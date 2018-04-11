@@ -1,0 +1,10 @@
+.homeContainer{
+    background-color: lightblue;
+    background-size: auto 100%;
+    margin: 0;
+}
+.subheader{
+    background-size: 100%;
+    background-color: orange;
+    margin: 0;
+}
