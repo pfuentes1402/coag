@@ -64,13 +64,19 @@ class MainContent extends Component {
                 var i;
                 for(i = 0; i < arrReduc.length; i++){
                     arrReduc[i].name = arrReduc[i]['titulo'];
-                    // if(arrReduc[i]['children'].length === 0){
-                    //     delete arrReduc[i].children;
-                    // }
+                    
                     delete arrReduc[i].titulo;
                 }
-
                  let tree = orderForTree(arrReduc);
+//TODO
+                 var i;
+                 console.log(tree);
+                 for(i = 0; i < tree.length; i++){
+                     if(tree[0].children[i].length === 0){
+                         console.log("entra");
+                         delete tree[i].children;
+                     }
+                 }
                 this.setState({ tree: tree })
             });
     }

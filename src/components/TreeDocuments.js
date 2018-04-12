@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import AppFrame from '../components/AppFrame';
 import {Treebeard} from 'react-treebeard';
 import './MenuAppBar.css';
-
-
+import CustomStyle from './customtree/CustomStyle'
 
 
 
@@ -18,13 +17,30 @@ class TreeDocuments extends Component {
         node.active = true;
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });
-        console.log(node);
     }
 
     render() {
+        const treeStyle = CustomStyle;
+        const animation = {    toggle: ({node: {toggled}}) => ({
+            animation: {rotateZ: toggled ? 90 : 0},
+            duration: 200
+        }),
+        drawer: (/* props */) => ({
+            enter: {
+                animation: 'slideDown',
+                duration: 300
+            },
+            leave: {
+                animation: 'slideUp',
+                duration: 300
+            }
+        })
+    };
         return (
             <div className="homeContainer">
                 <Treebeard
+                    style = {treeStyle}
+                    animations = {animation}
                     data={this.props.data}
                     onToggle={this.onToggle}
                 />
