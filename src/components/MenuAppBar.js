@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import coag from '../../../../appcoag/coag/src/components/coag.jpg';
+import coag from './coag.jpg';
 import './MenuAppBar.css';
 
 const styles = {
@@ -44,7 +44,7 @@ class MenuAppBar extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static" color="white">
+                <AppBar position="static" className="navbarPrimary">
                     <Toolbar>
                         <div >
                             <img src={coag} height="50" className="logo-coag"/>

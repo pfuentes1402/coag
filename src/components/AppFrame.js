@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MenuAppBar from './MenuAppBar';
-
 import MainContent from './../containers/MainContent';
 import '../App.css';
 
@@ -18,7 +17,6 @@ const AppFrame = ({}) => {
 
 AppFrame.propTypes = {
     header: PropTypes.string.isRequired,
-    body: PropTypes.element.isRequired,
 };
 
 export default AppFrame;

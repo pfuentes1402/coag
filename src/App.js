@@ -10,9 +10,6 @@ import './App.css';
 import compDummyContainer from "./components/compDummyContainer";
 
 
-
-
-
 class App extends Component {
     constructor(){
         super();
