@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuAppBar from './MenuAppBar';
+import MenuAppBar from './MenuAppBar/MenuAppBar';
 import MainContent from './../containers/MainContent';
 import '../App.css';
 
@@ -9,7 +9,6 @@ const AppFrame = ({}) => {
         <div>
             <div className="app-frame">
                 <MenuAppBar/>
-                <MainContent/>
             </div>
         </div>
     );

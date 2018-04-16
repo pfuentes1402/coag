@@ -4,7 +4,7 @@ import {withStyles} from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 
-import './MenuAppBar.css';
+import './MenuAppBar/MenuAppBar.css';
 
 const styles = {
     root: {

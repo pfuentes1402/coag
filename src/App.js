@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch, withRouter} from 'react-router-dom';
-import HomeContainer from './containers/index';
+import MainContainer from './containers/index';
+import HomeContainer from './containers/HomeContainer';
+import NuevoExpedienteContainer from './containers/NuevoExpedienteContainer';
 import { connect} from 'react-redux';
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
@@ -26,9 +28,11 @@ class App extends Component {
     return (
             <Router>
                 <div>
-                    <Route>
-                        <HomeContainer />
-                    </Route>
+                    <MainContainer />
+                    <Switch>
+                        <Route exact path='/' component={HomeContainer}/>
+                        <Route path='/nuevo-expediente' component={NuevoExpedienteContainer}/>
+                    </Switch>
                 </div>
             </Router>
     );

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import MenuAppBar from './../components/MenuAppBar';
 import subBar from '../components/SubBar';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import './styles.css';
-import TreeDocuments from "../components/TreeDocuments";
+import TreeDocuments from "../components/TreeDocuments/TreeDocuments";
 
 function orderForTree(arrReduc) {
 

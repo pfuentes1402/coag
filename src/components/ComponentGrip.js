@@ -1,66 +1,53 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
+
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid/dist/styles/ag-grid.css';
+import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
-import {AgGridReact} from 'ag-grid-react';
 
-
-class Componentgrip extends Component {
-
-    constructor() {
-        super();
+const propTypes = {
+    data: PropTypes.string.isRequired,
+}
+class ComponentGrip extends Component {
+    constructor(props) {
+        super(props);
 
         this.state = {
-            gridOptions = {
-                columnDefs: [
-                    {make: "Toyota", model: "Celica", price: 35000},
-                    {make: "Ford", model: "Mondeo", price: 32000},
-                    {make: "Porsche", model: "Boxter", price: 72000}
-                ]
-            }
+            columnDefs: [
+                {headerName: "Calle/Lugar", field: "calle"},
+                {headerName: "Nº", field: "numero"},
+                {headerName: "Piso", field: "piso"},
+                {headerName: "CP", field: "cp"},
+                {headerName: "Municipio", field: "municipio"}
+            ],
+            rowData: [
+                {calle: "Toyota", numero: "Celica", piso: 3, cp: 36208, municipio: "Vigo"}
+            ],
+            ubicacion: '',
+            response: '',
         }
     }
+    componentDidUpdate(){
+        console.log("actualiza");
 
+    }
 
     render() {
-
         return (
-
-            // Grid Definition
-            <AgGridReact
-                // listening for events
-                onGridReady={this.onGridReady}
-
-                // binding to array properties
-                rowData={this.state.rowData}
-
-                // no binding, just providing hard coded strings for the properties
-                // boolean properties will default to true if provided (ie enableColResize => enableColResize="true")
-                rowSelection="multiple"
-                enableColResize
-
-                // setting grid wide date component
-                dateComponentFramework={DateComponent}
-                gridOptions={this.state.gridOptions}
-
-                // setting default column properties
-                defaultColDef={{
-                    headerComponentFramework: SortableHeaderComponent,
-                    headerComponentParams: {
-                        menuIcon: 'fa-bars'
-                    }
-
-                }}>
-
-                // column definitions
-                <AgGridColumn field="make"></AgGridColumn>
-                <AgGridColumn field="model"></AgGridColumn>
-                <AgGridColumn field="price"></AgGridColumn>
-            </AgGridReact>
-        );
+                <div 
+                  className="ag-theme-balham"
+                  style={{ 
+	                height: '300px', 
+	                width: '900px' }} 
+		            >
+                    <div>{this.props.data}</div>
+                    <AgGridReact
+                        columnDefs={this.state.columnDefs}
+                        rowData={this.state.rowData}>
+                    </AgGridReact>
+                </div>
+            );
     }
 }
-
-Componentgrip.propTypes = {
-    dummy: PropTypes.string.isRequired,
-};
-
-export default Componentgrip;
+ComponentGrip.propTypes = propTypes;
+export default ComponentGrip;

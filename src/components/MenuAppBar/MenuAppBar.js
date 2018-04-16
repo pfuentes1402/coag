@@ -8,8 +8,9 @@ import IconButton from 'material-ui/IconButton';
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Button from 'material-ui/Button';
-import coag from './coag.jpg';
+import coag from './images/coag.jpg';
 import './MenuAppBar.css';
+import { Route } from 'react-router-dom';
 
 const styles = {
     root: {
@@ -42,6 +43,30 @@ class MenuAppBar extends React.Component {
         const {auth, anchorEl} = this.state;
         const open = Boolean(anchorEl);
 
+        const ButtonNew = () => (
+            <Route render={({ history}) => (
+              <Button
+                type='button'
+                onClick={() => { history.push('/nuevo-expediente') }}
+                variant="raised" color="primary" className={classes.button}
+              >
+                Nuevo expediente
+              </Button>
+            )} />
+          )
+          const ButtonHome = () => (
+            <Route render={({ history}) => (
+              <Button
+                type='button'
+                onClick={() => { history.push('/') }}
+                variant="raised" color="primary" className={classes.button}
+              >
+                Inicio
+              </Button>
+            )} />
+          )
+        
+
         return (
             <div className={classes.root}>
                 <AppBar position="static" className="navbarPrimary">
@@ -58,12 +83,8 @@ class MenuAppBar extends React.Component {
                             Mis expedientes
                         </Typography>
                         <div>
-                            <Button variant="raised" color="primary" className={classes.button}>
-                            Primary
-                        </Button>
-                            <Button variant="raised" color="primary" className={classes.button}>
-                                Primary
-                            </Button>
+                        <ButtonHome/>
+                        <ButtonNew />
                         </div>
                         {auth && (
                             <div>
