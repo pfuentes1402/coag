@@ -55,12 +55,12 @@ class MainContent extends Component {
     }
 
     componentDidMount(){
-        fetch('http://servicios.coag.es/api/EstructuraDocumental/702181/2')
+        fetch('http://servicios.coag.es/api/EstructuraDocumental/688685/2')
             .then((response) => {
                 return response.json();
             })
             .then((temp) => {
-                 arrReduc = temp[0].ds.EstructuraDocumental;
+                 arrReduc = temp.EstructuraDocumental;
                 var i;
                 for(i = 0; i < arrReduc.length; i++){
                     arrReduc[i].name = arrReduc[i]['titulo'];
@@ -68,13 +68,20 @@ class MainContent extends Component {
                     delete arrReduc[i].titulo;
                 }
                  let tree = orderForTree(arrReduc);
-//TODO
-                 var i;
-                 console.log(tree);
-                 for(i = 0; i < tree.length; i++){
-                     if(tree[0].children[i].length === 0){
-                         console.log("entra");
-                         delete tree[i].children;
+
+//TODO UNIFICAR EL ALGORITMO para más profundidad que 3 niveles
+                 for(var i = 0; i < tree[0].children.length; i++){
+                     var hijo = tree[0].children[i];
+                     for(var j = 0; j < hijo.children.length; j++){
+                        if(hijo.children[j].children.length == 0){
+                            delete tree[0].children[i].children[j].children;
+                        }else{
+                            for(var k = 0; k < hijo.children[j].children.length; k++ ){
+                                if(hijo.children[j].children[k].children){
+                                    delete tree[0].children[i].children[j].children[k].children;
+                                }
+                            }
+                        }
                      }
                  }
                 this.setState({ tree: tree })
