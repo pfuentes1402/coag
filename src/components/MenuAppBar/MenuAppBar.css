@@ -1,7 +1,15 @@
 .logo-coag{
-    width: 50%;
-    margin: 14px 10px -4px 3px ;
+  margin: 10px;
 }
-.navbarPrimary{
-    background-color: white !important;
+.app-frame{
+  background-color: white !important;
+}
+.app-frame .btn{
+  margin-top:15px;
+}
+.app-frame .btn-link{
+  color: #575757;
+}
+.app-frame .btn-primary{
+  background-color: #0288d1;
 }

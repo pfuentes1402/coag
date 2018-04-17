@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import TablaCatastro from './TablaCatastro';
+import TablaCatastro from './CatastroTable';
 import { Button } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
-import './NuevoExpediente.css';
+import './NewExpedient.css';
 
    // Create component for label
    class Label extends Component {

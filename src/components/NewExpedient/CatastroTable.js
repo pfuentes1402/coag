@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const propTypes = {
     data: PropTypes.array,
 }
-class ComponentGrip extends Component {
+class TablaCatastro extends Component {
     constructor(props) {
         super(props);
 
@@ -23,14 +23,12 @@ class ComponentGrip extends Component {
             rowData: [
                 {calle: "Aragón", numero: "", piso: 3, cp: 36202, municipio: "Vigo"}
             ],
-            ubicacion: '',
-            response: '',
+            ubicacion: [{calle: "", numero: "", piso: "", cp: "", municipio: ""}],
         }
     }
     shouldComponentUpdate(nextProps, nextState){
         if(nextProps.data != this.props.data && this.props.data.length!=0){
             this.forceUpdate()
-            console.log(this.state.ubicacion);
             return true;
         } 
         else return false; 
@@ -43,7 +41,6 @@ class ComponentGrip extends Component {
                         piso: response.Planta, cp: response.Codigo_Postal, municipio: response.ID_Municipio}
                 ]
             });
-            console.log(this.state.ubicacion);
     }
 
     render() {
@@ -57,11 +54,11 @@ class ComponentGrip extends Component {
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
-                        rowData={this.state.rowData}>
+                        rowData={this.state.ubicacion}>
                     </AgGridReact>
                 </div>
             );
     }
 }
-ComponentGrip.propTypes = propTypes;
-export default ComponentGrip;
+TablaCatastro.propTypes = propTypes;
+export default TablaCatastro;

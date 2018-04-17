@@ -2,6 +2,7 @@
     background-color: lightblue;
     background-size: auto 100%;
     margin: 0;
+    min-height: 700px;
 }
 .subheader{
     background-size: 100%;
@@ -11,4 +12,7 @@
 .divizquierda{
     background-size: 100%;
     background-color: orange;
+}
+#root .container.full{
+    max-width:100%;
 }

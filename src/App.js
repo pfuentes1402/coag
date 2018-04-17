@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import {setDummy} from "./actions";
 import 'typeface-roboto';
 import './App.css';
-import compDummyContainer from "./components/compDummyContainer";
 
 
 class App extends Component {

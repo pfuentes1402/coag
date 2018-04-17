@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import AppFrame from '../../components/AppFrame';
 import {Treebeard} from 'react-treebeard';
-import '../MenuAppBar/MenuAppBar.css';
 import CustomStyle from './CustomStyle'
 
 

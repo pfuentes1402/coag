@@ -5,6 +5,9 @@
 .nuevoExpedienteContainer{
     background: #f9f9f9;
 }
+.nuevoExpedienteContainer .btn-primary{
+    background-color: #0288d1;
+}
 .formulario{
     padding:30px;
     padding-top: 50px;

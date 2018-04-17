@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import Menu, {MenuItem} from 'material-ui/Menu';
-import Button from 'material-ui/Button';
+import { Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import coag from './images/coag.jpg';
 import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 const styles = {
     root: {
@@ -46,7 +42,6 @@ class MenuAppBar extends React.Component {
         const ButtonNew = () => (
             <Route render={({ history}) => (
               <Button
-                type='button'
                 onClick={() => { history.push('/nuevo-expediente') }}
                 variant="raised" color="primary" className={classes.button}
               >
@@ -57,9 +52,9 @@ class MenuAppBar extends React.Component {
           const ButtonHome = () => (
             <Route render={({ history}) => (
               <Button
-                type='button'
+                color="link"
                 onClick={() => { history.push('/') }}
-                variant="raised" color="primary" className={classes.button}
+                variant="raised" className={classes.button}
               >
                 Inicio
               </Button>
@@ -68,57 +63,16 @@ class MenuAppBar extends React.Component {
         
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static" className="navbarPrimary">
-                    <Toolbar>
-                        <div >
-                            <img src={coag} height="50" className="logo-coag"/>
-                            <p>{this.props.title}</p>
-                        </div>
-
-                        <Typography variant="title" color="inherit" className={classes.flex}  position="pull-left">
-                            Inicio
-                        </Typography>
-                        <Typography variant="title" color="inherit"  className={classes.flex}  position="pull-left">
-                            Mis expedientes
-                        </Typography>
-                        <div>
-                        <ButtonHome/>
-                        <ButtonNew />
-                        </div>
-                        {auth && (
-                            <div>
-                                <IconButton
-                                    aria-owns={open ? 'menu-appbar' : null}
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenu}
-                                    color="inherit"
-                                    position="pull-right"
-                                >
-                                    <AccountCircle/>
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                >
-                                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                                </Menu>
-                            </div>
-                        )}
-                    </Toolbar>
-                </AppBar>
-            </div>
+            <Container className="full">
+            <Row>
+            <Col sm="3"><div><img src={coag} height="50" className="logo-coag"/></div></Col>
+            <Col sm="2"><ButtonHome/><Button color="link">Mis expedientes</Button></Col>
+            <Col sm="3">
+                <ButtonNew/>{' '}
+                <Button outline color="secondary">Tramitación en lote<FontAwesome name='rocket'/></Button>
+            </Col>
+            </Row>
+            </Container>
         );
     }
 }

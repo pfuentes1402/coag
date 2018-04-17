@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuAppBar from './MenuAppBar/MenuAppBar';
-import MainContent from './../containers/MainContent';
+import MenuAppBar from '../components/MenuAppBar/MenuAppBar';
+import MainContent from '../components/MainContent/MainContent';
 import '../App.css';
 
-const AppFrame = ({}) => {
+const AppHeader = ({}) => {
     return (
         <div>
             <div className="app-frame">
@@ -14,8 +14,4 @@ const AppFrame = ({}) => {
     );
 };
 
-AppFrame.propTypes = {
-    header: PropTypes.string.isRequired,
-};
-
-export default AppFrame;
+export default AppHeader;

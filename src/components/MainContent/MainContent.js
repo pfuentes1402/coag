@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import subBar from '../components/SubBar';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import './styles.css';
-import TreeDocuments from "../components/TreeDocuments/TreeDocuments";
+import TreeDocuments from "../TreeDocuments/TreeDocuments";
+import { Container, Row, Col } from 'reactstrap';
 
 function orderForTree(arrReduc) {
 
@@ -92,16 +92,16 @@ class MainContent extends Component {
     render() {
         return (
             <div>
-                <Grid container spacing={24}>
-
-                    <Grid item xs={6} sm={3}>
+                <Container className="full">
+                    <Row className="principal">
+                    <Col xs="6" sm="3">
                         <TreeDocuments data={this.state.tree}/>
-                    </Grid>
-                    <Grid item xs={6} sm={9}>
+                    </Col>
+                    <Col xs="6" sm="9">
                        <div className='divizquierda'></div>
-                    </Grid>
-
-                </Grid>
+                    </Col>
+                    </Row>
+                </Container>
             </div>
         );
     }
