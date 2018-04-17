@@ -3,7 +3,7 @@ import ComponentGrip from '../ComponentGrip';
 import PropTypes from 'prop-types';
 
 const propTypes = {
-    data: PropTypes.string.isRequired,
+    data: PropTypes.array,
 }
 
 class TablaCatastro extends Component {

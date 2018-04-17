@@ -1,0 +1,48 @@
+.margen{
+    padding-top:30px;
+    padding-bottom:30px;
+}
+.nuevoExpedienteContainer{
+    background: #f9f9f9;
+}
+.formulario{
+    padding:30px;
+    padding-top: 50px;
+    border: 1px solid #dce1e5;
+    background-color: white;
+}
+.inputDiv{
+    margin-bottom:30px; 
+}
+.inputDiv p{
+    margin-top:10px;
+    color: #919191;
+}
+.inputDiv label{
+    width:100%;
+    text-transform: uppercase;
+    margin-bottom:0;
+}
+.inputDiv input{
+    width:300px;
+    border: none;
+    border-bottom: solid 1px #bcc7cd;
+    transition: all 0.3s cubic-bezier(.64,.09,.08,1);
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 96%, #0277bd 4%);
+    background-position: -300px 0;
+    background-size: 300px 100%;
+    background-repeat: no-repeat;
+    color: darken(#0277bd, 20%);
+}
+.inputDiv input::-webkit-input-placeholder{
+    color:#cfcfcf;
+}
+.inputDiv input:focus{
+    box-shadow: none;
+    outline: none;
+    background-position: 0 0;
+}
+.inputDiv input:focus::-webkit-input-placeholder, .inputDiv input:valid::-webkit-input-placeholder {
+    color: #0277bd;
+    transform: translateY(-20px);
+  }

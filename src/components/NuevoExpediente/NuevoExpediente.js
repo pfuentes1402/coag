@@ -2,67 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import TablaCatastro from './TablaCatastro';
 import { Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import './NuevoExpediente.css';
 
-
-   
-   // Create component for datalist input
-   class Datalist extends Component {
-    render() {
-     // Get all options from option prop
-     const dataOptions = this.props.options.split(', ');
-   
-     // Generate list of options
-     const dataOptionsList = dataOptions.map((dataOption, index) => {
-      return <option key={index} value={dataOption} />
-     });
-   
-     return (
-      <div>
-       <Label
-        hasLabel={this.props.hasLabel}
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       />
-    
-       <input list={this.props.htmlFor} />
-    
-       <datalist
-        defaultValue=''
-        id={this.props.htmlFor}
-        name={this.props.name || null}
-        required={this.props.required || null}
-       >
-        <option value='' disabled>Select one option</option>
-   
-        {dataOptionsList}
-       </datalist>
-      </div>
-     );
-    }
-   }
-   
-   // Create component for checkbox input
-   class Checkbox extends Component {
-    render() {
-     return (
-      <fieldset>
-       <label
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       >
-        <input
-         id={this.props.htmlFor}
-         name={this.props.name || null}
-         required={this.props.required || null}
-         type='checkbox'
-        />
-        {this.props.label}
-       </label>
-      </fieldset>
-     );
-    }
-   }
-   
    // Create component for label
    class Label extends Component {
     render() {
@@ -118,40 +60,7 @@ import { Button } from 'reactstrap';
      );
     }
    }
-   
-   // Create component for select input
-   class Select extends Component {
-    render() {
-     // Get all options from option prop
-     const selectOptions = this.props.options.split(', ');
-   
-     // Generate list of options
-     const selectOptionsList = selectOptions.map((selectOption, index) => {
-      return <option key={index} value={index}>{selectOption}</option>
-     });
-   
-     return (
-      <fieldset>
-       <Label
-        hasLabel={this.props.hasLabel}
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       />
-    
-       <select
-        defaultValue=''
-        id={this.props.htmlFor}
-        name={this.props.name || null}
-        required={this.props.required || null}
-       >
-        <option value='' disabled>Select one option</option>
-   
-        {selectOptionsList}
-       </select>
-      </fieldset>
-     );
-    }
-   }
+
    
    // Create component for textarea
    class Textarea extends Component {
@@ -177,20 +86,24 @@ import { Button } from 'reactstrap';
     }
    }
 
-   // Create component for form
-   class Form extends Component {
-      constructor(props) {
-        super(props);
-        this.validar = this.validar.bind(this);
-        this.updateInputValue = this.updateInputValue.bind(this);
-        this.state = {
-          inputUbicacion: '',
-        };
-      }
-      validar(e){
-        console.log(e);
-        var a = "cadena";
-        if(e != ''){
+// Create component for form
+class Form extends Component {
+
+    constructor(props) {
+      super(props);
+      this.validar = this.validar.bind(this);
+      this.updateInputValue = this.updateInputValue.bind(this);
+      this.state = {
+        inputUbicacion: '',
+        catastro: [],
+        enlacesMaps: []
+      };
+    }
+    updateInputValue = (e) => {
+      this.setState({inputUbicacion: e.target.value});
+    }
+    validar(e){
+      if(e != ''){
           var api = `http://servicios.coag.es/api/DatosCatastro/${e}`;
           console.log(api);
           fetch(api)
@@ -198,98 +111,122 @@ import { Button } from 'reactstrap';
                 return response.json();
             })
             .then((temp) => {
-              console.log(temp);
+              if(temp.MensajesProcesado.length == 0){
+                ubicacion: [
+                  {calle: temp.MensajesProcesado.Calle, numero: temp.MensajesProcesado.Numero,
+                      piso: temp.MensajesProcesado.Planta, cp: temp.MensajesProcesado.Codigo_Postal, municipio: temp.MensajesProcesado.ID_Municipio}
+                ]
+                this.setState({
+                  catastro: temp.Datos_Completos
+                });
+                this.setState({
+                  enlacesMaps: temp.Enlaces
+                });
+              }else{
+                alert("Error al validar");
+              }
           });
         }
       }
-      updateInputValue(e){
-        this.setState({
-          inputUbicacion: e.target.value
-        });
-      }
-     render() {
-      return (
-       <form method='' action=''>
-       <div>
-        <Input
-          hasLabel='true'
-          htmlFor='textInput'
-          label='Código Expediente'
-          required='true'
-          type='text'
-        />
-      
-        <Input
-          hasLabel='true'
-          htmlFor='estudioInput'
-          label='Código Estudio'
-          required='true'
-          type='text'
-        />
-      
-        <Input
-          hasLabel='true'
-          htmlFor='numberInput'
-          label='Título Expediente'
-          required='true'
-          type='text'
-        />
-      
-        <Input
-          hasLabel='true'
-          htmlFor='passwordInput'
-          label='Antecedente'
-          required='true'
-          type='text'
-        />
-          <p>Introducir el código del expediente en caso que(..)</p>
-          <Button color="secondary">secondary</Button>
-          <Textarea
-          hasLabel='true'
-          htmlFor='textarea'
-          label='Observaciones del estudio'
-          required='true'
-        />
-        </div>
-        <div>
-        <input
-          htmlFor='inputUbicacion2'
-          label='inputUbicación2'
-          required='true'
-          type='text'
-          value={this.state.inputUbicacion}
-          onChange={e => this.updateInputValue(e)}
-        />
-        <p>La dirección se proporcionará automáticamente</p>
-        <button onClick={e => this.validar(this.state.inputUbicacion)}>Validar</button>
-      
-        <TablaCatastro data={this.state.Ubicacion}/>
 
-          <Input
-          hasLabel='true'
-          htmlFor='passwordInput'
-          label='Alias dirección'
-          required='true'
-          type='text'
-          />
+    render() {
+      return (
+        <Container className="margen">
+       <form className="formulario" method='' action=''>
+       <Row>
+         <Col>
+         <div className="inputDiv">
+          <label>Código Expediente</label>
+          <input   
+            htmlFor='codigoInput'
+            required='true'
+            type='text'>
+          </input>
+          </div>
+          <div className="inputDiv">
+          <label>Código Estudio</label>
+          <input   
+            htmlFor='estudioInput'
+            required='true'
+            type='text'>
+          </input>
+          </div>
+          <div className="inputDiv">
+          <label>Título Expediente</label>
+          <input   
+            htmlFor='estudioInput'
+            required='true'
+            type='text'>
+          </input>
+          </div>
+          <div className="inputDiv">
+          <label>Antecedente</label>
+          <input   
+            htmlFor='estudioInput'
+            required='true'
+            type='text'>
+          </input>
+          <p>Introducir el código del expediente en caso que (...)</p>
+          </div>
+          <div className="inputDiv">
+          <label>Observaciones del estudio</label>
+          <textarea
+            cols="50" rows="5"   
+            htmlFor='estudioInput'
+            required='true'
+            type='text'>
+          </textarea>
+          </div>
+        </Col>
+        <Col>
+        <div className="inputDiv">
+          <label>Ubicación</label>
+          <input
+            placeholder="Ref catastral o coordenadas UTM"
+            htmlFor='inputUbicacion'
+            required='true'
+            type='text'
+            value={this.state.inputUbicacion}
+            onChange={e => this.updateInputValue(e)}>
+          </input>
+          <p>La dirección se proporcionará automáticamente</p>
+          </div>
+        <Button color="primary" 
+        onClick={() => this.validar(this.state.inputUbicacion)}>Validar</Button>
+      
+        <TablaCatastro data={this.state.catastro}/>
+        <div className="inputDiv">
+          <label>Alias dirección</label>
+          <input   
+            htmlFor='estudioInput'
+            required='true'
+            type='text'>
+          </input>
+
           <p>Introducir un alias para la dirección en caso que (...)</p>
+          </div>
+
           <div>
           <Button
+          color="primary"
           type='submit'
           value='cancelar'
-          text='Cancelar'
-          />
+          text='Cancelar'>Cancelar
+          </Button>
+          {' '}
           <Button
+          color="primary"
           type='submit'
           value='submit'
-          text='Guardar y crear expediente'
-          />
+          text='Guardar y crear expediente'>Guardar y crear expediente
+          </Button>
           </div>
-          </div>
+          </Col>
+          </Row>
         </form>
+        </Container>
       )
       }
-      
     }
     
     // Render Form component
