@@ -7,12 +7,14 @@ import SubHeader from '../components/SubHeader/SubHeader';
 
 
 class MainContainer extends Component {
-
+    state = {
+        title: window.location.pathname
+    }
     render() {
         return (
             <div className="mainContainer">
                <AppHeader/>
-               <SubHeader/>
+               <SubHeader title={this.state.title}/>
             </div>
         );
     }

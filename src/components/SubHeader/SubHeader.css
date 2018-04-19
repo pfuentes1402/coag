@@ -1,8 +1,8 @@
 .subheader{
     border-top: 1px solid #f3f3f3;
     border-bottom: 3px solid rgba(0,0,0,0.10);
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top:15px;
+    padding-bottom:15px;
 }
 .subheader .titulo{
     font-size:20px;

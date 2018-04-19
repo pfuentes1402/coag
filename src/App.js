@@ -16,6 +16,7 @@ class App extends Component {
         super();
         this.state = {dummy: 'gol'}
     }
+    
     handleOnclicktest (e) {
             //e.preventDefault();
         console.log(this.state.valueDummy);

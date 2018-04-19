@@ -10,7 +10,7 @@ class SubHeader extends Component {
             <div className="subheader">
                 <Container className="full">
                     <Row>
-                    <Col sm="3" className="titulo">{'Nuevo Expediente'}</Col>
+                    <Col sm="3" className="titulo">{this.props.title}</Col>
                     <Col sm="9"></Col>
                     </Row>
                 </Container>

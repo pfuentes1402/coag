@@ -26,6 +26,12 @@
     text-transform: uppercase;
     margin-bottom:0;
 }
+.ubicacion{
+    margin-top:25px;
+}
+.ubicacion .inputDiv input{
+    width:100%;
+}
 .inputDiv input{
     width:300px;
     border: none;
@@ -48,4 +54,9 @@
 .inputDiv input:focus::-webkit-input-placeholder, .inputDiv input:valid::-webkit-input-placeholder {
     color: #0277bd;
     transform: translateY(-20px);
-  }
+}
+.center-align{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}

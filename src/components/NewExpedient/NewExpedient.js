@@ -5,87 +5,6 @@ import { Button } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import './NewExpedient.css';
 
-   // Create component for label
-   class Label extends Component {
-    render() {
-     if (this.props.hasLabel === 'true') {
-      return <label htmlFor={this.props.htmlFor}>{this.props.label}</label>
-     }
-    }
-   }
-   
-   // Create component for input
-   class Input extends Component {
-    render() {
-     return (
-         <div>
-       <Label
-        hasLabel={this.props.hasLabel}
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       />
-       <br/>
-        <input
-         id={this.props.htmlFor}
-         max={this.props.max || null}
-         min={this.props.min || null}
-         name={this.props.name || null}
-         placeholder={this.props.placeholder || null}
-         required={this.props.required || null}
-         step={this.props.step || null}
-         type={this.props.type || 'text'}
-        /></div>
-     );
-    }
-   }
-   
-   // Create component for radio input
-   class Radio extends Component {
-    render() {
-     return (
-      <fieldset>
-       <label
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       >
-        <input
-         id={this.props.htmlFor}
-         name={this.props.name || null}
-         required={this.props.required || null}
-         type='radio'
-        />
-        {this.props.label}
-       </label>
-      </fieldset>
-     );
-    }
-   }
-
-   
-   // Create component for textarea
-   class Textarea extends Component {
-    render() {
-     return (
-      <div>
-       <Label
-        hasLabel={this.props.hasLabel}
-        htmlFor={this.props.htmlFor}
-        label={this.props.label}
-       />
-        <br/>
-       <textarea
-        cols={this.props.cols || null}
-        id={this.props.htmlFor}
-        name={this.props.name || null}
-        required={this.props.required || null}
-        rows={this.props.rows || null}
-       >
-       </textarea>
-      </div>
-     );
-    }
-   }
-
 // Create component for form
 class Form extends Component {
 
@@ -93,10 +12,14 @@ class Form extends Component {
       super(props);
       this.validar = this.validar.bind(this);
       this.updateInputValue = this.updateInputValue.bind(this);
+      this.handleInputChange = this.handleInputChange.bind(this);
       this.state = {
+        codigo: '', estudio: '', titulo: '', antecedente: '', observaciones: '',
         inputUbicacion: '',
         catastro: [],
-        enlacesMaps: []
+        enlacesMaps: [],
+        ubicacion: [],
+        emplazamientos: [],
       };
     }
     updateInputValue = (e) => {
@@ -104,31 +27,43 @@ class Form extends Component {
     }
     validar(e){
       if(e != ''){
-          var api = `http://servicios.coag.es/api/DatosCatastro/${e}`;
-          console.log(api);
-          fetch(api)
-            .then((response) => {
-                return response.json();
-            })
-            .then((temp) => {
-              if(temp.MensajesProcesado.length == 0){
-                ubicacion: [
-                  {calle: temp.MensajesProcesado.Calle, numero: temp.MensajesProcesado.Numero,
-                      piso: temp.MensajesProcesado.Planta, cp: temp.MensajesProcesado.Codigo_Postal, municipio: temp.MensajesProcesado.ID_Municipio}
-                ]
-                this.setState({
-                  catastro: temp.Datos_Completos
-                });
-                this.setState({
-                  enlacesMaps: temp.Enlaces
-                });
-              }else{
-                alert("Error al validar");
-              }
+        var api = `http://servicios.coag.es/api/DatosCatastro/${e}`;
+        console.log(api);
+        fetch(api)
+          .then((response) => {
+            return response.json();
+          })
+          .then((temp) => {
+            if(temp.MensajesProcesado.length == 0){
+              this.setState({
+                ubicacion: temp.Datos_Completos[0]
+              })
+              this.setState({
+                catastro: temp.Datos_Completos
+              });
+              this.setState({
+                enlacesMaps: temp.Enlaces
+              });
+            }else{
+              alert("Error al validar");
+            }
           });
-        }
       }
-
+    }
+    handleInputChange(event) {
+      const target = event.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+      const name = target.name;
+      console.log(name);
+      console.log("value: "+ value);
+      this.setState({
+        [name]: value
+      });
+    }
+    handleSubmit(event) {
+      alert('A name was submitted: ' + this.state.ubicacion);
+      event.preventDefault();
+    }
     render() {
       return (
         <Container className="margen">
@@ -138,33 +73,37 @@ class Form extends Component {
          <div className="inputDiv">
           <label>Código Expediente</label>
           <input   
-            htmlFor='codigoInput'
+            name = 'codigo'
             required='true'
-            type='text'>
+            type='text'
+            onChange={this.handleInputChange}>
           </input>
           </div>
           <div className="inputDiv">
           <label>Código Estudio</label>
           <input   
-            htmlFor='estudioInput'
+            name='estudio'
             required='true'
-            type='text'>
+            type='text'
+            onChange={this.handleInputChange}>
           </input>
           </div>
           <div className="inputDiv">
           <label>Título Expediente</label>
           <input   
-            htmlFor='estudioInput'
+            name='titulo'
             required='true'
-            type='text'>
+            type='text'
+            onChange={this.handleInputChange}>
           </input>
           </div>
           <div className="inputDiv">
           <label>Antecedente</label>
           <input   
-            htmlFor='estudioInput'
+            name='antecedente'
             required='true'
-            type='text'>
+            type='text'
+            onChange={this.handleInputChange}>
           </input>
           <p>Introducir el código del expediente en caso que (...)</p>
           </div>
@@ -172,13 +111,16 @@ class Form extends Component {
           <label>Observaciones del estudio</label>
           <textarea
             cols="50" rows="5"   
-            htmlFor='estudioInput'
+            name='observaciones'
             required='true'
-            type='text'>
+            type='text'
+            onChange={this.handleInputChange}>
           </textarea>
           </div>
         </Col>
         <Col>
+        <Row>
+        <Col sm="9">
         <div className="inputDiv">
           <label>Ubicación</label>
           <input
@@ -191,10 +133,85 @@ class Form extends Component {
           </input>
           <p>La dirección se proporcionará automáticamente</p>
           </div>
+          </Col>
+          <Col sm="3" className="center-align">
         <Button color="primary" 
         onClick={() => this.validar(this.state.inputUbicacion)}>Validar</Button>
-      
+        </Col>
+        </Row>
         <TablaCatastro data={this.state.catastro}/>
+
+        <div className="ubicacion">
+        <Row>
+          <Col sm="4">
+            <div className="inputDiv">
+              <label>Calle</label>
+              <span htmlFor='CalleInput'>
+                {this.state.ubicacion.Calle}
+              </span>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="inputDiv">
+              <label>Num</label>
+              <input
+                htmlFor='NumeroInput'
+                type='text'
+                value={this.state.ubicacion.Numero}
+                onChange={this.handleChangeNumero} >
+              </input>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>Piso</label>
+            <input
+              htmlFor='PisoInput'
+              type='text'
+              value={this.state.ubicacion.Piso}
+              onChange={this.handleChangePiso} >
+            </input>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>código postal</label>
+            <span htmlFor='cpInput'>{this.state.ubicacion.Codigo_Postal}</span>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>Municipio</label>
+            <span htmlFor='MunicipioInput'>{this.state.ubicacion.ID_Municipio}</span>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>Provincia</label>
+            <span htmlFor='ProvinciaInput'>{this.state.ubicacion.Provincia}</span>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>Región</label>
+            <span htmlFor='RegionInput'>{this.state.ubicacion.Region}</span>
+            </div>
+          </Col>
+          <Col sm="4">
+            <div className="inputDiv">
+            <label>País</label>
+            <span htmlFor='PaisInput'>{this.state.ubicacion.Pais}</span>
+            </div>
+          </Col>
+          <Col sm="4"></Col>
+        </Row>
+
+        </div>
+
         <div className="inputDiv">
           <label>Alias dirección</label>
           <input   
@@ -208,6 +225,7 @@ class Form extends Component {
 
           <div>
           <Button
+          outline
           color="primary"
           type='submit'
           value='cancelar'
