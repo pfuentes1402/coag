@@ -14,12 +14,9 @@ class MainContent extends Component {
 
 
     componentDidMount(){
-
             let id_expediente='688685';
             this.props.fetchExpedientes(id_expediente);
     }
-
-
     render() {
         return (
             <div>
