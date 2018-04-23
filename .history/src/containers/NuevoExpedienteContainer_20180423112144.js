@@ -13,8 +13,8 @@ class NuevoExpedienteContainer extends Component {
     render() {
         return (
             <div className="nuevoExpedienteContainer">
-               
-               <NuevoExpediente/>                
+               <reduxForm/>
+                        
             </div>
         );
     }

@@ -15,9 +15,9 @@ export const fetchError = (error) => ({
     payload: error
 });
 
-export const fetchExpedientes = (id_expediente) => (dispatch) => {
+export const fetchExpedientes = () => (dispatch) => {
     dispatch(fetchInit());
-    getExpedientes(id_expediente).then((expedientes) => {
+    getExpedientes().then((expedientes) => {
         
         dispatch(fetchSuccess(expedientes));
     })

@@ -8,7 +8,6 @@ import TreeDocuments from "../TreeDocuments/TreeDocuments";
 import {fetchExpedientes} from '../../actions/expedientes'
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import {Divider} from 'material-ui'
 
 class MainContent extends Component {
 

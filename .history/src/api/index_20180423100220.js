@@ -15,6 +15,6 @@ export const getExpedientes = (id_expediente) =>
     })
     .then(resultado => {
       let ordenado = ordertree(resultado);
-    
+      console.log(ordenado);
       return ordenado;
     });

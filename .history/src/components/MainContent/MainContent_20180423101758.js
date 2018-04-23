@@ -26,6 +26,9 @@ class MainContent extends Component {
                 <Container className="full">
                     <Row className="principal">
                     <Col xs="6" sm="3">
+                        <p>{this.props.loading}</p>
+                    </Col>
+                    <Col xs="6" sm="3">
                         <TreeDocuments data={this.props.tree}/>
                     </Col>
                     <Col xs="6" sm="9">
