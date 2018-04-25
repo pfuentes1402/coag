@@ -13,6 +13,8 @@ class Form extends Component {
       this.validar = this.validar.bind(this);
       this.updateInputValue = this.updateInputValue.bind(this);
       this.handleInputChange = this.handleInputChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+
       this.state = {
         codigo: '', estudio: '', titulo: '', antecedente: '', observaciones: '',
         inputUbicacion: '',
@@ -34,12 +36,14 @@ class Form extends Component {
             return response.json();
           })
           .then((temp) => {
+            console.log(temp);
             if(temp.MensajesProcesado.length == 0){
+              console.log(temp);
               this.setState({
-                ubicacion: temp.Datos_Completos[0]
+                ubicacion: temp.Inmuebles[0]
               })
               this.setState({
-                catastro: temp.Datos_Completos
+                catastro: temp.Inmuebles
               });
               this.setState({
                 enlacesMaps: temp.Enlaces
@@ -54,30 +58,53 @@ class Form extends Component {
       const target = event.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
       const name = target.name;
-      console.log(name);
-      console.log("value: "+ value);
       this.setState({
         [name]: value
       });
     }
     handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.ubicacion);
+      var fechaEntrada =  new Date();
+      fechaEntrada = fechaEntrada.toISOString();
+      console.log(fechaEntrada);
+      var request = {
+        'Fecha_Entrada' : fechaEntrada,
+        'Titulo' : this.state.titulo,
+        'Expediente_Codigo_Estudio' : this.state.codigo,
+        'Antecedente' : this.state.antecedente,
+        'Observaciones' : this.state.observaciones,
+        'Emplazamientos' : [
+          {'Calle' : this.state.ubicacion.Calle,
+          'Numero' : this.state.ubicacion.Numero,
+          'Piso' : this.state.ubicacion.Piso,
+          'Id_Concello' : this.state.ubicacion.Id_Concello,
+          'CodigoPostal' : this.state.ubicacion.Codigo_Postal,
+          'Georeferencia' : '',
+          }
+        ]
+      }
+      console.log('Request: ' + request);
+      console.log('Request: ' + JSON.stringify(request));
+      fetch('http://servicios.coag.es/api/Expedientes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: request
+      }).then((response) => {
+        console.log(response);
+        return response.json();
+      });
       event.preventDefault();
     }
     render() {
       return (
         <Container className="margen">
-       <form className="formulario" method='' action=''>
+       <form className="formulario" onSubmit={this.handleSubmit} method='' action=''>
        <Row>
          <Col>
          <div className="inputDiv">
           <label>Código Expediente</label>
-          <input   
-            name = 'codigo'
-            required='true'
-            type='text'
-            onChange={this.handleInputChange}>
-          </input>
+          <span>123456789</span>
           </div>
           <div className="inputDiv">
           <label>Código Estudio</label>
@@ -184,13 +211,13 @@ class Form extends Component {
           <Col sm="4">
             <div className="inputDiv">
             <label>Municipio</label>
-            <span htmlFor='MunicipioInput'>{this.state.ubicacion.ID_Municipio}</span>
+            <span htmlFor='MunicipioInput'>{this.state.ubicacion.Id_Municipio}</span>
             </div>
           </Col>
           <Col sm="4">
             <div className="inputDiv">
             <label>Provincia</label>
-            <span htmlFor='ProvinciaInput'>{this.state.ubicacion.Provincia}</span>
+            <span htmlFor='ProvinciaInput'>{this.state.ubicacion.Id_Provincia}</span>
             </div>
           </Col>
         </Row>
@@ -198,13 +225,13 @@ class Form extends Component {
           <Col sm="4">
             <div className="inputDiv">
             <label>Región</label>
-            <span htmlFor='RegionInput'>{this.state.ubicacion.Region}</span>
+            <span htmlFor='RegionInput'>{this.state.ubicacion.Id_Region}</span>
             </div>
           </Col>
           <Col sm="4">
             <div className="inputDiv">
             <label>País</label>
-            <span htmlFor='PaisInput'>{this.state.ubicacion.Pais}</span>
+            <span htmlFor='PaisInput'>{this.state.ubicacion.Id_Pais}</span>
             </div>
           </Col>
           <Col sm="4"></Col>
@@ -235,8 +262,9 @@ class Form extends Component {
           <Button
           color="primary"
           type='submit'
-          value='submit'
+          value='Submit'
           text='Guardar y crear expediente'>Guardar y crear expediente
+
           </Button>
           </div>
           </Col>
