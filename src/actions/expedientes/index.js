@@ -1,7 +1,9 @@
-import { getExpedientes } from '../../api';
+import { getExpedientes, getValidateAdress } from '../../api';
+
 import * as types from './types';
 
 export const fetchInit = () => ({
+   
     type: types.FETCH_EXPEDIENTES_INIT
 });
 
@@ -25,4 +27,17 @@ export const fetchExpedientes = (id_expediente) => (dispatch) => {
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+
+export const validateAdress = () => (dispatch) => {
+    dispatch(fetchInit());
+    console.log("llega hasta action");
+    getValidateAdress().then((expedientes) => {
+        
+        dispatch(fetchSuccess(expedientes));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+
 

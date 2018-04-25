@@ -18,3 +18,14 @@ export const getExpedientes = (id_expediente) =>
     
       return ordenado;
     });
+
+    export const getValidateAdress = (e) =>   
+    fetch(`${BASE_PATH}/DatosCatastro/${e}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(resultado => {
+      
+      console.log(resultado)
+        return resultado;
+      });
