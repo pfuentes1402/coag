@@ -52,8 +52,7 @@
     background-position: 0 0;
 }
 .inputDiv input:focus::-webkit-input-placeholder, .inputDiv input:valid::-webkit-input-placeholder {
-    color: #0277bd;
-    transform: translateY(-20px);
+    color: #919191;
 }
 .center-align{
     align-items: center;

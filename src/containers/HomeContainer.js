@@ -11,7 +11,6 @@ import { fetchExpedientes } from '../actions/expedientes/';
 
 class HomeContainer extends Component {
     componentDidMount() {
-        this.props.fetchExpedientes();
         console.log("entra");
     }
     render() {

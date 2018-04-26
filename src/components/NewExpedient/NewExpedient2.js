@@ -6,7 +6,10 @@ import { Button } from "reactstrap";
 import PropTypes from 'prop-types';
 import "./NewExpedient.css";
 import { Divider } from "material-ui";
-import {validateAdress} from '../../actions/expedientes';
+import { connect } from 'react-redux';
+
+import {validateAddress} from '../../actions/expedientes';
+
 
 const validate = values => {
   const errors = {};
@@ -19,8 +22,8 @@ const validate = values => {
     errors.estudio = "Campo requerido";
   }
   if (!values.titulo) {
-    errors.tilulo = "Required";
-  } else if (this.values.tilulo.length > 150) {
+    errors.titulo = "Required";
+  } else if (this.values.titulo.length > 150) {
     errors.codigo = "Tiene que tener menos de 150 caracteres";
   }
 
@@ -53,6 +56,18 @@ const renderField = ({
 );
 
 class SyncValidationForm extends Component{
+  constructor(props){
+    super(props);
+    this.validar = this.validar.bind(this);
+}
+componentDidMount(){
+//9872023VH5797S0001WX
+  console.log("validar 1");
+  this.props.validateAddress('9872023VH5797S0001WX');
+}
+  validar(e){
+    e.preventDefault();
+  }
   render(){
     return(
       <Container className="margen">
@@ -120,9 +135,8 @@ class SyncValidationForm extends Component{
                 </div>
               </Col>
               <Col sm="3" className="center-align">
-                <Button color="primary" 
-                
-                onClick={() => this.props.validateAdress()}
+                <Button color="primary"
+                onClick={this.validar}
                 >Validar</Button>
               </Col>
             </Row>
@@ -255,7 +269,7 @@ class SyncValidationForm extends Component{
   }
 }
 /*const SyncValidationForm = props => {
-  const { handleSubmit, pristine, reset, submitting, validateAdress  } = props;
+  const { handleSubmit, pristine, reset, submitting, validateAddress  } = props;
   return (
     <Container className="margen">
       <form onSubmit={handleSubmit}>
@@ -323,7 +337,7 @@ class SyncValidationForm extends Component{
               </Col>
               <Col sm="3" className="center-align">
                 <Button color="primary" 
-                onClick={() => validateAdress('9872023VH5797S0001WX')}
+                onClick={() => validateAddress('9872023VH5797S0001WX')}
                 >Validar</Button>
               </Col>
             </Row>
@@ -455,16 +469,17 @@ class SyncValidationForm extends Component{
   );
 };*/
 
-
-
-const mapDispatchToProps = {
-	validateAdress
-};
+const mapStateToProps = (state) => ({
+  // ...
+});
+SyncValidationForm = connect(
+  mapStateToProps,
+  {validateAddress}
+)(SyncValidationForm);
 
 export default reduxForm({
   form: "syncValidation", // a unique identifier for this form
   validate, // <--- validation function given to redux-form
-  warn, // <--- warning function given to redux-form  
-  validateAdress,
+  warn, // <--- warning function given to redux-form
 })(SyncValidationForm);
 
