@@ -6,26 +6,40 @@ export const getExpedientes = () => fetch(`${BASE_PATH}/EstructuraDocumental/688
 });*/
 
 import ordertree from "../helpers/orderTree";
+import expedientetree from "../helpers/expedientetree";
 const BASE_PATH = "http://servicios.coag.es/api";
 
-export const getExpedientes = (id_expediente) =>
-  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/2`, {'Content-type' : 'application/json'})
+export const getExpedientes = id_expediente =>
+  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/2`)
     .then(response => {
-      console.log("entra aqui");
       return response.json();
     })
     .then(resultado => {
-      console.log("entra aqui 2");
       let ordenado = ordertree(resultado);
-    
+
       return ordenado;
     });
 
-    export const getValidateAdress = (e) =>   
-    fetch(`${BASE_PATH}/DatosCatastro/${e}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(resultado => {
-        return resultado;
-      });
+export const getValidateAdress = e =>
+  fetch(`${BASE_PATH}/DatosCatastro/${e}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(resultado => {
+     
+      return resultado;
+    });
+
+export const getExpediente = id_expediente =>
+  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}`)
+    .then(response => {
+      console.log("Datos expediente concreto");
+      return response.json();
+    }).then(resultado => {
+      console.log("Previo a ordenar");
+      console.log(resultado.Trabajos);
+      let query='Trabajos'
+      let ordenado = expedientetree(resultado.Trabajos);
+
+      return ordenado;
+    });

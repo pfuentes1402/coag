@@ -8,11 +8,10 @@ import {Grid} from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 
 import { fetchExpedientes } from '../actions/expedientes/';
+import { fetchExpediente } from '../actions/expedientes/';
 
 class HomeContainer extends Component {
-    componentDidMount() {
-        console.log("entra");
-    }
+  
     render() {
         return (
             <div className="homeContainer">
@@ -26,6 +25,7 @@ HomeContainer.propTypes = {
     expedientes: PropTypes.array.isRequired,
     loading: PropTypes.bool,
     fetchExpedientes: PropTypes.func.isRequired,
+    fetchExpediente: PropTypes.func.isRequired,
   };
   
   HomeContainer.defaultProps = {
@@ -34,10 +34,12 @@ HomeContainer.propTypes = {
 
 const mapStateToProps = state => ({
     expedientes: state.expedientes.data,
+    trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
   });
 
 const mapDispatchToProps = {
-	fetchExpedientes
+    fetchExpedientes,
+    fetchExpediente
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
