@@ -28,12 +28,12 @@ const reducer = (state = {arbolCompleto : initialState, loading : true, address:
 
 
       const {Datos_Completos} = action.payload;
-      const addressreduc=[];
-        addressreduc.push({Calle : Datos_Completos[0].Calle});
-          addressreduc.push({Numero : Datos_Completos[0].Numero});
-          addressreduc.push({Piso : Datos_Completos[0].Piso});
-          addressreduc.push({Codigo_Postal : Datos_Completos[0].Codigo_Postal});
-          addressreduc.push({Concello : Datos_Completos[0].Concello});
+
+      const addressreduc=[
+          {calle: Datos_Completos[0].Calle, numero: Datos_Completos[0].Numero,
+              piso: Datos_Completos[0].Piso, cp: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello}
+      ];
+          console.log(addressreduc);
     return {
       ...state,            
       address: action.payload,

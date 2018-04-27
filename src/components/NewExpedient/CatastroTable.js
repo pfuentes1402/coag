@@ -29,20 +29,6 @@ class TablaCatastro extends Component {
 
 
     render() {
-
-            var response = this.props.data;
-            if(response.length === 0){
-               var ubicacion=[];
-            }else{
-                console.log(response);
-                 ubicacion = [
-                    {calle: response[0].Calle, numero: response[1].Numero,
-                        piso: response[2].Piso, cp: response[3].Codigo_Postal, municipio: response[4].Concello}
-                ]     ;
-            }
-
-
-
         return (
                 <div 
                   className="ag-theme-balham"
@@ -53,7 +39,7 @@ class TablaCatastro extends Component {
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
-                        rowData={ubicacion}>
+                        rowData={this.props.data}>
                     </AgGridReact>
                 </div>
             );

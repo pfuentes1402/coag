@@ -42,12 +42,13 @@ const renderField = ({
   input,
   label,
   type,
+  //readOnly,
   meta: { touched, error, warning }
 }) => (
   <div>
     <label>{label}</label>
     <div>
-      <input {...input} placeholder={label} type={type} />
+      {<input {...input} placeholder={label} type={type} /*readOnly={readOnly}*/ />}
       {touched &&
         ((error && <span>{error}</span>) ||
           (warning && <span>{warning}</span>))}
@@ -55,7 +56,7 @@ const renderField = ({
   </div>
 );
 
-class SyncValidationForm extends Component{
+/*class SyncValidationForm extends Component{
   constructor(props){
     super(props);
     this.validar = this.validar.bind(this);
@@ -121,6 +122,8 @@ componentWillMount(){
                 rows="5"
                 type="text"
                 label="Observaciones"
+                readOnly="readOnly"
+                value="Hola que hacce"
               />
             </div>
           </Col>
@@ -152,10 +155,9 @@ componentWillMount(){
                 <Col sm="4">
                   <div className="inputDiv">
                     <Field
-                      name="Calle"
-                      type="text"
-                      htmlFor="inputUbicacion"
+                      name="calle"
                       component={renderField}
+                      type="text"
                       label="Calle"
 
                     />
@@ -164,11 +166,12 @@ componentWillMount(){
                 <Col sm="4">
                   <div className="inputDiv">
                     <Field
-                      name="Num"
+                      name="numero"
+                      id="numero"
                       type="text"
                       htmlFor="NumeroInput"
                       component={renderField}
-                      label="Num"
+                      label="Numero"
                     />
                   </div>
                 </Col>
@@ -186,7 +189,7 @@ componentWillMount(){
                 <Col sm="4">
                   <div className="inputDiv">
                     <Field
-                      name="CP"
+                      name="cp"
                       type="text"
                       htmlFor="inputUbicacion"
                       component={renderField}
@@ -273,9 +276,10 @@ componentWillMount(){
     </Container>
     )
   }
-}
-/*const SyncValidationForm = props => {
-  const { handleSubmit, pristine, reset, submitting, validateAddress  } = props;
+}*/
+let SyncValidationForm = props => {
+  const { handleSubmit, pristine, reset, submitting, validateAddress, catastro  } = props;
+
   return (
     <Container className="margen">
       <form onSubmit={handleSubmit}>
@@ -342,12 +346,12 @@ componentWillMount(){
                 </div>
               </Col>
               <Col sm="3" className="center-align">
-                <Button color="primary" 
+                <Button color="primary"
                 onClick={() => validateAddress('9872023VH5797S0001WX')}
                 >Validar</Button>
               </Col>
             </Row>
-            <TablaCatastro />
+            <TablaCatastro data={catastro}/>
 
             <div className="ubicacion">
               <Row>
@@ -459,13 +463,13 @@ componentWillMount(){
                 outline
                   type="submit"
                   disabled={submitting}
-                  
+
                   color="primary"
                   value="cancelar"
                 >
                   Guardar y crear expediente
                 </Button>
-                
+
               </div>
             </div>
           </Col>
@@ -473,22 +477,44 @@ componentWillMount(){
       </form>
     </Container>
   );
-};*/
-
-const mapStateToProps = (state) => ({
-  catastro: state.expedientes.addressreduc,
-});
-SyncValidationForm.defaultProps = {
-    catastro: [],
 };
-SyncValidationForm = connect(
-  mapStateToProps,
-  {validateAddress}
-)(SyncValidationForm);
 
-export default reduxForm({
-  form: "syncValidation", // a unique identifier for this form
-  validate, // <--- validation function given to redux-form
-  warn, // <--- warning function given to redux-form
-})(SyncValidationForm);
+// const mapStateToProps = (state) => ({
+//
+//   catastro: state.expedientes.addressreduc,
+//   initialValues: state.expedientes.addressreduc,
+// });
+// SyncValidationForm.defaultProps = {
+//     catastro: [],
+// };
+// SyncValidationForm = connect(
+//
+//   mapStateToProps,
+//   {validateAddress}
+// )(SyncValidationForm);
+//
+// export default reduxForm({
+//   form: "syncValidation", // a unique identifier for this form
+//      enableReinitialize:true,
+//     // keepDirtyOnReinitialize:true,
+//     validate, // <--- validation function given to redux-form
+//   warn, // <--- warning function given to redux-form
+// })(SyncValidationForm);
+
+SyncValidationForm = reduxForm({
+    form: 'syncValidation', // a unique identifier for this form
+    validate,
+    warn,
+})(SyncValidationForm)
+
+SyncValidationForm = connect(
+    state => ({
+        catastro: state.expedientes.addressreduc,
+        initialValues: state.expedientes.addressreduc[0], // pull initial values from account reducer
+    }),
+    { validateAddress: validateAddress } // bind account loading action creator
+)(SyncValidationForm)
+
+
+export default SyncValidationForm
 
