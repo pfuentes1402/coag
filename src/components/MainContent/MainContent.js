@@ -21,13 +21,13 @@ class MainContent extends Component {
     
     render() {
 
-        let  data = this.props.trabajos;     
+
         return (
             <div>
                 <Container className="full">
                     <Row className="principal">
                     <Col xs="6" sm="3">
-                        <TreeDocuments data={this.props.tree}/>
+                        <TreeDocuments data={this.props.arbolCompleto}/>
                     </Col>
                     <Col xs="6" sm="9">
                        <div className='divizquierda'></div>

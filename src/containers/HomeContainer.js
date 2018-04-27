@@ -33,7 +33,7 @@ HomeContainer.propTypes = {
   };
 
 const mapStateToProps = state => ({
-    expedientes: state.expedientes.data,
+    expedientes: state.expedientes.arbolCompleto,
     trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
   });

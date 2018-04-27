@@ -15,8 +15,7 @@ class NuevoExpedienteContainer extends Component {
 
     render() {
         return (
-            <div className="nuevoExpedienteContainer">               
-             
+            <div className="nuevoExpedienteContainer">
                <NuevoExpediente2/>                                
             </div>
         );

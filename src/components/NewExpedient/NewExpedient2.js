@@ -60,15 +60,20 @@ class SyncValidationForm extends Component{
     super(props);
     this.validar = this.validar.bind(this);
 }
-componentDidMount(){
+componentWillMount(){
 //9872023VH5797S0001WX
   console.log("validar 1");
-  this.props.validateAddress('9872023VH5797S0001WX');
+  //this.props.validateAddress('9872023VH5797S0001WX');
+
 }
   validar(e){
+
     e.preventDefault();
+    console.log('validar desde Boton');
+      this.props.validateAddress('9872023VH5797S0001WX');
   }
-  render(){
+
+    render(){
     return(
       <Container className="margen">
       <form onSubmit={this.props.handleSubmit}>
@@ -136,11 +141,11 @@ componentDidMount(){
               </Col>
               <Col sm="3" className="center-align">
                 <Button color="primary"
-                onClick={this.validar}
+                onClick={(e) => this.validar(e)}
                 >Validar</Button>
               </Col>
             </Row>
-            <TablaCatastro />
+            <TablaCatastro data={this.props.catastro}/>
 
             <div className="ubicacion">
               <Row>
@@ -152,6 +157,7 @@ componentDidMount(){
                       htmlFor="inputUbicacion"
                       component={renderField}
                       label="Calle"
+
                     />
                   </div>
                 </Col>
@@ -470,8 +476,11 @@ componentDidMount(){
 };*/
 
 const mapStateToProps = (state) => ({
-  // ...
+  catastro: state.expedientes.addressreduc,
 });
+SyncValidationForm.defaultProps = {
+    catastro: [],
+};
 SyncValidationForm = connect(
   mapStateToProps,
   {validateAddress}

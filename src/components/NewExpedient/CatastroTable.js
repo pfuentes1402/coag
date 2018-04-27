@@ -26,24 +26,23 @@ class TablaCatastro extends Component {
             ubicacion: [{calle: "", numero: "", piso: "", cp: "", municipio: ""}],
         }
     }
-    shouldComponentUpdate(nextProps, nextState){
-        if(nextProps.data != this.props.data && this.props.data.length!=0){
-            this.forceUpdate()
-            return true;
-        } 
-        else return false; 
-    }
-    componentDidUpdate(){
-            var response = this.props.data[0];
-            this.setState({
-                ubicacion: [
-                    {calle: response.Calle, numero: response.Numero,
-                        piso: response.Planta, cp: response.Codigo_Postal, municipio: response.ID_Municipio}
-                ]
-            });
-    }
+
 
     render() {
+
+            var response = this.props.data;
+            if(response.length === 0){
+               var ubicacion=[];
+            }else{
+                console.log(response);
+                 ubicacion = [
+                    {calle: response[0].Calle, numero: response[1].Numero,
+                        piso: response[2].Piso, cp: response[3].Codigo_Postal, municipio: response[4].Concello}
+                ]     ;
+            }
+
+
+
         return (
                 <div 
                   className="ag-theme-balham"
@@ -54,7 +53,7 @@ class TablaCatastro extends Component {
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
-                        rowData={this.state.ubicacion}>
+                        rowData={ubicacion}>
                     </AgGridReact>
                 </div>
             );

@@ -26,18 +26,17 @@ export const getValidateAdress = e =>
       return response.json();
     })
     .then(resultado => {
-     
+
       return resultado;
     });
 
 export const getExpediente = id_expediente =>
   fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}`)
     .then(response => {
-      console.log("Datos expediente concreto");
+
       return response.json();
     }).then(resultado => {
-      console.log("Previo a ordenar");
-      console.log(resultado.Trabajos);
+
       let query='Trabajos'
       let ordenado = expedientetree(resultado.Trabajos);
 

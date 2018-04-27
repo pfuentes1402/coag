@@ -9,9 +9,10 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 const initialState = [];
 
 const initialStateb = [];
+const initialStatec = [];
 
 
-const reducer = (state = {arbolCompleto : initialState, loading : true, address: '', trabajos: initialState}, action) => {
+const reducer = (state = {arbolCompleto : initialState, loading : true, address: '', trabajos: initialState,addressreduc:initialStatec}, action) => {
  
   switch (action.type) {
     case FETCH_EXPEDIENTES_SUCCESS: {
@@ -23,10 +24,20 @@ const reducer = (state = {arbolCompleto : initialState, loading : true, address:
     case FETCH_EXPEDIENTES_ERROR:
       return initialState;
 
-    case FETCH_UBICACION_SUCCESS:
+      case FETCH_UBICACION_SUCCESS:
+
+
+      const {Datos_Completos} = action.payload;
+      const addressreduc=[];
+        addressreduc.push({Calle : Datos_Completos[0].Calle});
+          addressreduc.push({Numero : Datos_Completos[0].Numero});
+          addressreduc.push({Piso : Datos_Completos[0].Piso});
+          addressreduc.push({Codigo_Postal : Datos_Completos[0].Codigo_Postal});
+          addressreduc.push({Concello : Datos_Completos[0].Concello});
     return {
       ...state,            
-      adress: action.payload,
+      address: action.payload,
+        addressreduc: addressreduc,
     }; 
      
       case FETCH_EXPEDIENTE_SUCCESS:
