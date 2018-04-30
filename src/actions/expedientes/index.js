@@ -1,4 +1,4 @@
-import { getExpedientes, getValidateAdress, getExpediente } from '../../api';
+import { getExpedientes, getValidateAdress, getExpediente, postValidAdress } from '../../api';
 
 import * as types from './types';
 
@@ -63,3 +63,15 @@ export const validateAddress = (id_ubicacion) =>
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+export const postUbicacion = (data) => 
+(dispatch) => {
+    postValidAdress(data).then((response) => {
+        console.log("llega a post");
+        console.log(response);
+        dispatch(fetchAddress(response));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+

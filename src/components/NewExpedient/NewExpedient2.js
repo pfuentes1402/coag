@@ -7,8 +7,10 @@ import PropTypes from 'prop-types';
 import "./NewExpedient.css";
 import { Divider } from "material-ui";
 import { connect } from 'react-redux';
+import CatastroForm from './CatastroForm';
+import { formValueSelector } from 'redux-form'; 
 
-import {validateAddress} from '../../actions/expedientes';
+import {validateAddress, postUbicacion} from '../../actions/expedientes';
 
 
 const validate = values => {
@@ -278,7 +280,7 @@ componentWillMount(){
   }
 }*/
 let SyncValidationForm = props => {
-  const { handleSubmit, pristine, reset, submitting, validateAddress, catastro  } = props;
+  const { handleSubmit, pristine, reset, submitting, validateAddress, catastro, Refcatastral  } = props;
 
   return (
     <Container className="margen">
@@ -347,107 +349,13 @@ let SyncValidationForm = props => {
               </Col>
               <Col sm="3" className="center-align">
                 <Button color="primary"
-                onClick={() => validateAddress('9872023VH5797S0001WX')}
+                onClick={(e) => validateAddress('9872023VH5797S0001WX')}
                 >Validar</Button>
               </Col>
             </Row>
             <TablaCatastro data={catastro}/>
-
-            <div className="ubicacion">
-              <Row>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Calle"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="Calle"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Num"
-                      type="text"
-                      htmlFor="NumeroInput"
-                      component={renderField}
-                      label="Num"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Piso"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="Piso"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="CP"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="código postal"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Municipio"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="Municipio"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Region"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="Región"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Pais"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="País"
-                    />
-                  </div>
-                </Col>
-                <Col sm="4">
-                  <div className="inputDiv">
-                    <Field
-                      name="Alias"
-                      type="text"
-                      htmlFor="inputUbicacion"
-                      component={renderField}
-                      label="Alias dirección"
-                    />
-                    <p>
-                      Introducir un alias para la dirección en caso que (...)
-                    </p>
-                  </div>
-                </Col>
-              </Row>
-            </div>
+            <CatastroForm />
+          
             <div>
               <div>
               <Button
@@ -501,6 +409,12 @@ let SyncValidationForm = props => {
 //   warn, // <--- warning function given to redux-form
 // })(SyncValidationForm);
 
+const selector = formValueSelector('syncValidation');
+
+CatastroForm.defaultProps = {
+  Refcatastral:'',
+};
+
 SyncValidationForm = reduxForm({
     form: 'syncValidation', // a unique identifier for this form
     validate,
@@ -510,9 +424,12 @@ SyncValidationForm = reduxForm({
 SyncValidationForm = connect(
     state => ({
         catastro: state.expedientes.addressreduc,
-        initialValues: state.expedientes.addressreduc[0], // pull initial values from account reducer
+        
+        //initialValues: state.expedientes.addressreduc, // pull initial values from account reducer
     }),
-    { validateAddress: validateAddress } // bind account loading action creator
+    { validateAddress: validateAddress,
+      postUbicacion: postUbicacion,
+     } // bind account loading action creator
 )(SyncValidationForm)
 
 

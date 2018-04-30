@@ -42,3 +42,42 @@ export const getExpediente = id_expediente =>
 
       return ordenado;
     });
+
+
+   
+
+    export const postValidAdress = ()=> 
+
+
+ 
+    fetch(`${BASE_PATH}/expedientes/`, {
+      
+      method:'POST',     
+      body: JSON.stringify({"Fecha_Entrada": "2018-03-16T13:21:37.443",      
+              "Titulo":"Vivienda",
+              "Expediente_Codigo_Estudio": "Test_18_149",  
+              "Antecedente": "",
+              "Observaciones": "",
+              "Emplazamientos": [
+              {"Calle": "LUGAR ARIÑO Polígono 0 Parcela 1 NC",  
+                "Piso":"",
+                  "Numero":"",
+                "Id_Concello":15086,    
+                "Codigo_Postal":"",  
+                  "Georeferencia":""
+                }
+                ]  
+                ,"IgnorarObservaciones":1
+            }),
+            headers: new Headers({     
+              'Accept': 'application/json',
+              'Content-type': 'application/json'}),      
+           
+     
+    }).then(v => v.json())
+      .then(resultado => {
+
+        return resultado;
+      });
+
+    
