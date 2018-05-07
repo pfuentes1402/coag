@@ -9,6 +9,7 @@ import {fetchExpedientes, fetchExpediente} from '../../actions/expedientes'
 import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import {Divider} from 'material-ui'
+import LastWorks from '../lastWorks/LastWorks';
 
 class MainContent extends Component {
   
@@ -18,6 +19,7 @@ class MainContent extends Component {
             this.props.fetchExpedientes(id_expediente);
             this.props.fetchExpediente(id_expediente);
     }
+   
     
     render() {
 
@@ -30,7 +32,9 @@ class MainContent extends Component {
                         <TreeDocuments data={this.props.arbolCompleto}/>
                     </Col>
                     <Col xs="6" sm="9">
-                       <div className='divizquierda'></div>
+                       <div className='divderecha'></div>
+                      <p>Trabajos recientes</p>
+                      <LastWorks data={this.props.trabajos}/>
                     </Col>                
 
                     </Row>

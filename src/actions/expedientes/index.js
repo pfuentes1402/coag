@@ -20,8 +20,9 @@ export const fetchError = (error) => ({
     payload: error
 });
 
-export const fetchAddress = (response) => ({
-    type: types.FETCH_UBICACION_SUCCESS,
+export const fetchAddress = (response, id_ubicacion) => ({
+    //Todo pasar variable de referencia catastral hasta el reducer
+    type: types.FETCH_UBICACION_SUCCESS,   
     payload: response
 });
 
@@ -53,17 +54,71 @@ export const fetchExpediente = (id_expediente) =>
 };
 
 
+export const fetchExpedientSave = (response) => ({   
+    type: types.FETCH_EXPEDIENTSAVE_TO_STORE,   
+    payload: response
+});
+
+
 
 export const validateAddress = (id_ubicacion) => 
+
 (dispatch) => {
     getValidateAdress(id_ubicacion).then((response) => {
-        dispatch(fetchAddress(response));
+        
+        dispatch(fetchAddress(response, id_ubicacion));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
-export const postUbicacion = (data) => 
+
+export   const postUbicacion = (data)=>
+ dispatch => {
+    console.log("llega a postUbicacion");
+    postValidAdress(data).then((response) => {
+      
+        dispatch(fetchExpedientSave(response));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+    
+};
+
+/*export const saveExpediente = (data) => 
+
+(dispatch) => {
+    console.log("llega a dfdshfdskjghfkjdsh");
+    postValidAdress(data).then((response) => {
+        console.log("llega a post");
+        console.log(response);
+        dispatch(fetchExpedientSave(response));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+
+export const saveExpediente = (data) => 
+
+(dispatch) => {
+    
+    postValidAdress(data).then((response) => {
+        
+        dispatch(fetchExpedientSave(response));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};*/
+
+
+
+
+/*export const handleSubmit = (data) => 
+
+
 (dispatch) => {
     postValidAdress(data).then((response) => {
         console.log("llega a post");
@@ -73,5 +128,15 @@ export const postUbicacion = (data) =>
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})
     );
-};
+};*/
+
+
+
+
+export const saveAdressTostore = (address) => ({
+    type: types.FETCH_SAVE_ADRESS_TO_STORE,
+    payload: address
+});
+
+
 

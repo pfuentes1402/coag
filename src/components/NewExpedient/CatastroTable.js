@@ -14,16 +14,16 @@ class TablaCatastro extends Component {
 
         this.state = {
             columnDefs: [
-                {headerName: "Calle/Lugar", field: "calle", width: 120},
-                {headerName: "Nº", field: "numero", width: 100},
-                {headerName: "Piso", field: "piso", width: 70},
-                {headerName: "CP", field: "cp", width: 100},
+                {headerName: "Calle/Lugar", field: "Calle", width: 120},
+                {headerName: "Nº", field: "Numero", width: 100},
+                {headerName: "Piso", field: "Piso", width: 70},
+                {headerName: "CP", field: "Codigo_Postal", width: 100},
                 {headerName: "Municipio", field: "municipio", width: 100}
             ],
             rowData: [
-                {calle: "Aragón", numero: "", piso: 3, cp: 36202, municipio: "Vigo"}
+                {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Id_Concello: "Vigo"}
             ],
-            ubicacion: [{calle: "", numero: "", piso: "", cp: "", municipio: ""}],
+            ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", municipio: ""}],
         }
     }
 
@@ -33,7 +33,7 @@ class TablaCatastro extends Component {
                 <div 
                   className="ag-theme-balham"
                   style={{ 
-	                height: '63px', 
+	                height: '125px', 
                     width: '492px' ,
                     margin: '20px 0 20px 0'}} 
 		            >
