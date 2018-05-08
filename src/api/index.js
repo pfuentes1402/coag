@@ -59,28 +59,17 @@ export const getExpediente = id_expediente =>
         console.log(resultado);
         return resultado;
       });
+   
 
-    
+      export const getExpedienteGeneral = id_expediente =>
+  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
+    .then(response => {
+      return response.json();
+    }).then(resultado => {
 
-
-     /* export const postValidAdress = data =>
-      fetch(`${BASE_PATH}/expedientes/`, {      
-        method:'POST',     
-        body:data,
-              headers: new Headers({     
-                'Accept': 'application/json',
-                'Content-type': 'application/json'}),
-      })
-        .then(response => {
-          console.log(response);
-          return response.json();
-        })
-        .then(resultado => {
-          
-          return resultado;
-        });*/
-
-
+      return resultado;
+    });
+  
 
 
      /* export const putValidAdress = (data)=>

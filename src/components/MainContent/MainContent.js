@@ -5,11 +5,14 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import './styles.css';
 import TreeDocuments from "../TreeDocuments/TreeDocuments";
-import {fetchExpedientes, fetchExpediente} from '../../actions/expedientes'
-import { Container, Row, Col } from 'reactstrap';
+import {fetchExpedientes, fetchExpediente} from '../../actions/expedientes';
+import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import {Divider} from 'material-ui'
 import LastWorks from '../lastWorks/LastWorks';
+import ListWorks from '../ListWorks/ListWorks';
+import OverViewComponent from '../OverViewComponent/OverViewComponent';
+import {getExpedienteGeneral} from '../../api/index';
 
 class MainContent extends Component {
   
@@ -18,6 +21,8 @@ class MainContent extends Component {
             let id_expediente='688685';
             this.props.fetchExpedientes(id_expediente);
             this.props.fetchExpediente(id_expediente);
+            console.log("Gooooo");
+            console.log(getExpedienteGeneral(703094));
     }
    
     
@@ -28,15 +33,27 @@ class MainContent extends Component {
             <div>
                 <Container className="full">
                     <Row className="principal">
-                    <Col xs="6" sm="3">
-                        <TreeDocuments data={this.props.arbolCompleto}/>
-                    </Col>
-                    <Col xs="6" sm="9">
-                       <div className='divderecha'></div>
-                      <p>Trabajos recientes</p>
-                      <LastWorks data={this.props.trabajos}/>
-                    </Col>                
-
+                        <Col xs="6" sm="2">                            
+                             <TreeDocuments data={this.props.arbolCompleto}/>                            
+                        </Col>                        
+                        <Col xs="6" sm="6">
+                            <div className='divderecha'>   
+                                <Card>
+                                    <CardHeader>Ficha expediente</CardHeader>    
+                                        <CardText> <OverViewComponent/> </CardText>
+                                </Card> 
+                            </div>   
+                            <div className='divderecha'>             
+                                    {/*<LastWorks data={this.props.trabajos}/>*/} 
+                                    
+                            </div>
+                        </Col>
+                        <Col xs="6" sm="4">
+                            <div className='divderecha'>
+                                <ListWorks/>
+                            </div>
+                        </Col>     
+                              
                     </Row>
                 </Container>
             </div>

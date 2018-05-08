@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { Field, reduxForm , initialize} from "redux-form";
-import { Container, Row, Col, UncontrolledAlert } from "reactstrap";
+import { Container, Row, Col, UncontrolledAlert, Button } from "reactstrap";
 import TablaCatastro from "./CatastroTable";
-import { Button } from "reactstrap";
 import PropTypes from 'prop-types';
 import "./NewExpedient.css";
 import { Divider , colors} from "material-ui";
@@ -212,8 +211,7 @@ SyncValidationForm = connect(
         catastroSave: state.form.CatastroForm,
         adressaved: state.expedientes.adressValidated,
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 
-        datosNuevoExpediente:state.expedientes.ExpedientNew,
-        
+        datosNuevoExpediente:state.expedientes.ExpedientNew,        
        
     }),
     { validateAddress: validateAddress,

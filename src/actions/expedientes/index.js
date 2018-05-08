@@ -86,52 +86,6 @@ export   const postUbicacion = (data)=>
     
 };
 
-/*export const saveExpediente = (data) => 
-
-(dispatch) => {
-    console.log("llega a dfdshfdskjghfkjdsh");
-    postValidAdress(data).then((response) => {
-        console.log("llega a post");
-        console.log(response);
-        dispatch(fetchExpedientSave(response));
-    })
-        .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    );
-};
-
-export const saveExpediente = (data) => 
-
-(dispatch) => {
-    
-    postValidAdress(data).then((response) => {
-        
-        dispatch(fetchExpedientSave(response));
-    })
-        .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    );
-};*/
-
-
-
-
-/*export const handleSubmit = (data) => 
-
-
-(dispatch) => {
-    postValidAdress(data).then((response) => {
-        console.log("llega a post");
-        console.log(response);
-        dispatch(fetchAddress(response));
-    })
-        .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    );
-};*/
-
-
-
 
 export const saveAdressTostore = (address) => ({
     type: types.FETCH_SAVE_ADRESS_TO_STORE,

@@ -1,3 +1,8 @@
+.card-header {
+background-color: white!important;
+font-weight: 600;
+font-size: large;
+}
 .margen{
     padding-top:30px;
     padding-bottom:30px;
@@ -33,7 +38,7 @@
     width:100%;
 }
 .inputDiv input{
-    width:300px;
+    width:200px!important;
     border: none;
     border-bottom: solid 1px #bcc7cd;
     transition: all 0.3s cubic-bezier(.64,.09,.08,1);
@@ -62,4 +67,7 @@
 
 .formularioNuevoExpediente{
     margin-bottom: 0.5em;
+}
+.labelsformulario{
+    font-size: small;
 }
