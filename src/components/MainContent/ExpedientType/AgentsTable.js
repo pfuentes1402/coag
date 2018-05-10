@@ -1,49 +1,54 @@
 import React, { Component } from 'react'
-
+import {CardBody} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
+import "./styles.css";
 
 const propTypes = {
     data: PropTypes.array,
 }
-class TablaCatastro extends Component {
+class AgentsTable extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             columnDefs: [
-                {headerName: "Calle/Lugar", field: "Calle", width: 120},
-                {headerName: "Nº", field: "Numero", width: 100},
-                {headerName: "Piso", field: "Piso", width: 70},
-                {headerName: "CP", field: "Codigo_Postal", width: 100},
-                {headerName: "Municipio", field: "Concello", width: 100}
+                {headerName: "NIF", field: "nif", width: 55},                
+                {headerName: "NOMBRE", field: "Id_Colegiado", width: 140},
+                {headerName: "%", field: "porcentage", width: 110},
+                          
             ],
             rowData: [
-                {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Concello: "Vigo"}
+                {nif: "76900827M", nombre: "Manuel", porcentage: '30%'}
             ],
-            ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", Concello: ""}],
+            trabajo:[
+                {nif: "", Id_Colegiado: "", porcentage: ""}
+            ],
         }
     }
 
 
     render() {
         return (
+            <CardBody  className="card-body-Trabajos">
                 <div 
                   className="ag-theme-balham"
                   style={{ 
 	                height: '125px', 
-                    width: '492px' ,
-                    margin: '20px 0 20px 0'}} 
+                    width: '570px' ,
+                    margin: '20px 26px 20px 26px'}} 
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.data}>
                     </AgGridReact>
                 </div>
+                </CardBody>
             );
     }
 }
-TablaCatastro.propTypes = propTypes;
-export default TablaCatastro;
+AgentsTable.propTypes = propTypes;
+
+export default AgentsTable;

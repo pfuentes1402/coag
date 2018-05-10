@@ -1,0 +1,15 @@
+.ag-theme-balham .ag-header-cell, .ag-theme-balham .ag-header-group-cell{
+    line-height: 32px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.ag-theme-balham .ag-header{
+    background-color: #fafafa!important;
+}
+.card-body-Trabajos{
+    padding: 0px!important;
+  
+}
+.card-Trabajos{
+    max-width: fit-content;
+}

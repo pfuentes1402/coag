@@ -6,6 +6,7 @@ import MainContent from '../components/MainContent/MainContent';
 import { withStyles } from 'material-ui/styles';
 import {Grid} from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import "./styles.css";
 
 import { fetchExpedientes } from '../actions/expedientes/';
 import { fetchExpediente } from '../actions/expedientes/';

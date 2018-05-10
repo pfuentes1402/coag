@@ -38,7 +38,7 @@ const renderField = ({
               <Col sm="4">
                 <div className="inputDiv">
                 <Field
-                    name="calle"
+                    name="Calle"
                     type="text"
                     htmlFor="calleInput"
                     component={renderField}
@@ -49,7 +49,7 @@ const renderField = ({
               <Col sm="4">
                 <div className="inputDiv">
                   <Field
-                    name="numero"
+                    name="Numero"
                     type="text"
                     htmlFor="NumeroInput"
                     component={renderField}
@@ -71,7 +71,7 @@ const renderField = ({
               <Col sm="4">
                 <div className="inputDiv">
                   <Field
-                    name="cp"
+                    name="Codigo_Postal"
                     type="text"
                     htmlFor="inputUbicacion"
                     component={renderField}
@@ -82,7 +82,7 @@ const renderField = ({
               <Col sm="4">
                 <div className="inputDiv">
                   <Field
-                    name="municipio"
+                    name="Id_Concello"
                     type="text"
                     htmlFor="inputUbicacion"
                     component={renderField}
@@ -112,6 +112,7 @@ const renderField = ({
                   />
                 </div>
               </Col>
+             
               <Col sm="4">
                 <div className="inputDiv">
                   <Field
@@ -124,6 +125,15 @@ const renderField = ({
                   <p>
                     Introducir un alias para la dirección en caso que (...)
                   </p>
+                </div>
+              </Col>
+              <Col sm="4">
+                <div className="inputDiv">
+                  <Field
+                    name="RefCatastral"
+                    type="hidden"                  
+                    component={renderField}                  
+                  />
                 </div>
               </Col>
             </Row>
@@ -139,17 +149,20 @@ const renderField = ({
         "municipio": ""
       }
     };
+    
 
 CatastroForm = reduxForm({
   form: 'CatastroForm', // a unique identifier for this form
-  
+  enableReinitialize: true,
 })(CatastroForm)
 
 
 CatastroForm = connect(
   (state) => ({
-      catastro: state.expedientes.addressreduc[0],
+     // catastro: state.expedientes.addressreduc[0],
      initialValues:state.expedientes.addressreduc[0],
+     
+     
       // pull initial values from account reducer
   }),{ postUbicacion: postUbicacion }
   // bind account loading action creator

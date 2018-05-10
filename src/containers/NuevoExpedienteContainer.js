@@ -1,22 +1,57 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import NuevoExpediente from '../components/NewExpedient/NewExpedient';
 import NuevoExpediente2 from '../components/NewExpedient/NewExpedient2';
-import { withStyles } from 'material-ui/styles';
-import {Grid} from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
 
-import { validateAddress } from '../actions/expedientes/';
+import moment from 'moment';
+import { validateAddress , postUbicacion } from '../actions/expedientes/';
+import {postValidAdress} from '../api/index';
+
+
+
+
+
+var datosTosave ={};
+
+let dateNow = moment().format('YYYY-MM-DDTHH:MM:SS')
+
+
+ function valoresdesde(values, datab){
+    datosTosave.Fecha_Entrada=dateNow;
+    datosTosave.Titulo=values.titulo;
+    datosTosave.Expediente_Codigo_Estudio=values.estudio;
+    datosTosave.Antecedente=values.antecedente;
+    datosTosave.Observaciones=values.Observaciones;
+    datosTosave.Emplazamientos=datab;
+    datosTosave.IgnorarObservaciones=1;  
+    console.log(JSON.stringify(datosTosave));   
+   // saveExpediente(JSON.stringify(datosTosave));
+    console.log("datostosave");
+    //postUbicacion(datosTosave);
+    //postValidAdress(JSON.stringify(datosTosave));
+    //postUbicacion(datosTosave); 
+    return JSON.stringify(datosTosave);
+
+}
 
 
 class NuevoExpedienteContainer extends Component {
+    
+ 
 
     render() {
         return (
             <div className="nuevoExpedienteContainer">
-               <NuevoExpediente2/>                                
+               <NuevoExpediente2 onSubmit={data => {let test = valoresdesde(data, this.props.direcciones)
+                
+                this.props.postUbicacion(test)} 
+                
+              }/>                            
+                   
+                          
+                   
+
+                                                           
             </div>
         );
     }
@@ -27,9 +62,11 @@ NuevoExpedienteContainer.propTypes = {
   };
 
 const mapStateToProps = state => ({
+    direcciones:state.expedientes.adressValidated,
   });
 
 const mapDispatchToProps = {
-	validateAddress
+    validateAddress,   
+    postUbicacion
 };
-export default connect(mapStateToProps, mapDispatchToProps)(NuevoExpedienteContainer);
+export default  connect(mapStateToProps, mapDispatchToProps)(NuevoExpedienteContainer);

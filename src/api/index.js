@@ -20,8 +20,22 @@ export const getExpedientes = id_expediente =>
       return ordenado;
     });
 
+    export const getExpedienteDatosGeneral = id_expediente =>
+  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
+    .then(response => {
+      console.log("Inicio del getExpedienteDatosGeneral");
+      return response.json();
+    })
+    .then(resultado => {
+      console.log("Fin del getExpedienteDatosGeneral");
+      console.log(resultado);      
+      return resultado;
+    });
+
 export const getValidateAdress = e =>
+
   fetch(`${BASE_PATH}/DatosCatastro/${e}`)
+  
     .then(response => {
       return response.json();
     })
@@ -42,42 +56,51 @@ export const getExpediente = id_expediente =>
 
       return ordenado;
     });
+  
 
-
-   
-
-    export const postValidAdress = ()=> 
-
-
- 
-    fetch(`${BASE_PATH}/expedientes/`, {
-      
+    export const postValidAdress = data =>
+  
+    fetch(`${BASE_PATH}/expedientes/`, {      
       method:'POST',     
-      body: JSON.stringify({"Fecha_Entrada": "2018-03-16T13:21:37.443",      
-              "Titulo":"Vivienda",
-              "Expediente_Codigo_Estudio": "Test_18_149",  
-              "Antecedente": "",
-              "Observaciones": "",
-              "Emplazamientos": [
-              {"Calle": "LUGAR ARIÑO Polígono 0 Parcela 1 NC",  
-                "Piso":"",
-                  "Numero":"",
-                "Id_Concello":15086,    
-                "Codigo_Postal":"",  
-                  "Georeferencia":""
-                }
-                ]  
-                ,"IgnorarObservaciones":1
-            }),
+      body:data,
             headers: new Headers({     
               'Accept': 'application/json',
-              'Content-type': 'application/json'}),      
-           
-     
+              'Content-type': 'application/json'}),
     }).then(v => v.json())
-      .then(resultado => {
-
+      .then(resultado => {     
+        console.log(resultado);
         return resultado;
       });
+   
 
+export const getExpedienteGeneral = id_expediente =>
+  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
+    .then(response => {
+      return response.json();
+    }).then(resultado => {
+        console.log(resultado);
+      return resultado;
+    });
+  
+
+
+     /* export const putValidAdress = (data)=>
+
+ 
+      fetch(`${BASE_PATH}/expedientes/`, {
+        
+        method:'PUT',     
+        body:data,
+              headers: new Headers({     
+                'Accept': 'application/json',
+                'Content-type': 'application/json'}),      
+             
+       
+      }).then(v => v.json())
+        .then(resultado => {
+          console.log(resultado);
+          return resultado;
+        });*/
+  
+      
     
