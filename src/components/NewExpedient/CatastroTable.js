@@ -18,12 +18,12 @@ class TablaCatastro extends Component {
                 {headerName: "Nº", field: "Numero", width: 100},
                 {headerName: "Piso", field: "Piso", width: 70},
                 {headerName: "CP", field: "Codigo_Postal", width: 100},
-                {headerName: "Municipio", field: "municipio", width: 100}
+                {headerName: "Municipio", field: "Concello", width: 100}
             ],
             rowData: [
-                {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Id_Concello: "Vigo"}
+                {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Concello: "Vigo"}
             ],
-            ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", municipio: ""}],
+            ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", Concello: ""}],
         }
     }
 

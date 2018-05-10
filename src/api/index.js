@@ -20,6 +20,18 @@ export const getExpedientes = id_expediente =>
       return ordenado;
     });
 
+    export const getExpedienteDatosGeneral = id_expediente =>
+  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
+    .then(response => {
+      console.log("Inicio del getExpedienteDatosGeneral");
+      return response.json();
+    })
+    .then(resultado => {
+      console.log("Fin del getExpedienteDatosGeneral");
+      console.log(resultado);      
+      return resultado;
+    });
+
 export const getValidateAdress = e =>
 
   fetch(`${BASE_PATH}/DatosCatastro/${e}`)
@@ -61,12 +73,12 @@ export const getExpediente = id_expediente =>
       });
    
 
-      export const getExpedienteGeneral = id_expediente =>
+export const getExpedienteGeneral = id_expediente =>
   fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
     .then(response => {
       return response.json();
     }).then(resultado => {
-
+        console.log(resultado);
       return resultado;
     });
   

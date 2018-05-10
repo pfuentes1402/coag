@@ -1,4 +1,4 @@
-import { getExpedientes, getValidateAdress, getExpediente, postValidAdress } from '../../api';
+import { getExpedientes, getValidateAdress, getExpediente, postValidAdress, getExpedienteDatosGeneral } from '../../api';
 
 import * as types from './types';
 
@@ -13,6 +13,10 @@ export const fetchSuccess = (expedientes) => ({
 export const fetchSucces = (trabajos) => ({
     type: types.FETCH_EXPEDIENTE_SUCCESS,
     payload: trabajos
+});
+export const fetchSuccesExpediente = (data) => ({
+    type: types.FETCH_EXPEDIENTE_SUCCESS_EXP,
+    payload: data
 });
 
 export const fetchError = (error) => ({
@@ -52,6 +56,21 @@ export const fetchExpediente = (id_expediente) =>
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+export const fetchExpedienteDatosGeneral = (id_expediente) => 
+(dispatch) => {
+    console.log(`dispatch:Llega a fetchExpedienteDatosGeneral_${id_expediente}`);
+    
+    getExpedienteDatosGeneral(id_expediente).then((expedientes) => {
+        
+        dispatch(fetchSuccesExpediente(expedientes));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+
+
+
 
 
 export const fetchExpedientSave = (response) => ({   

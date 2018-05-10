@@ -4,29 +4,27 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
-import "./ListWorks.css";
+import "./styles.css";
 
 const propTypes = {
     data: PropTypes.array,
 }
-class TablaTrabajos extends Component {
+class AgentsTable extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             columnDefs: [
-                {headerName: "Nº", field: "Id_Trabajo", width: 55},                
-                {headerName: "TITULO TRABAJO", field: "Titulo", width: 140},
-                {headerName: "ESTADO", field: "Estado", width: 80},
-                {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
-                {headerName: "F.VIASADO", field: "Fecha_Visado", width: 120},
-                {headerName: "INC", field: "inc", width: 60},             
+                {headerName: "NIF", field: "nif", width: 55},                
+                {headerName: "NOMBRE", field: "Id_Colegiado", width: 140},
+                {headerName: "%", field: "porcentage", width: 110},
+                          
             ],
             rowData: [
-                {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
+                {nif: "76900827M", nombre: "Manuel", porcentage: '30%'}
             ],
             trabajo:[
-                {Id_Trabajo: "", Titulo: "", Estado: "", fecha_entrada:"", fecha_visado: "", inc: ""}
+                {nif: "", Id_Colegiado: "", porcentage: ""}
             ],
         }
     }
@@ -38,9 +36,9 @@ class TablaTrabajos extends Component {
                 <div 
                   className="ag-theme-balham"
                   style={{ 
-	                height: '250px', 
-                    width: '580px',
-                    margin: '0px'}} 
+	                height: '125px', 
+                    width: '570px' ,
+                    margin: '20px 26px 20px 26px'}} 
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
@@ -51,6 +49,6 @@ class TablaTrabajos extends Component {
             );
     }
 }
-TablaTrabajos.propTypes = propTypes;
+AgentsTable.propTypes = propTypes;
 
-export default TablaTrabajos;
+export default AgentsTable;

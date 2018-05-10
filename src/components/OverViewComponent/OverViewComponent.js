@@ -110,9 +110,9 @@ OverViewComponent = reduxForm({
 
 OverViewComponent = connect(
     state => ({
-        initialValues:state.expedientes.ExpedientNew.Expediente  ? state.expedientes.ExpedientNew.Expediente[0]:"",
-        datosNuevoExpediente:state.expedientes.ExpedientNew,        
-        adressaved: state.expedientes.adressValidated,     
+        initialValues:state.expedientes.expedienteData.Expediente  ? state.expedientes.expedienteData.Expediente[0]:"",
+        datosNuevoExpediente:state.expedientes.expedienteData,        
+        //adressaved: state.expedientes.adressValidated,     
        
     }),
     {    
