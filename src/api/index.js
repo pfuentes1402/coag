@@ -1,16 +1,15 @@
-/*const BASE_PATH = 'http://servicios.coag.es/api';
-
-export const getExpedientes = () => fetch(`${BASE_PATH}/EstructuraDocumental/688685/2`).then((response) =>{
-  var exp = response.json();
-  return exp;
-});*/
-
 import ordertree from "../helpers/orderTree";
-import expedientetree from "../helpers/expedientetree";
 const BASE_PATH = "http://servicios.coag.es/api";
 
-export const getExpedientes = id_expediente =>
-  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/2`)
+/*
+ *Proporciona la extructura documental de un trabajo
+ * Parametros 
+ *    id_expediente
+ *    idtrabajo
+ */
+
+export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
+  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
     .then(response => {
       return response.json();
     })
@@ -19,22 +18,33 @@ export const getExpedientes = id_expediente =>
 
       return ordenado;
     });
+/*
+ *Proporciona los datos generales de un expediente
+ * Parametros 
+ *    id_expediente
+ */
+
 
     export const getExpedienteDatosGeneral = id_expediente =>
   fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
     .then(response => {
-      console.log("Inicio del getExpedienteDatosGeneral");
+     
       return response.json();
     })
     .then(resultado => {
-      console.log("Fin del getExpedienteDatosGeneral");
-      console.log(resultado);      
+           
       return resultado;
     });
 
-export const getValidateAdress = e =>
+/*
+ *Valida una dirección a traves de su referencia catastral
+ * Parametros 
+ *    ref_catastral
+ */
 
-  fetch(`${BASE_PATH}/DatosCatastro/${e}`)
+export const getValidateAddress = ref_catastral =>
+
+  fetch(`${BASE_PATH}/DatosCatastro/${ref_catastral}`)
   
     .then(response => {
       return response.json();
@@ -44,21 +54,12 @@ export const getValidateAdress = e =>
       return resultado;
     });
 
-export const getExpediente = id_expediente =>
-  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}`)
-    .then(response => {
-
-      return response.json();
-    }).then(resultado => {
-
-      let query='Trabajos'
-      let ordenado = expedientetree(resultado.Trabajos);
-
-      return ordenado;
-    });
-  
-
-    export const postValidAdress = data =>
+/*
+ *Graba un nuevo expediente
+ * Parametros 
+ *    data->Datos que conforman un nuevo expediente
+*/
+    export const postNuevoExpediente = data =>
   
     fetch(`${BASE_PATH}/expedientes/`, {      
       method:'POST',     
@@ -68,23 +69,16 @@ export const getExpediente = id_expediente =>
               'Content-type': 'application/json'}),
     }).then(v => v.json())
       .then(resultado => {     
-        console.log(resultado);
+        
         return resultado;
       });
-   
-
-export const getExpedienteGeneral = id_expediente =>
-  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
-    .then(response => {
-      return response.json();
-    }).then(resultado => {
-        console.log(resultado);
-      return resultado;
-    });
-  
-
-
-     /* export const putValidAdress = (data)=>
+      
+/*
+ *Edita un expediente expediente
+ * Parametros 
+ *    data->Datos que conforman  el expediente
+*/
+ export const putExpediente = (data)=>
 
  
       fetch(`${BASE_PATH}/expedientes/`, {
@@ -98,9 +92,9 @@ export const getExpedienteGeneral = id_expediente =>
        
       }).then(v => v.json())
         .then(resultado => {
-          console.log(resultado);
+        
           return resultado;
-        });*/
+        });
   
       
     

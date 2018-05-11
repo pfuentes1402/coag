@@ -8,8 +8,8 @@ import {Grid} from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import "./styles.css";
 
-import { fetchExpedientes } from '../actions/expedientes/';
-import { fetchExpediente } from '../actions/expedientes/';
+import { fetchEstructuraDocumental } from '../actions/expedientes/';
+
 
 class HomeContainer extends Component {
   
@@ -25,7 +25,7 @@ class HomeContainer extends Component {
 HomeContainer.propTypes = {
     expedientes: PropTypes.array.isRequired,
     loading: PropTypes.bool,
-    fetchExpedientes: PropTypes.func.isRequired,
+    fetchEstructuraDocumental: PropTypes.func.isRequired,
     fetchExpediente: PropTypes.func.isRequired,
   };
   
@@ -34,13 +34,13 @@ HomeContainer.propTypes = {
   };
 
 const mapStateToProps = state => ({
-    expedientes: state.expedientes.arbolCompleto,
+    expedientes: state.expedientes.arbolEstructuraDocumentalTrabajo,
     trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
   });
 
 const mapDispatchToProps = {
-    fetchExpedientes,
-    fetchExpediente
+    fetchEstructuraDocumental,
+    
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

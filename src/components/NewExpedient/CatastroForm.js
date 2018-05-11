@@ -159,8 +159,8 @@ CatastroForm = reduxForm({
 
 CatastroForm = connect(
   (state) => ({
-     // catastro: state.expedientes.addressreduc[0],
-     initialValues:state.expedientes.addressreduc[0],
+     // catastro: state.expedientes.addressreducida[0],
+     initialValues:state.expedientes.addressreducida[0],
      
      
       // pull initial values from account reducer

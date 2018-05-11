@@ -12,62 +12,45 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 
 const initialState = [];
-
-const initialStateb = [];
-const initialStatec = [];
-const initialstated =[];
-const initialstatee =[];
-
-
-const reducer = (state = {arbolCompleto : initialState, loading : true, address: '',
- trabajos: initialState,addressreduc:initialStatec, adressValidated : initialstated, ExpedientNew:initialstatee,expedienteData:initialState}, action) => {
+const reducer = (state = {arbolEstructuraDocumentalTrabajo : [], loading : true, address: '',
+ trabajos: [],addressreducida:[], adressValidated : [], ExpedientNew:[],expedienteData:[]}, action) => {
  
   switch (action.type) {
-    case FETCH_EXPEDIENTES_SUCCESS: {
-    return {
-      ...state,            
-      arbolCompleto: action.payload,
-    };    
-  }
+    case FETCH_EXPEDIENTES_SUCCESS: 
+      return {
+        ...state,            
+        arbolEstructuraDocumentalTrabajo: action.payload,
+      };    
+    
     case FETCH_EXPEDIENTES_ERROR:
       return initialState;
 
-      case FETCH_UBICACION_SUCCESS:
+    case FETCH_UBICACION_SUCCESS:
 
-
-      const {Datos_Completos} = action.payload;
-
-      const addressreduc=[
-          {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
-              Piso: Datos_Completos[0].Piso, Codigo_Postal: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello, Id_Concello:Datos_Completos[0].Id_Concello, Georeferencia:""}
-      ];
-          console.log(addressreduc);
-    return {
-      ...state,            
-      address: action.payload,
-        addressreduc: addressreduc,
-    }; 
-     
-      case FETCH_EXPEDIENTE_SUCCESS:
+        const {Datos_Completos} = action.payload;
+        const addressreducida=[
+            {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
+                Piso: Datos_Completos[0].Piso, Codigo_Postal: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello, Id_Concello:Datos_Completos[0].Id_Concello, Georeferencia:""}
+        ];
+         
       return {
-        ...state,            
-        trabajos: action.payload,
-      };
-      case FETCH_EXPEDIENTSAVE_TO_STORE:
+            ...state,            
+            address: action.payload,
+            addressreducida: addressreducida,
+          }; 
+    
+    case FETCH_EXPEDIENTSAVE_TO_STORE:
       return {
         ...state,            
         ExpedientNew: action.payload,
       };  
-      case FETCH_SAVE_ADRESS_TO_STORE:
-
-      console.log( action.payload);     
+    case FETCH_SAVE_ADRESS_TO_STORE:       
       return {
         ...state,
         adressValidated: state.adressValidated.concat([action.payload]) ,
       }  
-      case FETCH_EXPEDIENTE_SUCCESS_EXP:
-      console.log( "payload de FETCH_EXPEDIENTE_SUCCESS_EXP");     
-      console.log( action.payload);     
+    case FETCH_EXPEDIENTE_SUCCESS_EXP:
+       
         return {
           ...state,
           expedienteData: action.payload ,

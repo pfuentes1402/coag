@@ -207,7 +207,7 @@ SyncValidationForm = reduxForm({
 
 SyncValidationForm = connect(
     state => ({
-        catastro: state.expedientes.addressreduc,
+        catastro: state.expedientes.addressreducida,
         catastroSave: state.form.CatastroForm,
         adressaved: state.expedientes.adressValidated,
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 

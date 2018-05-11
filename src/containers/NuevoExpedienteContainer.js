@@ -5,7 +5,7 @@ import NuevoExpediente2 from '../components/NewExpedient/NewExpedient2';
 
 import moment from 'moment';
 import { validateAddress , postUbicacion } from '../actions/expedientes/';
-import {postValidAdress} from '../api/index';
+import {postNuevoExpediente} from '../api/index';
 
 
 
@@ -28,7 +28,7 @@ let dateNow = moment().format('YYYY-MM-DDTHH:MM:SS')
    // saveExpediente(JSON.stringify(datosTosave));
     console.log("datostosave");
     //postUbicacion(datosTosave);
-    //postValidAdress(JSON.stringify(datosTosave));
+    //postNuevoExpediente(JSON.stringify(datosTosave));
     //postUbicacion(datosTosave); 
     return JSON.stringify(datosTosave);
 

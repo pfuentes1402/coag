@@ -5,7 +5,7 @@ import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import './styles.css';
 import TreeDocuments from "../TreeDocuments/TreeDocuments";
-import {fetchExpedientes, fetchExpediente, fetchExpedienteDatosGeneral} from '../../actions/expedientes';
+import { fetchEstructuraDocumental, fetchExpedienteDatosGeneral} from '../../actions/expedientes';
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import {Divider} from 'material-ui'
@@ -21,8 +21,9 @@ class MainContent extends Component {
 
     componentDidMount(){
             let id_expediente='688685';
-            this.props.fetchExpedientes(id_expediente);
-            this.props.fetchExpediente(id_expediente);
+            let idtrabajo = '2';
+            this.props.fetchEstructuraDocumental(id_expediente, idtrabajo);
+            //this.props.fetchExpediente(id_expediente);
             console.log("Gooooo");
             this.props.fetchExpedienteDatosGeneral(id_expediente)
            
@@ -38,7 +39,7 @@ class MainContent extends Component {
                 <Container className="full">
                     <Row className="principal">
                         <Col xs="6" sm="2">                            
-                             <TreeDocuments data={this.props.arbolCompleto}/>                            
+                             <TreeDocuments data={this.props.arbolEstructuraDocumentalTrabajo}/>                            
                         </Col>                        
                         <Col xs="6" sm="5">
                             <div className='divderecha'>   
@@ -78,20 +79,20 @@ class MainContent extends Component {
 }
 
 MainContent.propTypes = {
-    arbolCompleto: PropTypes.arrayOf(PropTypes.shape()),
+    arbolEstructuraDocumentalTrabajo: PropTypes.arrayOf(PropTypes.shape()),
     loading: PropTypes.bool
 };
 
 MainContent.defaultProps = {
-    arbolCompleto: [],
+    arbolEstructuraDocumentalTrabajo: [],
     trabajos: [],
     loading: false,
   };
 const mapStateToProps = state => ({
-    arbolCompleto: state.expedientes.arbolCompleto,
+    arbolEstructuraDocumentalTrabajo: state.expedientes.arbolEstructuraDocumentalTrabajo,
     trabajos: state.expedientes.trabajos,
     loading:state.expedientes.loading
    
   });
 
-export default connect(mapStateToProps,{fetchExpedientes, fetchExpediente, fetchExpedienteDatosGeneral})(MainContent);
+export default connect(mapStateToProps,{fetchEstructuraDocumental, fetchExpedienteDatosGeneral})(MainContent);
