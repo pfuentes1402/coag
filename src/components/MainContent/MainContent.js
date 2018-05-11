@@ -21,7 +21,7 @@ class MainContent extends Component {
 
     componentDidMount(){
             let id_expediente='688685';
-            //this.props.fetchExpedientes(id_expediente);
+            this.props.fetchExpedientes(id_expediente);
             this.props.fetchExpediente(id_expediente);
             console.log("Gooooo");
             this.props.fetchExpedienteDatosGeneral(id_expediente)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {CardBody} from 'reactstrap';
+import {CardBody, CardText} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
@@ -33,6 +33,8 @@ class AgentsTable extends Component {
     render() {
         return (
             <CardBody  className="card-body-Trabajos">
+            <CardText>
+
                 <div 
                   className="ag-theme-balham"
                   style={{ 
@@ -45,6 +47,7 @@ class AgentsTable extends Component {
                         rowData={this.props.data}>
                     </AgGridReact>
                 </div>
+                </CardText>
                 </CardBody>
             );
     }

@@ -8,7 +8,7 @@ class ExpedientContainer extends Component {
         return (
             <div>
                  <Card>
-                   <CardHeader><span>{this.props.titulo}</span></CardHeader>    
+                   <CardHeader>{this.props.titulo}</CardHeader>    
                         <CardText> <AgentsTable data={this.props.propietarios}/> </CardText>
                 </Card> 
             </div>
@@ -32,4 +32,4 @@ const mapStateToProps = state => ({
    
   });
 
-export default connect(mapStateToProps,)(ExpedientContainer);
+export default connect(mapStateToProps)(ExpedientContainer);
