@@ -5,6 +5,7 @@ import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
 import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
+import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
 
 
 
@@ -57,7 +58,11 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
             address: action.payload,
             addressreducida: addressreducida,
           }; 
-    
+    case SET_EXPEDIENTE_SELECTED_DATOS:
+          return{
+            ...state,
+            selectedData: action.payload,
+          };
     case FETCH_EXPEDIENTSAVE_TO_STORE:
     const { Id_Trabajo, Titulo } = action.payload;
     console.log("************************************************");

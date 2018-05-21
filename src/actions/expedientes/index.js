@@ -163,10 +163,12 @@ export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) =>
 
 
 const setExpediente = payload => ({ type: types.SET_EXPEDIENTE_SELECTED, payload });
+const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_DATOS, payload });
 
 export const setSelectedExpediente = payload => {
           return dispatch =>{
             dispatch(setExpediente(payload));
+            dispatch(setExpedienteSelected(payload));
           }
        
     

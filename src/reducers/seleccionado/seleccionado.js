@@ -1,18 +1,18 @@
 
-import { SET_EXPEDIENTE_SELECTED } from "../../actions/expedientes/types";
+import { SET_EXPEDIENTE_SELECTED_DATOS } from "../../actions/expedientes/types";
 
 
 const seleccionado = (state = {}, action) => {
  
   switch (action.type) {
 
-    case SET_EXPEDIENTE_SELECTED:
+    case SET_EXPEDIENTE_SELECTED_DATOS:
       console.log("SET_EXPEDIENTE");
       console.log("payload");
-      const {  Fecha_Entrada } = action.payload;
-      const {data} = action.payload;
+      const {  Fecha_Entrada, Id_Expediente, Id_Trabajo } = action.payload;
+    
       return {
-        ...state, [Fecha_Entrada ]: { ...state[Fecha_Entrada], selectedData: action.payload, expedienteDataDate: new Date() }
+        ...state, [Id_Expediente+'-'+Id_Trabajo ]: { ...state[Fecha_Entrada], selectedData: action.payload, expedienteDataDate: new Date() }
         };
         default:
         return state;
