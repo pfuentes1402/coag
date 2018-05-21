@@ -3,13 +3,18 @@ import { Card,  CardHeader, CardText } from 'reactstrap';
 import AgentsTable from './ExpedientType/AgentsTable';
 import { connect } from 'react-redux';
 
+
 class ExpedientContainer extends Component {
+
+
     render() {
+        console.log("data");
+        console.log(this.props.datosAgentes);
         return (
             <div>
                  <Card>
-                   <CardHeader>{this.props.titulo}</CardHeader>    
-                        <CardText> <AgentsTable data={this.props.propietarios}/> </CardText>
+                   <CardHeader>{this.props.titulo}</CardHeader>                
+                        <CardText> <AgentsTable data={ this.props.datosAgentes}/> </CardText>
                 </Card> 
             </div>
         );
@@ -24,12 +29,13 @@ ExpedientContainer.propTypes = {
 };
 
 ExpedientContainer.defaultProps = {
-    propietarios: [],   
+    
     loading: false
   };
 const mapStateToProps = state => ({
-    propietarios:state.expedientes.expedienteData ? state.expedientes.expedienteData.ExpedientePropietarios:""
+    //datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:""
    
   });
+ 
 
-export default connect(mapStateToProps)(ExpedientContainer);
+export default connect(mapStateToProps,)(ExpedientContainer);
