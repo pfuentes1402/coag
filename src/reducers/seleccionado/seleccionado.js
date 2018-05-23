@@ -1,4 +1,4 @@
-
+import { createSelector } from 'reselect';
 import { SET_EXPEDIENTE_SELECTED_DATOS } from "../../actions/expedientes/types";
 
 
@@ -18,5 +18,6 @@ const seleccionado = (state = {}, action) => {
         return state;
     }
 }
+
 
 export default seleccionado;

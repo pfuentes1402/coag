@@ -38,8 +38,7 @@ import ExpedienteLevel from './ExpedienteLevel';
 
 const Componentelateral = ({trabajos, onSelectedLevel})=>{
     const handleClickLateral = trabajo =>{
-        console.log("Clic desde ---------------Componente Lateral");
-        console.log(trabajo);
+      
         onSelectedLevel(trabajo);
     };
 

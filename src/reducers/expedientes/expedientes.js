@@ -1,3 +1,4 @@
+
 import { FETCH_UBICACION_SUCCESS } from "../../actions/expedientes/types";
 import { FETCH_SAVE_ADRESS_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTSAVE_TO_STORE } from "../../actions/expedientes/types";
@@ -6,6 +7,8 @@ import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
+import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO} from "../../actions/expedientes/types";
+
 
 
 
@@ -19,7 +22,7 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 const initialState = [];
 const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
  trabajos: {},addressreducida:{}, adressValidated : {}, ExpedientNew:{},expedienteData:{}, datosAgentes:{},
-  datosTrabajo:{},arbolEstructuraTrabajoRefactor:{}, selectedData:{}}, action) => {
+  datosTrabajo:{},arbolEstructuraTrabajoRefactor:{}, selectedData:{expedieteotrabajo:{}, trabajoData:{}}}, action) => {
  
   switch (action.type) {
     case FETCH_EXPEDIENTES_SUCCESS: 
@@ -59,16 +62,23 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
             addressreducida: addressreducida,
           }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
+    const {Id_Trabajo} = action.payload;
           return{
             ...state,
             selectedData: action.payload,
+            expedieteotrabajo: Id_Trabajo?'trabajo':'expediente',
+            trabajoData:action.payload,
           };
+          case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
+          console.log("SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO");
+         console.log(action.payload);
+                return{
+                  ...state,
+                 
+                  trabajoData:action.payload,
+                };
     case FETCH_EXPEDIENTSAVE_TO_STORE:
-    const { Id_Trabajo, Titulo } = action.payload;
-    console.log("************************************************");
-    console.log(Id_Trabajo);
-    console.log(Titulo);
-    console.log(action.payload);
+    
       return {
         ...state,            
         ExpedientNew: action.payload,
@@ -127,5 +137,14 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
       return state;
   }
 };
+
+
+
+
+
+
+
+
+
 
 export default expedientes;

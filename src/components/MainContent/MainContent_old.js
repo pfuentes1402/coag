@@ -15,7 +15,7 @@ import OverViewComponent from '../OverViewComponent/OverViewComponent';
 import ExpedientType from '../MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from './ExpedientContainer';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
-import ContenedorCentral from './../../containers/ContenedorCentral'
+import { getInfotopaint } from '../../reducers/expedientes/expedientes';
 const   id_expediente='688685';
 
 class MainContent extends Component {
@@ -51,13 +51,12 @@ class MainContent extends Component {
        
         handleSelectedExpediente = trabajo => {
             this.props.setSelectedExpediente(trabajo);
-            this.props.setSelectedExpedienteTo(688685,2);
+            this.props.setSelectedExpedienteTo(3,4)
         }
    
     
     render() {
-        console.log("---------------------------");
-console.log(this.props.selectedData);
+     console.log(this.props.selectedData);
         
         return (
            
@@ -68,13 +67,39 @@ console.log(this.props.selectedData);
                         <Componentelateral trabajos={this.props.trabajos}
                         onSelectedLevel={this.handleSelectedExpediente}/>                            
                              {/*<TreeDocuments data={this.props.arbolEstructuraDocumentalTrabajo}/> */ }                         
-                    
                         </Col>
-                        <Col xs="6" sm="10">
-                            <ContenedorCentral contenidoExp ={this.props.selectedData} />
-                        </Col>                   
-
-                    </Row>                    
+                                                                     
+                        <Col xs="6" sm="5">
+                            <div className='divderecha'>                           
+                                <Card>                             
+                                    <CardHeader>Ficha expediente</CardHeader>    
+                                        <CardText> <OverViewComponent/> </CardText>
+                                </Card> 
+                            </div>   
+                            <div className='divderecha'>             
+                                    {/*<LastWorks data={this.props.trabajos}/>*/} 
+                                    
+                            </div>
+                        </Col>
+                        <Col xs="6" sm="5">
+                            <div className='divderecha'>
+                                <ListWorks/>
+                            </div>
+                        </Col>     
+                              
+                    </Row>
+                    <Row>
+                    <Col sm={{ size: '6', offset: 2 }}>
+                            <div className='divderecha'>   
+                                <Card>
+                                    <CardHeader>Tipo de Expediente</CardHeader>    
+                                        <CardText> <ExpedientType/> </CardText>
+                                </Card> 
+                                <ExpedientContainer titulo='Promotores' datosAgentes={this.props.datosAgentes.Arquitectos}/>
+                                <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.datosAgentes.Promotores}/>
+                            </div>   
+                        </Col>
+                    </Row>
                 </Container>
             </div>
         );
@@ -98,9 +123,8 @@ const mapStateToProps = state => ({
     loading:state.expedientes.loading,
     datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:"",
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",
-    
+    selectedData:state.expedientes.selectedData,
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
-    selectedData:state.expedientes.expedieteotrabajo,
     
    
   });
@@ -114,7 +138,4 @@ export default connect(mapStateToProps,{fetchEstructuraDocumental, fetchExpedien
 
 
   
-
     
-    
-  

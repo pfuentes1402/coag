@@ -164,12 +164,29 @@ export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) =>
 
 const setExpediente = payload => ({ type: types.SET_EXPEDIENTE_SELECTED, payload });
 const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_DATOS, payload });
+const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, payload});
 
 export const setSelectedExpediente = payload => {
+    const {id_expediente, id_Trabajo} =payload;
+    console.log("Clic desde ---------------Componente LateralClic desde ---------------Componente Lateral");
+    console.log(payload.id_expediente);
+    console.log(payload);
           return dispatch =>{
             dispatch(setExpediente(payload));
             dispatch(setExpedienteSelected(payload));
           }
        
+    
+};
+export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) => 
+   
+    (dispatch) =>{
+            getTrabajoeDatosGenerales(id_Trabajo,id_expediente).then((data) =>{
+                 dispatch(fetchSuccesTrabajoDatosgeneralesSelected(data));
+                })
+                 .catch(
+              ()=> fetchError({ error: 'Algo ha salido mal'})
+        );
+              
     
 };
