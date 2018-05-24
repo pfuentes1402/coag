@@ -166,6 +166,7 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
   .then(response => {
    
     return response.json();
+
   })
   .then(resultado => {
       

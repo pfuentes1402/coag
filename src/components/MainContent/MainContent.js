@@ -50,8 +50,9 @@ class MainContent extends Component {
         }
        
         handleSelectedExpediente = trabajo => {
+           
             this.props.setSelectedExpediente(trabajo);
-            this.props.setSelectedExpedienteTo(688685,2);
+            this.props.setSelectedExpedienteTo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
         }
    
     

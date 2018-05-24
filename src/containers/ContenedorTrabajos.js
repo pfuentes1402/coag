@@ -13,7 +13,8 @@ import OverViewComponent from '../components/OverViewComponent/OverViewComponent
 
 import ExpedientType from '../components/MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
-import FichaTrabajo from '../components/Trabajos/FichaTrabajo'
+import FichaTrabajo from '../components/Trabajos/FichaTrabajo';
+import TrabajosContainer from '../components/Trabajos/TrabajosContainer';
 
 
 const   id_expediente='688685';
@@ -49,7 +50,7 @@ class ContenedorExpedientes extends Component {
                 <Row className="principal">
                     
                                                                  
-                    <Col xs="6" sm="8">
+                    <Col sm={{ size: '6' }}>
                         <div className='divderecha'>                           
                             <Card>                             
                                 <CardHeader><p>Ficha del trabajo</p></CardHeader>    
@@ -63,7 +64,25 @@ class ContenedorExpedientes extends Component {
                     </Col>
                     <Col xs="6" sm="5">
                         <div className='divderecha'>
-                        
+                        <Row>
+                <Col sm={{ size: '20' }}>
+                        <div className='divderecha'>
+                        <Card>
+                            <CardHeader><p>ARQUITECTOS PROMOTORES Y OTROS AGENTES</p></CardHeader>    
+                                <CardText>
+                                    <p>
+                                        Arquitectos y promotores se deben editar desde la ficha del expediente,
+                                        ya que implican una comunicacion de encargo.
+                                    </p>
+                                        
+                                </CardText><TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
+                               
+                                <CardText><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
+                                <CardText> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
+                        </Card>    
+                        </div>   
+                    </Col>
+                </Row>
                         </div>
                     </Col>     
                           
@@ -95,8 +114,11 @@ const mapStateToProps = state => ({
     loading:state.expedientes.loading,
     datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:"",
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",
+    selectedIdTrabajos:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.selectedData,
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
+    Colegiados:state.expedientes.trabajoData ?state.expedientes.trabajoData.Colegiados:"",
+    Promotores:state.expedientes.trabajoData ?state.expedientes.trabajoData.Promotores:"",   
     
    
   });

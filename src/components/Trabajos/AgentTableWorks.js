@@ -15,17 +15,17 @@ class AgentsTable extends Component {
 
         this.state = {
             columnDefs: [
-                {headerName: "NIF", field: "Nif", width: 100},                
+                {headerName: "Nº COL", field: "Id_Colegiado", width: 100},                
                 {headerName: "NOMBRE", field: "Nombre", width: 180},
                 {headerName: "%", field: "Porcentaje", width: 60},
                 {headerName: "FUNCIÓN", field: "Funcion", width: 80},
                           
             ],
             rowData: [
-                {nif: "76900827M", nombre: "Manuel", porcentage: '30%', Funcion:'DO'}
+                {Id_Colegiado: "76900827M", nombre: "Manuel", porcentage: '30%', Funcion:'DO'}
             ],
             trabajo:[
-                {Nif: "", Nombre: "", Porcentaje: "", Funcion:""}
+                {Id_Colegiado: "", Nombre: "", Porcentaje: "", Funcion:""}
             ],
         }
     }
@@ -34,22 +34,20 @@ class AgentsTable extends Component {
     render() {
         return (
             <CardBody  className="card-body-Trabajos">
-            <CardText>
-
-                <div 
-                  className="ag-theme-balham"
-                  style={{ 
-	                height: '125px', 
-                    width: '550px' ,
-                    margin: '20px 26px 20px 26px'}} 
-		            >
-                    <AgGridReact
-                        columnDefs={this.state.columnDefs}
-                        rowData={this.props.data}>
-                    </AgGridReact>
-                </div>
+                <CardText>
+                    <div 
+                    className="ag-theme-balham"
+                     style={{ 
+                        height: '125px', 
+                        width: '550px' ,
+                        margin: '20px 26px 20px 26px'}}>
+                        <AgGridReact
+                            columnDefs={this.state.columnDefs}
+                            rowData={this.props.data}>
+                        </AgGridReact>
+                    </div>
                 </CardText>
-                </CardBody>
+            </CardBody>
             );
     }
 }

@@ -67,14 +67,15 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
             ...state,
             selectedData: action.payload,
             expedieteotrabajo: Id_Trabajo?'trabajo':'expediente',
-            trabajoData:action.payload,
+            //trabajoData:action.payload,
           };
           case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
           console.log("SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO");
          console.log(action.payload);
+         const {  Fecha_Entrada,Id_Expediente } = action.payload.Trabajos[0];
                 return{
                   ...state,
-                 
+                 // [Id_Expediente+'-'+Fecha_Entrada ]: { ...state[Fecha_Entrada], trabajoData: action.payload }
                   trabajoData:action.payload,
                 };
     case FETCH_EXPEDIENTSAVE_TO_STORE:

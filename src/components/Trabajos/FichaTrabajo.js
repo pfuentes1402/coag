@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Container, Row, Col,  CardBody, CardTitle} from "reactstrap";
-import {Divider, Input} from 'material-ui';
+import {Divider, Input, Card, CardHeader} from 'material-ui';
 import { Field, reduxForm , initialize} from "redux-form";
 import { connect } from 'react-redux';
+import  ExpedientContainer from '../../components/MainContent/ExpedientContainer';
 
 
 import './styles.css';
@@ -29,38 +30,39 @@ const renderField = ({
   );
 
   let FichaTrabajo = props => {
-    const { selectedData } = props;
+    const {Promotores, Colegiados } = props;
   
     return (
         <CardBody>
           <Container className="Contenedor">
             <form>
                 <Row>
-                    <Col>       
-                       
+                        
                         <Row>
-                        <Col sm={{ size: 5}}>
-                            <div className="inputDiv">
-                                <Field
-                                    name="Expediente_Codigo_Estudio"
-                                    type="text"
-                                    component={renderField}
-                                    label="Titulo complementario"
-                                    readOnly="readonly"
-                                />
-                            </div>
-                        </Col>
-                        <Col sm={{ size: 3, offset: 2}}>
-                            <div className="inputDiv">
-                                <Field
-                                    name="Fecha_Entrada"
-                                    type="text"
-                                    component={renderField}
-                                    label="Fecha Entrada"
-                                    readOnly="readonly"
-                                />
-                            </div>
-                        </Col>
+                            <Col sm={{ size: 5}}>
+                                <div className="inputDiv">
+                                    <Field
+                                        name="Expediente_Codigo_Estudio"
+                                        type="text"
+                                        component={renderField}
+                                        label="Titulo complementario"
+                                        readOnly="readonly"
+                                    />
+                                </div>
+                            </Col>
+                            <Col sm={{ size: 3, offset: 2}}>
+                                <div className="inputDiv">
+                                    <Field
+                                        name="Fecha_Entrada"
+                                        type="text"
+                                        component={renderField}
+                                        label="Fecha Entrada"
+                                        readOnly="readonly"
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        
                         <Row>
                             <Col sm={{ size: 5}}>
                                 <div className="inputDiv">
@@ -84,11 +86,10 @@ const renderField = ({
                                     />
                                 </div>
                             </Col>
-                        </Row>
-                        </Row>
-                            
-                    </Col>
+                        </Row>      
+                   
                 </Row>
+               
             </form>
             </Container>
             </CardBody>
@@ -104,9 +105,9 @@ const renderField = ({
 
 FichaTrabajo = connect(
     state => ({
-        initialValues:state.expedientes.selectedData ? state.expedientes.selectedData:"",
+        initialValues:state.expedientes.trabajoData ? state.expedientes.trabajoData.Trabajos[0]:"",
         enableReinitialize:true,
-        selectedData:state.expedientes.selectedData,        
+           
         //adressaved: state.expedientes.adressValidated,     
        
     }),
