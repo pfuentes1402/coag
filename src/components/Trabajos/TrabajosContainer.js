@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 
 class TrabajosContainer extends Component {
 
-
-    render() {
-      
+    render() {      
         return (
             <div>
                  <Card>
@@ -22,10 +20,6 @@ class TrabajosContainer extends Component {
 
 
 
-
-TrabajosContainer.propTypes = {
-    
-};
 
 TrabajosContainer.defaultProps = {
     

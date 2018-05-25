@@ -24,8 +24,7 @@ class ContenedorExpedientes extends Component {
     componentDidMount(){
        
         let idtrabajo = this.props.selectedData.id_Trabajo;
-      console.log(idtrabajo);
-        
+ 
       
         this.props.fetchExpedienteDatosGeneral(id_expediente);           
        // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     

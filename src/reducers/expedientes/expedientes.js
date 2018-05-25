@@ -26,15 +26,13 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
  
   switch (action.type) {
     case FETCH_EXPEDIENTES_SUCCESS: 
-    console.log("FETCH_EXPEDIENTES_SUCCESS");
-    console.log(action.payload);
+ 
       return {
         ...state,            
         arbolEstructuraDocumentalTrabajo: action.payload,
       };   
       case FETCH_DATAFORTREETRABAJO_SUCCESS: 
-      console.log("datafortree");
-      console.log(action.payload);
+ 
     
       //TODO: Ver como grabar esto dento de cada trabajo, para tewner ahi su estructura documental
       return {
@@ -70,8 +68,7 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
             //trabajoData:action.payload,
           };
           case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
-          console.log("SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO");
-         console.log(action.payload);
+         
          const {  Fecha_Entrada,Id_Expediente } = action.payload.Trabajos[0];
                 return{
                   ...state,
@@ -96,8 +93,8 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
           expedienteData: action.payload ,
         }
     /*case SET_EXPEDIENTE_SELECTED:
-      console.log("SET_EXPEDIENTE");
-      console.log("payload");
+      
+      
       const {  Fecha_Entrada } = action.payload;
       const {data} = action.payload;
       return {

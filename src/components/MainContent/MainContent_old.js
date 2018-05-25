@@ -41,10 +41,7 @@ class MainContent extends Component {
            // this.props.trabajos.map(x =>this.props.fetchEstructuraDocumentalTrabajo(x.Id_Expediente,x.Id_Trabajo)); 
            let id_e = this.props.selectedIdexpediente;
            let id_t = this.props.selectedIdTrabajo;
-           console.log("-------------------------------------");
-           console.log(id_e);
-           console.log(id_t);
-
+         
            //this.props.fetchEstructuraDocumental(id_e, id_t);         
            
         }
@@ -56,7 +53,7 @@ class MainContent extends Component {
    
     
     render() {
-     console.log(this.props.selectedData);
+     
         
         return (
            

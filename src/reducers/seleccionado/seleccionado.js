@@ -7,8 +7,7 @@ const seleccionado = (state = {}, action) => {
   switch (action.type) {
 
     case SET_EXPEDIENTE_SELECTED_DATOS:
-      console.log("SET_EXPEDIENTE");
-      console.log("payload");
+     
       const {  Fecha_Entrada, Id_Expediente, Id_Trabajo } = action.payload;
     
       return {

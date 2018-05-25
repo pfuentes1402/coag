@@ -9,8 +9,10 @@ const BASE_PATH = "http://servicios.coag.es/api";
  */
 
 export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
+
   fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
     .then(response => {
+     
       return response.json();
     })
     .then(resultado => {
@@ -151,7 +153,7 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
     return response.json();
   })
   .then(resultado => {
-         console.log(resultado.Trabajos);
+         
     return resultado;
   });
 

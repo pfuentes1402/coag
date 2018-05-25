@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ExpedienteLevel from './ExpedienteLevel';
 
 const Arbol = ({expedientes, onSelectedArbol})=>{
-    const handleArbolClick = expediente => {
-        console.log("handleArbolClick");
+    const handleArbolClick = expediente => {       
         onSelectedArbol(expediente);
 
     }

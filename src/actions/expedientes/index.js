@@ -78,11 +78,11 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
 };
 export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) => 
 (dispatch) => {
-    console.log(id_expediente);
-    console.log(idtrabajo);
+   
     
     dispatch(fetchInit());
     getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
+        
        
         dispatch(fetchSuccessTrabajo(expedientes));
        
@@ -152,7 +152,7 @@ dispatch => {
 */
 export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) => 
 (dispatch) => {
-              console.log("fetchTrabajoDatosGeneral");
+              
           getTrabajoeDatosGenerales(id_expediente, id_Trabajo).then((DatosTrabajo) => {              
               dispatch(fetchSuccesTrabajoDatosgenerales(DatosTrabajo));
                       })
@@ -168,9 +168,7 @@ const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXP
 
 export const setSelectedExpediente = payload => {
     const {id_expediente, id_Trabajo} =payload;
-    console.log("Clic desde ---------------Componente LateralClic desde ---------------Componente Lateral");
-    console.log(payload.id_expediente);
-    console.log(payload);
+   
           return dispatch =>{
             dispatch(setExpediente(payload));
             dispatch(setExpedienteSelected(payload));

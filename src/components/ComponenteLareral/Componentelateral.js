@@ -2,57 +2,39 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpedienteLevel from './ExpedienteLevel';
+import Expandible from './Expandible';
+import {fetchEstructuraDocumentalTrabajo} from '../../actions/expedientes/index';
 
 
 
-/*class Componentelateral extends Component {
-    
 
 
-    componentDidMount(){
-        console.log("Componente Lateral Did Mount");
-       // console.log(this.props.trabajos[0]);
-    }
-    componentWillMount(){
-        console.log("Componente Lateral WillMount");
-        //console.log(this.props.trabajos[0]);
-    }
-    componentDidUpdate(){
-        console.log("Componente Did Update");      
-        console.log(this.props.trabajos[0]);
-    }
-      
 
-    render() {  
-
-        console.log("Componente Lateral render");
-        //console.log(this.props.trabajos[0]);
-      
-        
-        return (
-          <div>{PruebaArbol}</div>
-        );
-    }
-}*/
-
-
-const Componentelateral = ({trabajos, onSelectedLevel})=>{
+const Componentelateral = ({trabajos, onSelectedLevel, expedientes})=>{
     const handleClickLateral = trabajo =>{
       
         onSelectedLevel(trabajo);
+        
+        fetchEstructuraDocumentalTrabajo(688685,2);
     };
 
     const strToComponent = trabajos =>(
         trabajos.map(trabajo =>
         (
-            <ExpedienteLevel
+           /* <ExpedienteLevel
                 key={trabajo.key}
                 expediente={trabajo.Titulo}
                 OnhandleClickLateral={()=>handleClickLateral(trabajo)}
-            />))
+            />*/
+            <Expandible key={trabajo.Fecha_Entrada}
+            expediente={trabajo.Titulo}
+            OnhandleClickLateral={()=>handleClickLateral(trabajo)}/>
+        
+        ))
     );
 
 return (<div>
+        <div className='bloque'><p>{expedientes.Id_Expediente}</p></div>
         {strToComponent(trabajos)}
         </div>);
 };
@@ -60,10 +42,10 @@ return (<div>
 
 
 const mapStateToProps = state => ({
-    expedientes: state.expedientes.datosTrabajo,    
+    expedientes: state.expedientes.expedienteData.Expediente?state.expedientes.expedienteData.Expediente[0]:"",    
    
   });
 
 
 
-export default connect(mapStateToProps,)(Componentelateral);
+export default connect(mapStateToProps,{fetchEstructuraDocumentalTrabajo})(Componentelateral);

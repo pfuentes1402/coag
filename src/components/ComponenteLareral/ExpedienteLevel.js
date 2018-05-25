@@ -13,9 +13,11 @@ import './styles.css';
 }*/
 
 const ExpedienteLevel = ({OnhandleClickLateral,expediente})=>(
-    <div className="arbol" onClick={OnhandleClickLateral}>
-         
-            <p>{expediente}</p>
+    <div  onClick={OnhandleClickLateral}>
+         <div className='bloque'>
+         <p>{expediente}</p>
+         </div>
+            
     </div>
 )
 
@@ -24,3 +26,4 @@ ExpedienteLevel.propTypes = {
 };
 
 export default ExpedienteLevel;
+
