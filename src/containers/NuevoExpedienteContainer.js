@@ -24,9 +24,9 @@ let dateNow = moment().format('YYYY-MM-DDTHH:MM:SS')
     datosTosave.Observaciones=values.Observaciones;
     datosTosave.Emplazamientos=datab;
     datosTosave.IgnorarObservaciones=1;  
-    console.log(JSON.stringify(datosTosave));   
+      
    // saveExpediente(JSON.stringify(datosTosave));
-    console.log("datostosave");
+   
     //postUbicacion(datosTosave);
     //postNuevoExpediente(JSON.stringify(datosTosave));
     //postUbicacion(datosTosave); 

@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 import { Card,  CardHeader, CardText } from 'reactstrap';
-import AgentsTable from './ExpedientType/AgentsTable';
+import AgentsTableWorks from '../Trabajos/AgentTableWorks';
 import { connect } from 'react-redux';
 
 
-class ExpedientContainer extends Component {
+class TrabajosContainer extends Component {
 
-
-    render() {
-      
+    render() {      
         return (
             <div>
                  <Card>
                    <CardHeader>{this.props.titulo}</CardHeader>                
-                    <CardText>
-                        <AgentsTable data={ this.props.datosAgentes}/>
-                    </CardText>
+                        <CardText> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>
                 </Card> 
             </div>
         );
     }
 }
-ExpedientContainer.propTypes = {
-    
-};
-ExpedientContainer.defaultProps = {
+
+
+
+
+TrabajosContainer.defaultProps = {
     
     loading: false
   };
@@ -34,4 +31,4 @@ const mapStateToProps = state => ({
   });
  
 
-export default connect(mapStateToProps,)(ExpedientContainer);
+export default connect(mapStateToProps,)(TrabajosContainer);

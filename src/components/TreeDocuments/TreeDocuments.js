@@ -15,6 +15,8 @@ class TreeDocuments extends Component {
         node.active = true;
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });
+        console.log(node);
+      
     }
 
     render() {

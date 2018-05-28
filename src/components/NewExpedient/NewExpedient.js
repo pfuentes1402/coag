@@ -30,15 +30,15 @@ class Form extends Component {
     validar(e){
       if(e != ''){
         var api = `http://servicios.coag.es/api/DatosCatastro/${e}`;
-        console.log(api);
+      
         fetch(api)
           .then((response) => {
             return response.json();
           })
           .then((temp) => {
-            console.log(temp);
+           
             if(temp.MensajesProcesado.length == 0){
-              console.log(temp);
+            
               this.setState({
                 ubicacion: temp.Inmuebles[0]
               })
@@ -65,7 +65,7 @@ class Form extends Component {
     handleSubmit(event) {
       var fechaEntrada =  new Date();
       fechaEntrada = fechaEntrada.toISOString();
-      console.log(fechaEntrada);
+      
       var request = {
         'Fecha_Entrada' : fechaEntrada,
         'Titulo' : this.state.titulo,
@@ -82,8 +82,7 @@ class Form extends Component {
           }
         ]
       }
-      console.log('Request: ' + request);
-      console.log('Request: ' + JSON.stringify(request));
+    
       fetch('http://servicios.coag.es/api/Expedientes', {
         method: 'POST',
         headers: {
@@ -91,7 +90,7 @@ class Form extends Component {
         },
         body: request
       }).then((response) => {
-        console.log(response);
+        
         return response.json();
       });
       event.preventDefault();

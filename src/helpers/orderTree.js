@@ -1,8 +1,7 @@
 import orderForTree from "./orderForTree";
 
 export default function ordertree(temp){
-    console.log('llega ordertree');
-    console.log(temp);
+   
 
     let arrReduc = temp.EstructuraDocumental;
                 var i;
@@ -28,6 +27,6 @@ export default function ordertree(temp){
                         }
                      }
                  }
-                
+                console.log(tree);
                 return tree
             }

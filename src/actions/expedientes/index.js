@@ -1,4 +1,5 @@
-import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral } from '../../api';
+import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral,
+    getTrabajoeDatosGenerales, getAgentesInfo } from '../../api';
 
 import * as types from './types';
 
@@ -8,6 +9,10 @@ export const fetchInit = () => ({
 
 export const fetchSuccess = (expedientes) => ({
     type: types.FETCH_EXPEDIENTES_SUCCESS,
+    payload: expedientes
+});
+export const fetchSuccessTrabajo = (expedientes) => ({
+    type: types.FETCH_DATAFORTREETRABAJO_SUCCESS,
     payload: expedientes
 });
 
@@ -39,7 +44,24 @@ export const saveAdressTostore = (address) => ({
     payload: address
 });
 
+/*
+*Salva una direccion desde la pantalla de nuevo expediente
+*/
+export const fetchSuccesTrabajoDatosgenerales = (DatosTrabajo) => ({
+    type: types.FETCH_SAVE_TRABAJO_TO_STORE,
+    payload: DatosTrabajo
+});
 
+
+
+
+/*
+*Salva una direccion desde la pantalla de nuevo expediente
+*/
+export const fetchDatosAgente = (dataAgente) => ({
+    type: types.FETCH_SAVE_AGENTES_DATA,
+    payload: dataAgente
+});
 
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) => 
 (dispatch) => {
@@ -48,6 +70,21 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
     getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
         
         dispatch(fetchSuccess(expedientes));
+       
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) => 
+(dispatch) => {
+   
+    
+    dispatch(fetchInit());
+    getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
+        
+       
+        dispatch(fetchSuccessTrabajo(expedientes));
        
     })
         .catch(
@@ -94,5 +131,59 @@ export   const postUbicacion = (data)=>
 };
 
 
+export const getAgentes  = (id_agente)=>
+dispatch => {   
+     
+       dispatch(fetchDatosAgente(getAgentesInfo(id_agente)));
+};
+   
+  /* export const getAgentes  = (id_agente)=>
+   dispatch => {   
+    getAgentesInfo(id_agente).then((response)=>{
+        dispatch(fetchDatosAgente(response));
+    }).catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    )
+          
+      };*/
+      
+/*
+*Guarda los datos generales de un trabajo
+*/
+export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) => 
+(dispatch) => {
+              
+          getTrabajoeDatosGenerales(id_expediente, id_Trabajo).then((DatosTrabajo) => {              
+              dispatch(fetchSuccesTrabajoDatosgenerales(DatosTrabajo));
+                      })
+              .catch(
+              () => fetchError({ error: 'Algo ha salido mal'})
+          );
+      };
 
 
+const setExpediente = payload => ({ type: types.SET_EXPEDIENTE_SELECTED, payload });
+const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_DATOS, payload });
+const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, payload});
+
+export const setSelectedExpediente = payload => {
+    const {id_expediente, id_Trabajo} =payload;
+   
+          return dispatch =>{
+            dispatch(setExpediente(payload));
+            dispatch(setExpedienteSelected(payload));
+          }
+       
+    
+};
+export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) => 
+   
+    (dispatch) =>{
+            getTrabajoeDatosGenerales(id_expediente,id_Trabajo).then((data) =>{
+                 dispatch(fetchSuccesTrabajoDatosgeneralesSelected(data));
+                })
+                 .catch(
+              ()=> fetchError({ error: 'Algo ha salido mal'})
+        );             
+    
+};
