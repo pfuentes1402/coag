@@ -36,14 +36,46 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
       return resultado;
     });
 
+
+/*
+ *Proporciona los grupos temáticos de un trabajo
+ * Parametros 
+ *    id_grupo
+ */
+
+
+export const getTiposTrabajo = id_grupo =>
+fetch(`${BASE_PATH}/Tipos/Guia/GruposTematicos/${id_grupo}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(resultado => {
+    return resultado;
+  });
+
+
+/*
+ *Proporciona los tipos de trámite de un trabajo
+ */
+
+export const getTiposAutorizacionMunicipal = () =>
+fetch(`${BASE_PATH}/Tipos/Guia/Tiposautorizacionmunicipal/`)
+  .then(response => {
+    return response.json();
+  })
+  .then(resultado => {
+    return resultado;
+  });
+
+
 /*
  *Valida una dirección a traves de su referencia catastral
  * Parametros 
  *    ref_catastral
  */
 
-export const getValidateAddress = ref_catastral =>
 
+export const getValidateAddress = ref_catastral =>
   fetch(`${BASE_PATH}/DatosCatastro/${ref_catastral}`)
   
     .then(response => {
