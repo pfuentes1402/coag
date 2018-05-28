@@ -15,8 +15,7 @@ const Arbol = ({expedientes, onSelectedArbol})=>{
                 key={expediente.key}
                 expediente={expediente.name}
                 OnExpedienteClick = {()=>handleArbolClick(expediente.name)}
-                data={expediente.data} /> ))
-            
+                data={expediente.data} /> ))           
         
     
     );

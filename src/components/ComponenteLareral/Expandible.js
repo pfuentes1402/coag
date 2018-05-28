@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import { connect } from 'react-redux';
 import './styles.css';
+import TreeDocuments from '../TreeDocuments/TreeDocuments'
+
+
 
 class Expandible extends Component {
   constructor(props) {
@@ -13,16 +16,20 @@ class Expandible extends Component {
   toggle() {
     this.setState({ collapse: !this.state.collapse });
     this.props.OnhandleClickLateral();
+    
+   
   }
 
   render() {
+    console.log('>>>>>>>>>>>>>>>>>>>>>');
+    console.log(this.props.dataArbol);
     return (
       <div>
         <div color="primary" className='bloque' onClick={this.toggle} >{this.props.expediente}</div>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
-            <p>levels</p>
+            <TreeDocuments data={this.props.data}/>
             </CardBody>
           </Card>
         </Collapse>
@@ -32,7 +39,7 @@ class Expandible extends Component {
 }
 
 const mapStateToProps = state => ({
-    
+     
    
   });
   const mapDispatchToProps = state => ({

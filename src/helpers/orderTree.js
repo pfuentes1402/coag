@@ -27,6 +27,6 @@ export default function ordertree(temp){
                         }
                      }
                  }
-                
+                console.log(tree);
                 return tree
             }
