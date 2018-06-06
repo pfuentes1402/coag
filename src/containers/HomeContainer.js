@@ -9,11 +9,16 @@ import Paper from 'material-ui/Paper';
 import "./styles.css";
 
 import { fetchEstructuraDocumental } from '../actions/expedientes/';
+import { fetchDatosUsuario } from '../actions/usuarios/';
+
 
 
 class HomeContainer extends Component {
-  
+
+   
+
     render() {
+       
         return (
             <div className="homeContainer">
                 <MainContent/>
@@ -22,25 +27,22 @@ class HomeContainer extends Component {
     }
 }
 
-HomeContainer.propTypes = {
-    expedientes: PropTypes.array.isRequired,
-    loading: PropTypes.bool,
-    fetchEstructuraDocumental: PropTypes.func.isRequired,
-    fetchExpediente: PropTypes.func.isRequired,
-  };
+
   
   HomeContainer.defaultProps = {
     loading: false,
   };
 
 const mapStateToProps = state => ({
-    expedientes: state.expedientes.arbolEstructuraDocumentalTrabajo,
+   // expedientes: state.expedientes.arbolEstructuraDocumentalTrabajo,
     trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
+    expedientes:state.user.data.Expedientes?state.user.data.Expedientes:"",
   });
 
 const mapDispatchToProps = {
     fetchEstructuraDocumental,
+    fetchDatosUsuario,
     
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

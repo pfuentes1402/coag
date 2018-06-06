@@ -30,11 +30,11 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
     export const getExpedienteDatosGeneral = id_expediente =>
   fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
     .then(response => {
-     
+      console.log(response);
       return response.json();
     })
     .then(resultado => {
-           
+           console.log(resultado);
       return resultado;
     });
 
@@ -176,8 +176,34 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
   });
 
 
+ export function getDatosUsuario(id){   
 
+  let data =  {
+    Expedientes: [
+      {
+        Expediente: '688685 ',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '683180',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '685062',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '693458',
+        fecha: '05/06/2018',       
+      },
+    ],   
+  }
+   
+  
+    return data;
+  }
 
+ 
   
    
     

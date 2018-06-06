@@ -6,7 +6,8 @@ import TreeDocuments from '../TreeDocuments/TreeDocuments'
 
 
 
-class Expandible extends Component {
+
+class ConteArboles extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
@@ -21,14 +22,15 @@ class Expandible extends Component {
   }
 
   render() {
-    console.log('>>>>>>>>>>>>>>>>>>>>>');
-    console.log(this.props.dataArbol);
+    console.log('cdcdcdcdcdcdcdcdcdcdcdcdcd');
+      console.log(this.props.data);
+   
     return (
       <div>
         <div color="primary" className='bloque' onClick={this.toggle} >{this.props.expedient}</div>
         <Collapse isOpen={this.state.collapse}>
           <Card>
-            <CardBody>{this.props.expedient}
+            <CardBody>
             <TreeDocuments data={this.props.data}/>
             </CardBody>
           </Card>
@@ -47,5 +49,5 @@ const mapStateToProps = state => ({
    
   });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Expandible);
+export default connect(mapStateToProps,mapDispatchToProps)(ConteArboles);
 

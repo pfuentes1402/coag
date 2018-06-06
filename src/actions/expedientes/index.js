@@ -35,6 +35,10 @@ export const fetchExpedientSave = (response) => ({
     type: types.FETCH_EXPEDIENTSAVE_TO_STORE,   
     payload: response
 });
+export const fetchExpedienteSelected = (response) => ({   
+    type: types.FETCH_SAVE_SELECTED_EXP_TO_STORE,   
+    payload: response
+});
 
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
@@ -51,9 +55,6 @@ export const fetchSuccesTrabajoDatosgenerales = (DatosTrabajo) => ({
     type: types.FETCH_SAVE_TRABAJO_TO_STORE,
     payload: DatosTrabajo
 });
-
-
-
 
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
@@ -167,6 +168,9 @@ const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_
 const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, payload});
 
 export const setSelectedExpediente = payload => {
+    console.log(payload);
+    console.log("setSelectedExpediente");
+    console.log("setSelectedExpediente");
     const {id_expediente, id_Trabajo} =payload;
    
           return dispatch =>{
@@ -187,3 +191,12 @@ export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) =>
         );             
     
 };
+
+/*
+*Salva una direccion desde la pantalla de nuevo expediente
+*/
+export const fetchSelectedNode = (node) => ({
+    
+    type: types.FETCH_SAVE_SELECTED_NODE_TO_STORE,
+    payload: node
+});

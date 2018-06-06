@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Treebeard} from 'react-treebeard';
 import CustomStyle from './CustomStyle'
+import { connect } from 'react-redux';
+import { fetchSelectedNode } from '../../actions/expedientes/index'
 
 
 
@@ -15,7 +17,9 @@ class TreeDocuments extends Component {
         node.active = true;
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });
-        console.log(node);
+       
+        this.props.fetchSelectedNode(node);
+        
       
     }
 
@@ -49,4 +53,14 @@ class TreeDocuments extends Component {
     }
 }
 
-export default TreeDocuments;
+const mapStateToProps = state => ({
+    
+  });
+
+const mapDispatchToProps = {
+    fetchSelectedNode,   
+  
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TreeDocuments);
+

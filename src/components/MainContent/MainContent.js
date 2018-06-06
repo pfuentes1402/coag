@@ -16,46 +16,33 @@ import ExpedientType from '../MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from './ExpedientContainer';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
 import ContenedorCentral from './../../containers/ContenedorCentral'
+import { fetchDatosUsuario } from '../../actions/usuarios';
 const   id_expediente='688685';
 
 class MainContent extends Component {
   
 
-    componentDidMount(){
+    componentWillMount(){
            
-            let idtrabajo = '2';
-          
-            
-          
-            this.props.fetchExpedienteDatosGeneral(id_expediente);           
-           // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     
-            this.props.getAgentes('111');
-            test('111');
-            //this.props.setSelectedExpediente(); 
-              
-        
-        }
-        componentWillReceiveProps(){
-           // this.props.trabajos &&
-           // this.props.trabajos.map(x =>this.props.fetchTrabajoDatosGeneral(x.Id_Expediente,x.Id_Trabajo));           
-           // this.props.trabajos.map(x =>this.props.fetchEstructuraDocumentalTrabajo(x.Id_Expediente,x.Id_Trabajo)); 
-           let id_e = this.props.selectedIdexpediente;
-           let id_t = this.props.selectedIdTrabajo;
-          
-
-           //this.props.fetchEstructuraDocumental(id_e, id_t);         
-           
-        }
+            let idtrabajo = '2';      
+            this.props.fetchDatosUsuario(idtrabajo);          
+    }
+   
        
-        handleSelectedExpediente = trabajo => {
-           
-            this.props.setSelectedExpediente(trabajo);
-            this.props.setSelectedExpedienteTo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
+        handleSelectedExpediente = d => {
+            console.log("handleSelectedExpediente");
+            console.log("handleSelectedExpediente");
+            console.log(d);
+             if(d.Id_Expediente!=null){
+                this.props.setSelectedExpediente(d);
+                //this.props.setSelectedExpedienteTo(d.Id_Expediente,d.Id_Trabajo);
+             }   
+            
         }
    
     
     render() {
-    
+     
         
         return (
            
@@ -65,7 +52,7 @@ class MainContent extends Component {
                         <Col xs="6" sm="2">
                         <Componentelateral trabajos={this.props.trabajos}
                         onSelectedLevel={this.handleSelectedExpediente}/>                            
-                             {/*<TreeDocuments data={this.props.arbolEstructuraDocumentalTrabajo}/> */ }                         
+                                               
                     
                         </Col>
                         <Col xs="6" sm="10">
@@ -80,7 +67,7 @@ class MainContent extends Component {
 }
 
 MainContent.propTypes = {
-    arbolEstructuraDocumentalTrabajo: PropTypes.arrayOf(PropTypes.shape()),
+    
     loading: PropTypes.bool
 };
 
@@ -108,7 +95,7 @@ const mapStateToProps = state => ({
   
 
 export default connect(mapStateToProps,{fetchEstructuraDocumental, fetchExpedienteDatosGeneral, getAgentes, test,
-     fetchTrabajoDatosGeneral,fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo})(MainContent);
+     fetchTrabajoDatosGeneral,fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo,fetchDatosUsuario})(MainContent);
 
 
   

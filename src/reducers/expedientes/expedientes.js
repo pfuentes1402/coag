@@ -61,6 +61,8 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
           }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
     const {Id_Trabajo} = action.payload;
+    console.log(action.payload);
+    console.log('Payload');
           return{
             ...state,
             selectedData: action.payload,
