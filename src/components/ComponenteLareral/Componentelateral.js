@@ -13,9 +13,10 @@ import ConteArboles from './ConteArboles';
 
 const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, expedientearbol,expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected, dataArbol})=>{
     const handleClickLateral = trabajo =>{
-      
+      console.log('Trabajo tras click');
+      console.log(trabajo);
         onSelectedLevel(trabajo);
-      
+        fetchExpedienteSelected(trabajo);  
         fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
     };
     const handleClickLateralEXp = trabajo =>{
@@ -29,11 +30,7 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
     const strToComponent = trabajos =>(
         trabajos.map(trabajo =>
         (
-           /* <ExpedienteLevel
-                key={trabajo.key}
-                expediente={trabajo.Titulo}
-                OnhandleClickLateral={()=>handleClickLateral(trabajo)}
-            />*/
+          
             <Expandible key={trabajo.Fecha_Entrada}
             expedient={trabajo.Titulo}
             data={dataArbol}
@@ -45,7 +42,7 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
 
     const strToComponentExp = expedientes =>(
         
-        expedientes.map(expediente =>        (
+        expedientes.map(expediente =>(
                 
             <ConteArboles key={expediente.expediente}
             expedient={expediente.Expediente}

@@ -61,21 +61,25 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
           }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
     const {Id_Trabajo} = action.payload;
-    console.log(action.payload);
-    console.log('Payload');
+   
           return{
             ...state,
             selectedData: action.payload,
             expedieteotrabajo: Id_Trabajo?'trabajo':'expediente',
             //trabajoData:action.payload,
           };
-          case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
-         
-         const {  Fecha_Entrada,Id_Expediente } = action.payload.Trabajos[0];
+          case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:           
+          
+
+         const {  Fecha_Entrada,Id_Expediente } = action.payload.Trabajos;
+         console.log(action.payload);
+         console.log('case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO');
+         const expOtr = Id_Trabajo!==null?'Trabajo':'expediente';
                 return{
                   ...state,
                  // [Id_Expediente+'-'+Fecha_Entrada ]: { ...state[Fecha_Entrada], trabajoData: action.payload }
                   trabajoData:action.payload,
+                  expedieteotrabajo:expOtr,
                 };
     case FETCH_EXPEDIENTSAVE_TO_STORE:
     

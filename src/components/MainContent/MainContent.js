@@ -23,20 +23,29 @@ class MainContent extends Component {
   
 
     componentWillMount(){
-           
+           //Esto es dummy, los datos del usuario estan seteados en el api
             let idtrabajo = '2';      
-            this.props.fetchDatosUsuario(idtrabajo);          
+            this.props.fetchDatosUsuario(idtrabajo);
+                      
     }
    
        
         handleSelectedExpediente = d => {
-            console.log("handleSelectedExpediente");
-            console.log("handleSelectedExpediente");
-            console.log(d);
+           
              if(d.Id_Expediente!=null){
-                this.props.setSelectedExpediente(d);
-                //this.props.setSelectedExpedienteTo(d.Id_Expediente,d.Id_Trabajo);
+
+              
+                this.props.setSelectedExpedienteTo(d.Id_Expediente,d.Id_Trabajo)
+
+             }else{
+               
+                 this.props.setSelectedExpediente(d);
+               
              }   
+             
+               
+               
+            
             
         }
    
@@ -66,8 +75,7 @@ class MainContent extends Component {
     }
 }
 
-MainContent.propTypes = {
-    
+MainContent.propTypes = {    
     loading: PropTypes.bool
 };
 
@@ -82,8 +90,7 @@ const mapStateToProps = state => ({
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
     loading:state.expedientes.loading,
     datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:"",
-    selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",
-    
+    selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",    
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.expedieteotrabajo,
     

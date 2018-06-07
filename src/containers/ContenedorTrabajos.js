@@ -42,7 +42,9 @@ class ContenedorExpedientes extends Component {
        
     }
    
+   
     render() {
+        console.log(this.props.Colegiados);
         return (
             <div>
             <Container className="full">
@@ -98,7 +100,6 @@ class ContenedorExpedientes extends Component {
         );
     }
 }
-
 
 
 ContenedorExpedientes.defaultProps = {

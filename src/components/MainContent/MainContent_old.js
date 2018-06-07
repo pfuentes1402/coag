@@ -36,13 +36,13 @@ class MainContent extends Component {
         
         }
         componentWillReceiveProps(){
-           // this.props.trabajos &&
-           // this.props.trabajos.map(x =>this.props.fetchTrabajoDatosGeneral(x.Id_Expediente,x.Id_Trabajo));           
-           // this.props.trabajos.map(x =>this.props.fetchEstructuraDocumentalTrabajo(x.Id_Expediente,x.Id_Trabajo)); 
+           
            let id_e = this.props.selectedIdexpediente;
            let id_t = this.props.selectedIdTrabajo;
-         
-           //this.props.fetchEstructuraDocumental(id_e, id_t);         
+         console.log('selectedIdexpediente and selectedIdTrabajo');
+         console.log(id_e);
+         console.log(id_t);
+               
            
         }
        

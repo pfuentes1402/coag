@@ -57,7 +57,7 @@ const RenderContenedorcentrales =() =>{
 const Contenedorcentral= ({contenidoExp}) =>(
 
     <div>
-    {contenidoExp === 'trabajo' ? RenderContenedorcentral():RenderContenedorcentrales()}
+    {contenidoExp === 'Trabajo' ? RenderContenedorcentral():RenderContenedorcentrales()}
     
     </div>
 )

@@ -168,9 +168,7 @@ const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_
 const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, payload});
 
 export const setSelectedExpediente = payload => {
-    console.log(payload);
-    console.log("setSelectedExpediente");
-    console.log("setSelectedExpediente");
+
     const {id_expediente, id_Trabajo} =payload;
    
           return dispatch =>{

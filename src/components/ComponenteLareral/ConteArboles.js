@@ -22,9 +22,7 @@ class ConteArboles extends Component {
   }
 
   render() {
-    console.log('cdcdcdcdcdcdcdcdcdcdcdcdcd');
-      console.log(this.props.data);
-   
+       
     return (
       <div>
         <div color="primary" className='bloque' onClick={this.toggle} >{this.props.expedient}</div>
