@@ -45,11 +45,14 @@ class ContenedorExpedientes extends Component {
        
     }
    
-   
+  
 
 
 
     render() {
+        console.log("Contenedor de Expedientes");
+        console.log(this.props.Arquitectos);
+        console.log("Contenedor de Expedientes");
         return (
             <div>
             <Container className="full">
@@ -82,8 +85,8 @@ class ContenedorExpedientes extends Component {
                                 <CardHeader>Tipo de Expediente</CardHeader>    
                                     <CardText> <ExpedientType/> </CardText>
                             </Card> 
-                            <ExpedientContainer titulo='Promotores' datosAgentes={this.props.datosAgentes.Arquitectos}/>
-                            <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.datosAgentes.Promotores}/>
+                            <ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/>
+                            <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Arquitectos}/>
                         </div>   
                     </Col>
                 </Row>
@@ -109,6 +112,8 @@ const mapStateToProps = state => ({
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",
     selectedData:state.expedientes.selectedData,
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
+    Arquitectos:state.expedientes.expedienteData?state.expedientes.expedienteData.Colegiados:"",
+    Promotores:state.expedientes.expedienteData?state.expedientes.expedienteData.Colegiados:"",
     
    
   });

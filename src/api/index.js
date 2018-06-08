@@ -30,7 +30,11 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
     export const getExpedienteDatosGeneral = id_expediente =>
   fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
     .then(response => {
+      console.log('getExpedienteDatosGeneral');
+      console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
       console.log(response);
+      console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
+     
       return response.json();
     })
     .then(resultado => {

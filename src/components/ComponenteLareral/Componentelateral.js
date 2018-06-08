@@ -22,10 +22,13 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
     const handleClickLateralEXp = trabajo =>{
         onSelectedLevel(trabajo.Expediente);
         fetchExpedienteSelected(trabajo.Expediente);       
-        fetchExpedienteDatosGeneral(selectedExpFromstore);
+        //fetchExpedienteDatosGeneral(selectedExpFromstore);
        
         //fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
     };
+    const click = expedientes=>{        
+        fetchExpedienteDatosGeneral(expedientes.Expediente);
+    }
 
     const strToComponent = trabajos =>(
         trabajos.map(trabajo =>
@@ -43,12 +46,12 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
     const strToComponentExp = expedientes =>(
         
         expedientes.map(expediente =>(
-                
+      <div onClick={()=>click(expediente)}>
             <ConteArboles key={expediente.expediente}
             expedient={expediente.Expediente}
             data={trabajos}
             OnhandleClickLateral={()=>handleClickLateralEXp(expediente)}/>
-        
+      </div>  
         ))
     );
 
@@ -62,20 +65,25 @@ return (
             {strToComponentExp(expedientes)}
         </div>
         <div>
-          {strToComponent(trabajos)}
+          {/* {strToComponent(trabajos)} */}
         </div>
     </div>
 );
 
 };
 
-
+Componentelateral.defaultProps = {
+ 
+    trabajos: [],
+   
+  };
 
 const mapStateToProps = state => ({
     expedientearbol: state.expedientes.expedienteData.Expediente?state.expedientes.expedienteData.Expediente[0]:"",
     expedientes: state.user.data?state.user.data.Expedientes:"",     
     dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0],
     selectedExpFromstore: state.seleccionado.selectedExp?state.seleccionado.selectedExp:"",
+    trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
   });
 
 

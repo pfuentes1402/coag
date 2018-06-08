@@ -29,25 +29,19 @@ class MainContent extends Component {
                       
     }
    
-       
-        handleSelectedExpediente = d => {
-           
-             if(d.Id_Expediente!=null){
 
-              
-                this.props.setSelectedExpedienteTo(d.Id_Expediente,d.Id_Trabajo)
+    handleSelectedExpediente = d => {
 
-             }else{
-               
-                 this.props.setSelectedExpediente(d);
-               
-             }   
-             
-               
-               
-            
-            
+        if (d.Id_Expediente != null) {
+            this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo)
+
+        } else {
+            this.props.setSelectedExpediente(d);
+            fetchExpedienteDatosGeneral(d);
+
         }
+
+    }
    
     
     render() {
@@ -59,7 +53,8 @@ class MainContent extends Component {
                 <Container className="full">
                     <Row className="principal">
                         <Col xs="6" sm="2">
-                        <Componentelateral trabajos={this.props.trabajos}
+                        {/* <Componentelateral trabajos={this.props.trabajos}  */}
+                        <Componentelateral  
                         onSelectedLevel={this.handleSelectedExpediente}/>                            
                                                
                     
@@ -87,7 +82,7 @@ MainContent.defaultProps = {
   };
 const mapStateToProps = state => ({
     arbolEstructuraDocumentalTrabajo: state.expedientes.arbolEstructuraDocumentalTrabajo,
-    trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
+    //trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
     loading:state.expedientes.loading,
     datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:"",
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",    

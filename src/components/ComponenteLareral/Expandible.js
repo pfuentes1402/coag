@@ -25,13 +25,13 @@ class Expandible extends Component {
     console.log(this.props.dataArbol);
     return (
       <div>
-        <div color="primary" className='bloque' onClick={this.toggle} >{this.props.expedient}</div>
+        <div  color="primary" className='bloqueInterno' onClick={this.toggle} >{this.props.expedient}</div>
         <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>{this.props.expedient}
+          <div >
+            <div>{this.props.expedient}
             <TreeDocuments data={this.props.data}/>
-            </CardBody>
-          </Card>
+            </div>
+          </div>
         </Collapse>
       </div>
     );
@@ -40,7 +40,7 @@ class Expandible extends Component {
 
 const mapStateToProps = state => ({
      
-   
+  dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
   });
   const mapDispatchToProps = state => ({
         
