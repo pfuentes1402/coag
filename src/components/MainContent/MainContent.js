@@ -31,7 +31,7 @@ class MainContent extends Component {
    
 
     handleSelectedExpediente = d => {
-
+        
         if (d.Id_Expediente != null) {
             this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo)
 
@@ -55,7 +55,7 @@ class MainContent extends Component {
                         <Col xs="6" sm="2">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
                         <Componentelateral  
-                        onSelectedLevel={this.handleSelectedExpediente}/>                            
+                        onSelectedLevel={this.handleSelectedExpediente}/>                          
                                                
                     
                         </Col>

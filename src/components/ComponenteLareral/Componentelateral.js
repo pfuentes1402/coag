@@ -5,6 +5,7 @@ import ExpedienteLevel from './ExpedienteLevel';
 import Expandible from './Expandible';
 import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected} from '../../actions/expedientes/index';
 import ConteArboles from './ConteArboles';
+import {Divider} from 'material-ui'
 
 
 
@@ -28,29 +29,22 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
     };
     const click = expedientes=>{        
         fetchExpedienteDatosGeneral(expedientes.Expediente);
+        console.log(expedientes.Expediente);
+        console.log('click expediente');
     }
 
-    const strToComponent = trabajos =>(
-        trabajos.map(trabajo =>
-        (
-          
-            <Expandible key={trabajo.Fecha_Entrada}
-            expedient={trabajo.Titulo}
-            data={dataArbol}
-            OnhandleClickLateral={()=>handleClickLateral(trabajo)}/>
-        
-        ))
-    );
+
 
 
     const strToComponentExp = expedientes =>(
         
         expedientes.map(expediente =>(
       <div onClick={()=>click(expediente)}>
-            <ConteArboles key={expediente.expediente}
+      <div>{expediente.Expediente}</div>
+            {/* <ConteArboles key={expediente.expediente}
             expedient={expediente.Expediente}
             data={trabajos}
-            OnhandleClickLateral={()=>handleClickLateralEXp(expediente)}/>
+            OnhandleClickLateral={()=>handleClickLateralEXp(expediente)}/> */}
       </div>  
         ))
     );
