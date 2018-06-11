@@ -3,6 +3,10 @@ background-color: white!important;
 font-weight: 600;
 font-size: large;
 }
+.cardBody-ficha{
+    padding-top: 1.25rem!important;
+    padding-left: 10px!important;
+}
 .margen{
     padding-top:30px;
     padding-bottom:30px;
@@ -38,7 +42,7 @@ font-size: large;
     width:100%;
 }
 .inputDiv input{
-    width:200px!important;
+    width:300px!important;
     border: none;
     border-bottom: solid 1px #bcc7cd;
     transition: all 0.3s cubic-bezier(.64,.09,.08,1);
@@ -70,4 +74,12 @@ font-size: large;
 }
 .labelsformulario{
     font-size: small;
+}
+.observaciones{
+    background: #f3f3f3;
+    margin-left: -25px;
+    margin-right: -35px;
+    padding-left: 25px;
+    padding-bottom: 25px;
+    padding-top: 20px;
 }

@@ -50,8 +50,8 @@ const renderField = ({
                                     />
                                 </div>
                             </Col>
-                            <Col sm={{ size: 3, offset: 2}}>
-                                <div className="inputDiv">
+                            <Col sm={{ size: 3, offset: 1}}>
+                                <div className="inputDiv fecha">
                                     <Field
                                         name="Fecha_Entrada"
                                         type="text"
@@ -75,8 +75,8 @@ const renderField = ({
                                     />
                                 </div>
                             </Col>
-                            <Col sm={{ size: 3, offset: 2}}>
-                                <div className="inputDiv">
+                            <Col sm={{ size: 3, offset: 1}}>
+                                <div className="inputDiv fecha">
                                     <Field
                                         name="Fecha_Visado"
                                         type="text"

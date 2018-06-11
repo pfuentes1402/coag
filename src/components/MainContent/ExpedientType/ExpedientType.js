@@ -32,13 +32,13 @@ const renderField = ({
     const {adressaved, datosNuevoExpediente } = props;
   
     return (
-        <CardBody>
+        <CardBody className="cardBody-ficha">
           <Container className="Contenedor">
             <form>
                 <Row>
                     <Col>        
                         <Row>
-                            <Col sm={{ size: 3}}>
+                            <Col sm={{ size: 5}}>
                                 <div className="inputDiv">
                                     <Field
                                         name="TipoExpediente"

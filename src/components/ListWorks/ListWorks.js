@@ -6,17 +6,15 @@ import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 
 class ListWorks extends Component {
     render() {
-        return (
-            <Container className="Contenedor">            
-                <Row>
+        return (    
+            <Row>
                     <Col> 
                         <Card className="card-Trabajos">
                             <CardHeader>Trabajos</CardHeader>                                                                
                                 <CardText  className="card-body-Trabajos"><TablaTrabajos data={this.props.trabajos}/></CardText>
                         </Card>
                     </Col>
-             </Row>
-            </Container>           
+             </Row>         
         );
     }
 }

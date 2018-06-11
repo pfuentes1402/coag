@@ -12,9 +12,9 @@ class ExpedientContainer extends Component {
       console.log(this.props.datosAgentes);
       console.log('ExpedienteContainer');
         return (
-            <div>
+            <div className="cajaAgentes">
                  <Card>
-                   <CardHeader>{this.props.titulo}</CardHeader>                
+                   <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
                     <CardText>
                         <AgentsTable data={this.props.datosAgentes}/>
                     </CardText>

@@ -1,11 +1,19 @@
 
 .bloque{
     background-color: #0288d1;
-    border: black solid 0.1px;
+    border: 1px solid #333333;
+    padding: 15px;
+    border-top: 0;
+    color: white;
+    font-size: 14px;
+}
+.bloque:hover{
+    cursor:pointer;
 }
 
 .bloqueInterno{
     background-color: #fff;
-    border: black solid 0.1px;
+    border: #dddddd solid 0.1px;
+    border-top: 0;
    
 }

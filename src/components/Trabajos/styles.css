@@ -1,7 +1,8 @@
 .card-header {
 background-color: white!important;
-font-weight: 600;
+font-weight: 300;
 font-size: large;
+padding-left: 25px!important;
 }
 .margen{
     padding-top:30px;
@@ -38,11 +39,22 @@ font-size: large;
     width:100%;
 }
 .inputDiv input{
-    width:200px!important;
+    width:275px!important;
     border: none;
     border-bottom: solid 1px #bcc7cd;
     transition: all 0.3s cubic-bezier(.64,.09,.08,1);
     background: linear-gradient(to bottom, rgba(255,255,255,0) 96%, #0277bd 4%);
+    background-position: -300px 0;
+    background-size: 300px 100%;
+    background-repeat: no-repeat;
+    color: darken(#0277bd, 20%);
+}
+.inputDiv.fecha input{
+    width:275px!important;
+    border: none;
+    border-bottom: 0!important;
+    transition: all 0.3s cubic-bezier(.64,.09,.08,1);
+    background: 0;
     background-position: -300px 0;
     background-size: 300px 100%;
     background-repeat: no-repeat;
@@ -70,4 +82,14 @@ font-size: large;
 }
 .labelsformulario{
     font-size: small;
+}
+.trabajos .cajaAgentes{
+    padding: 1.25rem;
+    padding-top: 0;
+}
+.expedientes .cajaAgentes .card-body-Trabajos{
+    margin:23px;
+}
+.card-header.tituloTabla{
+    padding-left:15px!important;
 }
