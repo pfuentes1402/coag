@@ -58,9 +58,7 @@ return (
         <div> 
             {strToComponentExp(expedientes)}
         </div>
-        <div>
-          { strToComponent(trabajos) }
-        </div>
+        
     </div>
 );
 
