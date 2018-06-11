@@ -14,11 +14,11 @@ class TablaCatastro extends Component {
 
         this.state = {
             columnDefs: [
-                {headerName: "Calle/Lugar", field: "Calle", width: 120},
-                {headerName: "Nº", field: "Numero", width: 100},
-                {headerName: "Piso", field: "Piso", width: 70},
-                {headerName: "CP", field: "Codigo_Postal", width: 100},
-                {headerName: "Municipio", field: "Concello", width: 100}
+                {headerName: "Calle/Lugar", field: "Calle", width: 150},
+                {headerName: "Nº", field: "Numero", width: 50},
+                {headerName: "Piso", field: "Piso", width: 60},
+                {headerName: "CP", field: "Codigo_Postal", width: 70},
+                {headerName: "Municipio", field: "Concello", width: 155}
             ],
             rowData: [
                 {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Concello: "Vigo"}

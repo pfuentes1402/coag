@@ -16,9 +16,9 @@ class AgentsTable extends Component {
         this.state = {
             columnDefs: [
                 {headerName: "Nº COL", field: "Id_Colegiado", width: 100},                
-                {headerName: "NOMBRE", field: "Nombre", width: 180},
+                {headerName: "NOMBRE", field: "Nombre", width: 310},
                 {headerName: "%", field: "Porcentaje", width: 60},
-                {headerName: "FUNCIÓN", field: "Funcion", width: 80},
+                {headerName: "FUNCIÓN", field: "Funcion", width: 100},
                           
             ],
             rowData: [
@@ -39,8 +39,8 @@ class AgentsTable extends Component {
                     className="ag-theme-balham"
                      style={{ 
                         height: '125px', 
-                        width: '550px' ,
-                        margin: '20px 26px 20px 26px'}}>
+                        width: '605px' ,
+                        margin: '0'}}>
                         <AgGridReact
                             columnDefs={this.state.columnDefs}
                             rowData={this.props.data}>

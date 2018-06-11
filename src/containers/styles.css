@@ -2,9 +2,26 @@
     background-color: #f9f9f9;
 }
 .principal{
-    padding-left: 5px;
-    padding-right: 5px;
 }
 .divderecha{
     margin-top: 20px;
+}
+.textoArquitectos{
+    padding: 1.25rem 1.25rem 0.75rem;
+}
+.activeTrabajo{
+    border: 1px solid #0288d1!important;
+}
+.activeTrabajo p{
+    color: #0288d1;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.card-header p{
+    margin-bottom: 0;
+}
+
+.card.fondoGris{
+    background: #f3f3f3;
 }

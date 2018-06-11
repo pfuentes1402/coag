@@ -8,12 +8,12 @@ class TrabajosContainer extends Component {
 
     render() {      
         return (
-            <div>
-                 <Card>
-                   <CardHeader>{this.props.titulo}</CardHeader>                
-                        <CardText> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>
-                </Card> 
-            </div>
+                <div class="cajaAgentes">
+                    <Card>
+                    <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
+                            <CardText> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>
+                    </Card> 
+                </div>
         );
     }
 }

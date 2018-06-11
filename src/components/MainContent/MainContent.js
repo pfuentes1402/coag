@@ -51,8 +51,8 @@ class MainContent extends Component {
            
             <div>
                 <Container className="full">
-                    <Row className="principal">
-                        <Col xs="6" sm="2">
+                    <Row>
+                        <Col xs="6" sm="2" className="arbol">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
                         <Componentelateral  
                         onSelectedLevel={this.handleSelectedExpediente}/>                            

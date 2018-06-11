@@ -32,15 +32,13 @@ const renderField = ({
     const {adressaved, datosNuevoExpediente } = props;
   
     return (
-        <CardBody>
+        <CardBody className="cardBody-ficha">
           <Container className="Contenedor">
             <form>
                 <Row>
                     <Col>
-         
-                       
                         <Row>
-                        <Col sm={{ size: 3}}>
+                        <Col sm={{ size: 4}}>
                             <div className="inputDiv">
                                 <Field
                                     name="Expediente_Codigo_Estudio"
@@ -51,8 +49,8 @@ const renderField = ({
                                 />
                             </div>
                         </Col>
-                        <Col sm={{ size: 3, offset: 2}}>
-                            <div className="inputDiv">
+                        <Col sm={{ size: 4, offset: 2}}>
+                            <div className="inputDiv fecha">
                                 <Field
                                     name="Fecha_Entrada"
                                     type="text"
@@ -72,12 +70,12 @@ const renderField = ({
                                     readOnly="readonly"
                                 />
                             </div>
-                            <div className="inputDiv">
+                            <div className="inputDiv observaciones">
                                 <Field
                                     name="Observaciones"
                                     type="text"
                                     component={renderField}
-                                    label="Observaciones Estudio"
+                                    label="Observaciones"
                                     readOnly="readonly"
                                 />
                             </div>

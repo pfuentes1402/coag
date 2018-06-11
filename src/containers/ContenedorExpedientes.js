@@ -59,7 +59,7 @@ class ContenedorExpedientes extends Component {
                 <Row className="principal">
                     
                                                                  
-                    <Col xs="6" sm="5">
+                    <Col xs="6" sm="6">
                         <div className='divderecha'>                           
                             <Card>                             
                                 <CardHeader>Ficha expediente</CardHeader>    
@@ -71,7 +71,7 @@ class ContenedorExpedientes extends Component {
                                 
                         </div>
                     </Col>
-                    <Col xs="6" sm="5">
+                    <Col xs="6" sm="6">
                         <div className='divderecha'>
                             <ListWorks/>
                         </div>
@@ -79,14 +79,18 @@ class ContenedorExpedientes extends Component {
                           
                 </Row>
                 <Row>
-                <Col sm={{ size: '6', offset: 2 }}>
+                <Col sm={{ size: '6' }}>
                         <div className='divderecha'>   
                             <Card>
                                 <CardHeader>Tipo de Expediente</CardHeader>    
                                     <CardText> <ExpedientType/> </CardText>
                             </Card> 
-                            <ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/>
-                            <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Arquitectos}/>
+                            <div className="expedientes">
+                                <ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/>
+                            </div>
+                            <div className="expedientes">
+                                <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Arquitectos}/>
+                            </div>
                         </div>   
                     </Col>
                 </Row>

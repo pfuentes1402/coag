@@ -18,12 +18,10 @@
     background-color: white;
 }
 .principal{
-    padding-left: 5px;
-    padding-right: 5px;
 }
 .ag-theme-balham .ag-header-cell, .ag-theme-balham .ag-header-group-cell{
     line-height: 32px;
-    padding-left: 10px;
+    padding-left: 15px;
     padding-right: 10px;
 }
 .ag-theme-balham .ag-header{
@@ -35,4 +33,12 @@
 }
 .card-Trabajos{
     max-width: fit-content;
+}
+
+.card-text{
+    margin-bottom:0;
+}
+
+.card.header p{
+    margin-bottom: 0;
 }

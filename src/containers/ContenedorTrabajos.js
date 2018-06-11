@@ -63,33 +63,30 @@ class ContenedorExpedientes extends Component {
                                 
                         </div>
                     </Col>
-                    <Col xs="6" sm="5">
+                    <Col xs="6" sm="6">
                         <div className='divderecha'>
-                        <Row>
-                <Col sm={{ size: '20' }}>
-                        <div className='divderecha'>
-                        <Card>
-                            <CardHeader><p>ARQUITECTOS PROMOTORES Y OTROS AGENTES</p></CardHeader>    
-                                <CardText>
+                        <Card className="fondoGris">
+                            <CardHeader className="activeTrabajo"><p>ARQUITECTOS PROMOTORES Y OTROS AGENTES</p></CardHeader>    
+                                <div className="textoArquitectos">
                                     <p>
                                         Arquitectos y promotores se deben editar desde la ficha del expediente,
                                         ya que implican una comunicacion de encargo.
                                     </p>
-                                        
-                                </CardText><TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
-                               
-                                <CardText><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
-                                <CardText> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
+                                </div>
+                                <div className="trabajos">
+                                <TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
+                                </div>
+                                <CardText className="trabajos"><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
+                                <CardText className="trabajos"> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
                         </Card>    
-                        </div>   
-                    </Col>
-                </Row>
+
                         </div>
                     </Col>     
                           
                 </Row>
                 <Row>
-                <Col sm={{ size: '6', offset: 2 }}>
+                <Col sm={{ size: '6', offset: 1
+             }}>
                         <div className='divderecha'>   
                           
                         </div>   
