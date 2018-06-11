@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ExpedienteLevel from './ExpedienteLevel';
 import Expandible from './Expandible';
-import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected} from '../../actions/expedientes/index';
+import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected,fetchSelectedExpediente} from '../../actions/expedientes/index';
 import ConteArboles from './ConteArboles';
 import {Divider} from 'material-ui'
 
@@ -12,7 +12,7 @@ import {Divider} from 'material-ui'
 
 
 
-const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, expedientearbol,expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected, dataArbol})=>{
+const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetchSelectedExpediente, expedientearbol,expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected, dataArbol})=>{
     const handleClickLateral = trabajo =>{
       console.log('Trabajo tras click');
       console.log(trabajo);
@@ -27,10 +27,13 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel, exp
        
         //fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
     };
-    const click = expedientes=>{        
-        fetchExpedienteDatosGeneral(expedientes.Expediente);
-        console.log(expedientes.Expediente);
+    const click = expedientes=>{
         console.log('click expediente');
+        console.log('click expediente');        
+        fetchExpedienteDatosGeneral(expedientes.Expediente);
+        fetchSelectedExpediente(expedientes.Expediente);
+        console.log(expedientes.Expediente);
+       
     }
 
 
@@ -81,4 +84,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps,{fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected})(Componentelateral);
+export default connect(mapStateToProps,{fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected,fetchSelectedExpediente})(Componentelateral);

@@ -198,3 +198,9 @@ export const fetchSelectedNode = (node) => ({
     type: types.FETCH_SAVE_SELECTED_NODE_TO_STORE,
     payload: node
 });
+
+export const fetchSelectedExpediente = (exp) => ({
+    
+    type: types.FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE,
+    payload: exp
+});

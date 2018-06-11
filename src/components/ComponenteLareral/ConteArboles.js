@@ -41,8 +41,7 @@ class ConteArboles extends Component {
         datos.map(dato =>(
           <div className="bloqueInterno">
           <Expandible key={dato.Fecha_Entrada}
-          expedient={dato.Titulo}
-          data={this.props.dataArbol}
+          expedient={dato.Titulo}         
           OnhandleClickLateral={()=>handleClickLateral(dato)}/>
         </div>
      
@@ -56,8 +55,7 @@ class ConteArboles extends Component {
         <Collapse isOpen={this.state.collapse}>
           <div>
             <div className="bloqueInterno">
-            {strToComponentTrabajo(this.props.data)}
-            {/* <TreeDocuments data={this.props.dataArbol}/> */}
+            {strToComponentTrabajo(this.props.data)}            
             </div>
           </div>
         </Collapse>
@@ -68,7 +66,7 @@ class ConteArboles extends Component {
 }
 
 const mapStateToProps = state => ({
-  dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
+  trabajos: state.expedientes.expedienteData?state.expedientes.expedienteData.Trabajos:'',
    
   });
   const mapDispatchToProps = state => ({

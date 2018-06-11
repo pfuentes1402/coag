@@ -17,6 +17,8 @@ import ExpedientContainer from './ExpedientContainer';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
 import ContenedorCentral from './../../containers/ContenedorCentral'
 import { fetchDatosUsuario } from '../../actions/usuarios';
+import Expandible from '../ComponenteLareral/Expandible';
+
 const   id_expediente='688685';
 
 class MainContent extends Component {
@@ -31,7 +33,8 @@ class MainContent extends Component {
    
 
     handleSelectedExpediente = d => {
-        
+            console.log(d);
+            console.log('click expediente');
         if (d.Id_Expediente != null) {
             this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo)
 
@@ -45,18 +48,26 @@ class MainContent extends Component {
    
     
     render() {
-     
+        const RenderComponenteExp =() =>{
+            return (<Componentelateral onSelectedLevel={this.handleSelectedExpediente}/>)
+        }
+        const RenderContenedorcentral =() =>{
+            return (<Expandible expedient={this.props.expTrabajo}
+            data={this.props.dataArbol}
+            />)
+        }
         
+
+     
+       
         return (
            
             <div>
                 <Container className="full">
-                    <Row>
-                        <Col xs="6" sm="2" className="arbol">
+                    <Row className="principal">
+                        <Col xs="6" sm="2">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
-                        <Componentelateral  
-                        onSelectedLevel={this.handleSelectedExpediente}/>                          
-                                               
+                        {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()}
                     
                         </Col>
                         <Col xs="6" sm="10">
@@ -88,6 +99,8 @@ const mapStateToProps = state => ({
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",    
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.expedieteotrabajo,
+    expTrabajo:state.seleccionado?state.seleccionado.selectedExpediente:'',
+    dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
     
    
   });

@@ -3,6 +3,7 @@ import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import { connect } from 'react-redux';
 import './styles.css';
 import TreeDocuments from '../TreeDocuments/TreeDocuments'
+import ContenedorExpediente from '../ComponenteLareral/ContenedorExpediente'
 
 
 
@@ -15,21 +16,42 @@ class Expandible extends Component {
 
   toggle() {
     this.setState({ collapse: !this.state.collapse });
-    this.props.OnhandleClickLateral();
+    
     
    
   }
 
+
+
   render() {
-    console.log('>>>>>>>>>>>>>>>>>>>>>');
-    console.log(this.props.dataArbol);
+    const handleClickLateral = trabajo =>{
+        console.log(trabajo);
+    };
+
+    const strToComponentTrabajo = (trabajos) =>(       
+      
+      trabajos.map(dato =>(
+      
+        <div className="bloqueInterno">
+       {dato.Titulo}       
+       <ContenedorExpediente
+       OnhandleClickLateral={()=>handleClickLateral(dato)}
+       />
+        
+      </div>
+   
+      ))
+  );
+
+
+ 
     return (
       <div>
         <div  color="primary" className='bloqueInterno' onClick={this.toggle} >{this.props.expedient}</div>
         <Collapse isOpen={this.state.collapse}>
           <div >
             <div>{this.props.expedient}
-            <TreeDocuments data={this.props.data}/>
+            {strToComponentTrabajo(this.props.trabajos)}  
             </div>
           </div>
         </Collapse>
@@ -38,9 +60,16 @@ class Expandible extends Component {
   }
 }
 
+Expandible.defaultProps = {
+ 
+  trabajos: [],
+ 
+};
+
 const mapStateToProps = state => ({
      
   dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
+  trabajos: state.expedientes.expedienteData?state.expedientes.expedienteData.Trabajos:'',
   });
   const mapDispatchToProps = state => ({
         

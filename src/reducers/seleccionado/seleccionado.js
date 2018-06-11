@@ -2,13 +2,15 @@ import { createSelector } from 'reselect';
 import { SET_EXPEDIENTE_SELECTED_DATOS } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_NODE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_EXP_TO_STORE } from "../../actions/expedientes/types";
+import { FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE } from "../../actions/expedientes/types";
 
 
 
 
 
 
-const seleccionado = (state = {}, action) => {
+
+const seleccionado = (state = {selectedExpediente:'inicial'}, action) => {
  
   switch (action.type) {
 
@@ -28,6 +30,12 @@ const seleccionado = (state = {}, action) => {
     return {
       ...state,            
       selectedNode:action.payload
+    };
+    case FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE:
+    
+    return {
+      ...state,            
+      selectedExpediente:action.payload
     };
     case FETCH_SAVE_SELECTED_EXP_TO_STORE:
     
