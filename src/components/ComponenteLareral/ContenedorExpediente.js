@@ -1,11 +1,16 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
-class ContenedorExpediente extends PureComponent {
+import './styles.css';
+import ContenedorTrabajo from './ContenedorTrabajo';
+
+class ContenedorExpediente extends Component {
     render() {
         return (
-            <div>
-                
+            <div className="test"> 
+            <div onClick={()=>this.props.OnhandleClickLateral()}>               
+               <ContenedorTrabajo
+               titulo= {this.props.titulo}/>               
+            </div>
             </div>
         );
     }

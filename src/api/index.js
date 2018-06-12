@@ -170,7 +170,8 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
 export const getTrabajoeDatosGenerales = (id_expediente,id_Trabajo) =>
 fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
   .then(response => {
-   
+   console.log('getTrabajoeDatosGenerales api');
+   console.log(response);
     return response.json();
 
   })

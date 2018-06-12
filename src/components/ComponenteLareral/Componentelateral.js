@@ -31,7 +31,7 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
         console.log('click expediente');
         console.log('click expediente');        
         fetchExpedienteDatosGeneral(expedientes.Expediente);
-        fetchSelectedExpediente(expedientes.Expediente);
+        fetchSelectedExpediente(expedientes.Expediente);       
         console.log(expedientes.Expediente);
        
     }
@@ -42,12 +42,10 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
     const strToComponentExp = expedientes =>(
         
         expedientes.map(expediente =>(
+           
       <div onClick={()=>click(expediente)}>
       <div>{expediente.Expediente}</div>
-            {/* <ConteArboles key={expediente.expediente}
-            expedient={expediente.Expediente}
-            data={trabajos}
-            OnhandleClickLateral={()=>handleClickLateralEXp(expediente)}/> */}
+          
       </div>  
         ))
     );

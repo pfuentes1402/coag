@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import { connect } from 'react-redux';
 import './styles.css';
-import TreeDocuments from '../TreeDocuments/TreeDocuments'
-import ContenedorExpediente from '../ComponenteLareral/ContenedorExpediente'
+import TreeDocuments from '../TreeDocuments/TreeDocuments';
+import ContenedorExpediente from '../ComponenteLareral/ContenedorExpediente';
+import { setSelectedExpedienteTo, fetchEstructuraDocumental } from '../../actions/expedientes';
+
 
 
 
@@ -11,13 +13,11 @@ class Expandible extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: false };
+    this.state = { collapse: true };
   }
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
-    
-    
+    this.setState({ collapse: !this.state.collapse });  
    
   }
 
@@ -25,21 +25,24 @@ class Expandible extends Component {
 
   render() {
     const handleClickLateral = trabajo =>{
-        console.log(trabajo);
-    };
-
-    const strToComponentTrabajo = (trabajos) =>(       
       
-      trabajos.map(dato =>(
+      this.props.setSelectedExpedienteTo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
+      this.props.fetchEstructuraDocumental(trabajo.Id_Expediente,trabajo.Id_Trabajo);
+     
       
-        <div className="bloqueInterno">
-       {dato.Titulo}       
-       <ContenedorExpediente
-       OnhandleClickLateral={()=>handleClickLateral(dato)}
-       />
         
-      </div>
-   
+    };
+    
+    const strToComponentTrabajo = (trabajos) =>(    
+      
+      trabajos.map(dato =>(    
+                
+       <ContenedorExpediente
+       key={dato.Id_Expediente+dato.Id_Trabajo}
+       titulo={dato.Titulo}
+       OnhandleClickLateral={()=>handleClickLateral(dato)}
+       />       
+     
       ))
   );
 
@@ -50,7 +53,7 @@ class Expandible extends Component {
         <div  color="primary" className='bloqueInterno' onClick={this.toggle} >{this.props.expedient}</div>
         <Collapse isOpen={this.state.collapse}>
           <div >
-            <div>{this.props.expedient}
+            <div>
             {strToComponentTrabajo(this.props.trabajos)}  
             </div>
           </div>
@@ -71,10 +74,7 @@ const mapStateToProps = state => ({
   dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
   trabajos: state.expedientes.expedienteData?state.expedientes.expedienteData.Trabajos:'',
   });
-  const mapDispatchToProps = state => ({
-        
-   
-  });
+ 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Expandible);
+export default connect(mapStateToProps,{ setSelectedExpedienteTo, fetchEstructuraDocumental })(Expandible);
 

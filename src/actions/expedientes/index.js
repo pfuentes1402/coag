@@ -179,8 +179,9 @@ export const setSelectedExpediente = payload => {
     
 };
 export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) => 
-   
+  
     (dispatch) =>{
+        
             getTrabajoeDatosGenerales(id_expediente,id_Trabajo).then((data) =>{
                  dispatch(fetchSuccesTrabajoDatosgeneralesSelected(data));
                 })
