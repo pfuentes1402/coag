@@ -6,6 +6,7 @@ import Expandible from './Expandible';
 import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected,fetchSelectedExpediente} from '../../actions/expedientes/index';
 import ConteArboles from './ConteArboles';
 import {Divider} from 'material-ui'
+import "./styles.css";
 
 
 

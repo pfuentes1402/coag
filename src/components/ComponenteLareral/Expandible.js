@@ -50,7 +50,7 @@ class Expandible extends Component {
  
     return (
       <div>
-        <div  color="primary" className='bloqueInterno' onClick={this.toggle} >{this.props.expedient}</div>
+        <div  color="primary" className='bloque' onClick={this.toggle} >{this.props.expedient}</div>
         <Collapse isOpen={this.state.collapse}>
           <div >
             <div>

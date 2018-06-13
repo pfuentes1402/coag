@@ -18,6 +18,7 @@
    
 }
 .test{
-    background-color: #ff5;
+    background-color: white;
+    padding-left:10px;
     border: #333333 solid 1px;
 }

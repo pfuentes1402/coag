@@ -1,0 +1,64 @@
+.trabajos-tramitar p{
+  margin-bottom: 0;
+}
+
+.trabajos-tramitar .fase{
+  margin-bottom: 0.45rem;
+}
+.trabajos-tramitar{
+  margin-bottom:1rem;
+}
+.fondoSeleccion{
+  background: #f3f3f3;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.fondoSeleccion label{
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #666666;
+}
+.activo{
+  border: 1px solid #0288d1;
+  color: #0288d1;
+}
+
+.botonTrabajos .dropdown-toggle.btn{
+  border-bottom: 1px solid #a3a3a3;
+  padding-left: 0;
+  background: #f6f6f6;
+  border-radius: 0;
+  color: #212529;
+  border-top: 0;
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+}
+
+.botonTrabajos .dropdown-toggle::after{
+  margin-left: 13em;
+}
+
+.botonTrabajos .btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle{
+  background: #f6f6f6;
+  border-radius: 0;
+  color: #212529;
+}
+
+.botonTrabajos .btn-secondary:not(:disabled):not(.disabled).active:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.show>.btn-secondary.dropdown-toggle:focus,
+.btn-secondary.focus, .btn-secondary:focus{
+ box-shadow:none;
+ -webkit-box-shadow: none;
+}
+
+.bootstrapCard{
+  margin-left:15px;
+  margin-right:15px;
+  margin-top:20px;
+  margin-bottom:20px;
+}

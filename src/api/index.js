@@ -73,6 +73,18 @@ fetch(`${BASE_PATH}/Tipos/Guia/Tiposautorizacionmunicipal/`)
     return resultado;
   });
 
+/*
+ *Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
+ */
+
+export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion) =>
+fetch(`${BASE_PATH}/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=1`)
+  .then(response => {
+    return response.json();
+  })
+  .then(resultado => {
+    return resultado;
+  });
 
 /*
  *Valida una dirección a traves de su referencia catastral
