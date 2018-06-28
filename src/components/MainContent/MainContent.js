@@ -19,7 +19,7 @@ import ContenedorCentral from './../../containers/ContenedorCentral'
 import { fetchDatosUsuario } from '../../actions/usuarios';
 import Expandible from '../ComponenteLareral/Expandible';
 
-const   id_expediente='688685';
+
 
 class MainContent extends Component {
   

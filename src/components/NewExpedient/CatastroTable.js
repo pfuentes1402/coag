@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
@@ -26,9 +26,11 @@ class TablaCatastro extends Component {
             ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", Concello: ""}],
         }
     }
-
+   
+    
 
     render() {
+      
         return (
                 <div 
                   className="ag-theme-balham"
@@ -39,11 +41,19 @@ class TablaCatastro extends Component {
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
-                        rowData={this.props.data}>
+                        rowData={this.props.addressreducida}>
                     </AgGridReact>
                 </div>
             );
     }
 }
-TablaCatastro.propTypes = propTypes;
-export default TablaCatastro;
+
+const mapStateToProps = state => ({
+    direcciones:state.expedientes.adressValidated,
+  });
+
+const mapDispatchToProps =state =>({
+    addressreducida:state.expedientes?state.expedientes.addressreducida:'',
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TablaCatastro);

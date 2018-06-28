@@ -198,6 +198,7 @@ let SyncValidationForm = props => {
 
 CatastroForm.defaultProps = {
   Refcatastral:'',
+  adressaved:'',
 };
 SyncValidationForm = reduxForm({
     form: 'syncValidation', 
@@ -209,7 +210,7 @@ SyncValidationForm = connect(
     state => ({
         catastro: state.expedientes.addressreducida,
         catastroSave: state.form.CatastroForm,
-        adressaved: state.expedientes.adressValidated,
+        adressaved: state.expedientes.adressValidated?state.expedientes.adressValidated:'',
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 
         datosNuevoExpediente:state.expedientes.ExpedientNew,        
        
