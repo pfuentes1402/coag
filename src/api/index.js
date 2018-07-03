@@ -1,5 +1,10 @@
+import store from './../index';
 import ordertree from "../helpers/orderTree";
+import axios from 'axios';
+
 const BASE_PATH = "http://servicios.coag.es/api";
+
+
 
 /*
  *Proporciona la extructura documental de un trabajo
@@ -28,11 +33,17 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
 
 
     export const getExpedienteDatosGeneral = id_expediente =>
-  fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
-    .then(response => {
-      console.log('getExpedienteDatosGeneral');
-      console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
-      console.log(response);
+  fetch(`${BASE_PATH}/expedientes/${id_expediente}`,{
+    method:'GET',     
+    
+          headers: new Headers({     
+            
+            'Token': 'hLpgkmZCcuV4G3Q5RoQ76+/nXDT7WMl+3NxoWKsM4AzUNkPBgf9j+aEQ+O7BNPd9robwsY0hYnsaCXMBO+yYUA=='}),
+  }).then(response => {
+    console.log('accesostore');
+      console.log( store.getState().seleccionado.selectedExpediente);
+     
+      console.log();
       console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
      
       return response.json();
@@ -42,6 +53,7 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
       return resultado;
     });
 
+        
 
 /*
  *Proporciona los grupos temáticos de un trabajo
@@ -197,7 +209,8 @@ let data =  {
 export const test = id_expediente =>
 fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
   .then(response => {
-   
+   console.log('respuesta');
+   console.log(response);
     return response.json();
   })
   .then(resultado => {
@@ -223,6 +236,25 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
       
     return resultado;
   });
+
+
+  export const funcionForma = (datos) => 
+    //console.log(datos);
+    axios.post('http://servicios.coag.es/api/login',     
+    {
+        
+            Usuario: datos.usuario,
+            password: datos.password
+        
+    })
+    .then(response => {
+      console.log('funcionForma');
+      console.log(response);
+       return response;  
+       
+    
+
+});
 
 
  export function getDatosUsuario(id){   
@@ -254,5 +286,4 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
 
  
   
-   
-    
+  

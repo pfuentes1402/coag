@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
+
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
@@ -21,8 +22,11 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 
+
+
 ReactDOM.render((
 <Provider store={store} ><Router>
     {routes}
 </Router></Provider>), document.getElementById('root'));
 
+export default store;

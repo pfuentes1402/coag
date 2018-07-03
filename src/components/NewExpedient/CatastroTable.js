@@ -30,7 +30,7 @@ class TablaCatastro extends Component {
     
 
     render() {
-      
+      console.log(this.props.addressreducida);
         return (
                 <div 
                   className="ag-theme-balham"
@@ -39,10 +39,10 @@ class TablaCatastro extends Component {
                     width: '492px' ,
                     margin: '20px 0 20px 0'}} 
 		            >
-                    <AgGridReact
+                    {/* <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.addressreducida}>
-                    </AgGridReact>
+                    </AgGridReact> */}
                 </div>
             );
     }
@@ -50,10 +50,11 @@ class TablaCatastro extends Component {
 
 const mapStateToProps = state => ({
     direcciones:state.expedientes.adressValidated,
+    addressreducida:state.expedientes.addressreducida?state.expedientes.addressreducida:'',
   });
 
 const mapDispatchToProps =state =>({
-    addressreducida:state.expedientes?state.expedientes.addressreducida:'',
+   
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TablaCatastro);

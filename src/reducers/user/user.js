@@ -1,19 +1,53 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL } from "../../actions/usuarios/types";
 
-const initialState = { name: "userName", config: "useConfig" };
 
-const reducer = (state = { PersonalData: initialState, data: {Expedientes:[]} }, action) => {
-  
-  switch (action.type) {
-    case FETCH_DATOSDEUSUARIO_SUCCESS:
-        
-          return{
-            ...state,
-            data: action.payload,            
-          };
-    default:
-      return state;
-  }
-};
 
-export default reducer;
+const reducer = (state = { DatosUsuarioValidado: {
+      //   "Id": "",
+      // "Usuario": "",
+      // "Id_Colegiado":"" ,
+      // "Id_Entidad":"",
+      // "Es_Usuario_Delegado":"",
+      // "Es_Sociedad":"",
+      // "Mail":"",
+      // "Fecha_Ultima_Conexion":""
+    },
+    DatosConfiguracionesUsuario:{
+      "Id": "",
+      "Idioma_Predefinido": "",
+      "Numero_Trabajos_Acciones_Pendientes": ""
+    }
+    ,
+    Token:"",
+    mensaje:""
+    ,
+    data: {Expedientes:[]} }, action) => {
+      
+      switch (action.type) {
+        case FETCH_DATOSDEUSUARIO_SUCCESS:
+            
+              return{
+                ...state,
+                data: action.payload,            
+              };
+        case FETCH_LOGIN_SUCCESS:
+            
+              return{
+                ...state,
+                DatosUsuarioValidado: action.payload,     
+                mensaje:  action.payload,        
+              };
+        case FETCH_LOGIN_FAIL:
+            
+              return{
+                ...state,
+                mensaje: 'error en el login',            
+              };
+        default:
+          return state;
+    }
+  };
+
+ export default reducer;

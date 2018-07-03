@@ -87,10 +87,11 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
         ...state,            
         ExpedientNew: action.payload,
       };  
-    case FETCH_SAVE_ADRESS_TO_STORE:       
+    case FETCH_SAVE_ADRESS_TO_STORE:  
+    console.log(action.payload);     
       return {
         ...state,
-        adressValidated: state.adressValidated.concat([action.payload]) 
+        adressValidated: action.payload, 
       }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:
        

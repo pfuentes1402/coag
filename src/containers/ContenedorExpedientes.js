@@ -27,8 +27,8 @@ class ContenedorExpedientes extends Component {
       
         this.props.fetchExpedienteDatosGeneral(id_expediente);           
        // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     
-        this.props.getAgentes('111');
-        test('111');
+       // this.props.getAgentes('111');
+       // test('111');
         //this.props.setSelectedExpediente(); 
           
     

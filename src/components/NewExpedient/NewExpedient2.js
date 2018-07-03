@@ -210,7 +210,7 @@ SyncValidationForm = connect(
     state => ({
         catastro: state.expedientes.addressreducida,
         catastroSave: state.form.CatastroForm,
-        adressaved: state.expedientes.adressValidated?state.expedientes.adressValidated:'',
+        adressaved: state.expedientes.adressreducida?state.expedientes.adressreducida:'',
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 
         datosNuevoExpediente:state.expedientes.ExpedientNew,        
        
