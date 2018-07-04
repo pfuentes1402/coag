@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 
 
 import * as types from './types';
-import {History} from 'material-ui-icons'
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -69,9 +68,9 @@ dispatch => {
            dispatch(fetchLoginExito(data.data));           
           
        }).then(history.push('/'))
-        //    .catch(
-        //    () => errorLogin({ error: 'Algo ha salido mal'})
-    //    );
+            .catch(
+            () => errorLogin({ error: 'Algo ha salido mal'})
+        );
    };
 
    export const  loginAndRedirect = (data) =>
