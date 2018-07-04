@@ -1,6 +1,7 @@
 import persistor from './../index';
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
+import * as types from './../actions/usuarios/types';
 
 const BASE_PATH = "http://servicios.coag.es/api";
 
@@ -237,6 +238,15 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
     return resultado;
   });
 
+  export const errorLogin = (data) => (  
+   
+    {
+        
+    type: types.FETCH_LOGIN_FAIL,
+    payload: data
+});
+
+
 
   export const funcionForma = (datos) => 
     //console.log(datos);
@@ -255,6 +265,9 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
 }).catch(error => {
   console.log(error.response)
   console.log(error.response.status);
+  //errorLogin(error);
+  return error.response.status;
+
 });
 
 

@@ -1,10 +1,6 @@
 import { getDatosUsuario, funcionForma } from '../../api';
 import { history } from '../../helpers/hidtory';
 import { withRouter } from "react-router-dom";
-
-
-
-
 import * as types from './types';
 
 export const fetchInit = () => ({
@@ -42,15 +38,22 @@ export const errorLogin = (data) => (
    export const fetchUserLogin = (data) => 
    (dispatch) => {
        
-       dispatch(fetchInit());
+      
        funcionForma(data).then((data) => {
-           
-           dispatch(fetchLoginExito(data.data));           
+        console.log(data);
+           if(data=== 401){
+               console.log('respuesta 401 desde el server');
+               dispatch(errorLogin("login: "+data)); 
+           }else{
+            
+            dispatch(fetchLoginExito(data.data)); 
+           }
+                     
           
-       }).then(history.push('/'))
+       }).then((history.push('/')))
             .catch(
                
-            () => errorLogin(data)
+            // () => errorLogin(data)
         );
    };
 

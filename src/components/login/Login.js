@@ -4,43 +4,28 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { fetchLoginExito, errorLogin, fetchUserLogin, loginAndRedirect } from './../../actions/usuarios/index';
 import {withRouter} from  'react-router-dom';
+import  Mensajes  from './Mensajes';
 
 import "./styles.css";
 
 const Login = (props) => {
-    // const funcionForma = (datos) => {
-    //     console.log(datos);
-    //     axios.post('http://servicios.coag.es/api/login',     
-    //     {
-            
-    //             Usuario: datos.usuario,
-    //             password: datos.password
-            
-    //     })
-    //     .then(function(response){
-    //         console.log(response);
-    //         props.fetchLoginExito(response.data);
-    //     })
-    //     .catch(function(response){
-    //         console.log(response);
-    //         props.errorLogin(response.data);
-    //     })
-
-    // }
+   
     return (
         <div className="centrado">
             <h2>Login</h2>
             {/* {props.mensaje.mensaje} */}
             <LoginFormaFinal onSubmit={ props.fetchUserLogin
             }/>
+           <Mensajes/>
         </div>
     )
 }
 
 
-const mapStateToProps = state => ({
-  
-    // mensaje: state.user.DatosUsuarioValidado!==''? state.user.DatosUsuarioValidado[0].id: '',
+
+   const mapStateToProps = state => ({
+   
+   
     
    });
 

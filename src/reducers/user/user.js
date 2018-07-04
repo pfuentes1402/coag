@@ -21,7 +21,7 @@ const reducer = (state = { DatosUsuarioValidado: {
     }
     ,
     Token:"",
-    mensaje:""
+    mensaje:{}
     ,
     data: {Expedientes:[]} }, action) => {
       
@@ -43,7 +43,6 @@ const reducer = (state = { DatosUsuarioValidado: {
                 mensaje:  'login Correcto',        
               };
         case FETCH_LOGIN_FAIL:
-            
               return{
                 ...state,
                 mensaje: 'error en el login',            
