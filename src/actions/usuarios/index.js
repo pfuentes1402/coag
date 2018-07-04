@@ -38,7 +38,7 @@ export const errorLogin = (data) => (
    export const fetchUserLogin = (data) => 
    (dispatch) => {
        
-      
+       localStorage.setItem('datosusuario', JSON.stringify(data));
        funcionForma(data).then((data) => {
         console.log(data);
            if(data=== 401){
