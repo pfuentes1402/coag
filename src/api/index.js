@@ -248,12 +248,13 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
         
     })
     .then(response => {
+      
       console.log('funcionForma');
       console.log(response);
-       return response;  
-       
-    
-
+       return response;
+}).catch(error => {
+  console.log(error.response)
+  console.log(error.response.status);
 });
 
 

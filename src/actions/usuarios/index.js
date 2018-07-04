@@ -31,7 +31,7 @@ export const fetchLoginExito = (data) => (
     payload: data
 });
 export const errorLogin = (data) => (  
-    
+   
     {
         
     type: types.FETCH_LOGIN_FAIL,
@@ -39,7 +39,30 @@ export const errorLogin = (data) => (
 });
 
 
-/*
+
+   export const fetchUserLogin = (data) => 
+   (dispatch) => {
+       
+       dispatch(fetchInit());
+       funcionForma(data).then((data) => {
+           
+           dispatch(fetchLoginExito(data.data));           
+          
+       }).then(history.push('/'))
+            .catch(
+               
+            () => errorLogin(data)
+        );
+   };
+
+   export const  loginAndRedirect = (data) =>
+     dispatch => {
+         dispatch(fetchUserLogin(data))
+     
+  };
+
+
+   /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)
 */
 export const fetchDatosUsuario = (id_usuario) => 
@@ -60,25 +83,3 @@ dispatch => {
    //     .catch(
     //    () => fetchError({ error: 'Algo ha salido mal'})
    // );
-   export const fetchUserLogin = (data) => 
-   (dispatch) => {
-       
-       dispatch(fetchInit());
-       funcionForma(data).then((data) => {
-           
-           dispatch(fetchLoginExito(data.data));           
-          
-       }).then(history.push('/'))
-        //    .catch(
-        //    () => errorLogin({ error: 'Algo ha salido mal'})
-    //    );
-   };
-
-   export const  loginAndRedirect = (data) =>
-     dispatch => {
-         dispatch(fetchUserLogin(data))
-     
-  };
-
-
-   
