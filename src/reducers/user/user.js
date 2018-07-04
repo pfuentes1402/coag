@@ -5,14 +5,14 @@ import { FETCH_LOGIN_FAIL } from "../../actions/usuarios/types";
 
 
 const reducer = (state = { DatosUsuarioValidado: {
-      //   "Id": "",
-      // "Usuario": "",
-      // "Id_Colegiado":"" ,
-      // "Id_Entidad":"",
-      // "Es_Usuario_Delegado":"",
-      // "Es_Sociedad":"",
-      // "Mail":"",
-      // "Fecha_Ultima_Conexion":""
+        "Id": "",
+      "Usuario": "",
+      "Id_Colegiado":"" ,
+      "Id_Entidad":"",
+      "Es_Usuario_Delegado":"",
+      "Es_Sociedad":"",
+      "Mail":"",
+      "Fecha_Ultima_Conexion":""
     },
     DatosConfiguracionesUsuario:{
       "Id": "",
@@ -27,17 +27,20 @@ const reducer = (state = { DatosUsuarioValidado: {
       
       switch (action.type) {
         case FETCH_DATOSDEUSUARIO_SUCCESS:
-            
+           
               return{
                 ...state,
                 data: action.payload,            
               };
         case FETCH_LOGIN_SUCCESS:
-            
+       
+        const { DatosConfiguracionesUsuario,DatosUsuarioValidado} = action.payload;
+       
               return{
                 ...state,
-                DatosUsuarioValidado: action.payload,     
-                mensaje:  action.payload,        
+                DatosConfiguracionesUsuario: DatosConfiguracionesUsuario[0],     
+                DatosUsuarioValidado: DatosUsuarioValidado[0],     
+                mensaje:  'login Correcto',        
               };
         case FETCH_LOGIN_FAIL:
             
