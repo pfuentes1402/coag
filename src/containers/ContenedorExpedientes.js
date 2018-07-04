@@ -75,6 +75,7 @@ class ContenedorExpedientes extends Component {
                         <div className='divderecha'>
                             <ListWorks/>
                         </div>
+                        
                     </Col>     
                           
                 </Row>

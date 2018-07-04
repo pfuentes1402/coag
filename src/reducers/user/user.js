@@ -21,7 +21,7 @@ const reducer = (state = { DatosUsuarioValidado: {
     }
     ,
     Token:"",
-    mensaje:{}
+    mensaje:""
     ,
     data: {Expedientes:[]} }, action) => {
       
@@ -34,13 +34,13 @@ const reducer = (state = { DatosUsuarioValidado: {
               };
         case FETCH_LOGIN_SUCCESS:
        
-        const { DatosConfiguracionesUsuario,DatosUsuarioValidado} = action.payload;
+        const { DatosConfiguracionesUsuario,DatosUsuarioValidado} = action.payload.data;
        
               return{
                 ...state,
                 DatosConfiguracionesUsuario: DatosConfiguracionesUsuario[0],     
                 DatosUsuarioValidado: DatosUsuarioValidado[0],     
-                mensaje:  'login Correcto',        
+                mensaje:  'login Correcto',                    
               };
         case FETCH_LOGIN_FAIL:
               return{

@@ -9,7 +9,7 @@ const Mensajes = (props) => {
    
     return (
         <div className="centrado">
-            <h2>{this.props.mensaje}</h2>           
+            <h2>{props.mensaje}</h2>           
             
         </div>
     )
@@ -18,7 +18,7 @@ const Mensajes = (props) => {
 
 
 const mapStateToProps = state => ({
-    mensaje: state.user.mensaje || '',
+   
   });
 
 

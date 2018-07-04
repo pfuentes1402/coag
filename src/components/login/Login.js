@@ -16,7 +16,8 @@ const Login = (props) => {
             {/* {props.mensaje.mensaje} */}
             <LoginFormaFinal onSubmit={ props.fetchUserLogin
             }/>
-           <Mensajes/>
+             <h2>{props.mensaje}</h2>         
+          
         </div>
     )
 }
@@ -25,7 +26,7 @@ const Login = (props) => {
 
    const mapStateToProps = state => ({
    
-   
+    mensaje: state.user.mensaje || '',
     
    });
 

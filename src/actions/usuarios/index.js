@@ -46,11 +46,12 @@ export const errorLogin = (data) => (
                dispatch(errorLogin("login: "+data)); 
            }else{
             
-            dispatch(fetchLoginExito(data.data)); 
+            dispatch(fetchLoginExito(data)); 
+        history.push('/');
            }
                      
           
-       }).then((history.push('/')))
+       })
             .catch(
                
             // () => errorLogin(data)
