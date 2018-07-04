@@ -11,6 +11,7 @@ export default (
   <div>
       <Route component={MainContainer}/>
       <Route exact path='/' component={HomeContainer}/>
+      <Route exact path='/home' component={HomeContainer}/>
       <Route path='/nuevo-expediente' component={NuevoExpedienteContainer}/>
       <Route path='/selector-expediente' component={SelectorTipoTrabajoContainer}/>
       <Route path='/login' component={Login}/>

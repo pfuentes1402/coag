@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-
+import { history } from './helpers/hidtory';
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -25,7 +25,7 @@ const store = createStore(
 
 
 ReactDOM.render((
-<Provider store={store} ><Router>
+<Provider store={store} ><Router history={history}>
     {routes}
 </Router></Provider>), document.getElementById('root'));
 

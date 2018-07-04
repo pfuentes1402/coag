@@ -1,10 +1,12 @@
 import { getDatosUsuario, funcionForma } from '../../api';
+import { history } from '../../helpers/hidtory';
+import { withRouter } from "react-router-dom";
+
 
 
 
 import * as types from './types';
-
-
+import {History} from 'material-ui-icons'
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -64,19 +66,19 @@ dispatch => {
        dispatch(fetchInit());
        funcionForma(data).then((data) => {
            
-           dispatch(fetchLoginExito(data.data));
+           dispatch(fetchLoginExito(data.data));           
           
-       })
-           .catch(
-           () => errorLogin({ error: 'Algo ha salido mal'})
-       );
+       }).then(history.push('/'))
+        //    .catch(
+        //    () => errorLogin({ error: 'Algo ha salido mal'})
+    //    );
    };
-   
 
-   export function loginAndRedirect(data,history) {
-    return dispatch => dispatch(fetchUserLogin(data))
-      .then(() => history.push('/'))
-      .catch(() => history.push('/failure/path'));
-  }
+   export const  loginAndRedirect = (data) =>
+     dispatch => {
+         dispatch(fetchUserLogin(data))
+     
+  };
+
 
    

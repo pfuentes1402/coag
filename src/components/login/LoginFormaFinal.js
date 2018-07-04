@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form';
+import { Route } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 
 
@@ -44,6 +46,16 @@ const renderField = ({
             </span>))}
     </div>
   </div>
+const Buttonloggin = () => (
+  <Route render={({ history}) => (
+    <Button
+      onClick={() => { history.push('/') }}
+      variant="raised" color="primary" 
+    >
+      login
+    </Button>
+  )} />
+)
 
 
 const LoginFormaFinal = props => {
@@ -53,8 +65,8 @@ const LoginFormaFinal = props => {
       <Field name="usuario" type="usuario" component={renderField} label="usuario" />
       <Field name="password" type="password" component={renderField} label="Password" />
       <div>
-        <button type="submit" disabled={submitting}>
-          Enviar
+        <button type="submit" disabled={submitting}>   
+        Login      
         </button>
         <button type="button" disabled={pristine || submitting} onClick={reset}>
           Limpiar Valores
@@ -68,3 +80,8 @@ export default reduxForm({
   form: 'loginValidation', // a unique identifier for this form
   validate// <--- validation function given to redux-form
 })(LoginFormaFinal)
+
+
+
+
+
