@@ -1,4 +1,4 @@
-import store from './../index';
+import persistor from './../index';
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 
@@ -41,7 +41,7 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
             'Token': 'hLpgkmZCcuV4G3Q5RoQ76+/nXDT7WMl+3NxoWKsM4AzUNkPBgf9j+aEQ+O7BNPd9robwsY0hYnsaCXMBO+yYUA=='}),
   }).then(response => {
     console.log('accesostore');
-      console.log( store.getState().seleccionado.selectedExpediente);
+      console.log( persistor.getState().seleccionado.selectedExpediente);
      
       console.log();
       console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
