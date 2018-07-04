@@ -58,6 +58,7 @@
     "reactstrap": "^5.0.0-beta.3",
     "redux": "^3.7.2",
     "redux-form": "^7.3.0",
+    "redux-persist": "^5.10.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "resolve": "1.6.0",
