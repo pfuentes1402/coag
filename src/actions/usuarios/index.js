@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 
 
 import * as types from './types';
-import {History} from 'material-ui-icons'
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT

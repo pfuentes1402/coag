@@ -8,7 +8,8 @@ import thunkMiddleware from 'redux-thunk';
 
 import './index.css';
 import App from './App';
-import { BrowserRouter as Router } from 'react-router-dom'
+//import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
