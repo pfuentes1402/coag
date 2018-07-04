@@ -7,6 +7,7 @@ import coag from './images/coag.jpg';
 import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import { connect } from 'react-redux';
 
 const styles = {
     root: {
@@ -60,6 +61,17 @@ class MenuAppBar extends React.Component {
               </Button>
             )} />
           )
+          const Profile = () => (
+            <Route render={({ history}) => (
+                <Button
+                  color="link"
+                  onClick={() => { history.push('/login') }}
+                  variant="raised" className={classes.button}
+                >
+                  { this.props.usuario }
+                </Button>
+              )} />
+          )
         
 
         return (
@@ -71,6 +83,9 @@ class MenuAppBar extends React.Component {
                 <ButtonNew/>{' '}
                 <Button outline color="secondary">Tramitación en lote<FontAwesome name='rocket'/></Button>
             </Col>
+            <Col sm="3">
+                <Profile/>
+            </Col>
             </Row>
             </Container>
         );
@@ -81,4 +96,17 @@ MenuAppBar.propTypes = {
     classes: PropTypes.object,
 };
 
-export default withStyles(styles)(MenuAppBar);
+const mapStateToProps = state => ({
+    
+      usuario: state.user.DatosUsuarioValidado.Usuario || 'Login',
+      
+     });
+  
+  
+  const mapDispatchToProps = {
+
+      
+  };
+  
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MenuAppBar));
