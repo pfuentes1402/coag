@@ -42,11 +42,12 @@ const persistor  = persistStore(store);
 
 ReactDOM.render((
 <Provider store={store} >
-<PersistGate loading={null} persistor={persistor}>
-<Router history={history}>
-    {routes}
-</Router>
- </PersistGate>
+  <PersistGate loading={null} persistor={persistor}>
+    <Router history={history}>
+        {routes}
+    </Router>
+    {/* <App/> */}
+  </PersistGate>
 </Provider>), document.getElementById('root'));
 
 export default persistor;

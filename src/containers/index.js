@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import {Grid} from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import SubHeader from '../components/SubHeader/SubHeader';
+import HomeContainer from '../containers/HomeContainer';
 
 
 class MainContainer extends Component {
@@ -15,6 +16,8 @@ class MainContainer extends Component {
             <div className="mainContainer">
                <AppHeader/>
                <SubHeader title={this.state.title}/>
+               <HomeContainer/>
+               
             </div>
         );
     }
