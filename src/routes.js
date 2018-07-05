@@ -14,7 +14,7 @@ export default (
       {/* <Route component={Login}/> */}
       {/* <Route exact path='/' component={MainContainer}/>
       <Route exact path='/home' component={HomeContainer}/> */}
-      <Route path='/nuevo-expediente' component={NuevoExpedienteContainer}/>
+      <PrivateRoute path='/nuevo-expediente' component={NuevoExpedienteContainer}/>
       <Route path='/selector-expediente' component={SelectorTipoTrabajoContainer}/>
       <Route path='/login' component={Login}/>
 

@@ -47,7 +47,10 @@ export const errorLogin = (data) => (
          
                dispatch(errorLogin("login: "+data)); 
            }else{
-            
+               if(data.headers.clienteclave)
+                    localStorage.setItem('clienteclave', JSON.stringify(data.headers.clienteclave));
+                if(data.headers.clienteid)
+                    localStorage.setItem('clienteid', JSON.stringify(data.headers.clienteid)); 
             dispatch(fetchLoginExito(data));
             localStorage.setItem('user', JSON.stringify(data));            
             history.push('/');
