@@ -5,21 +5,24 @@ import { Button } from 'reactstrap';
 
 
 
-const validate = values => {
+const asyncValidate = async (values, dispatch, props, fieldString) => {
   const errors = {}
   // if (!values.email) {
   //   errors.email = 'Requerido'
   // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
   //   errors.email = 'Invalid email address'
   // }
-
+  if(!values.usuario){
+    errors.usuario = "Requerido";
+  }
   if(!values.password){
       errors.password = "Requerido";
   } else if( values.password.length < 6 ){
       errors.password = "Mínimo 6 letras";
   }
-
-  return errors
+    throw errors;
+  //return new Promise((resolve, reject) => reject(errors))
+  //return errors
 }
 
 
@@ -34,10 +37,10 @@ const renderField = ({
       {label}
     </label>
     <div>
-      <input {...input} placeholder={label} type={type} />
+      <input className={touched && error && 'error'}{...input} placeholder={label} type={type} />
       {touched &&
         ((error &&
-          <span>
+          <span className='errorMessage'>
             {error}
           </span>) ||
           (warning &&
@@ -62,15 +65,19 @@ const LoginFormaFinal = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <form   onSubmit={handleSubmit}>
-      <Field name="usuario" type="usuario" component={renderField} label="usuario" />
-      <Field name="password" type="password" component={renderField} label="Password" />
+      <div className="inputDiv">
+          <Field name="usuario" type="usuario" component={renderField} label="Usuario" />
+      </div>
+      <div className="inputDiv">
+          <Field name="password" type="password" component={renderField} label="Contraseña" />
+      </div>
       <div>
-        <button type="submit" disabled={submitting}>   
-        Login      
+        <button className="loginbutton" type="submit" disabled={submitting}>   
+        Entrar     
         </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Limpiar Valores
-        </button>
+      </div>
+      <div className="recuperar">
+        <a href="">¿Has olvidado tu contraseña?</a>
       </div>
     </form>
   )
@@ -78,7 +85,8 @@ const LoginFormaFinal = props => {
 
 export default reduxForm({
   form: 'loginValidation', // a unique identifier for this form
-  validate// <--- validation function given to redux-form
+  asyncValidate,
+  asyncBlurFields: [],
 })(LoginFormaFinal)
 
 
