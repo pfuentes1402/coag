@@ -40,8 +40,6 @@ export const errorLogin = (data) => (
 
    export const fetchUserLogin = (data) => 
    (dispatch) => {
-       
-       localStorage.setItem('datosusuario', JSON.stringify(data));
        funcionForma(data).then((data) => {
      
            if(data=== 401){
@@ -49,7 +47,10 @@ export const errorLogin = (data) => (
          
                dispatch(errorLogin("login: "+data)); 
            }else{
-            
+               if(data.headers.clienteclave)
+                    localStorage.setItem('clienteclave', JSON.stringify(data.headers.clienteclave));
+                if(data.headers.clienteid)
+                    localStorage.setItem('clienteid', JSON.stringify(data.headers.clienteid)); 
             dispatch(fetchLoginExito(data));
             console.log(data);
             localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
