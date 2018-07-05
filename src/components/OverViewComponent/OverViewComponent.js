@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Container, Row, Col,  CardBody, CardTitle} from "reactstrap";
-import {Divider, Input} from 'material-ui';
-import { Field, reduxForm , initialize} from "redux-form";
+import React from 'react';
+import { Container, Row, Col, CardBody,} from "reactstrap";
+import { Field, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
 import TablaCatastro from "../NewExpedient/CatastroTable";
 
@@ -29,7 +28,7 @@ const renderField = ({
   );
 
   let OverViewComponent = props => {
-    const {adressaved, datosNuevoExpediente } = props;
+    const {datosNuevoExpediente } = props;
   
     return (
         <CardBody className="cardBody-ficha">

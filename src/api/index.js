@@ -301,3 +301,17 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
  
   
   
+export const getToken = () =>
+    axios.post('http://servicios.coag.es/api/authenticate',     
+    {ClienteId: localStorage.getItem('clienteid'),
+    ClienteClave: localStorage.getItem('clienteclave')
+    })
+    .then(response => {
+      console.log('getToken');
+      console.log(response.headers.token);
+      return response;
+    }).catch(error => {
+      console.log(error.response)
+      console.log(error.response.status);
+      return error.response.status;
+  });

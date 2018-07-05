@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
-import { Field, reduxForm , initialize} from "redux-form";
+import React from 'react';
+import { Field, reduxForm } from "redux-form";
 import { Container, Row, Col, UncontrolledAlert, Button } from "reactstrap";
 import TablaCatastro from "./CatastroTable";
-import PropTypes from 'prop-types';
 import "./NewExpedient.css";
-import { Divider , colors} from "material-ui";
+import { colors} from "material-ui";
 import { connect } from 'react-redux';
 import CatastroForm from './CatastroForm';
-import { formValueSelector } from 'redux-form'; 
 
-import {validateAddress, postUbicacion, saveAdressTostore, handleSubmit } from '../../actions/expedientes';
+import {validateAddress, postUbicacion, saveAdressTostore } from '../../actions/expedientes';
 import {DriveEta, Input} from 'material-ui-icons'
 
 

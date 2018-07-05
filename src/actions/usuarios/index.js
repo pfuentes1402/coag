@@ -1,4 +1,4 @@
-import { getDatosUsuario, funcionForma } from '../../api';
+import { getDatosUsuario, funcionForma, getToken } from '../../api';
 import { history } from '../../helpers/hidtory';
 import { withRouter } from "react-router-dom";
 import * as types from './types';
@@ -19,10 +19,7 @@ export const fetchError = (error) => ({
 });
 
 
-export const fetchLoginExito = (data) => (  
-    
-    {
-        
+export const fetchLoginExito = (data) => ({
     type: types.FETCH_LOGIN_SUCCESS,
     payload: data
 });
@@ -41,22 +38,24 @@ export const errorLogin = (data) => (
    export const fetchUserLogin = (data) => 
    (dispatch) => {
        funcionForma(data).then((data) => {
-     
            if(data=== 401){
                console.log('respuesta 401 desde el server');
          
                dispatch(errorLogin("login: "+data)); 
            }else{
-               if(data.headers.clienteclave)
-                    localStorage.setItem('clienteclave', JSON.stringify(data.headers.clienteclave));
-                if(data.headers.clienteid)
-                    localStorage.setItem('clienteid', JSON.stringify(data.headers.clienteid)); 
-            dispatch(fetchLoginExito(data));
-            localStorage.setItem('user', JSON.stringify(data));            
-            history.push('/');
+               if(data.headers.clienteclave && data.headers.clienteid){
+                    localStorage.setItem('clienteclave', data.headers.clienteclave);
+                    localStorage.setItem('clienteid', data.headers.clienteid);
+                    getToken().then((response) => {
+                        if(response.status === 200){
+                            data.data.token= response.headers.token;
+                            dispatch(fetchLoginExito(data));
+                            localStorage.setItem('user', JSON.stringify(data));            
+                            history.push('/');
+                        }
+                    });
+                }
            }
-                     
-          
        })
             .catch(
                
