@@ -12,15 +12,13 @@ const asyncValidate = async (values, dispatch, props, fieldString) => {
   // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
   //   errors.email = 'Invalid email address'
   // }
-  if(!values.usuario){
-    errors.usuario = "Requerido";
-  }
   if(!values.password){
       errors.password = "Requerido";
+      throw errors;
   } else if( values.password.length < 6 ){
       errors.password = "Mínimo 6 letras";
+      throw errors;
   }
-    throw errors;
   //return new Promise((resolve, reject) => reject(errors))
   //return errors
 }
@@ -37,7 +35,7 @@ const renderField = ({
       {label}
     </label>
     <div>
-      <input className={touched && error && 'error'}{...input} placeholder={label} type={type} />
+      <input className={touched && error ? 'error' : ''}{...input} placeholder={label} type={type} />
       {touched &&
         ((error &&
           <span className='errorMessage'>
