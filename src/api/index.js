@@ -325,7 +325,11 @@ api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(resp
   }
 
  
-  
+/*
+ * Proporciona un token de autorización necesario para autentificar las peticiones API
+ * Parametros 
+ *    Recoge ClienteId y ClienteClave del localStorage del navegador
+*/  
   
 export const getToken = () =>
     axios.post('http://servicios.coag.es/api/authenticate',     
@@ -333,11 +337,7 @@ export const getToken = () =>
     ClienteClave: localStorage.getItem('clienteclave')
     })
     .then(response => {
-      console.log('getToken');
-      console.log(response.headers.token);
       return response;
     }).catch(error => {
-      console.log(error.response)
-      console.log(error.response.status);
       return error.response.status;
   });
