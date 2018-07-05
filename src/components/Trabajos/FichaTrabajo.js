@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container, Row, Col,  CardBody, CardTitle} from "reactstrap";
-import {Divider, Input, Card, CardHeader} from 'material-ui';
-import { Field, reduxForm , initialize} from "redux-form";
+import { Field, reduxForm } from "redux-form";
 import { connect } from 'react-redux';
-import  ExpedientContainer from '../../components/MainContent/ExpedientContainer';
 
 
 import './styles.css';
