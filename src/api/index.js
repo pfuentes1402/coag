@@ -1,4 +1,4 @@
-
+import store from './../index'
 
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
@@ -17,7 +17,12 @@ const BASE_PATH = "http://servicios.coag.es/api";
   
 // }
 
-//const token = store.getState().user.Token;
+if(store){
+  const token = store.getState();
+  console.log(token)
+  console.log('gol')
+}
+
 
 
 /*
@@ -25,13 +30,15 @@ const BASE_PATH = "http://servicios.coag.es/api";
 *Configuración base para las llamadas axios
 *
 */
-const api = axios.create({
+const api = axios.create(
+  {
+  
   baseURL: BASE_PATH,
   timeout: 10000,
   headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'Token':`${token}`,
+       'Token': store ? store.getState().user.token : '',
  
   }
 });
@@ -70,7 +77,8 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
     
           headers: new Headers({     
             
-            'Token': 'hLpgkmZCcuV4G3Q5RoQ76+/nXDT7WMl+3NxoWKsM4AzUNkPBgf9j+aEQ+O7BNPd9robwsY0hYnsaCXMBO+yYUA=='}),
+            'Token':  store ? store.getState().user.token : '',
+            }),
   }).then(response => {
     console.log('accesostore');
      

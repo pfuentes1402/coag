@@ -39,6 +39,7 @@ const store = createStore(
 const persistor  = persistStore(store);
 
 
+
 ReactDOM.render((
 <Provider store={store} >
   <PersistGate loading={null} persistor={persistor}>
@@ -47,6 +48,8 @@ ReactDOM.render((
     </Router>
   </PersistGate>
 </Provider>), document.getElementById('root'));
+
+export default store;
 
 
 
