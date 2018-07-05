@@ -51,7 +51,8 @@ export const errorLogin = (data) => (
            }else{
             
             dispatch(fetchLoginExito(data));
-            localStorage.setItem('user', JSON.stringify(data));            
+            console.log(data);
+            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
             history.push('/');
            }
                      
@@ -71,7 +72,7 @@ export const errorLogin = (data) => (
             type: PURGE,
             key: "root",   
             result: () => null        
-    })
+    }); 
         
     };
 
