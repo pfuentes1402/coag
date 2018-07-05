@@ -44,7 +44,9 @@ class MenuAppBar extends React.Component {
     };
     handleLoggout = () =>{
       console.log("metodo de loggout")
-      localStorage.removeItem('user');
+     
+      localStorage.clear();
+      this.props.purgarStore();
       history.push('/');
     }
     
@@ -94,6 +96,7 @@ class MenuAppBar extends React.Component {
                   color="link"
                 //   onClick={() => { history.push('/') }}
                   onClick={this.handleLoggout}
+                  
                   variant="raised" className={classes.button}
                 >
                   logout
