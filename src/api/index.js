@@ -247,28 +247,54 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
 });
 
 
+const api = axios.create({
+  baseURL: BASE_PATH,
+  timeout: 10000,
+  headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+ 
+  }
+});
+
+
+
+
+
+
 
   export const funcionForma = (datos) => 
     //console.log(datos);
-    axios.post('http://servicios.coag.es/api/login',     
-    {
+//     axios.post('http://servicios.coag.es/api/login',   
+//     {
         
-            Usuario: datos.usuario,
-            password: datos.password
+//             Usuario: datos.usuario,
+//             password: datos.password
         
-    })
-    .then(response => {
+//     })
+//     .then(response => {
       
-      console.log('funcionForma');
-      console.log(response);
-       return response;
-}).catch(error => {
+//       console.log('funcionForma');
+//       console.log(response);
+//        return response;
+// }).catch(error => {
+//   console.log(error.response)
+//   console.log(error.response.status);
+//   //errorLogin(error);
+//   return error.response.status;
+
+// })
+
+api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(response => {      
+    console.log('funcionForma');
+    console.log(response);
+    return response;
+  }).catch(error => {
   console.log(error.response)
   console.log(error.response.status);
   //errorLogin(error);
   return error.response.status;
-
-});
+  });
 
 
  export function getDatosUsuario(id){   

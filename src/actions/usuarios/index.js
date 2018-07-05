@@ -50,7 +50,7 @@ export const errorLogin = (data) => (
                         if(response.status === 200){
                             data.data.token= response.headers.token;
                             dispatch(fetchLoginExito(data));
-                            localStorage.setItem('user', JSON.stringify(data));            
+                            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
                             history.push('/');
                         }
                     });
@@ -71,7 +71,7 @@ export const errorLogin = (data) => (
             type: PURGE,
             key: "root",   
             result: () => null        
-    })
+    }); 
         
     };
 

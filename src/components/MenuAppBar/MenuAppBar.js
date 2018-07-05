@@ -8,7 +8,8 @@ import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
-import { purgarStore } from './../../actions/usuarios/index'
+import { purgarStore } from './../../actions/usuarios/index';
+import { history } from '../../helpers/hidtory';
 
 const styles = {
     root: {
@@ -24,6 +25,12 @@ const styles = {
 };
 
 class MenuAppBar extends React.Component {
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    
+    this.handleLoggout = this.handleLoggout.bind(this);
+  }
     state = {
         auth: true,
         anchorEl: null,
@@ -35,7 +42,12 @@ class MenuAppBar extends React.Component {
     handleClose = () => {
         this.setState({anchorEl: null});
     };
- 
+    handleLoggout = () =>{
+      console.log("metodo de loggout")
+      localStorage.removeItem('user');
+      history.push('/');
+    }
+    
 
     render() {
         const {classes} = this.props;
@@ -81,7 +93,7 @@ class MenuAppBar extends React.Component {
                 <Button
                   color="link"
                 //   onClick={() => { history.push('/') }}
-                  onClick={(e) =>this.props.purgarStore}
+                  onClick={this.handleLoggout}
                   variant="raised" className={classes.button}
                 >
                   logout
@@ -104,6 +116,7 @@ class MenuAppBar extends React.Component {
             <Col sm="3">
                 <Profile/>
                 <Logout/>
+                
             </Col>
             </Row>
             </Container>
