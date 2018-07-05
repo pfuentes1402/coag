@@ -35,6 +35,10 @@
     width: 100%;
     padding:12px;
 }
+.login .loginbutton:hover{
+    box-shadow: 0px 1px 3px 1px #666;
+    cursor: pointer;
+}
 .login .inputDiv input{
     width: 100%!important;
 }
