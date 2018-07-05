@@ -40,7 +40,7 @@ const mapStateToProps = state => ({
    // expedientes: state.expedientes.arbolEstructuraDocumentalTrabajo,
     trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
-    expedientes:state.user.data.Expedientes?state.user.data.Expedientes:"",
+    //expedientes:state.user.data.Expedientes || "",
   });
 
 const mapDispatchToProps = {

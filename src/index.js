@@ -48,4 +48,5 @@ ReactDOM.render((
   </PersistGate>
 </Provider>), document.getElementById('root'));
 
-export default persistor;
+
+
