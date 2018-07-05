@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MainContent from '../components/MainContent/MainContent';
+import MainContainer from '../components/MainContent/MainContent';
+
 import { withStyles } from 'material-ui/styles';
 import {Grid} from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
@@ -22,6 +24,7 @@ class HomeContainer extends Component {
         return (
             <div className="homeContainer">
                 <MainContent/>
+               
             </div>
         );
     }

@@ -8,6 +8,7 @@ import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
+import { purgarStore } from './../../actions/usuarios/index'
 
 const styles = {
     root: {
@@ -34,6 +35,7 @@ class MenuAppBar extends React.Component {
     handleClose = () => {
         this.setState({anchorEl: null});
     };
+ 
 
     render() {
         const {classes} = this.props;
@@ -70,6 +72,22 @@ class MenuAppBar extends React.Component {
                 >
                   { this.props.usuario }
                 </Button>
+                
+                
+              )} />
+          )
+          const Logout = () => (
+            <Route render={({ history}) => (
+                <Button
+                  color="link"
+                //   onClick={() => { history.push('/') }}
+                  onClick={(e) =>this.props.purgarStore}
+                  variant="raised" className={classes.button}
+                >
+                  logout
+                </Button>
+                
+                
               )} />
           )
         
@@ -85,6 +103,7 @@ class MenuAppBar extends React.Component {
             </Col>
             <Col sm="3">
                 <Profile/>
+                <Logout/>
             </Col>
             </Row>
             </Container>
@@ -104,8 +123,8 @@ const mapStateToProps = state => ({
   
   
   const mapDispatchToProps = {
-
-      
+    
+    purgarStore,
   };
   
 

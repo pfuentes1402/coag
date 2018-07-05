@@ -2,6 +2,7 @@ import { getDatosUsuario, funcionForma } from '../../api';
 import { history } from '../../helpers/hidtory';
 import { withRouter } from "react-router-dom";
 import * as types from './types';
+import { PURGE } from 'redux-persist';
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -35,19 +36,23 @@ export const errorLogin = (data) => (
 
 
 
+
+
    export const fetchUserLogin = (data) => 
    (dispatch) => {
        
        localStorage.setItem('datosusuario', JSON.stringify(data));
        funcionForma(data).then((data) => {
-        console.log(data);
+     
            if(data=== 401){
                console.log('respuesta 401 desde el server');
+         
                dispatch(errorLogin("login: "+data)); 
            }else{
             
-            dispatch(fetchLoginExito(data)); 
-        history.push('/');
+            dispatch(fetchLoginExito(data));
+            localStorage.setItem('user', JSON.stringify(data));            
+            history.push('/');
            }
                      
           
@@ -58,11 +63,20 @@ export const errorLogin = (data) => (
         );
    };
 
-   export const  loginAndRedirect = (data) =>
-     dispatch => {
-         dispatch(fetchUserLogin(data))
-     
-  };
+   export const  purgarStore = () =>
+
+        (dispatch) => {
+            console.log('purgar');
+            dispatch({
+            type: PURGE,
+            key: "root",   
+            result: () => null        
+    })
+        
+    };
+
+   
+
 
 
    /*

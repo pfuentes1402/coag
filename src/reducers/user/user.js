@@ -1,6 +1,7 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL } from "../../actions/usuarios/types";
+import { PURGE, REHYDRATE } from 'redux-persist';
 
 
 
@@ -46,6 +47,11 @@ const reducer = (state = { DatosUsuarioValidado: {
               return{
                 ...state,
                 mensaje: 'error en el login',            
+              };
+        case PURGE:
+              console.log("PURGING!!!!"); 
+              return{
+                         
               };
         default:
           return state;
