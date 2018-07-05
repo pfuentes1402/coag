@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import ExpedienteLevel from './ExpedienteLevel';
-import Expandible from './Expandible';
 import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected,fetchSelectedExpediente} from '../../actions/expedientes/index';
-import ConteArboles from './ConteArboles';
-import {Divider} from 'material-ui'
+
 import "./styles.css";
 
 
@@ -42,12 +38,11 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
 
     const strToComponentExp = expedientes =>(
         
-        expedientes.map(expediente =>(
+        expedientes.map((expediente,i) =>(
            
-      <div onClick={()=>click(expediente)}>
-      <div>{expediente.Expediente}</div>
-          
-      </div>  
+            <div key={i} onClick={()=>click(expediente)}>
+                <div key={i}>{expediente.Expediente}</div>
+            </div>  
         ))
     );
 

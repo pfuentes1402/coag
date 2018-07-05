@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Container, Row, Col } from "reactstrap";
 import { Collapse, CardBody, Card, CardHeader } from 'reactstrap';
 
@@ -84,7 +83,7 @@ class SelectorTipoTrabajo extends Component {
   }
 
   render() {
-    const {cards, collapse} = this.state;
+    const {} = this.state;
     return (
       <div className="container">
           <h3 className="page-header"></h3>
@@ -140,25 +139,25 @@ class SelectorTipoTrabajo extends Component {
                       <Col sm="6" >
                       <div className="trabajos-tramitar">
                         <p className="fase"><b>Proyecto</b></p>
-                        {this.props.fasesTrabajos.map(trabajo =>{
-                          if(trabajo.Fase == "Proyecto"){
-                            return <p>{trabajo.Trabajo_Titulo}</p>
+                        {this.props.fasesTrabajos.map((trabajo,i) =>{
+                          if(trabajo.Fase === "Proyecto"){
+                            return <p key={i} >{trabajo.Trabajo_Titulo}</p>
                           }
                         })}
                       </div>
                       <div className="trabajos-tramitar">
                         <p className="fase"><b>Dirección de ejecución</b></p>
-                        {this.props.fasesTrabajos.map(trabajo =>{
-                          if(trabajo.Fase == "Dirección de ejec."){
-                            return <p>{trabajo.Trabajo_Titulo}</p>
+                        {this.props.fasesTrabajos.map((trabajo,i) =>{
+                          if(trabajo.Fase === "Dirección de ejec."){
+                            return <p key={i}>{trabajo.Trabajo_Titulo}</p>
                           }
                         })}
                       </div>
                       <div className="trabajos-tramitar">
                         <p className="fase"><b>Seguridad y salud</b></p>
-                        {this.props.fasesTrabajos.map(trabajo =>{
-                          if(trabajo.Fase == "Seguridad y salud"){
-                            return <p>{trabajo.Trabajo_Titulo}</p>
+                        {this.props.fasesTrabajos.map((trabajo,i) =>{
+                          if(trabajo.Fase === "Seguridad y salud"){
+                            return <p key={i}>{trabajo.Trabajo_Titulo}</p>
                           }
                         })}
                       </div>
@@ -166,10 +165,10 @@ class SelectorTipoTrabajo extends Component {
                       <Col sm="6">
                       <div className="trabajos-tramitar">
                         <p className="fase"><b>Dirección de obra</b></p>
-                        {this.props.fasesTrabajos.map(trabajo =>{
-                          if(trabajo.Fase == "Dirección de obra"){
-                            return <p>{trabajo.Trabajo_Titulo}</p>
-                          }
+                        {this.props.fasesTrabajos.map((trabajo,i) =>{
+                          if(trabajo.Fase === "Dirección de obra"){
+                            return <p key={i}>{trabajo.Trabajo_Titulo}</p>
+                          };
                         })}
                       </div>
                       </Col>

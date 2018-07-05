@@ -50,7 +50,7 @@ class TablaCatastro extends Component {
 
 const mapStateToProps = state => ({
     direcciones:state.expedientes.adressValidated,
-    addressreducida:state.expedientes.addressreducida?state.expedientes.addressreducida:'',
+    addressreducida:state.expedientes.addressreducida || '',
   });
 
 const mapDispatchToProps =state =>({

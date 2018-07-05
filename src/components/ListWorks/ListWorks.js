@@ -11,7 +11,7 @@ class ListWorks extends Component {
                     <Col> 
                         <Card className="card-Trabajos">
                             <CardHeader>Trabajos</CardHeader>                                                                
-                                <CardText  className="card-body-Trabajos"><TablaTrabajos data={this.props.trabajos}/></CardText>
+                                <CardText tag="div" className="card-body-Trabajos"><TablaTrabajos data={this.props.trabajos}/></CardText>
                         </Card>
                     </Col>
              </Row>         

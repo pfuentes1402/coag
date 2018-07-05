@@ -8,16 +8,11 @@ import {test} from '../api/index'
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 
-import ListWorks from '../components/ListWorks/ListWorks';
-import OverViewComponent from '../components/OverViewComponent/OverViewComponent';
 
-import ExpedientType from '../components/MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
 import FichaTrabajo from '../components/Trabajos/FichaTrabajo';
 import TrabajosContainer from '../components/Trabajos/TrabajosContainer';
 
-
-const   id_expediente='688685';
 
 class ContenedorExpedientes extends Component {
 
@@ -26,7 +21,7 @@ class ContenedorExpedientes extends Component {
         let idtrabajo = this.props.selectedData.id_Trabajo;
  
       
-        this.props.fetchExpedienteDatosGeneral(id_expediente);           
+        //this.props.fetchExpedienteDatosGeneral(id_expediente);           
        // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     
         this.props.getAgentes('111');
         //test('111');
@@ -55,7 +50,7 @@ class ContenedorExpedientes extends Component {
                         <div className='divderecha'>                           
                             <Card>                             
                                 <CardHeader><p>Ficha del trabajo</p></CardHeader>    
-                                    <CardText> <FichaTrabajo/> </CardText>
+                                    <CardText tag="div"> <FichaTrabajo/> </CardText>
                             </Card> 
                         </div>   
                         <div className='divderecha'>             
@@ -76,8 +71,8 @@ class ContenedorExpedientes extends Component {
                                 <div className="trabajos">
                                 <TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
                                 </div>
-                                <CardText className="trabajos"><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
-                                <CardText className="trabajos"> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
+                                <CardText tag="div" className="trabajos"><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
+                                <CardText tag="div" className="trabajos"> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
                         </Card>    
 
                         </div>

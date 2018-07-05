@@ -8,14 +8,12 @@ class ExpedientContainer extends Component {
 
 
     render() {
-      console.log('ExpedienteContainer');
-      console.log(this.props.datosAgentes);
-      console.log('ExpedienteContainer');
+      //console.log(this.props.datosAgentes);
         return (
             <div className="cajaAgentes">
                  <Card>
                    <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
-                    <CardText>
+                    <CardText tag="div">
                         <AgentsTable data={this.props.datosAgentes}/>
                     </CardText>
                 </Card> 

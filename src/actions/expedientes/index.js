@@ -97,7 +97,6 @@ export const fetchExpedienteDatosGeneral = (id_expediente) =>
 (dispatch) => {
         
     getExpedienteDatosGeneral(id_expediente).then((expedientes) => {
-        
         dispatch(fetchSuccesExpediente(expedientes));
     })
         .catch(
@@ -111,8 +110,7 @@ export const validateAddress = (id_ubicacion) =>
 
 (dispatch) => {
     getValidateAddress(id_ubicacion).then((response) => {
-        
-        dispatch(fetchAddress(response, id_ubicacion));
+        dispatch(fetchAddress(response.data, id_ubicacion));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})

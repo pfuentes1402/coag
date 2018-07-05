@@ -5,7 +5,7 @@ import NuevoExpediente2 from '../components/NewExpedient/NewExpedient2';
 
 import moment from 'moment';
 import { validateAddress , postUbicacion } from '../actions/expedientes/';
-import {postNuevoExpediente} from '../api/index';
+//import {postNuevoExpediente} from '../api/index';
 
 
 

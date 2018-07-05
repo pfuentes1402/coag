@@ -109,7 +109,7 @@ OverViewComponent = connect(
     state => ({
         initialValues:state.expedientes.expedienteData.Expediente  ? state.expedientes.expedienteData.Expediente[0]:"",
         datosNuevoExpediente:state.expedientes.expedienteData,        
-        //adressaved: state.expedientes.adressValidated,     
+        adressaved: state.expedientes.adressValidated,     
        
     }),
     {    

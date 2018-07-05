@@ -34,7 +34,7 @@ class AgentsTable extends Component {
     render() {
         return (
             <CardBody  className="card-body-Trabajos">
-            <CardText>
+            <CardText tag="div">
 
                 <div 
                   className="ag-theme-balham"

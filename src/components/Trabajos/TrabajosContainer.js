@@ -11,7 +11,7 @@ class TrabajosContainer extends Component {
                 <div class="cajaAgentes">
                     <Card>
                     <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
-                            <CardText> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>
+                            <CardText tag="div"> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>
                     </Card> 
                 </div>
         );

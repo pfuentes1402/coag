@@ -49,6 +49,7 @@ export const errorLogin = (data) => (
                     getToken().then((response) => {
                         if(response.status === 200){
                             data.data.token= response.headers.token;
+                            localStorage.setItem('token', response.headers.token);
                             dispatch(fetchLoginExito(data));
                             localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
                             history.push('/');

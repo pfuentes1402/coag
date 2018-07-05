@@ -21,7 +21,7 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 const initialState = [];
 const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
- trabajos: {},addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{},expedienteData:{}, datosAgentes:{},
+ trabajos: {},addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{}, expedienteData:{}, datosAgentes:{},
   datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}}, action) => {
  
   switch (action.type) {
@@ -47,7 +47,6 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
       return {initialState};
 
     case FETCH_UBICACION_SUCCESS:
-
         const {Datos_Completos} = action.payload;
         const addressreducida=[
             {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
@@ -94,10 +93,9 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
         adressValidated: action.payload, 
       }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:
-       
         return {
           ...state,
-          expedienteData: action.payload ,
+          expedienteData: action.payload.data ,
         }
     /*case SET_EXPEDIENTE_SELECTED:
       

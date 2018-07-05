@@ -63,7 +63,7 @@ class ContenedorExpedientes extends Component {
                         <div className='divderecha'>                           
                             <Card>                             
                                 <CardHeader>Ficha expediente</CardHeader>    
-                                    <CardText> <OverViewComponent/> </CardText>
+                                    <CardText tag="div"> <OverViewComponent/> </CardText>
                             </Card> 
                         </div>   
                         <div className='divderecha'>             
@@ -84,7 +84,7 @@ class ContenedorExpedientes extends Component {
                         <div className='divderecha'>   
                             <Card>
                                 <CardHeader>Tipo de Expediente</CardHeader>    
-                                    <CardText> <ExpedientType/> </CardText>
+                                    <CardText tag="div"> <ExpedientType/> </CardText>
                             </Card> 
                             <div className="expedientes">
                                 <ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/>

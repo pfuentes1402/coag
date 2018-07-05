@@ -13,7 +13,9 @@ class TreeDocuments extends Component {
         this.onToggle = this.onToggle.bind(this);
     }
     onToggle(node, toggled){
-        if(this.state.cursor){this.state.cursor.active = false;}
+        if(this.state.cursor){
+            this.setState({ cursor: false });
+        }
         node.active = true;
         if(node.children){ node.toggled = toggled; }
         this.setState({ cursor: node });

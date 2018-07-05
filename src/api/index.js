@@ -17,29 +17,19 @@ const BASE_PATH = "http://servicios.coag.es/api";
   
 // }
 
-if(store){
-  const token = store.getState();
-  console.log(token)
-  console.log('gol')
-}
-
-
 
 /*
 *
 *Configuración base para las llamadas axios
 *
 */
-const api = axios.create(
-  {
-  
+const api = axios.create({
   baseURL: BASE_PATH,
   timeout: 10000,
   headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-       'Token': store ? store.getState().user.token : '',
- 
+      'Token': localStorage.getItem('token'),
   }
 });
 
@@ -51,47 +41,27 @@ const api = axios.create(
  *    id_expediente
  *    idtrabajo
  */
-
 export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
-
-  fetch(`${BASE_PATH}/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
-    .then(response => {
-     
-      return response.json();
+  api.get(`/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
+    .then(r=> {
+      return r.json();
     })
     .then(resultado => {
       let ordenado = ordertree(resultado);
-
       return ordenado;
     });
+
+
+
 /*
  *Proporciona los datos generales de un expediente
  * Parametros 
  *    id_expediente
  */
-
-
-    export const getExpedienteDatosGeneral = id_expediente =>
-  fetch(`${BASE_PATH}/expedientes/${id_expediente}`,{
-    method:'GET',     
-    
-          headers: new Headers({     
-            
-            'Token':  store ? store.getState().user.token : '',
-            }),
-  }).then(response => {
-    console.log('accesostore');
-     
-     
-      console.log();
-      console.log('>>>>>>><<<<<<<<>>>>>><<<<<<');
-     
-      return response.json();
-    })
-    .then(resultado => {
-           console.log(resultado);
-      return resultado;
-    });
+export const getExpedienteDatosGeneral = id_expediente =>
+  api.get(`/expedientes/${id_expediente}`).then(response => {
+    return response;
+  });
 
         
 
@@ -100,103 +70,81 @@ export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
  * Parametros 
  *    id_grupo
  */
-
-
 export const getTiposTrabajo = id_grupo =>
-fetch(`${BASE_PATH}/Tipos/Guia/GruposTematicos/${id_grupo}`)
-  .then(response => {
-    return response.json();
-  })
-  .then(resultado => {
-    return resultado;
-  });
+  api.get(`/Tipos/Guia/GruposTematicos/${id_grupo}`).then(response => {
+      return response.json();
+    })
+    .then(resultado => {
+      return resultado;
+    });
+
 
 
 /*
  *Proporciona los tipos de trámite de un trabajo
  */
-
 export const getTiposAutorizacionMunicipal = () =>
-fetch(`${BASE_PATH}/Tipos/Guia/Tiposautorizacionmunicipal/`)
-  .then(response => {
-    return response.json();
-  })
-  .then(resultado => {
-    return resultado;
-  });
+  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/`)
+    .then(response => {
+      return response.json();
+    })
+    .then(resultado => {
+      return resultado;
+    });
+
+
 
 /*
  *Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
  */
-
 export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion) =>
-fetch(`${BASE_PATH}/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=1`)
-  .then(response => {
-    return response.json();
-  })
-  .then(resultado => {
-    return resultado;
-  });
+  api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=1`)
+    .then(response => {
+      return response.json();
+    })
+    .then(resultado => {
+      return resultado;
+    });
+
+
 
 /*
  *Valida una dirección a traves de su referencia catastral
  * Parametros 
  *    ref_catastral
  */
-
-
 export const getValidateAddress = ref_catastral =>
-  fetch(`${BASE_PATH}/DatosCatastro/${ref_catastral}`)
-  
-    .then(response => {
-      return response.json();
-    })
-    .then(resultado => {
-
-      return resultado;
+  api.get(`/DatosCatastro/${ref_catastral}`).then(response => {
+      return response;
     });
+
+
 
 /*
  *Graba un nuevo expediente
  * Parametros 
  *    data->Datos que conforman un nuevo expediente
 */
-    export const postNuevoExpediente = data =>
-  
-    fetch(`${BASE_PATH}/expedientes/`, {      
-      method:'POST',     
-      body:data,
-            headers: new Headers({     
-              'Accept': 'application/json',
-              'Content-type': 'application/json'}),
-    }).then(v => v.json())
+export const postNuevoExpediente = data =>
+    api.post(`/expedientes/`).then(v => v.json())
       .then(resultado => {     
-        
         return resultado;
       });
-      
+
+
+
 /*
  *Edita un expediente expediente
  * Parametros 
  *    data->Datos que conforman  el expediente
 */
  export const putExpediente = (data)=>
+  api.put(`${BASE_PATH}/expedientes/`).then(
+    v => v.json()).then(resultado => {
+            return resultado;
+          });
 
- 
-      fetch(`${BASE_PATH}/expedientes/`, {
-        
-        method:'PUT',     
-        body:data,
-              headers: new Headers({     
-                'Accept': 'application/json',
-                'Content-type': 'application/json'}),      
-             
-       
-      }).then(v => v.json())
-        .then(resultado => {
-        
-          return resultado;
-        });
+
 
 /*
  *Edita un expediente expediente
@@ -204,39 +152,35 @@ export const getValidateAddress = ref_catastral =>
  *    data->Datos que conforman  el expediente
 */
 export function getAgentesInfo(id_Agente){
- 
- 
-let data =  {
-  Arquitectos: [
-    {
-      nif: '76900827M',
-      nombre: 'Pedro Martinez',
-      porcentage: '60%',
-    },
-    {
-      nif: '35782595X',
-      nombre: 'Martin Alvarez Salgado',
-      porcentage:  '20%',
+    let data =  {
+      Arquitectos: [
+        {
+          nif: '76900827M',
+          nombre: 'Pedro Martinez',
+          porcentage: '60%',
+        },
+        {
+          nif: '35782595X',
+          nombre: 'Martin Alvarez Salgado',
+          porcentage:  '20%',
+        }
+      ],
+      Promotores: [
+        {
+          nif: '3578245544T',
+          nombre: 'Joaquin Perez Salgado',
+          porcentage:  '10%',
+        },
+        {
+          nif: '233444266H',
+          nombre: 'Juan Alvarez Sousa',
+          porcentage:  '10%',
+        }
+      ]
     }
-  ],
-  Promotores: [
-    {
-      nif: '3578245544T',
-      nombre: 'Joaquin Perez Salgado',
-      porcentage:  '10%',
-    },
-    {
-      nif: '233444266H',
-      nombre: 'Juan Alvarez Sousa',
-      porcentage:  '10%',
-    }
-  ]
-}
-
-
-
   return data;
 }
+
 
 
 /*
@@ -244,19 +188,19 @@ let data =  {
  * Parametros 
  *    id_expediente
  */
-
-
 export const test = id_expediente =>
-fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
-  .then(response => {
-   console.log('respuesta');
-   console.log(response);
-    return response.json();
-  })
-  .then(resultado => {
-         
-    return resultado;
-  });
+  api.get(`/expedientes/${id_expediente}`)
+    .then(response => {
+    console.log('respuesta');
+    console.log(response);
+      return response.json();
+    })
+    .then(resultado => {
+          
+      return resultado;
+    });
+
+
 
   /*
  *Proporciona los datos generales de un Trabajo
@@ -265,7 +209,7 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}`)
  *    id_Trabajo
  */
 export const getTrabajoeDatosGenerales = (id_expediente,id_Trabajo) =>
-fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
+api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
   .then(response => {
    console.log('getTrabajoeDatosGenerales api');
    console.log(response);
@@ -289,25 +233,24 @@ fetch(`${BASE_PATH}/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
 
 
 
-
-  export const funcionForma = (datos) => 
-
-api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(response => {      
-    console.log('funcionForma');
-    console.log(response);
-    return response;
-  }).catch(error => {
-    console.log(error.response)
-    console.log(error.response.status);
-    //errorLogin(error);
-    return error.response.status;
-  });
-
-
+/*
+ *  Función que loguea a un usuario y consigue identificadores únicos para la generación del token
+ *  Parametros 
+ *    usuario
+ *    password
+ */
+export const funcionForma = (datos) => 
+  api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(response => {      
+      return response;
+    }).catch(error => {
+      //errorLogin(error);
+      return error.response.status;
+    });
 
 
+
+//FUNCION DUMMY
  export function getDatosUsuario(id){   
-
   let data =  {
     Expedientes: [
       {
@@ -328,18 +271,16 @@ api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(resp
       },
     ],   
   }
-   
-  
     return data;
-  }
+}
 
  
+
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
  * Parametros 
  *    Recoge ClienteId y ClienteClave del localStorage del navegador
 */  
-  
 export const getToken = () =>
     axios.post('http://servicios.coag.es/api/authenticate',     
     {ClienteId: localStorage.getItem('clienteid'),
@@ -348,5 +289,5 @@ export const getToken = () =>
     .then(response => {
       return response;
     }).catch(error => {
-      return error.response.status;
-  });
+        return error.response.status;
+});

@@ -68,7 +68,8 @@ const renderField = ({
 
 ExpedientType = connect(
     state => ({
-        initialValues:state.expedientes.ExpedientNew.Expediente  ? state.expedientes.ExpedientNew.Expediente[0]:"",
+        //TODO
+        //initialValues:state.expedientes.ExpedientNew.Expediente[0] || "",
         datosNuevoExpediente:state.expedientes.ExpedientNew,        
         adressaved: state.expedientes.adressValidated,     
        

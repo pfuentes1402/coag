@@ -10,7 +10,6 @@ import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import ListWorks from '../ListWorks/ListWorks';
-import OverViewComponent from '../OverViewComponent/OverViewComponent';
 
 import ExpedientType from '../MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from './ExpedientContainer';
