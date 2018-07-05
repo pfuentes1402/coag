@@ -1,3 +1,66 @@
 .centrado{
     text-align: center;
 }
+.login{
+    background: url("./images/login.jpg");
+    background-size: cover;
+    background-position-x: center;
+    min-height: 100vh;
+}
+.login .white-box{
+    width: 360px;
+    margin:auto;
+    background: white;
+    padding:55px;
+    padding-top: 40px;
+    padding-bottom: 50px;
+    box-shadow: 0px 1px 6px 2px #999999;
+}
+
+.login .box-position{
+    position: absolute;
+    top: 40%;
+    text-align: center;
+    width: 100%;
+}
+.login .white-box img{
+    width: 246px;
+    padding-bottom: 20px;
+}
+.login .loginbutton{
+    background: #0277bd;
+    border: none;
+    text-transform: uppercase;
+    color: white;
+    width: 100%;
+    padding:12px;
+}
+.login .inputDiv input{
+    width: 100%!important;
+}
+.login .inputDiv label{
+    display: none;
+}
+.login .recuperar{
+    font-size:12px;
+    text-align: left;
+    font-weight: 500;
+    padding-top: 7px;
+}
+
+.login .mensaje{
+    text-align: left;
+    padding-top: 7px;
+    color: green;
+}
+
+.login .inputDiv .error{
+    background: pink;
+    border-bottom: solid 1px red;
+}
+
+
+.login .inputDiv .errorMessage{
+    float: left;
+    color: red;
+}

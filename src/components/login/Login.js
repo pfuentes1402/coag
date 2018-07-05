@@ -11,13 +11,16 @@ import "./styles.css";
 const Login = (props) => {
    
     return (
-        <div className="centrado">
-            <h2>Login</h2>
-            {/* {props.mensaje.mensaje} */}
-            <LoginFormaFinal onSubmit={ props.fetchUserLogin
-            }/>
-             <h2>{props.mensaje}</h2>         
-          
+        <div className="centrado login">
+            <div className="box-position">
+            <div className="white-box">
+                <img src={require('./images/loginlogo.png')}/>
+                {/* {props.mensaje.mensaje} */}
+                <LoginFormaFinal onSubmit={ props.fetchUserLogin
+                }/>
+                <div className="mensaje">{props.mensaje}</div>
+            </div>    
+          </div>
         </div>
     )
 }
