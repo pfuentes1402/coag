@@ -1,4 +1,5 @@
-import store from './../index'
+ import { store } from './../index'
+ import {handleLoggout} from './../helpers/logout.js'
 
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
@@ -23,16 +24,69 @@ const BASE_PATH = "http://servicios.coag.es/api";
 *Configuración base para las llamadas axios
 *
 */
+
+  
+
+
 const api = axios.create({
   baseURL: BASE_PATH,
   timeout: 10000,
-  headers: {
+  transformRequest: [function (data,headers) {
+   
+   
+    // headers['Token'] = localStorage.getItem('token')||''
+    headers['Token'] =  store ? store.getState().user.token : localStorage.getItem('token')||''
+    // headers['Token'] =   localStorage.getItem('token')||''
+   
+    return JSON.stringify(data);
+  }], 
+   headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Token': localStorage.getItem('token'),
+     
+  //     // // 'Token': store ? store.getState().user.token : '',
   }
+
+  
 });
 
+
+
+
+
+  // api.interceptors.response.use(function (response) {
+  //   return response
+  // }, function (error) {
+  //   const originalRequest = error.config
+  //   console.log(originalRequest)  
+  //   if (error.response.status === 401 && !originalRequest._retry) {
+  //     originalRequest._retry = true
+  //     //get refresh token
+  //     const refreshToken = localStorage.getItem('token')||''
+  //     //make refresh token request
+  //     return api.post(
+  //       BASE_PATH + '/authenticate',
+  //       {ClienteId: localStorage.getItem('clienteid'),
+  //   ClienteClave: localStorage.getItem('clienteclave')
+  //   })
+  //       .then((responseData) => {
+  //         // set new oauth2 info
+  //         // store.dispatch('userInfo/set', responseData.data)
+  //         api.defaults.headers.common['Token'] = localStorage.getItem('token')||''
+  //         originalRequest.headers['Token'] = localStorage.getItem('token')||''
+  //         //retry failed request
+  //         return api(originalRequest)
+  //       }).catch(function (error) {
+  //         console.log(error)
+  //       })
+  //   }
+  
+  //   return Promise.reject(error)
+  // })
+
+
+
+    
 
 
 /*
@@ -199,6 +253,25 @@ export const test = id_expediente =>
           
       return resultado;
     });
+/*
+ *Proporciona expedientes de un usuario
+ * Parametros 
+ *    id_expediente
+ */
+export const expedientesuser = () =>
+  api.get('/expedientes')
+  
+    .then(response => {
+    
+   
+      return response.data.Expedientes;
+    }).catch((error)=>{
+
+      console.log(error)
+      // getToken();
+      
+    });
+    
 
 
 
@@ -254,7 +327,7 @@ export const funcionForma = (datos) =>
   let data =  {
     Expedientes: [
       {
-        Expediente: '688685 ',
+        Expediente: '688685',
         fecha: '05/06/2018',       
       },
       {
@@ -289,5 +362,6 @@ export const getToken = () =>
     .then(response => {
       return response;
     }).catch(error => {
+      handleLoggout()
         return error.response.status;
 });

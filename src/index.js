@@ -20,6 +20,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import MainContainer from './containers/index'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -31,7 +32,7 @@ const persistConfig = {
  const pReducer = persistReducer(persistConfig, reducers);
 
 
-const store = createStore(
+export const store = createStore(
   pReducer,
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );
@@ -49,7 +50,5 @@ ReactDOM.render((
   </PersistGate>
 </Provider>), document.getElementById('root'));
 
-export default store;
-
-
+export default persistor;
 

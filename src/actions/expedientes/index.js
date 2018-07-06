@@ -1,5 +1,5 @@
 import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral,
-    getTrabajoeDatosGenerales, getAgentesInfo } from '../../api';
+    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser } from '../../api';
 
 import * as types from './types';
 
@@ -111,6 +111,23 @@ export const validateAddress = (id_ubicacion) =>
 (dispatch) => {
     getValidateAddress(id_ubicacion).then((response) => {
         dispatch(fetchAddress(response.data, id_ubicacion));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+/*
+*
+*Obtiene los expedientes de un usuario logeado y con token
+*
+*/
+export const fetchexpedientesUser = () => 
+
+(dispatch) => {
+    expedientesuser().then((response) => {
+        console.log('expedientesuser en el fetch');      
+        console.log(response);
+        dispatch(fetchSuccess(response));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})

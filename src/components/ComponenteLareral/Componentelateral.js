@@ -24,12 +24,13 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
        
         //fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
     };
-    const click = expedientes=>{
+    const click = datos=>{
         console.log('click expediente');
-        console.log('click expediente');        
-        fetchExpedienteDatosGeneral(expedientes.Expediente);
-        fetchSelectedExpediente(expedientes.Expediente);       
-        console.log(expedientes.Expediente);
+        console.log(datos);
+        
+        fetchExpedienteDatosGeneral(datos);
+        //fetchSelectedExpediente(expedientes.Expediente);       
+       
        
     }
 
@@ -40,8 +41,8 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
         
         expedientes.map((expediente,i) =>(
            
-            <div key={i} onClick={()=>click(expediente)}>
-                <div key={i}>{expediente.Expediente}</div>
+            <div key={i} onClick={()=>click(expediente.Id_Expediente)}>
+                <div key={i}>{expediente.Id_Expediente}</div>
             </div>  
         ))
     );
@@ -52,8 +53,8 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
 
 return (
     <div> 
-        <div> 
-            {strToComponentExp(expedientes)}
+        <div>         
+            {/* {strToComponentExp(expedientes)} */}
         </div>
         
     </div>
@@ -69,7 +70,7 @@ Componentelateral.defaultProps = {
 
 const mapStateToProps = state => ({
     expedientearbol: state.expedientes.expedienteData.Expediente?state.expedientes.expedienteData.Expediente[0]:"",
-    expedientes: state.user.data?state.user.data.Expedientes:"",     
+    expedientes: state.expedientes.expedientes || "",     
     dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0],
     selectedExpFromstore: state.seleccionado.selectedExp?state.seleccionado.selectedExp:"",
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],

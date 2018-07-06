@@ -15,7 +15,7 @@ import ExpedientType from '../MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from './ExpedientContainer';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
 import ContenedorCentral from './../../containers/ContenedorCentral'
-import { fetchDatosUsuario } from '../../actions/usuarios';
+
 import Expandible from '../ComponenteLareral/Expandible';
 
 
@@ -24,9 +24,9 @@ class MainContent extends Component {
   
 
     componentWillMount(){
-           //Esto es dummy, los datos del usuario estan seteados en el api
-            let idtrabajo = '2';      
-            this.props.fetchDatosUsuario(idtrabajo);
+        //    //Esto es dummy, los datos del usuario estan seteados en el api
+        //     let idtrabajo = '2';      
+        //     this.props.fetchDatosUsuario(idtrabajo);
                       
     }
    
@@ -66,7 +66,8 @@ class MainContent extends Component {
                     <Row className="principal">
                         <Col xs="6" sm="2">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
-                        {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()}
+                        {/* {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()} */}
+                        {RenderComponenteExp()}
                     
                         </Col>
                         <Col xs="6" sm="10">
@@ -98,7 +99,8 @@ const mapStateToProps = state => ({
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",    
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.expedieteotrabajo,
-    expTrabajo:state.seleccionado?state.seleccionado.selectedExpediente:'',
+    expTrabajo:state.seleccionado.selectedExpediente || '',
+    // expTrabajo:state.seleccionado?state.seleccionado.selectedExpediente:'',
     dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
     
    
@@ -109,7 +111,7 @@ const mapStateToProps = state => ({
   
 
 export default connect(mapStateToProps,{fetchEstructuraDocumental, fetchExpedienteDatosGeneral, getAgentes, test,
-     fetchTrabajoDatosGeneral,fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo,fetchDatosUsuario})(MainContent);
+     fetchTrabajoDatosGeneral,fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo})(MainContent);
 
 
   

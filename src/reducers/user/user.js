@@ -1,6 +1,6 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL, FETCH_EXPEDIENTES_SUCCESS } from "../../actions/usuarios/types";
 import { PURGE, REHYDRATE } from 'redux-persist';
 
 
@@ -21,6 +21,7 @@ const reducer = (state = { DatosUsuarioValidado: {
       "Numero_Trabajos_Acciones_Pendientes": ""
     },
     token:"",
+    
     mensaje:"",
     data: {Expedientes:[]} }, action) => {
       
@@ -47,6 +48,7 @@ const reducer = (state = { DatosUsuarioValidado: {
                 ...state,
                 mensaje: 'error en el login',            
               };
+       
         case PURGE:
               console.log("PURGING!!!!"); 
               return{

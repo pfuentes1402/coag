@@ -43,9 +43,12 @@ export const errorLogin = (data) => (
          
                dispatch(errorLogin("login: "+data)); 
            }else{
-               if(data.headers.clienteclave && data.headers.clienteid){
-                    localStorage.setItem('clienteclave', data.headers.clienteclave);
-                    localStorage.setItem('clienteid', data.headers.clienteid);
+               let cienteClave =data.headers ?data.headers.clienteclave : ''; 
+               let clienteid =data.headers ? data.headers.clienteid : ''; 
+              
+               if(cienteClave && clienteid){
+                    localStorage.setItem('clienteclave',cienteClave);
+                    localStorage.setItem('clienteid',clienteid);
                     getToken().then((response) => {
                         if(response.status === 200){
                             data.data.token= response.headers.token;
@@ -53,6 +56,8 @@ export const errorLogin = (data) => (
                             dispatch(fetchLoginExito(data));
                             localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
                             history.push('/');
+                        }else{
+                            data.data.token ='';
                         }
                     });
                 }
@@ -83,14 +88,14 @@ export const errorLogin = (data) => (
    /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)
 */
-export const fetchDatosUsuario = (id_usuario) => 
-dispatch => {   
+// export const fetchDatosUsuario = (id_usuario) => 
+// dispatch => {   
    
-    console.log('fetchDatosUsuario');
-    let data = getDatosUsuario(id_usuario)
-    //console.log(data);
-        dispatch(fetchSuccessusuario(data));
-};
+//     console.log('fetchDatosUsuario');
+//     let data = getDatosUsuario(id_usuario)
+//     //console.log(data);
+//         dispatch(fetchSuccessusuario(data));
+// };
 //(dispatch) => {    
   //  dispatch(fetchInit());
     //getDatosUsuario(id_usuario).then((datos) => {

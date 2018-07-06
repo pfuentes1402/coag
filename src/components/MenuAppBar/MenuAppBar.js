@@ -10,6 +10,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { purgarStore } from './../../actions/usuarios/index';
 import { history } from '../../helpers/hidtory';
+import { handleLoggout } from '../../helpers/logout';
 
 const styles = {
     root: {
@@ -53,8 +54,8 @@ class MenuAppBar extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const {auth, anchorEl} = this.state;
-        const open = Boolean(anchorEl);
+        // const {auth, anchorEl} = this.state;
+        // const open = Boolean(anchorEl);
 
         const ButtonNew = () => (
             <Route render={({ history}) => (
@@ -95,7 +96,8 @@ class MenuAppBar extends React.Component {
                 <Button
                   color="link"
                 //   onClick={() => { history.push('/') }}
-                  onClick={this.handleLoggout}
+                  // onClick={this.handleLoggout}
+                  onClick={handleLoggout}
                   
                   variant="raised" className={classes.button}
                 >

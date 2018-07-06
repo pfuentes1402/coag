@@ -15,7 +15,7 @@ import ExpedientType from '../components/MainContent/ExpedientType/ExpedientType
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
 
 
-const   id_expediente='688685';
+//const   id_expediente='688685';
 
 class ContenedorExpedientes extends Component {
 
@@ -25,7 +25,7 @@ class ContenedorExpedientes extends Component {
       
         
       
-        this.props.fetchExpedienteDatosGeneral(id_expediente);           
+        //this.props.fetchExpedienteDatosGeneral(id_expediente);           
        // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     
        // this.props.getAgentes('111');
        // test('111');

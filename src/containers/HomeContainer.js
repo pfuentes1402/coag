@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MainContent from '../components/MainContent/MainContent';
-import MainContainer from '../components/MainContent/MainContent';
 
-import { withStyles } from 'material-ui/styles';
-import {Grid} from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
+
 import "./styles.css";
 
-import { fetchEstructuraDocumental } from '../actions/expedientes/';
-import { fetchDatosUsuario } from '../actions/usuarios/';
+import { fetchEstructuraDocumental, fetchexpedientesUser } from '../actions/expedientes/';
+
 
 
 
 class HomeContainer extends Component {
 
+    componentWillMount(){
+        this.props.fetchexpedientesUser();
+    }
    
 
     render() {
@@ -45,7 +45,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     fetchEstructuraDocumental,
-    fetchDatosUsuario,
+    
+    fetchexpedientesUser,
     
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);
