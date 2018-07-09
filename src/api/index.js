@@ -4,7 +4,7 @@
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
-
+import { fetchRefresh } from './../actions/usuarios'
 
 const BASE_PATH = "http://servicios.coag.es/api";
 
@@ -35,15 +35,15 @@ const api = axios.create({
    
    
     // headers['Token'] = localStorage.getItem('token')||''
-    headers['Token'] =  store ? store.getState().user.token : localStorage.getItem('token')||''
-    // headers['Token'] =   localStorage.getItem('token')||''
+    //headers['Token'] =  store ? store.getState().user.token : localStorage.getItem('token')||''
+    
    
     return JSON.stringify(data);
   }], 
    headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-     
+      'Token': localStorage.getItem('token')||''
   //     // // 'Token': store ? store.getState().user.token : '',
   }
 
@@ -52,41 +52,52 @@ const api = axios.create({
 
 
 
-
-
-  // api.interceptors.response.use(function (response) {
-  //   return response
-  // }, function (error) {
-  //   const originalRequest = error.config
-  //   console.log(originalRequest)  
-  //   if (error.response.status === 401 && !originalRequest._retry) {
-  //     originalRequest._retry = true
-  //     //get refresh token
-  //     const refreshToken = localStorage.getItem('token')||''
-  //     //make refresh token request
-  //     return api.post(
-  //       BASE_PATH + '/authenticate',
-  //       {ClienteId: localStorage.getItem('clienteid'),
-  //   ClienteClave: localStorage.getItem('clienteclave')
-  //   })
-  //       .then((responseData) => {
-  //         // set new oauth2 info
-  //         // store.dispatch('userInfo/set', responseData.data)
-  //         api.defaults.headers.common['Token'] = localStorage.getItem('token')||''
-  //         originalRequest.headers['Token'] = localStorage.getItem('token')||''
-  //         //retry failed request
-  //         return api(originalRequest)
-  //       }).catch(function (error) {
-  //         console.log(error)
-  //       })
-  //   }
-  
-  //   return Promise.reject(error)
-  // })
-
-
-
+let subscribers = []
+function addSubscriber(callback) {
+  subscribers.push(callback)
+}
+  api.interceptors.response.use(function (response) {
     
+    return response
+  }, function (error) {
+     
+    const originalRequest = error.config
+     
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true     
+    
+      //make refresh token request
+      // return getToken()
+      //   .then((response) => {
+      //     console.log(response);
+      //     console.log('Nuevo Token');
+      //     console.log(response.headers.token);
+      //     // set new oauth2 info
+      //     // store.dispatch('userInfo/set', responseData.data)
+      //     api.defaults.headers.common['Token'] = response.headers.token;
+      //     originalRequest.headers['Token'] =  response.headers.token;
+      //     //retry failed request
+      //     console.log(originalRequest);
+      //     return axios(originalRequest)
+      //   }).catch(function (error) {
+      //     console.log(error)
+      //   })
+
+      const retryOriginalRequest = new Promise((resolve) => {
+        getToken().then(response => {          
+          originalRequest.headers['Token'] = response.headers.token;       
+          resolve(api(originalRequest))
+        });       
+      })
+      return retryOriginalRequest
+    }
+    handleLoggout();
+    return Promise.reject(error)
+  })
+    //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
+ 
+
+
 
 
 /*
@@ -262,8 +273,8 @@ export const expedientesuser = () =>
   api.get('/expedientes')
   
     .then(response => {
-    
-   
+      console.log('expedientesuser')
+      console.log(response)
       return response.data.Expedientes;
     }).catch((error)=>{
 
@@ -360,8 +371,13 @@ export const getToken = () =>
     ClienteClave: localStorage.getItem('clienteclave')
     })
     .then(response => {
-      return response;
+      localStorage.setItem('token', response.headers.token);
+     
+    //  store.dispatch(fetchRefresh(response)).then( response=>{
+    //    return response;
+    //  });
+     return response;
     }).catch(error => {
       handleLoggout()
-        return error.response.status;
+        return error;
 });

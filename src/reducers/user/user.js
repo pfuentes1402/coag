@@ -1,6 +1,6 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL, FETCH_EXPEDIENTES_SUCCESS } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL, FETCH_EXPEDIENTES_SUCCESS, REFRESH_TOKEN_ } from "../../actions/usuarios/types";
 import { PURGE, REHYDRATE } from 'redux-persist';
 
 
@@ -43,7 +43,15 @@ const reducer = (state = { DatosUsuarioValidado: {
                 token:token,
                 mensaje:  'login Correcto',                    
               };
-        case FETCH_LOGIN_FAIL:
+        case REFRESH_TOKEN_:
+              const {tokenFresh} = action.payload.data.headers.token;
+              return{
+                ...state,
+                
+                token:tokenFresh,
+                                
+              };
+              case FETCH_LOGIN_FAIL:
               return{
                 ...state,
                 mensaje: 'error en el login',            

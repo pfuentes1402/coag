@@ -23,6 +23,13 @@ export const fetchLoginExito = (data) => ({
     type: types.FETCH_LOGIN_SUCCESS,
     payload: data
 });
+export const fetchRefresh = (data) => ({
+    type: types.REFRESH_TOKEN_,
+    payload: data
+});
+
+
+
 export const errorLogin = (data) => (  
    
     {
