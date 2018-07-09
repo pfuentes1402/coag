@@ -1,5 +1,5 @@
 import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral,
-    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser } from '../../api';
+    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser, getAcciones } from '../../api';
 
 import * as types from './types';
 
@@ -220,3 +220,15 @@ export const fetchSelectedExpediente = (exp) => ({
     type: types.FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE,
     payload: exp
 });
+
+
+export const fetchgetAcciones= (id_expediente, id_Trabajo) => 
+(dispatch) => {
+              
+    getAcciones().then((response) => {              
+              console.log(response);
+                      })
+              .catch(
+              () => fetchError({ error: 'Algo ha salido mal'})
+          );
+      };

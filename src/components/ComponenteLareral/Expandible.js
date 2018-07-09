@@ -72,7 +72,7 @@ Expandible.defaultProps = {
 const mapStateToProps = state => ({
      
   dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
-  trabajos: state.expedientes.expedienteData?state.expedientes.expedienteData.Trabajos:'',
+  trabajos: state.expedientes.expedienteData.Trabajos ||'',
   });
  
 

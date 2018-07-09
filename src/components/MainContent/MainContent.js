@@ -51,7 +51,7 @@ class MainContent extends Component {
             return (<Componentelateral onSelectedLevel={this.handleSelectedExpediente}/>)
         }
         const RenderContenedorcentral =() =>{
-            return (<Expandible expedient={this.props.expTrabajo}
+            return (<Expandible
             data={this.props.dataArbol}
             />)
         }
@@ -66,8 +66,8 @@ class MainContent extends Component {
                     <Row className="principal">
                         <Col xs="6" sm="2">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
-                        {/* {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()} */}
-                        {RenderComponenteExp()}
+                        {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()}
+                        {/* {RenderContenedorcentral()} */}
                     
                         </Col>
                         <Col xs="6" sm="10">
@@ -101,7 +101,7 @@ const mapStateToProps = state => ({
     selectedData:state.expedientes.expedieteotrabajo,
     expTrabajo:state.seleccionado.selectedExpediente || '',
     // expTrabajo:state.seleccionado?state.seleccionado.selectedExpediente:'',
-    dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor?state.expedientes.arbolEstructuraTrabajoRefactor[0]:'',
+    dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0] ||'',
     
    
   });

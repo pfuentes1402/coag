@@ -381,3 +381,21 @@ export const getToken = () =>
       handleLoggout()
         return error;
 });
+/*
+ * Proporciona las acciones pendientes de un usuario
+ * Parametros 
+ *   Numero de acciones pendientes
+*/  
+export const getAcciones = () =>
+    api.post('http://servicios.coag.es/api/AccionesPendientes/?Numero_Trabajos_acciones_pendientes=10',     
+    )
+    .then(response => {
+     console.log(response);     
+    //  store.dispatch(fetchRefresh(response)).then( response=>{
+    //    return response;
+    //  });
+     return response;
+    }).catch(error => {
+     
+        return error;
+});

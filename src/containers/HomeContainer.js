@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MainContent from '../components/MainContent/MainContent';
 
-
+import {getAcciones} from '../api/index';
 import "./styles.css";
 
-import { fetchEstructuraDocumental, fetchexpedientesUser } from '../actions/expedientes/';
+import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } from '../actions/expedientes/';
 
 
 
@@ -16,6 +16,7 @@ class HomeContainer extends Component {
 
     componentWillMount(){
         this.props.fetchexpedientesUser();
+        this.props.fetchgetAcciones();
     }
    
 
@@ -45,7 +46,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     fetchEstructuraDocumental,
-    
+    fetchgetAcciones,
     fetchexpedientesUser,
     
 };
