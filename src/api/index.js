@@ -84,9 +84,13 @@ function addSubscriber(callback) {
       //   })
 
       const retryOriginalRequest = new Promise((resolve) => {
-        getToken().then(response => {          
-          originalRequest.headers['Token'] = response.headers.token;       
-          resolve(api(originalRequest))
+        getToken().then(response => {
+          if(response.headers.token){         
+            originalRequest.headers['Token'] = response.headers.token;       
+            resolve(api(originalRequest))
+          }else{
+            handleLoggout();
+          }
         });       
       })
       return retryOriginalRequest
