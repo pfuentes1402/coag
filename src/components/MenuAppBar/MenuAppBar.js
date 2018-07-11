@@ -8,9 +8,10 @@ import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
-import { purgarStore } from './../../actions/usuarios/index';
+import { purgarStore, goHome } from './../../actions/usuarios/index';
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
+import { Collapse, Navbar,NavbarToggler,NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
 
 const styles = {
     root: {
@@ -31,18 +32,18 @@ class MenuAppBar extends React.Component {
     // Don't call this.setState() here!
     
     this.handleLoggout = this.handleLoggout.bind(this);
+    this.handleHome = this.handleHome.bind(this);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
   }
     state = {
         auth: true,
         anchorEl: null,
     };
-    handleMenu = event => {
-        this.setState({anchorEl: event.currentTarget});
-    };
-
-    handleClose = () => {
-        this.setState({anchorEl: null});
-    };
+    
     handleLoggout = () =>{
       console.log("metodo de loggout")
      
@@ -50,7 +51,19 @@ class MenuAppBar extends React.Component {
       this.props.purgarStore();
       history.push('/');
     }
-    
+    handleHome = () =>{
+      console.log("metodo de Home")
+     
+      
+      this.props.goHome();
+      history.push('/');
+    }
+
+    toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
 
     render() {
         const {classes} = this.props;
@@ -62,16 +75,28 @@ class MenuAppBar extends React.Component {
               <Button
                 onClick={() => { history.push('/nuevo-expediente') }}
                 variant="raised" color="primary" className={classes.button}
+              
               >
                 Nuevo expediente
               </Button>
             )} />
           )
+          // const ButtonHome = () => (
+          //   <Route render={({ history}) => (
+          //     <Button
+          //       color="link"
+          //       onClick={() => { history.push('/') }}
+          //       variant="raised" className={classes.button}
+          //     >
+          //       Inicio
+          //     </Button>
+          //   )} />
+          // )
           const ButtonHome = () => (
             <Route render={({ history}) => (
               <Button
                 color="link"
-                onClick={() => { history.push('/') }}
+                onClick={this.handleHome}
                 variant="raised" className={classes.button}
               >
                 Inicio
@@ -110,6 +135,7 @@ class MenuAppBar extends React.Component {
         
 
         return (
+         
             <Container className="full">
             <Row>
             <Col sm="3"><div><img src={coag} height="50" className="logo-coag"/></div></Col>
@@ -119,12 +145,34 @@ class MenuAppBar extends React.Component {
                 <Button outline color="secondary">Tramitación en lote<FontAwesome name='rocket'/></Button>
             </Col>
             <Col sm="3">
-                <Profile/>
-                <Logout/>
+            <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Perfil
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                  <Profile/>
+                  <DropdownItem divider />
+                  </DropdownItem>
+                  <DropdownItem>
+                  <Logout/>
+                  </DropdownItem>
+                  
+                  
+                </DropdownMenu>
+              </UncontrolledDropdown>
                 
             </Col>
             </Row>
             </Container>
+
+
+
+
+
+
+
+           
         );
     }
 }
@@ -143,6 +191,7 @@ const mapStateToProps = state => ({
   const mapDispatchToProps = {
     
     purgarStore,
+    goHome
   };
   
 

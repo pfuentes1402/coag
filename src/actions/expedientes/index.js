@@ -64,13 +64,20 @@ export const fetchDatosAgente = (dataAgente) => ({
     payload: dataAgente
 });
 
+export const cambioContenidoCentral = () => ({  
+    type: types.CAMBIO_CONTENEDOR_CENTRAL,
+  
+});
+
+
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) => 
 (dispatch) => {
-    
+   
     dispatch(fetchInit());
+    dispatch(cambioContenidoCentral());
     getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
-        
-        dispatch(fetchSuccess(expedientes));
+        console.log(expedientes);
+        dispatch(fetchSuccessTrabajo(expedientes));
        
     })
         .catch(
@@ -153,23 +160,15 @@ dispatch => {
        dispatch(fetchDatosAgente(getAgentesInfo(id_agente)));
 };
    
-  /* export const getAgentes  = (id_agente)=>
-   dispatch => {   
-    getAgentesInfo(id_agente).then((response)=>{
-        dispatch(fetchDatosAgente(response));
-    }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    )
-          
-      };*/
-      
+ 
 /*
 *Guarda los datos generales de un trabajo
 */
 export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) => 
 (dispatch) => {
               
-          getTrabajoeDatosGenerales(id_expediente, id_Trabajo).then((DatosTrabajo) => {              
+          getTrabajoeDatosGenerales(id_expediente, id_Trabajo).then((DatosTrabajo) => {       
+              console.log('fetchTrabajoDatosGeneral');       
               dispatch(fetchSuccesTrabajoDatosgenerales(DatosTrabajo));
                       })
               .catch(
@@ -180,7 +179,12 @@ export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) =>
 
 const setExpediente = payload => ({ type: types.SET_EXPEDIENTE_SELECTED, payload });
 const setExpedienteSelected = payload => ({ type: types.SET_EXPEDIENTE_SELECTED_DATOS, payload });
-const fetchSuccesTrabajoDatosgeneralesSelected = payload =>({type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, payload});
+
+
+export const fetchSuccesTrabajoDatosgeneralesSelected = (data) => ({
+    type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO,
+    payload: data
+});
 
 export const setSelectedExpediente = payload => {
 
@@ -196,9 +200,12 @@ export const setSelectedExpediente = payload => {
 export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) => 
   
     (dispatch) =>{
+     
         
-            getTrabajoeDatosGenerales(id_expediente,id_Trabajo).then((data) =>{
+            getTrabajoeDatosGenerales(id_expediente,id_Trabajo).then((data) =>{               
+          
                  dispatch(fetchSuccesTrabajoDatosgeneralesSelected(data));
+                 
                 })
                  .catch(
               ()=> fetchError({ error: 'Algo ha salido mal'})
@@ -221,7 +228,9 @@ export const fetchSelectedExpediente = (exp) => ({
     payload: exp
 });
 
-
+/*
+*Salva las acciones pendientes de un usuario
+*/
 export const fetchgetAcciones= (id_expediente, id_Trabajo) => 
 (dispatch) => {
               

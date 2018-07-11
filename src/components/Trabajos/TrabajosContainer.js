@@ -8,7 +8,7 @@ class TrabajosContainer extends Component {
 
     render() {      
         return (
-                <div class="cajaAgentes">
+                <div className="cajaAgentes">
                     <Card>
                     <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
                             <CardText tag="div"> <AgentsTableWorks data={ this.props.datosAgentes}/> </CardText>

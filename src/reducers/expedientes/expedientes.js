@@ -46,19 +46,19 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
       return {initialState};
 
     case FETCH_UBICACION_SUCCESS:
-        const {Datos_Completos} = action.payload;
-        const addressreducida=[
-            {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
-                Piso: Datos_Completos[0].Piso, Codigo_Postal: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello, Id_Concello:Datos_Completos[0].Id_Concello, Georeferencia:""}
-        ];
-         
-      return {
-            ...state,            
-            address: action.payload,
-            addressreducida: addressreducida,
-          }; 
+          const {Datos_Completos} = action.payload;
+          const addressreducida=[
+              {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
+                  Piso: Datos_Completos[0].Piso, Codigo_Postal: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello, Id_Concello:Datos_Completos[0].Id_Concello, Georeferencia:""}
+          ];
+          
+        return {
+              ...state,            
+              address: action.payload,
+              addressreducida: addressreducida,
+            }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
-    const {Id_Trabajo} = action.payload;
+          const {Id_Trabajo} = action.payload;
    
           return{
             ...state,
@@ -66,31 +66,30 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
             expedieteotrabajo: Id_Trabajo?'trabajo':'expediente',
             //trabajoData:action.payload,
           };
-          case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:           
-          
+    case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:   
+         
 
-         const {  Fecha_Entrada,Id_Expediente } = action.payload.Trabajos;
-         console.log(action.payload);
-         console.log('case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO');
+       
+         
          const expOtr = Id_Trabajo!==null?'Trabajo':'expediente';
                 return{
                   ...state,
                  // [Id_Expediente+'-'+Fecha_Entrada ]: { ...state[Fecha_Entrada], trabajoData: action.payload }
-                  trabajoData:action.payload,
+                  trabajoData:action.payload.data,
                   expedieteotrabajo:expOtr,
                 };
     case FETCH_EXPEDIENTSAVE_TO_STORE:
     
-      return {
-        ...state,            
-        ExpedientNew: action.payload,
-      };  
+        return {
+          ...state,            
+          ExpedientNew: action.payload,
+        };  
     case FETCH_SAVE_ADRESS_TO_STORE:  
-    console.log(action.payload);     
-      return {
-        ...state,
-        adressValidated: action.payload, 
-      }  
+      
+        return {
+          ...state,
+          adressValidated: action.payload, 
+        }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:
         return {
           ...state,
@@ -112,7 +111,8 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
        datosAgentes:action.payload,
      } 
      case FETCH_SAVE_TRABAJO_TO_STORE:
-          
+          console.log('En el reduces de trabajo to store');
+          console.log(action.payload);
      const id=action.payload.Trabajos[0].Id_Trabajo;
      const index = state.datosTrabajo.findIndex(el => el.Trabajos[0].Id_Trabajo === id);
     

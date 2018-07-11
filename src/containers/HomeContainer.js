@@ -15,8 +15,7 @@ import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } fro
 class HomeContainer extends Component {
 
     componentWillMount(){
-        this.props.fetchexpedientesUser();
-        this.props.fetchgetAcciones();
+        this.props.fetchexpedientesUser();       
     }
    
 
@@ -24,8 +23,7 @@ class HomeContainer extends Component {
        
         return (
             <div className="homeContainer">
-                <MainContent/>
-               
+                <MainContent/>               
             </div>
         );
     }

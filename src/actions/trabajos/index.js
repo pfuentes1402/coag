@@ -23,6 +23,17 @@ export const fetchError = (error) => ({
 });
 
 
+// export const FuncioncambioContenidoCentral = () =>(dispatch)=>{
+    
+//     dispatch(cambioContenidoCentral);
+// }
+
+export const cambioContenidoCentralReset = (error) => ({
+  type: types.CAMBIO_CONTENEDOR_CENTRAL_RESET,
+  payload: error
+});
+
+
 export const fetchTipoTrabajo = (idGrupoTematico) => (dispatch) => {
     getTiposTrabajo(idGrupoTematico).then((gruposTematicos) => {
       dispatch(fetchTiposTrabajo(gruposTematicos));

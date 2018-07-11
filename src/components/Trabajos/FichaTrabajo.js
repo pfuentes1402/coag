@@ -103,7 +103,7 @@ const renderField = ({
 
 FichaTrabajo = connect(
     state => ({
-        initialValues:state.expedientes.trabajoData ? state.expedientes.trabajoData.Trabajos[0]:"",
+        initialValues:state.expedientes.trabajoData.Trabajos[0] || "",
         enableReinitialize:true,
            
         //adressaved: state.expedientes.adressValidated,     

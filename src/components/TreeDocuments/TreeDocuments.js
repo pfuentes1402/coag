@@ -11,6 +11,8 @@ class TreeDocuments extends Component {
         super(props);
         this.state = {};
         this.onToggle = this.onToggle.bind(this);
+      
+        
     }
     onToggle(node, toggled){
         if(this.state.cursor){
@@ -24,6 +26,7 @@ class TreeDocuments extends Component {
         
       
     }
+  
 
     render() {
         const treeStyle = CustomStyle;

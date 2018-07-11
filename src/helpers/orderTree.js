@@ -3,7 +3,7 @@ import orderForTree from "./orderForTree";
 export default function ordertree(temp){
    
 
-    let arrReduc = temp.EstructuraDocumental;
+    let arrReduc = temp.data.EstructuraDocumental;
                 var i;
                 for(i = 0; i < arrReduc.length; i++){
                     arrReduc[i].name = arrReduc[i]['titulo'];
@@ -27,6 +27,6 @@ export default function ordertree(temp){
                         }
                      }
                  }
-                console.log(tree);
+                
                 return tree
             }

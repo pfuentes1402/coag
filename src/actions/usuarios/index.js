@@ -87,6 +87,16 @@ export const errorLogin = (data) => (
     }); 
         
     };
+   export const  goHome = () =>
+
+        (dispatch) => {
+           
+            dispatch({
+            type: types.BORRASELECTED,
+             
+    }); 
+        
+    };
 
    
 

@@ -39,7 +39,7 @@ class ContenedorExpedientes extends Component {
    
    
     render() {
-        console.log(this.props.Colegiados);
+       
         return (
             <div>
             <Container className="full">
@@ -102,7 +102,7 @@ ContenedorExpedientes.defaultProps = {
   };
 const mapStateToProps = state => ({
     arbolEstructuraDocumentalTrabajo: state.expedientes.arbolEstructuraDocumentalTrabajo,
-    trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
+    trabajos: state.expedientes.expedienteData.Trabajos? state.expedientes.expedienteData.Trabajos:[],
     loading:state.expedientes.loading,
     datosAgentes:state.expedientes.datosAgentes ? state.expedientes.datosAgentes:"",
     selectedIdexpediente:state.expedientes.selectedData?state.expedientes.selectedData.Id_Expediente:"",

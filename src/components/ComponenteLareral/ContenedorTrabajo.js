@@ -18,7 +18,7 @@ class ContenedorTrabajo extends Component {
   }
 
   toggle(e) {
-     
+   
     this.setState({ collapse: !this.state.collapse });  
    
   }
@@ -53,7 +53,7 @@ ContenedorTrabajo.defaultProps = {
 
 const mapStateToProps = state => ({     
   //dataArbol: state.expedientes.arbolEstructuraDocumentalTrabajo&&state.expedientes.arbolEstructuraDocumentalTrabajo[0],
-  dataArbol: state.expedientes.arbolEstructuraDocumentalTrabajo,
+dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0] || '',
  
   });
  

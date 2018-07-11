@@ -1,45 +1,26 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-import './styles.css';
-import TreeDocuments from "../TreeDocuments/TreeDocuments";
 import { fetchEstructuraDocumental, fetchExpedienteDatosGeneral, getAgentes,
      fetchTrabajoDatosGeneral, fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo} from '../../actions/expedientes';
 import {test} from '../../api/index'
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
-import { connect } from 'react-redux';
-
-import ListWorks from '../ListWorks/ListWorks';
-
-import ExpedientType from '../MainContent/ExpedientType/ExpedientType';
-import ExpedientContainer from './ExpedientContainer';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
-import ContenedorCentral from './../../containers/ContenedorCentral'
-
+import ContenedorCentral from './../../containers/ContenedorCentral';
 import Expandible from '../ComponenteLareral/Expandible';
-
+import { connect } from 'react-redux';
+import './styles.css';
 
 
 class MainContent extends Component {
   
-
-    componentWillMount(){
-        //    //Esto es dummy, los datos del usuario estan seteados en el api
-        //     let idtrabajo = '2';      
-        //     this.props.fetchDatosUsuario(idtrabajo);
-                      
-    }
-   
-
-    handleSelectedExpediente = d => {
-            console.log(d);
-            console.log('click expediente');
+       handleSelectedExpediente = d => {
+            
         if (d.Id_Expediente != null) {
             this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo)
 
         } else {
             this.props.setSelectedExpediente(d);
-            fetchExpedienteDatosGeneral(d);
+            this.propps.fetchExpedienteDatosGeneral(d);
 
         }
 
@@ -50,7 +31,8 @@ class MainContent extends Component {
         const RenderComponenteExp =() =>{
             return (<Componentelateral onSelectedLevel={this.handleSelectedExpediente}/>)
         }
-        const RenderContenedorcentral =() =>{
+       
+        const RenderContenedorTrabajos =() =>{
             return (<Expandible
             data={this.props.dataArbol}
             />)
@@ -66,12 +48,12 @@ class MainContent extends Component {
                     <Row className="principal">
                         <Col xs="6" sm="2">
                         {/* <Componentelateral trabajos={this.props.trabajos}  */}
-                        {this.props.expTrabajo === 'inicial' ? RenderComponenteExp():RenderContenedorcentral()}
-                        {/* {RenderContenedorcentral()} */}
+                        {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()}
+                        {/* {RenderComponenteExp()} */}
                     
                         </Col>
                         <Col xs="6" sm="10">
-                            <ContenedorCentral contenidoExp ={this.props.selectedData} />
+                            <ContenedorCentral contenidoExp ={this.props.expTrabajoParaCentral} />
                         </Col>                   
 
                     </Row>                    
@@ -100,7 +82,8 @@ const mapStateToProps = state => ({
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.expedieteotrabajo,
     expTrabajo:state.seleccionado.selectedExpediente || '',
-    // expTrabajo:state.seleccionado?state.seleccionado.selectedExpediente:'',
+    expTrabajoParaCentral:state.seleccionado.expTrabajoParaCentral || '',
+    
     dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0] ||'',
     
    

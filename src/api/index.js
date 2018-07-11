@@ -91,7 +91,7 @@ function addSubscriber(callback) {
       })
       return retryOriginalRequest
     }
-    handleLoggout();
+   // handleLoggout();
     return Promise.reject(error)
   })
     //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
@@ -108,8 +108,8 @@ function addSubscriber(callback) {
  */
 export const getEstructuraDocumental = (id_expediente,idtrabajo) =>
   api.get(`/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
-    .then(r=> {
-      return r.json();
+    .then(r=> {      
+      return r;
     })
     .then(resultado => {
       let ordenado = ordertree(resultado);
@@ -295,9 +295,7 @@ export const expedientesuser = () =>
 export const getTrabajoeDatosGenerales = (id_expediente,id_Trabajo) =>
 api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
   .then(response => {
-   console.log('getTrabajoeDatosGenerales api');
-   console.log(response);
-    return response.json();
+    return response;
 
   })
   .then(resultado => {

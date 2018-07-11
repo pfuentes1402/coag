@@ -2,8 +2,12 @@ import { createSelector } from 'reselect';
 import { SET_EXPEDIENTE_SELECTED_DATOS } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_NODE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_EXP_TO_STORE } from "../../actions/expedientes/types";
+import { CAMBIO_CONTENEDOR_CENTRAL_RESET } from "../../actions/trabajos/types";
+import { CAMBIO_CONTENEDOR_CENTRAL } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
+import { BORRASELECTED } from "../../actions/usuarios/types";
+import { PURGE, REHYDRATE } from 'redux-persist';
 
 
 
@@ -11,7 +15,7 @@ import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
 
 
 
-const seleccionado = (state = {selectedExpediente:'inicial'}, action) => { 
+const seleccionado = (state = {selectedExpediente:'inicial', expTrabajoParaCentral:'expedientes'}, action) => { 
   switch (action.type) {
     case SET_EXPEDIENTE_SELECTED_DATOS:
     console.log('Payload de seleccionado');
@@ -39,9 +43,33 @@ const seleccionado = (state = {selectedExpediente:'inicial'}, action) => {
       selectedExp:action.payload,
       selectedExpediente: "expediente"
     };
+    case BORRASELECTED:
     
-        default:
-        return state;
+    return {
+      ...state,        
+      selectedExpediente: "",
+      expTrabajoParaCentral: "expedientes",
+    };
+    case CAMBIO_CONTENEDOR_CENTRAL:    
+    return {
+      ...state,        
+      
+      expTrabajoParaCentral: 'trabajos'
+    };
+    case CAMBIO_CONTENEDOR_CENTRAL_RESET:    
+    return {
+      ...state,        
+      
+      expTrabajoParaCentral: 'expedientes'
+    };
+    case PURGE:
+      console.log("PURGING!!!!"); 
+      state=null
+      return{
+            
+      };
+    default:
+      return state;
     }
 }
 
