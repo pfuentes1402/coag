@@ -71,7 +71,7 @@ const mapStateToProps = state => ({
   dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor
     ? state.expedientes.arbolEstructuraTrabajoRefactor[0]
     : "",
-  trabajos: state.expedientes.expedienteData.Trabajos || "",
+  trabajos: state.expedientes.expedienteData.Trabajos || [{}],
   nodo: state.expedientes.arbolEstructuraTrabajoRefactor[0].id_documento || ""
 });
 

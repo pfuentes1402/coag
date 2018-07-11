@@ -67,7 +67,7 @@ Componentelateral.defaultProps = {
 
 const mapStateToProps = state => ({
     expedientearbol: state.expedientes.expedienteData.Expediente?state.expedientes.expedienteData.Expediente[0]:"",
-    expedientes: state.expedientes.expedientes || "",     
+    expedientes: state.expedientes.expedientes || [{}],     
     dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0],
     selectedExpFromstore: state.seleccionado.selectedExp?state.seleccionado.selectedExp:"",
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],

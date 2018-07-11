@@ -59,10 +59,7 @@ const reducer = (state = { DatosUsuarioValidado: {
        
         case PURGE:
               console.log("PURGING!!!!"); 
-              state=null
-              return{
-                     state    
-              };
+              return state; 
         default:
           return state;
     }
