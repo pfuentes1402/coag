@@ -10,6 +10,7 @@ import { PrivateRoute } from './components/login/privateRoute';
 
 export default (
   <div>
+    
       <PrivateRoute exact path="/" component={MainContainer} />
       {/* <Route component={Login}/> */}
       {/* <Route exact path='/' component={MainContainer}/>
