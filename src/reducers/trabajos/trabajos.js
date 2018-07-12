@@ -1,8 +1,9 @@
 import { FETCH_TIPOS_TRABAJO, FETCH_TRABAJOS_ERROR, FETCH_TIPOS_AUTORIZACION, FETCH_FASES_TRABAJOS } from "../../actions/trabajos/types";
+import { PURGE } from 'redux-persist';
 
-const initialState = [];
-const reducer = (state = {tiposTrabajos : { GruposTematicos: [{Nombre: "Edi"},{Nombre: "Ei"}] }
-, tiposAutorizacion: {Tipos_autorizacion_municipal:[]}, fasesTrabajos:{FasesTrabajos:[]}, loading : true }, action) => {
+const initialState = {tiposTrabajos : { GruposTematicos: [{Nombre: "Edi"},{Nombre: "Ei"}] }
+, tiposAutorizacion: {Tipos_autorizacion_municipal:[]}, fasesTrabajos:{FasesTrabajos:[]}, loading : true };
+const reducer = (state = initialState, action) => {
  
   switch (action.type) {
     case FETCH_TIPOS_TRABAJO:
@@ -23,7 +24,9 @@ const reducer = (state = {tiposTrabajos : { GruposTematicos: [{Nombre: "Edi"},{N
       };
     case FETCH_TRABAJOS_ERROR:
       return initialState;
-    default:
+  case PURGE:                        
+      return initialState; 
+  default:
       return state;
   }
 };

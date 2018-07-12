@@ -8,6 +8,7 @@ import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO} from "../../actions/expedientes/types";
+import { PURGE } from 'redux-persist';
 
 
 
@@ -19,10 +20,10 @@ export const FETCH_EXPEDIENTES_ERROR = 'FETCH_EXPEDIENTES_ERROR';
 export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 
-const initialState = [];
-const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
- trabajos: [{}],addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{},expedientes:{}, expedienteData:{}, datosAgentes:{},
-  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} },action) => {
+const initialState = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
+trabajos: [{}],addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{},expedientes:{}, expedienteData:{}, datosAgentes:{},
+ datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
+const expedientes = (state = initialState,action) => {
  
   switch (action.type) {
      case FETCH_EXPEDIENTES_SUCCESS:
@@ -95,14 +96,10 @@ const expedientes = (state = {arbolEstructuraDocumentalTrabajo : {}, loading : t
           ...state,
           expedienteData: action.payload.data ,
         }
-    /*case SET_EXPEDIENTE_SELECTED:
-      
-      
-      const {  Fecha_Entrada } = action.payload;
-      const {data} = action.payload;
-      return {
-        ...state, [Fecha_Entrada ]: { ...state[Fecha_Entrada], selectedData: action.payload, expedienteDataDate: new Date() }
-        };*/
+    case PURGE: 
+        return{
+          initialState
+        };
     
   
      case FETCH_SAVE_AGENTES_DATA:

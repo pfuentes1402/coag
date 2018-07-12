@@ -4,26 +4,26 @@ import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_ } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
 
+const initialstate ={ DatosUsuarioValidado: {
+  "Id": "",
+"Usuario": "",
+"Id_Colegiado":"" ,
+"Id_Entidad":"",
+"Es_Usuario_Delegado":"",
+"Es_Sociedad":"",
+"Mail":"",
+"Fecha_Ultima_Conexion":""
+},
+DatosConfiguracionesUsuario:{
+"Id": "",
+"Idioma_Predefinido": "",
+"Numero_Trabajos_Acciones_Pendientes": ""
+},
+token:"",
 
-const reducer = (state = { DatosUsuarioValidado: {
-        "Id": "",
-      "Usuario": "",
-      "Id_Colegiado":"" ,
-      "Id_Entidad":"",
-      "Es_Usuario_Delegado":"",
-      "Es_Sociedad":"",
-      "Mail":"",
-      "Fecha_Ultima_Conexion":""
-    },
-    DatosConfiguracionesUsuario:{
-      "Id": "",
-      "Idioma_Predefinido": "",
-      "Numero_Trabajos_Acciones_Pendientes": ""
-    },
-    token:"",
-    
-    mensaje:"",
-    data: {Expedientes:[]} }, action) => {
+mensaje:"",
+data: {Expedientes:[]} };
+const reducer = (state = initialstate, action) => {
       
       switch (action.type) {
         case FETCH_DATOSDEUSUARIO_SUCCESS:
@@ -58,8 +58,8 @@ const reducer = (state = { DatosUsuarioValidado: {
               };
        
         case PURGE:
-              console.log("PURGING!!!!"); 
-              return state; 
+                        
+              return initialstate; 
         default:
           return state;
     }

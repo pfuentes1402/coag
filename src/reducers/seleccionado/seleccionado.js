@@ -8,8 +8,8 @@ import { BORRASELECTED } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
 
 
-
-const seleccionado = (state = {selectedExpediente:'inicial', expTrabajoParaCentral:'expedientes'}, action) => { 
+const initialState ={selectedExpediente:'inicial', expTrabajoParaCentral:'expedientes'};
+const seleccionado = (state = initialState , action) => { 
   switch (action.type) {
     case SET_EXPEDIENTE_SELECTED_DATOS:
     console.log('Payload de seleccionado');
@@ -56,11 +56,9 @@ const seleccionado = (state = {selectedExpediente:'inicial', expTrabajoParaCentr
       
       expTrabajoParaCentral: 'expedientes'
     };
-    case PURGE:
-      console.log("PURGING!!!!"); 
-      state=null
+    case PURGE: 
       return{
-            
+        initialState
       };
     default:
       return state;
