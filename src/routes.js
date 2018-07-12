@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import HomeContainer from './containers/HomeContainer';
 import NuevoExpedienteContainer from './containers/NuevoExpedienteContainer';
 import SelectorTipoTrabajoContainer from './containers/SelectorTipoTrabajoContainer';
 import MainContainer from './containers/index';

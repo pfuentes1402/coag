@@ -1,10 +1,10 @@
- import { store } from './../index'
+
  import {handleLoggout} from './../helpers/logout.js'
 
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
-import { fetchRefresh } from './../actions/usuarios'
+
 
 const BASE_PATH = "http://servicios.coag.es/api";
 
@@ -52,10 +52,7 @@ const api = axios.create({
 
 
 
-let subscribers = []
-function addSubscriber(callback) {
-  subscribers.push(callback)
-}
+
   api.interceptors.response.use(function (response) {
     
     return response

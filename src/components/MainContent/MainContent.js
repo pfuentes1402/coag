@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { fetchEstructuraDocumental, fetchExpedienteDatosGeneral, getAgentes,
      fetchTrabajoDatosGeneral, fetchEstructuraDocumentalTrabajo, setSelectedExpediente, setSelectedExpedienteTo} from '../../actions/expedientes';
 import {test} from '../../api/index'
-import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
+import {Container, Row, Col } from 'reactstrap';
 import Componentelateral from './../ComponenteLareral/Componentelateral.js';
 import ContenedorCentral from './../../containers/ContenedorCentral';
 import Expandible from '../ComponenteLareral/Expandible';

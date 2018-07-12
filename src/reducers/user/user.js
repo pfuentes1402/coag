@@ -1,7 +1,7 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL, FETCH_EXPEDIENTES_SUCCESS, REFRESH_TOKEN_ } from "../../actions/usuarios/types";
-import { PURGE, REHYDRATE } from 'redux-persist';
+import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_ } from "../../actions/usuarios/types";
+import { PURGE } from 'redux-persist';
 
 
 

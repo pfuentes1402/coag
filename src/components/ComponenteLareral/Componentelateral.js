@@ -10,20 +10,7 @@ import "./styles.css";
 
 
 const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetchSelectedExpediente, expedientearbol,expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected, dataArbol})=>{
-    const handleClickLateral = trabajo =>{
-      console.log('Trabajo tras click');
-      console.log(trabajo);
-        onSelectedLevel(trabajo);
-        fetchExpedienteSelected(trabajo);  
-        fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
-    };
-    const handleClickLateralEXp = trabajo =>{
-        onSelectedLevel(trabajo.Expediente);
-        fetchExpedienteSelected(trabajo.Expediente);       
-        //fetchExpedienteDatosGeneral(selectedExpFromstore);
-       
-        //fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);
-    };
+  
     const click = datos=>{
     
         fetchExpedienteDatosGeneral(datos.Id_Expediente);

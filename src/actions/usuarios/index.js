@@ -1,6 +1,5 @@
-import { getDatosUsuario, funcionForma, getToken } from '../../api';
+import {  funcionForma, getToken } from '../../api';
 import { history } from '../../helpers/hidtory';
-import { withRouter } from "react-router-dom";
 import * as types from './types';
 import { PURGE } from 'redux-persist';
 

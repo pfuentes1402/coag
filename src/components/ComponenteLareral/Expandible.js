@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Collapse, Button, CardBody, Card } from "reactstrap";
+import { Collapse } from "reactstrap";
 import { connect } from "react-redux";
 import "./styles.css";
-import TreeDocuments from "../TreeDocuments/TreeDocuments";
+
 import ContenedorExpediente from "../ComponenteLareral/ContenedorExpediente";
 import {
   setSelectedExpedienteTo,
@@ -22,7 +22,7 @@ class Expandible extends Component {
 
   render() {
     const handleClickLateral = trabajo => {
-      //TODO: Cada vez que clickeo en un elemento anidado se vuelve a ejecutar estas llamadas, incluso cuando es un nodo del arbol(revisar)
+      //TODO: Cada vez que hago click en un elemento anidado se vuelve a ejecutar estas llamadas, incluso cuando es un nodo del arbol(revisar)
       console.log(trabajo);
       console.log(this.props.nodo);
       let nodo = this.props.nodo;

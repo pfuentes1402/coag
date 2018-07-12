@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { purgarStore, goHome } from './../../actions/usuarios/index';
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
-import { Collapse, Navbar,NavbarToggler,NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
+import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
 
 const styles = {
     root: {
@@ -81,17 +81,7 @@ class MenuAppBar extends React.Component {
               </Button>
             )} />
           )
-          // const ButtonHome = () => (
-          //   <Route render={({ history}) => (
-          //     <Button
-          //       color="link"
-          //       onClick={() => { history.push('/') }}
-          //       variant="raised" className={classes.button}
-          //     >
-          //       Inicio
-          //     </Button>
-          //   )} />
-          // )
+       
           const ButtonHome = () => (
             <Route render={({ history}) => (
               <Button
@@ -120,8 +110,7 @@ class MenuAppBar extends React.Component {
             <Route render={({ history}) => (
                 <Button
                   color="link"
-                //   onClick={() => { history.push('/') }}
-                  // onClick={this.handleLoggout}
+                
                   onClick={handleLoggout}
                   
                   variant="raised" className={classes.button}
@@ -138,7 +127,7 @@ class MenuAppBar extends React.Component {
          
             <Container className="full">
             <Row>
-            <Col sm="3"><div><img src={coag} height="50" className="logo-coag"/></div></Col>
+            <Col sm="3"><div><img src={coag} alt="logo" height="50" className="logo-coag"/></div></Col>
             <Col sm="2"><ButtonHome/><Button color="link">Mis expedientes</Button></Col>
             <Col sm="3">
                 <ButtonNew/>{' '}
