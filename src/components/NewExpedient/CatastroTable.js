@@ -39,10 +39,11 @@ class TablaCatastro extends Component {
                     width: '492px' ,
                     margin: '20px 0 20px 0'}} 
 		            >
-                    <AgGridReact
-                        columnDefs={this.state.columnDefs}
-                        rowData={this.props.addressreducida}>
-                    </AgGridReact>
+            <AgGridReact
+                                        columnDefs={this.state.columnDefs}
+                                        rowData={this.props.addressreducida}>
+                                    </AgGridReact>
+            
                 </div>
             );
     }
@@ -50,7 +51,7 @@ class TablaCatastro extends Component {
 
 const mapStateToProps = state => ({
     direcciones:state.expedientes.adressValidated,
-    addressreducida:state.expedientes.addressreducida || '',
+    addressreducida:state.expedientes.addressreducida || [],
   });
 
 const mapDispatchToProps =state =>({

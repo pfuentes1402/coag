@@ -20,7 +20,7 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 
 const initialState = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
-trabajos: [{}],addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{},expedientes:{}, expedienteData:{}, datosAgentes:{},
+trabajos: [{}],addressreducida:[{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}], adressValidated : {}, ExpedientNew:{},expedientes:{}, expedienteData:{Expediente:[]}, datosAgentes:{},
  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
 const expedientes = (state = initialState,action) => {
  
