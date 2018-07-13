@@ -39,10 +39,10 @@ class TablaCatastro extends Component {
                     width: '492px' ,
                     margin: '20px 0 20px 0'}} 
 		            >
-                    {/* <AgGridReact
+                    <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.addressreducida}>
-                    </AgGridReact> */}
+                    </AgGridReact>
                 </div>
             );
     }

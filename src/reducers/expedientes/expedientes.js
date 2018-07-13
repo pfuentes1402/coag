@@ -8,7 +8,6 @@ import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO} from "../../actions/expedientes/types";
-import { PURGE } from 'redux-persist';
 
 
 
@@ -96,10 +95,14 @@ const expedientes = (state = initialState,action) => {
           ...state,
           expedienteData: action.payload.data ,
         }
-    case PURGE: 
-        return{
-          initialState
-        };
+    /*case SET_EXPEDIENTE_SELECTED:
+      
+      
+      const {  Fecha_Entrada } = action.payload;
+      const {data} = action.payload;
+      return {
+        ...state, [Fecha_Entrada ]: { ...state[Fecha_Entrada], selectedData: action.payload, expedienteDataDate: new Date() }
+        };*/
     
   
      case FETCH_SAVE_AGENTES_DATA:

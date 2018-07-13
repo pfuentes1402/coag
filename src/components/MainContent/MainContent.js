@@ -34,7 +34,7 @@ class MainContent extends Component {
        
         const RenderContenedorTrabajos =() =>{
             return (<Expandible
-            data={this.props.dataArbol}
+            
             />)
         }
         
@@ -84,7 +84,7 @@ const mapStateToProps = state => ({
     expTrabajo:state.seleccionado.selectedExpediente || '',
     expTrabajoParaCentral:state.seleccionado.expTrabajoParaCentral || '',
     
-    dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0] ||'',
+   
     
    
   });

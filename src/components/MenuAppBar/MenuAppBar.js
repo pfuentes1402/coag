@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { purgarStore, goHome } from './../../actions/usuarios/index';
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
-import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
+import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem, NavItem } from 'reactstrap';
 
 const styles = {
     root: {
@@ -134,6 +134,7 @@ class MenuAppBar extends React.Component {
                 <Button outline color="secondary">Tramitación en lote<FontAwesome name='rocket'/></Button>
             </Col>
             <Col sm="3">
+           
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Perfil
@@ -150,7 +151,7 @@ class MenuAppBar extends React.Component {
                   
                 </DropdownMenu>
               </UncontrolledDropdown>
-                
+            
             </Col>
             </Row>
             </Container>

@@ -11,6 +11,8 @@ export const fetchSuccess = (expedientes) => ({
     type: types.FETCH_EXPEDIENTES_SUCCESS,
     payload: expedientes
 });
+
+
 export const fetchSuccessTrabajo = (expedientes) => ({
     type: types.FETCH_DATAFORTREETRABAJO_SUCCESS,
     payload: expedientes

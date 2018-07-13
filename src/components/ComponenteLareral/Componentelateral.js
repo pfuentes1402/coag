@@ -9,7 +9,7 @@ import "./styles.css";
 
 
 
-const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetchSelectedExpediente, expedientearbol,expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected, dataArbol})=>{
+const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetchSelectedExpediente, expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected})=>{
   
     const click = datos=>{
     
@@ -26,7 +26,7 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
         expedientes.map((expediente,i) =>(
            
             <div className="Expediente" key={i} onClick={()=>click(expediente)}>
-                <div key={i}>{expediente.Id_Expediente}</div>
+                <div key={i}>{expediente.Id_Expediente}-{expediente.Titulo}</div>
             </div>  
         ))
     );
@@ -53,9 +53,8 @@ Componentelateral.defaultProps = {
   };
 
 const mapStateToProps = state => ({
-    expedientearbol: state.expedientes.expedienteData.Expediente?state.expedientes.expedienteData.Expediente[0]:"",
-    expedientes: state.expedientes.expedientes || [{}],     
-    dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor[0],
+   
+    expedientes: state.expedientes.expedientes || [{}],
     selectedExpFromstore: state.seleccionado.selectedExp?state.seleccionado.selectedExp:"",
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
   });

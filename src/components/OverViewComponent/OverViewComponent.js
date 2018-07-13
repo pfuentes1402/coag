@@ -101,14 +101,15 @@ const renderField = ({
 
  
 OverViewComponent = reduxForm({
-    form: 'OverViewComponent', 
+    form: 'OverViewComponent',
+    enableReinitialize: true,
  
 })(OverViewComponent)
 
 OverViewComponent = connect(
     state => ({
-        initialValues:state.expedientes.expedienteData.Expediente  ? state.expedientes.expedienteData.Expediente[0]:"",
-        datosNuevoExpediente:state.expedientes.expedienteData,        
+        initialValues:state.expedientes.expedienteData.Expediente[0] || "",
+        datosNuevoExpediente:state.expedientes.expedienteData || '',        
         adressaved: state.expedientes.adressValidated,     
        
     }),

@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import SubHeader from '../components/SubHeader/SubHeader';
 import HomeContainer from '../containers/HomeContainer';
 import routes from './../routes';
+import { connect } from 'react-redux';
 import { fetchEstructuraDocumental, fetchexpedientesUser } from '../actions/expedientes/';
 
 
@@ -13,18 +14,44 @@ class MainContainer extends Component {
     state = {
         title: window.location.pathname
     }
+    componentWillMount(){
+        this.props.fetchexpedientesUser();       
+    }
 
   
     render() {
+
+        const RenderComponents =() =>{
+            return ( <div className="mainContainer">
+            <AppHeader/>
+            <SubHeader title={this.state.title}/>               
+            <HomeContainer/>
+            
+         </div>)
+        }
+       
+        const loading =() =>{
+            return (<div>
+                    <p>Loading...</p>
+            </div>)
+        }
+
+
+
+
         return (
             <div className="mainContainer">
-               <AppHeader/>
-               <SubHeader title={this.state.title}/>               
-               <HomeContainer/>
-               
+            {this.props.loading === true ?loading(): RenderComponents()}
             </div>
         );
     }
 }
 
-export default MainContainer;
+
+const mapStateToProps = state => ({
+    loading:state.status.loading || '',
+    
+  });
+
+
+export default connect(mapStateToProps,{fetchexpedientesUser})(MainContainer);
