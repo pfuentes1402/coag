@@ -23,6 +23,7 @@ class HomeContainer extends Component {
        
         return (
             <div className="homeContainer">
+        
                 <MainContent/>               
             </div>
         );
