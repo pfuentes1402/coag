@@ -22,11 +22,11 @@ class Expandible extends Component {
 
   render() {
     const handleClickLateral = trabajo => {
-      //TODO: Cada vez que hago click en un elemento anidado se vuelve a ejecutar estas llamadas, incluso cuando es un nodo del arbol(revisar)
+      
       console.log(trabajo);
       console.log(this.props.nodo);
       let nodo = this.props.nodo;
-      if (nodo !== trabajo.Id_Trabajo) {
+      if (nodo !== trabajo.Id_Trabajo) { 
         this.props.setSelectedExpedienteTo(
           trabajo.Id_Expediente,
           trabajo.Id_Trabajo
@@ -51,7 +51,8 @@ class Expandible extends Component {
     return (
       <div>
         <div color="primary" className="bloque" onClick={this.toggle}>
-          {this.props.expedient}
+          {this.props.expedienteActualid}-
+          {this.props.expedienteActualtitulo}
         </div>
         <Collapse isOpen={this.state.collapse}>
           <div>
@@ -72,7 +73,10 @@ const mapStateToProps = state => ({
     ? state.expedientes.arbolEstructuraTrabajoRefactor[0]
     : "",
   trabajos: state.expedientes.expedienteData.Trabajos || [{}],
-  nodo: state.expedientes.arbolEstructuraTrabajoRefactor[0].id_documento || ""
+  nodo: state.expedientes.arbolEstructuraTrabajoRefactor[0].id_documento || "",
+  expedienteActualtitulo:state.seleccionado.expedienteActualtitulo || "",
+  expedienteActualid:state.seleccionado.expedienteActualid || "",
+
 });
 
 export default connect(

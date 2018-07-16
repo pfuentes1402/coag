@@ -8,7 +8,7 @@ import { BORRASELECTED } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
 
 
-const initialState ={selectedExpediente:'inicial', expTrabajoParaCentral:'expedientes'};
+const initialState ={selectedExpediente:'inicial', expTrabajoParaCentral:'expedientes', expedienteActualtitulo:'',expedienteActualid:''};
 const seleccionado = (state = initialState , action) => { 
   switch (action.type) {
     case SET_EXPEDIENTE_SELECTED_DATOS:
@@ -31,11 +31,13 @@ const seleccionado = (state = initialState , action) => {
     //   selectedExpediente:action.payload.data
     // };
     case FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE:
-    
+    console.log(action.payload);
     return {
       ...state,            
       selectedExp:action.payload,
-      selectedExpediente: "expediente"
+      selectedExpediente: "expediente",
+      expedienteActualtitulo:action.payload.Titulo,
+      expedienteActualid:action.payload.Id_Expediente,
     };
     case BORRASELECTED:
     
@@ -57,9 +59,9 @@ const seleccionado = (state = initialState , action) => {
       expTrabajoParaCentral: 'expedientes'
     };
     case PURGE: 
-      return{
-        initialState
-      };
+      return initialState
+      ;
+ 
     default:
       return state;
     }

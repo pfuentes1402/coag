@@ -14,13 +14,15 @@ import './styles.css';
 class MainContent extends Component {
   
        handleSelectedExpediente = d => {
-            
+          
+           
         if (d.Id_Expediente != null) {
-            this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo)
+            this.props.setSelectedExpedienteTo(d.Id_Expediente, d.Id_Trabajo);
+           
 
         } else {
             this.props.setSelectedExpediente(d);
-            this.propps.fetchExpedienteDatosGeneral(d);
+            this.props.fetchExpedienteDatosGeneral(d);
 
         }
 
@@ -33,9 +35,8 @@ class MainContent extends Component {
         }
        
         const RenderContenedorTrabajos =() =>{
-            return (<Expandible
             
-            />)
+            return (<Expandible />)
         }
         
 
