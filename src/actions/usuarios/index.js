@@ -1,4 +1,4 @@
-import {  funcionForma, getToken } from '../../api';
+import {  funcionForma, getToken, getultimosTrabajos } from '../../api';
 import { history } from '../../helpers/hidtory';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
@@ -24,6 +24,10 @@ export const fetchLoginExito = (data) => ({
 });
 export const fetchRefresh = (data) => ({
     type: types.REFRESH_TOKEN_,
+    payload: data
+});
+export const fetchUltimosTrabajos = (data) => ({
+    type: types.ULTIMOSTRABAJOS,
     payload: data
 });
 
@@ -104,21 +108,11 @@ export const errorLogin = (data) => (
    /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)
 */
-// export const fetchDatosUsuario = (id_usuario) => 
-// dispatch => {   
+export const getTrabajos = () => 
+dispatch => {   
    
-//     console.log('fetchDatosUsuario');
-//     let data = getDatosUsuario(id_usuario)
-//     //console.log(data);
-//         dispatch(fetchSuccessusuario(data));
-// };
-//(dispatch) => {    
-  //  dispatch(fetchInit());
-    //getDatosUsuario(id_usuario).then((datos) => {
-        
-    //    dispatch(fetchSuccessusuario(datos));
-       
-  //  })
-   //     .catch(
-    //    () => fetchError({ error: 'Algo ha salido mal'})
-   // );
+    console.log('fetchDatosUsuario');
+    let data = getultimosTrabajos();
+    //console.log(data);
+        dispatch(fetchUltimosTrabajos(data));
+};

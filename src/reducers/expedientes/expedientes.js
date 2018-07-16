@@ -85,9 +85,7 @@ const expedientes = (state = initialState,action) => {
           ExpedientNew: action.payload,
         };  
     case FETCH_SAVE_ADRESS_TO_STORE:  
-      console.log(action.payload)
-
-     
+         
 
 
         return {

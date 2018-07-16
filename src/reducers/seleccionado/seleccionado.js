@@ -32,20 +32,21 @@ const seleccionado = (state = initialState , action) => {
     //   selectedExpediente:action.payload.data
     // };
     case FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE:
-    console.log(action.payload);
+   
     return {
       ...state,            
       selectedExp:action.payload,
-      selectedExpediente: "expediente",
+      selectedExpediente: 'expediente',
       expedienteActualtitulo:action.payload.Titulo,
       expedienteActualid:action.payload.Id_Expediente,
+      expTrabajoParaCentral:'expedientes',
     };
     case BORRASELECTED:
     
     return {
       ...state,        
       selectedExpediente: "",
-      expTrabajoParaCentral: "expedientes",
+      expTrabajoParaCentral: "Home",
     };
     case CAMBIO_CONTENEDOR_CENTRAL:    
     return {

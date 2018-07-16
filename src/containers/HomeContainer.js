@@ -8,6 +8,7 @@ import {getAcciones} from '../api/index';
 import "./styles.css";
 
 import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } from '../actions/expedientes/';
+import { getTrabajos } from '../actions/usuarios/index';
 
 
 
@@ -15,7 +16,8 @@ import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } fro
 class HomeContainer extends Component {
 
     componentWillMount(){
-        this.props.fetchexpedientesUser();       
+        this.props.fetchexpedientesUser();
+        this.props.getTrabajos();       
     }
    
 
@@ -47,6 +49,7 @@ const mapDispatchToProps = {
     fetchEstructuraDocumental,
     fetchgetAcciones,
     fetchexpedientesUser,
+    getTrabajos
     
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

@@ -1,6 +1,6 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_ } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
 
 
@@ -14,6 +14,8 @@ const initialstate ={ DatosUsuarioValidado: {
 "Mail":"",
 "Fecha_Ultima_Conexion":""
 },
+ultimostrabajos:[{}]
+,
 DatosConfiguracionesUsuario:{
 "Id": "",
 "Idioma_Predefinido": "",
@@ -55,6 +57,11 @@ const reducer = (state = initialstate, action) => {
               return{
                 ...state,
                 mensaje: 'error en el login',            
+              };
+              case ULTIMOSTRABAJOS:
+              return{
+                ...state,
+                ultimostrabajos: action.payload,            
               };
        
         case PURGE:

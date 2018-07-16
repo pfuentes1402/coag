@@ -19,8 +19,10 @@ const RenderHome = () => {
 function renderizadoCondicional(contenidoExp) {
         switch (contenidoExp) {
             case 'trabajos':
+            console.log('trabajos');
                 return RenderContenedorcentralTrabajo();
-            case 'expediente':
+            case 'expedientes':
+            console.log('expediente');
                 return RenderContenedorExpediente();
             
             default:

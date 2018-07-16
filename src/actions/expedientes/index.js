@@ -74,11 +74,11 @@ export const cambioContenidoCentral = () => ({
 
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) => 
 (dispatch) => {
-   
+   console.log('fetchEstructuraDocumental');
     dispatch(fetchInit());
     dispatch(cambioContenidoCentral());
     getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
-        console.log(expedientes);
+       
         dispatch(fetchSuccessTrabajo(expedientes));
        
     })
