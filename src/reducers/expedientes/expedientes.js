@@ -20,7 +20,7 @@ export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 
 const initialState = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
-trabajos: [{}],addressreducida:{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}, adressValidated : {}, ExpedientNew:{},expedientes:{}, expedienteData:{}, datosAgentes:{},
+trabajos: [{}],addressreducida:[{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}], adressValidated : [{}], ExpedientNew:{},expedientes:{}, expedienteData:{Expediente:[]}, datosAgentes:{},
  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
 const expedientes = (state = initialState,action) => {
  
@@ -55,7 +55,7 @@ const expedientes = (state = initialState,action) => {
         return {
               ...state,            
               address: action.payload,
-              addressreducida: addressreducida,
+              addressreducida: state.addressreducida.concat([addressreducida]),
             }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
           const {Id_Trabajo} = action.payload;
@@ -85,10 +85,15 @@ const expedientes = (state = initialState,action) => {
           ExpedientNew: action.payload,
         };  
     case FETCH_SAVE_ADRESS_TO_STORE:  
-      
+      console.log(action.payload)
+
+     
+
+
         return {
           ...state,
-          adressValidated: action.payload, 
+          adressValidated: state.adressValidated.concat([action.payload]),
+          addressreducida : state.addressreducida.concat(addressreducida)
         }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:
         return {

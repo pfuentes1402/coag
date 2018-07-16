@@ -43,7 +43,12 @@ class AgentsTable extends Component {
                         margin: '0'}}>
                         <AgGridReact
                             columnDefs={this.state.columnDefs}
-                            rowData={this.props.data}>
+                            rowData={this.props.data}
+                             getContextMenuItems = {this.getContextMenuItems}
+                             enableSorting = {true}
+                             enableFilter = {true}
+                             rowSelection = "multiple"
+                              >
                         </AgGridReact>
                     </div>
                 </CardText>
