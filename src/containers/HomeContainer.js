@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import MainContent from '../components/MainContent/MainContent';
-
-import {getAcciones} from '../api/index';
 import "./styles.css";
-
 import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } from '../actions/expedientes/';
 import { getTrabajos } from '../actions/usuarios/index';
 

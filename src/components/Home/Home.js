@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
-import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso'
+import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
+import './styles.css';
 
 
 
@@ -12,7 +13,7 @@ class ContenedorExpedientes extends Component {
  
 
     render() {
-      
+     
         return (
             <div>
             <Container className="full">
@@ -20,8 +21,13 @@ class ContenedorExpedientes extends Component {
                                                                  
                  
                     <Col xs="12" sm="12">
+                        
                         <div className='divderecha'>
-                        <TramitacionesCurso data={this.props.ultimostrabajos.Trabajos}/>
+                        <p>Tramitaciones en Curso <span className="colorAzul">({this.props.ultimostrabajos.Trabajos.length})</span> 
+                        
+                       </p>
+                       
+                        <TramitacionesCurso data={this.props.ultimostrabajos.Trabajos}  />
                         </div>
                         
                     </Col>     

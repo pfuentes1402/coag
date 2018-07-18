@@ -4,7 +4,7 @@ import { Collapse, CardBody, Card, CardHeader } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { fetchTipoTrabajo, fetchTipoAutorizacion, fetchFasesTrabajos } from '../../actions/trabajos';
-import  TrabajosTramitables  from './TrabajosTramitables';
+
 
 import "./styles.css";
 class SelectorTipoTrabajo extends Component {
@@ -41,11 +41,11 @@ class SelectorTipoTrabajo extends Component {
   }
   toggle2(e) {
     this.setState({ collapse2: !this.state.collapse2 ,
-      estiloActivo2: this.state.estiloActivo2 == "activo" ? "" : "activo"});
+      estiloActivo2: this.state.estiloActivo2 === "activo" ? "" : "activo"});
   }
   toggle3(e) {
     this.setState({ collapse3: !this.state.collapse3 ,
-      estiloActivo3: this.state.estiloActivo3 == "activo" ? "" : "activo"});
+      estiloActivo3: this.state.estiloActivo3 === "activo" ? "" : "activo"});
   }
   toggle4(e) {
     this.setState({ collapse4: !this.state.collapse4,
@@ -60,7 +60,7 @@ class SelectorTipoTrabajo extends Component {
   activoObra(e){
     var gTematico = this.props.trabajos.tiposTrabajos.GruposTematicos;
     for(var i=0; i < gTematico.length; i++){
-      if(gTematico[i].Id_Tipo_Grupo_Tematico == e.currentTarget.dataset.id){
+      if(gTematico[i].Id_Tipo_Grupo_Tematico === e.currentTarget.dataset.id){
         this.setState({ descripcion: gTematico[i].Observaciones});
         this.setState({ advertencia: gTematico[i].Advertencia });
         this.setState({trabajoSelected: gTematico[i].Nombre});
@@ -72,7 +72,7 @@ class SelectorTipoTrabajo extends Component {
   activoTramite(e){
     var gTramite = this.props.tiposAutorizacion;
     for(var i=0; i < gTramite.length; i++){
-      if(gTramite[i].Id_Tipo_Autorizacion_Municipal == e.currentTarget.dataset.id){
+      if(gTramite[i].Id_Tipo_Autorizacion_Municipal === e.currentTarget.dataset.id){
         
         this.setState({tramiteSelected: gTramite[i].Nombre});
         this.setState({idTramiteSelected: gTramite[i].Id_Tipo_Autorizacion_Municipal});
@@ -83,10 +83,10 @@ class SelectorTipoTrabajo extends Component {
   }
 
   render() {
-    const {} = this.state;
+    // const {} = this.state;
     return (
       <div className="container">
-          <h3 className="page-header"></h3>
+          {/* <h3 className="page-header"></h3> */}
               <Card style={{ marginBottom: '1rem' }}>
                 <CardHeader className={this.state.estiloActivo1} onClick={this.toggle}>OBRAS</CardHeader>
                 <Collapse className="fondoSeleccion" isOpen={this.state.collapse}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './SubHeader.css';
-import { Button } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 
 class SubHeader extends Component {

@@ -7,9 +7,7 @@ import PropTypes from 'prop-types';
 import {traduccionGrid} from './../../helpers/traducciones'
 
 
-const propTypes = {
-    data: PropTypes.array,
-}
+
 class TramitacionesCurso extends Component {
     constructor(props) {
         super(props);
@@ -17,11 +15,12 @@ class TramitacionesCurso extends Component {
         this.state = {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                
-                {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 180},
-                {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 180},
-                {headerName: "MUNICIPIO", field: "Municipio", width: 180},
-                {headerName: "ESTADO", field: "Estado", width: 180},
-                {headerName: "ACCIONES", field: "acciones", width: 140},             
+                {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200},
+                {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 200},
+                {headerName: "MUNICIPIO", field: "Municipio", width: 200},
+                {headerName: "ESTADO", field: "Estado", width: 200},
+                {headerName: "ACCIONES", field: "acciones", width: 140,
+                },             
             ]          
             ,
             components: {
@@ -30,7 +29,7 @@ class TramitacionesCurso extends Component {
                     }
                 },                
                 rowGroupPanelShow: "always",
-                paginationPageSize: 20,
+                paginationPageSize:10,
                 localeText: traduccionGrid,
             rowData: this.props.data            
             ,
@@ -41,10 +40,14 @@ class TramitacionesCurso extends Component {
     }
     onGridReady(params) {
         this.gridApi = params.api
-        console.log(this.gridApi)
+       
         this.gridColumnApi = params.columnApi
-
+        
     };
+    onPageSizeChanged(newPageSize) {
+        var value = document.getElementById("page-size").value;
+        this.gridApi.paginationSetPageSize(Number(value));
+      }
 
 
     render() {
@@ -53,10 +56,19 @@ class TramitacionesCurso extends Component {
                 <div 
                   className="ag-theme-balham"
                   style={{ 
-	                height: '250px', 
-                    width: '100%',
+	                height: '400px', 
+                    width: '1350px',
                     margin: '0px'}} 
 		            >
+                    <div >
+                           Mostrar:
+                            <select onChange={this.onPageSizeChanged.bind(this)} id="page-size">
+                                <option value="10" selected="">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="100">100</option>
+                            </select>
+                     </div>
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.data}
@@ -77,6 +89,9 @@ class TramitacionesCurso extends Component {
                           pagination = {
                               true
                           }
+                          paginationPageSize={
+                              this.state.paginationPageSize
+                              }
                             rowGroupPanelShow = {
                                 this.state.rowGroupPanelShow
                             }
@@ -91,10 +106,14 @@ class TramitacionesCurso extends Component {
                            } >
                     </AgGridReact>
                 </div>
+          
                 </CardBody>
             );
     }
 }
 
+const propTypes = {
+    data: PropTypes.array,
+}
 
 export default TramitacionesCurso;
