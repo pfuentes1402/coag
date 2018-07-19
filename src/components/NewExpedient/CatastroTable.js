@@ -4,6 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
+import  { elimardelatabla } from './../../actions/expedientes/index'
 
 const propTypes = {
     data: PropTypes.array,
@@ -46,17 +47,19 @@ class TablaCatastro extends Component {
    };
    onButtonClick = e => {
        const selectedNodes = this.gridApi.getSelectedNodes()
-       console.log('llega')
-      
+            
        const selectedData = selectedNodes.map(node => node.data)
+       
         console.log(selectedNodes)
-       const selectedDataStringPresentation = selectedData.map(node => node.Calle + ' ' + node.Numero).join(', ')
-       alert(`Selected nodes: ${selectedDataStringPresentation}`)
+       const selectedDataStringPresentation = selectedNodes.map(node => node.id ).join(', ')
+       console.log(selectedDataStringPresentation);
+       this.props.elimardelatabla(selectedDataStringPresentation)
+       
    }
     
 
     render() {
-      console.log(this.props.addressreducida);
+      
         return (
                 <div 
                   className="ag-theme-balham"
@@ -67,8 +70,7 @@ class TablaCatastro extends Component {
 		            >
             <AgGridReact
                                         columnDefs={this.state.columnDefs}
-                                        rowData={this.props.addressreducida}
-                                         getContextMenuItems = {this.getContextMenuItems}
+                                        rowData={this.props.addressreducida}                                         
                                          enableSorting = {true}
                                          enableFilter = {true}
                                          rowSelection = "multiple"
@@ -93,7 +95,7 @@ const mapStateToProps = state => ({
   });
 
 const mapDispatchToProps =state =>({
-   
+    elimardelatabla,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TablaCatastro);

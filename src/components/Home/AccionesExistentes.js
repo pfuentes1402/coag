@@ -18,12 +18,9 @@ class AccionesExistentes extends Component {
                 <Row className="principal">                   
                                                                  
                  
-                    <Col xs="12" sm="12">
-                        
+                    <Col xs="12" sm="12">                        
                         <div className='divderecha'>
-                        <p>Acciones directas en expedientes existentes</p>
-                                               
-                       
+                        <p>Acciones directas en expedientes existentes</p> 
                         </div>
                         
                     </Col>     

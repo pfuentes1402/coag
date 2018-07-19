@@ -7,7 +7,8 @@ import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
-import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO} from "../../actions/expedientes/types";
+import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA} from "../../actions/expedientes/types";
+import { PURGE } from 'redux-persist';
 
 
 
@@ -19,7 +20,18 @@ export const FETCH_EXPEDIENTES_ERROR = 'FETCH_EXPEDIENTES_ERROR';
 export const FETCH_EXPEDIENTE_SUCCESS = 'FETCH_EXPEDIENTE_SUCCESS';
 
 
-const initialState = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: '',
+const initialState = {arbolEstructuraDocumentalTrabajo : {}, loading : true, address: {Datos_Completos:[{ Id_Pais: '',
+Id_Autonomia: '',
+Id_Provincia: '',
+Id_Concello: '',
+Calle: '',
+Numero: '',
+Planta: '',
+Codigo_Postal: '',
+Concello: '',
+Provincia: '',
+Autonomia: '',
+Pais: ''}]},
 trabajos: [{}],addressreducida:[{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}], adressValidated : [{}], ExpedientNew:{},expedientes:{}, expedienteData:{Expediente:[]}, datosAgentes:{},
  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
 const expedientes = (state = initialState,action) => {
@@ -46,16 +58,20 @@ const expedientes = (state = initialState,action) => {
       return {initialState};
 
     case FETCH_UBICACION_SUCCESS:
-          const {Datos_Completos} = action.payload;
-          const addressreducida=[
-              {Calle: Datos_Completos[0].Calle, Numero: Datos_Completos[0].Numero,
-                  Piso: Datos_Completos[0].Piso, Codigo_Postal: Datos_Completos[0].Codigo_Postal, municipio: Datos_Completos[0].Concello, Id_Concello:Datos_Completos[0].Id_Concello, Georeferencia:""}
-          ];
+         
           
         return {
               ...state,            
               address: action.payload,
-              addressreducida: state.addressreducida.concat([addressreducida]),
+             
+            }; 
+    case ELIMINAR_TABLA:         
+          ///**aqui***/
+          console.log("el del payload"+action.payload);
+        return {
+              ...state,            
+             // addressreducida: action.payload,
+             
             }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
           const {Id_Trabajo} = action.payload;
@@ -84,14 +100,19 @@ const expedientes = (state = initialState,action) => {
           ...state,            
           ExpedientNew: action.payload,
         };  
-    case FETCH_SAVE_ADRESS_TO_STORE:  
+    case FETCH_SAVE_ADRESS_TO_STORE:
          
-
+    
+          const addressreducida=[
+              {Calle:action.payload.Calle, Numero: action.payload.Numero,
+                  Piso: action.payload.Piso, Codigo_Postal: action.payload.Codigo_Postal, municipio: action.payload.Concello, Id_Concello:action.payload.Id_Concello, Georeferencia:""}
+          ];
 
         return {
           ...state,
           adressValidated: state.adressValidated.concat([action.payload]),
-          addressreducida : state.addressreducida.concat(addressreducida)
+          addressreducida:state.addressreducida.concat(addressreducida),
+         
         }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:
         return {
@@ -114,8 +135,7 @@ const expedientes = (state = initialState,action) => {
        datosAgentes:action.payload,
      } 
      case FETCH_SAVE_TRABAJO_TO_STORE:
-          console.log('En el reduces de trabajo to store');
-          console.log(action.payload);
+         
      const id=action.payload.Trabajos[0].Id_Trabajo;
      const index = state.datosTrabajo.findIndex(el => el.Trabajos[0].Id_Trabajo === id);
     
@@ -136,7 +156,9 @@ const expedientes = (state = initialState,action) => {
        
        datosTrabajo:state.datosTrabajo.concat([action.payload]),
      } */
-         
+     case PURGE:
+                        
+     return initialState;    
       
     default:
       return state;

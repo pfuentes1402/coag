@@ -71,7 +71,8 @@ default:
 }
 
 let SyncValidationForm = props => {
-  const { handleSubmit, pristine,  onBack,submitting, validateAddress, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressaved,  } = props;
+  const { handleSubmit, pristine,  onBack,submitting, validateAddress, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressreducida,datosCompletos  } = props;
+const direccionPintar = catastro[catastro.length-1]
 
   return (
     <Container className="margen">
@@ -155,14 +156,15 @@ let SyncValidationForm = props => {
                 >Validar</Button>
               </Col>
               <Col sm="12" className="center-align">
-              <TablaCatastro data={adressaved}/>
+              <TablaCatastro data={adressreducida}/>
                 <Button color="danger"               
-                onClick={(e) => saveAdressTostore(catastroSave.values)}              
+                 onClick={(e) => saveAdressTostore(catastroSave.values)}     
+                 
                 
                 >+</Button>
               </Col>
             </Row>           
-            <CatastroForm dataCatastro={catastro[0]}/>          
+            <CatastroForm/>          
             <div>
               <div>
               <Button
@@ -196,7 +198,7 @@ let SyncValidationForm = props => {
 
 CatastroForm.defaultProps = {
   Refcatastral:'',
-  adressaved:'',
+  adressreducida:'',
 };
 SyncValidationForm = reduxForm({
     form: 'syncValidation', 
@@ -206,9 +208,10 @@ SyncValidationForm = reduxForm({
 
 SyncValidationForm = connect(
     state => ({
+        
         catastro: state.expedientes.addressreducida,
         catastroSave: state.form.CatastroForm,
-        adressaved: state.expedientes.adressreducida || '',
+        adressreducida: state.expedientes.adressreducida || '',
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 
         datosNuevoExpediente:state.expedientes.ExpedientNew,        
        
