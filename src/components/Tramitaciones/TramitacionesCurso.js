@@ -4,7 +4,9 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
-import {traduccionGrid} from './../../helpers/traducciones'
+import {traduccionGrid} from './../../helpers/traducciones';
+import AccionRenderer from './AccionRenderer';
+import EstadoRenderer from './EstadoRenderer';
 
 
 
@@ -18,11 +20,17 @@ class TramitacionesCurso extends Component {
                 {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200},
                 {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 200},
                 {headerName: "MUNICIPIO", field: "Municipio", width: 200},
-                {headerName: "ESTADO", field: "Estado", width: 200},
-                {headerName: "ACCIONES", field: "acciones", width: 140,
+                {headerName: "ESTADO", field: "Estado", cellRenderer:'estadoRenderer', colId: "estado", width: 200},
+                {headerName: "ACCIONES", field: "acciones", cellRenderer:'accionRenderer', colId: "params", width: 140,
                 },             
             ]          
             ,
+            context: {componentParent: this},
+            frameworkComponents: {
+                accionRenderer: AccionRenderer,
+                estadoRenderer: EstadoRenderer
+              }
+              ,
             components: {
                     rowNodeIdRenderer: function (params) {
                         return params.node.id + 1;
@@ -71,6 +79,8 @@ class TramitacionesCurso extends Component {
                      </div>
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
+                        context={this.state.context}
+                        frameworkComponents={this.state.frameworkComponents}
                         rowData={this.props.data}
                        
                           enableSorting = {
