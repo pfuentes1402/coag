@@ -8,6 +8,7 @@ import Componentelateral from './../ComponenteLareral/Componentelateral.js';
 import ContenedorCentral from './../../containers/ContenedorCentral';
 import Expandible from '../ComponenteLareral/Expandible';
 import { connect } from 'react-redux';
+import AccionesExistentes from './../Home/AccionesExistentes';
 import './styles.css';
 
 
@@ -38,6 +39,10 @@ class MainContent extends Component {
             
             return (<Expandible />)
         }
+        const RenderContenedorAcciones =() =>{
+            
+            return (<AccionesExistentes />)
+        }
         
 
      
@@ -47,10 +52,10 @@ class MainContent extends Component {
             <div>
                 <Container className="full">
                     <Row className="principal">
-                        <Col xs="6" sm="2">
-                        {/* <Componentelateral trabajos={this.props.trabajos}  */}
+                        <Col xs="6" sm="2">                        
                         {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()}
-                        {/* {RenderComponenteExp()} */}
+                        {/* {this.props.expTrabajo === 'inicial' ?RenderContenedorAcciones(): RenderComponenteExp()} */}
+                        {/* {RenderContenedorAcciones()} */}
                     
                         </Col>
                         <Col xs="6" sm="10">

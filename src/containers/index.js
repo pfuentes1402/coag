@@ -33,8 +33,6 @@ class MainContainer extends Component {
         }
 
 
-
-
         return (
             <div className="mainContainer">
             {this.props.loading === true ?loading(): RenderComponents()}
