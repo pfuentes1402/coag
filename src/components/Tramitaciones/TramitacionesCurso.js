@@ -3,6 +3,7 @@ import {CardBody} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
+import 'ag-grid/dist/styles/ag-theme-material.css';
 import PropTypes from 'prop-types';
 import {traduccionGrid} from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
@@ -62,10 +63,10 @@ class TramitacionesCurso extends Component {
         return (
             <CardBody  className="card-body-Trabajos">
                 <div 
-                  className="ag-theme-balham"
+                  className="ag-theme-material"
                   style={{ 
 	                height: '400px', 
-                    width: '1350px',
+                    width: '100%',
                     margin: '0px'}} 
 		            >
                     <div >
