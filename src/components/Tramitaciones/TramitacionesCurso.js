@@ -3,6 +3,7 @@ import {CardBody} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
+import 'ag-grid/dist/styles/ag-theme-material.css';
 import PropTypes from 'prop-types';
 import {traduccionGrid} from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
