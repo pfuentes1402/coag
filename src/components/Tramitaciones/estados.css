@@ -1,0 +1,26 @@
+.estados .preentrega{
+  color: #b4c2c9;
+}
+.estados .entregado{
+  color: #7f7f7f;
+}
+.estados .en_tramite{
+  color: #7f7f7f;
+}
+.estados .pendiente{
+  color: #7f7f7f;
+}
+.estados .retenido{
+  color: #fe6c3e;
+}
+.estados .tramitado{
+  color: #75c178;
+}
+.estados .pendiente_de_retirar{
+  color: #7f7f7f;
+}
+
+.estados img{
+  width: 15px;
+  margin: 0 5px 0 0;
+}

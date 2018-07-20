@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-
+import './estados.css';
 class AccionRenderer extends Component {
     constructor(props) {
         super(props);
@@ -10,65 +10,39 @@ class AccionRenderer extends Component {
           color: '000',
           icono: './IconosEstados/default.png',
         }
-        this.invokeParentMethod = this.invokeParentMethod.bind(this);
     }
 
-    invokeParentMethod() {
-        alert("Id del trabajo: "+this.state.idTrabajo);
+    getCleanedString(cadena){
+      if(cadena == null)
+        return '';
+      var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.";
+   
+      for (var i = 0; i < specialChars.length; i++) {
+          cadena= cadena.replace(new RegExp("\\" + specialChars[i], 'gi'), '');
+      }  
+      cadena = cadena.toLowerCase();
+      cadena = cadena.replace(/ /g,"_");
+      cadena = cadena.replace(/á/gi,"a");
+      cadena = cadena.replace(/é/gi,"e");
+      cadena = cadena.replace(/í/gi,"i");
+      cadena = cadena.replace(/ó/gi,"o");
+      cadena = cadena.replace(/ú/gi,"u");
+      cadena = cadena.replace(/ñ/gi,"n");
+      return cadena;
     }
-
 
     colorea = (nombre) => {
-      console.log(nombre);
-      switch(nombre){
-      case 'Preentrega':
+      let nombreLimpio = this.getCleanedString(nombre);
+      if(nombreLimpio != '')
         return( 
-        <span style={{color:'#b4c2c9'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}></img>{nombre}
+        <span className={nombreLimpio}>
+          <img src={require(`./IconosEstados/${nombreLimpio}.jpg`)}></img>
+          {nombre}
         </span>);
-        break;
-      case 'Entregado':
-        return( 
-        <span style={{color:'#7f7f7f'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}></img>{nombre}
-        </span>);
-        break;
-      case 'En trámite':
-        return(
-        <span style={{color:'#7f7f7f'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}></img>{nombre}
-        </span>);
-        break;
-      case 'Pendiente':
-        return(
-        <span style={{color:'#7f7f7f'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}></img>{nombre}
-        </span>);
-        break;
-      case 'Retenido':
-        return(
-        <span style={{color:'#fe6c3e'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}/>{nombre}
-        </span>);
-        break;
-      case 'Tramitado':
-        return(
-        <span style={{color:'#75c178'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}/>{nombre}
-        </span>);
-        break;
-      case 'Pendiente de retirar':
-      return(
-        <span style={{color:'#7f7f7f'}}>
-          <img style={{width:'15px', margin:'0 5px 0 0'}} src={require('./IconosEstados/file.jpg')}/>{nombre}
-        </span>);
-        break;
     }
-    return '';
-  }
 
     render() {
-        return (<div>
+        return (<div className='estados'>
               {this.colorea(this.props.value)}
               </div>
         );
