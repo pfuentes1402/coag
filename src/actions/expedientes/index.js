@@ -45,10 +45,19 @@ export const fetchExpedienteSelected = (response) => ({
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
 */
-export const saveAdressTostore = (address) => ({
+export const fetchsaveAdressTostore = (address) => (  
+    {
+   
     type: types.FETCH_SAVE_ADRESS_TO_STORE,
     payload: address
 });
+
+export const saveAdressTostore = (address) => 
+
+(dispatch) => {   
+   
+        dispatch(fetchsaveAdressTostore(address));
+          };
 
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
@@ -248,3 +257,15 @@ export const fetchgetAcciones= (id_expediente, id_Trabajo) =>
               () => fetchError({ error: 'Algo ha salido mal'})
           );
       };
+
+export const fetchelimardelatabla = (parametro) => ({
+    
+        type: types.ELIMINAR_TABLA,
+        payload: parametro
+    });
+
+export const elimardelatabla = (parametro)=> (dispatch) => {
+        console.log("parametro"+parametro);
+        dispatch(fetchelimardelatabla(parametro)); 
+    };
+
