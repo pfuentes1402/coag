@@ -53,14 +53,15 @@ class MainContent extends Component {
                 <Container className="full">
                     <Row className="principal">
                         <Col xs="6" sm="2">                        
-                        {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()}
+                        {/* {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()} */}
                         {/* {this.props.expTrabajo === 'inicial' ?RenderContenedorAcciones(): RenderComponenteExp()} */}
-                        {/* {RenderContenedorAcciones()} */}
+                        {RenderContenedorAcciones()}
                     
                         </Col>
                         <Col xs="6" sm="10">
                             <ContenedorCentral contenidoExp ={this.props.expTrabajoParaCentral} />
-                        </Col>                   
+                        </Col>      
+                                     
 
                     </Row>                    
                 </Container>

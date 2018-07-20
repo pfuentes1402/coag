@@ -8,6 +8,9 @@ import {traduccionGrid} from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
 
+import 'ag-grid/dist/styles/ag-theme-material.css';
+
+
 
 
 class TramitacionesCurso extends Component {
@@ -38,23 +41,25 @@ class TramitacionesCurso extends Component {
                 },                
                 rowGroupPanelShow: "always",
                 paginationPageSize:10,
+                
                 localeText: traduccionGrid,
-            rowData: this.props.data            
-            ,
+            rowData: this.props.data,
+            
             
         }
 
 
     }
     onGridReady(params) {
-        this.gridApi = params.api
-       
+        this.gridApi = params.api        
         this.gridColumnApi = params.columnApi
+       
         
     };
     onPageSizeChanged(newPageSize) {
         var value = document.getElementById("page-size").value;
         this.gridApi.paginationSetPageSize(Number(value));
+       
       }
 
 
@@ -62,11 +67,14 @@ class TramitacionesCurso extends Component {
         return (
             <CardBody  className="card-body-Trabajos">
                 <div 
-                  className="ag-theme-balham"
+               
+                  className="ag-theme-material"
                   style={{ 
+                    boxSizing: "border-box",
 	                height: '400px', 
                     width: '1350px',
-                    margin: '0px'}} 
+                    margin: '0px',
+                    border: '#E0E0E0 solid 1px'}} 
 		            >
                     <div >
                            Mostrar:
@@ -113,7 +121,9 @@ class TramitacionesCurso extends Component {
                             }
                            onGridReady = {
                                this.onGridReady.bind(this)
-                           } >
+                           }
+                    
+                            >
                     </AgGridReact>
                 </div>
           

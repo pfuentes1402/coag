@@ -1,0 +1,2 @@
+export const FETCH_SHOW_MODAL = 'FETCH_SHOW_MODAL';
+export const FETCH_HIDE_MODAL = 'FETCH_HIDE_MODAL';

@@ -25,3 +25,10 @@
 .card.fondoGris{
     background: #f3f3f3;
 }
+
+.opacidadApp{
+    opacity:0.5 !important;
+    pointer-events: none;
+    
+    
+}

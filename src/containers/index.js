@@ -4,6 +4,10 @@ import SubHeader from '../components/SubHeader/SubHeader';
 import HomeContainer from '../containers/HomeContainer';
 import { connect } from 'react-redux';
 import {  fetchexpedientesUser } from '../actions/expedientes/';
+import { CSSTransitionGroup } from 'react-transition-group'
+import  Modalacciones  from '../components/Home/Modalacciones';
+
+import './styles.css';
 
 
 class MainContainer extends Component {
@@ -16,14 +20,31 @@ class MainContainer extends Component {
 
   
     render() {
+        const claseOpacidad= this.props.mostrarModal ===true ? 'opacidadApp':'';
+
+        const renderModal =() =>{      
+            return (<Modalacciones/>)
+        }
 
         const RenderComponents =() =>{
-            return ( <div className="mainContainer">
-            <AppHeader/>
-            <SubHeader title={this.state.title}/>               
-            <HomeContainer/>
-            
-         </div>)
+            return (
+            <div>
+                
+                <div className={`mainContainer ${claseOpacidad}`} >
+                    <AppHeader/>
+                    <SubHeader title={this.state.title}/>               
+                    <HomeContainer/>            
+                </div>
+                    <div>
+                        <CSSTransitionGroup
+                                        transitionName="acciones"
+                                        transitionEnterTimeout={3000}
+                                        transitionLeaveTimeout={3000}>
+                                        {this.props.mostrarModal ===true?renderModal():''}
+                        </CSSTransitionGroup>     
+                    </div>
+            </div>
+        )
         }
        
         const loading =() =>{
@@ -34,7 +55,7 @@ class MainContainer extends Component {
 
 
         return (
-            <div className="mainContainer">
+            <div>
             {this.props.loading === true ?loading(): RenderComponents()}
             </div>
         );
@@ -44,6 +65,7 @@ class MainContainer extends Component {
 
 const mapStateToProps = state => ({
     loading:state.status.loading || '',
+    mostrarModal:state.status.modalAcciones,
     
   });
 
