@@ -46,7 +46,7 @@ class TramitacionesCurso extends Component {
                 localeText: traduccionGrid,
             rowData: this.props.data,
             
-            
+        
         }
 
 
