@@ -1179,3 +1179,60 @@ export function getultimosTrabajos(){
   }
     return data;
 }
+
+
+//FUNCION DUMMY para obtener los ultimos trabajos
+export function getExpedienteSuscepNuevoTrabajo(idUsuario){   
+  let data =  {
+    Expedientes: [
+      {
+        "Expediente_Codigo": "180133",
+        "Id_Trabajo": 5,
+        "Titulo_Documento": "Tramites",        
+        "Fecha_Entrada": "12/03/2018",
+        "Municipio": "A Cañiza",
+        "Emplazamiento": "Calle Rosal",       
+        "Id_Expediente": 702453,
+    },
+    {
+      "Expediente_Codigo": "1801314",
+      "Id_Trabajo": 5,
+      "Titulo_Documento": "Vivienda calle Rosal",        
+      "Fecha_Entrada": "11/03/2018",
+      "Municipio": "A Cañiza",
+      "Emplazamiento": "Calle Rosal",       
+      "Id_Expediente": 702103,
+  },
+  {
+    "Expediente_Codigo": "1801114",
+    "Id_Trabajo": 2,
+    "Titulo_Documento": "Viviendas en Gerona",        
+    "Fecha_Entrada": "15/04/2018",
+    "Municipio": "A Cañiza",
+    "Emplazamiento": "Calle Gerona",       
+    "Id_Expediente": 702103,
+},
+{
+  "Expediente_Codigo": "1801884",
+  "Id_Trabajo": 3,
+  "Titulo_Documento": "Viviendas en Vigo",        
+  "Fecha_Entrada": "15/09/2018",
+  "Municipio": "A Cañiza",
+  "Emplazamiento": "Calle Rosal",       
+  "Id_Expediente": 702103,
+},
+{
+  "Expediente_Codigo": "1801314",
+  "Id_Trabajo": 5,
+  "Titulo_Documento": "Tramites",        
+  "Fecha_Entrada": "19/03/2018",
+  "Municipio": "A Cañiza",
+  "Emplazamiento": "Calle Lerida",       
+  "Id_Expediente": 702103,
+},
+  
+     
+    ],   
+  }
+    return data;
+}

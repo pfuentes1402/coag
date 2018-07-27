@@ -1,8 +1,8 @@
 import { FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
-import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL } from "../../actions/interfaz/types"
+import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL, OCULTACAMBIAESTADOMODAL } from "../../actions/interfaz/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false };
+const initialState = { loading : true, modalAcciones:false,modalLoading:true };
 const reducer = (state = initialState, action) => {
  
   switch (action.type) {
@@ -23,6 +23,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,            
         modalAcciones: false,
+      };
+      case CAMBIAESTADOMODAL:
+      return{
+        ...state,
+       modalLoading: false,            
+      };
+      case OCULTACAMBIAESTADOMODAL:
+      return{
+        ...state,
+       modalLoading: true,            
       };
     
   case PURGE:                        

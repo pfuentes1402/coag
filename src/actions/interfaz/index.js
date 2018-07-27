@@ -1,3 +1,4 @@
+
 import * as types from './types';
 
 
@@ -20,3 +21,12 @@ export const  fetchocultaModal = () =>
         
         }); 
     };
+
+    export const fetchCambiaStadoModal = (data) => ({
+        type: types.CAMBIAESTADOMODAL,
+        payload: false
+    });
+    export const fetchCambiaStadoModalFalse = (data) => ({
+        type: types.OCULTACAMBIAESTADOMODAL,
+        payload: false
+    });
