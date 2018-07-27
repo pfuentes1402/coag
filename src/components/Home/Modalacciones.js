@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchocultaModal, fetchCambiaStadoModalFalse } from '../../actions/interfaz/index'
 
 import './styles.css';
+import TablaDatosModal from '../Busquedas/TablaDatosModal';
 
 
 
@@ -31,7 +32,7 @@ class Modalacciones extends Component {
             return (
                 <div>
                     <div >
-                        <p>Propiedad titulo desde redux</p>
+                        <p>{this.props.tituloModal}</p>
                         <p>Propiedad descripcion desde redux </p>
                     </div>
                     <div>
@@ -43,6 +44,7 @@ class Modalacciones extends Component {
                     <div>
                         <div>
                             <p>Tabla de resultados</p>
+                            <TablaDatosModal data={this.props.datosTabla} />
                         </div>
                     
                     </div> 
@@ -83,7 +85,9 @@ class Modalacciones extends Component {
 
 
 const mapStateToProps = state => ({
-    loading:state.status.modalLoading || '',   
+    loading:state.status.modalLoading || '',
+    datosTabla:state.user.datosModal ?state.user.datosModal.Expedientes: '', 
+    tituloModal:state.user.tituloModal ||'', 
   });
 
 

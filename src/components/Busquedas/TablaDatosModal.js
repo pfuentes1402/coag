@@ -5,7 +5,7 @@ import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
 import {traduccionGrid} from './../../helpers/traducciones'
-import "./ListWorks.css";
+
 
 const propTypes = {
     data: PropTypes.array,
@@ -53,9 +53,7 @@ class TablaDatosModal extends Component {
 
 
     render() {
-        const loading =()=>{/*  */}
-        const RenderComponents=()=>{/*  */}
-        
+       
         return (
 
            
@@ -79,7 +77,7 @@ class TablaDatosModal extends Component {
                           enableFilter = {
                               true
                           }
-                          rowSelection = "multiple" 
+                          rowSelection = "single" 
                           enableColResize = {
                               true
                           }
@@ -91,10 +89,7 @@ class TablaDatosModal extends Component {
                           }
                             rowGroupPanelShow = {
                                 this.state.rowGroupPanelShow
-                            }
-                            enableStatusBar = {
-                                true
-                            }
+                            }                          
                             localeText = {
                                 this.state.localeText
                             }

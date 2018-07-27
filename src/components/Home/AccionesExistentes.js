@@ -14,13 +14,18 @@ import './styles.css';
 class AccionesExistentes extends Component { 
 
     render() {
-        const click = accion=>{
-    
-           console.log(accion);
-           this.props.fetchSuscepTrabajos();
-           this.props.fetchMuestraModal();
+        const click = (accion)=>{    
+          
            
-        }
+          
+            this.props.fetchSuscepTrabajos(accion.Id);      
+           this.props.fetchMuestraModal();
+                
+        }              
+           
+          
+           
+        
        
         const RenderAccion = acciones =>(
         

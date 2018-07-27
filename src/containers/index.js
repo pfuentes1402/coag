@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AppHeader from './AppHeader';
+
 import SubHeader from '../components/SubHeader/SubHeader';
 import HomeContainer from '../containers/HomeContainer';
 import { connect } from 'react-redux';
@@ -31,8 +31,7 @@ class MainContainer extends Component {
             <div>
                 
                 <div className={`mainContainer ${claseOpacidad}`} >
-                    <AppHeader/>
-                    <SubHeader title={this.state.title}/>               
+                                 
                     <HomeContainer/>            
                 </div>
                     <div>

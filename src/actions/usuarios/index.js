@@ -124,18 +124,28 @@ export const fetchExpedientesSusceptibles = (data) => ({
     type: types.EXPEDIENTESSUSCEPTIBLESTRABAJO,
     payload: data
 });
+export const fetchExpedientesTrabajosTest = () => ({
+    type: types.EXPEDIENTETEST,
+    
+});
 
 /*
 *Obtiene los expedientes susceptibles de tramitar trabajo (Datos dummy desde el api)
 */
-export const fetchSuscepTrabajos = (idUsuario) => 
+export const fetchSuscepTrabajos = (id) => 
 (dispatch) => {
-    let data =getExpedienteSuscepNuevoTrabajo(idUsuario);
 
-    dispatch(fetchExpedientesSusceptibles(data));
+    switch(id) {
+        case 1:
+        let data =getExpedienteSuscepNuevoTrabajo(id);           
+        dispatch(fetchExpedientesSusceptibles(data));
+            break;
+        case 2:       
+        dispatch(fetchExpedientesTrabajosTest());
+            break;
+        default:
+    }
     dispatch(fetchCambiaStadoModal());
 
 
-
 };
-
