@@ -1,4 +1,4 @@
-import { FETCH_DATOSDEUSUARIO_SUCCESS } from "../../actions/usuarios/types";
+import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO  } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
@@ -14,6 +14,8 @@ const initialstate ={ DatosUsuarioValidado: {
 "Mail":"",
 "Fecha_Ultima_Conexion":""
 },
+
+trabajosSusceptiblestrabajo:[{}],
 ultimostrabajos:[{}]
 ,
 DatosConfiguracionesUsuario:{
@@ -63,6 +65,12 @@ const reducer = (state = initialstate, action) => {
                 ...state,
                 ultimostrabajos: action.payload,            
               };
+              case EXPEDIENTESSUSCEPTIBLESTRABAJO:
+              return{
+                ...state,
+               trabajosSusceptiblestrabajo: action.payload,            
+              };
+           
        
         case PURGE:
                         

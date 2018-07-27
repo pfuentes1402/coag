@@ -1,4 +1,5 @@
-import {  funcionForma, getToken, getultimosTrabajos } from '../../api';
+import {  funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
+import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
 import { history } from '../../helpers/hidtory';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
@@ -30,6 +31,7 @@ export const fetchUltimosTrabajos = (data) => ({
     type: types.ULTIMOSTRABAJOS,
     payload: data
 });
+
 
 
 
@@ -116,3 +118,24 @@ dispatch => {
     //console.log(data);
         dispatch(fetchUltimosTrabajos(data));
 };
+
+
+export const fetchExpedientesSusceptibles = (data) => ({
+    type: types.EXPEDIENTESSUSCEPTIBLESTRABAJO,
+    payload: data
+});
+
+/*
+*Obtiene los expedientes susceptibles de tramitar trabajo (Datos dummy desde el api)
+*/
+export const fetchSuscepTrabajos = (idUsuario) => 
+(dispatch) => {
+    let data =getExpedienteSuscepNuevoTrabajo(idUsuario);
+
+    dispatch(fetchExpedientesSusceptibles(data));
+    dispatch(fetchCambiaStadoModal());
+
+
+
+};
+

@@ -3,6 +3,8 @@ import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
 import { fetchMuestraModal } from './../../actions/interfaz/index'
+import { fetchSuscepTrabajos } from './../../actions/usuarios/index'
+
 import './styles.css';
 
 
@@ -15,6 +17,7 @@ class AccionesExistentes extends Component {
         const click = accion=>{
     
            console.log(accion);
+           this.props.fetchSuscepTrabajos();
            this.props.fetchMuestraModal();
            
         }
@@ -71,6 +74,6 @@ const mapStateToProps = state => ({
   
   
 
-export default connect(mapStateToProps,{ fetchMuestraModal })(AccionesExistentes);
+export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepTrabajos })(AccionesExistentes);
 
 
