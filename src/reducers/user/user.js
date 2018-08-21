@@ -1,4 +1,5 @@
-import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , EXPEDIENTETEST } from "../../actions/usuarios/types";
+import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , ACCIONESTRAMITARNUEVOTRABAJO, ACCIONESSOLICITARLOA,
+  ACCIONESSOLICITARLI,ACCIONESCONVERTIRDIGITAL,ACCIONESCESAREXPEDIENTE } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
@@ -15,7 +16,7 @@ const initialstate ={ DatosUsuarioValidado: {
 "Fecha_Ultima_Conexion":""
 },
 
-datosModal:[{}],
+datosModal:[{tituloModal:0}],
 tituloModal:'Inicial title',
 ultimostrabajos:[{}]
 ,
@@ -67,17 +68,61 @@ const reducer = (state = initialstate, action) => {
                 ultimostrabajos: action.payload,            
               };
               case EXPEDIENTESSUSCEPTIBLESTRABAJO:
+              
               return{
                 ...state,
-                datosModal: action.payload,
-                tituloModal: 'Expedientes desde redux',              
+                datosModal:{
+                  expedientes: action.payload.data.Expedientes,
+                  tituloModal: 'Expedientes que se pueden modificar',
+                  descripcion:'Utiliza el buscador para encontrar el expediente que quieres modificar y pulsa sobre él.'
+                }                          
               };
-              case EXPEDIENTETEST:
-              return{
-                ...state,
-                datosModal: action.payload,
-                tituloModal: 'Acciones desde redux',          
+              case ACCIONESTRAMITARNUEVOTRABAJO:                
+                return{
+                  ...state,
+                  datosModal:{
+                    expedientes: action.payload.data,
+                    tituloModal: 'Expedientes que permiten tramitar nuevo trabajo',
+                    descripcion:'Utiliza el buscador para encontrar el expediente existente en el que quieres tramitar un nuevo trabajo y pulsa sobre él.'
+                  }                 
               };
+              case ACCIONESSOLICITARLOA:                
+                return{
+                  ...state,
+                  datosModal:{
+                    expedientes: action.payload.data,
+                    tituloModal: 'Expedientes que permiten solicitar LOA',
+                    descripcion:'Utiliza el buscador para encontrar el expediente del que quieres solicitar LOA y pulsa sobre él.'
+                  }                 
+              };
+              case ACCIONESSOLICITARLI:                
+                return{
+                  ...state,
+                  datosModal:{
+                    expedientes: action.payload.data,
+                    tituloModal: 'Expedientes que permiten solicitar LI',
+                    descripcion:'Utiliza el buscador para encontrar el expediente del que quieres solicitar LI y pulsa sobre él.'
+                  }                 
+              };
+              case ACCIONESCONVERTIRDIGITAL:                
+                return{
+                  ...state,
+                  datosModal:{
+                    expedientes: action.payload.data,
+                    tituloModal: 'Expedientes en papel no convertidos a digital',
+                    descripcion:'Utiliza el buscador para encontrar el expediente en papel que quieres convertir a digital y pulsa sobre él.'
+                  }                 
+              };
+              case ACCIONESCESAREXPEDIENTE:                
+                return{
+                  ...state,
+                  datosModal:{
+                    expedientes: action.payload.data,
+                    tituloModal: 'Expedientes abiertos',
+                    descripcion:'Utiliza el buscador para encontrar el expediente existente que quieres cerrar y pulsa sobre él.'
+                  }                 
+              };
+          
            
        
         case PURGE:

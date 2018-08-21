@@ -8,24 +8,11 @@ import * as types from './../actions/usuarios/types';
 
 const BASE_PATH = "http://servicios.coag.es/api";
 
-// store.subscribe(listener)
-
-// function select(state) {
-//   return state.user.Token;
-// }
-// function listener() {
-//   let token = select(store.getState())
-  
-// }
-
-
 /*
 *
 *Configuración base para las llamadas axios
 *
-*/
-
-  
+*/ 
 
 
 const api = axios.create({
@@ -1186,13 +1173,13 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
   let data =  {
     Expedientes: [
       {
-        "Expediente_Codigo": "180133",
+        "Expediente_Codigo": "700043",
         "Id_Trabajo": 5,
         "Titulo_Documento": "Tramites",        
         "Fecha_Entrada": "12/03/2018",
         "Municipio": "A Cañiza",
         "Emplazamiento": "Calle Rosal",       
-        "Id_Expediente": 702453,
+        "Id_Expediente": 700043,
     },
     {
       "Expediente_Codigo": "1801314",
@@ -1201,7 +1188,7 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
       "Fecha_Entrada": "11/03/2018",
       "Municipio": "A Cañiza",
       "Emplazamiento": "Calle Rosal",       
-      "Id_Expediente": 702103,
+      "Id_Expediente": 696157,
   },
   {
     "Expediente_Codigo": "1801114",
@@ -1210,7 +1197,7 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
     "Fecha_Entrada": "15/04/2018",
     "Municipio": "A Cañiza",
     "Emplazamiento": "Calle Gerona",       
-    "Id_Expediente": 702103,
+    "Id_Expediente": 695127,
 },
 {
   "Expediente_Codigo": "1801884",

@@ -44,6 +44,7 @@ class TramitacionesCurso extends Component {
                 paginationPageSize:10,
                 
                 localeText: traduccionGrid,
+                rowSelection: "single",
             rowData: this.props.data,
             
         
@@ -62,6 +63,7 @@ class TramitacionesCurso extends Component {
         this.gridApi.paginationSetPageSize(Number(value));
        
       }
+   
 
 
     render() {
@@ -98,7 +100,7 @@ class TramitacionesCurso extends Component {
                           enableFilter = {
                               true
                           }
-                          rowSelection = "multiple" 
+                         
                           enableColResize = {
                               true
                           }
@@ -123,6 +125,8 @@ class TramitacionesCurso extends Component {
                            onGridReady = {
                                this.onGridReady.bind(this)
                            }
+                           rowSelection={this.state.rowSelection}
+                          
                     
                             >
                     </AgGridReact>

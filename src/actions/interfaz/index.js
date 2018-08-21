@@ -3,13 +3,14 @@ import * as types from './types';
 
 
 
-export const  fetchMuestraModal = () =>
+export const  fetchMuestraModal = (id) =>
 
     (dispatch) => {
     console.log('llega al reducer de interfaz')
+    console.log(id)
         dispatch({
         type: types.FETCH_SHOW_MODAL,
-        
+        payload:id
         }); 
     };
 export const  fetchocultaModal = () =>

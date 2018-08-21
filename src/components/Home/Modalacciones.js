@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchocultaModal, fetchCambiaStadoModalFalse } from '../../actions/interfaz/index'
+import {fetchBuscador } from '../../actions/expedientes/index'
 
 import './styles.css';
 import TablaDatosModal from '../Busquedas/TablaDatosModal';
@@ -20,6 +21,7 @@ class Modalacciones extends Component {
             this.props.fetchocultaModal();
             this.props.fetchCambiaStadoModalFalse();
             
+            
          }
       
 
@@ -28,31 +30,124 @@ class Modalacciones extends Component {
                     <p>Loading...</p>
             </div>)
         }
-        const RenderComponents=()=>{
-            return (
-                <div>
-                    <div >
-                        <p>{this.props.tituloModal}</p>
-                        <p>Propiedad descripcion desde redux </p>
-                    </div>
-                    <div>
-                        <p>Input</p>
-                    </div>
-                    <button>Cancelar</button>
-                    <button>Buscar</button>
+        // const RenderComponenteAcciones=()=>{
+        //     return (
+        //         <div>
+        //             <div>
+        //                 <div className="Titulo">
+        //                     <p>{this.props.tituloModal}</p>
+        //                 </div>                        
+        //                 <span className="descripcion">{this.props.descripcion}</span>    
+        //             </div>
+        //             <div>
+        //             <input type="text"  onChange={this.props.fetchBuscador} />
+        //             </div>
+        //             <button>Cancelar</button>
+        //             <button>Buscar</button>
 
+        //             <div>
+        //                 <div>
+        //                     <div>
+        //                         <span>Resultados</span><span className="colorAzul">({this.props.datosTabla.length})</span> 
+        //                     </div>
+        //                     <TablaDatosModal data={this.props.datosTabla} />
+        //                 </div>
+                    
+        //             </div> 
+        //         </div>
+        // )
+           
+        // }
+
+        // const RenderComponenteBuscador=()=>{
+        //     return (
+        //         <div>
+        //             <div>
+        //                 <div className="Titulo">
+        //                     <p>Busqueda</p>
+        //                 </div>                        
+        //                 <span className="descripcion">{this.props.descripcion}</span>    
+        //             </div>
+        //             <div>
+        //             <input type="text"  onChange={this.props.fetchBuscador} />
+        //             <select/>
+        //             </div>
+        //             <button>Cancelar</button>
+        //             <button>Buscar</button>
+
+        //             <div>
+        //                 <div>
+        //                     <div>
+        //                         <span>Resultados</span><span className="colorAzul">({this.props.datosTabla.length})</span> 
+        //                     </div>
+        //                     <TablaDatosModal data={this.props.datosTabla} />
+        //                 </div>
+                    
+        //             </div> 
+        //         </div>
+        // )
+        // }
+
+        const RenderComponents = ()=>{
+            console.log(this.props.modal)
+           switch(this.props.modal){
+               case true:
+                    return (
+                        <div>
+                            <div>
+                                <div className="Titulo">
+                                    <p>Busqueda</p>
+                                </div>                        
+                                <span className="descripcion">{this.props.descripcion}</span>    
+                            </div>
+                            <div>
+                            <input type="text"  onChange={this.props.fetchBuscador} />
+                            <select/>
+                            </div>
+                            <button>Cancelar</button>
+                            <button>Buscar</button>
+
+                            <div>
+                                <div>
+                                    <div>
+                                        <span>Resultados</span><span className="colorAzul">({this.props.datosTabla.length})</span> 
+                                    </div>
+                                    <TablaDatosModal data={this.props.datosTabla} />
+                                </div>
+                            
+                            </div> 
+                        </div>
+                )
+                default:
+                return (
                     <div>
                         <div>
-                            <p>Tabla de resultados</p>
-                            <TablaDatosModal data={this.props.datosTabla} />
+                            <div className="Titulo">
+                                <p>{this.props.tituloModal}</p>
+                            </div>                        
+                            <span className="descripcion">{this.props.descripcion}</span>    
                         </div>
-                    
-                    </div> 
-                </div>
-        )
-           
+                        <div>
+                        <input type="text"  onChange={this.props.fetchBuscador} />
+                        </div>
+                        <button>Cancelar</button>
+                        <button>Buscar</button>
+    
+                        <div>
+                            <div>
+                                <div>
+                                    <span>Resultados</span><span className="colorAzul">({this.props.datosTabla.length})</span> 
+                                </div>
+                                <TablaDatosModal data={this.props.datosTabla} />
+                            </div>
+                        
+                        </div> 
+                    </div>
+            )
+           }
+            //this.props.modal===true ? RenderComponenteBuscador(): RenderComponenteAcciones();
+            
         }
-
   
         return (
 
@@ -65,12 +160,9 @@ class Modalacciones extends Component {
                     
                         <Col xs="12" sm="12">                        
                             <div className='divderecha'>
-                        <button onClick={()=>handleclick()}>X</button>
-                            
+                        <button onClick={()=>handleclick()}>X</button>                            
                              {this.props.loading === true ?loading(): RenderComponents()}
-                            </div>
-                                
-                            
+                            </div>                               
                         </Col>     
                             
                     </Row>
@@ -86,14 +178,16 @@ class Modalacciones extends Component {
 
 const mapStateToProps = state => ({
     loading:state.status.modalLoading || '',
-    datosTabla:state.user.datosModal ?state.user.datosModal.Expedientes: '', 
-    tituloModal:state.user.tituloModal ||'', 
+    datosTabla:state.user.datosModal.expedientes ||'', 
+    tituloModal:state.user.datosModal.tituloModal ||'', 
+    descripcion:state.user.datosModal.descripcion ||'', 
+    modal:state.status.modal ||'', 
   });
 
 
   
   
 
-export default connect(mapStateToProps,{ fetchocultaModal, fetchCambiaStadoModalFalse })(Modalacciones);
+export default connect(mapStateToProps,{ fetchocultaModal, fetchCambiaStadoModalFalse, fetchBuscador })(Modalacciones);
 
 

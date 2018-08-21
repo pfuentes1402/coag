@@ -1,8 +1,9 @@
 import { FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
 import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL, OCULTACAMBIAESTADOMODAL } from "../../actions/interfaz/types"
+import { GOEXPEDIENTES } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false,modalLoading:true };
+const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false };
 const reducer = (state = initialState, action) => {
  
   switch (action.type) {
@@ -13,10 +14,11 @@ const reducer = (state = initialState, action) => {
         loading: false,
       };
     case FETCH_SHOW_MODAL:
-     
+    
       return {
         ...state,            
         modalAcciones: true,
+        
       };
     case FETCH_HIDE_MODAL:
      
@@ -34,6 +36,11 @@ const reducer = (state = initialState, action) => {
         ...state,
        modalLoading: true,            
       };
+      case GOEXPEDIENTES:
+     return{
+      ...state,
+      modalAcciones:false,
+      }
     
   case PURGE:                        
       return initialState; 

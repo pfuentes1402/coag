@@ -22,7 +22,9 @@ class MainContent extends Component {
            
 
         } else {
+           
             this.props.setSelectedExpediente(d);
+            
             this.props.fetchExpedienteDatosGeneral(d);
 
         }
@@ -44,7 +46,20 @@ class MainContent extends Component {
             return (<AccionesExistentes />)
         }
         
-
+const RenderCondicional=()=> {
+   
+    switch(this.props.expTrabajo)
+    {
+        case 'expediente':
+            return (<Componentelateral onSelectedLevel={this.handleSelectedExpediente}/>)
+        case 'trabajos':
+            return (<Expandible />)
+        case 'inicial':
+            return (<AccionesExistentes />)        
+        default:
+            return (<AccionesExistentes />)
+    }
+}
      
        
         return (
@@ -54,8 +69,9 @@ class MainContent extends Component {
                     <Row className="principal">
                         <Col xs="6" sm="2">                        
                         {/* {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()} */}
-                        {/* {this.props.expTrabajo === 'inicial' ?RenderContenedorAcciones(): RenderComponenteExp()} */}
-                        {RenderContenedorAcciones()}
+                        {/*this.props.expTrabajo === 'inicial' ?RenderContenedorAcciones(): RenderComponenteExp()*/} 
+
+                        { RenderCondicional()}
                     
                         </Col>
                         <Col xs="6" sm="10">

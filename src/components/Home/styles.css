@@ -34,3 +34,12 @@
     opacity: 0.01;
     transition: opacity 300ms ease-in;
   }
+  .descripcion{
+    font-size:x-small;
+    font-weight: bold;
+  }
+  .Titulo{
+   
+    color:#A0A0A0;
+   border-bottom: 1px solid grey 
+  }

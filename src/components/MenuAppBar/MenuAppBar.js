@@ -6,9 +6,10 @@ import { Container, Row, Col } from 'reactstrap';
 import coag from './images/coag.jpg';
 import './MenuAppBar.css';
 import { Route } from 'react-router-dom';
-import FontAwesome from 'react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { purgarStore, goHome } from './../../actions/usuarios/index';
+import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
+
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
 import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem, NavItem } from 'reactstrap';
@@ -58,11 +59,21 @@ class MenuAppBar extends React.Component {
       this.props.goHome();
       history.push('/');
     }
+    handleMisexpe = () =>{
+      console.log("metodo de handleMisexpe")
+     
+      
+      this.props.goExpedientesUser();
+      history.push('/');
+    }
 
     toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+  handleBuscador=()=>{
+    
   }
 
     render() {
@@ -82,6 +93,17 @@ class MenuAppBar extends React.Component {
             )} />
           )
        
+        const ButtonBuscador = () => (
+            <Route render={({ history}) => (
+              <Button
+                onClick={() => { this.handleBuscador}}
+                variant="raised" color="primary" className={classes.button}              
+              >
+                <FontAwesomeIcon icon="search" />
+              </Button>
+            )} />
+          )
+       
           const ButtonHome = () => (
             <Route render={({ history}) => (
               <Button
@@ -90,6 +112,18 @@ class MenuAppBar extends React.Component {
                 variant="raised" className={classes.button}
               >
                 Inicio
+              </Button>
+            )} />
+          )
+       
+          const ButtonMisexpe = () => (
+            <Route render={({ history}) => (
+              <Button
+                color="link"
+                onClick={this.handleMisexpe}
+                variant="raised" className={classes.button}
+              >
+                Mis expedientes
               </Button>
             )} />
           )
@@ -128,12 +162,15 @@ class MenuAppBar extends React.Component {
             <Container className="full">
             <Row>
             <Col sm="3"><div><img src={coag} alt="logo" height="50" className="logo-coag"/></div></Col>
-            <Col sm="2"><ButtonHome/><Button color="link">Mis expedientes</Button></Col>
+            
+            <Col sm="2"><ButtonHome/><ButtonMisexpe/></Col>
             <Col sm="3">
-                <ButtonNew/>{' '}
-                <Button outline color="secondary">Tramitación en lote<FontAwesome name='rocket'/></Button>
+                <ButtonNew/>
+                <Button outline color="secondary">Tramitación en lote</Button>
+                <ButtonBuscador/>
             </Col>
-            <Col sm="3">
+           
+            <Col sm="3">           
            
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -181,7 +218,9 @@ const mapStateToProps = state => ({
   const mapDispatchToProps = {
     
     purgarStore,
-    goHome
+    goHome,
+    goExpedientesUser,
+    
   };
   
 

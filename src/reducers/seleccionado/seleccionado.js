@@ -3,6 +3,7 @@ import { SET_EXPEDIENTE_SELECTED_DATOS } from "../../actions/expedientes/types";
 import { FETCH_SAVE_SELECTED_NODE_TO_STORE } from "../../actions/expedientes/types";
 import { CAMBIO_CONTENEDOR_CENTRAL_RESET } from "../../actions/trabajos/types";
 import { CAMBIO_CONTENEDOR_CENTRAL } from "../../actions/expedientes/types";
+import { GOEXPEDIENTES } from "../../actions/usuarios/types";
 import {
   FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE, FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
 import { BORRASELECTED } from "../../actions/usuarios/types";
@@ -55,6 +56,12 @@ const seleccionado = (state = initialState , action) => {
       expTrabajoParaCentral: 'trabajos'
     };
     case CAMBIO_CONTENEDOR_CENTRAL_RESET:    
+    return {
+      ...state,        
+      
+      expTrabajoParaCentral: 'expedientes'
+    };
+    case GOEXPEDIENTES:    
     return {
       ...state,        
       

@@ -99,7 +99,16 @@ export const errorLogin = (data) => (
             dispatch({
             type: types.BORRASELECTED,
              
-    }); 
+    });   
+        
+    };
+   export const  goExpedientesUser = () =>
+
+        (dispatch) => {
+          
+            dispatch({
+            type: types.GOEXPEDIENTES,             
+    });   
         
     };
 
@@ -119,29 +128,61 @@ dispatch => {
         dispatch(fetchUltimosTrabajos(data));
 };
 
-
-export const fetchExpedientesSusceptibles = (data) => ({
+/*
+*Acciones del modal hacia sus reducers
+*/
+export const fetchExpedientesSusceptibles = (data,id) => ({
     type: types.EXPEDIENTESSUSCEPTIBLESTRABAJO,
-    payload: data
+    payload: {data,id}
 });
-export const fetchExpedientesTrabajosTest = () => ({
-    type: types.EXPEDIENTETEST,
+export const fetchExpedientesTrabajosTest = (data,id) => ({
     
+    type: types.ACCIONESTRAMITARNUEVOTRABAJO,
+    payload:  {data,id}
 });
+export const fetchSolicitarLoa = (data,id) => ({    
+    type: types.ACCIONESSOLICITARLOA,
+    payload:  {data,id}
+});
+export const fetchSolicitarLi = (data,id) => ({    
+    type: types.ACCIONESSOLICITARLI,
+    payload:  {data,id}
+});
+export const fetchConvertirDigital = (data,id) => ({    
+    type: types.ACCIONESCONVERTIRDIGITAL,
+    payload:  {data,id}
+});
+export const fetchCesarExpediente = (data,id) => ({    
+    type: types.ACCIONESCESAREXPEDIENTE,
+    payload:  {data,id}
+});
+
 
 /*
 *Obtiene los expedientes susceptibles de tramitar trabajo (Datos dummy desde el api)
 */
-export const fetchSuscepTrabajos = (id) => 
+export const fetchSuscepAcciones = (id) => 
 (dispatch) => {
-
-    switch(id) {
+    let data="";
+    switch(id) {        
         case 1:
-        let data =getExpedienteSuscepNuevoTrabajo(id);           
-        dispatch(fetchExpedientesSusceptibles(data));
+        data =getExpedienteSuscepNuevoTrabajo(id);           
+        dispatch(fetchExpedientesSusceptibles(data,id));
             break;
-        case 2:       
-        dispatch(fetchExpedientesTrabajosTest());
+        case 2:         
+        dispatch(fetchExpedientesTrabajosTest(data,id));
+            break;
+        case 3:         
+        dispatch(fetchSolicitarLoa(data,id));
+            break;
+        case 4:         
+        dispatch(fetchSolicitarLi(data,id));
+            break;
+        case 5:         
+        dispatch(fetchConvertirDigital(data,id));
+            break;
+        case 6:         
+        dispatch(fetchCesarExpediente(data,id));
             break;
         default:
     }

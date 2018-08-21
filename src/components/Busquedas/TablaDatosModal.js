@@ -1,10 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {CardBody} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
-import {traduccionGrid} from './../../helpers/traducciones'
+import {traduccionGrid} from './../../helpers/traducciones';
+import { goExpedientesUser } from './../../actions/usuarios/index';
+import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
+
+
 
 
 const propTypes = {
@@ -33,6 +38,7 @@ class TablaDatosModal extends Component {
                 rowGroupPanelShow: "always",
                 paginationPageSize: 20,
                 localeText: traduccionGrid,
+                rowSelection: "single",
             rowData: [
                 {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
             ],
@@ -49,6 +55,12 @@ class TablaDatosModal extends Component {
         this.gridColumnApi = params.columnApi
 
     };
+    onSelectionChanged() {
+        var selectedRows = this.gridApi.getSelectedRows();
+        console.log(selectedRows);       
+       this.props.goExpedientesUser();
+       this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);      
+      }
 
 
 
@@ -77,7 +89,7 @@ class TablaDatosModal extends Component {
                           enableFilter = {
                               true
                           }
-                          rowSelection = "single" 
+                          
                           enableColResize = {
                               true
                           }
@@ -95,7 +107,10 @@ class TablaDatosModal extends Component {
                             }
                            onGridReady = {
                                this.onGridReady.bind(this)
-                           } >
+                           }
+                           rowSelection={this.state.rowSelection}
+                           onSelectionChanged={this.onSelectionChanged.bind(this)}
+                            >
                     </AgGridReact>
                 </div>
                 </CardBody>
@@ -104,4 +119,9 @@ class TablaDatosModal extends Component {
 }
 TablaDatosModal.propTypes = propTypes;
 
-export default TablaDatosModal;
+const mapStateToProps = state => ({
+   
+  });
+
+
+export default connect(mapStateToProps,{goExpedientesUser, fetchExpedienteDatosGeneral})(TablaDatosModal);

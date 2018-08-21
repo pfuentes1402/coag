@@ -95,6 +95,24 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+
+//Fake Buscador
+export const fetchBuscador = (parametros) => 
+(dispatch) => {
+   console.log('fetchBuscador');    
+   
+    // getBuscador(parametros).then((data) => {
+       
+    //     dispatch(fetchSuccessTrabajo(data));
+       
+    // })
+    //     .catch(
+    //     () => fetchError({ error: 'Algo ha salido mal'})
+    // );
+};
+
+
+
 export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) => 
 (dispatch) => {
    
@@ -113,7 +131,7 @@ export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
 
 export const fetchExpedienteDatosGeneral = (id_expediente) => 
 (dispatch) => {
-        
+        console.log('llega pero falta parametro');
     getExpedienteDatosGeneral(id_expediente).then((expedientes) => {
         dispatch(fetchSuccesExpediente(expedientes));
     })
