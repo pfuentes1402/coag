@@ -125,7 +125,7 @@ export const getExpedienteDatosGeneral = id_expediente =>
  */
 export const getTiposTrabajo = id_grupo =>
   api.get(`/Tipos/Guia/GruposTematicos/${id_grupo}`).then(response => {
-      return response.json();
+      return response;
     })
     .then(resultado => {
       return resultado;
@@ -139,7 +139,7 @@ export const getTiposTrabajo = id_grupo =>
 export const getTiposAutorizacionMunicipal = () =>
   api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/`)
     .then(response => {
-      return response.json();
+      return response;
     })
     .then(resultado => {
       return resultado;
@@ -153,7 +153,7 @@ export const getTiposAutorizacionMunicipal = () =>
 export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion) =>
   api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=1`)
     .then(response => {
-      return response.json();
+      return response;
     })
     .then(resultado => {
       return resultado;
@@ -171,8 +171,6 @@ export const getValidateAddress = ref_catastral =>
       return response;
     });
 
-
-
 /*
  *Graba un nuevo expediente
  * Parametros 
@@ -183,9 +181,6 @@ export const postNuevoExpediente = data =>
       .then(resultado => {     
         return resultado;
       });
-
-
-
 /*
  *Edita un expediente expediente
  * Parametros 
@@ -196,8 +191,6 @@ export const postNuevoExpediente = data =>
     v => v.json()).then(resultado => {
             return resultado;
           });
-
-
 
 /*
  *Edita un expediente expediente
@@ -399,8 +392,8 @@ export function getultimosTrabajos(){
         "Fecha_Entrada": "15/03/2018",
         "Fecha_Visado": "15/03/2018",
         "Titulo_Expediente": "Memoria",
-        "Titulo_Documento": "Tramites",
-        "Municipio": "A Cañiza",
+        "Titulo": "Tramites",
+        "Concello": "A Cañiza",
         "Promotor": "Colexio Oficial de Arquitectos de Galicia",
         "Estado": "Preentrega",
         "Id_Expediente": 702103,
@@ -417,8 +410,8 @@ export function getultimosTrabajos(){
       "Fecha_Entrada": "12/03/2018",
       "Fecha_Visado": "12/03/2018",
       "Titulo_Expediente": " para sustitución de ventanas",
-      "Titulo_Documento": "Pericias",
-      "Municipio": "SANTIAGO",
+      "Titulo": "Pericias",
+      "Concello": "SANTIAGO",
       "Promotor": "Colexio Oficial de Arquitectos de Galicia",
       "Estado": "Entregado",
       "Id_Expediente": 702003,
@@ -436,8 +429,8 @@ export function getultimosTrabajos(){
     "Fecha_Entrada": "12/03/206",
     "Fecha_Visado": "11/03/2018",
     "Titulo_Expediente": "Memoria para sustitución de ventanas",
-    "Titulo_Documento": "Pericias",
-    "Municipio": "SANTIAGO DE Chile",
+    "Titulo": "Pericias",
+    "Concello": "SANTIAGO DE Chile",
     "Promotor": "Colexio Oficial de Arquitectos de Galicia",
     "Estado": "En trámite",
     "Id_Expediente": 702003,
@@ -454,8 +447,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -472,8 +465,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": "Retenido",
 "Id_Expediente": 702003,
@@ -491,8 +484,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": "Tramitado",
 "Id_Expediente": 702003,
@@ -509,8 +502,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente de retirar",
   "Id_Expediente": 702103,
@@ -527,8 +520,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -546,8 +539,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -564,8 +557,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -582,8 +575,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -601,8 +594,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -619,8 +612,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -637,8 +630,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -656,8 +649,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -674,8 +667,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -692,8 +685,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -711,8 +704,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -729,8 +722,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -747,8 +740,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -766,8 +759,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -784,8 +777,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -802,8 +795,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -821,8 +814,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -839,8 +832,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -857,8 +850,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -876,8 +869,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -894,8 +887,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -912,8 +905,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -931,8 +924,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -949,8 +942,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -967,8 +960,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -986,8 +979,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1004,8 +997,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -1022,8 +1015,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1041,8 +1034,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1059,8 +1052,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -1077,8 +1070,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1096,8 +1089,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1114,8 +1107,8 @@ export function getultimosTrabajos(){
   "Fecha_Entrada": "15/03/2018",
   "Fecha_Visado": "15/03/2018",
   "Titulo_Expediente": "Memoria",
-  "Titulo_Documento": "Tramites",
-  "Municipio": "A Cañiza",
+  "Titulo": "Tramites",
+  "Concello": "A Cañiza",
   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
   "Estado": "Pendiente",
   "Id_Expediente": 702103,
@@ -1132,8 +1125,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/2018",
 "Fecha_Visado": "12/03/2018",
 "Titulo_Expediente": " para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1151,8 +1144,8 @@ export function getultimosTrabajos(){
 "Fecha_Entrada": "12/03/206",
 "Fecha_Visado": "11/03/2018",
 "Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo_Documento": "Pericias",
-"Municipio": "SANTIAGO DE Chile",
+"Titulo": "Pericias",
+"Concello": "SANTIAGO DE Chile",
 "Promotor": "Colexio Oficial de Arquitectos de Galicia",
 "Estado": null,
 "Id_Expediente": 702003,
@@ -1175,45 +1168,45 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
       {
         "Expediente_Codigo": "700043",
         "Id_Trabajo": 5,
-        "Titulo_Documento": "Tramites",        
+        "Titulo": "Tramites",        
         "Fecha_Entrada": "12/03/2018",
-        "Municipio": "A Cañiza",
+        "Concello": "A Cañiza",
         "Emplazamiento": "Calle Rosal",       
         "Id_Expediente": 700043,
     },
     {
       "Expediente_Codigo": "1801314",
       "Id_Trabajo": 5,
-      "Titulo_Documento": "Vivienda calle Rosal",        
+      "Titulo": "Vivienda calle Rosal",        
       "Fecha_Entrada": "11/03/2018",
-      "Municipio": "A Cañiza",
+      "Concello": "A Cañiza",
       "Emplazamiento": "Calle Rosal",       
       "Id_Expediente": 696157,
   },
   {
     "Expediente_Codigo": "1801114",
     "Id_Trabajo": 2,
-    "Titulo_Documento": "Viviendas en Gerona",        
+    "Titulo": "Viviendas en Gerona",        
     "Fecha_Entrada": "15/04/2018",
-    "Municipio": "A Cañiza",
+    "Concello": "A Cañiza",
     "Emplazamiento": "Calle Gerona",       
     "Id_Expediente": 695127,
 },
 {
   "Expediente_Codigo": "1801884",
   "Id_Trabajo": 3,
-  "Titulo_Documento": "Viviendas en Vigo",        
+  "Titulo": "Viviendas en Vigo",        
   "Fecha_Entrada": "15/09/2018",
-  "Municipio": "A Cañiza",
+  "Concello": "A Cañiza",
   "Emplazamiento": "Calle Rosal",       
   "Id_Expediente": 702103,
 },
 {
   "Expediente_Codigo": "1801314",
   "Id_Trabajo": 5,
-  "Titulo_Documento": "Tramites",        
+  "Titulo": "Tramites",        
   "Fecha_Entrada": "19/03/2018",
-  "Municipio": "A Cañiza",
+  "Concello": "A Cañiza",
   "Emplazamiento": "Calle Lerida",       
   "Id_Expediente": 702103,
 },
@@ -1230,13 +1223,11 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
  *    filtro
  */
 export const getBuscador = (filtro) =>
-api.get(`/expedientes/?filtro=${filtro}`)
+
+filtro==="" ? api.get('/expedientes/'):api.get(`/expedientes/?filtro=${filtro}`)
   .then(response => {
     console.log(response);
     return response;
-
-  })
-  .then(resultado => {
-      
-    return resultado;
   });
+
+

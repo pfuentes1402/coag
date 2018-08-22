@@ -101,12 +101,16 @@ export const fetchDataResults= (data) =>({
     type:types.RESULTADOSBUSQUEDA,
     payload:data
 });
+export const fetchFiltroUsuario= (filtro) =>({
+    type:types.FILTROBUSQUEDA,
+    payload:filtro
+});
 
 
 export const fetchBuscador = (filtro) => 
 (dispatch) => {
    console.log('fetchBuscador');    
-   
+   dispatch(fetchFiltroUsuario(filtro));
     getBuscador(filtro).then((data) => {       
        console.log(data);
        dispatch(fetchDataResults(data));
@@ -115,6 +119,8 @@ export const fetchBuscador = (filtro) =>
         () => fetchError({ error: 'Algo ha salido mal en la busqueda'})
     );
 };
+
+
 
 
 

@@ -1,9 +1,11 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , ACCIONESTRAMITARNUEVOTRABAJO, ACCIONESSOLICITARLOA,
   ACCIONESSOLICITARLI,ACCIONESCONVERTIRDIGITAL,ACCIONESCESAREXPEDIENTE } from "../../actions/usuarios/types";
-  import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
+  import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
+import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
+import expedientes from '../expedientes/expedientes'
 
 
 const initialstate ={ DatosUsuarioValidado: {
@@ -19,8 +21,9 @@ const initialstate ={ DatosUsuarioValidado: {
 
 datosModal:[{tituloModal:0}],
 tituloModal:'Inicial title',
-ultimostrabajos:[{}]
-,
+filtroBusqueda:'',
+filtroAcciones:'',
+ultimostrabajos:[{}],
 DatosConfiguracionesUsuario:{
 "Id": "",
 "Idioma_Predefinido": "",
@@ -75,24 +78,34 @@ const reducer = (state = initialstate, action) => {
                 datosModal:{
                   expedientes: action.payload.data.Expedientes,
                   tituloModal: 'Expedientes que se pueden modificar',
-                  descripcion:'Utiliza el buscador para encontrar el expediente que quieres modificar y pulsa sobre él.'
+                  descripcion:'Utiliza los filtros para encontrar el expediente que quieres modificar y pulsa sobre él.'
                 }                          
               };
               case RESULTADOSBUSQUEDA:
-              const {Expedientes} = action.payload.data;
-              return{
-                ...state,
-                datosModal:{
-                  expedientes:Expedientes,
+                const {Expedientes} = action.payload.data;
+                return{
+                  ...state,
+                  datosModal:{
+                    resultados:Expedientes
+                  }
                 }
-              }
+                case FILTROBUSQUEDA:
+                return{
+                  ...state,
+                  filtroBusqueda:action.payload
+                }
+                case FILTROACCIONES:
+                return {
+                  ...state,
+                  filtroAcciones:action.payload
+                }
               case ACCIONESTRAMITARNUEVOTRABAJO:                
                 return{
                   ...state,
                   datosModal:{
                     expedientes: action.payload.data,
                     tituloModal: 'Expedientes que permiten tramitar nuevo trabajo',
-                    descripcion:'Utiliza el buscador para encontrar el expediente existente en el que quieres tramitar un nuevo trabajo y pulsa sobre él.'
+                    descripcion:'Utiliza los filtros para encontrar el expediente existente en el que quieres tramitar un nuevo trabajo y pulsa sobre él.'
                   }                 
               };
               case ACCIONESSOLICITARLOA:                
@@ -101,7 +114,7 @@ const reducer = (state = initialstate, action) => {
                   datosModal:{
                     expedientes: action.payload.data,
                     tituloModal: 'Expedientes que permiten solicitar LOA',
-                    descripcion:'Utiliza el buscador para encontrar el expediente del que quieres solicitar LOA y pulsa sobre él.'
+                    descripcion:'Utiliza los filtros para encontrar el expediente del que quieres solicitar LOA y pulsa sobre él.'
                   }                 
               };
               case ACCIONESSOLICITARLI:                
@@ -110,7 +123,7 @@ const reducer = (state = initialstate, action) => {
                   datosModal:{
                     expedientes: action.payload.data,
                     tituloModal: 'Expedientes que permiten solicitar LI',
-                    descripcion:'Utiliza el buscador para encontrar el expediente del que quieres solicitar LI y pulsa sobre él.'
+                    descripcion:'Utiliza los filtros para encontrar el expediente del que quieres solicitar LI y pulsa sobre él.'
                   }                 
               };
               case ACCIONESCONVERTIRDIGITAL:                
@@ -119,7 +132,7 @@ const reducer = (state = initialstate, action) => {
                   datosModal:{
                     expedientes: action.payload.data,
                     tituloModal: 'Expedientes en papel no convertidos a digital',
-                    descripcion:'Utiliza el buscador para encontrar el expediente en papel que quieres convertir a digital y pulsa sobre él.'
+                    descripcion:'Utiliza los filtros para encontrar el expediente en papel que quieres convertir a digital y pulsa sobre él.'
                   }                 
               };
               case ACCIONESCESAREXPEDIENTE:                
@@ -128,9 +141,16 @@ const reducer = (state = initialstate, action) => {
                   datosModal:{
                     expedientes: action.payload.data,
                     tituloModal: 'Expedientes abiertos',
-                    descripcion:'Utiliza el buscador para encontrar el expediente existente que quieres cerrar y pulsa sobre él.'
+                    descripcion:'Utiliza los filtros para encontrar el expediente existente que quieres cerrar y pulsa sobre él.'
                   }                 
               };
+              case FETCH_RESET_RESULT:
+              return{
+                ...state,
+                datosModal:{
+                  expedientes:[]
+                }
+              }
           
            
        

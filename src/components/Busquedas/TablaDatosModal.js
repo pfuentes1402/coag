@@ -16,16 +16,17 @@ const propTypes = {
     data: PropTypes.array,
 }
 class TablaDatosModal extends Component {
+   
     constructor(props) {
         super(props);
  
         this.state = {
             columnDefs: [
                 {headerName: "COD. EXP", field: "Expediente_Codigo", width: 55},                
-                {headerName: "TITULO", field: "Titulo_Documento", width: 140},              
+                {headerName: "TITULO", field: "Titulo", width: 140},              
                 
                 {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
-                {headerName: "MUNICIPIO", field: "Municipio", width: 120},                       
+                {headerName: "MUNICIPIO", field: "Concello", width: 120},                       
                 {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 60},             
             ]          
             ,
@@ -55,13 +56,17 @@ class TablaDatosModal extends Component {
         this.gridColumnApi = params.columnApi
 
     };
+    handdlefiltro(){
+        console.log()
+    }
+
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
         console.log(selectedRows);       
        this.props.goExpedientesUser();
        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);      
       }
-
+   
 
 
     render() {
@@ -79,6 +84,7 @@ class TablaDatosModal extends Component {
                     width: '580px',
                     margin: '0px'}} 
 		            >
+                   
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.data}
@@ -99,6 +105,8 @@ class TablaDatosModal extends Component {
                           pagination = {
                               true
                           }
+                          floatingFilter={true}
+
                             rowGroupPanelShow = {
                                 this.state.rowGroupPanelShow
                             }                          
@@ -110,6 +118,7 @@ class TablaDatosModal extends Component {
                            }
                            rowSelection={this.state.rowSelection}
                            onSelectionChanged={this.onSelectionChanged.bind(this)}
+                           
                             >
                     </AgGridReact>
                 </div>

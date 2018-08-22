@@ -8,7 +8,7 @@ export const  traduccionGrid = {
         last: "última",
         first: "primera",
         previous: "anterio",
-        loadingOoo: "cargando...",
+        loadingOoo: "Nada que mostras...",
         selectAll: "seleccionar todo",
         searchOoo: "buscar...",
         blanks: "daBlanc",

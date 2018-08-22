@@ -44,3 +44,9 @@ export const  fetchocultaModal = () =>
     export const fetchCambiaStatoModalAcciones = ()=>({
         type:types.SHOWACCIONES,
     });
+
+ //Borra los datos del modal
+ 
+ export const fetchResetResultsModal = () =>({
+    type:types.FETCH_RESET_RESULT,
+ })
