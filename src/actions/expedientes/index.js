@@ -1,5 +1,5 @@
 import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral,
-    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser, getAcciones } from '../../api';
+    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser, getAcciones, getBuscador } from '../../api';
 
 import * as types from './types';
 
@@ -96,19 +96,24 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
     );
 };
 
-//Fake Buscador
-export const fetchBuscador = (parametros) => 
+//Buscador
+export const fetchDataResults= (data) =>({
+    type:types.RESULTADOSBUSQUEDA,
+    payload:data
+});
+
+
+export const fetchBuscador = (filtro) => 
 (dispatch) => {
    console.log('fetchBuscador');    
    
-    // getBuscador(parametros).then((data) => {
-       
-    //     dispatch(fetchSuccessTrabajo(data));
-       
-    // })
-    //     .catch(
-    //     () => fetchError({ error: 'Algo ha salido mal'})
-    // );
+    getBuscador(filtro).then((data) => {       
+       console.log(data);
+       dispatch(fetchDataResults(data));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal en la busqueda'})
+    );
 };
 
 

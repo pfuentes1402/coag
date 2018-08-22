@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
+import { fetchMuestraModal, fetchCambiaStatoModalBuscador,fetchCambiaStadoModal } from './../../actions/interfaz/index';
 
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
@@ -47,22 +48,17 @@ class MenuAppBar extends React.Component {
     
     handleLoggout = () =>{
       console.log("metodo de loggout")
-     
       localStorage.clear();
       this.props.purgarStore();
       history.push('/');
     }
     handleHome = () =>{
-      console.log("metodo de Home")
-     
-      
+      console.log("metodo de Home") 
       this.props.goHome();
       history.push('/');
     }
     handleMisexpe = () =>{
-      console.log("metodo de handleMisexpe")
-     
-      
+      console.log("metodo de handleMisexpe")      
       this.props.goExpedientesUser();
       history.push('/');
     }
@@ -73,7 +69,9 @@ class MenuAppBar extends React.Component {
     });
   }
   handleBuscador=()=>{
-    
+    this.props.fetchMuestraModal();
+    this.props.fetchCambiaStatoModalBuscador();
+    this.props.fetchCambiaStadoModal();
   }
 
     render() {
@@ -96,7 +94,7 @@ class MenuAppBar extends React.Component {
         const ButtonBuscador = () => (
             <Route render={({ history}) => (
               <Button
-                onClick={() => { this.handleBuscador}}
+                onClick={ this.handleBuscador}
                 variant="raised" color="primary" className={classes.button}              
               >
                 <FontAwesomeIcon icon="search" />
@@ -220,7 +218,9 @@ const mapStateToProps = state => ({
     purgarStore,
     goHome,
     goExpedientesUser,
-    
+    fetchMuestraModal,
+    fetchCambiaStatoModalBuscador,
+    fetchCambiaStadoModal,
   };
   
 

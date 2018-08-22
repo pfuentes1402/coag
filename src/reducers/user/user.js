@@ -1,5 +1,6 @@
 import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , ACCIONESTRAMITARNUEVOTRABAJO, ACCIONESSOLICITARLOA,
   ACCIONESSOLICITARLI,ACCIONESCONVERTIRDIGITAL,ACCIONESCESAREXPEDIENTE } from "../../actions/usuarios/types";
+  import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
@@ -77,6 +78,14 @@ const reducer = (state = initialstate, action) => {
                   descripcion:'Utiliza el buscador para encontrar el expediente que quieres modificar y pulsa sobre él.'
                 }                          
               };
+              case RESULTADOSBUSQUEDA:
+              const {Expedientes} = action.payload.data;
+              return{
+                ...state,
+                datosModal:{
+                  expedientes:Expedientes,
+                }
+              }
               case ACCIONESTRAMITARNUEVOTRABAJO:                
                 return{
                   ...state,

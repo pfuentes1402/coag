@@ -1223,3 +1223,20 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
   }
     return data;
 }
+
+ /*
+ *Busqueda de expedientes
+ * Parametros 
+ *    filtro
+ */
+export const getBuscador = (filtro) =>
+api.get(`/expedientes/?filtro=${filtro}`)
+  .then(response => {
+    console.log(response);
+    return response;
+
+  })
+  .then(resultado => {
+      
+    return resultado;
+  });

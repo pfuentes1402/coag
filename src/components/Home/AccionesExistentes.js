@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import { fetchMuestraModal } from './../../actions/interfaz/index'
+import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
 import { fetchSuscepAcciones } from './../../actions/usuarios/index'
 
 import './styles.css';
@@ -17,6 +17,7 @@ class AccionesExistentes extends Component {
           
             this.props.fetchSuscepAcciones(accion.Id);      
             this.props.fetchMuestraModal(accion.Id);
+            this.props.fetchCambiaStatoModalAcciones();
                 
         }              
            
@@ -76,6 +77,6 @@ const mapStateToProps = state => ({
   
   
 
-export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepAcciones })(AccionesExistentes);
+export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepAcciones, fetchCambiaStatoModalAcciones })(AccionesExistentes);
 
 

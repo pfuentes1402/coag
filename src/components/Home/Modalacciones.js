@@ -13,6 +13,11 @@ import TablaDatosModal from '../Busquedas/TablaDatosModal';
 
 class Modalacciones extends Component { 
 
+    handdlebuscador = (e) =>{
+        console.log(e.target.value);
+        this.props.fetchBuscador(e.target.value);
+    }
+
     render() {
      
        
@@ -23,6 +28,8 @@ class Modalacciones extends Component {
             
             
          }
+        
+       
       
 
          const loading =() =>{
@@ -101,7 +108,7 @@ class Modalacciones extends Component {
                                 <span className="descripcion">{this.props.descripcion}</span>    
                             </div>
                             <div>
-                            <input type="text"  onChange={this.props.fetchBuscador} />
+                            <input type="text"  onChange={(e)=>{this.handdlebuscador(e)}} />
                             <select/>
                             </div>
                             <button>Cancelar</button>
@@ -128,7 +135,7 @@ class Modalacciones extends Component {
                             <span className="descripcion">{this.props.descripcion}</span>    
                         </div>
                         <div>
-                        <input type="text"  onChange={this.props.fetchBuscador} />
+                        <input type="text"  /*onChange={this.props.fetchBuscador}*/ />
                         </div>
                         <button>Cancelar</button>
                         <button>Buscar</button>
