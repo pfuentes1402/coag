@@ -61,6 +61,18 @@ class TablaDatosModal extends Component {
        this.props.goExpedientesUser();
        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);      
       }
+      onBtExport() {
+
+         var params = {
+            columnGroups: true,
+            allColumns: true,            
+            fileName: "export.csv",
+         
+            
+        };
+          console.log("Boton exportar csv")
+          this.gridApi.exportDataAsCsv(params);
+      }
 
 
 
@@ -79,6 +91,8 @@ class TablaDatosModal extends Component {
                     width: '580px',
                     margin: '0px'}} 
 		            >
+                     
+                         <button onClick = {this.onBtExport.bind(this)} > Exportar a CSV </button>
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         rowData={this.props.data}
@@ -92,6 +106,9 @@ class TablaDatosModal extends Component {
                           
                           enableColResize = {
                               true
+                          }
+                          suppressCsvExport = {
+                              false
                           }
                           showToolPanel = {
                               true
