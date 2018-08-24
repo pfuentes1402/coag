@@ -22,8 +22,8 @@ class TramitacionesCurso extends Component {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                
                 {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200},
-                {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 200},
-                {headerName: "MUNICIPIO", field: "Municipio", width: 200},
+                {headerName: "TITULO TRABAJO", field: "Titulo", width: 200},
+                {headerName: "MUNICIPIO", field: "Concello", width: 200},
                 {headerName: "ESTADO", field: "Estado", cellRenderer:'estadoRenderer', colId: "estado", width: 200},
                 {headerName: "ACCIONES", field: "acciones", cellRenderer:'accionRenderer', colId: "params", width: 140,
                 },             
@@ -32,9 +32,7 @@ class TramitacionesCurso extends Component {
             context: {componentParent: this},
             frameworkComponents: {
                 accionRenderer: AccionRenderer,
-                estadoRenderer: EstadoRenderer
-              }
-              ,
+                estadoRenderer: EstadoRenderer},
             components: {
                     rowNodeIdRenderer: function (params) {
                         return params.node.id + 1;
@@ -55,7 +53,6 @@ class TramitacionesCurso extends Component {
     onGridReady(params) {
         this.gridApi = params.api        
         this.gridColumnApi = params.columnApi
-       
         
     };
     onPageSizeChanged(newPageSize) {
@@ -69,21 +66,21 @@ class TramitacionesCurso extends Component {
                columnGroups: true,
                allColumns: true,
                fileName: "export.csv",
-              
+
 
            };
            console.log("Boton exportar csv")
            this.gridApi.exportDataAsCsv(params);
        }
-   
+
 
 
     render() {
         return (
             <CardBody  className="card-body-Trabajos">
-                <div 
-               
-                  className="ag-theme-material"
+                <div
+                //   className="ag-theme-material"
+                  className="ag-theme-balham"
                   style={{ 
                     boxSizing: "border-box",
 	                height: '400px', 
@@ -113,8 +110,11 @@ class TramitacionesCurso extends Component {
                               true
                           }
                           enableFilter = {
-                              true
+                              false
                           }
+                          floatingFilter={
+                              true
+                            }
                          
                           enableColResize = {
                               true
