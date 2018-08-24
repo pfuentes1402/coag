@@ -3,6 +3,7 @@ import {Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchocultaModal, fetchCambiaStadoModalFalse } from '../../actions/interfaz/index'
 import {fetchBuscador } from '../../actions/expedientes/index'
+import {fetchSelect } from '../../actions/usuarios/index'
 import './styles.css';
 import TablaDatosModal from '../Busquedas/TablaDatosModal';
 import {createStore} from 'redux'
@@ -20,10 +21,16 @@ class Modalacciones extends Component {
        
       }
 
-    handdlebuscador = (e) =>{
+    handdlebuscador = (e) => {
         console.log(e.target.value);
-        this.props.fetchBuscador(e.target.value);
+        console.log(this.props.selectBuscador);       
+        this.props.fetchBuscador(e.target.value, this.props.selectBuscador);
     }
+    handleSelectChange(e){        
+        console.log(e.target.value);
+        this.props.fetchSelect(e.target.value);
+    }
+
     componentDidMount(){
         this.props.fetchBuscador(this.props.filtroBusqueda);
     }
@@ -38,9 +45,6 @@ class Modalacciones extends Component {
             
             
          }
-        
-       
-      
 
          const loading =() =>{
             return (<div>
@@ -61,7 +65,13 @@ class Modalacciones extends Component {
                             </div>
                             <div>
                             <input type="text"  value={this.props.filtroBusqueda} onChange={(e)=>{this.handdlebuscador(e)}} />
-                            <select/>
+                            <select onChange={(e)=>{this.handleSelectChange(e)}} >
+                                    <option selected value="expedientes">Expedientes</option>
+                                    <option value="trabajos">Trabajos</option>
+                                    <option value="arquitectos">Arquitectos</option>
+                                    <option value="promotores">promotores</option>
+                                    <option value="personasOrganismos">Personas/Organismos</option>                                   
+                            </select>
                             </div>
                             <button>Cancelar</button>
                             <button>Buscar</button>
@@ -136,13 +146,15 @@ const mapStateToProps = state => ({
     tituloModal:state.user.datosModal.tituloModal ||'', 
     descripcion:state.user.datosModal.descripcion ||'', 
     modal:state.status.modal ||'',
-    filtroBusqueda:state.user.filtroBusqueda ||'', 
+    filtroBusqueda:state.user.filtroBusqueda ||'',
+    selectBuscador:state.user.selectBusqueda ||'',
+   
   });
 
 
   
   
 
-export default connect(mapStateToProps,{ fetchocultaModal, fetchCambiaStadoModalFalse, fetchBuscador })(Modalacciones);
+export default connect(mapStateToProps,{ fetchocultaModal, fetchCambiaStadoModalFalse, fetchBuscador, fetchSelect  })(Modalacciones);
 
 

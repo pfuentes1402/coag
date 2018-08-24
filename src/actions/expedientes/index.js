@@ -107,11 +107,11 @@ export const fetchFiltroUsuario= (filtro) =>({
 });
 
 
-export const fetchBuscador = (filtro) => 
+export const fetchBuscador = (filtro,tipoBusqueda) => 
 (dispatch) => {
    console.log('fetchBuscador');    
    dispatch(fetchFiltroUsuario(filtro));
-    getBuscador(filtro).then((data) => {       
+    getBuscador(filtro,tipoBusqueda).then((data) => {       
        console.log(data);
        dispatch(fetchDataResults(data));
     })

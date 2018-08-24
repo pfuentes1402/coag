@@ -4,6 +4,7 @@
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
+import {store} from './../index';
 
 
 const BASE_PATH = "http://servicios.coag.es/api";
@@ -1222,10 +1223,12 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario){
  * Parametros 
  *    filtro
  */
-export const getBuscador = (filtro) =>
+export const getBuscador = (filtro,tipoBusqueda) =>
 
-filtro==="" ? api.get('/expedientes/'):api.get(`/expedientes/?filtro=${filtro}`)
+filtro==="" ? api.get(`/${tipoBusqueda}/`):api.get(`/${tipoBusqueda}/?filtro=${filtro}`)
   .then(response => {
+    //let test=  store ? store.getState().user.token : ''
+   
     console.log(response);
     return response;
   });

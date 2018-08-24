@@ -31,6 +31,17 @@ export const fetchUltimosTrabajos = (data) => ({
     type: types.ULTIMOSTRABAJOS,
     payload: data
 });
+export const CambiaSelect = (data) => ({
+    type: types.CAMBIASELECT,
+   payload:data
+});
+
+export const fetchSelect = (data)=>
+    (dispatch) => {
+        console.log("llega a fetchselect");
+            dispatch(CambiaSelect(data));
+}; 
+
 
 
 

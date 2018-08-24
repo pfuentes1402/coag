@@ -3,7 +3,7 @@ import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL, OCULTACAMBIAESTA
 import { GOEXPEDIENTES } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false };
+const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false,muestraFiltros:true };
 const reducer = (state = initialState, action) => {
  
   switch (action.type) {
@@ -34,7 +34,8 @@ const reducer = (state = initialState, action) => {
       case OCULTACAMBIAESTADOMODAL:
       return{
         ...state,
-       modalLoading: true,            
+       modalLoading: true,
+       muestraFiltros:true,            
       };
       case GOEXPEDIENTES:
      return{
@@ -45,6 +46,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
           modal:true,
+          muestraFiltros:false,
       }
       case SHOWACCIONES:
       return {

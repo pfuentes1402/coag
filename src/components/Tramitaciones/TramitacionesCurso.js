@@ -97,9 +97,7 @@ class TramitacionesCurso extends Component {
                                 <option value="100">100</option>
                             </select>
                      </div>
-                     < button onClick = {
-                         this.onBtExport.bind(this)
-                     } > Exportar a CSV < /button>
+                    
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         context={this.state.context}
@@ -140,11 +138,13 @@ class TramitacionesCurso extends Component {
                            onGridReady = {
                                this.onGridReady.bind(this)
                            }
-                           rowSelection={this.state.rowSelection}
-                          
+                           rowSelection={this.state.rowSelection}                         
                     
                             >
                     </AgGridReact>
+                    <div>
+                        <button onClick={this.onBtExport.bind(this)} > Exportar a CSV </button>
+                    </div>
                 </div>
           
                 </CardBody>

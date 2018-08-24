@@ -2,10 +2,10 @@ import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , ACCIONEST
   ACCIONESSOLICITARLI,ACCIONESCONVERTIRDIGITAL,ACCIONESCESAREXPEDIENTE } from "../../actions/usuarios/types";
   import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT } from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
-import expedientes from '../expedientes/expedientes'
+
 
 
 const initialstate ={ DatosUsuarioValidado: {
@@ -23,6 +23,7 @@ datosModal:[{tituloModal:0}],
 tituloModal:'Inicial title',
 filtroBusqueda:'',
 filtroAcciones:'',
+selectBusqueda:'',
 ultimostrabajos:[{}],
 DatosConfiguracionesUsuario:{
 "Id": "",
@@ -61,6 +62,11 @@ const reducer = (state = initialstate, action) => {
                 token:tokenFresh,
                                 
               };
+              case CAMBIASELECT:
+              return{
+                ...state,
+                selectBusqueda:action.payload,
+              }
               case FETCH_LOGIN_FAIL:
               return{
                 ...state,
