@@ -63,6 +63,18 @@ class TramitacionesCurso extends Component {
         this.gridApi.paginationSetPageSize(Number(value));
        
       }
+       onBtExport() {
+
+           var params = {
+               columnGroups: true,
+               allColumns: true,
+               fileName: "export.csv",
+              
+
+           };
+           console.log("Boton exportar csv")
+           this.gridApi.exportDataAsCsv(params);
+       }
    
 
 
@@ -88,6 +100,9 @@ class TramitacionesCurso extends Component {
                                 <option value="100">100</option>
                             </select>
                      </div>
+                     < button onClick = {
+                         this.onBtExport.bind(this)
+                     } > Exportar a CSV < /button>
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
                         context={this.state.context}
