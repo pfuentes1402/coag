@@ -6,7 +6,7 @@ import {fetchBuscador } from '../../actions/expedientes/index'
 import {fetchSelect } from '../../actions/usuarios/index'
 import './styles.css';
 import TablaDatosModal from '../Busquedas/TablaDatosModal';
-import {createStore} from 'redux'
+
 
 
 
@@ -22,12 +22,11 @@ class Modalacciones extends Component {
       }
 
     handdlebuscador = (e) => {
-        console.log(e.target.value);
-        console.log(this.props.selectBuscador);       
+             
         this.props.fetchBuscador(e.target.value, this.props.selectBuscador);
     }
     handleSelectChange(e){        
-        console.log(e.target.value);
+        
         this.props.fetchSelect(e.target.value);
     }
 
@@ -39,7 +38,7 @@ class Modalacciones extends Component {
      
        
         const handleclick = ()=>{    
-            console.log("Cierra el modal");
+           
             this.props.fetchocultaModal();
             this.props.fetchCambiaStadoModalFalse();
             

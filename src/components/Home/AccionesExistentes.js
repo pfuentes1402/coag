@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
 import { fetchSuscepAcciones } from './../../actions/usuarios/index'
 
+
 import './styles.css';
 
 
@@ -11,6 +12,7 @@ import './styles.css';
 
 
 class AccionesExistentes extends Component { 
+ 
 
     render() {
         const click = (accion)=>{
@@ -19,12 +21,8 @@ class AccionesExistentes extends Component {
             this.props.fetchMuestraModal(accion.Id);
             this.props.fetchCambiaStatoModalAcciones();
                 
-        }              
-           
-          
-           
-        
-       
+        }          
+
         const RenderAccion = acciones =>(
         
             acciones.map((accion,i) =>(

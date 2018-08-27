@@ -84,7 +84,7 @@ class TramitacionesCurso extends Component {
                   style={{ 
                     boxSizing: "border-box",
 	                height: '400px', 
-                    width: '1350px',
+                    width: '1100px',
                     margin: '0px',
                     border: '#E0E0E0 solid 1px'}} 
 		            >

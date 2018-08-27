@@ -19,12 +19,12 @@ class TablaDatosModal extends Component {
  
         this.state = {
             columnDefs: [
-                {headerName: "COD. EXP", field: "Expediente_Codigo", width: 55},                
+                {headerName: "COD. EXP", field: "Expediente_Codigo", width: 93},                
                 {headerName: "TITULO", field: "Titulo", width: 140},
                 
                 {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
                 {headerName: "MUNICIPIO", field: "Concello", width: 120},
-                {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 60},             
+                {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 148},             
             ]          
             ,
             components: {
@@ -55,7 +55,6 @@ class TablaDatosModal extends Component {
     };
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
-        console.log(selectedRows);
         this.props.goExpedientesUser();
         this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);
     };    
@@ -67,22 +66,10 @@ class TablaDatosModal extends Component {
         };       
         this.gridApi.exportDataAsCsv(params);
     };
-    // filtrado(e) {
-      
-    //     console.log("filtrado")
-    //     console.log(e.target.value)
-    //     this.setState({ quickFilterText: e.target.value });
-    // }
+
     filtrado= (e)=> {
-      
-        console.log("filtrado")
-        console.log(e.target.value)
         this.setState({ quickFilterText: e.target.value });
     }
- 
-
-
-
 
     render() {
 
@@ -101,7 +88,7 @@ class TablaDatosModal extends Component {
                     className="ag-theme-balham"
                     style={{
                         height: '250px',
-                        width: '580px',
+                        width: '650px',
                         margin: '0px'
                     }}
                 >
@@ -150,7 +137,7 @@ class TablaDatosModal extends Component {
                     >
                     </AgGridReact>
                     <div>
-                        <button onClick={this.onBtExport.bind(this)} > Exportar a CSV </button>
+                        <button onClick={this.onBtExport.bind(this)}> Exportar a CSV </button>
                     </div>
                 </div>
             </CardBody>
