@@ -176,23 +176,23 @@ export const fetchSuscepAcciones = (id) =>
 (dispatch) => {
     let data="";
     switch(id) {        
-        case 1:
+        case 0:
         data =getExpedienteSuscepNuevoTrabajo(id);           
         dispatch(fetchExpedientesSusceptibles(data,id));
             break;
-        case 2:         
+        case 1:         
         dispatch(fetchExpedientesTrabajosTest(data,id));
             break;
-        case 3:         
+        case 2:         
         dispatch(fetchSolicitarLoa(data,id));
             break;
-        case 4:         
+        case 3:         
         dispatch(fetchSolicitarLi(data,id));
             break;
-        case 5:         
+        case 4:         
         dispatch(fetchConvertirDigital(data,id));
             break;
-        case 6:         
+        case 5:         
         dispatch(fetchCesarExpediente(data,id));
             break;
         default:

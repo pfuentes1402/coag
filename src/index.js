@@ -23,6 +23,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import MainContainer from './containers/index'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import {LocalizeProvider} from 'react-localize-redux';
 
 library.add(faSearch);
 
@@ -46,12 +47,15 @@ const persistor  = persistStore(store);
 
 
 ReactDOM.render((
+
 <Provider store={store} >
+<LocalizeProvider store={store} >
   <PersistGate loading={null} persistor={persistor}>
     <Router history={history}>
         {routes}
     </Router>
   </PersistGate>
+  </LocalizeProvider>
 </Provider>), document.getElementById('root'));
 
 export default persistor;

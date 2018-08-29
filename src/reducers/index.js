@@ -5,6 +5,7 @@ import TrabajosReducer from './trabajos/trabajos';
 import UserReducer from './user/user';
 import seleccionado from './seleccionado/seleccionado';
 import status from './status/status';
+import { localizeReducer} from 'react-localize-redux';
 
 import { reducer as reduxFormReducer } from 'redux-form';
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     form: reduxFormReducer,
     seleccionado:seleccionado,
     status:status,
+    localize:localizeReducer,
     
   });
 

@@ -3,6 +3,8 @@ import {Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
 import { fetchSuscepAcciones } from './../../actions/usuarios/index'
+import { withLocalize, Translate } from 'react-localize-redux';
+import AccionesTranslations from './../../traducciones/Actions.json'
 
 
 import './styles.css';
@@ -12,7 +14,10 @@ import './styles.css';
 
 
 class AccionesExistentes extends Component { 
- 
+    constructor(props) {
+        super(props);
+       this.props.addTranslation(AccionesTranslations);
+      }
 
     render() {
         const click = (accion)=>{
@@ -24,21 +29,26 @@ class AccionesExistentes extends Component {
         }          
 
         const RenderAccion = acciones =>(
-        
-            acciones.map((accion,i) =>(
+        <Translate>
+            {({translate})=>
+                acciones.map((accion,i) =>(
                
                 <div className="acciones" key={i} onClick={()=>click(accion)}>
-                    <div key={i}>{accion.nombre.toUpperCase()}</div>
+                    <p>
+                        {translate(`Actions.listactions.action${i}`).toUpperCase()}
+                    </p>
+                   
                 </div>  
-            ))
+            ))}
+            </Translate>
         );
      var acciones =[
-            {Id:1,nombre:'Modificar datos expediente'},
-            {Id:2,nombre:'Tramitar nuevo trabajo'},
-            {Id:3,nombre:'Solicitar Loa(libro de órdenes y asistencias)'},
-            {Id:4,nombre:'Solicitar Li(libro de incidencias)'},
-            {Id:5,nombre:'convertir a digital expediente papel'},
-            {Id:6,nombre:'cesar/cerrar expediente'}
+        {Id:0,nombre:'Modificar datos expediente'},
+        {Id:1,nombre:'Tramitar nuevo trabajo'},
+        {Id:2,nombre:'Solicitar Loa(libro de órdenes y asistencias)'},
+        {Id:3,nombre:'Solicitar Li(libro de incidencias)'},
+        {Id:4,nombre:'convertir a digital expediente papel'},
+        {Id:5,nombre:'cesar/cerrar expediente'}
      ]
         return (
             <div>
@@ -48,7 +58,7 @@ class AccionesExistentes extends Component {
                  
                     <Col xs="12" sm="12">                        
                         <div className='divderecha'>
-                        <p>Acciones directas en expedientes existentes</p> 
+                        <p><Translate id="Actions.title"></Translate></p> 
                         </div>
                         <div>
                         {RenderAccion(acciones)}
@@ -75,6 +85,6 @@ const mapStateToProps = state => ({
   
   
 
-export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepAcciones, fetchCambiaStatoModalAcciones })(AccionesExistentes);
+export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepAcciones, fetchCambiaStatoModalAcciones })(withLocalize(AccionesExistentes));
 
 

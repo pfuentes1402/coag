@@ -1,0 +1,40 @@
+{
+    "Actions":{
+        "title":[
+            "Acciones directas en expedientes existentes",
+            "Accions directas en expedentes existentes"
+        ],
+        "listactions":
+            {
+                "action0":[
+                    "Modificar datos expediente",
+                    "Modificar datos expedente"
+                ],
+                "action1":[
+                    "Tramitar nuevo trabajo",
+                    "Tramitar novo traballo"
+                ],
+                "action2":[
+                    "Solicitar Loa(libro de órdenes y asistencias)",
+                    "Solicitar Loa(libro de ordes e asistencias)"
+                ],
+                "action3":[
+                    "Solicitar Li(libro de incidencias)",
+                    "Solicitar Li(libro de incidencias)"
+                ],
+                "action4":[
+                    "convertir a digital expediente en papel",
+                    "converter a dixital expedes en papel"
+                ],
+                "action5":[
+                    "cesar/cerrar expediente",
+                    "cesar/pechar expedente"
+                ]
+                    
+                
+            }
+        
+        
+
+    }
+}

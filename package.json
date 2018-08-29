@@ -54,6 +54,7 @@
     "react-dom-factories": "^1.0.2",
     "react-flexbox-grid": "^2.1.2",
     "react-fontawesome": "^1.6.1",
+    "react-localize-redux": "^3.3.2",
     "react-moment": "^0.7.7",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

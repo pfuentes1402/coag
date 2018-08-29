@@ -6,14 +6,29 @@ import { connect } from 'react-redux';
 import {  fetchexpedientesUser } from '../actions/expedientes/';
 import { CSSTransitionGroup } from 'react-transition-group'
 import  Modalacciones  from '../components/Home/Modalacciones';
+import globalTranslations from "./../traducciones/global.json";
+import { withLocalize, Translate } from "react-localize-redux";
+import { renderToStaticMarkup } from "react-dom/server";
+import LanguageToggle from "./../components/test/LanguageToggle";
 
 import './styles.css';
 
 
-class MainContainer extends Component {
-    state = {
-        title: window.location.pathname
-    }
+class MainContainer extends React.Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.props.initialize({
+          languages: [
+            { name: "Castellano", code: "es" },
+            { name: "Gallego", code: "gal" }          
+          ],
+          translation: globalTranslations,
+          options: { renderToStaticMarkup }
+        });
+      }
+   
     componentWillMount(){
         this.props.fetchexpedientesUser();       
     }
@@ -29,6 +44,7 @@ class MainContainer extends Component {
         const RenderComponents =() =>{
             return (
             <div>
+                   
                 
                 <div className={`mainContainer ${claseOpacidad}`} >
                                  
@@ -69,4 +85,4 @@ const mapStateToProps = state => ({
   });
 
 
-export default connect(mapStateToProps,{fetchexpedientesUser})(MainContainer);
+export default connect(mapStateToProps,{fetchexpedientesUser})(withLocalize(MainContainer));

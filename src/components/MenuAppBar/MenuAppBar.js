@@ -14,6 +14,9 @@ import { fetchMuestraModal, fetchCambiaStatoModalBuscador,fetchCambiaStadoModal 
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
 import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem, NavItem } from 'reactstrap';
+import { withLocalize, Translate } from 'react-localize-redux';
+import menuBarTranslations from './../../traducciones/menubar.json'
+import LanguageToggle from '../test/LanguageToggle';
 
 const styles = {
     root: {
@@ -31,7 +34,7 @@ const styles = {
 class MenuAppBar extends React.Component {
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
+   this.props.addTranslation(menuBarTranslations);
     
     this.handleLoggout = this.handleLoggout.bind(this);
     this.handleHome = this.handleHome.bind(this);
@@ -86,7 +89,8 @@ class MenuAppBar extends React.Component {
                 variant="raised" color="primary" className={classes.button}
               
               >
-                Nuevo expediente
+              <Translate id="menubar.NewExpe">                  
+              </Translate>
               </Button>
             )} />
           )
@@ -109,7 +113,8 @@ class MenuAppBar extends React.Component {
                 onClick={this.handleHome}
                 variant="raised" className={classes.button}
               >
-                Inicio
+                <Translate id="menubar.Home">                  
+              </Translate>
               </Button>
             )} />
           )
@@ -121,7 +126,9 @@ class MenuAppBar extends React.Component {
                 onClick={this.handleMisexpe}
                 variant="raised" className={classes.button}
               >
-                Mis expedientes
+               <Translate id="menubar.expedients">                  
+              </Translate>
+                
               </Button>
             )} />
           )
@@ -164,15 +171,21 @@ class MenuAppBar extends React.Component {
             <Col sm="2"><ButtonHome/><ButtonMisexpe/></Col>
             <Col sm="3">
                 <ButtonNew/>
-                <Button outline color="secondary">Tramitación en lote</Button>
+                <Button outline color="secondary">
+                <Translate id="menubar.BatchRequest">                  
+              </Translate>
+                </Button>
                 <ButtonBuscador/>
             </Col>
            
             <Col sm="3">           
-           
+            <div>
+            
+            </div>
             <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Perfil
+                <Translate id="menubar.profile">                  
+              </Translate>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
@@ -181,14 +194,14 @@ class MenuAppBar extends React.Component {
                   </DropdownItem>
                   <DropdownItem>
                   <Logout/>
-                  </DropdownItem>
-                  
-                  
-                </DropdownMenu>
+                  </DropdownItem>                           
+                  </DropdownMenu>
               </UncontrolledDropdown>
-            
+              
             </Col>
+            <LanguageToggle/>
             </Row>
+           
             </Container>
 
 
@@ -224,4 +237,4 @@ const mapStateToProps = state => ({
   };
   
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MenuAppBar));
+export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(MenuAppBar)));

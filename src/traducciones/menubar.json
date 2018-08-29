@@ -1,0 +1,25 @@
+{
+    "menubar":{
+        "Home":[
+            "Inicio",
+            "Inicio"
+        ],
+        "expedients":[
+            "Mis Expedientes",
+            "Meus Expedentes"
+        ],
+        "NewExpe":[
+            "Nuevo expediente",
+            "Novo Expedente"
+        ],
+        "BatchRequest":[
+            "Tramitacion en lote",
+            "Tramitacion en lote"
+        ],
+        "profile":[
+            "Perfil",
+            "Eu"
+        ]
+
+    }
+}
