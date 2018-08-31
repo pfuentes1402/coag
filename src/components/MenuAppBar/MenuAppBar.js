@@ -16,7 +16,7 @@ import { handleLoggout } from '../../helpers/logout';
 import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem, NavItem } from 'reactstrap';
 import { withLocalize, Translate } from 'react-localize-redux';
 import menuBarTranslations from './../../traducciones/menubar.json'
-import LanguageToggle from '../test/LanguageToggle';
+import LanguageToggle from '../ToggleLanguage/LanguageToggle';
 
 const styles = {
     root: {

@@ -128,16 +128,32 @@ export const errorLogin = (data) => (
 
 
    /*
-*Obtiene los expedientes de usuario (Datos dummy desde el api)
+*Obtiene los expedientes de usuario (Datos dummy desde el api)(Debajo esta la final)
 */
 export const getTrabajos = () => 
-dispatch => {   
-   
-    console.log('fetchDatosUsuario');
-    let data = getultimosTrabajos();
-    //console.log(data);
+(dispatch) => {    
+  let data = getultimosTrabajos();
         dispatch(fetchUltimosTrabajos(data));
 };
+// export const getTrabajos = () => 
+// (dispatch) => {   
+   
+    
+//     getultimosTrabajos().then((data)=>{
+//         console.log('getTrabajos');
+//         console.log(data);
+//         dispatch(fetchUltimosTrabajos(data));
+//      })
+//      .catch(
+//         ()=> fetchError({ error: 'Algo ha salido mal'})
+//      );
+// };
+
+
+
+
+
+
 
 /*
 *Acciones del modal hacia sus reducers

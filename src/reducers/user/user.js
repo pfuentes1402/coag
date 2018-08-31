@@ -24,7 +24,7 @@ tituloModal:'Inicial title',
 filtroBusqueda:'',
 filtroAcciones:'',
 selectBusqueda:'',
-ultimostrabajos:[{}],
+ultimostrabajos:{Trabajos:[]},
 DatosConfiguracionesUsuario:{
 "Id": "",
 "Idioma_Predefinido": "",
@@ -65,6 +65,10 @@ const reducer = (state = initialstate, action) => {
               case CAMBIASELECT:
               return{
                 ...state,
+                datosModal:{
+                  expedientes:'',
+                  
+                },                
                 selectBusqueda:action.payload,
               }
               case FETCH_LOGIN_FAIL:
@@ -73,6 +77,9 @@ const reducer = (state = initialstate, action) => {
                 mensaje: 'error en el login',            
               };
               case ULTIMOSTRABAJOS:
+              console.log('UltimosTrabajos');
+              console.log(action.payload.data);
+              
               return{
                 ...state,
                 ultimostrabajos: action.payload,            
@@ -88,13 +95,39 @@ const reducer = (state = initialstate, action) => {
                 }                          
               };
               case RESULTADOSBUSQUEDA:
-                const {Expedientes} = action.payload.data;
-                return{
-                  ...state,
-                  datosModal:{
-                    resultados:Expedientes
+            
+             switch(action.payload.tipoBusqueda){
+               case 'trabajos':
+                  const {Trabajos} = action.payload.data.data;
+                  return{
+                    ...state,
+                    datosModal:{
+                      resultados:Trabajos,                      
+                      
+                    }
                   }
+                  case 'promotores':
+                  const {Promotores} = action.payload.data.data;
+                  return{
+                    ...state,
+                    datosModal:{
+                      resultados:Promotores,                     
+                      
+                    }
+                  }
+                                          
+
+              default:              
+              const {Expedientes} = action.payload.data.data;
+              return{
+                ...state,
+                datosModal:{
+                  resultados:Expedientes,                  
+                  
                 }
+              }  
+             }           
+             
                 case FILTROBUSQUEDA:
                 return{
                   ...state,

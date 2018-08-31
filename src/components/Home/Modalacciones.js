@@ -5,7 +5,11 @@ import { fetchocultaModal, fetchCambiaStadoModalFalse } from '../../actions/inte
 import {fetchBuscador } from '../../actions/expedientes/index'
 import {fetchSelect } from '../../actions/usuarios/index'
 import './styles.css';
-import TablaDatosModal from '../Busquedas/TablaDatosModal';
+import TablaDatosModal  from '../Busquedas/TablaDatosModal';
+import TablaBusquedaArquitectos  from '../Busquedas/TablaBusquedaArquitectos';
+import {traduccionGrid} from './../../helpers/traducciones';
+
+
 
 
 
@@ -17,7 +21,7 @@ class Modalacciones extends Component {
     constructor(props) {
         super(props);
        
-        this.state = { filtro:'' };
+        this.state = { filtro:'',tablaArquitectos:false};
        
       }
 
@@ -25,9 +29,34 @@ class Modalacciones extends Component {
              
         this.props.fetchBuscador(e.target.value, this.props.selectBuscador);
     }
-    handleSelectChange(e){        
-        
+    handleSelectChange(e){ 
+       
+        switch(e.target.value){
+            case 'arquitectos':
+            this.setState({
+                tablaArquitectos: true
+              })
+              break;
+              case 'promotores':
+                this.setState({
+                    tablaArquitectos: true
+                })
+              break;
+              case 'personasOrganismos':
+                this.setState({
+                    tablaArquitectos: true
+                })
+              break;
+            default:
+                this.setState({
+                    tablaArquitectos: false
+                })
+        }  
+          
+        console.log('filtroBusqueda');
+        console.log(this.props.filtroBusqueda);
         this.props.fetchSelect(e.target.value);
+        this.props.fetchBuscador(this.props.filtroBusqueda,e.target.value);
     }
 
     componentDidMount(){
@@ -37,12 +66,9 @@ class Modalacciones extends Component {
     render() {
      
        
-        const handleclick = ()=>{    
-           
-            this.props.fetchocultaModal();
+        const handleclick = ()=>{
+             this.props.fetchocultaModal();
             this.props.fetchCambiaStadoModalFalse();
-            
-            
          }
 
          const loading =() =>{
@@ -51,6 +77,18 @@ class Modalacciones extends Component {
             </div>)
         }
 
+        const RenderTipoTabla = () => {
+            if(this.state.tablaArquitectos===true){
+                return (
+                    <TablaBusquedaArquitectos data={this.props.datosTablaResult}></TablaBusquedaArquitectos>
+                );
+            }else{
+                return (
+                    <TablaDatosModal data={this.props.datosTablaResult}/>
+                );
+            }
+            
+        }
         const RenderComponents = ()=>{
            switch(this.props.modal){
                case true:
@@ -64,7 +102,7 @@ class Modalacciones extends Component {
                             </div>
                             <div>
                             <input type="text"  value={this.props.filtroBusqueda} onChange={(e)=>{this.handdlebuscador(e)}} />
-                            <select onChange={(e)=>{this.handleSelectChange(e)}} >
+                            <select value={this.props.selectBuscador} onChange={(e)=>{this.handleSelectChange(e)}} >
                                     <option selected value="expedientes">Expedientes</option>
                                     <option value="trabajos">Trabajos</option>
                                     <option value="arquitectos">Arquitectos</option>
@@ -80,7 +118,10 @@ class Modalacciones extends Component {
                                     <div>
                                         <span>Resultados</span><span className="colorAzul">({this.props.datosTablaResult.length})</span> 
                                     </div>
-                                    <TablaDatosModal data={this.props.datosTablaResult} />
+                                    <div>
+                                    
+                                    </div>
+                                    {RenderTipoTabla()}
                                 </div>
                             
                             </div> 
@@ -147,6 +188,7 @@ const mapStateToProps = state => ({
     modal:state.status.modal ||'',
     filtroBusqueda:state.user.filtroBusqueda ||'',
     selectBuscador:state.user.selectBusqueda ||'',
+
    
   });
 

@@ -9,7 +9,7 @@ import  Modalacciones  from '../components/Home/Modalacciones';
 import globalTranslations from "./../traducciones/global.json";
 import { withLocalize, Translate } from "react-localize-redux";
 import { renderToStaticMarkup } from "react-dom/server";
-import LanguageToggle from "./../components/test/LanguageToggle";
+
 
 import './styles.css';
 

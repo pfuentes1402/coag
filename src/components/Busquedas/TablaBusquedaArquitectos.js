@@ -11,72 +11,43 @@ import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
 
 
 
-const stateExpedientes = {
-    columnDefs: [
-        {headerName: "COD. EXP", field: "Expediente_Codigo", width: 93},                
-        {headerName: "TITULO", field: "Titulo", width: 140},                
-        {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
-        {headerName: "MUNICIPIO", field: "Concello", width: 120},
-        {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 148},             
-    ]          
-    ,
-    components: {
-            rowNodeIdRenderer: function (params) {
-                return params.node.id + 1;
-            }
-        },
-        
-        rowGroupPanelShow: "always",
-        quickFilterText: null,
-        paginationPageSize: 20,
-        localeText: traduccionGrid,
-        rowSelection: "single",
-    rowData: [
-        {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
-    ],
-    trabajo:[
-        {Id_Trabajo: "", Titulo: "", Estado: "", fecha_entrada:"", fecha_visado: "", inc: ""}
-    ],
-}
-
-const stateTrabajos = {
-    columnDefs: [
-        {headerName: "COD. EXP", field: "Expediente_Codigo", width: 93},                
-        {headerName: "T", field: "Titulo", width: 140},                
-        {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
-        {headerName: "MUNICIPIO", field: "Concello", width: 120},
-        {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 148},             
-    ]          
-    ,
-    components: {
-            rowNodeIdRenderer: function (params) {
-                return params.node.id + 1;
-            }
-        },
-        
-        rowGroupPanelShow: "always",
-        quickFilterText: null,
-        paginationPageSize: 20,
-        localeText: traduccionGrid,
-        rowSelection: "single",
-    rowData: [
-        {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
-    ],
-    trabajo:[
-        {Id_Trabajo: "", Titulo: "", Estado: "", fecha_entrada:"", fecha_visado: "", inc: ""}
-    ],
-}
 
 
-
-class TablaDatosModal extends Component {
+class TablaBusquedaArquitectos extends Component {
     constructor(props) {
         super(props);
  
-        this.state =stateExpedientes;
+        this.state = {
+            columnDefs: [
+                {headerName: "NIF", field: "Nif", width: 93},                
+                {headerName: "NOMBRE", field: "Nombre", width: 140},                
+                {headerName: "APELLIDOS", field: "Apellido1", width: 120},
+                {headerName: "MUNICIPIO", field: "Concello", width: 120},
+                {headerName: "ID ENTIDAD", field: "Id_Entidad", width: 148},             
+            ]          
+            ,
+            components: {
+                    rowNodeIdRenderer: function (params) {
+                        return params.node.id + 1;
+                    }
+                },
+                
+                rowGroupPanelShow: "always",
+                quickFilterText: null,
+                paginationPageSize: 20,
+                localeText: traduccionGrid,
+                rowSelection: "single",
+            rowData: [
+                {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
+            ],
+            trabajo:[
+                {Id_Trabajo: "", Titulo: "", Estado: "", fecha_entrada:"", fecha_visado: "", inc: ""}
+            ],
+        }
 
 
     }
+  
     onGridReady(params) {
         this.gridApi = params.api        
         this.gridColumnApi = params.columnApi
@@ -181,4 +152,4 @@ const mapStateToProps = state => ({
   });
 
 
-export default connect(mapStateToProps,{goExpedientesUser, fetchExpedienteDatosGeneral})(TablaDatosModal);
+export default connect(mapStateToProps,{goExpedientesUser, fetchExpedienteDatosGeneral})(TablaBusquedaArquitectos);

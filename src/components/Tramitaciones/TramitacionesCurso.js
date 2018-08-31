@@ -5,19 +5,29 @@ import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import 'ag-grid/dist/styles/ag-theme-material.css';
 import PropTypes from 'prop-types';
-import {traduccionGrid} from './../../helpers/traducciones';
+import {traduccionGrid, traduccionGridGallego} from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
-
+import { connect } from 'react-redux';
 import 'ag-grid/dist/styles/ag-theme-material.css';
 
 
-
+function internationalization (param){
+    console.log(param);
+    console.log(param);
+    console.log(param);
+    console.log(param);
+    console.log(param);
+    console.log(param);
+    return param==='es'?traduccionGrid:traduccionGridGallego
+}
 
 class TramitacionesCurso extends Component {
     constructor(props) {
         super(props);
- 
+       
+       
+
         this.state = {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                
@@ -41,7 +51,7 @@ class TramitacionesCurso extends Component {
                 rowGroupPanelShow: "always",
                 paginationPageSize:10,
                 
-                localeText: traduccionGrid,
+                localeText: internationalization(this.props.lang),
                 rowSelection: "single",
             rowData: this.props.data,
             
@@ -53,6 +63,7 @@ class TramitacionesCurso extends Component {
     onGridReady(params) {
         this.gridApi = params.api        
         this.gridColumnApi = params.columnApi
+        
         
     };
     onPageSizeChanged(newPageSize) {
@@ -73,6 +84,7 @@ class TramitacionesCurso extends Component {
            this.gridApi.exportDataAsCsv(params);
        }
 
+   
 
 
     render() {
@@ -156,4 +168,9 @@ const propTypes = {
     data: PropTypes.array,
 }
 
-export default TramitacionesCurso;
+const mapStateToProps = state => ({
+  
+  });
+
+
+export default connect(mapStateToProps,{  })(TramitacionesCurso);

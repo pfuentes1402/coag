@@ -12,7 +12,6 @@ import './styles.css';
 
 class ContenedorExpedientes extends Component {
 
- 
 
     render() {       
 
@@ -25,11 +24,11 @@ class ContenedorExpedientes extends Component {
                     <Col xs="12" sm="12">
                         
                         <div className='divderecha'>
-                        <p>Tramitaciones en Curso <span className="colorAzul">({this.props.ultimostrabajos.Trabajos.length})</span> 
+                        {/* <p>Tramitaciones en Curso <span className="colorAzul">({this.props.ultimostrabajos.Trabajos.length})</span>  */}
                         
-                       </p>
+                       {/* </p> */}
                        
-                        <TramitacionesCurso data={this.props.ultimostrabajos.Trabajos}  />                      
+                        <TramitacionesCurso data={this.props.ultimostrabajos.Trabajos} lang={this.props.idioma} />                      
         
                       
                         </div>
@@ -49,9 +48,7 @@ class ContenedorExpedientes extends Component {
 
 const mapStateToProps = state => ({
     ultimostrabajos:state.user.ultimostrabajos||'',
-   
-    
-   
+    idioma:state.localize.languages[0].active===true?'es':'gal',
   });
 
 

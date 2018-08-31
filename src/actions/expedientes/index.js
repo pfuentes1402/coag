@@ -97,9 +97,9 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
 };
 
 //Buscador
-export const fetchDataResults= (data) =>({
+export const fetchDataResults= (data,tipoBusqueda) =>({
     type:types.RESULTADOSBUSQUEDA,
-    payload:data
+    payload:{tipoBusqueda,data}
 });
 export const fetchFiltroUsuario= (filtro) =>({
     type:types.FILTROBUSQUEDA,
@@ -113,7 +113,8 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
    dispatch(fetchFiltroUsuario(filtro));
     getBuscador(filtro,tipoBusqueda).then((data) => {       
        console.log(data);
-       dispatch(fetchDataResults(data));
+       console.log(tipoBusqueda);
+       dispatch(fetchDataResults(data,tipoBusqueda));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal en la busqueda'})
