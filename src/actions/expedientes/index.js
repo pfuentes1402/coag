@@ -101,17 +101,32 @@ export const fetchDataResults= (data,tipoBusqueda) =>({
     type:types.RESULTADOSBUSQUEDA,
     payload:{tipoBusqueda,data}
 });
-export const fetchFiltroUsuario= (filtro) =>({
+export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
     type:types.FILTROBUSQUEDA,
-    payload:filtro
+    payload: {
+        filtro,
+        tipoBusqueda
+    }
 });
 
 
 export const fetchBuscador = (filtro,tipoBusqueda) => 
 (dispatch) => {
-   console.log('fetchBuscador');    
-   dispatch(fetchFiltroUsuario(filtro));
-    getBuscador(filtro,tipoBusqueda).then((data) => {       
+    let temp='';
+    let temp2 = '';
+    if(filtro!=null){
+        temp=filtro;
+    }
+    if (tipoBusqueda != null) {
+        temp2 = filtro;
+    }
+    else{
+        temp2='expedientes';
+    }
+   console.log('fetchBuscador');
+   console.log(temp);   
+   dispatch(fetchFiltroUsuario(temp, temp2));
+    getBuscador(temp,tipoBusqueda).then((data) => {
        console.log(data);
        console.log(tipoBusqueda);
        dispatch(fetchDataResults(data,tipoBusqueda));

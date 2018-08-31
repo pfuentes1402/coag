@@ -53,14 +53,13 @@ class Modalacciones extends Component {
                 })
         }  
           
-        console.log('filtroBusqueda');
-        console.log(this.props.filtroBusqueda);
+        
         this.props.fetchSelect(e.target.value);
         this.props.fetchBuscador(this.props.filtroBusqueda,e.target.value);
     }
 
     componentDidMount(){
-        this.props.fetchBuscador(this.props.filtroBusqueda);
+        this.props.fetchBuscador(this.props.filtroBusqueda, this.props.selectBuscador);
     }
 
     render() {
@@ -187,7 +186,7 @@ const mapStateToProps = state => ({
     descripcion:state.user.datosModal.descripcion ||'', 
     modal:state.status.modal ||'',
     filtroBusqueda:state.user.filtroBusqueda ||'',
-    selectBuscador:state.user.selectBusqueda ||'',
+    selectBuscador:state.user.selectBusqueda ||'expedientes',
 
    
   });

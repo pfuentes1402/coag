@@ -23,7 +23,7 @@ datosModal:[{tituloModal:0}],
 tituloModal:'Inicial title',
 filtroBusqueda:'',
 filtroAcciones:'',
-selectBusqueda:'',
+selectBusqueda:'expedientes',
 ultimostrabajos:{Trabajos:[]},
 DatosConfiguracionesUsuario:{
 "Id": "",
@@ -129,9 +129,11 @@ const reducer = (state = initialstate, action) => {
              }           
              
                 case FILTROBUSQUEDA:
+                console.log(action.payload)
+                console.log('cambiaSelect')
                 return{
                   ...state,
-                  filtroBusqueda:action.payload
+                  filtroBusqueda: action.payload.filtro
                 }
                 case FILTROACCIONES:
                 return {
