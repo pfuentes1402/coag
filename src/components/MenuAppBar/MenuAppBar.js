@@ -169,21 +169,24 @@ class MenuAppBar extends React.Component {
             <Col sm="3"><div><img src={coag} alt="logo" height="50" className="logo-coag"/></div></Col>
             
             <Col sm="2"><ButtonHome/><ButtonMisexpe/></Col>
-            <Col sm="3">
-                <ButtonNew/>
+            <Col sm="3" className="botonesBarra">
+            <div>
+                <ButtonNew  className="botones"/>
                 <Button outline color="secondary">
-                <Translate id="menubar.BatchRequest">                  
-              </Translate>
+                  <Translate id="menubar.BatchRequest">               
+                  </Translate>
                 </Button>
-                <ButtonBuscador/>
+                <ButtonBuscador  className="botones"/>
+                </div>
             </Col>
            
-            <Col sm="3">           
+            <Col sm="3" className="dropMenu">           
             <div>
             
             </div>
-            <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
+            <div >
+            <UncontrolledDropdown nav inNavbar tag={'div'}>
+                <DropdownToggle nav caret  >
                 <Translate id="menubar.profile">                  
               </Translate>
                 </DropdownToggle>
@@ -197,7 +200,7 @@ class MenuAppBar extends React.Component {
                   </DropdownItem>                           
                   </DropdownMenu>
               </UncontrolledDropdown>
-              
+              </div>
             </Col>
             <LanguageToggle/>
             </Row>

@@ -40,10 +40,7 @@ export const fetchSelect = (data)=>
     (dispatch) => {
         console.log("llega a fetchselect");
             dispatch(CambiaSelect(data));
-}; 
-
-
-
+};
 
 
 export const errorLogin = (data) => (  

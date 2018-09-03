@@ -13,3 +13,14 @@
 .app-frame .btn-primary{
   background-color: #0288d1;
 }
+.botonesBarra{
+  display: flex;
+  flex-direction: row;
+ 
+}
+.botones{
+  margin: 10px;
+}
+.dropMenu{
+  max-width: 165px; ;
+}

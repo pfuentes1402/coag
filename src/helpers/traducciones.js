@@ -1,6 +1,6 @@
 export const  traduccionGrid = {
     
-        page: "pagina",
+        page: "página",
         more: "más",
         to: "a",
         of: "de",
