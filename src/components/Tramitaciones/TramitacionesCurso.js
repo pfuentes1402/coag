@@ -13,12 +13,7 @@ import 'ag-grid/dist/styles/ag-theme-material.css';
 
 
 function internationalization (param){
-    console.log(param);
-    console.log(param);
-    console.log(param);
-    console.log(param);
-    console.log(param);
-    console.log(param);
+ 
     return param==='es'?traduccionGrid:traduccionGridGallego
 }
 
@@ -32,10 +27,12 @@ class TramitacionesCurso extends Component {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                
                 {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200},
-                {headerName: "TITULO TRABAJO", field: "Titulo", width: 200},
-                {headerName: "MUNICIPIO", field: "Concello", width: 200},
+                {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 200},
+                {headerName: "MUNICIPIO", field: "Municipio", width: 200},
+                {headerName: "PROMOTOR", field: "Promotor", width: 200},
                 {headerName: "ESTADO", field: "Estado", cellRenderer:'estadoRenderer', colId: "estado", width: 200},
-                {headerName: "ACCIONES", field: "acciones", cellRenderer:'accionRenderer', colId: "params", width: 140,
+                {headerName: "ACCIONES", field: "acciones", cellRenderer:'accionRenderer', colId: "params", width: 140},
+                {headerName: "ULTIMA MOD.", field: "Ultima_Modificacion", width: 140,
                 },             
             ]          
             ,
@@ -71,6 +68,12 @@ class TramitacionesCurso extends Component {
         this.gridApi.paginationSetPageSize(Number(value));
        
       }
+      onSelectionChanged(){
+        var selectedRows = this.gridApi.getSelectedRows();
+        
+        console.log(selectedRows[0])
+
+      }
        onBtExport() {
 
            var params = {
@@ -96,7 +99,7 @@ class TramitacionesCurso extends Component {
                   style={{ 
                     boxSizing: "border-box",
 	                height: '400px', 
-                    width: '1100px',
+                    width: '1440px',
                     margin: '0px',
                     border: '#E0E0E0 solid 1px'}} 
 		            >
@@ -150,7 +153,8 @@ class TramitacionesCurso extends Component {
                            onGridReady = {
                                this.onGridReady.bind(this)
                            }
-                           rowSelection={this.state.rowSelection}                         
+                           rowSelection={this.state.rowSelection} 
+                           onSelectionChanged={this.onSelectionChanged.bind(this)}                        
                     
                             >
                     </AgGridReact>

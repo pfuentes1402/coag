@@ -27,8 +27,10 @@ const renderField = ({
     </div>
   );
 
-  let OverViewComponent = props => {
-    const {datosNuevoExpediente } = props;
+  let FichaExpediente = props => {
+    const {datosNuevoExpediente, ubicaciones } = props;
+    console.log(props);
+    console.log('FichaExpediente');
   
     return (
         <CardBody className="cardBody-ficha">
@@ -79,7 +81,7 @@ const renderField = ({
                                 />
                             </div>
                             <div className="inputDiv">
-                            <TablaCatastro data={datosNuevoExpediente.Emplazamientos}/>
+                            <TablaCatastro data={ubicaciones}/>
                             </div>
                             <div className="inputDiv">
                                 <Field
@@ -100,23 +102,24 @@ const renderField = ({
     }
 
  
-OverViewComponent = reduxForm({
-    form: 'OverViewComponent',
+FichaExpediente = reduxForm({
+    form: 'FichaExpediente',
     enableReinitialize: true,
  
-})(OverViewComponent)
+})(FichaExpediente)
 
-OverViewComponent = connect(
+FichaExpediente = connect(
     state => ({
         initialValues:state.expedientes.expedienteData.Expediente[0] || [],
         datosNuevoExpediente:state.expedientes.expedienteData || '',        
-        adressaved: state.expedientes.adressValidated,     
+        adressaved: state.expedientes.adressValidated,
+        ubicaciones:state.expedientes.expedienteData.Emplazamientos||'',     
        
     }),
     {    
      } 
-)(OverViewComponent)
+)(FichaExpediente)
 
 
 
-export default OverViewComponent;
+export default FichaExpediente;

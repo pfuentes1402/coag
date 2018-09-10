@@ -12,7 +12,7 @@ const propTypes = {
 class TablaCatastro extends Component {
     constructor(props) {
         super(props);
-         this.getContextMenuItems = this.getContextMenuItems.bind(this);
+         //this.getContextMenuItems = this.getContextMenuItems.bind(this);
           //this.onButtonClick = this.onButtonClick.bind(this);
 
         this.state = {
@@ -21,30 +21,15 @@ class TablaCatastro extends Component {
                 {headerName: "Nº", field: "Numero", width: 50},
                 {headerName: "Piso", field: "Piso", width: 60},
                 {headerName: "CP", field: "Codigo_Postal", width: 70},
-                {headerName: "Municipio", field: "Concello", width: 155}
+                {headerName: "Municipio", field: "municipio", width: 155}
             ],
             rowData: [
                 {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Concello: "Vigo"}
             ],
-            ubicacion: [{Calle: "", Numero: "", Piso: "", Codigo_Postal: "", Concello: ""}],
+            ubicacion: this.props.data,
         }
     }
-   getContextMenuItems = (params) => {
-       if (!params.node) return [];
-       let filePath = params.node.data ? params.node.data.Calle : [];
-
-       let deleteItem = {
-           name: "Delete",
-           action: () => this.props.actions.deleteFiles(filePath)
-       };
-
-       let newItem = {
-           name: "New",
-           action: () => console.log('new')
-       };
-
-       return params.node.data.Calle ? [deleteItem] : [newItem, deleteItem];
-   };
+  
    onButtonClick = e => {
        const selectedNodes = this.gridApi.getSelectedNodes()
             
@@ -70,7 +55,7 @@ class TablaCatastro extends Component {
 		            >
             <AgGridReact
                                         columnDefs={this.state.columnDefs}
-                                        rowData={this.props.addressreducida}                                         
+                                        rowData={this.props.data}                                         
                                          enableSorting = {true}
                                          enableFilter = {true}
                                          rowSelection = "multiple"
@@ -90,8 +75,8 @@ class TablaCatastro extends Component {
 }
 
 const mapStateToProps = state => ({
-    direcciones:state.expedientes.adressValidated,
-    addressreducida:state.expedientes.addressreducida || [],
+    //direcciones:state.expedientes.adressValidated,
+    //addressreducida:state.expedientes.addressreducida || [],
   });
 
 const mapDispatchToProps =state =>({

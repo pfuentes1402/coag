@@ -82,7 +82,7 @@ const reducer = (state = initialstate, action) => {
               
               return{
                 ...state,
-                ultimostrabajos: action.payload,            
+                ultimostrabajos: action.payload.data,            
               };
               case EXPEDIENTESSUSCEPTIBLESTRABAJO:
               

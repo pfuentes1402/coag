@@ -70,10 +70,21 @@ default:
   }
 }
 
+
+
 let SyncValidationForm = props => {
-  const { handleSubmit, pristine,  onBack,submitting, validateAddress, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressreducida,datosCompletos  } = props;
+  const { handleSubmit, pristine,  onBack,submitting, validateAddress,arrayReferencias, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressreducida,datosCompletos  } = props;
 const direccionPintar = catastro[catastro.length-1]
 
+
+const verificateRefCatastral = (refCatastral) =>{
+  
+  if (!(props.arrayReferencias).includes(refCatastral)){
+    saveAdressTostore(catastroSave.values, document.getElementById("Refcatastral").value)
+  }
+
+  
+}
   return (
     <Container className="margen">
        { mensajes &&
@@ -156,9 +167,10 @@ const direccionPintar = catastro[catastro.length-1]
                 >Validar</Button>
               </Col>
               <Col sm="12" className="center-align">
-              <TablaCatastro data={adressreducida}/>
+              <TablaCatastro data={catastro}/>
                 <Button color="danger"               
-                 onClick={(e) => saveAdressTostore(catastroSave.values)}     
+                //  onClick={(e) => saveAdressTostore(catastroSave.values, document.getElementById("Refcatastral").value)}     
+                 onClick={(e) => verificateRefCatastral(document.getElementById("Refcatastral").value)}     
                  
                 
                 >+</Button>
@@ -213,7 +225,8 @@ SyncValidationForm = connect(
         catastroSave: state.form.CatastroForm,
         adressreducida: state.expedientes.adressreducida || '',
         mensajes:state.expedientes.ExpedientNew.MensajesProcesado, 
-        datosNuevoExpediente:state.expedientes.ExpedientNew,        
+        datosNuevoExpediente:state.expedientes.ExpedientNew,
+        arrayReferencias:state.expedientes.arrayReferencias||'',        
        
     }),
     { validateAddress: validateAddress,

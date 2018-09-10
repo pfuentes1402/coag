@@ -126,25 +126,27 @@ export const errorLogin = (data) => (
 
    /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)(Debajo esta la final)
-*/
+
 export const getTrabajos = () => 
 (dispatch) => {    
   let data = getultimosTrabajos();
         dispatch(fetchUltimosTrabajos(data));
 };
-// export const getTrabajos = () => 
-// (dispatch) => {   
+*/
+
+export const getTrabajos = () => 
+(dispatch) => {   
    
     
-//     getultimosTrabajos().then((data)=>{
-//         console.log('getTrabajos');
-//         console.log(data);
-//         dispatch(fetchUltimosTrabajos(data));
-//      })
-//      .catch(
-//         ()=> fetchError({ error: 'Algo ha salido mal'})
-//      );
-// };
+    getultimosTrabajos().then((data)=>{
+        console.log('getTrabajos');
+        console.log(data);
+        dispatch(fetchUltimosTrabajos(data));
+     })
+     .catch(
+        ()=> fetchError({ error: 'Algo ha salido mal'})
+     );
+};
 
 
 

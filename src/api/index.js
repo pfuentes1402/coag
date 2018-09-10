@@ -386,7 +386,7 @@ export const getAcciones = () =>
 
 
   //FUNCION DUMMY para obtener los ultimos trabajos (debajo esta la final)
-export function getultimosTrabajos(){   
+export function getultimosTrabajosOld(){   
   let data =  {
     Trabajos: [
       {
@@ -1165,20 +1165,19 @@ export function getultimosTrabajos(){
     return data;
 }
 
-/*
-*
-*Descomentar para tener la final
-/*
-// export const getultimosTrabajos = () =>
-// api.get('AccionesPendientes/?Numero_Trabajos_acciones_pendientes=10')
-//   .then(response => {
-//     //let test=  store ? store.getState().user.token : ''
-//     console.log('ultimos')
-//     console.log(response);
-//     return response;
-//   });
 
-*/
+
+
+export const getultimosTrabajos = () =>
+api.get('AccionesPendientes/?Numero_Trabajos_acciones_pendientes=10')
+  .then(response => {
+    //let test=  store ? store.getState().user.token : ''
+    console.log('ultimos')
+    console.log(response);
+    return response;
+  });
+
+
 
 
 

@@ -45,18 +45,18 @@ export const fetchExpedienteSelected = (response) => ({
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
 */
-export const fetchsaveAdressTostore = (address) => (  
+export const fetchsaveAdressTostore = (address,refcatastral) => (  
     {
    
     type: types.FETCH_SAVE_ADRESS_TO_STORE,
-    payload: address
+    payload:[address,refcatastral]
 });
 
-export const saveAdressTostore = (address) => 
+export const saveAdressTostore = (address,refcatastral) => 
 
 (dispatch) => {   
    
-        dispatch(fetchsaveAdressTostore(address));
+        dispatch(fetchsaveAdressTostore(address,refcatastral));
           };
 
 /*

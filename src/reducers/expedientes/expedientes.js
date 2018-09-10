@@ -32,7 +32,12 @@ Concello: '',
 Provincia: '',
 Autonomia: '',
 Pais: ''}]},
-trabajos: [{}],addressreducida:[{Calle:'', Numero:'',Piso:'',Codigo_Postal:'',municipio:'',Id_Concello:'',Georeferencia:''}], adressValidated : [{}], ExpedientNew:{},expedientes:{}, expedienteData:{Expediente:[]}, datosAgentes:{},
+trabajos: [{}],
+addressreducida:[],
+adressValidated : [], ExpedientNew:{},expedientes:{},
+arrayReferencias : [],
+expedienteData:{Expediente:[],Emplazamientos:[{}]},
+ datosAgentes:{},
  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
 const expedientes = (state = initialState,action) => {
  
@@ -101,17 +106,19 @@ const expedientes = (state = initialState,action) => {
           ExpedientNew: action.payload,
         };  
     case FETCH_SAVE_ADRESS_TO_STORE:
-         
+         console.log(action.payload);
+        console.log('FETCH_SAVE_ADRESS_TO_STORE');
     
           const addressreducida=[
-              {Calle:action.payload.Calle, Numero: action.payload.Numero,
-                  Piso: action.payload.Piso, Codigo_Postal: action.payload.Codigo_Postal, municipio: action.payload.Concello, Id_Concello:action.payload.Id_Concello, Georeferencia:""}
+              {Calle:action.payload[0].Calle, Numero: action.payload[0].Numero,
+                  Piso: action.payload[0].Piso, Codigo_Postal: action.payload[0].Codigo_Postal, municipio: action.payload[0].Concello, Id_Concello:action.payload[0].Id_Concello, Georeferencia:""}
           ];
 
         return {
           ...state,
-          adressValidated: state.adressValidated.concat([action.payload]),
+          adressValidated: state.adressValidated.concat([action.payload[0]]),
           addressreducida:state.addressreducida.concat(addressreducida),
+          arrayReferencias:state.arrayReferencias.concat([action.payload[1]])
          
         }  
     case FETCH_EXPEDIENTE_SUCCESS_EXP:

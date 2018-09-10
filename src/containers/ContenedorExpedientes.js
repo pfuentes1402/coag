@@ -9,7 +9,7 @@ import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import ListWorks from '../components/ListWorks/ListWorks';
-import OverViewComponent from '../components/OverViewComponent/OverViewComponent';
+import FichaExpediente from '../components/OverViewComponent/FichaExpediente';
 
 import ExpedientType from '../components/MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
@@ -50,9 +50,7 @@ class ContenedorExpedientes extends Component {
 
 
     render() {
-        console.log("Contenedor de Expedientes");
-        console.log(this.props.Arquitectos);
-        console.log("Contenedor de Expedientes");
+        
         return (
             <div>
             <Container className="full">
@@ -63,7 +61,7 @@ class ContenedorExpedientes extends Component {
                         <div className='divderecha'>                           
                             <Card>                             
                                 <CardHeader>Ficha expediente</CardHeader>    
-                                    <CardText tag="div"> <OverViewComponent/> </CardText>
+                                    <CardText tag="div"> <FichaExpediente/> </CardText>
                             </Card> 
                         </div>   
                         <div className='divderecha'>             
@@ -118,7 +116,7 @@ const mapStateToProps = state => ({
     selectedData:state.expedientes.selectedData,
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     Arquitectos:state.expedientes.expedienteData?state.expedientes.expedienteData.Colegiados:"",
-    Promotores:state.expedientes.expedienteData?state.expedientes.expedienteData.Colegiados:"",
+    Promotores:state.expedientes.expedienteData?state.expedientes.expedienteData.Promotores:"",
     
    
   });

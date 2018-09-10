@@ -3,8 +3,9 @@ import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
+import  Upload  from './../../components/Upload/Upload'
 
-import './styles.css';
+
 
 
 
@@ -12,24 +13,26 @@ import './styles.css';
 
 class ContenedorExpedientes extends Component {
 
+ 
 
     render() {       
 
         return (
             <div>
+                
+               
+
+                        
             <Container className="full">
                 <Row className="principal">                   
                                                                  
                  
-                    <Col xs="12" sm="12">
-                        
+                    <Col xs="12" sm="12">                        
                         <div className='divderecha'>
-                        {/* <p>Tramitaciones en Curso <span className="colorAzul">({this.props.ultimostrabajos.Trabajos.length})</span>  */}
-                        
-                       {/* </p> */}
-                       
+                        <p>Tramitaciones en Curso <span className="colorAzul">({this.props.ultimostrabajos.Trabajos.length})</span></p>
+                         {/*TODO:Este componente esta comentado para probar el componente de subida de archivos */}
                         <TramitacionesCurso data={this.props.ultimostrabajos.Trabajos} lang={this.props.idioma} />                      
-        
+                        
                       
                         </div>
                         
