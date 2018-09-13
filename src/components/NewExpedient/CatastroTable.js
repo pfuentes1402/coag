@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
+import ReactDOM, {render} from 'react-dom';
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
 import  { elimardelatabla } from './../../actions/expedientes/index'
+const rootDiv = document.getElementById('root');
 
 const propTypes = {
     data: PropTypes.array,
 }
+
+
+
 class TablaCatastro extends Component {
     constructor(props) {
         super(props);
@@ -31,16 +36,22 @@ class TablaCatastro extends Component {
     }
   
    onButtonClick = e => {
+       e.preventDefault()
        const selectedNodes = this.gridApi.getSelectedNodes()
             
-       const selectedData = selectedNodes.map(node => node.data)
+       const selectedData = selectedNodes.map(node => node.data.Calle)
+       const refcatastrals = selectedNodes.map(node => node.data.refcatastral).join(', ')
        
-        console.log(selectedNodes)
+        console.log(refcatastrals)
        const selectedDataStringPresentation = selectedNodes.map(node => node.id ).join(', ')
-       console.log(selectedDataStringPresentation);
-       this.props.elimardelatabla(selectedDataStringPresentation)
+       //console.log(selectedDataStringPresentation);
+       this.props.elimardelatabla(selectedDataStringPresentation,refcatastrals)
+       var params = { force:true };
+              
        
    }
+
+  
     
 
     render() {
@@ -58,16 +69,24 @@ class TablaCatastro extends Component {
                                         rowData={this.props.data}                                         
                                          enableSorting = {true}
                                          enableFilter = {true}
+                                         enableCellChangeFlash={true}
                                          rowSelection = "multiple"
+
+                                       
+                                        
+                                        autoGroupColumnDef={this.autoGroupColumnDef}
+                                        groupDefaultExpanded={-1}
+                                        onFirstDataRendered={params => params.api.sizeColumnsToFit()}
+                                        getContextMenuItems={this.getContextMenuItems}
+
+                                        
                                          onGridReady = {
                                              params => this.gridApi = params.api
                                          }
                                         >
                                         
                                     </AgGridReact>
-                                    < button onClick = {
-                                        this.onButtonClick
-                                    } > Get selected rows </button>
+                                    <button onClick = {this.onButtonClick}> Eliminar seleccionadas </button>
             
                 </div>
             );
@@ -75,12 +94,13 @@ class TablaCatastro extends Component {
 }
 
 const mapStateToProps = state => ({
+    //catastros: state.expedientes.addressreducida,
     //direcciones:state.expedientes.adressValidated,
     //addressreducida:state.expedientes.addressreducida || [],
   });
 
-const mapDispatchToProps =state =>({
-    elimardelatabla,
-});
+// const mapDispatchToProps =state =>({
+//     elimardelatabla,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TablaCatastro);
+export default connect(mapStateToProps, {elimardelatabla})(TablaCatastro);

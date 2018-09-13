@@ -1,9 +1,12 @@
 import { FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
-import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL, OCULTACAMBIAESTADOMODAL, SHOWBUSCADOR, SHOWACCIONES } from "../../actions/interfaz/types"
+import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL,
+       OCULTACAMBIAESTADOMODAL, SHOWBUSCADOR, SHOWACCIONES, BUTTON_ADD } from "../../actions/interfaz/types"
 import { GOEXPEDIENTES } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false,muestraFiltros:true};
+const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false,muestraFiltros:true,contenedorAdd:false,contenedorPromo:false};
+
+
 
 const reducer = (state = initialState, action) => {
  
@@ -55,6 +58,24 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
           modal:false,
+      }
+      case BUTTON_ADD:
+      console.log('llega a BUTTON_ADD'+action.payload);
+      let arrq=false;
+      let promo=false;
+      switch(action.payload){
+          case 'Arquitectos':
+          arrq=true;
+          break;
+          case 'Promotores':
+          promo=true;
+          break;
+          default:
+            }
+      return{
+        ...state,
+        contenedorAdd:arrq,
+        contenedorPromo:promo,
       }
     
   case PURGE:                        

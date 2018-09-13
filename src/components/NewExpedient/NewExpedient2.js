@@ -74,7 +74,7 @@ default:
 
 let SyncValidationForm = props => {
   const { handleSubmit, pristine,  onBack,submitting, validateAddress,arrayReferencias, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressreducida,datosCompletos  } = props;
-const direccionPintar = catastro[catastro.length-1]
+
 
 
 const verificateRefCatastral = (refCatastral) =>{
@@ -216,6 +216,7 @@ SyncValidationForm = reduxForm({
     form: 'syncValidation', 
     validate,
     warn,
+    enableReinitialize: true,
 })(SyncValidationForm)
 
 SyncValidationForm = connect(

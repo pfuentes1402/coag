@@ -123,12 +123,10 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
     else{
         temp2='expedientes';
     }
-   console.log('fetchBuscador');
-   console.log(temp);   
+   
    dispatch(fetchFiltroUsuario(temp, temp2));
     getBuscador(temp,tipoBusqueda).then((data) => {
-       console.log(data);
-       console.log(tipoBusqueda);
+      
        dispatch(fetchDataResults(data,tipoBusqueda));
     })
         .catch(
@@ -303,14 +301,14 @@ export const fetchgetAcciones= (id_expediente, id_Trabajo) =>
           );
       };
 
-export const fetchelimardelatabla = (parametro) => ({
+export const fetchelimardelatabla = (nodos,parametro) => ({
     
         type: types.ELIMINAR_TABLA,
-        payload: parametro
+        payload:[nodos, parametro] 
     });
 
-export const elimardelatabla = (parametro)=> (dispatch) => {
-        console.log("parametro"+parametro);
-        dispatch(fetchelimardelatabla(parametro)); 
+export const elimardelatabla = (nodos, referencias)=> (dispatch) => {
+       
+        dispatch(fetchelimardelatabla(nodos,referencias)); 
     };
 

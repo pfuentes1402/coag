@@ -119,6 +119,15 @@ export const errorLogin = (data) => (
     });   
         
     };
+   export const  gotrabajos = () =>
+
+        (dispatch) => {
+          
+            dispatch({
+            type: types.GOTRABAJOS,             
+    });   
+        
+    };
 
    
 
@@ -216,3 +225,15 @@ export const fetchSuscepAcciones = (id) =>
 
 
 };
+
+
+
+export const setSelected = (data) => 
+(dispatch) => {  
+    dispatch(fetchsetSelected(data));  
+};
+
+export const fetchsetSelected = (data) => ({    
+    type: types.SELECTAGENTTOADD,
+    payload: data
+});

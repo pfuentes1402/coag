@@ -72,7 +72,7 @@ class ContenedorExpedientes extends Component {
                                 <TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
                                 </div>
                                 <CardText tag="div" className="trabajos"><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
-                                <CardText tag="div" className="trabajos"> <ExpedientContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/></CardText>
+                                <CardText tag="div" className="trabajos"> <ExpedientContainer renderB={true} titulo='Otros agentes' datosAgentes={this.props.Colegiados}/></CardText>
                         </Card>    
 
                         </div>

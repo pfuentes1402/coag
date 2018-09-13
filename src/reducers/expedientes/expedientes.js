@@ -5,7 +5,7 @@ import { FETCH_EXPEDIENTSAVE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
 import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
-import { FETCH_DATAFORTREETRABAJO_SUCCESS } from "../../actions/expedientes/types";
+import { FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
 import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA} from "../../actions/expedientes/types";
 import { PURGE } from 'redux-persist';
@@ -33,6 +33,7 @@ Provincia: '',
 Autonomia: '',
 Pais: ''}]},
 trabajos: [{}],
+promotores:[{}],
 addressreducida:[],
 adressValidated : [], ExpedientNew:{},expedientes:{},
 arrayReferencias : [],
@@ -71,12 +72,20 @@ const expedientes = (state = initialState,action) => {
              
             }; 
     case ELIMINAR_TABLA:         
-          ///**aqui***/
-          console.log("el del payload"+action.payload);
+         
+          let arraytEMP =  state.addressreducida;
+          let arraytEMP2 =  state.arrayReferencias;
+         
+          let newArrayreduc=action.payload[0].split(',');
+          
+          arraytEMP.splice(action.payload[0])
+          arraytEMP2.splice(action.payload[1])
+         
+
         return {
               ...state,            
-             // addressreducida: action.payload,
-             
+              addressreducida:arraytEMP,
+              arrayReferencias:arraytEMP2,
             }; 
     case SET_EXPEDIENTE_SELECTED_DATOS:
           const {Id_Trabajo} = action.payload;
@@ -87,7 +96,7 @@ const expedientes = (state = initialState,action) => {
             expedieteotrabajo: Id_Trabajo?'trabajo':'expediente',
             //trabajoData:action.payload,
           };
-    case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:   
+    case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
          
 
        
@@ -111,7 +120,8 @@ const expedientes = (state = initialState,action) => {
     
           const addressreducida=[
               {Calle:action.payload[0].Calle, Numero: action.payload[0].Numero,
-                  Piso: action.payload[0].Piso, Codigo_Postal: action.payload[0].Codigo_Postal, municipio: action.payload[0].Concello, Id_Concello:action.payload[0].Id_Concello, Georeferencia:""}
+                  Piso: action.payload[0].Piso, Codigo_Postal: action.payload[0].Codigo_Postal,
+                  municipio: action.payload[0].Concello, Id_Concello:action.payload[0].Id_Concello, Georeferencia:"", refcatastral:action.payload[1]}
           ];
 
         return {
@@ -163,6 +173,11 @@ const expedientes = (state = initialState,action) => {
        
        datosTrabajo:state.datosTrabajo.concat([action.payload]),
      } */
+
+            
+
+
+
      case PURGE:
                         
      return initialState;    

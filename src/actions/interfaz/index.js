@@ -50,3 +50,13 @@ export const  fetchocultaModal = () =>
  export const fetchResetResultsModal = () =>({
     type:types.FETCH_RESET_RESULT,
  })
+
+ export const  buttonAdd = (parametro) =>
+
+    (dispatch) => {
+          
+        dispatch({
+        type: types.BUTTON_ADD,
+        payload:parametro
+        }); 
+    };

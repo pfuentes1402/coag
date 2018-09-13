@@ -161,7 +161,7 @@ CatastroForm = connect(
   (state) => ({
      // catastro: state.expedientes.addressreducida[0],
    
-      initialValues:state.expedientes.address.Datos_Completos[0] || '',
+      initialValues:state.expedientes.address ? state.expedientes.address.Datos_Completos[0] : '',
      
      
      

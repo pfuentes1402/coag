@@ -4,6 +4,9 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {  Button} from 'reactstrap';
+import { buttonAdd } from './../../../actions/interfaz/index'
 import "./styles.css";
 
 const propTypes = {
@@ -30,8 +33,26 @@ class AgentsTable extends Component {
         }
     }
 
+    getContextMenuItems = (params) => {
+        if (!params.node) return [];
+        let filePath = params.node.data ? params.node.data.filePath : [];
+    
+        let deleteItem = {
+            name: "Delete",
+            action: () => this.props.actions.deleteFiles(filePath)
+        };
+    
+        let newItem = {
+            name: "New",
+            action: () => this.props.actions.newFile(filePath)
+        };
+    
+        return params.node.data.file ? [deleteItem] : [newItem, deleteItem];
+    };
 
     render() {
+        console.log('antes de pulsar');
+        console.log(this.props.titulo);
         return (
             <CardBody  className="card-body-Trabajos">
             <CardText tag="div">
@@ -45,14 +66,26 @@ class AgentsTable extends Component {
 		            >
                     <AgGridReact
                         columnDefs={this.state.columnDefs}
-                        rowData={this.props.data}>
+                        rowData={this.props.data}
+                        autoGroupColumnDef={this.autoGroupColumnDef}
+                        getContextMenuItems={this.getContextMenuItems}
+           
+                        >
                     </AgGridReact>
                 </div>
                 </CardText>
+               
+                {/* <Button onClick={() => { this.props.buttonAdd(this.props.titulo) }}>+</Button> */}
+                
                 </CardBody>
             );
     }
 }
 AgentsTable.propTypes = propTypes;
 
-export default AgentsTable;
+
+const mapStateToProps = state => ({    
+   
+  });
+
+export default connect(mapStateToProps, { buttonAdd } )(AgentsTable);

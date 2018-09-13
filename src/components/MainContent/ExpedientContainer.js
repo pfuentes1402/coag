@@ -1,22 +1,46 @@
 import React, { Component } from 'react';
-import { Card,  CardHeader, CardText } from 'reactstrap';
+import { Card,  CardHeader, CardText , Button} from 'reactstrap';
 import AgentsTable from './ExpedientType/AgentsTable';
 import { connect } from 'react-redux';
+import AddAgent from '../addAgent/AddAgent';
 
 
 class ExpedientContainer extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            muestraAdd:false,
+                }
+    this.handlerClickAddAgent = this.handlerClickAddAgent.bind(this);
+    }
+
+    handlerClickAddAgent(){      
+        this.setState({
+            muestraAdd:!this.state.muestraAdd
+          });          
+    }
+   
 
     render() {
-      //console.log(this.props.datosAgentes);
+      
+        const renderButton =() =>{      
+            return (<Button onClick={this.handlerClickAddAgent}>+</Button>   )
+        }
+
         return (
             <div className="cajaAgentes">
                  <Card>
                    <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
                     <CardText tag="div">
-                        <AgentsTable data={this.props.datosAgentes}/>
+                        <AgentsTable data={this.props.datosAgentes} titulo={this.props.titulo} />
                     </CardText>
+                    {/* <Button onClick={() => { this.props.buttonAdd(this.props.titulo) }}>+</Button>*/}
+                            {this.props.renderB===true?renderButton():''}         
+                    <AddAgent mostrarContenido={this.state.muestraAdd}/>                                  
                 </Card> 
+                
             </div>
         );
     }

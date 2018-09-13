@@ -1251,7 +1251,7 @@ filtro==="" ? api.get(`/${tipoBusqueda}/`):api.get(`/${tipoBusqueda}/?filtro=${f
     console.log(response);
     return response;
   });
-
+ 
 
  
 

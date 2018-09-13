@@ -8,6 +8,7 @@ import 'ag-grid/dist/styles/ag-theme-balham.css';
 import {traduccionGrid} from './../../helpers/traducciones';
 import { goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
+import { setSelected } from './../../actions/usuarios/index';
 
 
 
@@ -54,9 +55,12 @@ class TablaBusquedaArquitectos extends Component {
 
     };
     onSelectionChanged() {
+        /*A traves de este evento se envia al redux los datos de la fila seleccionada, estos datos son consumidos por el propio componente
+        para en un redux form poder editar estos datos y añadir más agentes*/
         var selectedRows = this.gridApi.getSelectedRows();
-        this.props.goExpedientesUser();
-        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);
+        console.log(selectedRows[0]);
+        this.props.setSelected(selectedRows[0]);
+       
     };    
     onBtExport() {
         var params = {
@@ -152,4 +156,4 @@ const mapStateToProps = state => ({
   });
 
 
-export default connect(mapStateToProps,{goExpedientesUser, fetchExpedienteDatosGeneral})(TablaBusquedaArquitectos);
+export default connect(mapStateToProps,{goExpedientesUser, fetchExpedienteDatosGeneral,setSelected})(TablaBusquedaArquitectos);

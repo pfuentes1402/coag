@@ -9,6 +9,8 @@ import {traduccionGrid, traduccionGridGallego} from './../../helpers/traduccione
 import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
 import { connect } from 'react-redux';
+import { gotrabajos } from './../../actions/usuarios'
+import { setSelectedExpedienteTo } from './../../actions/expedientes'
 import 'ag-grid/dist/styles/ag-theme-material.css';
 
 
@@ -70,10 +72,12 @@ class TramitacionesCurso extends Component {
       }
       onSelectionChanged(){
         var selectedRows = this.gridApi.getSelectedRows();
-        
-        console.log(selectedRows[0])
+        this.props.setSelectedExpedienteTo(selectedRows[0].Id_Expediente,selectedRows[0].Id_Trabajo);      
+        this.props.gotrabajos();
 
       }
+  
+
        onBtExport() {
 
            var params = {
@@ -177,4 +181,4 @@ const mapStateToProps = state => ({
   });
 
 
-export default connect(mapStateToProps,{  })(TramitacionesCurso);
+export default connect(mapStateToProps,{ gotrabajos, setSelectedExpedienteTo })(TramitacionesCurso);
