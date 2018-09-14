@@ -13,7 +13,7 @@ class AddAgent extends Component {
 
   handdlebuscador = (e) => {
              
-    this.props.fetchBuscador(e.target.value,'promotores');
+    this.props.fetchBuscador(e.target.value,'otrosagentes');
 }
 
 

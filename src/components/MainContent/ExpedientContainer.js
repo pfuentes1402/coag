@@ -35,8 +35,7 @@ class ExpedientContainer extends Component {
                    <CardHeader className="tituloTabla">{this.props.titulo}</CardHeader>                
                     <CardText tag="div">
                         <AgentsTable data={this.props.datosAgentes} titulo={this.props.titulo} />
-                    </CardText>
-                    {/* <Button onClick={() => { this.props.buttonAdd(this.props.titulo) }}>+</Button>*/}
+                    </CardText>                    
                             {this.props.renderB===true?renderButton():''}         
                     <AddAgent mostrarContenido={this.state.muestraAdd}/>                                  
                 </Card> 

@@ -8,11 +8,10 @@ import {test} from '../api/index'
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
 
+
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
 import FichaTrabajo from '../components/Trabajos/FichaTrabajo';
 import TrabajosContainer from '../components/Trabajos/TrabajosContainer';
-import Ficha from '../components/Trabajos/TrabajoVista/Ficha'
-import Agentes from '../components/Trabajos/TrabajoVista/Agentes'
 
 
 class ContenedorExpedientes extends Component {
@@ -59,9 +58,21 @@ class ContenedorExpedientes extends Component {
                     </Col>
                     <Col xs="6" sm="6">
                         <div className='divderecha'>
-                       <Ficha/>
-                       <Agentes/>
-                       <Ficha/>
+                        <Card className="fondoGris">
+                            <CardHeader className="activeTrabajo"><p>ARQUITECTOS PROMOTORES Y OTROS AGENTES</p></CardHeader>    
+                                <div className="textoArquitectos">
+                                    <p>
+                                        Arquitectos y promotores se deben editar desde la ficha del expediente,
+                                        ya que implican una comunicacion de encargo.
+                                    </p>
+                                </div>
+                                <div className="trabajos">
+                                <TrabajosContainer titulo='Arquitectos' datosAgentes={this.props.Colegiados}/>
+                                </div>
+                                <CardText tag="div" className="trabajos"><ExpedientContainer titulo='Promotores' datosAgentes={this.props.Promotores}/></CardText>
+                                <CardText tag="div" className="trabajos"> <ExpedientContainer renderB={true} titulo='Otros agentes' datosAgentes={this.props.Colegiados}/></CardText>
+                        </Card>    
+
                         </div>
                     </Col>     
                           
@@ -96,7 +107,8 @@ const mapStateToProps = state => ({
     selectedIdTrabajos:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
     selectedData:state.expedientes.selectedData,
     selectedIdTrabajo:state.expedientes.selectedData?state.expedientes.selectedData.Id_Trabajo:"",
- 
+    Colegiados:state.expedientes.trabajoData ?state.expedientes.trabajoData.Colegiados:"",
+    Promotores:state.expedientes.trabajoData ?state.expedientes.trabajoData.Promotores:"",   
     
    
   });

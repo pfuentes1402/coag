@@ -3,51 +3,53 @@ import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
 
-const initialState = {tiposTrabajos : { GruposTematicos: [{Nombre: "Edi"},{Nombre: "Ei"}] }
-, tiposAutorizacion: {Tipos_autorizacion_municipal:[]}, fasesTrabajos:{FasesTrabajos:[]}, loading : true,promotoresTrabajoSelec:[{}] };
+const initialState = {
+  tiposTrabajos: { GruposTematicos: [{ Nombre: "Edi" }, { Nombre: "Ei" }] }
+  , tiposAutorizacion: { Tipos_autorizacion_municipal: [] }, fasesTrabajos: { FasesTrabajos: [] }, loading: true, promotoresTrabajoSelec: [{}]
+};
 const reducer = (state = initialState, action) => {
- 
+
   switch (action.type) {
     case FETCH_TIPOS_TRABAJO:
       console.log(action.payload);
       return {
-        ...state,            
+        ...state,
         tiposTrabajos: action.payload,
       };
     case FETCH_TIPOS_AUTORIZACION:
       return {
-        ...state,            
+        ...state,
         tiposAutorizacion: action.payload,
       };
-    
-      case RESULTADOSBUSQUEDA:
-      console.log(action.payload.data.data.Promotores);
-            
-      switch(action.payload.tipoBusqueda){
-        
-           case 'promotores':
-           const {Promotores} = action.payload.data.data;
-           return{
-             ...state,
-             promotoresTrabajoSelec:Promotores
-           }                                 
- 
-       default:              
-       return{
-         state
-       }
-      }  
+
+    case RESULTADOSBUSQUEDA:
+
+
+      switch (action.payload.tipoBusqueda) {
+
+        case 'OtrosAgentes':
+          const { OtrosAgentes } = action.payload.data.data;
+          return {
+            ...state,
+            OtrosAgentesTrabajoSelec: OtrosAgentes
+
+          }
+        default:
+          return {
+            ...state
+          }
+      }
 
     case FETCH_FASES_TRABAJOS:
       return {
-        ...state,            
+        ...state,
         fasesTrabajos: action.payload,
       };
     case FETCH_TRABAJOS_ERROR:
       return initialState;
-  case PURGE:                        
-      return initialState; 
-  default:
+    case PURGE:
+      return initialState;
+    default:
       return state;
   }
 };

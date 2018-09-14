@@ -81,6 +81,39 @@ const renderField = ({
                       />
                     </div>
                   </Col>
+                  <Col sm="6">
+                    <div className="inputDiv">
+                      <Field
+                        name="Contacto"
+                        type="text"
+                        htmlFor="inputContacto"
+                        component={renderField}
+                        label="SEGUNDO APELLIDO"
+                      />
+                    </div>
+                  </Col>
+                  <Col sm="6">
+                    <div className="inputDiv">
+                      <Field
+                        name="Apellido2"
+                        type="text"
+                        htmlFor="inputApellido2"
+                        component={renderField}
+                        label="SEGUNDO APELLIDO"
+                      />
+                    </div>
+                  </Col>
+                  <Col sm="6">
+                    <div className="inputDiv">
+                      <Field
+                        name="Apellido2"
+                        type="text"
+                        htmlFor="inputApellido2"
+                        component={renderField}
+                        label="SEGUNDO APELLIDO"
+                      />
+                    </div>
+                  </Col>
                   
                 </Row>
               </div>
@@ -94,22 +127,16 @@ const renderField = ({
     
 
 DatosAgente = reduxForm({
-  form: 'DatosAgente', // a unique identifier for this form
+  form: 'DatosAgente', 
   enableReinitialize: true,
 })(DatosAgente)
 
 
 DatosAgente = connect(
   (state) => ({
-     // catastro: state.expedientes.addressreducida[0],
-   
-      initialValues:state.seleccionado.selecctedToADD || "",
-     
-     
-     
-      // pull initial values from account reducer
+    initialValues:state.expedientes.expedienteData.Expediente[0] || [],
   }),{  }
-  // bind account loading action creator
+ 
 )(DatosAgente)
 
 

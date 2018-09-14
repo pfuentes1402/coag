@@ -1,0 +1,10 @@
+.noMostrar{
+    display: none;
+}
+
+.negro{
+    background-color: aqua;
+}
+.textoArquitectos{
+    padding: 1.25rem 1.25rem 0.75rem;
+}

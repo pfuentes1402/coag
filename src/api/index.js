@@ -1248,6 +1248,7 @@ filtro==="" ? api.get(`/${tipoBusqueda}/`):api.get(`/${tipoBusqueda}/?filtro=${f
   .then(response => {
     //let test=  store ? store.getState().user.token : ''
    
+    console.log('response');
     console.log(response);
     return response;
   });
