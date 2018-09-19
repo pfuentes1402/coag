@@ -5,9 +5,9 @@ import { FETCH_EXPEDIENTSAVE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
 import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
-import { FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
-import {SET_EXPEDIENTE_SELECTED_DATOS} from "../../actions/expedientes/types";
-import {SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA} from "../../actions/expedientes/types";
+import { FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
+   SET_EXPEDIENTE_SELECTED_DATOS,SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO,ELIMINAR_TABLA } from "../../actions/expedientes/types";
+
 import { PURGE } from 'redux-persist';
 
 
@@ -98,9 +98,7 @@ const expedientes = (state = initialState,action) => {
           };
     case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO:
          
-
-       
-         
+            
          const expOtr = Id_Trabajo!==null?'Trabajo':'expediente';
                 return{
                   ...state,
@@ -108,6 +106,12 @@ const expedientes = (state = initialState,action) => {
                   trabajoData:action.payload.data,
                   expedieteotrabajo:expOtr,
                 };
+    case SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA:
+   
+                return{
+                  ...state,
+                  datosExpParaFicha:action.payload
+                }
     case FETCH_EXPEDIENTSAVE_TO_STORE:
     
         return {
@@ -115,8 +119,7 @@ const expedientes = (state = initialState,action) => {
           ExpedientNew: action.payload,
         };  
     case FETCH_SAVE_ADRESS_TO_STORE:
-         console.log(action.payload);
-        console.log('FETCH_SAVE_ADRESS_TO_STORE');
+     
     
           const addressreducida=[
               {Calle:action.payload[0].Calle, Numero: action.payload[0].Numero,

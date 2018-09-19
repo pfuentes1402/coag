@@ -5,7 +5,7 @@ import { CAMBIO_CONTENEDOR_CENTRAL_RESET } from "../../actions/trabajos/types";
 import { CAMBIO_CONTENEDOR_CENTRAL } from "../../actions/expedientes/types";
 import { GOEXPEDIENTES, GOTRABAJOS, SELECTAGENTTOADD } from "../../actions/usuarios/types";
 import {
-  FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE, FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
+  FETCH_SAVE_SELECTED_EXPEDIENTE_TO_STORE, FETCH_EXPEDIENTES_SUCCESS, FETCH_EXPEDIENTE_TRABAJOS_EXP,FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
 import { BORRASELECTED } from "../../actions/usuarios/types";
 import { PURGE } from 'redux-persist';
 
@@ -61,6 +61,16 @@ const seleccionado = (state = initialState , action) => {
       
       expTrabajoParaCentral: 'expedientes'
     };
+    case FETCH_EXPEDIENTE_TRABAJOS_EXP:    
+    return {
+      ...state,      
+      trabajosExpedienteSeleccionado: action.payload
+    };
+    case FETCH_EXPEDIENTE_SUCCESS_EXP:    
+    return {
+      ...state,      
+     ExpedienteSeleccionado: action.payload.data
+    };
     case GOEXPEDIENTES:    
     return {
       ...state,        
@@ -70,7 +80,7 @@ const seleccionado = (state = initialState , action) => {
     case GOTRABAJOS:    
     return {
       ...state,        
-      
+      selectedExpediente:'trabajos',
       expTrabajoParaCentral: 'trabajos'
     };
     case SELECTAGENTTOADD:

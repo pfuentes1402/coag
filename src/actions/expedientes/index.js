@@ -1,5 +1,5 @@
 import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getExpedienteDatosGeneral,
-    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser, getAcciones, getBuscador } from '../../api';
+    getTrabajoeDatosGenerales, getAgentesInfo, expedientesuser, getAcciones, getBuscador, GettrabajosExpediente } from '../../api';
 
 import * as types from './types';
 
@@ -20,6 +20,10 @@ export const fetchSuccessTrabajo = (expedientes) => ({
 
 export const fetchSuccesExpediente = (data) => ({
     type: types.FETCH_EXPEDIENTE_SUCCESS_EXP,
+    payload: data
+});
+export const fetchSuccesTrabajosExpediente = (data) => ({
+    type: types.FETCH_EXPEDIENTE_TRABAJOS_EXP,
     payload: data
 });
 
@@ -80,7 +84,9 @@ export const cambioContenidoCentral = () => ({
   
 });
 
-
+/*
+*Obtiene la estructura documental de un trabajo
+*/
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) => 
 (dispatch) => {
    console.log('fetchEstructuraDocumental');
@@ -96,7 +102,7 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
     );
 };
 
-//Buscador
+
 export const fetchDataResults= (data,tipoBusqueda) =>({
     type:types.RESULTADOSBUSQUEDA,
     payload:{tipoBusqueda,data}
@@ -109,7 +115,11 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
     }
 });
 
-
+/*
+*Buscador de elementos del usuario logeado
+*filtro: cadena a buscar
+*tipoBusqueda: expediente, arquitectos, promotores
+*/
 export const fetchBuscador = (filtro,tipoBusqueda) => 
 (dispatch) => {
     let temp='';
@@ -137,7 +147,11 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
 
 
 
-
+/*
+*Obtiene la estructura documental de un trabajo
+*id_expediente
+*idtrabajo
+*/
 export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) => 
 (dispatch) => {
    
@@ -153,12 +167,33 @@ export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
-
+/*
+*obtiene los datos generales de un expediente
+*id_expediente
+*/
 export const fetchExpedienteDatosGeneral = (id_expediente) => 
 (dispatch) => {
-        console.log('llega pero falta parametro');
+        console.log({id_expediente});
     getExpedienteDatosGeneral(id_expediente).then((expedientes) => {
+        console.log({expedientes})
+        console.table(expedientes)
         dispatch(fetchSuccesExpediente(expedientes));
+    })
+        .catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+/*
+*obtiene los datos generales de un expediente
+*id_expediente
+*/
+export const fetchExpedienteTrabajos= (id_expediente) => 
+(dispatch) => {
+        console.log({id_expediente});
+        GettrabajosExpediente(id_expediente).then((trabajos) => {
+        console.log({trabajos})
+        console.table(trabajos)
+        dispatch(fetchSuccesTrabajosExpediente(trabajos));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})
@@ -239,6 +274,10 @@ export const fetchSuccesTrabajoDatosgeneralesSelected = (data) => ({
     type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO,
     payload: data
 });
+export const fetchDatosExpeFichaTrabajo = (datos) => ({
+    type: types.SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
+    payload: datos
+});
 // export const fetchSuccesdatosExpSeleccionado = (datos) => ({
     
 //     type: types.SET_EXPEDIENTE_SELECTED_DATOS_GENERALES,
@@ -256,13 +295,18 @@ export const setSelectedExpediente = payload => {
        
     
 };
-export const setSelectedExpedienteTo = (id_expediente,id_Trabajo) => 
+export const setSelectedExpedienteTo = (datos) => 
   
     (dispatch) =>{
+       
      //let datos =[id_expediente,id_Trabajo]
         //dispatch(fetchSuccesdatosExpSeleccionado(datos));
-        getTrabajoeDatosGenerales(id_expediente,id_Trabajo).then((data) =>{               
-          
+       
+
+        dispatch(fetchDatosExpeFichaTrabajo(datos))
+        getTrabajoeDatosGenerales(datos.Id_Expediente,datos.Id_Trabajo).then((data) =>{               
+               
+                   
                  dispatch(fetchSuccesTrabajoDatosgeneralesSelected(data));
                 
                 })

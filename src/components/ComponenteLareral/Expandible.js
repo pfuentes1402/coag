@@ -1,65 +1,61 @@
 import React, { Component } from "react";
 import { Collapse } from "reactstrap";
 import { connect } from "react-redux";
-import "./styles.css";
-
+import {Card,  CardHeader, CardText,ListGroupItem } from 'reactstrap';
+import TrabajoElemto from './TrabajoElemto'
 import ContenedorExpediente from "../ComponenteLareral/ContenedorExpediente";
 import {
   setSelectedExpedienteTo,
   fetchEstructuraDocumental
 } from "../../actions/expedientes";
 
+import "./styles.css";
+
+
+
 class Expandible extends Component {
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = { collapse: true };
-  }
 
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
-  }
 
-  render() {
-    const handleClickLateral = trabajo => {
-      
-      console.log(trabajo);
-      console.log(this.props.nodo);
-      let nodo = this.props.nodo;
-      if (nodo !== trabajo.Id_Trabajo) { 
-        this.props.setSelectedExpedienteTo(
-          trabajo.Id_Expediente,
-          trabajo.Id_Trabajo
-        );
 
-        this.props.fetchEstructuraDocumental(
-          trabajo.Id_Expediente,
-          trabajo.Id_Trabajo
-        );
-      }
-    };
+  render() {  
 
-    const strToComponentTrabajo = trabajos =>
-      trabajos.map(dato => (
-        <ContenedorExpediente
-          key={dato.Id_Expediente + dato.Id_Trabajo}
-          titulo={dato.Titulo}
-          OnhandleClickLateral={() => handleClickLateral(dato)}
-        />
-      ));
 
+      const renderTrabajos = trabajos =>(
+          
+            
+        trabajos.map((trabajo,i) =>(
+       
+        <ListGroupItem className="file" key={i} >
+         
+         
+            <TrabajoElemto data={trabajo} />
+                          
+        </ListGroupItem>  
+    ))
+
+);
+
+     
     return (
-      <div>
-        <div color="primary" className="bloque" onClick={this.toggle}>
-          {this.props.expedienteActualid}-
-          {this.props.expedienteActualtitulo}
-        </div>
-        <Collapse isOpen={this.state.collapse}>
-          <div>
-            <div>{strToComponentTrabajo(this.props.trabajos)}</div>
+    
+      <Card>
+      
+          <CardHeader>
+              {/* <span>{this.props.datosExpediente.Titulo_Documento}</span> */}
+              <span>00001 Viviendas en calle aragon</span>
+          </CardHeader>
+     
+      <CardText tag="div" >
+          <div className={`ficha`}>                
+             <div>
+             {renderTrabajos(this.props.trabajos)}
+             </div>
           </div>
-        </Collapse>
-      </div>
+      </CardText>
+
+  </Card>
+
+   
     );
   }
 }
@@ -69,14 +65,8 @@ Expandible.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  dataArbol: state.expedientes.arbolEstructuraTrabajoRefactor
-    ? state.expedientes.arbolEstructuraTrabajoRefactor[0]
-    : "",
-  trabajos: state.expedientes.expedienteData.Trabajos || [{}],
-  nodo: state.expedientes.arbolEstructuraTrabajoRefactor[0].id_documento || "",
-  expedienteActualtitulo:state.seleccionado.expedienteActualtitulo || "",
-  expedienteActualid:state.seleccionado.expedienteActualid || "",
-
+ //datosExpediente:state.seleccionado.expedienteSeleccionado.Expediente || '',
+ trabajos:state.seleccionado.trabajosExpedienteSeleccionado || '',
 });
 
 export default connect(

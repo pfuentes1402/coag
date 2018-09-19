@@ -1,4 +1,4 @@
-import { getTiposTrabajo, getTiposAutorizacionMunicipal, getFasesTrabajos } from '../../api';
+import { getTiposTrabajo, getTiposAutorizacionMunicipal, getFasesTrabajos, getestructuradocumental } from '../../api';
 
 import * as types from './types';
 
@@ -57,3 +57,17 @@ export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion) => (disp
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+export const fetchEstructuraDocumentalTrabajo= (idExpediente, idTrabajo) => (dispatch) => {
+    getestructuradocumental(idExpediente, idTrabajo).then((estructuraDoc) => {
+       
+        dispatch(dispatchEstructuraDocumentalTrabajo(estructuraDoc));
+    }).catch(
+        () => fetchError({ error: 'Algo ha salido mal'})
+    );
+};
+
+
+  export const dispatchEstructuraDocumentalTrabajo = (estructuraDoc) => ({
+    type: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO,
+    payload: estructuraDoc
+});

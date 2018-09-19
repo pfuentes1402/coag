@@ -27,3 +27,9 @@
     text-align: center;
     font-size: 12px;
 }
+.noMostrar{
+    display: none;
+}
+.colorFondo{
+    background-color: blue;
+}

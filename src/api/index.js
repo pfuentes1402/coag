@@ -179,7 +179,8 @@ export const getValidateAddress = ref_catastral =>
 */
 export const postNuevoExpediente = data =>
     api.post(`/expedientes/`).then(v => v.json())
-      .then(resultado => {     
+      .then(resultado => { 
+        console.log(resultado);    
         return resultado;
       });
 /*
@@ -245,6 +246,25 @@ export const test = id_expediente =>
     .then(resultado => {
           
       return resultado;
+    });
+
+/*
+ *Proporciona los trabajos de un expediente
+ * Parametros 
+ *    id_expediente
+ */
+export const GettrabajosExpediente = (id_expediente) =>
+  api.get(`/expedientes/${id_expediente}/trabajos/`)
+  
+    .then(response => {
+      console.log('trabajos Expediente')
+      console.log({response})
+      return response.data.Trabajos;
+    }).catch((error)=>{
+
+      console.log(error)
+      
+      
     });
 /*
  *Proporciona expedientes de un usuario
@@ -1251,6 +1271,20 @@ filtro==="" ? api.get(`/${tipoBusqueda}/`):api.get(`/${tipoBusqueda}/?filtro=${f
     console.log('response');
     console.log(response);
     return response;
+  });
+ 
+ /*
+ *Proporciona la estructura documental de un trabajo
+ *    idExpediente 
+ *    idtrabajo
+ */
+export const getestructuradocumental = (idExpediente,idTrabajo) =>
+
+api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
+  .then(response => {
+
+    console.log({response});
+    return response.data;
   });
  
 

@@ -10,7 +10,9 @@ import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
 import { connect } from 'react-redux';
 import { gotrabajos } from './../../actions/usuarios'
-import { setSelectedExpedienteTo } from './../../actions/expedientes'
+import { setSelectedExpedienteTo, fetchExpedienteDatosGeneral, fetchExpedienteTrabajos } from './../../actions/expedientes'
+import { fetchEstructuraDocumentalTrabajo } from './../../actions/trabajos'
+import estructurahelper  from './../../helpers/estructuraDoc'
 import 'ag-grid/dist/styles/ag-theme-material.css';
 
 
@@ -72,7 +74,14 @@ class TramitacionesCurso extends Component {
       }
       onSelectionChanged(){
         var selectedRows = this.gridApi.getSelectedRows();
-        this.props.setSelectedExpedienteTo(selectedRows[0].Id_Expediente,selectedRows[0].Id_Trabajo);      
+        this.props.setSelectedExpedienteTo(selectedRows[0]);
+        
+        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Id_Expediente);
+        this.props.fetchExpedienteTrabajos(selectedRows[0].Id_Expediente);
+        this.props.fetchEstructuraDocumentalTrabajo(selectedRows[0].Id_Expediente,selectedRows[0].Id_Trabajo);
+       
+        //let test = estructurahelper(this.props.datosBrutos)
+        
         this.props.gotrabajos();
 
       }
@@ -177,8 +186,9 @@ const propTypes = {
 }
 
 const mapStateToProps = state => ({
-  
+    datosBrutos:state.trabajos.estructuraDocumentalTrabajo || '',
   });
 
 
-export default connect(mapStateToProps,{ gotrabajos, setSelectedExpedienteTo })(TramitacionesCurso);
+export default connect(mapStateToProps,{ gotrabajos, setSelectedExpedienteTo, fetchExpedienteDatosGeneral,
+     fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo })(TramitacionesCurso);
