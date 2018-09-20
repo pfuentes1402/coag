@@ -1,10 +1,10 @@
 import React from 'react';
 import Home from './../components/Home/Home';
-import './styles.css';   
 
+import Upload from '../components/Upload/Upload'
 import ContenedorExpedientes from './ContenedorExpedientes';
 import ContenedorTrabajos from './ContenedorTrabajos';
-
+import './styles.css';   
 
 const RenderContenedorcentralTrabajo =() =>{
     return (<ContenedorTrabajos/>)
@@ -34,6 +34,8 @@ const Contenedorcentral= ({contenidoExp}) =>(
     {/*contenidoExp === "trabajos" ? RenderContenedorcentralTrabajo():RenderContenedorExpediente()*/}  
     {
         renderizadoCondicional(contenidoExp)
+
+       
     }
     
     </div>

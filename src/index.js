@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 import './index.css';
 //import { BrowserRouter as Router } from 'react-router-dom';
 import { Router } from 'react-router-dom';
-
+import "../node_modules/uppy/dist/uppy.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from './reducers';

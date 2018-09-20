@@ -136,7 +136,7 @@ class MenuAppBar extends React.Component {
             <Route render={({ history}) => (
                 <Button
                   color="link"
-                  onClick={() => { history.push('/login') }}
+                  onClick={() => { history.push('/profile') }}
                   variant="raised" className={classes.button}
                 >
                   { this.props.usuario }

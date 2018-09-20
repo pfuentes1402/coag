@@ -6,6 +6,7 @@ import SelectorTipoTrabajoContainer from './containers/SelectorTipoTrabajoContai
 import MainContainer from './containers/index';
 import Login from './components/login/Login';
 import { PrivateRoute } from './components/login/privateRoute';
+import Profile from './components/Profile/Profile' 
 
 export default (
   <div>
@@ -18,6 +19,7 @@ export default (
       <PrivateRoute path='/nuevo-expediente' component={NuevoExpedienteContainer}/>
       <Route path='/selector-expediente' component={SelectorTipoTrabajoContainer}/>
       <Route path='/login' component={Login}/>
+      <Route path='/profile' component={Profile}/>
 
   </div>
 );

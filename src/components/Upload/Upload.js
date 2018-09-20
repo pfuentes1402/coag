@@ -24,13 +24,29 @@ class Upload extends Component {
   }
 
   componentWillMount () {
-    this.uppy = new Uppy({ id: 'uppy1', autoProceed: true, debug: true })
-      .use(Tus, { endpoint: 'https://master.tus.io/files/' })
+    this.uppy = new Uppy({ id: 'uppy1', autoProceed: true, debug: true  })
+      .use(Tus, { endpoint: 'https://master.tus.io/files/', onBeforeUpload: (files) => {
+        return files.map((file) => {
+          return (file.tus.headers = { 'Token': '/1PlvyfUpJ4qZusW0lehLx0SJ4Xk8Oor03yJOg8V1DEI7fFb2NHUvfi4Zg7xGGRRpFRo1TKeQkl29YlIxB9laA==' });
+        });
+      } })
       .use(GoogleDrive, { serverUrl: 'https://companion.uppy.io' })
 
     this.uppy2 = new Uppy({ id: 'uppy2', autoProceed: false, debug: true })
       .use(Tus, { endpoint: 'https://master.tus.io/files/' })
   }
+
+
+  // .use(XHRUpload, {
+  //   endpoint: 'https://master.tus.io/files/'
+  //   // endpoint: 'https://servicios.coag.es/api/expedientes/703378/AlmacenTemporalArchivos',
+  //   // 'Token': '/1PlvyfUpJ4qZusW0lehLx0SJ4Xk8Oor03yJOg8V1DEI7fFb2NHUvfi4Zg7xGGRRpFRo1TKeQkl29YlIxB9laA=='
+  // })
+
+
+
+
+
 
   componentWillUnmount () {
     this.uppy.close()
@@ -46,9 +62,8 @@ class Upload extends Component {
   render () {
     const { showInlineDashboard } = this.state
     return (
-      <div>
-        <h1>React Examples</h1>
-        <h2>Inline Dashboard</h2>
+      <div>       
+       
         <label>
           <input
             type="checkbox"
@@ -59,7 +74,7 @@ class Upload extends Component {
               })
             }}
           />
-          Show Dashboard
+          
         </label>
         {showInlineDashboard && (
           <Dashboard
@@ -76,7 +91,7 @@ class Upload extends Component {
 
        
 
-        <h2>Progress Bar</h2>
+      
         <ProgressBar
           uppy={this.uppy}
           hideAfterFinish={false}
