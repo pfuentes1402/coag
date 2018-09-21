@@ -12,8 +12,7 @@ class Ficha extends Component {
          this.handdleClick = this.handdleClick.bind(this)
       
       }
-      handdleClick(){
-          console.log("Hace el click")
+      handdleClick(){          
 
           this.setState({ noMostrar: !this.state.noMostrar});
         }

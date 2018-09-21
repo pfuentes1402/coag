@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
       }
 
       handdleClick(data){
-          console.log("Hace el click")
+          
           this.setState({ noMostrar: !this.state.noMostrar});
           
           this.props.setSelectedExpedienteTo(data);

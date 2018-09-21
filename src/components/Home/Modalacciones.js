@@ -7,7 +7,9 @@ import {fetchSelect } from '../../actions/usuarios/index'
 import './styles.css';
 import TablaDatosModal  from '../Busquedas/TablaDatosModal';
 import TablaBusquedaArquitectos  from '../Busquedas/TablaBusquedaArquitectos';
-import {traduccionGrid} from './../../helpers/traducciones';
+
+import Select from 'react-select';
+
 
 
 
@@ -61,7 +63,7 @@ class Modalacciones extends Component {
     componentDidMount(){
         this.props.fetchBuscador(this.props.filtroBusqueda, this.props.selectBuscador);
     }
-
+  
     render() {
      
        
@@ -88,6 +90,14 @@ class Modalacciones extends Component {
             }
             
         }
+
+        const options = [
+            { value: 'chocolate', label: 'Chocolate' },
+            { value: 'strawberry', label: 'Strawberry' },
+            { value: 'vanilla', label: 'Vanilla' }
+          ];
+          
+
         const RenderComponents = ()=>{
            switch(this.props.modal){
                case true:
@@ -108,6 +118,12 @@ class Modalacciones extends Component {
                                     <option value="promotores">promotores</option>
                                     <option value="personasOrganismos">Personas/Organismos</option>                                   
                             </select>
+                                <div> 
+                                        <Select                                           
+                                            onChange={this.handleChange}
+                                            options={options}
+                                        />
+                                </div>
                             </div>
                             <button>Cancelar</button>
                             <button>Buscar</button>
@@ -152,7 +168,11 @@ class Modalacciones extends Component {
             )
            }           
         }
-  
+   
+
+
+
+         
         return (           
 
             <div className="muestrate">

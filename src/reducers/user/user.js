@@ -2,7 +2,7 @@ import { FETCH_DATOSDEUSUARIO_SUCCESS,EXPEDIENTESSUSCEPTIBLESTRABAJO , ACCIONEST
   ACCIONESSOLICITARLI,ACCIONESCONVERTIRDIGITAL,ACCIONESCESAREXPEDIENTE } from "../../actions/usuarios/types";
   import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL,  REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO } from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
 
@@ -20,6 +20,7 @@ const initialstate ={ DatosUsuarioValidado: {
 },
 
 datosModal:[{tituloModal:0}],
+nuevaconfUsuario:{numeroTrabajosPendientes:"",idioma:""},
 tituloModal:'Inicial title',
 filtroBusqueda:'',
 filtroAcciones:'',
@@ -77,8 +78,7 @@ const reducer = (state = initialstate, action) => {
                 mensaje: 'error en el login',            
               };
               case ULTIMOSTRABAJOS:
-              console.log('UltimosTrabajos');
-              console.log(action.payload.data);
+            
               
               return{
                 ...state,
@@ -129,8 +129,7 @@ const reducer = (state = initialstate, action) => {
              }           
              
                 case FILTROBUSQUEDA:
-                console.log(action.payload)
-                console.log('cambiaSelect')
+               
                 return{
                   ...state,
                   filtroBusqueda: action.payload.filtro
@@ -139,6 +138,11 @@ const reducer = (state = initialstate, action) => {
                 return {
                   ...state,
                   filtroAcciones:action.payload
+                }
+                case NUEVA_CONF_USUARIO:
+                return {
+                  ...state,
+                  nuevaconfUsuario:{numeroTrabajosPendientes:"",idioma:action.payload}
                 }
               case ACCIONESTRAMITARNUEVOTRABAJO:                
                 return{

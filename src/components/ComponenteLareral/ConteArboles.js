@@ -22,14 +22,11 @@ class ConteArboles extends Component {
      
    
   }
-//   <div className="bloqueInterno" >
-//   {dato.Titulo}
-// </div> 
+
 
   render() {
     const handleClickLateral = trabajo =>{
-      // console.log('Trabajo tras click');
-      // console.log(trabajo);
+     
       //   onSelectedLevel(trabajo);
       //   fetchExpedienteSelected(trabajo);  
       //   fetchEstructuraDocumentalTrabajo(trabajo.Id_Expediente,trabajo.Id_Trabajo);

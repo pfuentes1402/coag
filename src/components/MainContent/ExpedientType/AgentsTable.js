@@ -51,8 +51,7 @@ class AgentsTable extends Component {
     };
 
     render() {
-        console.log('antes de pulsar');
-        console.log(this.props.titulo);
+       
         return (
             <CardBody  className="card-body-Trabajos">
             <CardText tag="div">

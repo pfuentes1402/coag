@@ -60,7 +60,7 @@ const reducer = (state = initialState, action) => {
           modal:false,
       }
       case BUTTON_ADD:
-      console.log('llega a BUTTON_ADD'+action.payload);
+     
       let arrq=false;
       let promo=false;
       switch(action.payload){

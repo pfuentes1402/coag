@@ -1,5 +1,5 @@
 import { FETCH_TIPOS_TRABAJO, FETCH_TRABAJOS_ERROR, FETCH_TIPOS_AUTORIZACION,
-   FETCH_FASES_TRABAJOS, FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO } from "../../actions/trabajos/types";
+   FETCH_FASES_TRABAJOS, FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO, FILES_TO_UPLOAD } from "../../actions/trabajos/types";
 import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case FETCH_TIPOS_TRABAJO:
-      console.log(action.payload);
+     
       return {
         ...state,
         tiposTrabajos: action.payload,
@@ -50,6 +50,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         estructuraDocumentalTrabajo: action.payload,
+      };
+    case FILES_TO_UPLOAD:
+    console.table(action.payload)
+      return {
+        ...state,
+        filesToUpload: action.payload,
       };
     case FETCH_TRABAJOS_ERROR:
       return initialState;

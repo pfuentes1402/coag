@@ -10,13 +10,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchMuestraModal, fetchCambiaStatoModalBuscador,fetchCambiaStadoModal } from './../../actions/interfaz/index';
-
 import { history } from '../../helpers/hidtory';
 import { handleLoggout } from '../../helpers/logout';
-import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem, NavItem } from 'reactstrap';
+import {  UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap';
 import { withLocalize, Translate } from 'react-localize-redux';
 import menuBarTranslations from './../../traducciones/menubar.json'
 import LanguageToggle from '../ToggleLanguage/LanguageToggle';
+import globalTranslations from './../../traducciones/global.json';
+import { renderToStaticMarkup } from "react-dom/server";
 
 const styles = {
     root: {
@@ -43,6 +44,15 @@ class MenuAppBar extends React.Component {
     this.state = {
       isOpen: false
     };
+
+    this.props.initialize({
+      languages: [
+        { name: "Castellano", code: "es" },
+        { name: "Gallego", code: "gal" }          
+      ],
+      translation: globalTranslations,
+      options: { renderToStaticMarkup }
+    });
   }
     state = {
         auth: true,
@@ -50,18 +60,18 @@ class MenuAppBar extends React.Component {
     };
     
     handleLoggout = () =>{
-      console.log("metodo de loggout")
+    
       localStorage.clear();
       this.props.purgarStore();
       history.push('/');
     }
     handleHome = () =>{
-      console.log("metodo de Home") 
+     
       this.props.goHome();
       history.push('/');
     }
     handleMisexpe = () =>{
-      console.log("metodo de handleMisexpe")      
+          
       this.props.goExpedientesUser();
       history.push('/');
     }

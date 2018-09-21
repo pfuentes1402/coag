@@ -9,9 +9,9 @@ export const  fetchMuestraModal = (id) =>
         let parametro ="";
         if (id!=null){
             parametro=id;
-            console.log(id)
+         
         }
-    console.log('llega al reducer de interfaz')
+    
    
         dispatch({
         type: types.FETCH_SHOW_MODAL,
@@ -21,7 +21,7 @@ export const  fetchMuestraModal = (id) =>
 export const  fetchocultaModal = () =>
 
     (dispatch) => {
-    console.log('llega al reducer de interfaz')
+  
         dispatch({
         type: types.FETCH_HIDE_MODAL,        
         }); 

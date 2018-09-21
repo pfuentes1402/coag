@@ -17,7 +17,7 @@ class Archivos extends Component {
       
       }
       handdleClick(){
-        //   console.log("Hace el click")
+       
         //   this.setState({ noMostrar: !this.state.noMostrar});
         }
 

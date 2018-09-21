@@ -29,8 +29,7 @@ const renderField = ({
 
   let FichaExpediente = props => {
     const {datosNuevoExpediente, ubicaciones } = props;
-    console.log(props);
-    console.log('FichaExpediente');
+  
   
     return (
         <CardBody className="cardBody-ficha">

@@ -96,7 +96,7 @@ class TramitacionesCurso extends Component {
 
 
            };
-           console.log("Boton exportar csv")
+           
            this.gridApi.exportDataAsCsv(params);
        }
 

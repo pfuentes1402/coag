@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React  from 'react';
 
-import SubHeader from '../components/SubHeader/SubHeader';
+
 import HomeContainer from '../containers/HomeContainer';
 import { connect } from 'react-redux';
 import {  fetchexpedientesUser } from '../actions/expedientes/';
 import { CSSTransitionGroup } from 'react-transition-group'
 import  Modalacciones  from '../components/Home/Modalacciones';
 import globalTranslations from "./../traducciones/global.json";
-import { withLocalize, Translate } from "react-localize-redux";
+import { withLocalize } from "react-localize-redux";
 import { renderToStaticMarkup } from "react-dom/server";
 
 
@@ -18,19 +18,25 @@ class MainContainer extends React.Component {
 
     constructor(props) {
         super(props);
-    
+      
+        let idioma= this.props.idiomaFavorito;
+        
+        let temp = idioma==='1'? 'es':'gal';
+         
         this.props.initialize({
           languages: [
             { name: "Castellano", code: "es" },
             { name: "Gallego", code: "gal" }          
           ],
           translation: globalTranslations,
-          options: { renderToStaticMarkup }
+          options: { renderToStaticMarkup,
+            defaultLanguage: temp }
         });
       }
    
     componentWillMount(){
-        this.props.fetchexpedientesUser();       
+        this.props.fetchexpedientesUser();
+       
     }
 
   
@@ -81,6 +87,7 @@ class MainContainer extends React.Component {
 const mapStateToProps = state => ({
     loading:state.status.loading || '',
     mostrarModal:state.status.modalAcciones,
+    idiomaFavorito:state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
     
   });
 

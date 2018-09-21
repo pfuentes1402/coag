@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field, reduxForm } from "redux-form";
-import { Container, Row, Col } from "reactstrap";
-import PropTypes from 'prop-types';
+import {  Row, Col } from "reactstrap";
+
 import "./styles.css";
-import { Divider } from "material-ui";
+
 import { connect } from 'react-redux';
-import {postUbicacion} from '../../actions/expedientes';
+
 
 
 

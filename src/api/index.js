@@ -4,42 +4,35 @@
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
-import {store} from './../index';
+
 
 
 const BASE_PATH = "http://servicios.coag.es/api";
 
 /*
 *
-*Configuración base para las llamadas axios
+*Configuración base para las llamadas axios,
+*se asegura que tenga el token, en caso de no tenerlo lo añade si este existe
 *
-*/ 
-
-
+*/
 const api = axios.create({
   baseURL: BASE_PATH,
   timeout: 10000,
-  transformRequest: [function (data,headers) {
-   
-   
-    // headers['Token'] = localStorage.getItem('token')||''
-    //headers['Token'] =  store ? store.getState().user.token : localStorage.getItem('token')||''
-    
-   
+  header: {
+    'Token': localStorage.getItem('token')
+  },
+  transformRequest: [function (data,headers) {  
+  
     return JSON.stringify(data);
   }], 
    headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Token': localStorage.getItem('token')||''
-  //     // // 'Token': store ? store.getState().user.token : '',
+      'Token': localStorage.getItem('token')||''  
   }
 
   
 });
-
-
-
 
   api.interceptors.response.use(function (response) {
     
@@ -50,24 +43,8 @@ const api = axios.create({
      
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true     
-    
-      //make refresh token request
-      // return getToken()
-      //   .then((response) => {
-      //     console.log(response);
-      //     console.log('Nuevo Token');
-      //     console.log(response.headers.token);
-      //     // set new oauth2 info
-      //     // store.dispatch('userInfo/set', responseData.data)
-      //     api.defaults.headers.common['Token'] = response.headers.token;
-      //     originalRequest.headers['Token'] =  response.headers.token;
-      //     //retry failed request
-      //     console.log(originalRequest);
-      //     return axios(originalRequest)
-      //   }).catch(function (error) {
-      //     console.log(error)
-      //   })
-
+   
+ 
       const retryOriginalRequest = new Promise((resolve) => {
         getToken().then(response => {
           if(response.headers.token){         
@@ -80,7 +57,7 @@ const api = axios.create({
       })
       return retryOriginalRequest
     }
-   // handleLoggout();
+   
     return Promise.reject(error)
   })
     //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
@@ -180,7 +157,7 @@ export const getValidateAddress = ref_catastral =>
 export const postNuevoExpediente = data =>
     api.post(`/expedientes/`).then(v => v.json())
       .then(resultado => { 
-        console.log(resultado);    
+           
         return resultado;
       });
 /*
@@ -239,8 +216,7 @@ export function getAgentesInfo(id_Agente){
 export const test = id_expediente =>
   api.get(`/expedientes/${id_expediente}`)
     .then(response => {
-    console.log('respuesta');
-    console.log(response);
+   
       return response.json();
     })
     .then(resultado => {
@@ -257,12 +233,11 @@ export const GettrabajosExpediente = (id_expediente) =>
   api.get(`/expedientes/${id_expediente}/trabajos/`)
   
     .then(response => {
-      console.log('trabajos Expediente')
-      console.log({response})
+     
       return response.data.Trabajos;
     }).catch((error)=>{
 
-      console.log(error)
+     
       
       
     });
@@ -275,16 +250,14 @@ export const expedientesuser = () =>
   api.get('/expedientes')
   
     .then(response => {
-      console.log('expedientesuser')
-      console.log(response)
+     
       return response.data.Expedientes;
     }).catch((error)=>{
 
-      console.log(error)
-      // getToken();
+     
       
-    });
-    
+      
+    });  
 
 
 
@@ -331,35 +304,6 @@ export const funcionForma = (datos) =>
       return error.response.status;
     });
 
-
-
-//FUNCION DUMMY
- export function getDatosUsuario(id){   
-  let data =  {
-    Expedientes: [
-      {
-        Expediente: '688685',
-        fecha: '05/06/2018',       
-      },
-      {
-        Expediente: '683180',
-        fecha: '05/06/2018',       
-      },
-      {
-        Expediente: '685062',
-        fecha: '05/06/2018',       
-      },
-      {
-        Expediente: '693458',
-        fecha: '05/06/2018',       
-      },
-    ],   
-  }
-    return data;
-}
-
- 
-
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
  * Parametros 
@@ -390,7 +334,7 @@ export const getAcciones = () =>
     api.post('http://servicios.coag.es/api/AccionesPendientes/?Numero_Trabajos_acciones_pendientes=10',     
     )
     .then(response => {
-     console.log(response);     
+        
     //  store.dispatch(fetchRefresh(response)).then( response=>{
     //    return response;
     //  });
@@ -399,801 +343,15 @@ export const getAcciones = () =>
      
         return error;
 });
-
-
-
-
-
-
-  //FUNCION DUMMY para obtener los ultimos trabajos (debajo esta la final)
-export function getultimosTrabajosOld(){   
-  let data =  {
-    Trabajos: [
-      {
-        "Expediente_Codigo": "1801314",
-        "Id_Trabajo": 5,
-        "Antecedente": "",
-        "Expediente_Codigo_estudio": "2018_C2",
-        "Fecha_Entrada": "15/03/2018",
-        "Fecha_Visado": "15/03/2018",
-        "Titulo_Expediente": "Memoria",
-        "Titulo": "Tramites",
-        "Concello": "A Cañiza",
-        "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-        "Estado": "Preentrega",
-        "Id_Expediente": 702103,
-        "Id_Objeto_Unico_WorkFlow": 987740,
-        "Envio_Completo": 1,
-        "Id_Estado": -1,
-        "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-    },
-    {
-      "Expediente_Codigo": "1801312",
-      "Id_Trabajo": 2,
-      "Antecedente": "",
-      "Expediente_Codigo_estudio": "2018_C1",
-      "Fecha_Entrada": "12/03/2018",
-      "Fecha_Visado": "12/03/2018",
-      "Titulo_Expediente": " para sustitución de ventanas",
-      "Titulo": "Pericias",
-      "Concello": "SANTIAGO",
-      "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-      "Estado": "Entregado",
-      "Id_Expediente": 702003,
-      "Id_Objeto_Unico_WorkFlow": 987740,
-      "Envio_Completo": 1,
-      "Id_Estado": -1,
-      "Ultima_Modificacion": "2018-03-12T11:31:45.44",
-      "acciones":"test"
-  },
-  {
-    "Expediente_Codigo": "1801312",
-    "Id_Trabajo": 2,
-    "Antecedente": "",
-    "Expediente_Codigo_estudio": "2018_C1",
-    "Fecha_Entrada": "12/03/206",
-    "Fecha_Visado": "11/03/2018",
-    "Titulo_Expediente": "Memoria para sustitución de ventanas",
-    "Titulo": "Pericias",
-    "Concello": "SANTIAGO DE Chile",
-    "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-    "Estado": "En trámite",
-    "Id_Expediente": 702003,
-    "Id_Objeto_Unico_WorkFlow": 987740,
-    "Envio_Completo": 1,
-    "Id_Estado": -1,
-    "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": "Retenido",
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": "Tramitado",
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente de retirar",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-  "Expediente_Codigo": "1801314",
-  "Id_Trabajo": 5,
-  "Antecedente": "",
-  "Expediente_Codigo_estudio": "2018_C2",
-  "Fecha_Entrada": "15/03/2018",
-  "Fecha_Visado": "15/03/2018",
-  "Titulo_Expediente": "Memoria",
-  "Titulo": "Tramites",
-  "Concello": "A Cañiza",
-  "Promotor": "Colexio Oficial de Arquitectos de Galicia",
-  "Estado": "Pendiente",
-  "Id_Expediente": 702103,
-  "Id_Objeto_Unico_WorkFlow": 987740,
-  "Envio_Completo": 1,
-  "Id_Estado": -1,
-  "Ultima_Modificacion": "2018-03-12T11:31:45.44"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/2018",
-"Fecha_Visado": "12/03/2018",
-"Titulo_Expediente": " para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44",
-"acciones":"test"
-},
-{
-"Expediente_Codigo": "1801312",
-"Id_Trabajo": 2,
-"Antecedente": "",
-"Expediente_Codigo_estudio": "2018_C1",
-"Fecha_Entrada": "12/03/206",
-"Fecha_Visado": "11/03/2018",
-"Titulo_Expediente": "Memoria para sustitución de ventanas",
-"Titulo": "Pericias",
-"Concello": "SANTIAGO DE Chile",
-"Promotor": "Colexio Oficial de Arquitectos de Galicia",
-"Estado": null,
-"Id_Expediente": 702003,
-"Id_Objeto_Unico_WorkFlow": 987740,
-"Envio_Completo": 1,
-"Id_Estado": -1,
-"Ultima_Modificacion": "2018-03-12T11:31:45.44"
-}
-     
-    ],   
-  }
-    return data;
-}
-
-
-
+/*
+ *obtiene las acciones pendientes(todas), luego las pagina el componente 
+ */
 
 export const getultimosTrabajos = () =>
 api.get('AccionesPendientes/?Numero_Trabajos_acciones_pendientes=10')
   .then(response => {
     //let test=  store ? store.getState().user.token : ''
-    console.log('ultimos')
-    console.log(response);
+ 
     return response;
   });
 
@@ -1268,8 +426,7 @@ filtro==="" ? api.get(`/${tipoBusqueda}/`):api.get(`/${tipoBusqueda}/?filtro=${f
   .then(response => {
     //let test=  store ? store.getState().user.token : ''
    
-    console.log('response');
-    console.log(response);
+    
     return response;
   });
  
@@ -1283,11 +440,816 @@ export const getestructuradocumental = (idExpediente,idTrabajo) =>
 api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
   .then(response => {
 
-    console.log({response});
+  
     return response.data;
   });
- 
 
- 
+/*
+*Funciones dummy previas aa la implementacion del metodo final
+*/
+//FUNCION DUMMY
+
+export function getDatosUsuario(id){   
+  let data =  {
+    Expedientes: [
+      {
+        Expediente: '688685',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '683180',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '685062',
+        fecha: '05/06/2018',       
+      },
+      {
+        Expediente: '693458',
+        fecha: '05/06/2018',       
+      },
+    ],   
+  }
+    return data;
+}
 
 
+//FUNCION DUMMY para obtener los ultimos trabajos (debajo esta la final)
+// export function getultimosTrabajosOld(){   
+//   let data =  {
+//     Trabajos: [
+//       {
+//         "Expediente_Codigo": "1801314",
+//         "Id_Trabajo": 5,
+//         "Antecedente": "",
+//         "Expediente_Codigo_estudio": "2018_C2",
+//         "Fecha_Entrada": "15/03/2018",
+//         "Fecha_Visado": "15/03/2018",
+//         "Titulo_Expediente": "Memoria",
+//         "Titulo": "Tramites",
+//         "Concello": "A Cañiza",
+//         "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//         "Estado": "Preentrega",
+//         "Id_Expediente": 702103,
+//         "Id_Objeto_Unico_WorkFlow": 987740,
+//         "Envio_Completo": 1,
+//         "Id_Estado": -1,
+//         "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+//     },
+//     {
+//       "Expediente_Codigo": "1801312",
+//       "Id_Trabajo": 2,
+//       "Antecedente": "",
+//       "Expediente_Codigo_estudio": "2018_C1",
+//       "Fecha_Entrada": "12/03/2018",
+//       "Fecha_Visado": "12/03/2018",
+//       "Titulo_Expediente": " para sustitución de ventanas",
+//       "Titulo": "Pericias",
+//       "Concello": "SANTIAGO",
+//       "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//       "Estado": "Entregado",
+//       "Id_Expediente": 702003,
+//       "Id_Objeto_Unico_WorkFlow": 987740,
+//       "Envio_Completo": 1,
+//       "Id_Estado": -1,
+//       "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+//       "acciones":"test"
+//   },
+//   {
+//     "Expediente_Codigo": "1801312",
+//     "Id_Trabajo": 2,
+//     "Antecedente": "",
+//     "Expediente_Codigo_estudio": "2018_C1",
+//     "Fecha_Entrada": "12/03/206",
+//     "Fecha_Visado": "11/03/2018",
+//     "Titulo_Expediente": "Memoria para sustitución de ventanas",
+//     "Titulo": "Pericias",
+//     "Concello": "SANTIAGO DE Chile",
+//     "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//     "Estado": "En trámite",
+//     "Id_Expediente": 702003,
+//     "Id_Objeto_Unico_WorkFlow": 987740,
+//     "Envio_Completo": 1,
+//     "Id_Estado": -1,
+//     "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": "Retenido",
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": "Tramitado",
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente de retirar",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+//   "Expediente_Codigo": "1801314",
+//   "Id_Trabajo": 5,
+//   "Antecedente": "",
+//   "Expediente_Codigo_estudio": "2018_C2",
+//   "Fecha_Entrada": "15/03/2018",
+//   "Fecha_Visado": "15/03/2018",
+//   "Titulo_Expediente": "Memoria",
+//   "Titulo": "Tramites",
+//   "Concello": "A Cañiza",
+//   "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+//   "Estado": "Pendiente",
+//   "Id_Expediente": 702103,
+//   "Id_Objeto_Unico_WorkFlow": 987740,
+//   "Envio_Completo": 1,
+//   "Id_Estado": -1,
+//   "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/2018",
+// "Fecha_Visado": "12/03/2018",
+// "Titulo_Expediente": " para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44",
+// "acciones":"test"
+// },
+// {
+// "Expediente_Codigo": "1801312",
+// "Id_Trabajo": 2,
+// "Antecedente": "",
+// "Expediente_Codigo_estudio": "2018_C1",
+// "Fecha_Entrada": "12/03/206",
+// "Fecha_Visado": "11/03/2018",
+// "Titulo_Expediente": "Memoria para sustitución de ventanas",
+// "Titulo": "Pericias",
+// "Concello": "SANTIAGO DE Chile",
+// "Promotor": "Colexio Oficial de Arquitectos de Galicia",
+// "Estado": null,
+// "Id_Expediente": 702003,
+// "Id_Objeto_Unico_WorkFlow": 987740,
+// "Envio_Completo": 1,
+// "Id_Estado": -1,
+// "Ultima_Modificacion": "2018-03-12T11:31:45.44"
+// }
+     
+//     ],   
+//   }
+//     return data;
+// }

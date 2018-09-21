@@ -1,17 +1,18 @@
 import React from 'react';
 import Home from './../components/Home/Home';
 
-import Upload from '../components/Upload/Upload'
+
 import ContenedorExpedientes from './ContenedorExpedientes';
 import ContenedorTrabajos from './ContenedorTrabajos';
 import './styles.css';   
 
+
 const RenderContenedorcentralTrabajo =() =>{
     return (<ContenedorTrabajos/>)
-}
+};
 const RenderContenedorExpediente =() =>{
     return (<ContenedorExpedientes/>)
-}
+};
 const RenderHome = () => {
     return ( <Home/> )
 }
@@ -32,12 +33,12 @@ const Contenedorcentral= ({contenidoExp}) =>(
     <div>
         
     {/*contenidoExp === "trabajos" ? RenderContenedorcentralTrabajo():RenderContenedorExpediente()*/}  
-    {
-        renderizadoCondicional(contenidoExp)
-
-       
-    }
     
+        { renderizadoCondicional(contenidoExp) }
+        {/* <Upload/> */}
+
+     
+   
     </div>
 )
 

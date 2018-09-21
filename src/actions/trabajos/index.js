@@ -71,3 +71,8 @@ export const fetchEstructuraDocumentalTrabajo= (idExpediente, idTrabajo) => (dis
     type: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO,
     payload: estructuraDoc
 });
+
+export const dispachFilesToUpload = (files) => ({
+    type: types.FILES_TO_UPLOAD,
+    payload: files
+});

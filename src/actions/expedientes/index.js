@@ -89,15 +89,12 @@ export const cambioContenidoCentral = () => ({
 */
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) => 
 (dispatch) => {
-   console.log('fetchEstructuraDocumental');
+   
     dispatch(fetchInit());
     dispatch(cambioContenidoCentral());
-    getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {
-       
-        dispatch(fetchSuccessTrabajo(expedientes));
-       
-    })
-        .catch(
+    getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {       
+        dispatch(fetchSuccessTrabajo(expedientes));       
+    }).catch(
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
@@ -173,10 +170,9 @@ export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
 */
 export const fetchExpedienteDatosGeneral = (id_expediente) => 
 (dispatch) => {
-        console.log({id_expediente});
+        
     getExpedienteDatosGeneral(id_expediente).then((expedientes) => {
-        console.log({expedientes})
-        console.table(expedientes)
+       
         dispatch(fetchSuccesExpediente(expedientes));
     })
         .catch(
@@ -189,10 +185,9 @@ export const fetchExpedienteDatosGeneral = (id_expediente) =>
 */
 export const fetchExpedienteTrabajos= (id_expediente) => 
 (dispatch) => {
-        console.log({id_expediente});
+      
         GettrabajosExpediente(id_expediente).then((trabajos) => {
-        console.log({trabajos})
-        console.table(trabajos)
+      
         dispatch(fetchSuccesTrabajosExpediente(trabajos));
     })
         .catch(
@@ -221,8 +216,7 @@ export const fetchexpedientesUser = () =>
 
 (dispatch) => {
     expedientesuser().then((response) => {
-        console.log('expedientesuser en el fetch');      
-        console.log(response);
+      
         dispatch(fetchSuccess(response));
     })
         .catch(
@@ -257,7 +251,7 @@ export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) =>
 (dispatch) => {
               
           getTrabajoeDatosGenerales(id_expediente, id_Trabajo).then((DatosTrabajo) => {       
-              console.log('fetchTrabajoDatosGeneral');       
+               
               dispatch(fetchSuccesTrabajoDatosgenerales(DatosTrabajo));
                       })
               .catch(
@@ -287,7 +281,7 @@ export const fetchDatosExpeFichaTrabajo = (datos) => ({
 export const setSelectedExpediente = payload => {
 
     const {id_expediente, id_Trabajo} =payload;
-   console.log("antes de mandara el dispatch de setExpedienteSelected ");
+
           return dispatch =>{
             dispatch(setExpediente(payload));
             dispatch(setExpedienteSelected(payload));
@@ -338,7 +332,7 @@ export const fetchgetAcciones= (id_expediente, id_Trabajo) =>
 (dispatch) => {
               
     getAcciones().then((response) => {              
-              console.log(response);
+         
                       })
               .catch(
               () => fetchError({ error: 'Algo ha salido mal'})

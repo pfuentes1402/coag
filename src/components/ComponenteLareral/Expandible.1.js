@@ -23,8 +23,7 @@ class Expandible extends Component {
   render() {
     const handleClickLateral = trabajo => {
       
-      console.log(trabajo);
-      console.log(this.props.nodo);
+     
       let nodo = this.props.nodo;
       if (nodo !== trabajo.Id_Trabajo) { 
         this.props.setSelectedExpedienteTo(

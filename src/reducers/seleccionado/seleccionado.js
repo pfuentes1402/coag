@@ -14,8 +14,7 @@ const initialState ={selectedExpediente:'inicial', expTrabajoParaCentral:'Home',
 const seleccionado = (state = initialState , action) => { 
   switch (action.type) {
     case SET_EXPEDIENTE_SELECTED_DATOS:
-    console.log('Payload de seleccionado');
-    console.log(action.payload);    
+       
       const {  Fecha_Entrada, Id_Expediente, Id_Trabajo } = action.payload;      
       const expOtr = Id_Trabajo!=null?'Trabajo':'Expediente';    
       return {

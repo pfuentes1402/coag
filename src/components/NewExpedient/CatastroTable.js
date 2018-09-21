@@ -42,9 +42,9 @@ class TablaCatastro extends Component {
        const selectedData = selectedNodes.map(node => node.data.Calle)
        const refcatastrals = selectedNodes.map(node => node.data.refcatastral).join(', ')
        
-        console.log(refcatastrals)
+       
        const selectedDataStringPresentation = selectedNodes.map(node => node.id ).join(', ')
-       //console.log(selectedDataStringPresentation);
+      
        this.props.elimardelatabla(selectedDataStringPresentation,refcatastrals)
        var params = { force:true };
               

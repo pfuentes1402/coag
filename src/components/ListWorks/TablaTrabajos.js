@@ -45,7 +45,7 @@ class TablaTrabajos extends Component {
     }
     onGridReady(params) {
         this.gridApi = params.api
-        console.log(this.gridApi)
+  
         this.gridColumnApi = params.columnApi
 
     };

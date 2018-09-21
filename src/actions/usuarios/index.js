@@ -35,11 +35,20 @@ export const CambiaSelect = (data) => ({
     type: types.CAMBIASELECT,
    payload:data
 });
+export const confUsuarioActualizada = (data) => ({
+    type: types.NUEVA_CONF_USUARIO,
+   payload:data
+});
 
 export const fetchSelect = (data)=>
     (dispatch) => {
-        console.log("llega a fetchselect");
+        
             dispatch(CambiaSelect(data));
+};
+export const fetchCambiaIdioma = (data)=>
+    (dispatch) => {
+        
+            dispatch(confUsuarioActualizada(data));
 };
 
 
@@ -59,7 +68,7 @@ export const errorLogin = (data) => (
    (dispatch) => {
        funcionForma(data).then((data) => {
            if(data=== 401){
-               console.log('respuesta 401 desde el server');
+               
          
                dispatch(errorLogin("login: "+data)); 
            }else{
@@ -92,7 +101,7 @@ export const errorLogin = (data) => (
    export const  purgarStore = () =>
 
         (dispatch) => {
-            console.log('purgar');
+           
             dispatch({
             type: PURGE,
             key: "root",   
@@ -148,8 +157,7 @@ export const getTrabajos = () =>
    
     
     getultimosTrabajos().then((data)=>{
-        console.log('getTrabajos');
-        console.log(data);
+        
         dispatch(fetchUltimosTrabajos(data));
      })
      .catch(
