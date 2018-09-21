@@ -18,35 +18,35 @@ export const dispatchFasesTrabajos = (fasesTrabajos) => ({
 });
 
 export const fetchError = (error) => ({
-  type: types.FETCH_TRABAJOS_ERROR,
-  payload: error
+    type: types.FETCH_TRABAJOS_ERROR,
+    payload: error
 });
 
 
 // export const FuncioncambioContenidoCentral = () =>(dispatch)=>{
-    
+
 //     dispatch(cambioContenidoCentral);
 // }
 
 export const cambioContenidoCentralReset = (error) => ({
-  type: types.CAMBIO_CONTENEDOR_CENTRAL_RESET,
-  payload: error
+    type: types.CAMBIO_CONTENEDOR_CENTRAL_RESET,
+    payload: error
 });
 
 
 export const fetchTipoTrabajo = (idGrupoTematico) => (dispatch) => {
     getTiposTrabajo(idGrupoTematico).then((gruposTematicos) => {
-      dispatch(fetchTiposTrabajo(gruposTematicos));
+        dispatch(fetchTiposTrabajo(gruposTematicos));
     }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
 
 export const fetchTipoAutorizacion = () => (dispatch) => {
     getTiposAutorizacionMunicipal().then((tiposAutorizacion) => {
-      dispatch(fetchTiposAutorizacion(tiposAutorizacion));
+        dispatch(fetchTiposAutorizacion(tiposAutorizacion));
     }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
 
@@ -54,20 +54,20 @@ export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion) => (disp
     getFasesTrabajos(idGrupoTematico, idTipoAutorizacion).then((fasesTrabajos) => {
         dispatch(dispatchFasesTrabajos(fasesTrabajos));
     }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
-export const fetchEstructuraDocumentalTrabajo= (idExpediente, idTrabajo) => (dispatch) => {
+export const fetchEstructuraDocumentalTrabajo = (idExpediente, idTrabajo) => (dispatch) => {
     getestructuradocumental(idExpediente, idTrabajo).then((estructuraDoc) => {
-       
+
         dispatch(dispatchEstructuraDocumentalTrabajo(estructuraDoc));
     }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
 
 
-  export const dispatchEstructuraDocumentalTrabajo = (estructuraDoc) => ({
+export const dispatchEstructuraDocumentalTrabajo = (estructuraDoc) => ({
     type: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO,
     payload: estructuraDoc
 });
