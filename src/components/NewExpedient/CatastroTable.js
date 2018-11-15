@@ -22,11 +22,11 @@ class TablaCatastro extends Component {
 
         this.state = {
             columnDefs: [
-                {headerName: "Calle/Lugar",field: "Calle",checkboxSelection: true, width: 150 },
-                {headerName: "Nº", field: "Numero", width: 50},
-                {headerName: "Piso", field: "Piso", width: 60},
+                {headerName: "Calle/Lugar",field: "Calle",checkboxSelection: true, width: 110 },
+                {headerName: "Nº", field: "Numero", width: 60},
+                {headerName: "Piso", field: "Piso", width: 70},
                 {headerName: "CP", field: "Codigo_Postal", width: 70},
-                {headerName: "Municipio", field: "municipio", width: 155}
+                {headerName: "Municipio", field: "municipio", width: 125}
             ],
             rowData: [
                 {Calle: "Aragón", Numero: "", Piso: 3, Codigo_Postal: 36202, Concello: "Vigo"}

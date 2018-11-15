@@ -178,7 +178,7 @@ class MenuAppBar extends React.Component {
             <Row>
             <Col sm="3"><div><img src={coag} alt="logo" height="50" className="logo-coag"/></div></Col>
             
-            <Col sm="2"><ButtonHome/><ButtonMisexpe/></Col>
+            <Col sm="2"><ButtonHome/></Col>
             <Col sm="3" className="botonesBarra">
             <div>
                 <ButtonNew  className="botones"/>

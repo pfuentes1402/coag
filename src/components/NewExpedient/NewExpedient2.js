@@ -3,12 +3,10 @@ import { Field, reduxForm } from "redux-form";
 import { Container, Row, Col, UncontrolledAlert, Button } from "reactstrap";
 import TablaCatastro from "./CatastroTable";
 import "./NewExpedient.css";
-import { colors} from "material-ui";
 import { connect } from 'react-redux';
 import CatastroForm from './CatastroForm';
 
 import {validateAddress, postUbicacion, saveAdressTostore } from '../../actions/expedientes';
-import {DriveEta, Input} from 'material-ui-icons'
 
 
 const validate = values => {
@@ -19,7 +17,7 @@ const validate = values => {
     errors.codigo = "Tiene que tener menos de 15 caracteres";
   }
   if (!values.estudio) {
-    errors.estudio = "Campo requerid0";
+    errors.estudio = "Campo requerido";
   }
 
   if (values.Refcatastral && (values.Refcatastral.length < 14 || values.Refcatastral.length > 20) ) {

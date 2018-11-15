@@ -152,18 +152,15 @@ export const getTrabajos = () =>
 };
 */
 
-export const getTrabajos = () => 
-(dispatch) => {   
-   
-    
-    getultimosTrabajos().then((data)=>{
-        
-        dispatch(fetchUltimosTrabajos(data));
-     })
-     .catch(
-        ()=> fetchError({ error: 'Algo ha salido mal'})
-     );
-};
+export const getTrabajos = () =>
+    (dispatch) => {
+        getultimosTrabajos().then((data) => {
+            dispatch(fetchUltimosTrabajos(data));
+        })
+            .catch(
+                () => fetchError({ error: 'Algo ha salido mal' })
+            );
+    };
 
 
 
@@ -174,30 +171,29 @@ export const getTrabajos = () =>
 /*
 *Acciones del modal hacia sus reducers
 */
-export const fetchExpedientesSusceptibles = (data,id) => ({
+export const fetchExpedientesSusceptibles = (data, id) => ({
     type: types.EXPEDIENTESSUSCEPTIBLESTRABAJO,
-    payload: {data,id}
+    payload: { data, id }
 });
-export const fetchExpedientesTrabajosTest = (data,id) => ({
-    
+export const fetchExpedientesTrabajosTest = (data, id) => ({
     type: types.ACCIONESTRAMITARNUEVOTRABAJO,
-    payload:  {data,id}
+    payload: { data, id }
 });
-export const fetchSolicitarLoa = (data,id) => ({    
+export const fetchSolicitarLoa = (data, id) => ({
     type: types.ACCIONESSOLICITARLOA,
-    payload:  {data,id}
+    payload: { data, id }
 });
-export const fetchSolicitarLi = (data,id) => ({    
+export const fetchSolicitarLi = (data, id) => ({
     type: types.ACCIONESSOLICITARLI,
-    payload:  {data,id}
+    payload: { data, id }
 });
-export const fetchConvertirDigital = (data,id) => ({    
+export const fetchConvertirDigital = (data, id) => ({
     type: types.ACCIONESCONVERTIRDIGITAL,
-    payload:  {data,id}
+    payload: { data, id }
 });
-export const fetchCesarExpediente = (data,id) => ({    
+export const fetchCesarExpediente = (data, id) => ({
     type: types.ACCIONESCESAREXPEDIENTE,
-    payload:  {data,id}
+    payload: { data, id }
 });
 
 
