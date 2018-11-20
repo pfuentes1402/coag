@@ -30,15 +30,15 @@ class Form extends Component {
     validar(e){
       if(e != ''){
         var api = `http://servicios.coag.es/api/DatosCatastro/${e}`;
-      
+
         fetch(api)
           .then((response) => {
             return response.json();
           })
           .then((temp) => {
-           
+
             if(temp.MensajesProcesado.length == 0){
-            
+
               this.setState({
                 ubicacion: temp.Inmuebles[0]
               })
@@ -75,7 +75,7 @@ class Form extends Component {
         'Emplazamientos' : [
           {'Calle' : this.state.ubicacion.Calle,
           'Numero' : this.state.ubicacion.Numero,
-          'Piso' : this.state.ubicacion.Piso,
+          'Piso' : this.state.ubicacion.Numero,
           'Id_Concello' : this.state.ubicacion.Id_Concello,
           'CodigoPostal' : this.state.ubicacion.Codigo_Postal,
           'Georeferencia' : '',
@@ -195,7 +195,7 @@ class Form extends Component {
               htmlFor='PisoInput'
               type='text'
               value={this.state.ubicacion.Piso}
-              onChange={this.handleChangePiso} >
+              onChange={this.handleInputChange} >
             </input>
             </div>
           </Col>
@@ -224,7 +224,7 @@ class Form extends Component {
           <Col sm="4">
             <div className="inputDiv">
             <label>Región</label>
-            <span htmlFor='RegionInput'>{this.state.ubicacion.Id_Region}</span>
+            <span htmlFor='PaisInput'>{this.state.ubicacion.Id_Pais}</span>
             </div>
           </Col>
           <Col sm="4">

@@ -21,8 +21,8 @@ class Expandible extends Component {
 
 
       const renderTrabajos = trabajos =>(
-          
-            
+
+          trabajos ?
         trabajos.map((trabajo,i) =>(
        
         <ListGroupItem className="file" key={i} >
@@ -31,7 +31,7 @@ class Expandible extends Component {
             <TrabajoElemto data={trabajo} />
                           
         </ListGroupItem>  
-    ))
+    )) : ""
 
 );
 

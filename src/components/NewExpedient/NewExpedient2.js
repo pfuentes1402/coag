@@ -75,6 +75,7 @@ let SyncValidationForm = props => {
 
 
 
+
 const verificateRefCatastral = (refCatastral) =>{
   
   if (!(props.arrayReferencias).includes(refCatastral)){
@@ -167,8 +168,8 @@ const verificateRefCatastral = (refCatastral) =>{
               <Col sm="12" className="center-align">
               <TablaCatastro data={catastro}/>
                 <Button color="danger"               
-                //  onClick={(e) => saveAdressTostore(catastroSave.values, document.getElementById("Refcatastral").value)}     
-                 onClick={(e) => verificateRefCatastral(document.getElementById("Refcatastral").value)}     
+                 onClick={(e) => saveAdressTostore(catastroSave.values, document.getElementById("Refcatastral").value)}
+                 //onClick={(e) => verificateRefCatastral(document.getElementById("Refcatastral").value)}
                  
                 
                 >+</Button>
@@ -192,7 +193,7 @@ const verificateRefCatastral = (refCatastral) =>{
                  disabled={pristine || submitting}            
                   color="primary"                  
                 >
-                  Guardar y crear expediente
+                  Guardar
                 </Button>
               </div>
             </div>           

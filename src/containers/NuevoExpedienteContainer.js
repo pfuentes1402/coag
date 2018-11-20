@@ -62,7 +62,7 @@ NuevoExpedienteContainer.propTypes = {
   };
 
 const mapStateToProps = state => ({
-    direcciones:state.expedientes.adressValidated,
+    direcciones: state.expedientes.adressValidated,
   });
 
 const mapDispatchToProps = {
