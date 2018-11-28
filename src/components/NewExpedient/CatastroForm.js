@@ -143,10 +143,13 @@ const renderField = ({
 
     CatastroForm.defaultProps = {
       catastro:{
-        "calle": "",
-        "numero": "",
-        "cp": "",
-        "municipio": ""
+        "Calle": "",
+        "Numero": "",
+        "Codigo_Postal": "",
+        "Municipio": "",
+          "Piso": "",
+          "Georeferencia": "",
+          "Id_Concello": ""
       }
     };
     

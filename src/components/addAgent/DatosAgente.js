@@ -134,7 +134,7 @@ DatosAgente = reduxForm({
 
 DatosAgente = connect(
   (state) => ({
-    initialValues:state.expedientes.expedienteData.Expediente[0] || [],
+    initialValues: state.expedientes.expedienteData.Expediente ? state.expedientes.expedienteData.Expediente[0] : [],
   }),{  }
  
 )(DatosAgente)

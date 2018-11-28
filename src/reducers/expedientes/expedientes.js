@@ -10,10 +10,6 @@ import { FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SE
 
 import { PURGE } from 'redux-persist';
 
-
-
-
-
 export const FETCH_EXPEDIENTES_INIT = 'FETCH_EXPEDIENTES_INIT';
 export const FETCH_EXPEDIENTES_SUCCESS = 'FETCH_EXPEDIENTES_SUCCESS';
 export const FETCH_EXPEDIENTES_ERROR = 'FETCH_EXPEDIENTES_ERROR';
@@ -56,9 +52,6 @@ const expedientes = (state = initialState,action) => {
         ...state,            
         arbolEstructuraTrabajoRefactor:action.payload
       };
-  
-      
-      
     
     case FETCH_EXPEDIENTES_ERROR:
       return {initialState};

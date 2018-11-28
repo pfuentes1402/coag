@@ -15,12 +15,14 @@
 }
 .botonesBarra{
   display: flex;
-  flex-direction: row;
- 
+  flex-wrap: wrap;
 }
 .botones{
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
 }
 .dropMenu{
   max-width: 165px; ;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
 }

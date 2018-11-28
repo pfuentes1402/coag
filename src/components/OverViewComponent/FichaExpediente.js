@@ -108,11 +108,12 @@ FichaExpediente = reduxForm({
 })(FichaExpediente)
 
 FichaExpediente = connect(
-    state => ({
-        initialValues:state.expedientes.expedienteData.Expediente[0] || [],
-        datosNuevoExpediente:state.expedientes.expedienteData || '',        
+    state => (
+        {
+        initialValues: state.expedientes.expedienteData.Expediente ? state.expedientes.expedienteData.Expediente[0] : [],
+        datosNuevoExpediente: state.expedientes.expedienteData.Expediente ? state.expedientes.expedienteData : '',
         adressaved: state.expedientes.adressValidated,
-        ubicaciones:state.expedientes.expedienteData.Emplazamientos||'',     
+        ubicaciones: state.expedientes.expedienteData.Emplazamientos ? state.expedientes.expedienteData.Emplazamientos : '',
        
     }),
     {    

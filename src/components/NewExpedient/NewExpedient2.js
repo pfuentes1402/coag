@@ -19,6 +19,12 @@ const validate = values => {
   if (!values.estudio) {
     errors.estudio = "Campo requerido";
   }
+  if (!values.titulo){
+    errors.titulo = "Obligatorio"
+  }else if (values.titulo === "") {
+      errors.titulo = 'El título es obligatorio'
+  }
+
 
   if (values.Refcatastral && (values.Refcatastral.length < 14 || values.Refcatastral.length > 20) ) {
     errors.Refcatastral = "La referencia catastral tiene que tener una longitud de entre 14 y 20 caracteres";
@@ -74,16 +80,6 @@ let SyncValidationForm = props => {
   const { handleSubmit, pristine,  onBack,submitting, validateAddress,arrayReferencias, catastro ,mensajes, Refcatastral, catastroSave, saveAdressTostore, adressreducida,datosCompletos  } = props;
 
 
-
-
-const verificateRefCatastral = (refCatastral) =>{
-  
-  if (!(props.arrayReferencias).includes(refCatastral)){
-    saveAdressTostore(catastroSave.values, document.getElementById("Refcatastral").value)
-  }
-
-  
-}
   return (
     <Container className="margen">
        { mensajes &&

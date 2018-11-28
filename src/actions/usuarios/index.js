@@ -163,11 +163,6 @@ export const getTrabajos = () =>
     };
 
 
-
-
-
-
-
 /*
 *Acciones del modal hacia sus reducers
 */

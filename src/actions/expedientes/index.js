@@ -224,7 +224,7 @@ export const fetchexpedientesUser = () =>
     );
 };
 
-export   const postUbicacion = (data)=>
+export const postUbicacion = (data)=>
  dispatch => {
     postNuevoExpediente(data).then((response) => {
       

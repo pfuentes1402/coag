@@ -12,7 +12,7 @@ class AccionRenderer extends Component {
     }
 
     invokeParentMethod() {
-        alert("Id del trabajo: "+this.state.idTrabajo);
+        alert("Id del trabajo: "+ this.state.idTrabajo);
     }
 
     render() {

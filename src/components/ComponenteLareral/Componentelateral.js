@@ -52,12 +52,13 @@ Componentelateral.defaultProps = {
    
   };
 
-const mapStateToProps = state => ({
-   
+const mapStateToProps = state => (
+    {
     expedientes: state.expedientes.expedientes || [{}],
-    selectedExpFromstore: state.seleccionado.selectedExp?state.seleccionado.selectedExp:"",
+    selectedExpFromstore: state.seleccionado.selectedExp ? state.seleccionado.selectedExp : "",
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
-  });
+  }
+  );
 
 
 

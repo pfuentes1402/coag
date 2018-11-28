@@ -18,7 +18,6 @@ const rootReducer = combineReducers({
     seleccionado:seleccionado,
     status:status,
     localize:localizeReducer,
-    
-  });
+      });
 
 export default rootReducer;

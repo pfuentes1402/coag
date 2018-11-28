@@ -3,3 +3,6 @@ body {
   padding: 0;
   font-family: "Montserrat"!important;
 }
+.ag-paging-panel {
+  justify-content: center !important;
+}

@@ -67,14 +67,14 @@ const RenderCondicional=()=> {
             <div>
                 <Container className="full">
                     <Row className="principal">
-                        <Col xs="6" sm="2">                        
+                        <Col xs="12" md={4} lg={3} style={{backgroundColor: "#FFFFFF"}}>
                         {/* {this.props.expTrabajo === 'expediente' ?RenderContenedorTrabajos(): RenderComponenteExp()} */}
                         {/*this.props.expTrabajo === 'inicial' ?RenderContenedorAcciones(): RenderComponenteExp()*/} 
 
                         { RenderCondicional()}
                     
                         </Col>
-                        <Col xs="6" sm="10">
+                        <Col xs="12" md={8} lg={9}>
                             <ContenedorCentral contenidoExp ={this.props.expTrabajoParaCentral} />
                         </Col>      
                                      

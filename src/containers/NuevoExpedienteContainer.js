@@ -23,13 +23,7 @@ let dateNow = moment().format('YYYY-MM-DDTHH:MM:SS')
     datosTosave.Antecedente=values.antecedente;
     datosTosave.Observaciones=values.Observaciones;
     datosTosave.Emplazamientos=datab;
-    datosTosave.IgnorarObservaciones=1;  
-      
-   // saveExpediente(JSON.stringify(datosTosave));
-   
-    //postUbicacion(datosTosave);
-    //postNuevoExpediente(JSON.stringify(datosTosave));
-    //postUbicacion(datosTosave); 
+    datosTosave.IgnorarObservaciones=1;
     return JSON.stringify(datosTosave);
 
 }

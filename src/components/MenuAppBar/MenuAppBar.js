@@ -96,9 +96,7 @@ class MenuAppBar extends React.Component {
             <Route render={({ history}) => (
               <Button
                 onClick={() => { history.push('/nuevo-expediente') }}
-                variant="raised" color="primary" className={classes.button}
-              
-              >
+                variant="raised" color="primary" className="botones">
               <Translate id="menubar.NewExpe">                  
               </Translate>
               </Button>
@@ -109,7 +107,7 @@ class MenuAppBar extends React.Component {
             <Route render={({ history}) => (
               <Button
                 onClick={ this.handleBuscador}
-                variant="raised" color="primary" className={classes.button}              
+                variant="raised" color="primary" className="botones"
               >
                 <FontAwesomeIcon icon="search" />
               </Button>
@@ -165,66 +163,54 @@ class MenuAppBar extends React.Component {
                   variant="raised" className={classes.button}
                 >
                   logout
-                </Button>
-                
-                
-              )} />
+                </Button>)} />
           )
         
 
         return (
-         
+
             <Container className="full">
-            <Row>
-            <Col sm="3"><div><img src={coag} alt="logo" height="50" className="logo-coag"/></div></Col>
-            
-            <Col sm="2"><ButtonHome/></Col>
-            <Col sm="3" className="botonesBarra">
-            <div>
-                <ButtonNew  className="botones"/>
-                <Button outline color="secondary">
-                  <Translate id="menubar.BatchRequest">               
-                  </Translate>
-                </Button>
-                <ButtonBuscador  className="botones"/>
-                </div>
-            </Col>
-           
-            <Col sm="3" className="dropMenu">           
-            <div>
-            
-            </div>
-            <div >
-            <UncontrolledDropdown nav inNavbar tag={'div'}>
-                <DropdownToggle nav caret  >
-                <Translate id="menubar.profile">                  
-              </Translate>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                  <Profile/>
-                  <DropdownItem divider />
-                  </DropdownItem>
-                  <DropdownItem>
-                  <Logout/>
-                  </DropdownItem>                           
-                  </DropdownMenu>
-              </UncontrolledDropdown>
-              </div>
-            </Col>
-            <LanguageToggle/>
-            </Row>
-           
-            </Container>
+                <Row>
+                    <Col xs={9} md="5" lg={3}>
+                        <div><img src={coag} alt="logo" height="50" className="logo-coag"/></div>
+                    </Col>
+                    <Col xs={3} md="2" lg={2}>
+                        <ButtonHome/>
+                    </Col>
+                    <Col xs={6} md="5" lg={5}>
+                        <div className="botonesBarra">
+                            <ButtonNew />
+                            <Button outline color="secondary" className="botones">
+                                <Translate id="menubar.BatchRequest">
+                                </Translate>
+                            </Button>
+                            <ButtonBuscador />
+                        </div>
 
+                    </Col>
+                    <Col xs={6} md="12" lg={2}>
+                        <div className="dropMenu">
+                            <UncontrolledDropdown nav inNavbar tag={'div'}>
+                                <DropdownToggle nav caret  >
+                                    <Translate id="menubar.profile">
+                                    </Translate>
+                                </DropdownToggle>
+                                <DropdownMenu right style={{left: 0}}>
+                                    <DropdownItem>
+                                        <Profile/>
+                                        <DropdownItem divider />
+                                    </DropdownItem>
+                                    <DropdownItem>
+                                        <Logout/>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <LanguageToggle/>
+                        </div>
+                    </Col>
+                </Row>
 
-
-
-
-
-
-           
-        );
+            </Container>);
     }
 }
 
@@ -240,7 +226,6 @@ const mapStateToProps = state => ({
   
   
   const mapDispatchToProps = {
-    
     purgarStore,
     goHome,
     goExpedientesUser,
