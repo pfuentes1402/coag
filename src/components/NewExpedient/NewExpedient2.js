@@ -5,7 +5,6 @@ import TablaCatastro from "./CatastroTable";
 import "./NewExpedient.css";
 import { connect } from 'react-redux';
 import CatastroForm from './CatastroForm';
-
 import {validateAddress, postUbicacion, saveAdressTostore } from '../../actions/expedientes';
 
 

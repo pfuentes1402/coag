@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { history } from './helpers/hidtory';
-
+import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import {blue, pink} from '@material-ui/core/colors';
 
 import './index.css';
 //import { BrowserRouter as Router } from 'react-router-dom';
@@ -44,19 +45,25 @@ export const store = createStore(
 
 const persistor  = persistStore(store);
 
-
+const theme = createMuiTheme({
+    palette: {
+        primary: blue,
+        secondary: pink,
+    },
+});
 
 ReactDOM.render((
-
-<Provider store={store} >
-<LocalizeProvider store={store} >
-  <PersistGate loading={null} persistor={persistor}>
-    <Router history={history}>
-        {routes}
-    </Router>
-  </PersistGate>
-  </LocalizeProvider>
-</Provider>), document.getElementById('root'));
+    <Provider store={store} >
+        <MuiThemeProvider theme={theme}>
+            <LocalizeProvider store={store} >
+                <PersistGate loading={null} persistor={persistor}>
+                    <Router history={history}>
+                        {routes}
+                    </Router>
+                </PersistGate>
+            </LocalizeProvider>
+        </MuiThemeProvider>
+    </Provider>), document.getElementById('root'));
 
 export default persistor;
 

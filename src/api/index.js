@@ -155,9 +155,8 @@ export const getValidateAddress = ref_catastral =>
  *    data->Datos que conforman un nuevo expediente
 */
 export const postNuevoExpediente = data => {
-    let jdata = JSON.parse(data);
     return new Promise((success, error)=>{
-        api.post(`/expedientes/`, jdata)
+        api.post(`/expedientes/`, data)
             .then(resultado => {
                 success(resultado)
             }).catch(function (e) {

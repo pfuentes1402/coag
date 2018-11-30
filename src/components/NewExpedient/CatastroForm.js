@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import { Container, Row, Col } from "reactstrap";
 import PropTypes from 'prop-types';
 import "./NewExpedient.css";
-import { Divider } from "material-ui";
 import { connect } from 'react-redux';
 import {postUbicacion} from '../../actions/expedientes';
 
@@ -28,10 +27,6 @@ const renderField = ({
   );
   let CatastroForm = props => {
     const { handleSubmit, pristine, reset, submitting,catastro  } = props;
-
-
-  
-
         return (
             <div className="ubicacion">
             <Row>

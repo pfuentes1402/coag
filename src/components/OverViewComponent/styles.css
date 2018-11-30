@@ -12,6 +12,7 @@ font-size: large;
     padding-bottom:30px;
 }
 .nuevoExpedienteContainer{
+    margin-top: 8px;
     background: #f9f9f9;
 }
 .nuevoExpedienteContainer .btn-primary{

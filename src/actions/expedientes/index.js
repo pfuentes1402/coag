@@ -37,6 +37,11 @@ export const fetchAddress = (response) => ({
     payload: response
 });
 
+export const fetchUpdateAddress = (response) => ({
+    type: types.FETCH_UBICACION_UPDATE,
+    payload: response
+});
+
 export const fetchExpedientSave = (response) => ({   
     type: types.FETCH_EXPEDIENTSAVE_TO_STORE,   
     payload: response
@@ -56,7 +61,7 @@ export const fetchsaveAdressTostore = (address,refcatastral) => (
     payload:[address,refcatastral]
 });
 
-export const saveAdressTostore = (address,refcatastral) => 
+export const saveAdressTostore = (address, refcatastral) =>
 
 (dispatch) => {   
    
@@ -200,13 +205,19 @@ export const fetchExpedienteTrabajos= (id_expediente) =>
 export const validateAddress = (id_ubicacion) => 
 
 (dispatch) => {
-    getValidateAddress(id_ubicacion).then((response) => {
-        dispatch(fetchAddress(response.data, id_ubicacion));
+    getValidateAddress(id_ubicacion).then(async (response) => {
+        dispatch(await fetchAddress(response.data, id_ubicacion));
     })
         .catch(
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };
+
+export const updateAddress = (address) =>
+    (dispatch) => {
+        dispatch(fetchUpdateAddress(address));
+    }
+
 /*
 *
 *Obtiene los expedientes de un usuario logeado y con token

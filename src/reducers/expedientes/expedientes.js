@@ -1,5 +1,4 @@
-
-import { FETCH_UBICACION_SUCCESS } from "../../actions/expedientes/types";
+import { FETCH_UBICACION_SUCCESS, FETCH_UBICACION_UPDATE } from "../../actions/expedientes/types";
 import { FETCH_SAVE_ADRESS_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTSAVE_TO_STORE } from "../../actions/expedientes/types";
 import { FETCH_EXPEDIENTE_SUCCESS_EXP } from "../../actions/expedientes/types";
@@ -36,7 +35,7 @@ arrayReferencias : [],
 expedienteData:{Expediente:[],Emplazamientos:[{}]},
  datosAgentes:{},
  datosTrabajo:{},arbolEstructuraTrabajoRefactor:[{'id_expediente':68885}], selectedData:{expedieteotrabajo:{}, trabajoData:{}}, trabajoData:{Trabajos:[{}]} };
-const expedientes = (state = initialState,action) => {
+const expedientes = (state = initialState, action) => {
  
   switch (action.type) {
      case FETCH_EXPEDIENTES_SUCCESS:
@@ -57,14 +56,18 @@ const expedientes = (state = initialState,action) => {
       return {initialState};
 
     case FETCH_UBICACION_SUCCESS:
-         
-          
         return {
               ...state,            
               address: action.payload,
-             
-            }; 
-    case ELIMINAR_TABLA:         
+            };
+        break;
+      case FETCH_UBICACION_UPDATE:
+          return {
+              ...state,
+              address: action.payload,
+          };
+          break;
+      case ELIMINAR_TABLA:
          
           let arraytEMP =  state.addressreducida;
           let arraytEMP2 =  state.arrayReferencias;
@@ -117,7 +120,7 @@ const expedientes = (state = initialState,action) => {
           const addressreducida=[
               {Calle:action.payload[0].Calle, Numero: action.payload[0].Numero,
                   Piso: action.payload[0].Piso, Codigo_Postal: action.payload[0].Codigo_Postal,
-                  municipio: action.payload[0].Concello, Id_Concello:action.payload[0].Id_Concello, Georeferencia:"", refcatastral:action.payload[1]}
+                  municipio: action.payload[0].Concello, Provincia: action.payload[0].Provincia , Id_Concello:action.payload[0].Id_Concello, Georeferencia:"", refcatastral:action.payload[1]}
           ];
 
         return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from 'material-ui/styles';
+import {withStyles} from '@material-ui/core/styles';
 import { Button } from 'reactstrap';
 import { Container, Row, Col } from 'reactstrap';
 import coag from './images/coag.jpg';
