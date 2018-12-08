@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/types.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/types.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/types.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/types.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.css" afterPath="$PROJECT_DIR$/src/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" afterPath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes.js" afterPath="$PROJECT_DIR$/src/routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -195,8 +182,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-442">
-              <caret line="129" column="44" lean-forward="true" selection-start-line="129" selection-start-column="44" selection-end-line="129" selection-end-column="44" />
+            <state relative-caret-position="272">
+              <caret line="150" column="10" lean-forward="true" selection-start-line="150" selection-start-column="10" selection-end-line="150" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -238,15 +225,12 @@
             <state relative-caret-position="-560">
               <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
               <folding>
-                <marker date="1544223100326" expanded="true" signature="7:12" ph="..." />
-                <marker date="1544223100326" expanded="true" signature="867:912" ph="//..." />
-                <marker date="1544223100326" expanded="true" signature="969:1040" ph="{&quot;type&quot;: types.CAMBIO_CONTENEDOR_CENTRAL_RESET...}" />
-                <marker date="1544223100326" expanded="true" signature="1784:1948" ph="{...}" />
-                <marker date="1544223100326" expanded="true" signature="1810:1873" ph="{...}" />
-                <marker date="1544223100326" expanded="true" signature="2041:2273" ph="{...}" />
-                <marker date="1544223100326" expanded="true" signature="2120:2198" ph="{...}" />
-                <marker date="1544223100326" expanded="true" signature="2348:2431" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
-                <marker date="1544223100326" expanded="true" signature="2483:2538" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
+                <marker date="1544226804129" expanded="true" signature="7:12" ph="..." />
+                <marker date="1544226804129" expanded="true" signature="2067:2071" ph="{...}" />
+                <marker date="1544226804129" expanded="true" signature="2164:2396" ph="{...}" />
+                <marker date="1544226804129" expanded="true" signature="2243:2321" ph="{...}" />
+                <marker date="1544226804129" expanded="true" signature="2471:2554" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
+                <marker date="1544226804129" expanded="true" signature="2606:2661" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
               </folding>
             </state>
           </provider>
@@ -601,7 +585,7 @@
       <workItem from="1544103801674" duration="2573000" />
       <workItem from="1544121878606" duration="916000" />
       <workItem from="1544132005957" duration="986000" />
-      <workItem from="1544192900157" duration="5169000" />
+      <workItem from="1544192900157" duration="6070000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -635,7 +619,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="221374000" />
+    <option name="totallyTimeSpent" value="222275000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -654,8 +638,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -673,6 +657,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -1029,15 +1023,12 @@
         <state relative-caret-position="-560">
           <caret line="44" column="4" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
           <folding>
-            <marker date="1544223100326" expanded="true" signature="7:12" ph="..." />
-            <marker date="1544223100326" expanded="true" signature="867:912" ph="//..." />
-            <marker date="1544223100326" expanded="true" signature="969:1040" ph="{&quot;type&quot;: types.CAMBIO_CONTENEDOR_CENTRAL_RESET...}" />
-            <marker date="1544223100326" expanded="true" signature="1784:1948" ph="{...}" />
-            <marker date="1544223100326" expanded="true" signature="1810:1873" ph="{...}" />
-            <marker date="1544223100326" expanded="true" signature="2041:2273" ph="{...}" />
-            <marker date="1544223100326" expanded="true" signature="2120:2198" ph="{...}" />
-            <marker date="1544223100326" expanded="true" signature="2348:2431" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
-            <marker date="1544223100326" expanded="true" signature="2483:2538" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
+            <marker date="1544226804129" expanded="true" signature="7:12" ph="..." />
+            <marker date="1544226804129" expanded="true" signature="2067:2071" ph="{...}" />
+            <marker date="1544226804129" expanded="true" signature="2164:2396" ph="{...}" />
+            <marker date="1544226804129" expanded="true" signature="2243:2321" ph="{...}" />
+            <marker date="1544226804129" expanded="true" signature="2471:2554" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
+            <marker date="1544226804129" expanded="true" signature="2606:2661" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
           </folding>
         </state>
       </provider>
@@ -1175,8 +1166,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-442">
-          <caret line="129" column="44" lean-forward="true" selection-start-line="129" selection-start-column="44" selection-end-line="129" selection-end-column="44" />
+        <state relative-caret-position="272">
+          <caret line="150" column="10" lean-forward="true" selection-start-line="150" selection-start-column="10" selection-end-line="150" selection-end-column="10" />
           <folding />
         </state>
       </provider>
