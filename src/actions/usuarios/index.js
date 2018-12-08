@@ -1,6 +1,5 @@
 import {  funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
-import { history } from '../../helpers/hidtory';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
 
@@ -55,7 +54,6 @@ export const fetchCambiaIdioma = (data)=>
 export const errorLogin = (data) => (  
    
     {
-        
     type: types.FETCH_LOGIN_FAIL,
     payload: data
 });
@@ -64,7 +62,7 @@ export const errorLogin = (data) => (
 
 
 
-   export const fetchUserLogin = (data) => 
+   export const fetchUserLogin = (data, props) =>
    (dispatch) => {
        funcionForma(data).then((data) => {
            if(data=== 401){
@@ -83,8 +81,8 @@ export const errorLogin = (data) => (
                             data.data.token= response.headers.token;
                             localStorage.setItem('token', response.headers.token);
                             dispatch(fetchLoginExito(data));
-                            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));            
-                            history.push('/');
+                            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));
+                            props.history.push("/")
                         }else{
                             data.data.token ='';
                         }

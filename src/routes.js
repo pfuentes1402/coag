@@ -19,6 +19,7 @@ export default (
       {/* <Route exact path='/' component={MainContainer}/>
       <Route exact path='/home' component={HomeContainer}/> */}
       <PrivateRoute path='/nuevo-expediente' component={AddExpedient}/>
+      <PrivateRoute path='/oll-expediente' component={NuevoExpedienteContainer}/>
       <PrivateRoute path='/comunicacion' component={ComunicacionEncargo}/>
       <Route path='/selector-expediente' component={SelectorTipoTrabajoContainer}/>
       <Route path='/login' component={Login}/>

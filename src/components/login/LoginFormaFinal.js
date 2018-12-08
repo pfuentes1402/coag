@@ -1,9 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form';
-import { Route } from 'react-router-dom';
 import { Button } from 'reactstrap';
-
-
 
 const asyncValidate = async (values, dispatch, props, fieldString) => {
   const errors = {}
@@ -47,22 +44,12 @@ const renderField = ({
             </span>))}
     </div>
   </div>
-const Buttonloggin = () => (
-  <Route render={({ history}) => (
-    <Button
-      onClick={() => { history.push('/') }}
-      variant="raised" color="primary" 
-    >
-      login
-    </Button>
-  )} />
-)
 
 
 const LoginFormaFinal = props => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <form   onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="inputDiv">
           <Field name="usuario" type="usuario" component={renderField} label="Usuario" />
       </div>
@@ -70,8 +57,8 @@ const LoginFormaFinal = props => {
           <Field name="password" type="password" component={renderField} label="Contraseña" />
       </div>
       <div>
-        <button className="loginbutton" type="submit" disabled={submitting}>   
-        Entrar     
+        <button className="loginbutton" type="submit" disabled={submitting} >
+             Entrar
         </button>
       </div>
       <div className="recuperar">

@@ -71,11 +71,10 @@ const expedientes = (state = initialState, action) => {
          
           let arraytEMP =  state.addressreducida;
           let arraytEMP2 =  state.arrayReferencias;
-         
-          let newArrayreduc=action.payload[0].split(',');
+
           
-          arraytEMP.splice(action.payload[0])
-          arraytEMP2.splice(action.payload[1])
+          arraytEMP.splice(action.payload[0], 1)
+          arraytEMP2.splice(action.payload[0], 1)
          
 
         return {

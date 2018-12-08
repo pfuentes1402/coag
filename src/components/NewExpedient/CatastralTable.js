@@ -16,14 +16,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import {Fab} from '@material-ui/core';
 import {Add} from '@material-ui/icons';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import {saveAdressTostore} from "../../actions/expedientes";
+import {elimardelatabla, saveAdressTostore} from "../../actions/expedientes";
 import {connect} from "react-redux";
 
-const mapStateToProps = (state) => (   {
+const mapStateToProps = (state) => (
+    {
+        catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida: [], /*Contiene arreglo de la tabla de ubicaciones */
+        arrayReferencias: state.expedientes.arrayReferencias ? state.expedientes.arrayReferencias : [] /*Contiene arreglo con las referencial catastrales de cada direccion de la tabla ubicacion*/,
         addressData: state.expedientes.address ? state.expedientes.address : ''
     }
 );
@@ -31,13 +33,18 @@ const mapStateToProps = (state) => (   {
 const mapDispatchToProps =
     {
         saveAdressTostore: saveAdressTostore,
+        elimardelatabla: elimardelatabla,
     };
 
 
 let counter = 0;
-function createData(calle, numero, Piso, cp, municipio) {
+function createData(objectAddrees) {
     counter += 1;
-    return { id: counter, calle, numero, Piso, cp, municipio };
+    if (!objectAddrees.id) {
+        objectAddrees["id"] = counter;
+    }
+
+    return objectAddrees;
 }
 
 function desc(a, b, orderBy) {
@@ -66,10 +73,10 @@ function getSorting(order, orderBy) {
 
 const rows = [
     { id: 'calle', numeric: false, disablePadding: true, label: 'Calle/Lugar' },
-    { id: 'numero', numeric: true, disablePadding: false, label: 'No' },
-    { id: 'Piso', numeric: true, disablePadding: false, label: 'Piso' },
-    { id: 'cp', numeric: true, disablePadding: false, label: 'CP' },
-    { id: 'municipio', numeric: true, disablePadding: false, label: 'Municipio' },
+    { id: 'numero', numeric: false, disablePadding: true, label: 'No' },
+    { id: 'Piso', numeric: false, disablePadding: true, label: 'Piso' },
+    { id: 'cp', numeric: false, disablePadding: true, label: 'CP' },
+    { id: 'municipio', numeric: false, disablePadding: true, label: 'Municipio' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -155,7 +162,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
+    const { numSelected, classes, isShowAddress } = props;
 
     return (
         <Toolbar
@@ -170,23 +177,24 @@ let EnhancedTableToolbar = props => {
                     </Typography>
                 ) : (
                     <Typography variant="h6" id="tableTitle">
-                        Nutrition
+                        Ubicación *
                     </Typography>
                 )}
             </div>
             <div className={classes.spacer} />
             <div className={classes.actions}>
                 {numSelected > 0 ? (
-                    <Tooltip title="Delete">
-                        <IconButton aria-label="Delete">
+                    <Tooltip title="Eliminar">
+                        <IconButton aria-label="Delete" onClick={()=>{props.onDelete()}}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
                 ) : (
-                    <Tooltip title="Filter list">
-                        <IconButton aria-label="Filter list">
-                            <FilterListIcon />
-                        </IconButton>
+                    <Tooltip title={"Agregar"}>
+                        <Fab size="small" color="primary" disabled={!isShowAddress}
+                             onClick={()=>{props.onSave()}}>
+                            <Add/>
+                        </Fab>
                     </Tooltip>
                 )}
             </div>
@@ -205,6 +213,7 @@ const styles = theme => ({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
+        position: "relative",
     },
     table: {
         minWidth: '100%',
@@ -215,6 +224,11 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
     },
+    fab: {
+        position: "absolute",
+        right: 14,
+        top: -21
+    }
 });
 
 class EnhancedTable extends React.Component {
@@ -238,15 +252,19 @@ class EnhancedTable extends React.Component {
         this.setState({ order, orderBy });
     };
 
-    handleSelectAllClick = event => {
+    handleSelectAllClick = data => event => {
         if (event.target.checked) {
-            this.setState(state => ({ selected: state.data.map(n => n.id) }));
+            this.setState(state => ({ selected: data.map(n => n.id) }));
             return;
         }
         this.setState({ selected: [] });
     };
 
     handleClick = (event, id) => {
+        this.onSelected(id)
+    };
+
+    onSelected(id){
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
@@ -265,7 +283,7 @@ class EnhancedTable extends React.Component {
         }
 
         this.setState({ selected: newSelected });
-    };
+    }
 
     handleChangePage = (event, page) => {
         this.setState({ page });
@@ -279,44 +297,64 @@ class EnhancedTable extends React.Component {
 
     handleSaveAddress(){
         let address = this.props.addressData.Datos_Completos[0];
-        let data = {...this.state.data};
-        if (!this.ifEqual()) {
-            data.push(createData(address.Calle ? address.Calle : "",address.Numero ? address.Numero : "", address.Piso ? address.Piso : "",  address.Codigo_Postal ? address.Codigo_Postal : "",address.Concello ? address.Concello: ""))
-            this.props.saveAdressTostore(this.props.addressData, this.props.catastro);
-            this.setState({data: data});
-        }
 
+        if (!this.ifEqual(this.props.catastro,address)) {
+            this.props.saveAdressTostore(address, this.props.location);
+            }
     }
 
     ifEqual(data, address){
         let equal = false;
-        data.map(value=>{
-            if(value.calle === address.Calle && value.numero === address.Numero && value.Piso === address.Piso && value.cp === address.Codigo_Postal && value.municipio === address.Concello){
-                equal = true
-            }
-        })
+        if (data.length > 0) {
+            data.map(value => {
+                if (value.Calle === address.Calle && value.Numero === address.Numero && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal && value.municipio === address.Concello) {
+                    equal = true
+                }
+            })
+        }
         return equal;
     }
 
-    render() {
-        const { classes } = this.props;
-        const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    getData(catastro){
+        let aux = [];
+        Object.keys(catastro).map(key=>{
+             aux.push(createData(catastro[key]));
+         })
+        return aux;
+    }
 
+    handleDeleteAddress(){
+        const { selected } = this.state;
+        let catastro = this.props.catastro;
+
+        selected.map((s,i)=>{
+            let index = catastro.findIndex(c=>c.id === s);
+            if(index !== -1){
+                this.props.elimardelatabla(index, this.props.location);
+            }
+        })
+
+        this.setState({selected: []});
+
+    }
+
+
+    render() {
+        let { classes, catastro } = this.props;
+        let { order, orderBy, selected, rowsPerPage, page } = this.state;
+        let emptyRows = rowsPerPage - Math.min(rowsPerPage, catastro.length - page * rowsPerPage);
+        let data = this.getData({...catastro});
         return (
             <Paper className={classes.root}>
-                <Fab size="small" color="primary" aria-label="Check" disabled={!this.props.catastro}
-                        onClick={()=>{this.handleSaveAddress()}}>
-                    <Add/>
-                </Fab>
-                <EnhancedTableToolbar numSelected={selected.length} />
+
+                <EnhancedTableToolbar numSelected={selected.length} isShowAddress={this.props.isShowAddress} onSave={()=>{this.handleSaveAddress()}} onDelete={()=>{this.handleDeleteAddress()}}/>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <EnhancedTableHead
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={this.handleSelectAllClick}
+                            onSelectAllClick={this.handleSelectAllClick(data)}
                             onRequestSort={this.handleRequestSort}
                             rowCount={data.length}
                         />
@@ -339,17 +377,17 @@ class EnhancedTable extends React.Component {
                                                 <Checkbox checked={isSelected} />
                                             </TableCell>
                                             <TableCell component="th" scope="row" padding="none">
-                                                {n.calle}
+                                                {n.Calle}
                                             </TableCell>
-                                            <TableCell numeric>{n.numero}</TableCell>
+                                            <TableCell numeric>{n.Numero}</TableCell>
                                             <TableCell numeric>{n.Piso}</TableCell>
-                                            <TableCell numeric>{n.cp}</TableCell>
+                                            <TableCell numeric>{n.Codigo_Postal}</TableCell>
                                             <TableCell numeric>{n.municipio}</TableCell>
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: 49 * emptyRows }}>
+                                <TableRow >
                                     <TableCell colSpan={6} />
                                 </TableRow>
                             )}

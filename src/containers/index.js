@@ -1,6 +1,4 @@
 import React  from 'react';
-
-
 import HomeContainer from '../containers/HomeContainer';
 import { connect } from 'react-redux';
 import {  fetchexpedientesUser } from '../actions/expedientes/';
@@ -12,6 +10,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 
 import './styles.css';
+import {Redirect} from "react-router-dom";
+import {fetchCambiaStadoModal, fetchCambiaStatoModalBuscador, fetchMuestraModal} from "../actions/interfaz";
+import {goExpedientesUser, goHome, purgarStore} from "../actions/usuarios";
 
 
 class MainContainer extends React.Component {
@@ -36,7 +37,6 @@ class MainContainer extends React.Component {
    
     componentWillMount(){
         this.props.fetchexpedientesUser();
-       
     }
 
   
@@ -49,35 +49,38 @@ class MainContainer extends React.Component {
 
         const RenderComponents =() =>{
             return (
-            <div>
-                   
-                
-                <div className={`mainContainer ${claseOpacidad}`} >
-                                 
-                    <HomeContainer/>            
-                </div>
-                    <div>
-                        <CSSTransitionGroup
+                <div>
+                    {
+                        this.props.loading === true ?
+                            <div>
+                                <p>Loading...</p>
+                            </div> :
+                            <div>
+                                <div className={`mainContainer ${claseOpacidad}`}>
+                                    <HomeContainer/>
+                                </div>
+                                <div>
+                                    <CSSTransitionGroup
                                         transitionName="acciones"
                                         transitionEnterTimeout={3000}
                                         transitionLeaveTimeout={3000}>
                                         {this.props.mostrarModal ===true?renderModal():''}
-                        </CSSTransitionGroup>     
-                    </div>
-            </div>
-        )
-        }
-       
-        const loading =() =>{
-            return (<div>
-                    <p>Loading...</p>
-            </div>)
-        }
+                                    </CSSTransitionGroup>
+                                </div>
+                            </div>
+                    }
 
+                </div>
+            )
+        }
 
         return (
             <div>
-            {this.props.loading === true ?loading(): RenderComponents()}
+                { localStorage.getItem('user') ?
+                    RenderComponents() :
+                    <Redirect push to='/login' />
+                }
+
             </div>
         );
     }
@@ -85,11 +88,14 @@ class MainContainer extends React.Component {
 
 
 const mapStateToProps = state => ({
-    loading:state.status.loading || '',
+    loading: state.status.loading ? state.status.loading : '',
     mostrarModal:state.status.modalAcciones,
     idiomaFavorito:state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
     
   });
+const mapDispatchToProps = {
+    fetchexpedientesUser: fetchexpedientesUser,
+};
 
 
-export default connect(mapStateToProps,{fetchexpedientesUser})(withLocalize(MainContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(MainContainer));
