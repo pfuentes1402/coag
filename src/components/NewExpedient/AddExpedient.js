@@ -54,10 +54,7 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => (
      {
-        catastro: state.expedientes.addressreducida,
-        catastroSave: state.form.CatastroForm,
-        mensajes: state.expedientes.ExpedientNew.data.MensajesProcesado,
-        datosNuevoExpediente: state.expedientes.ExpedientNew,
+
         addressData: state.expedientes.address ? state.expedientes.address : ''
     }
 );

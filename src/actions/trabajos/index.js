@@ -1,4 +1,4 @@
-import { getTiposTrabajo, getTiposAutorizacionMunicipal, getFasesTrabajos, getestructuradocumental } from '../../api';
+import { getAllBuilds, getTiposTrabajo, getTiposAutorizacionMunicipal, getFasesTrabajos, getestructuradocumental } from '../../api';
 
 import * as types from './types';
 
@@ -22,6 +22,13 @@ export const fetchError = (error) => ({
     payload: error
 });
 
+export const gruposRaiz = (value) =>{
+    return{
+        type: types.FETCH_GRUPOS_RAIZ,
+        payload: value
+    }
+}
+
 
 // export const FuncioncambioContenidoCentral = () =>(dispatch)=>{
 
@@ -34,28 +41,34 @@ export const cambioContenidoCentralReset = (error) => ({
 });
 
 
-export const fetchTipoTrabajo = (idGrupoTematico) => (dispatch) => {
-    getTiposTrabajo(idGrupoTematico).then((gruposTematicos) => {
+export const fetchTipoTrabajo = (idGrupoTematico, idLanguage = 1) => (dispatch) => {
+    getTiposTrabajo(idGrupoTematico, idLanguage).then((gruposTematicos) => {
         dispatch(fetchTiposTrabajo(gruposTematicos));
     }).catch(
         () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
 
-export const fetchTipoAutorizacion = () => (dispatch) => {
-    getTiposAutorizacionMunicipal().then((tiposAutorizacion) => {
+export const fetchTipoAutorizacion = (idLanguage) => (dispatch) => {
+    getTiposAutorizacionMunicipal(idLanguage).then((tiposAutorizacion) => {
         dispatch(fetchTiposAutorizacion(tiposAutorizacion));
     }).catch(
         () => fetchError({ error: 'Algo ha salido mal' })
     );
 };
 
-export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion) => (dispatch) => {
-    getFasesTrabajos(idGrupoTematico, idTipoAutorizacion).then((fasesTrabajos) => {
+
+
+export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion, idLanguage) => (dispatch) => {
+    getFasesTrabajos(idGrupoTematico, idTipoAutorizacion, idLanguage).then((fasesTrabajos) => {
         dispatch(dispatchFasesTrabajos(fasesTrabajos));
     }).catch(
         () => fetchError({ error: 'Algo ha salido mal' })
     );
+};
+
+export const fetchGruposRaiz = (idGrupoRaiz) => (dispatch) => {
+   dispatch(gruposRaiz(idGrupoRaiz));
 };
 export const fetchEstructuraDocumentalTrabajo = (idExpediente, idTrabajo) => (dispatch) => {
     getestructuradocumental(idExpediente, idTrabajo).then((estructuraDoc) => {

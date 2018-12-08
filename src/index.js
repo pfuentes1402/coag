@@ -5,7 +5,7 @@ import { history } from './helpers/hidtory';
 import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {blue, pink} from '@material-ui/core/colors';
+import {blue, pink, grey} from '@material-ui/core/colors';
 
 import './index.css';
 //import { BrowserRouter as Router } from 'react-router-dom';
@@ -48,7 +48,7 @@ const persistor  = persistStore(store);
 const theme = createMuiTheme({
     palette: {
         primary: blue,
-        secondary: pink,
+        secondary: {light:grey[100], medium: grey[300], main:grey[500], dark:grey[700]},
     },
 });
 

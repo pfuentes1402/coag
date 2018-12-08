@@ -38,7 +38,7 @@ expedienteData:{Expediente:[],Emplazamientos:[{}]},
 const expedientes = (state = initialState, action) => {
  
   switch (action.type) {
-     case FETCH_EXPEDIENTES_SUCCESS:
+      case FETCH_EXPEDIENTES_SUCCESS:
     return{
       ...state,
       expedientes: action.payload,            

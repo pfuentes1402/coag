@@ -7,7 +7,8 @@ import MainContainer from './containers/index';
 import Login from './components/login/Login';
 import { PrivateRoute } from './components/login/privateRoute';
 import Profile from './components/Profile/Profile';
-import AddExpedient from './components/NewExpedient/AddExpedient'
+import AddExpedient from './components/NewExpedient/AddExpedient';
+import ComunicacionEncargo from "./components/ComunicacionEncargo"
 
 export default (
   <div>
@@ -18,6 +19,7 @@ export default (
       {/* <Route exact path='/' component={MainContainer}/>
       <Route exact path='/home' component={HomeContainer}/> */}
       <PrivateRoute path='/nuevo-expediente' component={AddExpedient}/>
+      <PrivateRoute path='/comunicacion' component={ComunicacionEncargo}/>
       <Route path='/selector-expediente' component={SelectorTipoTrabajoContainer}/>
       <Route path='/login' component={Login}/>
       <Route path='/profile' component={Profile}/>
