@@ -2,29 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainContent/ExpedientType/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainContent/ExpedientType/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainContent/MainContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainContent/MainContent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainContent/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainContent/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,8 +30,8 @@
       <file leaf-file-name="resources.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/resources.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="52" column="32" lean-forward="true" selection-start-line="52" selection-start-column="32" selection-end-line="52" selection-end-column="32" />
+            <state relative-caret-position="333">
+              <caret line="69" column="6" lean-forward="true" selection-start-line="69" selection-start-column="6" selection-end-line="69" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -87,7 +67,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="259">
-              <caret line="119" column="5" lean-forward="true" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
+              <caret line="119" column="5" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -99,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/src/Main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="308">
-              <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -111,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="163">
-              <caret line="53" column="15" lean-forward="true" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
+              <caret line="53" column="15" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -150,7 +130,7 @@
       <find>isShowAddress</find>
       <find>HomeContainer</find>
       <find>.homeContainer</find>
-      <find>nuevo e</find>
+      <find />
       <find>but</find>
       <find>canc</find>
       <find>Fab</find>
@@ -426,7 +406,7 @@
       <workItem from="1543612992702" duration="7962000" />
       <workItem from="1543621329675" duration="268000" />
       <workItem from="1543845746615" duration="40632000" />
-      <workItem from="1544040108625" duration="29130000" />
+      <workItem from="1544040108625" duration="31084000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -456,11 +436,18 @@
       <option name="project" value="LOCAL" />
       <updated>1543621375164</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="router redefinido, preparado las traduciones">
+      <created>1544227300402</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1544227300402</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="264852000" />
+    <option name="totallyTimeSpent" value="266806000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -472,17 +459,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info id="npm" order="2" sideWeight="0.5254237" side_tool="true" weight="0.18746042" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.23867069" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.19335347" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23867069" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.19335347" />
       <window_info anchor="bottom" id="TypeScript" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47457626" visible="true" weight="0.19537954" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47457626" visible="true" weight="0.19537954" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -529,7 +516,8 @@
     <MESSAGE value="Componente Arbol beta1" />
     <MESSAGE value="Redux Catastro" />
     <MESSAGE value="cambios home" />
-    <option name="LAST_COMMIT_MESSAGE" value="cambios home" />
+    <MESSAGE value="router redefinido, preparado las traduciones" />
+    <option name="LAST_COMMIT_MESSAGE" value="router redefinido, preparado las traduciones" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -868,7 +856,7 @@
     <entry file="file://$PROJECT_DIR$/src/Main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
-          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -885,7 +873,7 @@
     <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
-          <caret line="53" column="15" lean-forward="true" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
+          <caret line="53" column="15" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -927,7 +915,7 @@
     <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
-          <caret line="119" column="5" lean-forward="true" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
+          <caret line="119" column="5" selection-start-line="119" selection-start-column="5" selection-end-line="119" selection-end-column="5" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -936,8 +924,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resources.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="52" column="32" lean-forward="true" selection-start-line="52" selection-start-column="32" selection-end-line="52" selection-end-column="32" />
+        <state relative-caret-position="333">
+          <caret line="69" column="6" lean-forward="true" selection-start-line="69" selection-start-column="6" selection-end-line="69" selection-end-column="6" />
         </state>
       </provider>
     </entry>
