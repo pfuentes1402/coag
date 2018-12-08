@@ -207,8 +207,7 @@ export const validateAddress = (id_ubicacion) =>
 (dispatch) => {
     getValidateAddress(id_ubicacion).then(async (response) => {
         dispatch(await fetchAddress(response.data, id_ubicacion));
-    })
-        .catch(
+    })        .catch(
         () => fetchError({ error: 'Algo ha salido mal'})
     );
 };

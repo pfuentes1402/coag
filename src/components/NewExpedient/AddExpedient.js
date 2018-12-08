@@ -54,12 +54,9 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => (
      {
-        catastro: state.expedientes.addressreducida,
-        catastroSave: state.form.CatastroForm,
-        mensajes: state.expedientes.ExpedientNew.data.MensajesProcesado,
-        datosNuevoExpediente: state.expedientes.ExpedientNew,
-        addressData: state.expedientes.address ? state.expedientes.address : ''
-    }
+         addressData: state.expedientes.address ? state.expedientes.address : '',
+         catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida: [], /*Contiene arreglo de la tabla de ubicaciones */
+     }
 );
 
 const mapDispatchToProps =
@@ -82,8 +79,10 @@ class AddExpedient extends Component {
             locations: [],
             emplacement: [],
             isValidate: false,
+            isShowAddress: false,
             alert: false,
-            msg: ""
+            msg: "",
+            observationsLength: 0
         };
 
     };
@@ -96,7 +95,7 @@ class AddExpedient extends Component {
 
     handleChangeAddress(name, event) {
         let address = {...this.props.addressData};
-        if(address && address.Datos_Completos[0] && address.Datos_Completos[0][name]){
+        if(address && address.Datos_Completos[0]){
             if (address.Datos_Completos[0][name] !== event.target.value ) {
                 address.Datos_Completos[0][name] = event.target.value;
                 this.props.updateAddress(address);
@@ -106,17 +105,43 @@ class AddExpedient extends Component {
 
     async handleValidateAddress(){
         await this.setState({isValidate: true});
-        await this.props.validateAddress(this.state.location);
+        try {
+            await this.props.validateAddress(this.state.location);
+        }
+        catch (e) {
+            console.log("prueba")
+        }
+
         await setTimeout(async()=> {
-            await this.setState({isValidate: false});
-            },3000)
+            await this.setState({isValidate: false, isShowAddress:  true});
+            },2000);
+        await this.saveAddress();
 
     }
 
+    saveAddress(){
+        let address = this.props.addressData.Datos_Completos[0];
+        if (!this.ifEqual(this.props.catastro, address)) {
+            this.props.saveAdressTostore(address, this.props.location);
+        }
+    }
+
+    ifEqual(data, address){
+        let equal = false;
+        if (data.length > 0) {
+            data.map(value => {
+                if (value.Calle === address.Calle && value.Numero === address.Numero && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal && value.municipio === address.Concello) {
+                    equal = true
+                }
+            })
+        }
+        return equal;
+    }
+
     handleSave(){
-        if(!this.state.title || !this.state.codeStudy){
-            this.setState({alert: true, msg: (!this.state.title && !this.state.codeStudy) ? "El título y el código de estudio son obligatorios" : (!this.state.title ? "El título es obligatorio": "El código de estudio es obligatorio" )})
- }
+        if(!this.state.title || !this.state.codeStudy || (this.state.observationsLength > 0 && this.state.observationsLength < 110)){
+            this.setState({alert: true, msg: (!this.state.title && !this.state.codeStudy) ? "El título y el código de estudio son obligatorios" : (!this.state.title ? "El título es obligatorio" : (!this.state.codeStudy ? "El código de estudio es obligatorio" : "Las observaciones requieren más de 110 caracteres"))})
+        }
         else {
             let fechaEntrada =  new Date();
             fechaEntrada = fechaEntrada.toISOString();
@@ -211,7 +236,7 @@ class AddExpedient extends Component {
                                         margin="normal"
                                         multiline
                                         rows={4}
-                                        helperText="110/500"
+                                        helperText={"110/500"}
                                         fullWidth
                                         InputProps={{
                                             disableUnderline: true,
@@ -222,17 +247,25 @@ class AddExpedient extends Component {
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
+                                        onInput = {(e) =>{
+                                            let aux = e.target.value;
+                                            this.setState({observationsLength: aux.length});
+                                            if(aux.length > 500)
+                                                e.target.value = aux.slice(0,500)
+                                        }}
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Grid container spacing={24}>
                                     <Grid item xs={12}>
+                                        <CatastralTable location={this.state.location} isShowAddress={this.state.isShowAddress}/>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <div style={{display: "flex", alignItems: "center"}}>
                                             <FormControl className={classes.formControl1}>
                                                 <TextField
                                                     id="location"
-                                                    label="UBICACION"
                                                     helperText="La dirección se proporciona automáticamente"
                                                     value={this.state.location}
                                                     onChange={this.handleChange('location')}
@@ -253,124 +286,132 @@ class AddExpedient extends Component {
                                         </div>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                label="Calle"
-                                                value={data && data.Calle ? data.Calle : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Calle', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="num"
-                                                label="NUM"
-                                                value={data && data.Numero ? data.Numero : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Numero', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="PISO"
-                                                label="PISO"
-                                                value={data && data.Piso ? data.Piso : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Piso', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="CP"
-                                                label="CODIGO POSTAL"
-                                                value={data && data.Codigo_Postal ? data.Codigo_Postal : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Codigo_Postal', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="municipio"
-                                                label="MUNICIPIO"
-                                                value={data && data.Concello ? data.Concello : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Concello', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="provincia"
-                                                label="PROVINCIA"
-                                                value={data && data.Provincia ? data.Provincia : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Provincia', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="REGION"
-                                                label="REGION"
-                                                value={data && data.REGION ? data.REGION : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('REGION', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
-                                        <FormControl className={classes.formControl2}>
-                                            <TextField
-                                                id="pais"
-                                                label="PAIS"
-                                                value={data && data.Pais ? data.Pais : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('Pais', event)}}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        </FormControl>
+                                    {
+                                        this.state.isShowAddress ?
+                                            <Grid container spacing={16}>
+                                                <Grid item xs={12}>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            label="Calle"
+                                                            value={data && data.Calle ? data.Calle : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Calle', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="num"
+                                                            label="NUM"
+                                                            value={data && data.Numero ? data.Numero : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Numero', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="PISO"
+                                                            label="PISO"
+                                                            value={data && data.Piso ? data.Piso : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Piso', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="CP"
+                                                            label="CODIGO POSTAL"
+                                                            value={data && data.Codigo_Postal ? data.Codigo_Postal : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Codigo_Postal', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="municipio"
+                                                            label="MUNICIPIO"
+                                                            value={data && data.Concello ? data.Concello : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Concello', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="provincia"
+                                                            label="PROVINCIA"
+                                                            value={data && data.Provincia ? data.Provincia : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Provincia', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="REGION"
+                                                            label="REGION"
+                                                            value={data && data.REGION ? data.REGION : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('REGION', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl className={classes.formControl2}>
+                                                        <TextField
+                                                            id="pais"
+                                                            label="PAIS"
+                                                            value={data && data.Pais ? data.Pais : ""}
+                                                            onChange={(event)=>{this.handleChangeAddress('Pais', event)}}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl className={classes.formControl1}>
+                                                        <TextField
+                                                            id="alias"
+                                                            label="ALIAS DIRECCION"
+                                                            placeholder="Ej C/Numancia No 13"
+                                                            value={this.state.alias}
+                                                            onChange={this.handleChange('alias')}
+                                                            margin="normal"
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                            helperText="Introducir un Alias para la dirección"
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                            : ""
+                                    }
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormControl className={classes.formControl1}>
-                                            <TextField
-                                                id="alias"
-                                                label="ALIAS DIRECCION"
-                                                placeholder="Ej C/Numancia No 13"
-                                                value={this.state.alias}
-                                                onChange={this.handleChange('alias')}
-                                                margin="normal"
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                helperText="Introducir un Alias para la dirección"
-                                            />
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button color="primary" className={classes.button}>
+                                        <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>
                                             Cancelar
                                             <Clear className={classes.rightIcon}/>
                                         </Button>
-                                        <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}}>
+                                        <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}} disabled={!this.state.isShowAddress}>
                                             Guardar y crear expediente
                                             <Check className={classes.rightIcon}/>
                                         </Button>

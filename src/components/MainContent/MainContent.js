@@ -106,10 +106,6 @@ const mapStateToProps = state => ({
     selectedData:state.expedientes.expedieteotrabajo,
     expTrabajo:state.seleccionado.selectedExpediente || '',
     expTrabajoParaCentral:state.seleccionado.expTrabajoParaCentral || '',
-    
-   
-    
-   
   });
 
 

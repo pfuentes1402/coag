@@ -254,13 +254,8 @@ export const expedientesuser = () =>
   api.get('/expedientes')
 
     .then(response => {
-
       return response.data.Expedientes;
     }).catch((error) => {
-
-
-
-
     });
 
 
