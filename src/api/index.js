@@ -101,21 +101,21 @@ export const getExpedienteDatosGeneral = id_expediente =>
  * Parametros 
  *    id_grupo
  */
-export const getTiposTrabajo = id_grupo =>
-  api.get(`/Tipos/Guia/GruposTematicos/${id_grupo}`).then(response => {
+export const getTiposTrabajo = (id_grupo, idLanguage=1) =>
+  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
     return response;
   })
     .then(resultado => {
       return resultado;
-    });
+});
 
 
 
 /*
  *Proporciona los tipos de trámite de un trabajo
  */
-export const getTiposAutorizacionMunicipal = () =>
-  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/`)
+export const getTiposAutorizacionMunicipal = (idLanguage = 1) =>
+  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${idLanguage}`)
     .then(response => {
       return response;
     })
@@ -128,8 +128,8 @@ export const getTiposAutorizacionMunicipal = () =>
 /*
  *Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
  */
-export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion) =>
-  api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=1`)
+export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 1) =>
+  api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`)
     .then(response => {
       return response;
     })
@@ -155,14 +155,14 @@ export const getValidateAddress = ref_catastral =>
  *    data->Datos que conforman un nuevo expediente
 */
 export const postNuevoExpediente = data => {
-    return new Promise((success, error)=>{
-        api.post(`/expedientes/`, data)
-            .then(resultado => {
-                success(resultado)
-            }).catch(function (e) {
-              console.log(e.response.data.Message)
-        });
-    })
+  return new Promise((success, error) => {
+    api.post(`/expedientes/`, data)
+      .then(resultado => {
+        success(resultado)
+      }).catch(function (e) {
+        console.log(e.response.data.Message)
+      });
+  })
 }
 /*
  *Edita un expediente expediente
@@ -441,11 +441,8 @@ export const getBuscador = (filtro, tipoBusqueda) =>
 *    idtrabajo
 */
 export const getestructuradocumental = (idExpediente, idTrabajo) =>
-
   api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
     .then(response => {
-
-
       return response.data;
     });
 
@@ -477,3 +474,21 @@ export function getDatosUsuario(id) {
   }
   return data;
 }
+
+/*Tipos de trámite*/
+export const getAllFormalities = () =>
+  api.get('/tipos/guia/tiposautorizacionmunicipal').then(response => {
+    return response;
+  });
+
+/*Tipos de obra, [Grupo temático]*/
+export const getTipoObra = (grupoRaiz,languageId=1) =>
+  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${grupoRaiz}&idioma=${languageId}`).then(response => {
+    return response;
+  });
+
+/**Todos los grupos raiz */
+export const getGruposRaiz = (idLanguage = 1) => 
+  api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`).then(response => {
+  return response;
+});
