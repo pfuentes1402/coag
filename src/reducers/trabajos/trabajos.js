@@ -1,16 +1,25 @@
 import { FETCH_TIPOS_TRABAJO, FETCH_TRABAJOS_ERROR, FETCH_TIPOS_AUTORIZACION,
-   FETCH_FASES_TRABAJOS, FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO, FILES_TO_UPLOAD } from "../../actions/trabajos/types";
+   FETCH_FASES_TRABAJOS, FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO, FILES_TO_UPLOAD,
+   FETCH_GRUPOS_RAIZ } from "../../actions/trabajos/types";
 import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
 
 const initialState = {
-  tiposTrabajos: { GruposTematicos: [{ Nombre: "Edi" }, { Nombre: "Ei" }] }
-  , tiposAutorizacion: { Tipos_autorizacion_municipal: [] }, fasesTrabajos: { FasesTrabajos: [] }, loading: true, promotoresTrabajoSelec: [{}]
+  tiposTrabajos: { GruposTematicos: [{ Nombre: "Edi" }, { Nombre: "Ei" }] }, 
+  tiposAutorizacion: { Tipos_autorizacion_municipal: [] }, 
+  fasesTrabajos: { FasesTrabajos: [] }, loading: true, 
+  promotoresTrabajoSelec: [{}]
 };
 const reducer = (state = initialState, action) => {
 
   switch (action.type) {
+    case FETCH_GRUPOS_RAIZ:
+          return{
+              ...state,
+              gruposRaiz: action.payload,
+          };
+
     case FETCH_TIPOS_TRABAJO:
      
       return {
