@@ -9,11 +9,6 @@ import {traduccionGrid} from './../../helpers/traducciones';
 import { goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
 import { setSelected } from './../../actions/usuarios/index';
-
-
-
-
-
 class TablaBusquedaArquitectos extends Component {
     constructor(props) {
         super(props);

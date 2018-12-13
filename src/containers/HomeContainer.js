@@ -4,10 +4,6 @@ import MainContent from '../components/MainContent/MainContent';
 import "./styles.css";
 import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } from '../actions/expedientes/';
 import { getTrabajos } from '../actions/usuarios/index';
-
-
-
-
 class HomeContainer extends Component {
 
     componentWillMount(){
@@ -33,10 +29,8 @@ class HomeContainer extends Component {
   };
 
 const mapStateToProps = state => ({
-   // expedientes: state.expedientes.arbolEstructuraDocumentalTrabajo,
     trabajos: state.expedientes.trabajos,
     loading: state.expedientes.loading,
-    //expedientes:state.user.data.Expedientes || "",
   });
 
 const mapDispatchToProps = {

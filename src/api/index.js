@@ -6,7 +6,6 @@ import axios from 'axios';
 import * as types from './../actions/usuarios/types';
 
 
-
 const BASE_PATH = "http://servicios.coag.es/api";
 
 /*
@@ -63,9 +62,6 @@ api.interceptors.response.use(function (response) {
 //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
 
 
-
-
-
 /*
  *Proporciona la extructura documental de un trabajo
  * Parametros 
@@ -95,11 +91,11 @@ export const getExpedienteDatosGeneral = id_expediente =>
   });
 
 
-
-/*
- *Proporciona los grupos temáticos de un trabajo
- * Parametros 
- *    id_grupo
+/**
+ * Proporciona los grupos temáticos de un trabajo
+ * @param id_grupo
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTiposTrabajo = (id_grupo, idLanguage=1) =>
   api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
@@ -109,12 +105,12 @@ export const getTiposTrabajo = (id_grupo, idLanguage=1) =>
       return resultado;
 });
 
-
-
-/*
- *Proporciona los tipos de trámite de un trabajo
+/**
+ * Proporciona los tipos de trámite de un trabajo
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
  */
-export const getTiposAutorizacionMunicipal = (idLanguage = 1) =>
+export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
   api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${idLanguage}`)
     .then(response => {
       return response;
@@ -123,12 +119,14 @@ export const getTiposAutorizacionMunicipal = (idLanguage = 1) =>
       return resultado;
     });
 
-
-
-/*
- *Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
+/**
+ * Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
+ * @param id_tipo_grupo
+ * @param id_tipo_autorizacion
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
  */
-export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 1) =>
+export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 2) =>
   api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`)
     .then(response => {
       return response;
@@ -144,10 +142,11 @@ export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage
  * Parametros 
  *    ref_catastral
  */
-export const getValidateAddress = ref_catastral =>
-  api.get(`/DatosCatastro/${ref_catastral}`).then(response => {
+export const getValidateAddress = async ref_catastral => {
+    let response = await api.get(`/DatosCatastro/${ref_catastral}`);
     return response;
-  });
+}
+
 
 /*
  *Graba un nuevo expediente
@@ -237,13 +236,8 @@ export const GettrabajosExpediente = (id_expediente) =>
   api.get(`/expedientes/${id_expediente}/trabajos/`)
 
     .then(response => {
-
       return response.data.Trabajos;
     }).catch((error) => {
-
-
-
-
     });
 /*
  *Proporciona expedientes de un usuario
@@ -284,9 +278,6 @@ export const errorLogin = (data) => (
     type: types.FETCH_LOGIN_FAIL,
     payload: data
   });
-
-
-
 
 
 /*
@@ -355,10 +346,6 @@ export const getultimosTrabajos = () =>
       return response;
     });
 
-
-
-
-
 //FUNCION DUMMY para obtener los susceptibles de acciones
 export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
   let data = {
@@ -415,11 +402,12 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
   return data;
 }
 
-/*
-*Busqueda de expedientes
-* Parametros 
-*    filtro
-*/
+/**
+ * Busqueda de expedientes
+ * @param filtro
+ * @param tipoBusqueda
+ * @returns {any}
+ */
 export const getBuscador = (filtro, tipoBusqueda) =>
 
   filtro === "" ? api.get(`/${tipoBusqueda}/`) : api.get(`/${tipoBusqueda}/?filtro=${filtro}`)
@@ -430,60 +418,80 @@ export const getBuscador = (filtro, tipoBusqueda) =>
       return response;
     });
 
-/*
-*Proporciona la estructura documental de un trabajo
-*    idExpediente 
-*    idtrabajo
-*/
+/**
+ * Proporciona la estructura documental de un trabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 export const getestructuradocumental = (idExpediente, idTrabajo) =>
   api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
     .then(response => {
       return response.data;
     });
 
-/*
-*Funciones dummy previas aa la implementacion del metodo final
-*/
-//FUNCION DUMMY
 
-export function getDatosUsuario(id) {
-  let data = {
-    Expedientes: [
-      {
-        Expediente: '688685',
-        fecha: '05/06/2018',
-      },
-      {
-        Expediente: '683180',
-        fecha: '05/06/2018',
-      },
-      {
-        Expediente: '685062',
-        fecha: '05/06/2018',
-      },
-      {
-        Expediente: '693458',
-        fecha: '05/06/2018',
-      },
-    ],
-  }
-  return data;
-}
-
-/*Tipos de trámite*/
-export const getAllFormalities = () =>
-  api.get('/tipos/guia/tiposautorizacionmunicipal').then(response => {
-    return response;
-  });
-
-/*Tipos de obra, [Grupo temático]*/
-export const getTipoObra = (grupoRaiz,languageId=1) =>
-  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${grupoRaiz}&idioma=${languageId}`).then(response => {
-    return response;
-  });
-
-/**Todos los grupos raiz */
-export const getGruposRaiz = (idLanguage = 1) => 
-  api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`).then(response => {
+/**
+ * Proporciona la lista de grupos raiz
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getGruposRaiz = (idLanguage = 2) =>
+  api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`)
+      .then(response => {
   return response;
 });
+
+/**
+ * Inserta un trabajo encomenda (comunicacion de encargo) para un expediente
+ * @param data object {
+ *           "Id_Tipo_Grupo_Tematico": 1,
+ *           "Id_Tipo_Autorizacion_Municipal":1,
+ *           "Id_Tipo_Fase":1,
+ *           "Id_Tipo_Trabajo":219,
+ *           "Id_Tipo_Tramite":2,
+ *
+ *           "Colegiados": [
+ *             {   "Id_Colegiado":2853,
+ *                "Id_Tipo_Colegiado":1,
+ *                "Id_Sociedad":0,
+ *                "Porcentaje": 10,
+ *                "Ids_Funciones":"31,30",
+ *                "PorcentajesEquitativos": 1
+ *                     	}
+ *
+ *                     	],
+ *            "Promotores"	:[
+ *               {"id_entidad": -1,
+ *                 "Nif":"36110129H",
+ *                 "Id_Tipo_Entidad":1,
+ *                 "Id_Tipo_Encargante":3,
+ *                 "Nombre": "Manolo",
+ *                 "Apellido1":"Cadenas",
+ *                 "Apellido2":"",
+ *                 "Observaciones":null,
+ *                 "Id_Tipo_Organismo": null,
+ *                 "Mail":"cadenas@gamil.com",
+ *                 "Telefono":null,
+ *                  "Calle":"Gran vía",
+ *                 "Numero":null,
+ *                 "Piso":null,
+ *                 "Codigo_Postal" :null,
+ *                 "Id_Concello":36057,
+ *                 "PorcentajesEquitativos": 1
+ *             	}  	],
+ *             "IgnorarObservaciones":1
+ *             }
+ * @param id_expediente
+ * @returns {Promise}
+ */
+export const insertTrabajoEncomenda = (data, id_expediente) => {
+    return new Promise((success, error) => {
+        api.post(`/expedientes/${id_expediente}/trabajos/`, data)
+            .then(resultado => {
+                success(resultado)
+            }).catch(function (e) {
+            console.log(e.response.data.message)
+        });
+    })
+};

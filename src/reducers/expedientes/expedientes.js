@@ -53,8 +53,10 @@ const expedientes = (state = initialState, action) => {
       };
     
     case FETCH_EXPEDIENTES_ERROR:
-      return {initialState};
-
+        return {
+            ...state,
+            error: action.payload,
+        };
     case FETCH_UBICACION_SUCCESS:
         return {
               ...state,            
@@ -114,7 +116,6 @@ const expedientes = (state = initialState, action) => {
           ExpedientNew: action.payload,
         };  
     case FETCH_SAVE_ADRESS_TO_STORE:
-     
     
           const addressreducida=[
               {Calle:action.payload[0].Calle, Numero: action.payload[0].Numero,

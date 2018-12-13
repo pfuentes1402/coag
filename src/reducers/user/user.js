@@ -4,7 +4,7 @@ import {
 } from "../../actions/usuarios/types";
 import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO , FETCH_LANGUAGE} from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
 
@@ -200,8 +200,11 @@ const reducer = (state = initialstate, action) => {
           expedientes: []
         }
       }
-
-
+      case FETCH_LANGUAGE:
+          return {
+              ...state,
+             language: action.payload
+          }
 
     case PURGE:
 

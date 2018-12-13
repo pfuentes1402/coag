@@ -1,0 +1,110 @@
+{
+    "languages": {
+        "header": {
+            "titleHome": ["Inicio", "Inicio"],
+            "btnNewExpedient": ["Nuevo expediente","Meus Expedentes"],
+            "btnTramitacionLote": ["Tramitacion en lote","Tramitacion en lote\""]
+        },
+        "leftMenu": {
+            "titleMenu": [
+                "Acciones directas en expedientes existentes",
+                "Accions directas en expedentes existentes"
+            ],
+            "titleModificarExp": [
+                "Modificar datos expediente",
+                "Modificar datos expedente"
+            ],
+            "titleTramitarTrabajo": [
+                "Tramitar nuevo trabajo",
+                "Tramitar novo traballo"
+            ],
+            "titleLoa": [
+                "Solicitar Loa(libro de órdenes y asistencias)",
+                "Solicitar Loa(libro de ordes e asistencias)"
+            ],
+            "titleLi": [
+                "Solicitar Li(libro de incidencias)",
+                "Solicitar Li(libro de incidencias)"
+            ],
+            "titleCovertPaper": [
+                "convertir a digital expediente en papel",
+                "converter a dixital expedes en papel"
+            ],
+            "titleCloseExpedient": [
+                "cesar/cerrar expediente",
+                "cesar/pechar expedente"
+            ]
+        },
+        "generalButton": {
+            "cancel": [
+                "Cancelar",
+                "Cancelar"],
+            "add": [
+                "Agregar",
+                "Agregar"],
+            "save": [
+                "Guardar",
+                "Guardar"],
+            "next": [
+                "Siguiente",
+                "Siguiente"],
+            "validate": ["Validar",
+                "Validar"],
+            "exportCsv": [
+                "Exportar a CSV",
+                "Exportar a CSV"]
+        },
+        "expedients": {
+            "fieldCodigoExpediente": [
+                "CODIGO EXPEDIENTE",
+                "CODIGO EXPEDENTE"],
+            "fieldCodigoEstudio": [
+                "CODIGO ESTUDIO",
+                "CODIGO ESTUDIO"],
+            "fieldTitleExp": [
+                "TITULO DEL EXPEDIENTE",
+                "TITULO DEL EXPEDENTE"],
+            "fieldAntecedente": [
+                "ANTECEDENTE",
+                "ANTECEDENTE"],
+            "fieldObservaciones": [
+                "OBSERVACIONES",
+                "OBSERVACIONS"],
+            "helperTextObservaciones": [
+                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio.",
+                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio."],
+            "helperTextAddressValidate": [
+                "La dirección se proporciona automáticamente",
+                "La dirección se proporciona automáticamente"],
+            "fieldAliasDireccion": [
+                "ALIAS DIRECCION",
+                "ALIAS DIRECCION"],
+            "helperTextAliasDireccion": [
+                "Introducir un Alias para la dirección",
+                "Introducir un Alias para la dirección"],
+            "btnGuardarExpediente": [
+                "Guardary crear expediente",
+                "Guardary crear expediente"]
+        },
+        "comunicacionEncargo":{
+            "titleEligeTipoExpeiente": [
+                "Elige el tipo de expediente",
+                "Elige el tipo de expediente"],
+            "fieldTipoObra": [
+                "TIPO DE OBRA",
+                "TIPO DE OBRA"],
+            "fieldTipoTramite": [
+                "TIPO DE TRÁMITE",
+                "TIPO DE TRÁMITE"],
+            "titleVerDescription": [
+                "Ver descripción",
+                "Ver descripción"],
+            "titleTrabajoPosiblesTramitar": [
+                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido",
+                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido"]
+        }
+    }
+}
+
+
+
