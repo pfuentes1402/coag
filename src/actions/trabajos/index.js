@@ -128,8 +128,8 @@ export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) 
 }
 
 //TODO: Queda consumir el servicio si fuera necesario aquí
-export const dispatchDeleteAgenteTrabajoSeleccion = (nif) => (dispatch) => {
-    dispatch(deleteAgenteTrabajoSeleccion(nif));
+export const dispatchDeleteAgenteTrabajoSeleccion = (id) => (dispatch) => {
+    dispatch(deleteAgenteTrabajoSeleccion(id));
 }
 
 export const dispatchEditAgenteTrabajoSeleccion = (agente) => (dispatch) => {

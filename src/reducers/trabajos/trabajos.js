@@ -15,7 +15,8 @@ const initialState = {
   agentesTrabajoSelected: [],
   /**Este es el resultado de la busqueda */
   OtrosAgentesTrabajoSelec: [],
-  funcionesTipologia: []
+  funcionesTipologia: [],
+  colegiadosAgentesTrabajo: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,7 +36,8 @@ const reducer = (state = initialState, action) => {
     case ADD_AGENTE_TRABAJO:
          let agente = action.payload;
          let newAgent = {
-           Id_Entidad: agente.Id_Entidad, 
+           Id_Entidad: agente.Id_Entidad,
+           Id_Colegiado: agente.Id_Colegiado, 
            Nif: agente.Nif,
            Nombre: `${agente.Nombre} ${agente.Apellido1} ${agente.Apellido2}`,
            Porciento: agente.Porciento ? agente.Porciento : 0,
@@ -50,13 +52,13 @@ const reducer = (state = initialState, action) => {
     case DELETE_AGENTE_TRABAJO:
          return{
            ...state,
-           agentesTrabajoSelected: [...state.agentesTrabajoSelected].filter(element=> element.Nif !== action.payload)
+           agentesTrabajoSelected: [...state.agentesTrabajoSelected].filter(element=> element.Id_Colegiado !== action.payload)
          }
 
     case EDIT_AGENTE_TRABAJO:
          return{
            ...state,
-           OtrosAgentesTrabajoSelec: [action.payload]
+           colegiadosAgentesTrabajo: [action.payload]
          }
 
     case FETCH_TIPOS_TRABAJO:
@@ -78,6 +80,14 @@ const reducer = (state = initialState, action) => {
             ...state,
             OtrosAgentesTrabajoSelec: OtrosAgentes
           }
+
+        case 'colegiados':
+          const {Colegiados} = action.payload.data.data;
+          return{
+            ...state,
+            colegiadosAgentesTrabajo: Colegiados
+          }
+
         default:
           return {
             ...state

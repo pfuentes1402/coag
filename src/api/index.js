@@ -416,7 +416,6 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
 *    filtro
 */
 export const getBuscador = (filtro, tipoBusqueda) =>
-
   filtro === "" ? api.get(`/${tipoBusqueda}/`) : api.get(`/${tipoBusqueda}/?filtro=${filtro}`)
     .then(response => {
       //let test=  store ? store.getState().user.token : ''

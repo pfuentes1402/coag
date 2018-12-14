@@ -129,6 +129,8 @@ class Arquitecto extends Component {
   componentDidMount() {
     try{
       this.props.fetchFuncionesTipologia(1);
+      this.props.fetchBuscador(this.props.loguedUser.Id_Colegiado, "colegiados");
+      this.handleCanSearch(false);
     }
     catch (e){
       console.log("ERROR",e)
@@ -151,7 +153,7 @@ class Arquitecto extends Component {
     this.setState({ canSearch: cansearch })
   }
 
-  addFunctionToAgent = (nif, functionCode) => (event) =>{
+  addFunctionToAgent = (functionCode) => (event) =>{
     let tag = event.target.tagName === "SPAN"? event.target.parentNode : event.target;
     if(!this.state.functionsSelected.some(x=> x=== functionCode)){
       let funcion = this.props.funcionesTipologia.find(x=> x.Codigo === functionCode);
@@ -165,7 +167,7 @@ class Arquitecto extends Component {
     }
   }
 
-  handlePercentChange = nif => (event) => {
+  handlePercentChange = (event) => {
     this.setState({ percent: event.target.value });
   }
 
@@ -183,15 +185,15 @@ class Arquitecto extends Component {
 
   async handleSearch() {
     if (this.state.searchQuery !== "") {
-      await this.props.fetchBuscador(this.state.searchQuery, "otrosagentes");
+      await this.props.fetchBuscador(this.state.searchQuery, "colegiados");
     }
   }
 
-  addAgenteTrabajoToSelection(nif){
-    let agente = this.props.agentsSearchResult.find(x => x.Nif === nif);
+  addAgenteTrabajoToSelection(id){
+    let agente = this.props.colegiadosSearchResult.find(x => x.Id_Colegiado === id);
     if(agente){
-      if(this.props.agentesTrabajoSelected.some(x=> x.Nif === nif)){
-        this.deleteAgentSelection(nif);
+      if(this.props.agentesTrabajoSelected.some(x=> x.Id_Colegiado === id)){
+        this.deleteAgentSelection(id);
       }
       agente.Porciento = this.state.percent;
       agente.Funciones = this.state.functionsSelected;
@@ -202,12 +204,12 @@ class Arquitecto extends Component {
     this.handleCanSearch(false);
   }
 
-  deleteAgentSelection(nif){
-    this.props.deleteAgenteTrabajoSeleccion(nif);
+  deleteAgentSelection(id){
+    this.props.deleteAgenteTrabajoSeleccion(id);
   }
 
-  editAgenteSeleccion(nif){
-    let edit = this.props.agentesTrabajoSelected.find(x=> x.Nif === nif);
+  editAgenteSeleccion(id){
+    let edit = this.props.agentesTrabajoSelected.find(x=> x.Id_Colegiado === id);
     if(edit){
       this.setState(
         {
@@ -237,7 +239,7 @@ class Arquitecto extends Component {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow className={classes.headHeight}>
-                  <CustomTableHead className="text-uppercase">NIF</CustomTableHead>
+                  <CustomTableHead className="text-uppercase px-3">NIF</CustomTableHead>
                   <CustomTableHead className="p-0 text-center text-uppercase">Nombre</CustomTableHead>
                   <CustomTableHead className="p-3 text-center text-uppercase">%</CustomTableHead>
                   <CustomTableHead className="p-0 text-center text-uppercase">Función</CustomTableHead>
@@ -270,10 +272,10 @@ class Arquitecto extends Component {
                           </TableCell>
                           <TableCell className="p-0">
                               <Fab size="small" aria-label="Edit" className={classes.iconoption}
-                                 onClick={() => this.editAgenteSeleccion(row.Nif)}>
+                                 onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
                                 <EditIcon color="primary"/>
                               </Fab>
-                              <Fab size="small" aria-label="Delete" onClick={()=> this.deleteAgentSelection(row.Nif)}>
+                              <Fab size="small" aria-label="Delete" onClick={()=> this.deleteAgentSelection(row.Id_Colegiado)}>
                                 <DeleteIcon color="primary"/>
                               </Fab>
                           </TableCell>
@@ -335,12 +337,12 @@ class Arquitecto extends Component {
   renderSearchResult = () => {
     let { classes } = this.props;
     return (
-      this.state.canSearch ? this.props.agentsSearchResult.map((value, index) => {
+      this.state.canSearch ? this.props.colegiadosSearchResult.map((value, index) => {
         return <Grid item xs={12} key={index}>
           <Paper key={index} className={classes.resultPanel}>
             <Grid container spacing={24}>
               <Grid item xs={8}>
-                <Typography variant="h6" gutterBottom>{value.Mail}</Typography>
+                <Typography variant="h6" gutterBottom>Datos del Arquitecto</Typography>
                 <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
@@ -367,7 +369,7 @@ class Arquitecto extends Component {
                 </Typography>
                 {
                   this.props.funcionesTipologia.map((value, index) => {
-                    return <Button onClick={this.addFunctionToAgent(0, value.Codigo)} 
+                    return <Button onClick={this.addFunctionToAgent(value.Codigo)} 
                       className={this.state.functionsSelected.some(x=> x === value.Codigo) ? "slectedFunction": ""}
                       variant="contained"
                       key={index}>{value.Codigo}
@@ -386,7 +388,7 @@ class Arquitecto extends Component {
                       value={this.state.percent}
                       placeholder="Ej 25"
                       type="number"
-                      onChange={this.handlePercentChange(value.Nif)}
+                      onChange={this.handlePercentChange}
                       margin="normal" />
                   </Grid>
                   <Grid item xs={7}>
@@ -431,7 +433,7 @@ class Arquitecto extends Component {
                   Cancelar<Close className={classes.rightIcon} />
                 </Button>
                 <Button variant="contained" size="small" color="primary" className={classes.button}
-                  onClick={()=> this.addAgenteTrabajoToSelection(value.Nif)} 
+                  onClick={()=> this.addAgenteTrabajoToSelection(value.Id_Colegiado)} 
                   disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
                   AÑADIR
                 </Button>
@@ -476,7 +478,10 @@ const mapStateToProps = (state) => ({
   trabajos: state.trabajos,
   agentesTrabajoSelected: state.trabajos.agentesTrabajoSelected ? state.trabajos.agentesTrabajoSelected : [],
   agentsSearchResult: state.trabajos.OtrosAgentesTrabajoSelec ? state.trabajos.OtrosAgentesTrabajoSelec : [],
-  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : []
+  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
+  colegiadosSearchResult : state.trabajos.colegiadosAgentesTrabajo ? state.trabajos.colegiadosAgentesTrabajo : [],
+  loguedUser: state.user.DatosUsuarioValidado,
+  state:state
 })
 
 const mapDispatchToProps = {
