@@ -19,7 +19,8 @@ const initialstate = {
     "Es_Usuario_Delegado": "",
     "Es_Sociedad": "",
     "Mail": "",
-    "Fecha_Ultima_Conexion": ""
+    "Fecha_Ultima_Conexion": "",
+    "Nif" : ""
   },
 
   datosModal: [{ tituloModal: 0 }],

@@ -1,13 +1,9 @@
-
 import { handleLoggout } from './../helpers/logout.js'
-
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
 
-
 const BASE_PATH = "http://servicios.coag.es/api";
-
 /*
 *
 *Configuración base para las llamadas axios,
@@ -409,12 +405,9 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  * @returns {any}
  */
 export const getBuscador = (filtro, tipoBusqueda) =>
-
   filtro === "" ? api.get(`/${tipoBusqueda}/`) : api.get(`/${tipoBusqueda}/?filtro=${filtro}`)
     .then(response => {
       //let test=  store ? store.getState().user.token : ''
-
-
       return response;
     });
 
@@ -495,3 +488,19 @@ export const insertTrabajoEncomenda = (data, id_expediente) => {
         });
     })
 };
+
+/**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
+export const getFuncionesTipologia = (idLanguage = 1) =>
+  api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
+    return response;
+  });
+
+/**Agregar nuevos agentes a un trabajo */
+export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
+  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`,{ OtrosAgentes: otrosAgentes })
+    .then(response => {
+      return response;
+    }).catch(error => {
+      console.log("ERROR", error);
+      return 403;
+    });

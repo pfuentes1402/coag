@@ -4,8 +4,11 @@ import {
     getTiposAutorizacionMunicipal,
     getFasesTrabajos,
     getestructuradocumental,
-    getGruposRaiz
+    getGruposRaiz,
+    getFuncionesTipologia,
+    addAgentesTrabajo
 } from '../../api';
+
 
 import * as types from './types';
 
@@ -34,9 +37,16 @@ export const fetchErrorTrabajo = (error) => ({
     payload: error
 });
 
-export const gruposRaiz = (value) =>{
-    return{
+export const gruposRaiz = (value) => {
+    return {
         type: types.FETCH_GRUPOS_RAIZ,
+        payload: value
+    }
+}
+
+export const funcionesTipologias = (value) => {
+    return {
+        type: types.FETCH_FUNCIONES_TIPOLOGIA,
         payload: value
     }
 }
@@ -138,6 +148,16 @@ export const fetchGruposRaiz = (idLanguage = 2) => async (dispatch) => {
 export const fetchComunicacionencargo = (value) => async (dispatch) => {
     dispatch(comunicacionEncargo(value))
 };
+
+export const fetchFuncionesTipologia = (idLanguage = 1) => (dispatch) => {
+    getFuncionesTipologia(idLanguage).then((funcionesTip) => {
+        dispatch(funcionesTipologias(funcionesTip));
+    }).catch(
+        () => fetchError({ error: 'Algo ha salido mal' })
+    );
+}
+
+
 export const fetchEstructuraDocumentalTrabajo = (idExpediente, idTrabajo) => (dispatch) => {
     getestructuradocumental(idExpediente, idTrabajo).then((estructuraDoc) => {
 
@@ -156,4 +176,45 @@ export const dispatchEstructuraDocumentalTrabajo = (estructuraDoc) => ({
 export const dispachFilesToUpload = (files) => ({
     type: types.FILES_TO_UPLOAD,
     payload: files
+});
+
+
+//TODO: Queda consumir el servicio si fuera necesario aquí
+export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) => (dispatch) => {
+    let dataPost = [{
+        Id_Entidad: agent.Id_Entidad,
+        Firma: 1,
+        Ids_Funciones: "32",
+        PorcentajesEquitativos: 1,
+        Porcentaje: agent.Porciento
+    }]
+    addAgentesTrabajo(idExpediente,idTrabajo,dataPost).then(response=>{
+        dispatch(addAgenteTrabajoSeleccion(agent));
+    }).catch(
+        () => fetchError({ error: 'Algo ha salido mal' })
+    );
+}
+
+//TODO: Queda consumir el servicio si fuera necesario aquí
+export const dispatchDeleteAgenteTrabajoSeleccion = (id) => (dispatch) => {
+    dispatch(deleteAgenteTrabajoSeleccion(id));
+}
+
+export const dispatchEditAgenteTrabajoSeleccion = (agente) => (dispatch) => {
+    dispatch(editAgenteTrabajoSeleccion(agente));
+}
+
+export const addAgenteTrabajoSeleccion = (agente) => ({
+    type: types.ADD_AGENTE_TRABAJO,
+    payload: agente
+});
+
+export const deleteAgenteTrabajoSeleccion = (agente) => ({
+    type: types.DELETE_AGENTE_TRABAJO,
+    payload: agente
+});
+
+export const editAgenteTrabajoSeleccion = (agente) => ({
+    type: types.EDIT_AGENTE_TRABAJO,
+    payload: agente
 });

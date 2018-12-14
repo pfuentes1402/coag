@@ -7,8 +7,7 @@ import Login from "./components/login/Login";
 import Profile from "./components/Profile/Profile";
 import ComunicacionEncargo from "./components/ComunicacionEncargo";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
-import ContenedorExpedientes from "./containers/ContenedorExpedientes";
-
+import Agentes from './components/Agentes';
 
 class Main extends Component {
 
@@ -24,7 +23,7 @@ class Main extends Component {
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/comunicacion' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
-                    <Route path='/agente' component={(props) => <ContenedorExpedientes {...props}/>}/>
+                    <Route path="/agentes" component={(props) => <Agentes {...props}/>}/>
                 </Switch>
             </div>
 

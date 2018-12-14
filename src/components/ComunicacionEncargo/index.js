@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { withLocalize } from "react-localize-redux";
-import { Translate } from "react-localize-redux";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -57,14 +55,14 @@ const styles = theme => ({
         minHeight: 42
     },
     panelBody: {
-        backgroundColor: grey[100]
+        backgroundColor: grey[50]
     },
     selectTitle: {
         color: theme.palette.secondary.main + ' !important',
         textTransform: 'uppercase',
     },
     titleMainPanel: {
-        borderBottom: '1.5px solid ' + theme.palette.secondary.medium,
+        borderBottom: '1.5px solid ' + grey[100],
     },
     marginPanel: {
         margin: '15px 0px'
