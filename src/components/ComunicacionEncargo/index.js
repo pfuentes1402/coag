@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { getTipoObra, getGruposRaiz } from '../../api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { grey } from '@material-ui/core/colors';
+import { grey} from '@material-ui/core/colors';
 
 const styles = theme => ({
     root: {
@@ -36,7 +36,8 @@ const styles = theme => ({
         color: theme.palette.text.secondary,
     },
     formControl: {
-        width: '100%'
+        width: '100%',
+        marginTop: 16
     },
     margin: {
         marginTop: 30

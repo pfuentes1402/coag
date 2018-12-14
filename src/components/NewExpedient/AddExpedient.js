@@ -156,7 +156,7 @@ class AddExpedient extends Component {
                 'IgnorarObservaciones': 1
             }
             this.props.postUbicacion(expediente);
-            this.props.history.push("/");
+            this.props.history.push("/comunicacion");
         }
 
     }
