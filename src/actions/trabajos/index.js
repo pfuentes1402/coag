@@ -149,12 +149,16 @@ export const fetchComunicacionencargo = (value) => async (dispatch) => {
     dispatch(comunicacionEncargo(value))
 };
 
-export const fetchFuncionesTipologia = (idLanguage = 1) => (dispatch) => {
-    getFuncionesTipologia(idLanguage).then((funcionesTip) => {
-        dispatch(funcionesTipologias(funcionesTip));
-    }).catch(
-        () => fetchError({ error: 'Algo ha salido mal' })
-    );
+export const fetchFuncionesTipologia = (idLanguage = 1) => async (dispatch) => {
+    try {
+        let response = await  getFuncionesTipologia(idLanguage);
+        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
+            dispatch(fetchErrorTrabajo(response.data))
+            :
+            dispatch(funcionesTipologias(response));
+    }catch (error) {
+        dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
+    }
 }
 
 
@@ -180,7 +184,7 @@ export const dispachFilesToUpload = (files) => ({
 
 
 //TODO: Queda consumir el servicio si fuera necesario aquí
-export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) => (dispatch) => {
+export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) => async (dispatch) => {
     let dataPost = [{
         Id_Entidad: agent.Id_Entidad,
         Firma: 1,
@@ -188,11 +192,13 @@ export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) 
         PorcentajesEquitativos: 1,
         Porcentaje: agent.Porciento
     }]
-    addAgentesTrabajo(idExpediente,idTrabajo,dataPost).then(response=>{
+    try {
+        let response = await addAgentesTrabajo(idExpediente,idTrabajo, dataPost);
         dispatch(addAgenteTrabajoSeleccion(agent));
-    }).catch(
-        () => fetchError({ error: 'Algo ha salido mal' })
-    );
+    }catch (error) {
+        dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
+    }
+
 }
 
 //TODO: Queda consumir el servicio si fuera necesario aquí

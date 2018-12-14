@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -97,7 +98,12 @@ const styles = theme => ({
   iconoption:{
     margin: theme.spacing.unit,
     color: theme.palette.text.primary
-  }
+  },
+    buttonEdit: {
+        border: "1px solid",
+        padding: 8,
+        margin: 4
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -271,13 +277,13 @@ class Arquitecto extends Component {
                             </Grid>
                           </TableCell>
                           <TableCell className="p-0">
-                              <Fab size="small" aria-label="Edit" className={classes.iconoption}
+                              <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
                                  onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
-                                <EditIcon color="primary"/>
-                              </Fab>
-                              <Fab size="small" aria-label="Delete" onClick={()=> this.deleteAgentSelection(row.Id_Colegiado)}>
-                                <DeleteIcon color="primary"/>
-                              </Fab>
+                                <EditIcon />
+                              </IconButton >
+                              <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete" onClick={()=> this.deleteAgentSelection(row.Id_Colegiado)}>
+                                <DeleteIcon />
+                              </IconButton>
                           </TableCell>
                         </TableRow>
                       );

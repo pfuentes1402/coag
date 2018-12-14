@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -276,6 +278,10 @@ class ComunicacionEncargo extends React.Component {
         )
     }
 
+    handleNext(){
+        this.props.history.push("/comunicacion/agentes");
+    }
+
     render() {
         let { classes } = this.props;
         let { expandedChild, expanded } = this.state;
@@ -384,7 +390,7 @@ class ComunicacionEncargo extends React.Component {
                         Cancelar
                                 <Close className={classes.rightIcon} />
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleNext()}}>
                         Siguiente
                                 <Next className={classes.rightIcon} />
                     </Button>
