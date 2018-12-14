@@ -377,7 +377,7 @@
       <workItem from="1544228977240" duration="428000" />
       <workItem from="1544644083381" duration="131000" />
       <workItem from="1544818625887" duration="494000" />
-      <workItem from="1544819616077" duration="1013000" />
+      <workItem from="1544819616077" duration="1035000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -435,11 +435,18 @@
       <option name="project" value="LOCAL" />
       <updated>1544819943487</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js">
+      <created>1544825364270</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1544825364270</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224341000" />
+    <option name="totallyTimeSpent" value="224363000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
