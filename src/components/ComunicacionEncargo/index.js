@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { getTipoObra, getGruposRaiz } from '../../api';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
     root: {
@@ -54,14 +55,14 @@ const styles = theme => ({
         minHeight: 42
     },
     panelBody: {
-        backgroundColor: theme.palette.secondary.light
+        backgroundColor: grey[50]
     },
     selectTitle: {
         color: theme.palette.secondary.main + ' !important',
         textTransform: 'uppercase',
     },
     titleMainPanel: {
-        borderBottom: '1.5px solid ' + theme.palette.secondary.medium,
+        borderBottom: '1.5px solid ' + grey[100],
     },
     marginPanel: {
         margin: '15px 0px'
@@ -93,12 +94,12 @@ const mapStateToProps = (state) => (
     }
 );
 
-const mapDispatchToProps =  {
-        fetchTipoTrabajo: fetchTipoTrabajo,
-        fetchTipoAutorizacion: fetchTipoAutorizacion,
-        fetchFasesTrabajos: fetchFasesTrabajos,
-        fetchGruposRaiz: fetchGruposRaiz
-    };
+const mapDispatchToProps = {
+    fetchTipoTrabajo: fetchTipoTrabajo,
+    fetchTipoAutorizacion: fetchTipoAutorizacion,
+    fetchFasesTrabajos: fetchFasesTrabajos,
+    fetchGruposRaiz: fetchGruposRaiz
+};
 
 
 class ComunicacionEncargo extends React.Component {
@@ -120,6 +121,7 @@ class ComunicacionEncargo extends React.Component {
         await this.props.fetchTipoAutorizacion(1);
         await this.transformGruposRaiz();
         this.updateFaseTrabajo(0);
+        console.log("this.props", this.props);
     }
 
     async transformGruposRaiz() {
@@ -130,7 +132,7 @@ class ComunicacionEncargo extends React.Component {
             arrayRaiz = await this.gruposRaizData(gruposRaiz, tiposTramite);
         }
         this.props.fetchGruposRaiz(arrayRaiz);
-        console.log("arrayRaiz",arrayRaiz);
+        console.log("arrayRaiz", arrayRaiz);
     }
 
     async gruposRaizData(gruposRaiz, tiposTramite) {
@@ -183,9 +185,9 @@ class ComunicacionEncargo extends React.Component {
         let gruposRaiz = this.props.gruposRaiz[index];
         let id = event.target.value;
         this.props.fetchFasesTrabajos(id, gruposRaiz.tramiteSelection, 1);
-        let indexTipoObra = gruposRaiz.tiposObra.findIndex(x=> x.Id_Tipo_Grupo_Tematico === id);
+        let indexTipoObra = gruposRaiz.tiposObra.findIndex(x => x.Id_Tipo_Grupo_Tematico === id);
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz,this.props.gruposRaiz);
+        Object.assign(updateGrupoRaiz, this.props.gruposRaiz);
         updateGrupoRaiz[index].obraSelection = id;
         updateGrupoRaiz[index].description = gruposRaiz.tiposObra[indexTipoObra].Observaciones;
         this.props.fetchGruposRaiz(updateGrupoRaiz);
@@ -196,7 +198,7 @@ class ComunicacionEncargo extends React.Component {
         let id = event.target.value;
         this.props.fetchFasesTrabajos(gruposRaiz.obraSelection, id, 1);
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz,this.props.gruposRaiz);
+        Object.assign(updateGrupoRaiz, this.props.gruposRaiz);
         updateGrupoRaiz[index].tramiteSelection = id;
         this.props.fetchGruposRaiz(updateGrupoRaiz);
     }
@@ -210,7 +212,6 @@ class ComunicacionEncargo extends React.Component {
         var relationsData = [[], []];
         if (!this.props.trabajos.fasesTrabajos.data)
             return relationsData;
-
         this.props.trabajos.fasesTrabajos.data.FasesTrabajos.map(value => {
             const { Fase } = value;
             if (relations.filter(rel => rel.category === Fase).length === 0) {
@@ -249,9 +250,9 @@ class ComunicacionEncargo extends React.Component {
         return relationsData;
     }
 
-    updateFaseTrabajo(index){
+    updateFaseTrabajo(index) {
         let currentGrupoRaiz = this.props.gruposRaiz[index];
-        this.props.fetchFasesTrabajos(currentGrupoRaiz.obraSelection, currentGrupoRaiz.tramiteSelection,1);
+        this.props.fetchFasesTrabajos(currentGrupoRaiz.obraSelection, currentGrupoRaiz.tramiteSelection, 1);
     }
 
     renderRelationWorks = () => {
@@ -314,7 +315,7 @@ class ComunicacionEncargo extends React.Component {
                                             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
                                                 expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
                                                 className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
-                                                onClick={()=>{this.updateFaseTrabajo(index)}}>
+                                                onClick={() => { this.updateFaseTrabajo(index) }}>
                                                 {value.name}
                                             </ExpansionPanelSummary>
                                             <ExpansionPanelDetails className={classes.panelBody}>
@@ -344,7 +345,7 @@ class ComunicacionEncargo extends React.Component {
                                                                     {
                                                                         value.tiposTramite.map((value, index) => {
                                                                             return <MenuItem key={index} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
-                                                                    })}
+                                                                        })}
                                                                 </Select>
                                                             </FormControl>
                                                         </Grid>
@@ -392,11 +393,11 @@ class ComunicacionEncargo extends React.Component {
                 <div className={classes.right}>
                     <Button color="primary" className={classes.button}>
                         Cancelar
-                                <Close className={classes.rightIcon} />
+                        <Close className={classes.rightIcon} />
                     </Button>
                     <Button variant="contained" color="primary" className={classes.button}>
                         Siguiente
-                                <Next className={classes.rightIcon} />
+                        <Next className={classes.rightIcon} />
                     </Button>
                 </div>
             </Container>

@@ -139,7 +139,6 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
    
    dispatch(fetchFiltroUsuario(temp, temp2));
     getBuscador(temp,tipoBusqueda).then((data) => {
-      
        dispatch(fetchDataResults(data,tipoBusqueda));
     })
         .catch(
