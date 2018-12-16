@@ -1,7 +1,12 @@
-import { FETCH_TIPOS_TRABAJO, FETCH_TRABAJOS_ERROR, FETCH_TIPOS_AUTORIZACION,
-   FETCH_FASES_TRABAJOS, FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO, FILES_TO_UPLOAD,
-   FETCH_GRUPOS_RAIZ, FETCH_FUNCIONES_TIPOLOGIA, ADD_AGENTE_TRABAJO, 
-   DELETE_AGENTE_TRABAJO, EDIT_AGENTE_TRABAJO } from "../../actions/trabajos/types";
+import { FETCH_TIPOS_TRABAJO,
+    FETCH_TRABAJOS_ERROR,
+    FETCH_TIPOS_AUTORIZACION,
+   FETCH_FASES_TRABAJOS,
+    FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO,
+    FILES_TO_UPLOAD,
+   FETCH_GRUPOS_RAIZ, FETCH_COMUNICACION_ENCARGO, FETCH_FUNCIONES_TIPOLOGIA, ADD_AGENTE_TRABAJO,
+    DELETE_AGENTE_TRABAJO, EDIT_AGENTE_TRABAJO } from "../../actions/trabajos/types";
+
 import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
@@ -18,9 +23,14 @@ const initialState = {
   funcionesTipologia: [],
   colegiadosAgentesTrabajo: []
 };
-
 const reducer = (state = initialState, action) => {
+
   switch (action.type) {
+      case FETCH_COMUNICACION_ENCARGO:
+          return{
+              ...state,
+              comunicacionEncargo: action.payload,
+          };
     case FETCH_GRUPOS_RAIZ:
           return{
               ...state,
@@ -37,7 +47,7 @@ const reducer = (state = initialState, action) => {
          let agente = action.payload;
          let newAgent = {
            Id_Entidad: agente.Id_Entidad,
-           Id_Colegiado: agente.Id_Colegiado, 
+           Id_Colegiado: agente.Id_Colegiado,
            Nif: agente.Nif,
            Nombre: `${agente.Nombre} ${agente.Apellido1} ${agente.Apellido2}`,
            Porciento: agente.Porciento ? agente.Porciento : 0,
@@ -111,7 +121,10 @@ const reducer = (state = initialState, action) => {
         filesToUpload: action.payload,
       };
     case FETCH_TRABAJOS_ERROR:
-      return initialState;
+        return {
+            ...state,
+            error: action.payload,
+        };
     case PURGE:
       return initialState;
     default:

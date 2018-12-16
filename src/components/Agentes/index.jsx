@@ -59,7 +59,7 @@ class Agentes extends Component {
           <Button color="primary" size="small" className="float-right mx-2">
             Cancelar<Close className={classes.rightIcon} />
           </Button>
-          <Button color="primary" size="small" className="float-left px-4">
+          <Button color="primary" size="small" className="float-left px-4" onClick={()=>{this.props.history.push("/comunicacion")}}>
             Volver
           </Button>
         </Grid>

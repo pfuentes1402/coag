@@ -8,10 +8,10 @@ export const fetchInit = () => ({
 });
 export const fetchSuccessusuario = (data) => (   
     {
-   
     type: types.FETCH_DATOSDEUSUARIO_SUCCESS,
     payload: data
 });
+
 export const fetchError = (error) => ({
     type: types.FETCH_EXPEDIENTES_ERROR,
     payload: error
@@ -37,6 +37,12 @@ export const CambiaSelect = (data) => ({
 export const confUsuarioActualizada = (data) => ({
     type: types.NUEVA_CONF_USUARIO,
    payload:data
+});
+
+export const fetchLanguage = (language) => (
+    {
+    type: types.FETCH_LANGUAGE,
+    payload: language
 });
 
 export const fetchSelect = (data)=>

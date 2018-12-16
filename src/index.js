@@ -5,7 +5,7 @@ import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {blue, pink, grey} from '@material-ui/core/colors';
-
+import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import { BrowserRouter} from 'react-router-dom';
 import "../node_modules/uppy/dist/uppy.css";
@@ -53,7 +53,9 @@ ReactDOM.render((
             <LocalizeProvider store={store} >
                 <PersistGate loading={null} persistor={persistor}>
                     <BrowserRouter>
-                        <App/>
+                        <CookiesProvider>
+                             <App/>
+                        </CookiesProvider>
                     </BrowserRouter>
                 </PersistGate>
             </LocalizeProvider>

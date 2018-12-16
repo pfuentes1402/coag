@@ -2,19 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import {withRouter} from "react-router-dom";
-import {Button, IconButton , MenuList, MenuItem, Popper, Grow, Paper, ClickAwayListener } from '@material-ui/core';
+import {Button, IconButton } from '@material-ui/core';
 import { Container, Row, Col } from 'reactstrap';
 import coag from './images/coag.jpg';
 import './MenuAppBar.css';
 import { connect } from 'react-redux';
+import { withLocalize } from 'react-localize-redux';
+import { Translate } from "react-localize-redux";
+import {Add, Settings, Search} from "@material-ui/icons";
+import MenuUser from "../Menus/user";
+import MenuLanguage from "../Menus/language";
 import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchMuestraModal, fetchCambiaStatoModalBuscador,fetchCambiaStadoModal } from './../../actions/interfaz/index';
-import { withLocalize, Translate } from 'react-localize-redux';
-import menuBarTranslations from './../../traducciones/menubar.json'
-import globalTranslations from './../../traducciones/global.json';
-import { renderToStaticMarkup } from "react-dom/server";
-import {Add, Settings, Search, Person} from "@material-ui/icons";
-import persistor from "../../index";
 
 
 const styles = theme => ({
@@ -49,23 +48,9 @@ class MenuAppBar extends React.Component {
         auth: true,
         open: false,
     };
-      this.props.addTranslation(menuBarTranslations);
-        this.props.initialize({
-          languages: [
-            { name: "Castellano", code: "es" },
-            { name: "Gallego", code: "gal" }
-          ],
-          translation: globalTranslations,
-          options: { renderToStaticMarkup }
-        });
+
   }
 
-    
-    handleLoggout(){
-        localStorage.clear();
-        persistor.purge();
-        this.props.history.push('/');
-    }
 
     handleHome = () =>{
       this.props.goHome();
@@ -84,23 +69,8 @@ class MenuAppBar extends React.Component {
         this.props.fetchCambiaStadoModal();
       }
 
-    handleToggle = () => {
-        this.setState(state => ({ open: !state.open }));
-    };
-
-
-    handleClose = () => {
-        this.setState({open: false });
-    };
-
-    handleNav(uri){
-        this.setState({ open: false });
-        this.props.history.push(uri);
-    }
-
     render() {
-        const {classes} = this.props;
-        let {open} = this.state;
+        let {classes} = this.props;
 
         return (
             <Container className="full">
@@ -110,21 +80,18 @@ class MenuAppBar extends React.Component {
                     </Col>
                     <Col xs={3} sm={3} md={2} lg={2} className={classes.col}>
                         <Button color="secondary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>
-                            <Translate id="menubar.Home">
-                            </Translate>
+                            <Translate id="languages.header.titleHome"/>
                         </Button>
                     </Col>
                     <Col xs={10} sm={8} md={5} lg={5} className={classes.col}>
                         <div className="botonesBarra">
                             <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.props.history.push("/nuevo-expediente")}}>
-                                    <Translate id="menubar.NewExpe">
-                                    </Translate>
+                                    <Translate id="languages.header.btnNewExpedient"/>
                                     <Add className={classes.rightIcon}/>
 
                             </Button>
                             <Button variant="outlined" color="secondary" className={classes.button}>
-                                <Translate id="menubar.BatchRequest">
-                                </Translate>
+                                <Translate id="languages.header.btnTramitacionLote"/>
                                 <Settings className={classes.rightIcon}/>
                             </Button>
                             <IconButton color="secondary" className={classes.button}
@@ -134,35 +101,11 @@ class MenuAppBar extends React.Component {
                         </div>
 
                     </Col>
-                    <Col xs={2} sm={4} md={1} lg={2} className={classes.col} style={{textAlign: "right"}}>
-                        <IconButton color="secondary"
-                            buttonRef={node => {
-                                this.anchorEl = node;
-                            }}
-                            aria-owns={open ? 'menu-list-grow' : undefined}
-                            aria-haspopup="true"
-                            onClick={this.handleToggle}
-                        >
-                            <Person/>
-                        </IconButton>
-                        <Popper open={open} anchorEl={this.anchorEl} style={{zIndex:2 }} transition disablePortal>
-                            {({ TransitionProps, placement }) => (
-                                <Grow
-                                    {...TransitionProps}
-                                    id="menu-list-grow"
-                                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}
-                                >
-                                    <Paper>
-                                        <ClickAwayListener onClickAway={this.handleClose}>
-                                            <MenuList>
-                                                <MenuItem onClick={()=> {this.handleNav("/profile")}}>{this.props.usuario }</MenuItem>
-                                                <MenuItem  onClick={()=> {this.handleLoggout()}} >logout</MenuItem>
-                                            </MenuList>
-                                        </ClickAwayListener>
-                                    </Paper>
-                                </Grow>
-                            )}
-                        </Popper>
+                    <Col xs={2} sm={4} md={1} lg={2} className={classes.col} >
+                        <div style={{display: "flex", textAlign: "right"}}>
+                            <MenuLanguage/>
+                            <MenuUser/>
+                        </div>
                     </Col>
                 </Row>
 
@@ -174,9 +117,11 @@ MenuAppBar.propTypes = {
     classes: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => (
+    {
       usuario: state.user.DatosUsuarioValidado.Usuario ? state.user.DatosUsuarioValidado.Usuario : 'Login',
-     });
+     }
+     );
   
   const mapDispatchToProps = {
     purgarStore,

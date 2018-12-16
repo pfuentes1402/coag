@@ -3,6 +3,12 @@ import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getE
 
 import * as types from './types';
 
+const formatMenssage = (error) => (
+      {
+        "MensajesProcesado": [ {"Mensaje": error}]
+     }
+)
+
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
 });
@@ -27,7 +33,7 @@ export const fetchSuccesTrabajosExpediente = (data) => ({
     payload: data
 });
 
-export const fetchError = (error) => ({
+export const fetchErrorExpediente = (error) => ({
     type: types.FETCH_EXPEDIENTES_ERROR,
     payload: error
 });
@@ -57,17 +63,14 @@ export const fetchExpedienteSelected = (response) => ({
 */
 export const fetchsaveAdressTostore = (address,refcatastral) => (  
     {
-   
     type: types.FETCH_SAVE_ADRESS_TO_STORE,
     payload:[address,refcatastral]
 });
 
 export const saveAdressTostore = (address, refcatastral) =>
-
-(dispatch) => {   
-   
-        dispatch(fetchsaveAdressTostore(address,refcatastral));
-          };
+    async (dispatch) => {
+        dispatch(fetchsaveAdressTostore(address, refcatastral));
+};
 
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
@@ -101,7 +104,7 @@ export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
     getEstructuraDocumental(id_expediente,idtrabajo).then((expedientes) => {       
         dispatch(fetchSuccessTrabajo(expedientes));       
     }).catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
     );
 };
 
@@ -142,7 +145,7 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
        dispatch(fetchDataResults(data,tipoBusqueda));
     })
         .catch(
-        () => fetchError({ error: 'Algo ha salido mal en la busqueda'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda'})
     );
 };
 
@@ -166,7 +169,7 @@ export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
        
     })
         .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
     );
 };
 /*
@@ -181,7 +184,7 @@ export const fetchExpedienteDatosGeneral = (id_expediente) =>
         dispatch(fetchSuccesExpediente(expedientes));
     })
         .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
     );
 };
 /*
@@ -196,20 +199,24 @@ export const fetchExpedienteTrabajos= (id_expediente) =>
         dispatch(fetchSuccesTrabajosExpediente(trabajos));
     })
         .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
     );
 };
 
 
 
-export const validateAddress = (id_ubicacion) => 
+export const validateAddress =  (id_ubicacion) =>
+    async (dispatch) => {
+        try {
+            let response = await getValidateAddress(id_ubicacion);
+            response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
+                dispatch(fetchErrorExpediente(response.data))
+                :
+                dispatch(fetchAddress(response.data, id_ubicacion))
+        }catch (error) {
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
 
-(dispatch) => {
-    getValidateAddress(id_ubicacion).then(async (response) => {
-        dispatch(await fetchAddress(response.data, id_ubicacion));
-    })        .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    );
 };
 
 export const updateAddress = (address) =>
@@ -230,20 +237,25 @@ export const fetchexpedientesUser = () =>
         dispatch(fetchSuccess(response));
     })
         .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
+        () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
     );
 };
-
-export const postUbicacion = (data)=>
- dispatch => {
-    postNuevoExpediente(data).then((response) => {
-      
-        dispatch(fetchExpedientSave(response));
-    })
-        .catch(
-        () => fetchError({ error: 'Algo ha salido mal'})
-    );
-    
+/**
+ * Insertar nuevo expediente con emplazamientos
+ * @param data
+ * @returns {Function}
+ */
+export const postUbicacion = (data) =>
+ async dispatch => {
+    try {
+        let response = await postNuevoExpediente(data);
+        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
+            dispatch(fetchErrorExpediente(response))
+            :
+            dispatch(fetchExpedientSave(response))
+    }catch (error) {
+        dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+    }
 };
 
 
@@ -265,7 +277,7 @@ export const fetchTrabajoDatosGeneral = (id_expediente, id_Trabajo) =>
               dispatch(fetchSuccesTrabajoDatosgenerales(DatosTrabajo));
                       })
               .catch(
-              () => fetchError({ error: 'Algo ha salido mal'})
+              () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
           );
       };
 
@@ -315,7 +327,7 @@ export const setSelectedExpedienteTo = (datos) =>
                 
                 })
                  .catch(
-              ()=> fetchError({ error: 'Algo ha salido mal'})
+              ()=> fetchErrorExpediente({ error: 'Algo ha salido mal'})
         );             
     
 };
@@ -345,7 +357,7 @@ export const fetchgetAcciones= (id_expediente, id_Trabajo) =>
          
                       })
               .catch(
-              () => fetchError({ error: 'Algo ha salido mal'})
+              () => fetchErrorExpediente({ error: 'Algo ha salido mal'})
           );
       };
 

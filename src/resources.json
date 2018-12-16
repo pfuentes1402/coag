@@ -1,0 +1,166 @@
+{
+    "languages": {
+        "header": {
+            "titleHome": ["Inicio", "Inicio"],
+            "btnNewExpedient": ["Nuevo expediente","Meus Expedentes"],
+            "btnTramitacionLote": ["Tramitacion en lote","Tramitacion en lote\""]
+        },
+        "leftMenu": {
+            "titleMenu": [
+                "Acciones directas en expedientes existentes",
+                "Accions directas en expedentes existentes"
+            ],
+            "titleModificarExp": [
+                "Modificar datos expediente",
+                "Modificar datos expedente"
+            ],
+            "titleTramitarTrabajo": [
+                "Tramitar nuevo trabajo",
+                "Tramitar novo traballo"
+            ],
+            "titleLoa": [
+                "Solicitar Loa(libro de órdenes y asistencias)",
+                "Solicitar Loa(libro de ordes e asistencias)"
+            ],
+            "titleLi": [
+                "Solicitar Li(libro de incidencias)",
+                "Solicitar Li(libro de incidencias)"
+            ],
+            "titleCovertPaper": [
+                "convertir a digital expediente en papel",
+                "converter a dixital expedes en papel"
+            ],
+            "titleCloseExpedient": [
+                "cesar/cerrar expediente",
+                "cesar/pechar expedente"
+            ]
+        },
+        "generalButton": {
+            "cancel": [
+                "Cancelar",
+                "Cancelar"],
+            "add": [
+                "Agregar",
+                "Agregar"],
+            "save": [
+                "Guardar",
+                "Guardar"],
+            "next": [
+                "Siguiente",
+                "Siguiente"],
+            "validate": ["Validar",
+                "Validar"],
+            "exportCsv": [
+                "Exportar a CSV",
+                "Exportar a CSV"],
+            "added":[
+                "Añadir",
+                "Añadir"
+            ]
+        },
+        "expedients": {
+            "fieldCodigoExpediente": [
+                "CODIGO EXPEDIENTE",
+                "CODIGO EXPEDENTE"],
+            "fieldCodigoEstudio": [
+                "CODIGO ESTUDIO",
+                "CODIGO ESTUDIO"],
+            "fieldTitleExp": [
+                "TITULO DEL EXPEDIENTE",
+                "TITULO DEL EXPEDENTE"],
+            "fieldAntecedente": [
+                "ANTECEDENTE",
+                "ANTECEDENTE"],
+            "fieldObservaciones": [
+                "OBSERVACIONES",
+                "OBSERVACIONS"],
+            "helperTextObservaciones": [
+                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio.",
+                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio."],
+            "helperTextAddressValidate": [
+                "La dirección se proporciona automáticamente",
+                "La dirección se proporciona automáticamente"],
+            "fieldAliasDireccion": [
+                "ALIAS DIRECCION",
+                "ALIAS DIRECCION"],
+            "helperTextAliasDireccion": [
+                "Introducir un Alias para la dirección",
+                "Introducir un Alias para la dirección"],
+            "btnGuardarExpediente": [
+                "Guardary crear expediente",
+                "Guardary crear expediente"]
+        },
+        "comunicacionEncargo":{
+            "titleEligeTipoExpeiente": [
+                "Elige el tipo de expediente",
+                "Elige el tipo de expediente"],
+            "fieldTipoObra": [
+                "TIPO DE OBRA",
+                "TIPO DE OBRA"],
+            "fieldTipoTramite": [
+                "TIPO DE TRÁMITE",
+                "TIPO DE TRÁMITE"],
+            "titleVerDescription": [
+                "Ver descripción",
+                "Ver descripción"],
+            "titleTrabajoPosiblesTramitar": [
+                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido",
+                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido"]
+        },
+        "agentes":{
+            "tableColumnName":[
+                "Nombre", "Nombre"
+            ],
+            "tableColumnFunction":[
+                "Función","Función"
+            ],
+            "searchLabelBox": [
+                "Introduce términos de búsqueda",
+                "Introduce términos de búsqueda"
+            ],
+            "searchLabelOption":[
+                "Opción de búsqueda",
+                "Opción de búsqueda"
+            ],
+            "search":[
+                "Buscar",
+                "Buscar"
+            ],
+            "firstName":[
+                "Primer Apellido",
+                "Primer Apellido"
+            ],
+            "secondName":[
+                "Segundo Apellido",
+                "Segundo Apellido"
+            ],
+            "observations":[
+                "Observaciones",
+                "Observaciones"
+            ],
+            "functionsTitle":[
+                "Funciones compatibles con la tipología",
+                "Funciones compatibles con la tipología"
+            ],
+            "percentTitle":[
+                "Porcentage",
+                "Porcentage"
+            ],
+            "percentLabel": [
+                "Porcntaje equitativo con el resto de los Arquitectos",
+                "Porcntaje equitativo con el resto de los Arquitectos"
+            ],
+            "conditionTermn1":[
+                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables.",
+                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables."
+            ],
+            "conditionTermn2":[
+                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente",
+                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente"
+            ]
+        }
+    }
+}
+
+
+

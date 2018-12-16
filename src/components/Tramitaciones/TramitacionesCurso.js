@@ -18,7 +18,7 @@ import { Button } from 'reactstrap';
 
 function internationalization (param){
  
-    return param==='es'?traduccionGrid:traduccionGridGallego
+    return param==='1'? traduccionGrid :  traduccionGridGallego
 }
 
 const styles = ({

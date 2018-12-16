@@ -2,8 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/Errors/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/Menus/language/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/Menus/user/index.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/resources.json" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/resources.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.js" afterPath="$PROJECT_DIR$/src/Main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/types.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/types.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/usuarios/types.js" afterPath="$PROJECT_DIR$/src/actions/usuarios/types.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Busquedas/TablaBusquedaArquitectos.js" afterPath="$PROJECT_DIR$/src/components/Busquedas/TablaBusquedaArquitectos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/Profile.js" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/HomeContainer.js" afterPath="$PROJECT_DIR$/src/containers/HomeContainer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/index.js" afterPath="$PROJECT_DIR$/src/containers/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" afterPath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/user/user.js" afterPath="$PROJECT_DIR$/src/reducers/user/user.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -192,7 +220,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -251,6 +278,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,6 +406,7 @@
       <workItem from="1544644083381" duration="131000" />
       <workItem from="1544818625887" duration="494000" />
       <workItem from="1544819616077" duration="1035000" />
+      <workItem from="1544825446035" duration="256000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -446,7 +475,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="224363000" />
+    <option name="totallyTimeSpent" value="224619000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -460,12 +489,12 @@
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.49415693" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.48722318" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.78652966" sideWeight="0.27083334" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31621003" sideWeight="0.7291667" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.50584304" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31621003" sideWeight="0.7291667" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.51277685" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32990867" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -838,16 +867,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-          <folding>
-            <marker date="1544816193817" expanded="true" signature="7:155" ph="..." />
-            <marker date="1544816193817" expanded="true" signature="2827:2904" ph="{...}" />
-            <marker date="1544816193817" expanded="true" signature="2827:3437" ph="{...}" />
-            <marker date="1544816193817" expanded="true" signature="2844:2896" ph="..." />
-            <marker date="1544816193817" expanded="true" signature="2862:2896" ph="{...}" />
-            <marker date="1544816193817" expanded="true" signature="2950:3016" ph="{&quot;fasesTrabajos&quot;: action.payload...}" />
-            <marker date="1544816193817" expanded="true" signature="3077:3157" ph="{&quot;estructuraDocumentalTrabajo&quot;: action.payload...}" />
-            <marker date="1544816193817" expanded="true" signature="3232:3298" ph="{&quot;filesToUpload&quot;: action.payload...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -869,7 +889,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1394">
           <caret line="41" column="11" lean-forward="false" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -877,7 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -892,7 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5236">
           <caret line="154" column="15" lean-forward="false" selection-start-line="154" selection-start-column="15" selection-end-line="154" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,7 +919,6 @@
           <caret line="27" column="16" lean-forward="false" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
           <folding>
             <element signature="e#0#41#0" expanded="false" />
-            <marker date="1544818374179" expanded="true" signature="17738:17762" ph="{&quot;fetchBuscador&quot;: fetchBuscador...}" />
           </folding>
         </state>
       </provider>

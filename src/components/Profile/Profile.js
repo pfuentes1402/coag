@@ -6,11 +6,6 @@ import {Card,  CardHeader, CardText } from 'reactstrap';
 
 class Profile extends Component {
     render() {
-
-      
-           
-        
-  
         return (
             <div>
                 <Card>
@@ -36,8 +31,8 @@ class Profile extends Component {
                             <label>
                             Idioma
                             <select  onChange={()=>{}} >
-                                    <option  value="es">Castellano</option>
-                                    <option  value="gal">Gallego</option>
+                                    <option  value="1">Castellano</option>
+                                    <option  value="2">Gallego</option>
                                    </select>
                             </label>
 

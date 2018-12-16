@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {Paper, Grid, TextField, FormControl, Button, Tooltip, CircularProgress, Fab } from '@material-ui/core';
-import {Check, Clear} from '@material-ui/icons'
+import {Paper, Grid, TextField, FormControl, Button, Tooltip, CircularProgress, Fab, Snackbar, IconButton } from '@material-ui/core';
+import {Check, Clear, Close} from '@material-ui/icons'
 import {Container} from "reactstrap";
 import {validateAddress, postUbicacion, saveAdressTostore, updateAddress } from '../../actions/expedientes';
 import { connect } from 'react-redux';
 import CatastralTable from "./CatastralTable";
-import {Alert} from "reactstrap";
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
 
 const styles = theme => ({
     paper: {
@@ -50,12 +51,16 @@ const styles = theme => ({
     rightIcon: {
         marginLeft: theme.spacing.unit,
     },
+    close: {
+        padding: theme.spacing.unit / 2,
+    },
 });
 
 const mapStateToProps = (state) => (
      {
          addressData: state.expedientes.address ? state.expedientes.address : '',
          catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida: [], /*Contiene arreglo de la tabla de ubicaciones */
+         error: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
      }
 );
 
@@ -67,6 +72,7 @@ const mapDispatchToProps =
         updateAddress: updateAddress
 
 };
+
 
 class AddExpedient extends Component {
     constructor(props) {
@@ -107,20 +113,21 @@ class AddExpedient extends Component {
         await this.setState({isValidate: true});
         try {
             await this.props.validateAddress(this.state.location);
+            let errors = this.props.error;
+            if(errors.length > 0){
+                await this.setState({isValidate: false, isShowAddress:  false});
+            }else {
+                await this.saveAddress();
+                await this.setState({isValidate: false, isShowAddress:  true});
+            }
         }
         catch (e) {
-            console.log("prueba")
+            this.setState({ alert: false, msg: e.message });
         }
-
-        await setTimeout(async()=> {
-            await this.setState({isValidate: false, isShowAddress:  true});
-            },2000);
-        await this.saveAddress();
-
     }
 
     saveAddress(){
-        let address = this.props.addressData.Datos_Completos[0];
+        let address = this.props.addressData ? this.props.addressData.Datos_Completos[0] : [];
         if (!this.ifEqual(this.props.catastro, address)) {
             this.props.saveAdressTostore(address, this.props.location);
         }
@@ -138,7 +145,7 @@ class AddExpedient extends Component {
         return equal;
     }
 
-    handleSave(){
+    async handleSave(){
         if(!this.state.title || !this.state.codeStudy || (this.state.observationsLength > 0 && this.state.observationsLength < 110)){
             this.setState({alert: true, msg: (!this.state.title && !this.state.codeStudy) ? "El título y el código de estudio son obligatorios" : (!this.state.title ? "El título es obligatorio" : (!this.state.codeStudy ? "El código de estudio es obligatorio" : "Las observaciones requieren más de 110 caracteres"))})
         }
@@ -155,43 +162,70 @@ class AddExpedient extends Component {
                 'Emplazamientos' : [data],
                 'IgnorarObservaciones': 1
             }
-            this.props.postUbicacion(expediente);
-            this.props.history.push("/comunicacion");
+            await this.props.postUbicacion(expediente);
+            let errors = this.props.error;
+
+            if(!(errors.length > 0)){
+                this.props.history.push("/comunicacion");
+            }
         }
 
     }
 
-    onDismiss() {
+    handleClose = () => {
         this.setState({ alert: false });
-    }
+    };
 
     render() {
         let {classes} = this.props;
         let data = this.props.addressData.Datos_Completos[0];
         return (
             <Container className={classes.margin}>
-                <Alert color="danger" isOpen={this.state.alert} toggle={()=>{this.onDismiss()}} fade={false}>
-                    {this.state.msg}
-                </Alert>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center',
+                    }}
+                    open={this.state.alert}
+                    autoHideDuration={5000}
+                    onClose={this.handleClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{this.state.msg}</span>}
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.handleClose}
+                        >
+                            <Close />
+                        </IconButton>,
+                    ]}
+                />
                 <Grid container spacing={8}>
                     <Paper className={classes.paper}>
                         <Grid container spacing={24}>
                             <Grid item xs={12} md={6} className={classes.divider}>
+
                                 <FormControl className={classes.formControl1}>
                                     <TextField
                                         id="code"
-                                        label="CODIGO EXPEDIENTE"
+                                        label={<Translate id="languages.expedients.fieldCodigoExpediente"/>}
                                         value={this.state.code}
                                         onChange={this.handleChange('code')}
                                         margin="normal"
                                        disabled
                                     />
                                 </FormControl>
+
                                 <FormControl className={classes.formControl1}>
                                     <TextField
                                         required
                                         id="codeStudy"
-                                        label="CODIGO ESTUDIO"
+                                        label={<Translate id="languages.expedients.fieldCodigoEstudio"/>}
                                         value={this.state.codeStudy}
                                         onChange={this.handleChange('codeStudy')}
                                         margin="normal"
@@ -204,7 +238,7 @@ class AddExpedient extends Component {
                                     <TextField
                                         required
                                         id="title"
-                                        label="TITULO DEL EXPEDIENTE"
+                                        label={<Translate id="languages.expedients.fieldTitleExp"/>}
                                         value={this.state.title}
                                         onChange={this.handleChange('title')}
                                         margin="normal"
@@ -217,7 +251,7 @@ class AddExpedient extends Component {
                                     <TextField
                                         id="antecedent"
                                         placeholder="Ej 1234567865"
-                                        label="ANTECEDENTE"
+                                        label={<Translate id="languages.expedients.fieldAntecedente"/>}
                                         value={this.state.antecedent}
                                         onChange={this.handleChange('antecedent')}
                                         margin="normal"
@@ -229,7 +263,7 @@ class AddExpedient extends Component {
                                 <FormControl className={classes.formControl}>
                                     <TextField
                                         id="observations"
-                                        label="OBSERVACIONES"
+                                        label={<Translate id="languages.expedients.fieldObservaciones"/>}
                                         placeholder="Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio."
                                         value={this.state.observations}
                                         onChange={this.handleChange('observations')}
@@ -266,7 +300,7 @@ class AddExpedient extends Component {
                                             <FormControl className={classes.formControl1}>
                                                 <TextField
                                                     id="location"
-                                                    helperText="La dirección se proporciona automáticamente"
+                                                    helperText={<Translate id="languages.expedients.helperTextAddressValidate"/>}
                                                     value={this.state.location}
                                                     onChange={this.handleChange('location')}
                                                     margin="normal"
@@ -276,7 +310,7 @@ class AddExpedient extends Component {
 
                                                 />
                                             </FormControl>
-                                            <Tooltip title="Validar">
+                                            <Tooltip title={<Translate id="languages.generalButton.validate"/>}>
                                                 <Fab size="small"  color="primary" aria-label="Check" className={classes.button} disabled={!this.state.location || this.state.isValidate}
                                                      onClick={()=>{this.handleValidateAddress()}}>
                                                     <Check/>
@@ -390,7 +424,7 @@ class AddExpedient extends Component {
                                                     <FormControl className={classes.formControl1}>
                                                         <TextField
                                                             id="alias"
-                                                            label="ALIAS DIRECCION"
+                                                            label={<Translate id="languages.expedients.fieldAliasDireccion"/>}
                                                             placeholder="Ej C/Numancia No 13"
                                                             value={this.state.alias}
                                                             onChange={this.handleChange('alias')}
@@ -398,7 +432,7 @@ class AddExpedient extends Component {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
-                                                            helperText="Introducir un Alias para la dirección"
+                                                            helperText={<Translate id="languages.expedients.helperTextAliasDireccion"/>}
                                                         />
                                                     </FormControl>
                                                 </Grid>
@@ -408,11 +442,11 @@ class AddExpedient extends Component {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>
-                                            Cancelar
+                                            {<Translate id="languages.generalButton.cancel"/>}
                                             <Clear className={classes.rightIcon}/>
                                         </Button>
                                         <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}} disabled={!this.state.isShowAddress}>
-                                            Guardar y crear expediente
+                                            {<Translate id="languages.expedients.btnGuardarExpediente"/>}
                                             <Check className={classes.rightIcon}/>
                                         </Button>
                                     </Grid>
@@ -427,4 +461,4 @@ class AddExpedient extends Component {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AddExpedient));
+export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(AddExpedient)));
