@@ -282,7 +282,7 @@ class Arquitecto extends Component {
                               })}
                             </Grid>
                           </TableCell>
-                          <TableCell className="p-0">
+                          <TableCell className="p-0 button-column-static">
                               <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
                                  onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
                                 <EditIcon />
@@ -498,7 +498,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  /**Hacer la busqueda dado un id o un query (filtro= nif o nombre, tipoBusqueda = otrosagentes) */
   fetchBuscador: fetchBuscador,
   fetchFuncionesTipologia: fetchFuncionesTipologia,
   addAgenteTrabajoSeleccion: dispatchAddAgenteTrabajoSeleccion,
