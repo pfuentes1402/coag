@@ -333,6 +333,7 @@ class AddExpedient extends Component {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
+
                                                         />
                                                     </FormControl>
                                                     <FormControl className={classes.formControl2}>
@@ -345,6 +346,7 @@ class AddExpedient extends Component {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
+                                                            type="number"
                                                         />
                                                     </FormControl>
                                                     <FormControl className={classes.formControl2}>
@@ -357,6 +359,7 @@ class AddExpedient extends Component {
                                                             InputLabelProps={{
                                                                 shrink: true,
                                                             }}
+                                                            type="number"
                                                         />
                                                     </FormControl>
                                                     <FormControl className={classes.formControl2}>
