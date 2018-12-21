@@ -26,9 +26,12 @@ import Search from '@material-ui/icons/Search';
 import Close from '@material-ui/icons/Close';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchBuscador } from '../../../actions/expedientes/index';
-import { fetchFuncionesTipologia, dispatchAddAgenteTrabajoSeleccion, 
-  dispatchDeleteAgenteTrabajoSeleccion,dispatchEditAgenteTrabajoSeleccion} 
+import {
+  fetchFuncionesTipologia, dispatchAddAgenteTrabajoSeleccion,
+  dispatchDeleteAgenteTrabajoSeleccion, dispatchEditAgenteTrabajoSeleccion
+}
   from '../../../actions/trabajos/index';
 import '../indexstyle.css';
 
@@ -97,15 +100,15 @@ const styles = theme => ({
   mt0: {
     marginTop: -10
   },
-  iconoption:{
+  iconoption: {
     margin: theme.spacing.unit,
     color: theme.palette.text.primary
   },
-    buttonEdit: {
-        border: "1px solid",
-        padding: 8,
-        margin: 4
-    }
+  buttonEdit: {
+    border: "1px solid",
+    padding: 8,
+    margin: 4
+  }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -130,18 +133,19 @@ class Arquitecto extends Component {
       percentChecked: false,
       acceptTerm1: false,
       acceptTerm2: false,
-      functionsSelected : []
+      functionsSelected: [],
+      isSearch: false
     }
   }
 
   componentDidMount() {
-    try{
+    try {
       this.props.fetchFuncionesTipologia(1);
       this.props.fetchBuscador(this.props.loguedUser.Id_Colegiado, "colegiados");
       this.handleCanSearch(false);
     }
-    catch (e){
-      console.log("ERROR",e)
+    catch (e) {
+      console.log("ERROR", e)
     }
   }
 
@@ -161,17 +165,17 @@ class Arquitecto extends Component {
     this.setState({ canSearch: cansearch })
   }
 
-  addFunctionToAgent = (functionCode) => (event) =>{
-    let tag = event.target.tagName === "SPAN"? event.target.parentNode : event.target;
-    if(!this.state.functionsSelected.some(x=> x=== functionCode)){
-      let funcion = this.props.funcionesTipologia.find(x=> x.Codigo === functionCode);
+  addFunctionToAgent = (functionCode) => (event) => {
+    let tag = event.target.tagName === "SPAN" ? event.target.parentNode : event.target;
+    if (!this.state.functionsSelected.some(x => x === functionCode)) {
+      let funcion = this.props.funcionesTipologia.find(x => x.Codigo === functionCode);
       this.state.functionsSelected.push(functionCode);
       tag.className = tag.className + " slectedFunction";
     }
-    else{
-      let selections = this.state.functionsSelected.filter(x=> x !== functionCode);
-      this.setState({functionsSelected: selections});
-      tag.className = tag.className.replace("slectedFunction","");
+    else {
+      let selections = this.state.functionsSelected.filter(x => x !== functionCode);
+      this.setState({ functionsSelected: selections });
+      tag.className = tag.className.replace("slectedFunction", "");
     }
   }
 
@@ -193,37 +197,39 @@ class Arquitecto extends Component {
 
   async handleSearch() {
     if (this.state.searchQuery !== "") {
+      this.setState({ isSearch: true });
       await this.props.fetchBuscador(this.state.searchQuery, "colegiados");
+      this.setState({ isSearch: false });
     }
   }
 
-  addAgenteTrabajoToSelection(id){
+  addAgenteTrabajoToSelection(id) {
     let agente = this.props.colegiadosSearchResult.find(x => x.Id_Colegiado === id);
-    if(agente){
-      if(this.props.agentesTrabajoSelected.some(x=> x.Id_Colegiado === id)){
+    if (agente) {
+      if (this.props.agentesTrabajoSelected.some(x => x.Id_Colegiado === id)) {
         this.deleteAgentSelection(id);
       }
       agente.Porciento = this.state.percent;
       agente.Funciones = this.state.functionsSelected;
 
       //TODO: Sacar el idExpediente y el idTrabajo de los estados de redux
-      this.props.addAgenteTrabajoSeleccion("703377","1",agente);
+      this.props.addAgenteTrabajoSeleccion("703377", "1", agente);
     }
     this.handleCanSearch(false);
   }
 
-  deleteAgentSelection(id){
+  deleteAgentSelection(id) {
     this.props.deleteAgenteTrabajoSeleccion(id);
   }
 
-  editAgenteSeleccion(id){
-    let edit = this.props.agentesTrabajoSelected.find(x=> x.Id_Colegiado === id);
-    if(edit){
+  editAgenteSeleccion(id) {
+    let edit = this.props.agentesTrabajoSelected.find(x => x.Id_Colegiado === id);
+    if (edit) {
       this.setState(
         {
           percent: edit.Porciento,
-          functionsSelected:edit.Funciones, 
-          acceptTerm1: true, 
+          functionsSelected: edit.Funciones,
+          acceptTerm1: true,
           acceptTerm2: true
         });
       this.props.editAgenteTrabajoSeleccion(edit.Agente);
@@ -233,71 +239,71 @@ class Arquitecto extends Component {
 
   renderSelection = () => {
     let { classes } = this.props;
-    return(
-          <Paper className={classes.root}>
-            <Grid container >
-              <Grid item md={10} className={classes.subtitle}>Arquitectos</Grid>
-              <Grid item md={2}>
-                <Fab size="small" color="primary" aria-label="Add"
-                  className={classes.fab} onClick={() => { this.handleCanSearch(true) }}>
-                  <AddIcon />
-                </Fab>
-              </Grid>
-            </Grid>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow className={classes.headHeight}>
-                  <CustomTableHead className="text-uppercase px-3">NIF</CustomTableHead>
-                  <CustomTableHead className="p-0 text-center text-uppercase">
-                      <Translate id="languages.agentes.tableColumnName"/>
-                  </CustomTableHead>
-                  <CustomTableHead className="p-3 text-center text-uppercase">%</CustomTableHead>
-                  <CustomTableHead className="p-0 text-center text-uppercase">
-                      <Translate id="languages.agentes.tableColumnFunction"/>
-                  </CustomTableHead>
-                  <CustomTableHead></CustomTableHead>
-                </TableRow>
-              </TableHead>
+    return (
+      <Paper className={classes.root}>
+        <Grid container >
+          <Grid item md={10} className={classes.subtitle}>Arquitectos</Grid>
+          <Grid item md={2}>
+            <Fab size="small" color="primary" aria-label="Add"
+              className={classes.fab} onClick={() => { this.handleCanSearch(true) }}>
+              <AddIcon />
+            </Fab>
+          </Grid>
+        </Grid>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow className={classes.headHeight}>
+              <CustomTableHead className="text-uppercase px-3">NIF</CustomTableHead>
+              <CustomTableHead className="p-0 text-center text-uppercase">
+                <Translate id="languages.agentes.tableColumnName" />
+              </CustomTableHead>
+              <CustomTableHead className="px-3 text-center text-uppercase">%</CustomTableHead>
+              <CustomTableHead className="p-0 text-center text-uppercase">
+                <Translate id="languages.agentes.tableColumnFunction" />
+              </CustomTableHead>
+              <CustomTableHead></CustomTableHead>
+            </TableRow>
+          </TableHead>
 
-              <TableBody className={classes.tableBodyHeight}>
-                {
-                  this.props.agentesTrabajoSelected.length === 0 ?
-                    <TableRow>
-                      <TableCell colSpan={5}></TableCell>
+          <TableBody className={classes.tableBodyHeight}>
+            {
+              this.props.agentesTrabajoSelected.length === 0 ?
+                <TableRow>
+                  <TableCell colSpan={5}></TableCell>
+                </TableRow>
+                : this.props.agentesTrabajoSelected.map((row, index) => {
+                  return (
+                    <TableRow className={classes.row} key={index}>
+                      <TableCell component="th" scope="row" className="px-1 text-center">
+                        {row.Nif}
+                      </TableCell>
+                      <TableCell className="p-0 text-center">{row.Nombre}</TableCell>
+                      <TableCell className="p-3 text-center">{row.Porciento ? `${row.Porciento}%` : ""}</TableCell>
+                      <TableCell className="p-0 text-center">
+                        <Grid item xs={12} className="text-center">
+                          {row.Funciones.map((funct, indexFunct) => {
+                            return <span key={indexFunct}>
+                              {`${funct} ${row.Funciones.length === (indexFunct + 1) ? "" : ", "}`}
+                            </span>
+                          })}
+                        </Grid>
+                      </TableCell>
+                      <TableCell className="p-0 button-column-static">
+                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
+                          onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
+                          <EditIcon />
+                        </IconButton >
+                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete" onClick={() => this.deleteAgentSelection(row.Id_Colegiado)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
-                    : this.props.agentesTrabajoSelected.map((row, index) => {
-                      return (
-                        <TableRow className={classes.row} key={index}>
-                          <TableCell component="th" scope="row" className="p-0 text-center">
-                            {row.Nif}
-                          </TableCell>
-                          <TableCell className="p-0 text-center">{row.Nombre}</TableCell>
-                          <TableCell className="p-3 text-center">{row.Porciento? `${row.Porciento}%` : ""}</TableCell>
-                          <TableCell className="p-0 text-center">
-                            <Grid item xs={12} className="text-center">
-                              {row.Funciones.map((funct,indexFunct)=>{
-                                return <span key={indexFunct}>
-                                  {`${funct} ${row.Funciones.length === (indexFunct + 1) ? "" : ", "}`}
-                                </span>
-                              })}
-                            </Grid>
-                          </TableCell>
-                          <TableCell className="p-0 button-column-static">
-                              <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
-                                 onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
-                                <EditIcon />
-                              </IconButton >
-                              <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete" onClick={()=> this.deleteAgentSelection(row.Id_Colegiado)}>
-                                <DeleteIcon />
-                              </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                }
-              </TableBody>
-            </Table>
-          </Paper>
+                  );
+                })
+            }
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
 
@@ -314,13 +320,13 @@ class Arquitecto extends Component {
                 this.handleSearch();
               }
             }}
-            label={<Translate id="languages.agentes.searchLabelBox"/>}
+            label={<Translate id="languages.agentes.searchLabelBox" />}
             className={classes.textField}>
           </TextField>
 
           <TextField
             select
-            label={<Translate id="languages.agentes.searchLabelOption"/>}
+            label={<Translate id="languages.agentes.searchLabelOption" />}
             className={classes.textField}
             value={this.state.selectedOption}
             onChange={this.handleSelectOptionChange}>
@@ -332,14 +338,18 @@ class Arquitecto extends Component {
           </TextField>
 
           <Grid item xs={12} className={classes.paddingButtons}>
-            <Button color="primary" size="small" className={classes.button}
-              onClick={() => { this.handleCanSearch(false) }}>
-              <Translate id="languages.generalButton.cancel"/><Close className={classes.rightIcon} />
-            </Button>
-            <Button variant="contained" size="small" color="primary" className={classes.button}
-              onClick={() => this.handleSearch()}>
-              <Translate id="languages.agentes.search"/><Search className={classes.rightIcon} />
-            </Button>
+            <div style={{ display: "inline-flex", alignItems: "center" }}>
+              <Button color="primary" size="small" className={classes.button}
+                onClick={() => { this.handleCanSearch(false) }}>
+                <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+              </Button>
+              <Button variant="contained" size="small" color="primary" className={classes.button}
+                onClick={() => this.handleSearch()}>
+                <Translate id="languages.agentes.search" /><Search className={classes.rightIcon} />
+              </Button>
+
+              {this.state.isSearch ? <CircularProgress size={24} /> : ""}
+            </div>
           </Grid>
         </Paper>
         : <div></div>
@@ -359,22 +369,22 @@ class Arquitecto extends Component {
                 <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
                 <Typography variant="body2" className={classes.subtitleData}>
-                    <Translate id="languages.agentes.tableColumnName"/>
+                  <Translate id="languages.agentes.tableColumnName" />
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
 
                 <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                    <Translate id="languages.agentes.firstName"/>
+                  <Translate id="languages.agentes.firstName" />
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
 
                 <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                    <Translate id="languages.agentes.secondName"/>
+                  <Translate id="languages.agentes.secondName" />
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
 
                 <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                    <Translate id="languages.agentes.observations"/>
+                  <Translate id="languages.agentes.observations" />
                 </Typography>
                 <Typography variant="subtitle2" gutterBottom></Typography>
               </Grid>
@@ -385,12 +395,12 @@ class Arquitecto extends Component {
 
               <Grid item xs={12} className="functionTipology">
                 <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.functionsTitle"/> *
+                  <Translate id="languages.agentes.functionsTitle" /> *
                 </Typography>
                 {
                   this.props.funcionesTipologia.map((value, index) => {
-                    return <Button onClick={this.addFunctionToAgent(value.Codigo)} 
-                      className={this.state.functionsSelected.some(x=> x === value.Codigo) ? "slectedFunction": ""}
+                    return <Button onClick={this.addFunctionToAgent(value.Codigo)}
+                      className={this.state.functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
                       variant="contained"
                       key={index}>{value.Codigo}
                     </Button>
@@ -400,7 +410,7 @@ class Arquitecto extends Component {
 
               <Grid item xs={12}>
                 <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                    <Translate id="languages.agentes.percentTitle"/>
+                  <Translate id="languages.agentes.percentTitle" />
                 </Typography>
                 <Grid container spacing={0}>
                   <Grid item xs={5}>
@@ -421,7 +431,7 @@ class Arquitecto extends Component {
                           onChange={this.handleCheckedPersentChange}
                           color="primary" />
                       }
-                      label={<Translate id="languages.agentes.percentLabel"/>}/>
+                      label={<Translate id="languages.agentes.percentLabel" />} />
                   </Grid>
                 </Grid>
               </Grid>
@@ -433,27 +443,27 @@ class Arquitecto extends Component {
                       onChange={this.handleTerm1Change}
                       color="primary" />
                   }
-                  label={<Translate id="languages.agentes.conditionTermn1"/>} />
+                  label={<Translate id="languages.agentes.conditionTermn1" />} />
 
-                  <FormControlLabel
+                <FormControlLabel
                   control={
                     <Checkbox
                       checked={this.state.acceptTerm2}
                       onChange={this.handleTerm2Change}
                       color="primary" />
                   }
-                  label={<Translate id="languages.agentes.conditionTermn2"/>} />
+                  label={<Translate id="languages.agentes.conditionTermn2" />} />
               </Grid>
 
               <Grid item xs={12} className="text-right">
                 <Button color="primary" size="small" className={classes.button}
                   onClick={() => { this.handleCanSearch(false) }}>
-                  <Translate id="languages.generalButton.cancel"/><Close className={classes.rightIcon} />
+                  <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
                 </Button>
                 <Button variant="contained" size="small" color="primary" className={classes.button}
-                  onClick={()=> this.addAgenteTrabajoToSelection(value.Id_Colegiado)} 
+                  onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
                   disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
-                  <Translate id="languages.generalButton.added"/>
+                  <Translate id="languages.generalButton.added" />
                 </Button>
               </Grid>
             </Grid>
@@ -464,24 +474,17 @@ class Arquitecto extends Component {
     );
   }
 
-  renderNavigationButtons = () =>{
-    let { classes } = this.props;
-    return(
-      <div>Buttons sections</div>
-    );
-  }
-
   render() {
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
           {this.renderSelection()}
         </Grid>
-        
+
         <Grid item xs={12}>
           {this.renderSearchBox()}
         </Grid>
-        
+
         {this.renderSearchResult()}
       </Grid>
     );
@@ -493,7 +496,7 @@ const mapStateToProps = (state) => ({
   agentesTrabajoSelected: state.trabajos.agentesTrabajoSelected ? state.trabajos.agentesTrabajoSelected : [],
   agentsSearchResult: state.trabajos.OtrosAgentesTrabajoSelec ? state.trabajos.OtrosAgentesTrabajoSelec : [],
   funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
-  colegiadosSearchResult : state.trabajos.colegiadosAgentesTrabajo ? state.trabajos.colegiadosAgentesTrabajo : [],
+  colegiadosSearchResult: state.trabajos.colegiadosAgentesTrabajo ? state.trabajos.colegiadosAgentesTrabajo : [],
   loguedUser: state.user.DatosUsuarioValidado
 })
 
