@@ -149,7 +149,8 @@ class ComunicacionEncargo extends React.Component {
                 obraSelection: tiposTrabajos.length > 0 ? tiposTrabajos[0].Id_Tipo_Grupo_Tematico : 0,
                 tramiteSelection: tiposTramite.length > 0 ? tiposTramite[0].Id_Tipo_Autorizacion_Municipal : 0,
                 description: tiposTrabajos.length > 0 ? tiposTrabajos[0].Observaciones : '',
-                fasesTrabajos: [[], []]
+                fasesTrabajos: [[], []],
+                isSelected: i === 0
             });
         }
 
@@ -157,10 +158,16 @@ class ComunicacionEncargo extends React.Component {
     }
 
 
-    handleChange = panel => (event, expanded) => {
+    handleChange = (panel, index) => (event, expanded) => {
         this.setState({
             expanded: expanded ? panel : false,
         });
+        let updateGrupoRaiz = [];
+        Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
+        for(let i = 0; i < updateGrupoRaiz.length; i++){
+            updateGrupoRaiz[i].isSelected = i === index;
+        }
+        this.props.fetchComunicacionencargo(updateGrupoRaiz);
     };
 
     handleChildChange = panel => (event, expanded) => {
@@ -302,7 +309,7 @@ class ComunicacionEncargo extends React.Component {
                             <Grid item xs={12}>
                                 {
                                     this.props.comunicacionencargo && this.props.comunicacionencargo.map((value, index) => {
-                                        return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`)}>
+                                        return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`,index)}>
                                             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
                                                 expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
                                                 className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}

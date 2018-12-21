@@ -93,13 +93,13 @@ export const getExpedienteDatosGeneral = id_expediente =>
  * @param idLanguage
  * @returns {Promise<AxiosResponse<any>>}
  */
-export const getTiposTrabajo = (id_grupo, idLanguage=1) =>
+export const getTiposTrabajo = (id_grupo, idLanguage = 1) =>
   api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
     return response;
   })
     .then(resultado => {
       return resultado;
-});
+    });
 
 /**
  * Proporciona los tipos de trámite de un trabajo
@@ -139,8 +139,8 @@ export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage
  *    ref_catastral
  */
 export const getValidateAddress = async ref_catastral => {
-    let response = await api.get(`/DatosCatastro/${ref_catastral}`);
-    return response;
+  let response = await api.get(`/DatosCatastro/${ref_catastral}`);
+  return response;
 }
 
 
@@ -431,9 +431,9 @@ export const getestructuradocumental = (idExpediente, idTrabajo) =>
  */
 export const getGruposRaiz = (idLanguage = 2) =>
   api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`)
-      .then(response => {
-  return response;
-});
+    .then(response => {
+      return response;
+    });
 
 /**
  * Inserta un trabajo encomenda (comunicacion de encargo) para un expediente
@@ -479,14 +479,14 @@ export const getGruposRaiz = (idLanguage = 2) =>
  * @returns {Promise}
  */
 export const insertTrabajoEncomenda = (data, id_expediente) => {
-    return new Promise((success, error) => {
-        api.post(`/expedientes/${id_expediente}/trabajos/`, data)
-            .then(resultado => {
-                success(resultado)
-            }).catch(function (e) {
-            console.log(e.response.data.message)
-        });
-    })
+  return new Promise((success, error) => {
+    api.post(`/expedientes/${id_expediente}/trabajos/`, data)
+      .then(resultado => {
+        success(resultado)
+      }).catch(function (e) {
+        console.log(e.response.data.message)
+      });
+  })
 };
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
@@ -497,7 +497,7 @@ export const getFuncionesTipologia = (idLanguage = 2) =>
 
 /**Agregar nuevos agentes a un trabajo */
 export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
-  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`,{ OtrosAgentes: otrosAgentes })
+  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`, { OtrosAgentes: otrosAgentes })
     .then(response => {
       return response;
     }).catch(error => {
@@ -511,12 +511,12 @@ export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getPaises = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 /**
  * Proporciona la lista de regiones autonomas
@@ -524,12 +524,12 @@ export const getPaises = async (idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getRegionesAutonoma = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -539,12 +539,12 @@ export const getRegionesAutonoma = async (idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getProvincias = async (idAutonomia, idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -554,12 +554,12 @@ export const getProvincias = async (idAutonomia, idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getConcellos = async (id_provincia, idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -568,12 +568,12 @@ export const getConcellos = async (id_provincia, idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTipoPromotores = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
+    return response;
+  } catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -582,10 +582,20 @@ export const getTipoPromotores = async (idLanguage = 2) => {
  * @returns {Promise<*>}
  */
 export const getTipoOrganismoa = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
-        return response;
-    } catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
+    return response;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
+  try {
+     let response = await api.post(`/expedientes/${idExpediente}/trabajos/`,dataPost)
+     return response;
+  }
+  catch (error) {
+    return error;
+  }
 }

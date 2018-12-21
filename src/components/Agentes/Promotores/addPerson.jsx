@@ -1,12 +1,12 @@
-import React ,{Component} from 'react';
+import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import {Grid, FormControl, TextField, Typography, InputLabel, Select, MenuItem, InputAdornment, Input, FormControlLabel, Checkbox, Button } from '@material-ui/core';
-import {getTipoPromotores, getPaises, getRegionesAutonoma, getProvincias, getConcellos} from '../../../api';
-import {fetchErrorExpediente, formatMenssage} from "../../../actions/expedientes";
-import {connect} from "react-redux";
-import {grey} from '@material-ui/core/colors';
+import { Grid, FormControl, TextField, Typography, InputLabel, Select, MenuItem, InputAdornment, Input, FormControlLabel, Checkbox, Button } from '@material-ui/core';
+import { getTipoPromotores, getPaises, getRegionesAutonoma, getProvincias, getConcellos } from '../../../api';
+import { fetchErrorExpediente, formatMenssage } from "../../../actions/expedientes";
+import { connect } from "react-redux";
+import { grey } from '@material-ui/core/colors';
 import Close from '@material-ui/icons/Close';
 
 const styles = theme => ({
@@ -39,11 +39,11 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => {
     return {
         onErrorExpediente: (value) => dispatch(fetchErrorExpediente(value)),
-       }
+    }
 }
 
-class AddPerson extends Component{
-    constructor(props){
+class AddPerson extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             promotor: this.props.promotor ? this.props.promotor : {
@@ -81,21 +81,22 @@ class AddPerson extends Component{
         }
     }
 
-    async componentWillMount(){
+    async componentWillMount() {
         let language = this.props.activeLanguage.code ? this.props.activeLanguage.code : null;
         try {
-            if(language){
+            if (language) {
                 let tiposPromotor = await getTipoPromotores(language);
                 let paises = await getPaises(language);
                 let regiones = await getRegionesAutonoma(language);
                 let provincias = await getProvincias(this.state.promotor.Id_Autonomia, language);
-                this.setState({tiposPromotor: tiposPromotor.data.Tipos_Promotores ? tiposPromotor.data.Tipos_Promotores : [],
+                this.setState({
+                    tiposPromotor: tiposPromotor.data.Tipos_Promotores ? tiposPromotor.data.Tipos_Promotores : [],
                     paises: paises.data.AreasGeograficasPaises ? paises.data.AreasGeograficasPaises : [],
                     regiones: regiones.data.AreasGeograficasAutonomias ? regiones.data.AreasGeograficasAutonomias : [],
                     provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : []
                 })
             }
-        }catch (error) {
+        } catch (error) {
             this.props.onErrorExpediente(formatMenssage(error.message))
         }
 
@@ -105,7 +106,7 @@ class AddPerson extends Component{
         let promotor = {};
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor})
+        this.setState({ promotor: promotor })
     };
 
     handlePorcentageChange = name => event => {
@@ -118,9 +119,11 @@ class AddPerson extends Component{
         let provincias = await getProvincias(event.target.value, this.props.activeLanguage.code);
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor,
+        this.setState({
+            promotor: promotor,
             provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : [],
-            municipios: []})
+            municipios: []
+        })
     };
 
     handleProvincias = name => async event => {
@@ -128,19 +131,25 @@ class AddPerson extends Component{
         let municipios = await getConcellos(event.target.value, this.props.activeLanguage.code);
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor,
-            municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []})
+        this.setState({
+            promotor: promotor,
+            municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []
+        })
     };
 
-    render(){
-        let {classes} = this.props;
-        let {tiposPromotor, paises, regiones, provincias, municipios} = this.state;
-        return(
+    handleSubmit() {
+
+    }
+
+    render() {
+        let { classes } = this.props;
+        let { tiposPromotor, paises, regiones, provincias, municipios } = this.state;
+        return (
             <Grid container spacing={16}>
                 <Grid item xs={12} >
                     <div className={classes.divGrey}>
                         <Typography variant="subtitle1" gutterBottom>
-                            <Translate id="languages.agentes.titleDatosPersonales"/>
+                            <Translate id="languages.agentes.titleDatosPersonales" />
                         </Typography>
                         <FormControl className={classes.formControl}>
                             <Translate>
@@ -155,7 +164,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
 
                                 />}
@@ -164,7 +174,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     required
                                     id="nombre"
                                     label={translate("languages.agentes.tableColumnName")}
@@ -175,7 +185,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="text"
                                 />}
@@ -183,7 +194,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     required
                                     id="apellido1"
                                     label={translate("languages.agentes.firstName")}
@@ -194,7 +205,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="text"
                                 />}
@@ -202,7 +214,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     id="apellido2"
                                     label={translate("languages.agentes.secondName")}
                                     placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.secondName")}
@@ -212,7 +224,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="text"
                                 />}
@@ -221,13 +234,13 @@ class AddPerson extends Component{
                     </div>
                     <div className="p-3">
                         <Typography variant="subtitle1" gutterBottom className="pb-3">
-                            <Translate id="languages.agentes.titleCaracteristicasPromotor"/>
+                            <Translate id="languages.agentes.titleCaracteristicasPromotor" />
                         </Typography>
                         <Grid container spacing={0}>
                             <Grid item xs={3}>
-                                <FormControl style={{width: "100%"}}>
+                                <FormControl style={{ width: "100%" }}>
                                     <InputLabel htmlFor="porciento" className={classes.label} shrink>
-                                        <Translate id="languages.agentes.percentTitle"/>
+                                        <Translate id="languages.agentes.percentTitle" />
                                     </InputLabel>
                                     <Input
                                         id="porcentaje"
@@ -241,7 +254,7 @@ class AddPerson extends Component{
                             </Grid>
                             <Grid item xs={9}>
                                 <Translate>
-                                    {({ translate }) =><FormControlLabel className="ml-0 mr-0"
+                                    {({ translate }) => <FormControlLabel className="ml-0 mr-0"
                                         control={
                                             <Checkbox
                                                 checked={this.state.promotor.PorcentajesEquitativos ? this.state.promotor.PorcentajesEquitativos : false}
@@ -258,11 +271,11 @@ class AddPerson extends Component{
                     </div>
                     <div className={classes.divGrey}>
                         <Typography variant="subtitle1" gutterBottom className="pb-3">
-                            <Translate id="languages.agentes.titleContacto"/>
+                            <Translate id="languages.agentes.titleContacto" />
                         </Typography>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     id="calle"
                                     required
                                     label={translate("languages.generalAddress.calle")}
@@ -273,15 +286,16 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="text"
                                 />}
                             </Translate>
                         </FormControl>
-                        <Grid container spacing={0} style={{width: "70%"}} >
+                        <Grid container spacing={0} style={{ width: "70%" }} >
                             <Grid item xs={8}>
-                                <FormControl style={{width:100}}>
+                                <FormControl style={{ width: 100 }}>
                                     <TextField
                                         id="Numero"
                                         label="Num"
@@ -292,16 +306,17 @@ class AddPerson extends Component{
                                         InputLabelProps={{
                                             shrink: true,
                                             classes: {
-                                                root: classes.label}
+                                                root: classes.label
+                                            }
                                         }}
                                         type="number"
                                     />
                                 </FormControl>
                             </Grid>
                             <Grid item xs={4} className="text-right">
-                                <FormControl style={{width:100}}>
+                                <FormControl style={{ width: 100 }}>
                                     <Translate>
-                                        {({ translate }) =><TextField
+                                        {({ translate }) => <TextField
                                             id="Piso"
                                             label={translate("languages.generalAddress.piso")}
                                             placeholder="Ej 1A"
@@ -311,7 +326,8 @@ class AddPerson extends Component{
                                             InputLabelProps={{
                                                 shrink: true,
                                                 classes: {
-                                                    root: classes.label}
+                                                    root: classes.label
+                                                }
                                             }}
                                         />}
                                     </Translate>
@@ -320,7 +336,7 @@ class AddPerson extends Component{
                         </Grid>
                         <FormControl className={classes.formControl2}>
                             <InputLabel htmlFor="provincia" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.provincia"/>
+                                <Translate id="languages.generalAddress.provincia" />
                             </InputLabel>
                             <Translate>
                                 {({ translate }) => <Select
@@ -334,11 +350,11 @@ class AddPerson extends Component{
                                 >
                                     <MenuItem value="" disabled>
                                         {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.generalAddress.provincia")}
+                                            translate("languages.generalAddress.provincia")}
                                     </MenuItem>
                                     {
                                         provincias ?
-                                            provincias.map(value=>{
+                                            provincias.map(value => {
                                                 return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
                                             })
                                             : ""
@@ -348,7 +364,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl2}>
                             <InputLabel htmlFor="provincia" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.municipio"/>
+                                <Translate id="languages.generalAddress.municipio" />
                             </InputLabel>
                             <Translate>
                                 {({ translate }) => <Select
@@ -362,11 +378,11 @@ class AddPerson extends Component{
                                 >
                                     <MenuItem value="" disabled>
                                         {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.generalAddress.municipio")}
+                                            translate("languages.generalAddress.municipio")}
                                     </MenuItem>
                                     {
                                         municipios ?
-                                            municipios.map(value=>{
+                                            municipios.map(value => {
                                                 return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
                                             })
                                             : ""
@@ -376,7 +392,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl2}>
                             <InputLabel htmlFor="pais" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.region"/>
+                                <Translate id="languages.generalAddress.region" />
                             </InputLabel>
                             <Select
                                 value={this.state.promotor.Id_Autonomia ? this.state.promotor.Id_Autonomia : ""}
@@ -388,7 +404,7 @@ class AddPerson extends Component{
                             >
                                 {
                                     regiones ?
-                                        regiones.map(value=>{
+                                        regiones.map(value => {
                                             return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
                                         })
                                         : ""
@@ -397,7 +413,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl2}>
                             <InputLabel htmlFor="pais" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.pais"/>
+                                <Translate id="languages.generalAddress.pais" />
                             </InputLabel>
                             <Select
                                 value={this.state.promotor.Id_Pais ? this.state.promotor.Id_Pais : ""}
@@ -410,7 +426,7 @@ class AddPerson extends Component{
                             >
                                 {
                                     paises ?
-                                        paises.map(value=>{
+                                        paises.map(value => {
                                             return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
                                         })
                                         : ""
@@ -419,7 +435,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     id="mail"
                                     label={translate("languages.agentes.titleCorreo")}
                                     placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleCorreo")}
@@ -429,7 +445,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="email"
                                 />}
@@ -437,7 +454,7 @@ class AddPerson extends Component{
                         </FormControl>
                         <FormControl className={classes.formControl}>
                             <Translate>
-                                {({ translate }) =><TextField
+                                {({ translate }) => <TextField
                                     id="telefono"
                                     label={translate("languages.agentes.titleTelefono")}
                                     placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleTelefono")}
@@ -447,7 +464,8 @@ class AddPerson extends Component{
                                     InputLabelProps={{
                                         shrink: true,
                                         classes: {
-                                            root: classes.label}
+                                            root: classes.label
+                                        }
                                     }}
                                     type="email"
                                 />}
@@ -456,16 +474,16 @@ class AddPerson extends Component{
                     </div>
                     <div className="p-3">
                         <Translate>
-                            {({ translate }) =><FormControlLabel className="ml-0 mr-0"
-                                                                 control={
-                                                                     <Checkbox
-                                                                         checked={this.state.checkedRepresentado}
-                                                                         onChange={this.handlePorcentageChange('checkedRepresentado')}
-                                                                         value="checkedPercentage"
-                                                                         color="primary"
-                                                                     />
-                                                                 }
-                                                                 label={translate("languages.agentes.titleRepresentadoA")}
+                            {({ translate }) => <FormControlLabel className="ml-0 mr-0"
+                                control={
+                                    <Checkbox
+                                        checked={this.state.checkedRepresentado}
+                                        onChange={this.handlePorcentageChange('checkedRepresentado')}
+                                        value="checkedPercentage"
+                                        color="primary"
+                                    />
+                                }
+                                label={translate("languages.agentes.titleRepresentadoA")}
                             />}
                         </Translate>
                         <FormControl className={classes.formControl}>
@@ -481,7 +499,7 @@ class AddPerson extends Component{
                                 >
                                     <MenuItem value="" disabled>
                                         {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.agentes.promotor")}
+                                            translate("languages.agentes.promotor")}
                                     </MenuItem>
                                 </Select>}
                             </Translate>
@@ -489,27 +507,27 @@ class AddPerson extends Component{
                     </div>
                     <div className={classes.divGrey}>
                         <Translate>
-                            {({ translate }) =><FormControlLabel className="ml-0 mr-0 align-items-start text-justify"
-                                                                 control={
-                                                                     <Checkbox
-                                                                         checked={this.state.checkedLey}
-                                                                         onChange={this.handlePorcentageChange('checkedLey')}
-                                                                         value="checkedLey"
-                                                                         color="primary"
-                                                                     />
-                                                                 }
-                                                                 label={translate("languages.agentes.textLeyOrganica")}
+                            {({ translate }) => <FormControlLabel className="ml-0 mr-0 align-items-start text-justify"
+                                control={
+                                    <Checkbox
+                                        checked={this.state.checkedLey}
+                                        onChange={this.handlePorcentageChange('checkedLey')}
+                                        value="checkedLey"
+                                        color="primary"
+                                    />
+                                }
+                                label={translate("languages.agentes.textLeyOrganica")}
                             />}
                         </Translate>
                     </div>
                     <div className="p-3 text-right">
                         <Button color="primary" size="small" className={classes.button}>
-                            <Translate id="languages.generalButton.cancel"/>
+                            <Translate id="languages.generalButton.cancel" />
                             <Close className={classes.rightIcon} />
                         </Button>
                         <Button variant="contained" size="small" color="primary" className={classes.button}
-                                disabled={!this.state.checkedLey} onClick={()=>{this.props.onAddPerson(this.state.promotor)}}>
-                            <Translate id="languages.generalButton.addedSave"/>
+                            disabled={!this.state.checkedLey} onClick={() => { this.props.onAddPerson(this.state.promotor) }}>
+                            <Translate id="languages.generalButton.addedSave" />
                         </Button>
                     </div>
                 </Grid>

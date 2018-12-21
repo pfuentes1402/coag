@@ -489,7 +489,7 @@ class AddOrganismo extends Component{
                             <Close className={classes.rightIcon} />
                         </Button>
                         <Button variant="contained" size="small" color="primary" className={classes.button}
-                                disabled={!this.state.checkedLey} onClick={()=>{this.props.onAddPerson(this.state.promotor)}}>
+                                disabled={!this.state.checkedLey} onClick={()=>{this.props.onAddOrganismo(this.state.promotor)}}>
                             <Translate id="languages.generalButton.addedSave"/>
                         </Button>
                     </div>
