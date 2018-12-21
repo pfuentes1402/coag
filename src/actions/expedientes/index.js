@@ -127,7 +127,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *tipoBusqueda: expediente, arquitectos, promotores
 */
 export const fetchBuscador = (filtro,tipoBusqueda) => 
-(dispatch) => {
+async (dispatch) => {
     let temp='';
     let temp2 = '';
     if(filtro!=null){
@@ -140,8 +140,8 @@ export const fetchBuscador = (filtro,tipoBusqueda) =>
         temp2='expedientes';
     }
    
-   dispatch(fetchFiltroUsuario(temp, temp2));
-    getBuscador(temp,tipoBusqueda).then((data) => {
+    dispatch(fetchFiltroUsuario(temp, temp2));
+    await getBuscador(temp,tipoBusqueda).then((data) => {
        dispatch(fetchDataResults(data,tipoBusqueda));
     })
         .catch(
@@ -371,4 +371,37 @@ export const elimardelatabla = (nodos, referencias)=> (dispatch) => {
        
         dispatch(fetchelimardelatabla(nodos,referencias)); 
     };
+
+/**Acciones para manejar la seccion de promotores */
+/**1- Limpiar la búsqueda */
+export const dispatchLimpiarBusquedaPromotores = () => (dispatch) =>{
+    dispatch({
+        type: types.LIMPIAR_BUSQUDA,
+        payload: []
+    })
+}
+
+/**2- Adicionar promotor */
+export const dispatchAddPromotor = (promotor) => (dispatch) =>{
+    dispatch({
+        type: types.ADD_PROMOTOR,
+        payload: promotor
+    })
+}
+
+/**Editar promotor */
+export const dispatchEditPromotor = (promotor) => (dispatch) =>{
+    dispatch({
+        type: types.EDIT_PROMOTOR,
+        payload: promotor
+    })
+}
+
+/**Eliminar un promotor */
+export const dispatchDeletePromotor = (nif) => (dispatch) =>{
+    dispatch({
+        type: types.DELETE_PROMOTOR,
+        payload: nif
+    })
+}
 
