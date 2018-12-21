@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
@@ -246,9 +248,13 @@ class Arquitecto extends Component {
               <TableHead>
                 <TableRow className={classes.headHeight}>
                   <CustomTableHead className="text-uppercase px-3">NIF</CustomTableHead>
-                  <CustomTableHead className="p-0 text-center text-uppercase">Nombre</CustomTableHead>
+                  <CustomTableHead className="p-0 text-center text-uppercase">
+                      <Translate id="languages.agentes.tableColumnName"/>
+                  </CustomTableHead>
                   <CustomTableHead className="p-3 text-center text-uppercase">%</CustomTableHead>
-                  <CustomTableHead className="p-0 text-center text-uppercase">Función</CustomTableHead>
+                  <CustomTableHead className="p-0 text-center text-uppercase">
+                      <Translate id="languages.agentes.tableColumnFunction"/>
+                  </CustomTableHead>
                   <CustomTableHead></CustomTableHead>
                 </TableRow>
               </TableHead>
@@ -276,7 +282,7 @@ class Arquitecto extends Component {
                               })}
                             </Grid>
                           </TableCell>
-                          <TableCell className="p-0">
+                          <TableCell className="p-0 button-column-static">
                               <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
                                  onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
                                 <EditIcon />
@@ -308,13 +314,13 @@ class Arquitecto extends Component {
                 this.handleSearch();
               }
             }}
-            label="Introduce términos de búsqueda"
+            label={<Translate id="languages.agentes.searchLabelBox"/>}
             className={classes.textField}>
           </TextField>
 
           <TextField
             select
-            label="Opción de búsqueda"
+            label={<Translate id="languages.agentes.searchLabelOption"/>}
             className={classes.textField}
             value={this.state.selectedOption}
             onChange={this.handleSelectOptionChange}>
@@ -328,11 +334,11 @@ class Arquitecto extends Component {
           <Grid item xs={12} className={classes.paddingButtons}>
             <Button color="primary" size="small" className={classes.button}
               onClick={() => { this.handleCanSearch(false) }}>
-              Cancelar<Close className={classes.rightIcon} />
+              <Translate id="languages.generalButton.cancel"/><Close className={classes.rightIcon} />
             </Button>
             <Button variant="contained" size="small" color="primary" className={classes.button}
               onClick={() => this.handleSearch()}>
-              Buscar<Search className={classes.rightIcon} />
+              <Translate id="languages.agentes.search"/><Search className={classes.rightIcon} />
             </Button>
           </Grid>
         </Paper>
@@ -352,16 +358,24 @@ class Arquitecto extends Component {
                 <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
-                <Typography variant="body2" className={classes.subtitleData}>NOMBRE</Typography>
+                <Typography variant="body2" className={classes.subtitleData}>
+                    <Translate id="languages.agentes.tableColumnName"/>
+                </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
 
-                <Typography variant="body2" className={classes.subtitleData}>PRIMER APELLIDO</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                    <Translate id="languages.agentes.firstName"/>
+                </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
 
-                <Typography variant="body2" className={classes.subtitleData}>SEGUNDO APELLIDO</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                    <Translate id="languages.agentes.secondName"/>
+                </Typography>
                 <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
 
-                <Typography variant="body2" className={classes.subtitleData}>OBSERVACIONES</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                    <Translate id="languages.agentes.observations"/>
+                </Typography>
                 <Typography variant="subtitle2" gutterBottom></Typography>
               </Grid>
 
@@ -370,8 +384,8 @@ class Arquitecto extends Component {
               </Grid>
 
               <Grid item xs={12} className="functionTipology">
-                <Typography variant="body2" className={classes.subtitleData}>
-                  FUNCIONES COMPATIBLES CON LA TIPOLOGÍA *
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.functionsTitle"/> *
                 </Typography>
                 {
                   this.props.funcionesTipologia.map((value, index) => {
@@ -385,7 +399,9 @@ class Arquitecto extends Component {
               </Grid>
 
               <Grid item xs={12}>
-                <Typography variant="body2" className={classes.subtitleData}>PORCENTAGE</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                    <Translate id="languages.agentes.percentTitle"/>
+                </Typography>
                 <Grid container spacing={0}>
                   <Grid item xs={5}>
                     <TextField
@@ -405,7 +421,7 @@ class Arquitecto extends Component {
                           onChange={this.handleCheckedPersentChange}
                           color="primary" />
                       }
-                      label="Porcntaje equitativo con el resto de los Arquitectos" />
+                      label={<Translate id="languages.agentes.percentLabel"/>}/>
                   </Grid>
                 </Grid>
               </Grid>
@@ -417,9 +433,7 @@ class Arquitecto extends Component {
                       onChange={this.handleTerm1Change}
                       color="primary" />
                   }
-                  label="Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o
-                  en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades
-                  53/1984 de 26 de diciembre y reglamentos que sean aplicables." />
+                  label={<Translate id="languages.agentes.conditionTermn1"/>} />
 
                   <FormControlLabel
                   control={
@@ -428,20 +442,18 @@ class Arquitecto extends Component {
                       onChange={this.handleTerm2Change}
                       color="primary" />
                   }
-                  label="Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo
-                  que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial,
-                  ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente" />
+                  label={<Translate id="languages.agentes.conditionTermn2"/>} />
               </Grid>
 
               <Grid item xs={12} className="text-right">
                 <Button color="primary" size="small" className={classes.button}
                   onClick={() => { this.handleCanSearch(false) }}>
-                  Cancelar<Close className={classes.rightIcon} />
+                  <Translate id="languages.generalButton.cancel"/><Close className={classes.rightIcon} />
                 </Button>
                 <Button variant="contained" size="small" color="primary" className={classes.button}
                   onClick={()=> this.addAgenteTrabajoToSelection(value.Id_Colegiado)} 
                   disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
-                  AÑADIR
+                  <Translate id="languages.generalButton.added"/>
                 </Button>
               </Grid>
             </Grid>
@@ -460,10 +472,6 @@ class Arquitecto extends Component {
   }
 
   render() {
-    {
-      console.log("this.props", this.props);
-      console.log("this.state", this.state);
-    }
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -486,12 +494,10 @@ const mapStateToProps = (state) => ({
   agentsSearchResult: state.trabajos.OtrosAgentesTrabajoSelec ? state.trabajos.OtrosAgentesTrabajoSelec : [],
   funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
   colegiadosSearchResult : state.trabajos.colegiadosAgentesTrabajo ? state.trabajos.colegiadosAgentesTrabajo : [],
-  loguedUser: state.user.DatosUsuarioValidado,
-  state:state
+  loguedUser: state.user.DatosUsuarioValidado
 })
 
 const mapDispatchToProps = {
-  /**Hacer la busqueda dado un id o un query (filtro= nif o nombre, tipoBusqueda = otrosagentes) */
   fetchBuscador: fetchBuscador,
   fetchFuncionesTipologia: fetchFuncionesTipologia,
   addAgenteTrabajoSeleccion: dispatchAddAgenteTrabajoSeleccion,
@@ -503,4 +509,4 @@ Arquitecto.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Arquitecto));
+export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(Arquitecto)));

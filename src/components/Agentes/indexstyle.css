@@ -12,3 +12,6 @@
 .min-height-panel{
   min-height: 70vh
 }
+.button-column-static{
+  width: 100px
+}
