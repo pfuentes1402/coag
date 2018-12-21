@@ -56,6 +56,40 @@
             "added":[
                 "Añadir",
                 "Añadir"
+            ],
+            "addedSave":[
+                "Añadir y guardar",
+                "Añadir y guardar"
+            ]
+        },
+        "generalAddress": {
+            "domicilio":[
+                "DOMICILIO",
+                "DOMICILIO"
+            ],
+            "calle":[
+                "CALLE",
+                "CALLE"
+            ],
+            "piso":[
+                "PISO",
+                "PISO"
+            ],
+            "provincia":[
+                "provincia",
+                "provincia"
+            ],
+            "municipio":[
+                "municipio",
+                "municipio"
+            ],
+            "region":[
+                "REGIÓN",
+                "REGIÓN"
+            ],
+            "pais":[
+                "PAÍS",
+                "PAÍS"
             ]
         },
         "expedients": {
@@ -147,8 +181,8 @@
                 "Porcentage"
             ],
             "percentLabel": [
-                "Porcntaje equitativo con el resto de los Arquitectos",
-                "Porcntaje equitativo con el resto de los Arquitectos"
+                "Porcentaje equitativo con el resto de los Arquitectos",
+                "Porcentaje equitativo con el resto de los Arquitectos"
             ],
             "conditionTermn1":[
                 "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables.",
@@ -157,6 +191,86 @@
             "conditionTermn2":[
                 "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente",
                 "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente"
+            ],
+            "titleDatosPersonales": [
+                "Datos personales",
+                "Datos personales"
+            ],
+            "titleDatosOrganismo": [
+                "Datos del Organismo",
+                "Datos del Organismo"
+            ],
+            "introduce": [
+                "Introduce",
+                "Introduce"
+            ],
+            "selecciona": [
+                "Selecciona",
+                "Selecciona"
+            ],
+            "titleCaracteristicasPromotor": [
+                "Características del promotor",
+                "Características del promotor"
+            ],
+            "titleTipoPromotor": [
+                "tipo de promotor",
+                "tipo de promotor"
+            ],
+            "titleSelectTipoPromotor": [
+                "Selecciona el tipo de promotor",
+                "Selecciona el tipo de promotor"
+            ],
+            "textSelectTipoPromotor": [
+                "Porcentaje equitativo con el resto de los Arquitectos",
+                "Porcentaje equitativo con el resto de los Arquitectos"
+            ],
+            "titleContacto": [
+                "Contacto",
+                "Contacto"
+            ],
+            "titleDomicilio": [
+                "Domicilio",
+                "Domicilio"
+            ],
+            "titleTipoCorreo": [
+                "tipo de correo electrónico",
+                "tipo de correo electrónico"
+            ],
+            "titleCorreo": [
+                "correo electrónico",
+                "correo electrónico"
+            ],
+            "titleTelefono": [
+                "teléfono",
+                "teléfono"
+            ],
+            "titleRepresentadoA": [
+                "Representando a",
+                "Representando a"
+            ],
+            "promotor": [
+                "promotor",
+                "promotor"
+            ],
+            "helperTextPromotor": [
+                "Seleccionar en caso de que (...)",
+                "Seleccionar en caso de que (...)"
+            ],
+            "textLeyOrganica": [
+                "A los efectos de la Ley Orgánica 15/1999. de 13 de diciembre, de Protección de Datos de Carácter Personal. se hace constar que se ha informado al(los) cliente(s) que, sus datos personales pasarán a formar parte de un archivo automatizado del COAG, para la finalidad de gestionar el visado colegial y las distintas actividades vinculadas a la presente comunicación de encargo colegial. y ha(n) reconocido quedar informado(s) y consentido que los datos personales reflejados en este documento, sean necesariamente tratados en un archivo propiedad del COAG, con la finalidad de llevar a la gestión del visado colegial. Además ha(n)sido informados(s) que puede ejercitar los derechos de acceso, rectificación, cancelación y oposición de sus datos personales, comunicándolo mediante envió postal a la dirección del estudio profesional y que esté dará traslado al COAG. ",
+                "A los efectos de la Ley Orgánica 15/1999. de 13 de diciembre, de Protección de Datos de Carácter Personal. se hace constar que se ha informado al(los) cliente(s) que, sus datos personales pasarán a formar parte de un archivo automatizado del COAG, para la finalidad de gestionar el visado colegial y las distintas actividades vinculadas a la presente comunicación de encargo colegial. y ha(n) reconocido quedar informado(s) y consentido que los datos personales reflejados en este documento, sean necesariamente tratados en un archivo propiedad del COAG, con la finalidad de llevar a la gestión del visado colegial. Además ha(n)sido informados(s) que puede ejercitar los derechos de acceso, rectificación, cancelación y oposición de sus datos personales, comunicándolo mediante envió postal a la dirección del estudio profesional y que esté dará traslado al COAG. "
+            ],
+            "titleTipoOrganismo": [
+                "tipo de organismo",
+                "tipo de organismo"
+            ],
+            "titlePersona": [
+                "Persona",
+                "Persona"
+            ],
+            "titleOrganismo": [
+                "organismo",
+                "organismo"
             ]
         }
     }

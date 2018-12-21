@@ -3,7 +3,7 @@ import { getEstructuraDocumental, getValidateAddress,  postNuevoExpediente, getE
 
 import * as types from './types';
 
-const formatMenssage = (error) => (
+export const formatMenssage = (error) => (
       {
         "MensajesProcesado": [ {"Mensaje": error}]
      }

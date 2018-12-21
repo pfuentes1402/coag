@@ -34,6 +34,11 @@ class App extends Component {
         });
     }
 
+    componentWillMount(){
+        let {setActiveLanguage} = this.props;
+        setActiveLanguage(this.props.idiomaFavorito.toString())
+    }
+
 
     render() {
         const {classes} = this.props;

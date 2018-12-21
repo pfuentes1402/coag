@@ -490,7 +490,7 @@ export const insertTrabajoEncomenda = (data, id_expediente) => {
 };
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
-export const getFuncionesTipologia = (idLanguage = 1) =>
+export const getFuncionesTipologia = (idLanguage = 2) =>
   api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
     return response;
   });
@@ -504,3 +504,88 @@ export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
       console.log("ERROR", error);
       return 403;
     });
+
+/**
+ * Proporciona la lista de paises
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getPaises = async (idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+/**
+ * Proporciona la lista de regiones autonomas
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getRegionesAutonoma = async (idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Proporcina la lista de provincias de una region
+ * @param idAutonomia identificador de la region autonoma
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getProvincias = async (idAutonomia, idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Proporciona la lista de municipios o concellos de una provincia
+ * @param idProvincia identificador de la provincia
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getConcellos = async (id_provincia, idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Proporciona lista de tipos de promotores
+ * @param idLanguage
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getTipoPromotores = async (idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Proporciona lista de tipos de Organismos
+ * @param idLanguage
+ * @returns {Promise<*>}
+ */
+export const getTipoOrganismoa = async (idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
+}
