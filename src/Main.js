@@ -8,6 +8,7 @@ import Profile from "./components/Profile/Profile";
 import ComunicacionEncargo from "./components/ComunicacionEncargo";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
 import Agentes from './components/Agentes';
+import VisualizarExpediente from './components/VisualizarExpediente/index';
 
 class Main extends Component {
 
@@ -24,6 +25,7 @@ class Main extends Component {
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
                     <Route exact path='/comunicacion' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/comunicacion/agentes" component={(props) => <Agentes {...props}/>}/>
+                    <Route path="/visualizar-expediente" component={(props) => <VisualizarExpediente {...props}/>}/>
                 </Switch>
             </div>
 

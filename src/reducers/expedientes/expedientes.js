@@ -7,7 +7,8 @@ import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import {
   FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
-  SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA
+  SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA,
+  ADD_TRABAJO_EXPEDIENTE
 } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
@@ -43,7 +44,8 @@ const initialState = {
   expedienteData: { Expediente: [], Emplazamientos: [{}] },
   datosAgentes: {},
   datosTrabajo: {}, arbolEstructuraTrabajoRefactor: [{ 'id_expediente': 68885 }], selectedData: { expedieteotrabajo: {}, trabajoData: {} }, trabajoData: { Trabajos: [{}] },
-  resultadoBusquedaPromotores: []
+  resultadoBusquedaPromotores: [],
+  trabajosPorExpediente: []
 };
 const expedientes = (state = initialState, action) => {
 
@@ -195,6 +197,18 @@ const expedientes = (state = initialState, action) => {
       return{
         ...state,
         promotores: [...state.promotores.filter(x=> x.Nif !== action.payload)]
+      }
+
+    case ADD_TRABAJO_EXPEDIENTE:
+      return{
+        ...state,
+        trabajosPorExpediente: [...state.trabajosPorExpediente, action.payload],
+        ExpedientNew: {
+          ...state.ExpedientNew,
+          Trabajos: action.payload.Trabajos,
+          Colegiados: action.payload.Colegiados,
+          Promotores: action.payload.Promotores
+        }
       }
 
     case PURGE:
