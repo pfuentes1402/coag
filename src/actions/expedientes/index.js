@@ -421,7 +421,8 @@ export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispat
         let response = await addTrabajoEncomendaExpediente(idExpediente, dataPost)
         response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0
             ? dispatch(fetchErrorExpediente(response.data))
-            : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data))
+            : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data));
+        return response.data.MensajesProcesado.length === 0;        
     } catch (error) {
         dispatch(fetchErrorExpediente(formatMenssage(error.message)));
     }

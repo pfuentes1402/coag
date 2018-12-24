@@ -200,7 +200,7 @@ const expedientes = (state = initialState, action) => {
       }
 
     case ADD_TRABAJO_EXPEDIENTE:
-      return{
+      let currentState = {
         ...state,
         trabajosPorExpediente: [...state.trabajosPorExpediente, action.payload],
         ExpedientNew: {
@@ -210,6 +210,7 @@ const expedientes = (state = initialState, action) => {
           Promotores: action.payload.Promotores
         }
       }
+      return currentState;
 
     case PURGE:
 

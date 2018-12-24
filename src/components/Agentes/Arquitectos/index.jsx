@@ -168,14 +168,15 @@ class Arquitecto extends Component {
   addFunctionToAgent = (functionCode) => (event) => {
     let tag = event.target.tagName === "SPAN" ? event.target.parentNode : event.target;
     if (!this.state.functionsSelected.some(x => x === functionCode)) {
-      let funcion = this.props.funcionesTipologia.find(x => x.Codigo === functionCode);
-      this.state.functionsSelected.push(functionCode);
+      let previusSelectedFunctions = this.state.functionsSelected;
+      previusSelectedFunctions.push(functionCode);
       tag.className = tag.className + " slectedFunction";
+      this.setState({ functionsSelected: previusSelectedFunctions });
     }
     else {
       let selections = this.state.functionsSelected.filter(x => x !== functionCode);
-      this.setState({ functionsSelected: selections });
       tag.className = tag.className.replace("slectedFunction", "");
+      this.setState({ functionsSelected: selections });
     }
   }
 
@@ -462,7 +463,8 @@ class Arquitecto extends Component {
                 </Button>
                 <Button variant="contained" size="small" color="primary" className={classes.button}
                   onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
-                  disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
+                  disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && this.state.functionsSelected.length > 0
+                    && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
                   <Translate id="languages.generalButton.added" />
                 </Button>
               </Grid>

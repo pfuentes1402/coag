@@ -32,7 +32,7 @@ class Agentes extends Component {
     super(props);
   }
 
-  mapFuncionesTipologias(codes){
+  mapFuncionesTipologias(codes) {
     let functionsId = codes.map(funct => {
       let functId = this.props.funcionesTipologicas.find(x => x.Codigo === funct);
       return functId ? functId.id_Funcion : "";
@@ -69,7 +69,7 @@ class Agentes extends Component {
           Nombre: value.Nombre,
           Apellido1: value.Apellido1,
           Apellido2: value.Apellido2,
-          Observaciones: value.Observaciones? value.Observaciones: null,
+          Observaciones: value.Observaciones ? value.Observaciones : null,
           Mail: value.Mail ? value.Mail : "",
           Telefono: value.Telefono ? value.Telefono : null,
           Calle: value.Calle ? value.Calle : "",
@@ -85,11 +85,18 @@ class Agentes extends Component {
       }),
       IgnorarObservaciones: 1
     };
+
+    //Obtener el id de expediente del estado de redux y llamar la funcion
+    //postAddTrabajoEncomenda
+    let currentExpId = this.props.currentExpediente.Expediente
+      && this.props.currentExpediente.Expediente.length > 0
+      ? this.props.currentExpediente.Expediente[0].Id_Expediente : null;
+    let success = await this.props.postAddTrabajoEncomenda(currentExpId, trabajoEncomenda);
     
-    await this.props.postAddTrabajoEncomenda("703515", trabajoEncomenda);
-    //TODO: Validar que se puede continuar
-    this.props.history.push("/visualizar-expediente");
-    console.log("props_state",this.props.state);
+    //Validación para continuar (si el resultado fue 200 se permite continuar)
+    if(success)
+      this.props.history.push("/visualizar-expediente");
+    console.log("props_state", this.props.state);
   }
 
   render() {
@@ -139,7 +146,7 @@ const mapStateToProps = (state) => ({
   loguedUser: state.user.DatosUsuarioValidado,
   comunicacionEncargo: state.trabajos.comunicacionEncargo,
   expedientes: state.expedientes,
-  funcionesTipologicas: state.trabajos.funcionesTipologia ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
+  funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
   currentExpediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
   state: state
 })

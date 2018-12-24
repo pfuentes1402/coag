@@ -183,17 +183,10 @@ export const dispachFilesToUpload = (files) => ({
 });
 
 
-//TODO: Queda consumir el servicio si fuera necesario aquí
+//Adicionar Agentes(arquitectos) a un trabajo
 export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) => async (dispatch) => {
-    let dataPost = [{
-        Id_Entidad: agent.Id_Entidad,
-        Firma: 1,
-        Ids_Funciones: "32",
-        PorcentajesEquitativos: 1,
-        Porcentaje: agent.Porciento
-    }]
     try {
-        let response = await addAgentesTrabajo(idExpediente,idTrabajo, dataPost);
+        //let response = await addAgentesTrabajo(idExpediente,idTrabajo, dataPost);
         dispatch(addAgenteTrabajoSeleccion(agent));
     }catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));

@@ -395,6 +395,20 @@ class Promotores extends Component {
             }
           </TableBody>
         </Table>
+
+        <TablePagination labelRowsPerPage="Cantidad de agentes por página"
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={100}
+          rowsPerPage={10}
+          page={1}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+        />
       </Paper>
       : <div></div>
     )
