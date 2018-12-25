@@ -28,6 +28,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchBuscador } from '../../../actions/expedientes/index';
+import TablePagination from '@material-ui/core/TablePagination';
 import {
   fetchFuncionesTipologia, dispatchAddAgenteTrabajoSeleccion,
   dispatchDeleteAgenteTrabajoSeleccion, dispatchEditAgenteTrabajoSeleccion
@@ -134,7 +135,12 @@ class Arquitecto extends Component {
       acceptTerm1: false,
       acceptTerm2: false,
       functionsSelected: [],
-      isSearch: false
+      isSearch: false,
+
+      currentPage: 0,
+      rowsPerPage: 5,
+      totalRecords: 1,
+      totalPages: 4
     }
   }
 
@@ -196,11 +202,18 @@ class Arquitecto extends Component {
     this.setState({ acceptTerm2: event.target.checked });
   };
 
-  async handleSearch() {
+  async handleSearch(currentPage = 0) {
     if (this.state.searchQuery !== "") {
       this.setState({ isSearch: true });
-      await this.props.fetchBuscador(this.state.searchQuery, "colegiados");
-      this.setState({ isSearch: false });
+      let search = await this.props.fetchBuscador(this.state.searchQuery, "colegiados", (currentPage + 1), this.state.rowsPerPage);
+      let pagination = search.data ? search.data.Paginacion[0] : null;
+
+      this.setState({
+        isSearch: false,
+        currentPage: currentPage,
+        totalRecords: pagination ? pagination.Numero_Total_Registros : this.state.totalRecords,
+        totalPages: pagination ? pagination.Numero_Paginas : this.state.totalPages
+      });
     }
   }
 
@@ -213,8 +226,8 @@ class Arquitecto extends Component {
       agente.Porciento = this.state.percent;
       agente.Funciones = this.state.functionsSelected;
 
-      //TODO: Sacar el idExpediente y el idTrabajo de los estados de redux
-      this.props.addAgenteTrabajoSeleccion("703377", "1", agente);
+      //Adicionando el agente al estdo de redux
+      this.props.addAgenteTrabajoSeleccion("", "", agente);
     }
     this.handleCanSearch(false);
   }
@@ -237,6 +250,16 @@ class Arquitecto extends Component {
       this.handleCanSearch(true);
     }
   }
+
+  handleChangePage = async (event, page) => {
+    this.state.currentPage = page;
+    await this.handleSearch(page);
+  };
+
+  handleChangeRowsPerPage = async (event) => {
+    this.state.rowsPerPage = event.target.value;
+    await this.handleSearch(0);
+  };
 
   renderSelection = () => {
     let { classes } = this.props;
@@ -360,119 +383,145 @@ class Arquitecto extends Component {
   renderSearchResult = () => {
     let { classes } = this.props;
     return (
-      this.state.canSearch ? this.props.colegiadosSearchResult.map((value, index) => {
-        return <Grid item xs={12} key={index}>
-          <Paper key={index} className={classes.resultPanel}>
-            <Grid container spacing={24}>
-              <Grid item xs={8}>
-                <Typography variant="h6" gutterBottom>Datos del Arquitecto</Typography>
-                <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
-                <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
+      <Grid container spacing={8} className="p-1">
+        {
+          this.state.canSearch
+            ? <Grid>
+              <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
+                rowsPerPageOptions={[5, 10]}
+                component="div"
+                count={this.state.totalRecords}
+                rowsPerPage={this.state.rowsPerPage}
+                page={this.state.currentPage}
+                backIconButtonProps={{
+                  'aria-label': 'Previous Page',
+                }}
+                nextIconButtonProps={{
+                  'aria-label': 'Next Page',
+                }}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
+            </Grid>
+            : <Grid item xs={12}></Grid>
+        }
 
-                <Typography variant="body2" className={classes.subtitleData}>
-                  <Translate id="languages.agentes.tableColumnName" />
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
+        {
+          this.state.canSearch ? this.props.colegiadosSearchResult.map((value, index) => {
+            return <Grid item xs={12} key={index}>
+              <Paper key={index} className={classes.resultPanel}>
+                <Grid container spacing={24}>
+                  <Grid item xs={8}>
+                    <Typography variant="h6" gutterBottom>Datos del Arquitecto</Typography>
+                    <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
+                    <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
-                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.firstName" />
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
+                    <Typography variant="body2" className={classes.subtitleData}>
+                      <Translate id="languages.agentes.tableColumnName" />
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
 
-                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.secondName" />
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
+                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                      <Translate id="languages.agentes.firstName" />
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
 
-                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.observations" />
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom></Typography>
-              </Grid>
+                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                      <Translate id="languages.agentes.secondName" />
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
 
-              <Grid item xs={4}>
-                <UserIcon className={classes.usericon} color="secondary" />
-              </Grid>
-
-              <Grid item xs={12} className="functionTipology">
-                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.functionsTitle" /> *
-                </Typography>
-                {
-                  this.props.funcionesTipologia.map((value, index) => {
-                    return <Button onClick={this.addFunctionToAgent(value.Codigo)}
-                      className={this.state.functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
-                      variant="contained"
-                      key={index}>{value.Codigo}
-                    </Button>
-                  })
-                }
-              </Grid>
-
-              <Grid item xs={12}>
-                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                  <Translate id="languages.agentes.percentTitle" />
-                </Typography>
-                <Grid container spacing={0}>
-                  <Grid item xs={5}>
-                    <TextField
-                      label="%"
-                      className={classes.mt0}
-                      value={this.state.percent}
-                      placeholder="Ej 25"
-                      type="number"
-                      onChange={this.handlePercentChange}
-                      margin="normal" />
+                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                      <Translate id="languages.agentes.observations" />
+                    </Typography>
+                    <Typography variant="subtitle2" gutterBottom></Typography>
                   </Grid>
-                  <Grid item xs={7}>
+
+                  <Grid item xs={4}>
+                    <UserIcon className={classes.usericon} color="secondary" />
+                  </Grid>
+
+                  <Grid item xs={12} className="functionTipology">
+                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                      <Translate id="languages.agentes.functionsTitle" /> *
+                </Typography>
+                    {
+                      this.props.funcionesTipologia.map((value, index) => {
+                        return <Button onClick={this.addFunctionToAgent(value.Codigo)}
+                          className={this.state.functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
+                          variant="contained"
+                          key={index}>{value.Codigo}
+                        </Button>
+                      })
+                    }
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                      <Translate id="languages.agentes.percentTitle" />
+                    </Typography>
+                    <Grid container spacing={0}>
+                      <Grid item xs={5}>
+                        <TextField
+                          label="%"
+                          className={classes.mt0}
+                          value={this.state.percent}
+                          placeholder="Ej 25"
+                          type="number"
+                          onChange={this.handlePercentChange}
+                          margin="normal" />
+                      </Grid>
+                      <Grid item xs={7}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={this.state.percentChecked}
+                              onChange={this.handleCheckedPersentChange}
+                              color="primary" />
+                          }
+                          label={<Translate id="languages.agentes.percentLabel" />} />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.percentChecked}
-                          onChange={this.handleCheckedPersentChange}
+                          checked={this.state.acceptTerm1}
+                          onChange={this.handleTerm1Change}
                           color="primary" />
                       }
-                      label={<Translate id="languages.agentes.percentLabel" />} />
+                      label={<Translate id="languages.agentes.conditionTermn1" />} />
+
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.acceptTerm2}
+                          onChange={this.handleTerm2Change}
+                          color="primary" />
+                      }
+                      label={<Translate id="languages.agentes.conditionTermn2" />} />
+                  </Grid>
+
+                  <Grid item xs={12} className="text-right">
+                    <Button color="primary" size="small" className={classes.button}
+                      onClick={() => { this.handleCanSearch(false) }}>
+                      <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+                    </Button>
+                    <Button variant="contained" size="small" color="primary" className={classes.button}
+                      onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
+                      disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && this.state.functionsSelected.length > 0
+                        && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
+                      <Translate id="languages.generalButton.added" />
+                    </Button>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.acceptTerm1}
-                      onChange={this.handleTerm1Change}
-                      color="primary" />
-                  }
-                  label={<Translate id="languages.agentes.conditionTermn1" />} />
-
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={this.state.acceptTerm2}
-                      onChange={this.handleTerm2Change}
-                      color="primary" />
-                  }
-                  label={<Translate id="languages.agentes.conditionTermn2" />} />
-              </Grid>
-
-              <Grid item xs={12} className="text-right">
-                <Button color="primary" size="small" className={classes.button}
-                  onClick={() => { this.handleCanSearch(false) }}>
-                  <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-                </Button>
-                <Button variant="contained" size="small" color="primary" className={classes.button}
-                  onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
-                  disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && this.state.functionsSelected.length > 0
-                    && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
-                  <Translate id="languages.generalButton.added" />
-                </Button>
-              </Grid>
+              </Paper>
             </Grid>
-          </Paper>
-        </Grid>
-      })
-        : <div></div>
+          })
+            : <div></div>
+        }
+      </Grid>
     );
   }
 

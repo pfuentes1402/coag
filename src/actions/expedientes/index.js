@@ -129,7 +129,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *filtro: cadena a buscar
 *tipoBusqueda: expediente, arquitectos, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=25) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -144,12 +144,13 @@ export const fetchBuscador = (filtro, tipoBusqueda) =>
         }
 
         dispatch(fetchFiltroUsuario(temp, temp2));
-        await getBuscador(temp, tipoBusqueda).then((data) => {
-            dispatch(fetchDataResults(data, tipoBusqueda));
-        })
-            .catch(
-                () => fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda' })
-            );
+        try{
+            let searchResult = await getBuscador(temp, tipoBusqueda,page, pageSize);
+            dispatch(fetchDataResults(searchResult, tipoBusqueda));
+            return searchResult;
+        } catch(e){
+            fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda' });
+        }
     };
 
 
@@ -162,14 +163,9 @@ export const fetchBuscador = (filtro, tipoBusqueda) =>
 */
 export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
     (dispatch) => {
-
-
         dispatch(fetchInit());
         getEstructuraDocumental(id_expediente, idtrabajo).then((expedientes) => {
-
-
             dispatch(fetchSuccessTrabajo(expedientes));
-
         })
             .catch(
                 () => fetchErrorExpediente({ error: 'Algo ha salido mal' })

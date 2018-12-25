@@ -194,7 +194,7 @@ export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) 
 
 }
 
-//TODO: Queda consumir el servicio si fuera necesario aquí
+//Eleiminado un agente de trabajo del estado de redux
 export const dispatchDeleteAgenteTrabajoSeleccion = (id) => (dispatch) => {
     dispatch(deleteAgenteTrabajoSeleccion(id));
 }

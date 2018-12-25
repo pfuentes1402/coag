@@ -272,6 +272,12 @@
                 "organismo",
                 "organismo"
             ]
+        },
+        "promotores":{
+            "itemsPerPage":[
+                "Cantidad de agentes por página",
+                "Cantidad de agentes por página"
+            ]
         }
     }
 }
