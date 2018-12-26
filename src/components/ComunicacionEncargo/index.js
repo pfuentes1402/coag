@@ -7,7 +7,10 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz, fetchComunicacionencargo } from "../../actions/trabajos";
+import {
+    fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz,
+    fetchComunicacionencargo, dispatchError
+} from "../../actions/trabajos";
 import { connect } from "react-redux";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { Container } from "reactstrap";
@@ -18,7 +21,7 @@ import Close from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { grey} from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
 
 const styles = theme => ({
     root: {
@@ -97,13 +100,14 @@ const mapStateToProps = (state) => (
     }
 );
 
-const mapDispatchToProps =  {
-        fetchTipoTrabajo: fetchTipoTrabajo,
-        fetchTipoAutorizacion: fetchTipoAutorizacion,
-        fetchFasesTrabajos: fetchFasesTrabajos,
-        fetchGruposRaiz: fetchGruposRaiz,
-        fetchComunicacionencargo: fetchComunicacionencargo
-    };
+const mapDispatchToProps = {
+    fetchTipoTrabajo: fetchTipoTrabajo,
+    fetchTipoAutorizacion: fetchTipoAutorizacion,
+    fetchFasesTrabajos: fetchFasesTrabajos,
+    fetchGruposRaiz: fetchGruposRaiz,
+    fetchComunicacionencargo: fetchComunicacionencargo,
+    dispatchError: dispatchError
+};
 
 
 class ComunicacionEncargo extends React.Component {
@@ -137,7 +141,7 @@ class ComunicacionEncargo extends React.Component {
         let arrayRaiz = [];
         let tiposTramite = this.props.tiposAutorizacion;
         let gruposRaiz = this.props.gruposRaiz;
-       for (let i = 0; i < gruposRaiz.length; i++) {
+        for (let i = 0; i < gruposRaiz.length; i++) {
             let value = gruposRaiz[i];
             await this.props.fetchTipoTrabajo(value.Id_Tipo_Grupo_Raiz, this.props.activeLanguage.code);
             let tiposTrabajos = this.props.tiposTrabajos;
@@ -164,7 +168,7 @@ class ComunicacionEncargo extends React.Component {
         });
         let updateGrupoRaiz = [];
         Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
-        for(let i = 0; i < updateGrupoRaiz.length; i++){
+        for (let i = 0; i < updateGrupoRaiz.length; i++) {
             updateGrupoRaiz[i].isSelected = i === index;
         }
         this.props.fetchComunicacionencargo(updateGrupoRaiz);
@@ -181,7 +185,7 @@ class ComunicacionEncargo extends React.Component {
         let comunicacionEncargo = this.props.comunicacionencargo[index];
         let id = event.target.value;
         this.props.fetchFasesTrabajos(id, comunicacionEncargo.tramiteSelection, this.props.activeLanguage.code);
-        let indexTipoObra = comunicacionEncargo.tiposObra.findIndex(x=> x.Id_Tipo_Grupo_Tematico === id);
+        let indexTipoObra = comunicacionEncargo.tiposObra.findIndex(x => x.Id_Tipo_Grupo_Tematico === id);
         let updateGrupoRaiz = [];
         Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
         updateGrupoRaiz[index].obraSelection = id;
@@ -194,7 +198,7 @@ class ComunicacionEncargo extends React.Component {
         let id = event.target.value;
         this.props.fetchFasesTrabajos(comunicacionEncargo.obraSelection, id, this.props.activeLanguage.code);
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz,this.props.comunicacionencargo);
+        Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
         updateGrupoRaiz[index].tramiteSelection = id;
         this.props.fetchComunicacionencargo(updateGrupoRaiz);
     }
@@ -247,7 +251,7 @@ class ComunicacionEncargo extends React.Component {
         return relationsData;
     }
 
-    async updateFaseTrabajo(index){
+    async updateFaseTrabajo(index) {
         let comunicacionencargo = this.props.comunicacionencargo[index];
         await this.props.fetchFasesTrabajos(comunicacionencargo.obraSelection, comunicacionencargo.tramiteSelection, this.props.activeLanguage.code);
     }
@@ -285,8 +289,17 @@ class ComunicacionEncargo extends React.Component {
         )
     }
 
-    handleNext(){
-        this.props.history.push("/comunicacion/agentes");
+    /**Función que valida la continuación en el wizard */
+    handleNext() {
+        if (this.props.trabajos.fasesTrabajos && 
+            this.props.trabajos.fasesTrabajos.FasesTrabajos && 
+            this.props.trabajos.fasesTrabajos.FasesTrabajos.length === 0) {
+            this.props.dispatchError("No existen trabajos relacionados para el tipo de obra " +
+                "y la autorización municipal selecccionada");
+        }
+        else{
+            this.props.history.push("/comunicacion/agentes");
+        }
     }
 
     render() {
@@ -300,7 +313,7 @@ class ComunicacionEncargo extends React.Component {
                         style={{ minHeight: 48, height: 48 }}>
                         <Grid container spacing={16} style={{ padding: '0 15px' }}>
                             <Grid item xs={6}>
-                                <Translate id="languages.comunicacionEncargo.titleEligeTipoExpeiente"/>
+                                <Translate id="languages.comunicacionEncargo.titleEligeTipoExpeiente" />
                             </Grid>
                         </Grid>
                     </ExpansionPanelSummary>
@@ -309,11 +322,11 @@ class ComunicacionEncargo extends React.Component {
                             <Grid item xs={12}>
                                 {
                                     this.props.comunicacionencargo && this.props.comunicacionencargo.map((value, index) => {
-                                        return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`,index)}>
+                                        return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`, index)}>
                                             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
                                                 expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
                                                 className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
-                                                onClick={()=>{this.updateFaseTrabajo(index)}}>
+                                                onClick={() => { this.updateFaseTrabajo(index) }}>
                                                 {value.name}
                                             </ExpansionPanelSummary>
                                             <ExpansionPanelDetails className={classes.panelBody}>
@@ -322,7 +335,7 @@ class ComunicacionEncargo extends React.Component {
                                                         <Grid item xs={4}>
                                                             <FormControl className={classes.formControl}>
                                                                 <InputLabel className={classes.selectTitle} htmlFor="build-type">
-                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoObra"/>
+                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoObra" />
                                                                 </InputLabel>
                                                                 <Select
                                                                     value={this.props.comunicacionencargo[index].obraSelection}
@@ -338,7 +351,7 @@ class ComunicacionEncargo extends React.Component {
                                                         <Grid item xs={4}>
                                                             <FormControl className={classes.formControl}>
                                                                 <InputLabel className={classes.selectTitle} htmlFor="tramit-type">
-                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoTramite"/>
+                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoTramite" />
                                                                 </InputLabel>
                                                                 <Select
                                                                     value={this.props.comunicacionencargo[index].tramiteSelection}
@@ -347,7 +360,7 @@ class ComunicacionEncargo extends React.Component {
                                                                     {
                                                                         value.tiposTramite.map((value, index) => {
                                                                             return <MenuItem key={index} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
-                                                                    })}
+                                                                        })}
                                                                 </Select>
                                                             </FormControl>
                                                         </Grid>
@@ -357,7 +370,7 @@ class ComunicacionEncargo extends React.Component {
                                                                 <ExpansionPanelSummary expandIcon={expandedChild === 'panel11' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
                                                                     className={expandedChild === 'panel11' ? classes.panelExapnded : classes.title}
                                                                     style={{ minHeight: 48, height: 48 }}>
-                                                                    <Translate id="languages.comunicacionEncargo.titleVerDescription"/>
+                                                                    <Translate id="languages.comunicacionEncargo.titleVerDescription" />
                                                                 </ExpansionPanelSummary>
                                                                 <ExpansionPanelDetails>
                                                                     <ReactQuill value={this.props.comunicacionencargo[index].description} onChange={this.handleChange} readOnly theme='bubble' />
@@ -369,7 +382,7 @@ class ComunicacionEncargo extends React.Component {
                                                                 <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
                                                                     className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
                                                                     style={{ minHeight: 48, height: 48 }}>
-                                                                    {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar"/>
+                                                                    {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
                                                                 </ExpansionPanelSummary>
                                                                 <ExpansionPanelDetails>
                                                                     <Grid container spacing={24} className={classes.marginPanel}>
@@ -394,12 +407,11 @@ class ComunicacionEncargo extends React.Component {
 
                 <div className={classes.right}>
                     <Button color="primary" className={classes.button}>
-                        Cancelar
-                                <Close className={classes.rightIcon} />
+                        Cancelar<Close className={classes.rightIcon} />
                     </Button>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleNext()}}>
-                        Siguiente
-                                <Next className={classes.rightIcon} />
+                    <Button variant="contained" color="primary" className={classes.button}
+                        onClick={() => { this.handleNext() }}>
+                        Siguiente<Next className={classes.rightIcon} />
                     </Button>
                 </div>
             </Container>
