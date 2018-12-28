@@ -8,6 +8,7 @@ import {fetchErrorExpediente, formatMenssage} from "../../../actions/expedientes
 import {connect} from "react-redux";
 import {grey} from '@material-ui/core/colors';
 import Close from '@material-ui/icons/Close';
+import { ValidatorForm, TextValidator, SelectValidator} from 'react-material-ui-form-validator';
 
 const styles = theme => ({
     formControl: {
@@ -23,7 +24,9 @@ const styles = theme => ({
     },
     divGrey: {
         backgroundColor: grey[100],
-        padding: 16
+        padding: 16,
+        borderBottom: "1px solid #eee",
+        borderTop: "1px solid #eee"
     },
     button: {
         margin: theme.spacing.unit,
@@ -33,6 +36,7 @@ const styles = theme => ({
 const mapStateToProps = (state) => (
     {
         errorExpediente: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
+        selectedPromoters: state.expedientes.promotores,
     }
 );
 
@@ -54,7 +58,6 @@ class AddOrganismo extends Component{
                 "Apellido1": "",
                 "Apellido2": "",
                 "Observaciones": "",
-                "Id_Tipo_Organismo": "",
                 "Mail": "",
                 "Telefono": "",
                 "Calle": "",
@@ -67,6 +70,7 @@ class AddOrganismo extends Component{
                 "Id_Provincia": "",
                 "Id_Autonomia": 71,
                 "Id_Pais": 100,
+                "Nif_Representado": ""
 
             },
             tiposPromotor: [],
@@ -78,7 +82,8 @@ class AddOrganismo extends Component{
             checkedRepresentado: false,
             selectedRepresentados: [],
             checkedLey: true
-        }
+        };
+
     }
 
     async componentWillMount(){
@@ -132,370 +137,407 @@ class AddOrganismo extends Component{
             municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []})
     };
 
+    handleSubmit(){
+        this.props.onAddOrganismo(this.state.promotor)
+    }
+
     render(){
         let {classes} = this.props;
         let {paises, regiones, provincias, municipios} = this.state;
+        console.log(this.props.state)
         return(
-            <Grid container spacing={16}>
-                <Grid item xs={12} >
-                    <div className="p-3">
-                        <Typography variant="subtitle1" gutterBottom>
-                            <Translate id="languages.agentes.titleDatosOrganismo"/>
-                        </Typography>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) => <TextField
-                                    required
-                                    id="CIF"
-                                    label="CIF"
-                                    placeholder={translate("languages.agentes.introduce") + "CIF"}
-                                    value={this.state.promotor.Nif ? this.state.promotor.Nif : ""}
-                                    onChange={this.handleChange('Nif')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
+            <ValidatorForm
+                ref="form"
+                onSubmit={()=>{this.handleSubmit()}}
+            >
+                <Grid container spacing={16}>
+                    <Grid item xs={12} >
 
-                                />}
-                            </Translate>
-
-                        </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) =><TextField
-                                    required
-                                    id="nombre"
-                                    label={translate("languages.agentes.tableColumnName")}
-                                    placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.tableColumnName")}
-                                    value={this.state.promotor.Nombre ? this.state.promotor.Nombre : ""}
-                                    onChange={this.handleChange('Nombre')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
-                                    type="text"
-                                />}
-                            </Translate>
-                        </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) =><TextField
-                                    id="observations"
-                                    label={translate("languages.agentes.observations")}
-                                    placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.observations")}
-                                    value={this.state.promotor.Observaciones ? this.state.promotor.Observaciones : ""}
-                                    onChange={this.handleChange('Observaciones')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
-                                    type="text"
-                                />}
-                            </Translate>
-                        </FormControl>
-                    </div>
-                    <div className={classes.divGrey}>
-                        <Typography variant="subtitle1" gutterBottom className="pb-3">
-                            <Translate id="languages.agentes.titleCaracteristicasPromotor"/>
-                        </Typography>
-                        <Grid container spacing={0}>
-                            <Grid item xs={3}>
-                                <FormControl style={{width: "100%"}}>
-                                    <InputLabel htmlFor="porciento" className={classes.label} shrink>
-                                        <Translate id="languages.agentes.percentTitle"/>
-                                    </InputLabel>
-                                    <Input
-                                        id="porcentaje"
-                                        placeholder="Ej 25"
-                                        value={this.state.promotor.porcentaje ? this.state.promotor.porcentaje : ""}
-                                        onChange={this.handleChange('porcentaje')}
-                                        endAdornment={<InputAdornment position="end">%</InputAdornment>}
-                                        type="number"
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={9}>
+                        <div className="p-3">
+                            <Typography variant="subtitle1" gutterBottom>
+                                <Translate id="languages.agentes.titleDatosOrganismo"/>
+                            </Typography>
+                            <FormControl className={classes.formControl}>
                                 <Translate>
-                                    {({ translate }) =><FormControlLabel className="ml-0 mr-0"
-                                                                         control={
-                                                                             <Checkbox
-                                                                                 checked={this.state.promotor.PorcentajesEquitativos ? this.state.promotor.PorcentajesEquitativos : false}
-                                                                                 onChange={this.handleChange('PorcentajesEquitativos')}
-                                                                                 value="PorcentajesEquitativos"
-                                                                                 color="primary"
-                                                                             />
-                                                                         }
-                                                                         label={translate("languages.agentes.percentLabel")}
-                                    />}
-                                </Translate>
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <div className="p-3">
-                        <Typography variant="subtitle1" gutterBottom className="pb-3">
-                            <Translate id="languages.agentes.titleContacto"/>
-                        </Typography>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) =><TextField
-                                    id="calle"
-                                    required
-                                    label={translate("languages.generalAddress.calle")}
-                                    placeholder="Ej Gran via"
-                                    value={this.state.promotor.Calle ? this.state.promotor.Calle : ""}
-                                    onChange={this.handleChange('Calle')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
-                                    type="text"
-                                />}
-                            </Translate>
-                        </FormControl>
-                        <Grid container spacing={0} style={{width: "70%"}} >
-                            <Grid item xs={8}>
-                                <FormControl style={{width:100}}>
-                                    <TextField
-                                        id="Numero"
-                                        label="Num"
-                                        placeholder="Ej 25"
-                                        value={this.state.promotor.Numero ? this.state.promotor.Numero : ""}
-                                        onChange={this.handleChange('Numero')}
+                                    {({ translate }) => <TextValidator
+                                        name="cif"
+                                        id="cif"
+                                        label="Nif *"
+                                        placeholder={translate("languages.agentes.introduce") + " " + "CIF"}
+                                        value={this.state.promotor.Nif ? this.state.promotor.Nif : ""}
+                                        onChange={this.handleChange('Nif')}
                                         margin="normal"
                                         InputLabelProps={{
                                             shrink: true,
                                             classes: {
                                                 root: classes.label}
                                         }}
-                                        type="number"
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={4} className="text-right">
-                                <FormControl style={{width:100}}>
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+
+                                    />}
+                                </Translate>
+
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) =><TextValidator
+                                        id="nombre"
+                                        name="nombre"
+                                        label={translate("languages.agentes.tableColumnName") + " *"}
+                                        placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.tableColumnName")}
+                                        value={this.state.promotor.Nombre ? this.state.promotor.Nombre : ""}
+                                        onChange={this.handleChange('Nombre')}
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            classes: {
+                                                root: classes.label}
+                                        }}
+                                        type="text"
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    />}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) =><TextField
+                                        id="observations"
+                                        label={translate("languages.agentes.observations")}
+                                        placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.observations")}
+                                        value={this.state.promotor.Observaciones ? this.state.promotor.Observaciones : ""}
+                                        onChange={this.handleChange('Observaciones')}
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            classes: {
+                                                root: classes.label}
+                                        }}
+                                        type="text"
+                                    />}
+                                </Translate>
+                            </FormControl>
+                        </div>
+                        <div className={classes.divGrey}>
+                            <Typography variant="subtitle1" gutterBottom className="pb-3">
+                                <Translate id="languages.agentes.titleCaracteristicasPromotor"/>
+                            </Typography>
+                            <Grid container spacing={0}>
+                                <Grid item xs={3}>
+                                    <FormControl style={{width: "100%"}}>
+                                        <InputLabel htmlFor="porciento" className={classes.label} shrink>
+                                            <Translate id="languages.agentes.percentTitle"/>
+                                        </InputLabel>
+                                        <Input
+                                            id="porcentaje"
+                                            placeholder="Ej 25"
+                                            value={this.state.promotor.porcentaje ? this.state.promotor.porcentaje : ""}
+                                            onChange={this.handleChange('porcentaje')}
+                                            endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={9}>
                                     <Translate>
-                                        {({ translate }) =><TextField
-                                            id="Piso"
-                                            label={translate("languages.generalAddress.piso")}
-                                            placeholder="Ej 1A"
-                                            value={this.state.promotor.Piso ? this.state.promotor.Piso : ""}
-                                            onChange={this.handleChange('Piso')}
+                                        {({ translate }) =><FormControlLabel className="ml-0 mr-0"
+                                                                             control={
+                                                                                 <Checkbox
+                                                                                     checked={this.state.promotor.PorcentajesEquitativos ? this.state.promotor.PorcentajesEquitativos : 0}
+                                                                                     onChange={this.handleChange('PorcentajesEquitativos')}
+                                                                                     value="PorcentajesEquitativos"
+                                                                                     color="primary"
+                                                                                 />
+                                                                             }
+                                                                             label={translate("languages.agentes.percentLabel")}
+                                        />}
+                                    </Translate>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        <div className="p-3">
+                            <Typography variant="subtitle1" gutterBottom className="pb-3">
+                                <Translate id="languages.agentes.titleContacto"/>
+                            </Typography>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) =><TextValidator
+                                        name="calle"
+                                        id="calle"
+                                        label={translate("languages.generalAddress.calle") + " *"}
+                                        placeholder="Ej Gran via"
+                                        value={this.state.promotor.Calle ? this.state.promotor.Calle : ""}
+                                        onChange={this.handleChange('Calle')}
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            classes: {
+                                                root: classes.label}
+                                        }}
+                                        type="text"
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    />}
+                                </Translate>
+                            </FormControl>
+                            <Grid container spacing={0} style={{width: "70%"}} >
+                                <Grid item xs={8}>
+                                    <FormControl style={{width:100}}>
+                                        <TextField
+                                            id="Numero"
+                                            label="Num"
+                                            placeholder="Ej 25"
+                                            value={this.state.promotor.Numero ? this.state.promotor.Numero : ""}
+                                            onChange={this.handleChange('Numero')}
                                             margin="normal"
                                             InputLabelProps={{
                                                 shrink: true,
                                                 classes: {
                                                     root: classes.label}
                                             }}
-                                        />}
-                                    </Translate>
-                                </FormControl>
+                                            type="number"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={4} className="text-right">
+                                    <FormControl style={{width:100}}>
+                                        <Translate>
+                                            {({ translate }) =><TextField
+                                                id="Piso"
+                                                label={translate("languages.generalAddress.piso")}
+                                                placeholder="Ej 1A"
+                                                value={this.state.promotor.Piso ? this.state.promotor.Piso : ""}
+                                                onChange={this.handleChange('Piso')}
+                                                margin="normal"
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                    classes: {
+                                                        root: classes.label}
+                                                }}
+                                            />}
+                                        </Translate>
+                                    </FormControl>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <FormControl className={classes.formControl2}>
-                            <InputLabel htmlFor="provincia" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.provincia"/>
-                            </InputLabel>
+                            <FormControl className={classes.formControl2}>
+                                <InputLabel htmlFor="provincia" required shrink className={classes.label} style={{transform: "translate(0, -12.5px) scale(0.75)"}}>
+                                    <Translate id="languages.generalAddress.provincia"/>
+                                </InputLabel>
+                                <Translate>
+                                    {({ translate }) => <SelectValidator
+                                        name="provincia"
+                                        value={this.state.promotor.Id_Provincia ? this.state.promotor.Id_Provincia : ""}
+                                        onChange={this.handleProvincias('Id_Provincia')}
+                                        inputProps={{
+                                            name: 'provincia',
+                                            id: 'provincia',
+                                        }}
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    >
+                                        <MenuItem value="" disabled>
+                                            {translate("languages.agentes.selecciona") + " " +
+                                            translate("languages.generalAddress.provincia")}
+                                        </MenuItem>
+                                        {
+                                            provincias ?
+                                                provincias.map(value=>{
+                                                    return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
+                                                })
+                                                : ""
+                                        }
+                                    </SelectValidator>}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl2}>
+                                <InputLabel htmlFor="concello" required shrink className={classes.label} style={{transform: "translate(0, -12.5px) scale(0.75)"}}>
+                                    <Translate id="languages.generalAddress.municipio"/>
+                                </InputLabel>
+                                <Translate>
+                                    {({ translate }) => <SelectValidator
+                                        name="concello"
+                                        value={this.state.promotor.Id_Concello ? this.state.promotor.Id_Concello : ""}
+                                        onChange={this.handleChange('Id_Concello')}
+                                        inputProps={{
+                                            name: 'concello',
+                                            id: 'concello',
+                                        }}
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    >
+                                        <MenuItem value="" disabled>
+                                            {translate("languages.agentes.selecciona") + " " +
+                                            translate("languages.generalAddress.municipio")}
+                                        </MenuItem>
+                                        {
+                                            municipios ?
+                                                municipios.map(value=>{
+                                                    return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
+                                                })
+                                                : ""
+                                        }
+                                    </SelectValidator>}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl2}>
+                                <InputLabel htmlFor="pais" required shrink className={classes.label} style={{transform: "translate(0, -12.5px) scale(0.75)"}}>
+                                    <Translate id="languages.generalAddress.region"/>
+                                </InputLabel>
+                                <Translate>
+                                    {({ translate }) => <SelectValidator
+                                        name="Id_Autonomia"
+                                        value={this.state.promotor.Id_Autonomia ? this.state.promotor.Id_Autonomia : ""}
+                                        onChange={this.handleRegion('Id_Autonomia')}
+                                        inputProps={{
+                                            name: 'region',
+                                            id: 'region',
+                                        }}
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    >
+                                        {
+                                            regiones ?
+                                                regiones.map(value=>{
+                                                    return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
+                                                })
+                                                : ""
+                                        }
+                                    </SelectValidator>}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl2}>
+                                <InputLabel htmlFor="pais" required shrink className={classes.label} style={{transform: "translate(0, -12.5px) scale(0.75)"}}>
+                                    <Translate id="languages.generalAddress.pais"/>
+                                </InputLabel>
+                                <Translate>
+                                    {({ translate }) => <SelectValidator
+                                        name="Id_Pais"
+                                        value={this.state.promotor.Id_Pais ? this.state.promotor.Id_Pais : ""}
+                                        onChange={this.handleChange('Id_Pais')}
+                                        inputProps={{
+                                            name: 'pais',
+                                            id: 'pais',
+                                        }}
+                                        validators={['required']}
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
+                                    >
+                                        {
+                                            paises ?
+                                                paises.map(value=>{
+                                                    return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
+                                                })
+                                                : ""
+                                        }
+                                    </SelectValidator>}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) =><TextField
+                                        id="mail"
+                                        label={translate("languages.agentes.titleCorreo")}
+                                        placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleCorreo")}
+                                        value={this.state.promotor.Mail ? this.state.promotor.Mail : ""}
+                                        onChange={this.handleChange('Mail')}
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            classes: {
+                                                root: classes.label}
+                                        }}
+                                        type="email"
+                                    />}
+                                </Translate>
+                            </FormControl>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) =><TextField
+                                        id="telefono"
+                                        label={translate("languages.agentes.titleTelefono")}
+                                        placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleTelefono")}
+                                        value={this.state.promotor.Telefono ? this.state.promotor.Telefono : ""}
+                                        onChange={this.handleChange('Telefono')}
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                            classes: {
+                                                root: classes.label}
+                                        }}
+                                        type="tel"
+                                    />}
+                                </Translate>
+                            </FormControl>
+                        </div>
+                        <div className={classes.divGrey}>
                             <Translate>
-                                {({ translate }) => <Select
-                                    value={this.state.promotor.Id_Provincia ? this.state.promotor.Id_Provincia : ""}
-                                    onChange={this.handleProvincias('Id_Provincia')}
-                                    inputProps={{
-                                        name: 'provincia',
-                                        id: 'provincia',
-                                    }}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="" disabled>
-                                        {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.generalAddress.provincia")}
-                                    </MenuItem>
-                                    {
-                                        provincias ?
-                                            provincias.map(value=>{
-                                                return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
-                                            })
-                                            : ""
-                                    }
-                                </Select>}
+                                {({ translate }) =><FormControlLabel className="ml-0 mr-0"
+                                                                     control={
+                                                                         <Checkbox
+                                                                             checked={this.state.checkedRepresentado}
+                                                                             onChange={this.handlePorcentageChange('checkedRepresentado')}
+                                                                             value="checkedPercentage"
+                                                                             color="primary"
+                                                                         />
+                                                                     }
+                                                                     label={translate("languages.agentes.titleRepresentadoA")}
+                                />}
                             </Translate>
-                        </FormControl>
-                        <FormControl className={classes.formControl2}>
-                            <InputLabel htmlFor="provincia" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.municipio"/>
-                            </InputLabel>
+                            <FormControl className={classes.formControl}>
+                                <Translate>
+                                    {({ translate }) => <Select
+                                        value={this.state.promotor.Nif_Representado ? this.state.promotor.Nif_Representado : ""}
+                                        onChange={this.handleChange('Nif_Representado')}
+                                        inputProps={{
+                                            name: 'representado',
+                                            id: 'representado',
+                                        }}
+                                        displayEmpty
+                                    >
+                                        <MenuItem value="" disabled>
+                                            {translate("languages.agentes.selecciona") + " " +
+                                            translate("languages.agentes.promotor")}
+                                        </MenuItem>
+                                        {
+                                            this.props.selectedPromoters ? this.props.selectedPromoters.map(value => {
+                                                    return <MenuItem key={value.Nif} value={value.Nif}>{value.Nombre}</MenuItem>
+                                                })
+                                                : ""
+                                        }
+                                    </Select>}
+                                </Translate>
+                            </FormControl>
+                        </div>
+                        <div className="p-3">
                             <Translate>
-                                {({ translate }) => <Select
-                                    value={this.state.promotor.Id_Concello ? this.state.promotor.Id_Concello : ""}
-                                    onChange={this.handleChange('Id_Concello')}
-                                    inputProps={{
-                                        name: 'provincia',
-                                        id: 'provincia',
-                                    }}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="" disabled>
-                                        {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.generalAddress.municipio")}
-                                    </MenuItem>
-                                    {
-                                        municipios ?
-                                            municipios.map(value=>{
-                                                return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
-                                            })
-                                            : ""
-                                    }
-                                </Select>}
+                                {({ translate }) =><FormControlLabel className="ml-0 mr-0 align-items-start text-justify"
+                                                                     control={
+                                                                         <Checkbox
+                                                                             checked={this.state.checkedLey}
+                                                                             onChange={this.handlePorcentageChange('checkedLey')}
+                                                                             value="checkedLey"
+                                                                             color="primary"
+                                                                         />
+                                                                     }
+                                                                     label={translate("languages.agentes.textLeyOrganica")}
+                                />}
                             </Translate>
-                        </FormControl>
-                        <FormControl className={classes.formControl2}>
-                            <InputLabel htmlFor="pais" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.region"/>
-                            </InputLabel>
-                            <Select
-                                value={this.state.promotor.Id_Autonomia ? this.state.promotor.Id_Autonomia : ""}
-                                onChange={this.handleRegion('Id_Autonomia')}
-                                inputProps={{
-                                    name: 'region',
-                                    id: 'region',
-                                }}
-                            >
-                                {
-                                    regiones ?
-                                        regiones.map(value=>{
-                                            return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
-                                        })
-                                        : ""
-                                }
-                            </Select>
-                        </FormControl>
-                        <FormControl className={classes.formControl2}>
-                            <InputLabel htmlFor="pais" required shrink className={classes.label}>
-                                <Translate id="languages.generalAddress.pais"/>
-                            </InputLabel>
-                            <Select
-                                value={this.state.promotor.Id_Pais ? this.state.promotor.Id_Pais : ""}
-                                onChange={this.handleChange('Id_Pais')}
-                                inputProps={{
-                                    name: 'pais',
-                                    id: 'pais',
-                                }}
+                        </div>
+                        <div className="p-3 text-right">
+                            <Button color="primary" size="small" className={classes.button}>
+                                <Translate id="languages.generalButton.cancel"/>
+                                <Close className={classes.rightIcon} />
+                            </Button>
+                            <Button type="submit" variant="contained" size="small" color="primary" className={classes.button}
+                                    disabled={!this.state.checkedLey}>
+                                <Translate id="languages.generalButton.addedSave"/>
+                            </Button>
+                        </div>
 
-                            >
-                                {
-                                    paises ?
-                                        paises.map(value=>{
-                                            return <MenuItem key={value.Id_Area} value={value.Id_Area}>{value.Nombre}</MenuItem>
-                                        })
-                                        : ""
-                                }
-                            </Select>
-                        </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) =><TextField
-                                    id="mail"
-                                    label={translate("languages.agentes.titleCorreo")}
-                                    placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleCorreo")}
-                                    value={this.state.promotor.Mail ? this.state.promotor.Mail : ""}
-                                    onChange={this.handleChange('Mail')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
-                                    type="email"
-                                />}
-                            </Translate>
-                        </FormControl>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) =><TextField
-                                    id="telefono"
-                                    label={translate("languages.agentes.titleTelefono")}
-                                    placeholder={translate("languages.agentes.introduce") + " " + translate("languages.agentes.titleTelefono")}
-                                    value={this.state.promotor.Telefono ? this.state.promotor.Telefono : ""}
-                                    onChange={this.handleChange('Telefono')}
-                                    margin="normal"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                        classes: {
-                                            root: classes.label}
-                                    }}
-                                    type="email"
-                                />}
-                            </Translate>
-                        </FormControl>
-                    </div>
-                    <div className={classes.divGrey}>
-                        <Translate>
-                            {({ translate }) =><FormControlLabel className="ml-0 mr-0"
-                                                                 control={
-                                                                     <Checkbox
-                                                                         checked={this.state.checkedRepresentado}
-                                                                         onChange={this.handlePorcentageChange('checkedRepresentado')}
-                                                                         value="checkedPercentage"
-                                                                         color="primary"
-                                                                     />
-                                                                 }
-                                                                 label={translate("languages.agentes.titleRepresentadoA")}
-                            />}
-                        </Translate>
-                        <FormControl className={classes.formControl}>
-                            <Translate>
-                                {({ translate }) => <Select
-                                    value={this.state.selectedRepresentados ? this.state.selectedRepresentados : ""}
-                                    onChange={this.handleChange('selectedRepresentados')}
-                                    inputProps={{
-                                        name: 'representado',
-                                        id: 'representado',
-                                    }}
-                                    displayEmpty
-                                >
-                                    <MenuItem value="" disabled>
-                                        {translate("languages.agentes.selecciona") + " " +
-                                        translate("languages.agentes.promotor")}
-                                    </MenuItem>
-                                </Select>}
-                            </Translate>
-                        </FormControl>
-                    </div>
-                    <div className="p-3">
-                        <Translate>
-                            {({ translate }) =><FormControlLabel className="ml-0 mr-0 align-items-start text-justify"
-                                                                 control={
-                                                                     <Checkbox
-                                                                         checked={this.state.checkedLey}
-                                                                         onChange={this.handlePorcentageChange('checkedLey')}
-                                                                         value="checkedLey"
-                                                                         color="primary"
-                                                                     />
-                                                                 }
-                                                                 label={translate("languages.agentes.textLeyOrganica")}
-                            />}
-                        </Translate>
-                    </div>
-                    <div className="p-3 text-right">
-                        <Button color="primary" size="small" className={classes.button}>
-                            <Translate id="languages.generalButton.cancel"/>
-                            <Close className={classes.rightIcon} />
-                        </Button>
-                        <Button variant="contained" size="small" color="primary" className={classes.button}
-                                disabled={!this.state.checkedLey} onClick={()=>{this.props.onAddOrganismo(this.state.promotor)}}>
-                            <Translate id="languages.generalButton.addedSave"/>
-                        </Button>
-                    </div>
+                    </Grid>
+
                 </Grid>
-
-            </Grid>
+            </ValidatorForm>
         );
     }
 }

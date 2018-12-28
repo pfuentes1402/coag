@@ -112,6 +112,12 @@
                 "PAÍS"
             ]
         },
+        "generalText": {
+            "fieldRequired":[
+                "El campo es obligatorio",
+                "El campo es obligatorio"
+            ]
+        },
         "expedients": {
             "fieldCodigoExpediente": [
                 "CODIGO EXPEDIENTE",
