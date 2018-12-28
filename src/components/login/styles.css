@@ -23,6 +23,9 @@
     text-align: center;
     width: 100%;
 }
+.background-white{
+    background-color: white
+}
 .login .white-box img{
     width: 246px;
     padding-bottom: 20px;

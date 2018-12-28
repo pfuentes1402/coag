@@ -140,7 +140,8 @@ class Arquitecto extends Component {
       currentPage: 0,
       rowsPerPage: 5,
       totalRecords: 1,
-      totalPages: 4
+      totalPages: 4,
+      showPagination: false
     }
   }
 
@@ -169,6 +170,10 @@ class Arquitecto extends Component {
 
   handleCanSearch = cansearch => {
     this.setState({ canSearch: cansearch })
+  }
+
+  handlePagination = showPag => {
+    this.setState({ showPagination: showPag });
   }
 
   addFunctionToAgent = (functionCode) => (event) => {
@@ -208,6 +213,7 @@ class Arquitecto extends Component {
       let search = await this.props.fetchBuscador(this.state.searchQuery, "colegiados", (currentPage + 1), this.state.rowsPerPage);
       let pagination = search.data ? search.data.Paginacion[0] : null;
 
+      this.handlePagination(true);
       this.setState({
         isSearch: false,
         currentPage: currentPage,
@@ -248,6 +254,7 @@ class Arquitecto extends Component {
         });
       this.props.editAgenteTrabajoSeleccion(edit.Agente);
       this.handleCanSearch(true);
+      this.handlePagination(false);
     }
   }
 
@@ -380,32 +387,35 @@ class Arquitecto extends Component {
     );
   }
 
+  renderPagination = () => {
+    return (
+      this.state.showPagination ?
+        <Grid item xs={12} className="float-right">
+          <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
+            rowsPerPageOptions={[5, 10]}
+            component="div"
+            count={this.state.totalRecords}
+            rowsPerPage={this.state.rowsPerPage}
+            page={this.state.currentPage}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />
+        </Grid>
+        : <Grid item xs={12}></Grid>
+    );
+  }
+
   renderSearchResult = () => {
     let { classes } = this.props;
     return (
       <Grid container spacing={8} className="p-1">
-        {
-          this.state.canSearch
-            ? <Grid>
-              <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
-                rowsPerPageOptions={[5, 10]}
-                component="div"
-                count={this.state.totalRecords}
-                rowsPerPage={this.state.rowsPerPage}
-                page={this.state.currentPage}
-                backIconButtonProps={{
-                  'aria-label': 'Previous Page',
-                }}
-                nextIconButtonProps={{
-                  'aria-label': 'Next Page',
-                }}
-                onChangePage={this.handleChangePage}
-                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              />
-            </Grid>
-            : <Grid item xs={12}></Grid>
-        }
-
+        {this.renderPagination()}
         {
           this.state.canSearch ? this.props.colegiadosSearchResult.map((value, index) => {
             return <Grid item xs={12} key={index}>
@@ -521,6 +531,7 @@ class Arquitecto extends Component {
           })
             : <div></div>
         }
+        {this.renderPagination()}
       </Grid>
     );
   }

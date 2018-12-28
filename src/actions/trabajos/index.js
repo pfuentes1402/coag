@@ -37,6 +37,11 @@ export const fetchErrorTrabajo = (error) => ({
     payload: error
 });
 
+/**Función que dispara un error desde cualquier parte */
+export const dispatchError = (error)=> (dispatch) => {
+    dispatch(fetchErrorTrabajo(formatMenssage(error)));
+}
+
 export const gruposRaiz = (value) => {
     return {
         type: types.FETCH_GRUPOS_RAIZ,

@@ -460,7 +460,6 @@ class Promotores extends Component {
   }
 
   render() {
-    console.log("state", this.props.state);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>

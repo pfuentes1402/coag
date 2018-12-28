@@ -60,6 +60,26 @@
             "addedSave":[
                 "Añadir y guardar",
                 "Añadir y guardar"
+            ],
+            "delete":[
+                "Eliminar",
+                "Eliminar"
+            ],
+            "getli":[
+                "Obtener Li",
+                "Obtener Li"
+            ],
+            "getloa":[
+                "Obtener Loa",
+                "Obtener Loa"
+            ],
+            "cancelbuild":[
+                "Renunciar obra",
+                "Renunciar obra"
+            ],
+            "download":[
+                "Descargar",
+                "Descargar"
             ]
         },
         "generalAddress": {
@@ -277,6 +297,80 @@
             "itemsPerPage":[
                 "Cantidad de agentes por página",
                 "Cantidad de agentes por página"
+            ]
+        },
+        "fichaExpediente":{
+            "titleFichaExpediente":[
+                "Ficha expediente",
+                "Ficha expediente"
+            ],
+            "titleListaTrabajos":[
+                "Trabajos",
+                "Trabajos"
+            ],
+            "labelExpedienteName":[
+                "NOMBRE DEL EXPEDIENTE",
+                "NOMBRE DEL EXPEDIENTE"
+            ],
+            "requiredField":[
+                "Este campo es requerido",
+                "Este campo es requerido"
+            ],
+            "labelExpedienteCode":[
+                "COD ESTUDIO",
+                "COD ESTUDIO"
+            ],
+            "labelExpedienteAnteced":[
+                "ANTECEDENTE",
+                "ANTECEDENTE"
+            ],
+            "labelEntryDate": [
+                "FECHA ENTRADA",
+                "FECHA ENTRADA"
+            ],
+            "labelObservations":[
+                "OBSERVACIONES",
+                "OBSERVACIONES"
+            ],
+            "titleUbication":[
+                "Ubicación",
+                "Ubicación"
+            ],
+            "tableLabelStret":[
+                "Calle/Lugar",
+                "Calle/Lugar"
+            ],
+            "tableLabelPiso":[
+                "Piso",
+                "Piso"
+            ],
+            "tableLabelMunicipe":[
+                "Municipio",
+                "Municipio"
+            ],
+            "labelAlias":[
+                "ALIAS UBICACIÓN",
+                "ALIAS UBICACIÓN"
+            ],
+            "titleExpedientType":[
+                "Tipo de expediente",
+                "Tipo de expediente"
+            ],
+            "titlePromotors":[
+                "Promotores",
+                "Promotores"
+            ],
+            "tableColumnName":[
+                "Nombre",
+                "Nombre"
+            ],
+            "titleAgents":[
+                "Arquitectos",
+                "Arquitectos"
+            ],
+            "tableColumnFunctions":[
+                "Función",
+                "Función"
             ]
         }
     }

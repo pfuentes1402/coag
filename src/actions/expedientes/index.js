@@ -411,6 +411,14 @@ export const dispatchAddTrabajoEncomendaExpediente = (trabajoExpediente) => (dis
     })
 }
 
+/**Edita los datos de un expediente dentro de un trabajo encomenda */
+export const dispatchEditExpedienteEnTrabajo = (expediente) => (dispatch) => {
+    dispatch({
+        type: types.EDIT_EXPEDIENTE_EN_TRABAJO,
+        payload: [expediente]
+    })
+}
+
 /**Post al servicio de adicionar trabajo encomenda a un expediente */
 export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispatch) => {
     try {
@@ -423,3 +431,4 @@ export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispat
         dispatch(fetchErrorExpediente(formatMenssage(error.message)));
     }
 };
+
