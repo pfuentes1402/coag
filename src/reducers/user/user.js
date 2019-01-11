@@ -100,7 +100,6 @@ const reducer = (state = initialstate, action) => {
         }
       };
     case RESULTADOSBUSQUEDA:
-
       switch (action.payload.tipoBusqueda) {
         case 'trabajos':
           const { Trabajos } = action.payload.data.data;
@@ -111,6 +110,15 @@ const reducer = (state = initialstate, action) => {
 
             }
           }
+          case 'colegiados':
+              const { Colegiados } = action.payload.data.data;
+              return {
+                  ...state,
+                  datosModal: {
+                      resultados: Colegiados,
+
+                  }
+              }
         case 'promotores':
           const { Promotores } = action.payload.data.data;
           return {
@@ -120,8 +128,15 @@ const reducer = (state = initialstate, action) => {
 
             }
           }
+          case 'otrosAgentes':
+              const { OtrosAgentes } = action.payload.data.data;
+              return {
+                  ...state,
+                  datosModal: {
+                      resultados: OtrosAgentes,
 
-
+                  }
+              }
         default:
           const { Expedientes } = action.payload.data.data;
           return {

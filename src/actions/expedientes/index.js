@@ -127,9 +127,9 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 /*
 *Buscador de elementos del usuario logeado
 *filtro: cadena a buscar
-*tipoBusqueda: expediente, arquitectos, promotores
+*tipoBusqueda: expediente,trabajos, colegiados, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -144,12 +144,17 @@ export const fetchBuscador = (filtro, tipoBusqueda) =>
         }
 
         dispatch(fetchFiltroUsuario(temp, temp2));
-        await getBuscador(temp, tipoBusqueda).then((data) => {
-            dispatch(fetchDataResults(data, tipoBusqueda));
-        })
-            .catch(
-                () => fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda' })
-            );
+        try{
+            let searchResult = await getBuscador(temp, tipoBusqueda, page, pageSize);
+            searchResult.data.MensajesProcesado && searchResult.data.MensajesProcesado.length > 0
+                ?
+                dispatch(fetchErrorExpediente(searchResult.data))
+                :
+                dispatch(fetchDataResults(searchResult, tipoBusqueda));
+            return searchResult;
+        } catch(error){
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
     };
 
 
@@ -162,14 +167,9 @@ export const fetchBuscador = (filtro, tipoBusqueda) =>
 */
 export const fetchEstructuraDocumentalTrabajo = (id_expediente, idtrabajo) =>
     (dispatch) => {
-
-
         dispatch(fetchInit());
         getEstructuraDocumental(id_expediente, idtrabajo).then((expedientes) => {
-
-
             dispatch(fetchSuccessTrabajo(expedientes));
-
         })
             .catch(
                 () => fetchErrorExpediente({ error: 'Algo ha salido mal' })
@@ -415,14 +415,22 @@ export const dispatchAddTrabajoEncomendaExpediente = (trabajoExpediente) => (dis
     })
 }
 
+/**Edita los datos de un expediente dentro de un trabajo encomenda */
+export const dispatchEditExpedienteEnTrabajo = (expediente) => (dispatch) => {
+    dispatch({
+        type: types.EDIT_EXPEDIENTE_EN_TRABAJO,
+        payload: [expediente]
+    })
+}
+
 /**Post al servicio de adicionar trabajo encomenda a un expediente */
 export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispatch) => {
     try {
         let response = await addTrabajoEncomendaExpediente(idExpediente, dataPost)
-        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0
-            ? dispatch(fetchErrorExpediente(response.data))
-            : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data))
+        dispatch(dispatchAddTrabajoEncomendaExpediente(response.data));
+        return true;
     } catch (error) {
         dispatch(fetchErrorExpediente(formatMenssage(error.message)));
     }
 };
+

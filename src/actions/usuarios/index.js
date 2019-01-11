@@ -204,7 +204,7 @@ export const fetchSuscepAcciones = (id) =>
     let data="";
     switch(id) {        
         case 0:
-        data =getExpedienteSuscepNuevoTrabajo(id);           
+        data = getExpedienteSuscepNuevoTrabajo(id);
         dispatch(fetchExpedientesSusceptibles(data,id));
             break;
         case 1:         

@@ -8,7 +8,7 @@ import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import {
   FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
   SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA,
-  ADD_TRABAJO_EXPEDIENTE
+  ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO
 } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
@@ -176,31 +176,31 @@ const expedientes = (state = initialState, action) => {
       }
 
     case LIMPIAR_BUSQUDA:
-      return{
+      return {
         ...state,
         resultadoBusquedaPromotores: []
       }
 
     case ADD_PROMOTOR:
-      return{
+      return {
         ...state,
         promotores: [...state.promotores, action.payload]
       }
 
     case EDIT_PROMOTOR:
-      return{
+      return {
         ...state,
-        promotores: [...state.promotores.filter(x=> x.Nif !== action.payload.Nif), action.payload]
+        promotores: [...state.promotores.filter(x => x.Nif !== action.payload.Nif), action.payload]
       }
 
     case DELETE_PROMOTOR:
-      return{
+      return {
         ...state,
-        promotores: [...state.promotores.filter(x=> x.Nif !== action.payload)]
+        promotores: [...state.promotores.filter(x => x.Nif !== action.payload)]
       }
 
     case ADD_TRABAJO_EXPEDIENTE:
-      return{
+      let currentState = {
         ...state,
         trabajosPorExpediente: [...state.trabajosPorExpediente, action.payload],
         ExpedientNew: {
@@ -210,6 +210,20 @@ const expedientes = (state = initialState, action) => {
           Promotores: action.payload.Promotores
         }
       }
+      return currentState;
+
+    case EDIT_EXPEDIENTE_EN_TRABAJO:
+      let newState = {
+        ...state,
+        ExpedientNew: {
+          ...state.ExpedientNew,
+          Expediente: action.payload && action.payload.length > 0
+            ? action.payload
+            : state.ExpedientNew.Expediente
+        }
+      }
+      return newState;
+
 
     case PURGE:
 

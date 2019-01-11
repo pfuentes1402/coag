@@ -39,6 +39,10 @@
             "cancel": [
                 "Cancelar",
                 "Cancelar"],
+            "search": [
+                "Buscar",
+                "Buscar"
+            ],
             "add": [
                 "Agregar",
                 "Agregar"],
@@ -60,6 +64,26 @@
             "addedSave":[
                 "Añadir y guardar",
                 "Añadir y guardar"
+            ],
+            "delete":[
+                "Eliminar",
+                "Eliminar"
+            ],
+            "getli":[
+                "Obtener Li",
+                "Obtener Li"
+            ],
+            "getloa":[
+                "Obtener Loa",
+                "Obtener Loa"
+            ],
+            "cancelbuild":[
+                "Renunciar obra",
+                "Renunciar obra"
+            ],
+            "download":[
+                "Descargar",
+                "Descargar"
             ]
         },
         "generalAddress": {
@@ -96,6 +120,34 @@
             "fieldRequired":[
                 "El campo es obligatorio",
                 "El campo es obligatorio"
+            ],
+            "expedientes": [
+                "Expedientes",
+                "Expedientes"
+            ],
+            "trabajos": [
+                "Trabajos",
+                "Trabajos"
+            ],
+            "arquitectos": [
+                "Arquitectos",
+                "Arquitectos"
+            ],
+            "promotores": [
+                "Promotores",
+                "Promotores"
+            ],
+            "personasOrganismos": [
+                "Personas/Organismos",
+                "Personas/Organismos"
+            ],
+            "otrosTecnicos": [
+                "Otros Técnicos",
+                "Otros Técnicos"
+            ],
+            "resultados": [
+                "Resultados",
+                "Resultados"
             ]
         },
         "expedients": {
@@ -277,6 +329,100 @@
             "titleOrganismo": [
                 "organismo",
                 "organismo"
+            ]
+        },
+        "promotores":{
+            "itemsPerPage":[
+                "Cantidad de agentes por página",
+                "Cantidad de agentes por página"
+            ]
+        },
+        "fichaExpediente":{
+            "titleFichaExpediente":[
+                "Ficha expediente",
+                "Ficha expediente"
+            ],
+            "titleListaTrabajos":[
+                "Trabajos",
+                "Trabajos"
+            ],
+            "labelExpedienteName":[
+                "NOMBRE DEL EXPEDIENTE",
+                "NOMBRE DEL EXPEDIENTE"
+            ],
+            "requiredField":[
+                "Este campo es requerido",
+                "Este campo es requerido"
+            ],
+            "labelExpedienteCode":[
+                "COD ESTUDIO",
+                "COD ESTUDIO"
+            ],
+            "labelExpedienteAnteced":[
+                "ANTECEDENTE",
+                "ANTECEDENTE"
+            ],
+            "labelEntryDate": [
+                "FECHA ENTRADA",
+                "FECHA ENTRADA"
+            ],
+            "labelObservations":[
+                "OBSERVACIONES",
+                "OBSERVACIONES"
+            ],
+            "titleUbication":[
+                "Ubicación",
+                "Ubicación"
+            ],
+            "tableLabelStret":[
+                "Calle/Lugar",
+                "Calle/Lugar"
+            ],
+            "tableLabelPiso":[
+                "Piso",
+                "Piso"
+            ],
+            "tableLabelMunicipe":[
+                "Municipio",
+                "Municipio"
+            ],
+            "labelAlias":[
+                "ALIAS UBICACIÓN",
+                "ALIAS UBICACIÓN"
+            ],
+            "titleExpedientType":[
+                "Tipo de expediente",
+                "Tipo de expediente"
+            ],
+            "titlePromotors":[
+                "Promotores",
+                "Promotores"
+            ],
+            "tableColumnName":[
+                "Nombre",
+                "Nombre"
+            ],
+            "titleAgents":[
+                "Arquitectos",
+                "Arquitectos"
+            ],
+            "tableColumnFunctions":[
+                "Función",
+                "Función"
+            ]
+        },
+        "search": {
+            "generalTitle":[
+                "Búsquedas",
+                "Búsquedas"
+            ],
+            "generalDescription":[
+                "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos.",
+                "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos."
+            ],
+            "generalTerm":[
+                "Introduce el término de búsqueda",
+                "Introduce el término de búsqueda"
             ]
         }
     }

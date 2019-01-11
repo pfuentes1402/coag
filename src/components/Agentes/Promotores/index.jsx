@@ -10,7 +10,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
@@ -108,6 +107,9 @@ const styles = theme => ({
     border: "1px solid",
     padding: 8,
     margin: 4
+  },
+  paddingButtom:{
+    padding: "5px 6px 6px 6px"
   }
 });
 
@@ -153,7 +155,12 @@ class Promotores extends Component {
         "Id_Autonomia": 71,
         "Id_Pais": 100,
       },
-      value: 0
+      value: 0,
+
+      currentPage: 0,
+      rowsPerPage: 25,
+      totalRecords: 100,
+      totalPages: 4
     }
   }
 
@@ -195,42 +202,59 @@ class Promotores extends Component {
     });
   }
 
-  async handleSearch() {
+  async handleSearch(currentPage = 0) {
     if (this.state.searchQuery !== "") {
       this.setState({ isSearch: true })
-      await this.props.fetchBuscador(this.state.searchQuery, "promotores");
-      this.setState({ isSearch: false, showAddPromotor: false, showSearchResult: true })
+      let search = await this.props.fetchBuscador(this.state.searchQuery, "promotores", (currentPage + 1), this.state.rowsPerPage);
+      let pagination = search.data ? search.data.Paginacion[0] : null;
+      this.setState({
+        isSearch: false,
+        showAddPromotor: false,
+        showSearchResult: true,
+        currentPage: currentPage,
+        totalRecords: pagination ? pagination.Numero_Total_Registros : this.state.totalRecords,
+        totalPages: pagination ? pagination.Numero_Paginas : this.state.totalPages
+      });
     }
   }
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
 
   addPromotor(promotor) {
     if (promotor) {
       if (this.props.selectedPromoters.some(x => x.Nif === promotor.Nif)) {
         this.props.editPromotor(promotor)
       }
-      else{
+      else {
         this.props.addPromotor(promotor);
       }
       this.setState({ showAddPromotor: false })
     }
   }
 
-  editPromotor(nif) {
-    let promotor = this.props.searchResult.find(x => x.Nif === nif);
-    this.setState({ value: promotor.Id_Tipo_Entidad - 1, editPromotorData: promotor, showAddPromotor: true });
+  editPromotor(nif, isSelection = false) {
+    if(isSelection){
+      let selectionPromotor = this.props.selectedPromoters.find(x => x.Nif === nif);
+      this.setState({ value: selectionPromotor.Id_Tipo_Entidad - 1, editPromotorData: selectionPromotor, showAddPromotor: true });
+    }
+    
+    else{
+      let promotor = this.props.searchResult.find(x => x.Nif === nif);
+      this.setState({ value: promotor.Id_Tipo_Entidad - 1, editPromotorData: promotor, showAddPromotor: true });
+    }
   }
 
   deletePromotor(nif) {
     this.props.deletePromotor(nif);
   }
+
+  handleChangePage = async (event, page) => {
+    this.state.currentPage = page;
+    await this.handleSearch(page);
+  };
+
+ handleChangeRowsPerPage = async(event) =>{
+    this.state.rowsPerPage = event.target.value;
+    await this.handleSearch(0);
+  };
 
   renderSelection = () => {
     let { classes } = this.props;
@@ -269,11 +293,12 @@ class Promotores extends Component {
                       <TableCell component="th" scope="row" className="px-1 text-center">
                         {row.Nif}
                       </TableCell>
-                      <TableCell className="p-0">{row.Nombre}</TableCell>
+                      <TableCell className="p-0">{`${row.Nombre} ${row.Apellido1} ${row.Apellido2}`}</TableCell>
                       <TableCell className="p-3">{row.porcentaje ? `${row.porcentaje}%` : ""}</TableCell>
                       <TableCell className="p-0 button-column-static">
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
-                          <EditIcon />
+                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
+                          onClick={() => this.editPromotor(row.Nif,true)}>
+                          <EditIcon/>
                         </IconButton >
                         <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete"
                           onClick={() => this.deletePromotor(row.Nif)}>
@@ -305,7 +330,7 @@ class Promotores extends Component {
                 }
               }}
               label={<Translate id="languages.agentes.searchLabelBox" />}
-              className={classes.textField} 
+              className={classes.textField}
               validators={['required']}
               errorMessages={['el criterio de búsqueda es obligatorio']}
               name="searchQuery">
@@ -317,7 +342,7 @@ class Promotores extends Component {
               label={<Translate id="languages.agentes.searchLabelOption" />}
               className={classes.textField}
               value={this.state.selectedOption}
-              
+
               onChange={this.handleSelectOptionChange}>
               {['CIF/NIF', 'Nombre'].map((option, index) => (
                 <MenuItem key={index} value={option}>
@@ -334,7 +359,8 @@ class Promotores extends Component {
                 </Button>
                 <Button variant="contained" size="small" color="primary" className={classes.button}
                   type="submit">
-                  <Translate id="languages.agentes.search" /><Search className={classes.rightIcon} />
+                  <Translate id="languages.agentes.search" />
+                  <Search className={classes.rightIcon} />
                 </Button>
 
                 {this.state.isSearch ? <CircularProgress size={24} /> : ""}
@@ -352,7 +378,7 @@ class Promotores extends Component {
     );
   }
 
-  renderSearchResults = () => {
+  renderSearchResults(){
     let { classes } = this.props;
     return (this.state.showSearchResult ?
       <Paper className={classes.root}>
@@ -395,6 +421,22 @@ class Promotores extends Component {
             }
           </TableBody>
         </Table>
+
+        <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
+          rowsPerPageOptions={[10, 25]}
+          component="div"
+          count={this.state.totalRecords}
+          rowsPerPage={this.state.rowsPerPage}
+          page={this.state.currentPage}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
       </Paper>
       : <div></div>
     )
@@ -418,7 +460,6 @@ class Promotores extends Component {
   }
 
   render() {
-    console.log("state", this.props.state);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -440,7 +481,7 @@ class Promotores extends Component {
 const mapStateToProps = (state) => ({
   searchResult: state.expedientes.resultadoBusquedaPromotores,
   selectedPromoters: state.expedientes.promotores,
-  state:state
+  state: state
 })
 
 const mapDispatchToProps = {

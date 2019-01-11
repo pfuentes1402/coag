@@ -404,12 +404,13 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  * @param tipoBusqueda
  * @returns {any}
  */
-export const getBuscador = (filtro, tipoBusqueda) =>
-  filtro === "" ? api.get(`/${tipoBusqueda}/`) : api.get(`/${tipoBusqueda}/?filtro=${filtro}`)
-    .then(response => {
-      //let test=  store ? store.getState().user.token : ''
-      return response;
-    });
+export const getBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
+  filtro === ""
+    ? api.get(`/${tipoBusqueda}/?pag=${page}&tam=${pageSize}`)
+    : api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`)
+      .then(response => {
+        return response;
+      });
 
 /**
  * Proporciona la estructura documental de un trabajo
@@ -592,8 +593,8 @@ export const getTipoOrganismoa = async (idLanguage = 2) => {
 
 export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
   try {
-     let response = await api.post(`/expedientes/${idExpediente}/trabajos/`,dataPost)
-     return response;
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/`, dataPost)
+    return response;
   }
   catch (error) {
     return error;
