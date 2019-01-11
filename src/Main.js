@@ -25,7 +25,7 @@ class Main extends Component {
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
                     <Route exact path='/comunicacion' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/comunicacion/agentes" component={(props) => <Agentes {...props}/>}/>
-                    <Route path="/visualizar-expediente" component={(props) => <VisualizarExpediente {...props}/>}/>
+                    <Route path="/visualizar-expediente/:id" component={(props) => <VisualizarExpediente {...props}/>}/>
                 </Switch>
             </div>
 

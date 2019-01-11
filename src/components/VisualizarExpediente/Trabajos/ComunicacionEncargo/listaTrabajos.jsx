@@ -111,8 +111,6 @@ class ListaTrabajos extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  expediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
-  state: state
 })
 
 const mapDispatchToProps = {

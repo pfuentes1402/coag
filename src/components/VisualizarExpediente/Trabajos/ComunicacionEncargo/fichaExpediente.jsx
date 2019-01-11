@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { withStyles, Grid, Button, Paper, Typography, Divider, TextField } from '@material-ui/core';
+import {
+  withStyles, Grid, Paper, Typography, Divider,
+  TextField, Button
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
-import { Add, Edit, Delete } from '@material-ui/icons';
-import { dispatchEditExpedienteEnTrabajo } from '../../../../actions/expedientes';
+import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
+import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
+import { putExpediente, putEmplazamiento } from '../../../../api';
+import ValidateAddress from '../../../Address';
+import { elimardelatabla, saveAdressTostore } from "../../../../actions/expedientes";
 
 const styles = theme => ({
   divGrey: {
@@ -72,18 +78,68 @@ class FichaExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      sourceExpediente: this.props.sourceExpediente,
+      emplazamientos: this.props.expediente.Emplazamientos,
+      isUpdate: false,
+      isAddUbicacion: false
     }
   }
 
   handleChangeDataExpedient = (propertyName) => (event) => {
     let expedienteCopy = {};
-    Object.assign(expedienteCopy, this.props.sourceExpediente);
+    Object.assign(expedienteCopy, this.state.sourceExpediente);
     expedienteCopy[propertyName] = event.target.value;
-    this.props.editExpedienteEnTrabajo(expedienteCopy);
+    this.setState({ sourceExpediente: expedienteCopy });
   }
 
+  async updateExpediente() {
+    this.setState({ isUpdate: true });
+    let result = await putExpediente(this.state.sourceExpediente)
+    if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
+      this.props.fetchErrorExpediente(result.data);
+    }
+    this.setState({ isUpdate: false });
+  }
 
+  handleAddUbication(action) {
+    this.setState({ isAddUbicacion: action });
+  }
+
+  async handleSaveAddress() {
+    let address = this.props.addressData.Datos_Completos[0];
+    if (!this.ifEqual(this.props.expediente.Emplazamientos, address)) {
+      //TODO: Llamar metodo de la api para adicionar ubicacion a expediente
+      let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, [this.props.expediente.Emplazamientos, address]);
+      if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
+        this.props.fetchErrorExpediente(response.data);
+      }
+      else if (response.response) {
+        if (response.response.data.MensajesProcesado)
+          this.props.fetchErrorExpediente(response.response.data);
+        else {
+          this.props.fetchErrorExpediente(formatMenssage(response.response.data.Message));
+        }
+      }
+      else {
+        this.setState({ emplazamientos: response.data.Emplazamientos })
+        this.handleAddUbication(false);
+      }
+    }
+  }
+
+  ifEqual(data, address) {
+    let equal = false;
+    if (data.length > 0) {
+      data.map(value => {
+        if (value.Calle === address.Calle && value.Numero === address.Numero
+          && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal
+          && value.municipio === address.Concello) {
+          equal = true
+        }
+      })
+    }
+    return equal;
+  }
 
   renderUbicationTable() {
     let { classes } = this.props;
@@ -97,6 +153,7 @@ class FichaExpediente extends Component {
           </Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
+              onClick={() => this.handleAddUbication(true)}
               className={classes.fab}>
               <Add />
             </Fab>
@@ -122,11 +179,11 @@ class FichaExpediente extends Component {
 
           <TableBody className={classes.tableBodyHeight}>
             {
-              this.props.expediente.Emplazamientos.length === 0 ?
+              this.state.emplazamientos.length === 0 ?
                 <TableRow>
                   <TableCell colSpan={6}></TableCell>
                 </TableRow>
-                : this.props.expediente.Emplazamientos.map((row, index) => {
+                : this.state.emplazamientos.map((row, index) => {
                   return (
                     <TableRow className={classes.row} key={index}>
                       <TableCell component="th" scope="row" className="px-1 text-center">
@@ -148,15 +205,22 @@ class FichaExpediente extends Component {
           </TableBody>
         </Table>
 
-        <Grid item xs={8}>
-          <TextField
-            id="standard-name"
-            label={<Translate id="languages.fichaExpediente.labelAlias" />}
-            className={classes.textField}
-            placeholder="Sin definir"
-            value={this.props.sourceExpediente.Antecedente}
-            margin="normal" />
-        </Grid>
+        {
+          this.state.isAddUbicacion &&
+          <Grid item xs={12} className="pt-2">
+            <ValidateAddress />
+            <Grid item xs={12} className="text-right">
+              <Button color="primary" size="small" className={`${classes.button} mx-2`}
+                onClick={() => { this.handleAddUbication(false) }}>
+                <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+              </Button>
+              <Button variant="contained" size="small" color="primary" className={classes.button}
+                onClick={() => this.handleSaveAddress()}>
+                <Translate id="languages.generalButton.added" />
+              </Button>
+            </Grid>
+          </Grid>
+        }
       </div>
     );
   }
@@ -308,7 +372,7 @@ class FichaExpediente extends Component {
           <Grid container spacing={16}>
             <Grid item xs={12} className="p-4 mr-3">
               <TextField
-                value={comunicacionEncargo ? `${comunicacionEncargo.grupoTematico.title} / ${comunicacionEncargo.autorizacionMunicipal.title}` : ""}
+                value={this.state.sourceExpediente.Descripcion_Encomenda_Actual}
                 label={<Translate id="languages.fichaExpediente.titleExpedientType" />}
                 className={`${classes.textField} mt-3 text-uppercase`}
                 disabled={true}
@@ -337,16 +401,22 @@ class FichaExpediente extends Component {
         <Paper className={`${classes.withoutRadius} m-3`}>
           <Grid container spacing={16} className="my-3">
             <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
-                <Translate id="languages.fichaExpediente.titleFichaExpediente" />
-              </Typography>
+              <Grid item xs={12} spacing={0} className="d-flex justify-content-between">
+                <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+                  <Translate id="languages.fichaExpediente.titleFichaExpediente" />
+                </Typography>
+                <Button color="primary" disabled={this.state.isUpdate} onClick={() => this.updateExpediente()}>
+                  Aplicar cambios<Check />
+                </Button>
+              </Grid>
               <Divider style={{ height: 3 }} />
             </Grid>
+
             <ValidatorForm ref="form">
               <Grid container spacing={16}>
                 <Grid item xs={7} className="p-4">
                   <TextValidator
-                    value={this.props.sourceExpediente.Titulo}
+                    value={this.state.sourceExpediente.Titulo}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
                     className={classes.textField}
                     validators={['required']}
@@ -354,7 +424,7 @@ class FichaExpediente extends Component {
                     onChange={this.handleChangeDataExpedient("Titulo")}
                     name="name" />
                   <TextValidator
-                    value={this.props.sourceExpediente.Expediente_Codigo_Estudio}
+                    value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
                     className={`${classes.textField} mt-3`}
                     validators={['required']}
@@ -362,7 +432,7 @@ class FichaExpediente extends Component {
                     onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
                     name="code" />
                   <TextField
-                    value={this.props.sourceExpediente.Antecedente}
+                    value={this.state.sourceExpediente.Antecedente}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
                     className={`${classes.textField} mt-3`}
                     onChange={this.handleChangeDataExpedient("Antecedente")}
@@ -373,7 +443,7 @@ class FichaExpediente extends Component {
                     <Translate id="languages.fichaExpediente.labelEntryDate" />
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>
-                    {moment(new Date(this.props.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
+                    {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
                   </Typography>
                 </Grid>
 
@@ -383,7 +453,7 @@ class FichaExpediente extends Component {
                   </Typography>
                   <TextField id="outlined-bare"
                     className={`${classes.textField} m-0`}
-                    defaultValue={this.props.sourceExpediente.Observaciones}
+                    defaultValue={this.state.sourceExpediente.Observaciones}
                     onChange={this.handleChangeDataExpedient("Observaciones")}
                     margin="normal" multiline rows="4"
                     variant="outlined" />
@@ -408,14 +478,17 @@ FichaExpediente.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  expediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
-  sourceExpediente: state.expedientes.ExpedientNew && state.expedientes.ExpedientNew.Expediente.length > 0 ? state.expedientes.ExpedientNew.Expediente[0] : {},
   funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
-  state: state
+  catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida : [], /*Contiene arreglo de la tabla de ubicaciones */
+  arrayReferencias: state.expedientes.arrayReferencias ? state.expedientes.arrayReferencias : [] /*Contiene arreglo con las referencial catastrales de cada direccion de la tabla ubicacion*/,
+  addressData: state.expedientes.address ? state.expedientes.address : ''
 })
 
 const mapDispatchToProps = {
-  editExpedienteEnTrabajo: dispatchEditExpedienteEnTrabajo
+  editExpedienteEnTrabajo: dispatchEditExpedienteEnTrabajo,
+  fetchErrorExpediente,
+  saveAdressTostore: saveAdressTostore,
+  elimardelatabla: elimardelatabla,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(FichaExpediente)));
