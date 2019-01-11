@@ -95,7 +95,7 @@ class Agentes extends Component {
     
     //Validación para continuar (si el resultado fue 200 se permite continuar)
     if(success)
-      this.props.history.push("/visualizar-expediente");
+      this.props.history.push(`/visualizar-expediente/${currentExpId}`);
   }
 
   render() {
