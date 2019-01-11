@@ -39,6 +39,10 @@
             "cancel": [
                 "Cancelar",
                 "Cancelar"],
+            "search": [
+                "Buscar",
+                "Buscar"
+            ],
             "add": [
                 "Agregar",
                 "Agregar"],
@@ -116,6 +120,34 @@
             "fieldRequired":[
                 "El campo es obligatorio",
                 "El campo es obligatorio"
+            ],
+            "expedientes": [
+                "Expedientes",
+                "Expedientes"
+            ],
+            "trabajos": [
+                "Trabajos",
+                "Trabajos"
+            ],
+            "arquitectos": [
+                "Arquitectos",
+                "Arquitectos"
+            ],
+            "promotores": [
+                "Promotores",
+                "Promotores"
+            ],
+            "personasOrganismos": [
+                "Personas/Organismos",
+                "Personas/Organismos"
+            ],
+            "otrosTecnicos": [
+                "Otros Técnicos",
+                "Otros Técnicos"
+            ],
+            "resultados": [
+                "Resultados",
+                "Resultados"
             ]
         },
         "expedients": {
@@ -377,6 +409,20 @@
             "tableColumnFunctions":[
                 "Función",
                 "Función"
+            ]
+        },
+        "search": {
+            "generalTitle":[
+                "Búsquedas",
+                "Búsquedas"
+            ],
+            "generalDescription":[
+                "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos.",
+                "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos."
+            ],
+            "generalTerm":[
+                "Introduce el término de búsqueda",
+                "Introduce el término de búsqueda"
             ]
         }
     }

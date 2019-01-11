@@ -406,7 +406,7 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  */
 export const getBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
   filtro === ""
-    ? api.get(`/${tipoBusqueda}/`)
+    ? api.get(`/${tipoBusqueda}/?pag=${page}&tam=${pageSize}`)
     : api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`)
       .then(response => {
         return response;

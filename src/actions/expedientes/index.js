@@ -127,9 +127,9 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 /*
 *Buscador de elementos del usuario logeado
 *filtro: cadena a buscar
-*tipoBusqueda: expediente, arquitectos, promotores
+*tipoBusqueda: expediente,trabajos, colegiados, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -144,12 +144,16 @@ export const fetchBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
         }
 
         dispatch(fetchFiltroUsuario(temp, temp2));
-        try {
+        try{
             let searchResult = await getBuscador(temp, tipoBusqueda, page, pageSize);
-            dispatch(fetchDataResults(searchResult, tipoBusqueda));
+            searchResult.data.MensajesProcesado && searchResult.data.MensajesProcesado.length > 0
+                ?
+                dispatch(fetchErrorExpediente(searchResult.data))
+                :
+                dispatch(fetchDataResults(searchResult, tipoBusqueda));
             return searchResult;
-        } catch (e) {
-            fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda' });
+        } catch(error){
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
         }
     };
 
@@ -442,7 +446,7 @@ export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispat
     }
 };
 
-/**Encargado de guardar en el expediente, el objeto Autorizacion municipal 
+/**Encargado de guardar en el expediente, el objeto Autorizacion municipal
  * y Grupo tematico */
 export const dispatchAddAutorizacion = (idExpediente, data) => (dispatch) => {
     dispatch({

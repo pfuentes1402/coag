@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {CardBody} from 'reactstrap';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
-
 import {traduccionGrid} from './../../helpers/traducciones';
 import { goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
 import { setSelected } from './../../actions/usuarios/index';
+import {Button} from "@material-ui/core";
 class TablaBusquedaArquitectos extends Component {
     constructor(props) {
         super(props);
@@ -66,80 +65,60 @@ class TablaBusquedaArquitectos extends Component {
         this.gridApi.exportDataAsCsv(params);
     };
 
-    filtrado= (e)=> {
-        this.setState({ quickFilterText: e.target.value });
-    }
 
     render() {
 
-        const RenderFiltros =() =>{
-            return (
-                <div>
-                     <input type="text" id="filter-text-box" placeholder="Filtro" onChange={this.filtrado} />
-                </div>
-        )
-        }
-
-
         return (
-            <CardBody className="card-body-Trabajos">
-                <div
-                    className="ag-theme-balham"
-                    style={{
-                        height: '250px',
-                        width: '650px',
-                        margin: '0px'
-                    }}
+            <div
+                className="ag-theme-balham"
+                style={{
+                    height: '250px',
+                    width: '100%',
+                }}
+            >
+                <AgGridReact
+                    columnDefs={this.state.columnDefs}
+                    rowData={this.props.data}
+
+                    enableSorting={true}
+                    enableFilter={
+                        true
+                    }
+
+                    enableColResize={
+                        true
+                    }
+                    suppressCsvExport={
+                        false
+                    }
+                    showToolPanel={
+                        true
+                    }
+                    pagination={
+                        true
+                    }
+                    floatingFilter={true}
+
+                    rowGroupPanelShow={
+                        this.state.rowGroupPanelShow
+                    }
+                    localeText={
+                        this.state.localeText
+                    }
+                    onGridReady={
+                        this.onGridReady.bind(this)
+                    }
+                    rowSelection={this.state.rowSelection}
+                    quickFilterText={this.state.quickFilterText}
+                    onSelectionChanged={this.onSelectionChanged.bind(this)}
                 >
-                    {/* <div style={{ float: "left", marginLeft: 20 }}>
-                        <input type="text" id="filter-text-box" placeholder="Filtro" onChange={this.filtrado} />
-                    </div> */}
-                    <div>
-                        {this.props.muestraFiltros === true ? RenderFiltros() : ''}
-                    </div>                   
-                   
-                    <AgGridReact
-                        columnDefs={this.state.columnDefs}
-                        rowData={this.props.data}
-
-                        enableSorting={true}
-                        enableFilter={
-                            true
-                        }
-
-                        enableColResize={
-                            true
-                        }
-                        suppressCsvExport={
-                            false
-                        }
-                        showToolPanel={
-                            true
-                        }
-                        pagination={
-                            true
-                        }
-                        floatingFilter={true}
-
-                        rowGroupPanelShow={
-                            this.state.rowGroupPanelShow
-                        }
-                        localeText={
-                            this.state.localeText
-                        }
-                        onGridReady={
-                            this.onGridReady.bind(this)
-                        }
-                        rowSelection={this.state.rowSelection}
-                        quickFilterText={this.state.quickFilterText}
-                        onSelectionChanged={this.onSelectionChanged.bind(this)}
-                    >
-                    </AgGridReact>
-                    <div>
-                        <button onClick={this.onBtExport.bind(this)}> Exportar a CSV </button>
-                    </div>
+                </AgGridReact>
+                <div className="pt-3 text-right">
+                    <Button variant="contained" color="primary" onClick={this.onBtExport.bind(this)}>
+                        Exportar a CSV
+                    </Button>
                 </div>
-            </CardBody>
+            </div>
         );
     }
 }

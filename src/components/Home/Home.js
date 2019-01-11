@@ -3,7 +3,6 @@ import {Container, Row, Col} from 'reactstrap';
 import { connect } from 'react-redux';
 
 import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
-import  Upload  from './../../components/Upload/Upload'
 
 class ContenedorExpedientes extends Component {
     render() {       

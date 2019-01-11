@@ -11,11 +11,9 @@ export const  fetchMuestraModal = (id) =>
             parametro=id;
          
         }
-    
-   
         dispatch({
         type: types.FETCH_SHOW_MODAL,
-        payload:parametro
+        payload: parametro
         }); 
     };
 export const  fetchocultaModal = () =>

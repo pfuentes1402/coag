@@ -14,6 +14,8 @@ import MenuUser from "../Menus/user";
 import MenuLanguage from "../Menus/language";
 import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
 import { fetchMuestraModal, fetchCambiaStatoModalBuscador,fetchCambiaStadoModal } from './../../actions/interfaz/index';
+import { CSSTransitionGroup } from 'react-transition-group'
+import  Modalacciones  from '../../components/Home/Modalacciones';
 
 
 const styles = theme => ({
@@ -69,6 +71,10 @@ class MenuAppBar extends React.Component {
         this.props.fetchCambiaStadoModal();
       }
 
+      handleNav(uri){
+          this.props.history.push(uri);
+      }
+
     render() {
         let {classes} = this.props;
 
@@ -79,7 +85,7 @@ class MenuAppBar extends React.Component {
                         <div><img src={coag} alt="logo" height="50" className="logo-coag"/></div>
                     </Col>
                     <Col xs={3} sm={3} md={2} lg={2} className={classes.col}>
-                        <Button color="secondary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>
+                        <Button color="secondary" className={classes.button} onClick={()=>{this.handleNav("/")}}>
                             <Translate id="languages.header.titleHome"/>
                         </Button>
                     </Col>
@@ -108,7 +114,17 @@ class MenuAppBar extends React.Component {
                         </div>
                     </Col>
                 </Row>
-
+                <div>
+                    <CSSTransitionGroup
+                        transitionName="acciones"
+                        transitionEnterTimeout={3000}
+                        transitionLeaveTimeout={3000}>
+                        {
+                            this.props.mostrarModal === true ?
+                                <Modalacciones/>
+                                : ''}
+                    </CSSTransitionGroup>
+                </div>
             </Container>);
     }
 }
@@ -119,7 +135,8 @@ MenuAppBar.propTypes = {
 
 const mapStateToProps = state => (
     {
-      usuario: state.user.DatosUsuarioValidado.Usuario ? state.user.DatosUsuarioValidado.Usuario : 'Login',
+        usuario: state.user.DatosUsuarioValidado.Usuario ? state.user.DatosUsuarioValidado.Usuario : 'Login',
+        mostrarModal: state.status.modalAcciones,
      }
      );
   

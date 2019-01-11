@@ -88,7 +88,8 @@ class AddExpedient extends Component {
             isShowAddress: false,
             alert: false,
             msg: "",
-            observationsLength: 0
+            observationsLength: 0,
+            isSave: false
         };
 
     };
@@ -150,6 +151,7 @@ class AddExpedient extends Component {
             this.setState({alert: true, msg: (!this.state.title && !this.state.codeStudy) ? "El título y el código de estudio son obligatorios" : (!this.state.title ? "El título es obligatorio" : (!this.state.codeStudy ? "El código de estudio es obligatorio" : "Las observaciones requieren más de 110 caracteres"))})
         }
         else {
+            this.setState({isSave: true});
             let fechaEntrada =  new Date();
             fechaEntrada = fechaEntrada.toISOString();
             let data = this.props.addressData.Datos_Completos[0];
@@ -164,7 +166,7 @@ class AddExpedient extends Component {
             }
             await this.props.postUbicacion(expediente);
             let errors = this.props.error;
-
+            this.setState({isSave: false});
             if(!(errors.length > 0)){
                 this.props.history.push("/comunicacion");
             }
@@ -451,6 +453,7 @@ class AddExpedient extends Component {
                                         <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}} disabled={!this.state.isShowAddress}>
                                             {<Translate id="languages.expedients.btnGuardarExpediente"/>}
                                             <Check className={classes.rightIcon}/>
+                                            {this.state.isSave && <CircularProgress size={24}/>}
                                         </Button>
                                     </Grid>
                                 </Grid>
