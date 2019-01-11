@@ -169,6 +169,9 @@
             "helperTextObservaciones": [
                 "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio.",
                 "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio."],
+            "labelAddressValidate": [
+            "Ref catastral o coordenadas UTM",
+            "Ref catastral o coordenadas UTM"],
             "helperTextAddressValidate": [
                 "La dirección se proporciona automáticamente",
                 "La dirección se proporciona automáticamente"],
