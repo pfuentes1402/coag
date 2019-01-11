@@ -12,10 +12,10 @@ class TrabajoComunicacion extends Component {
     return (
       <Grid container spacing={0}>
         <Grid item md={6} xs={12} >
-          <FichaExpediente />
+          <FichaExpediente expediente={this.props.expediente} sourceExpediente={this.props.expediente.Expediente.length > 0 ? this.props.expediente.Expediente[0] : {}}/>
         </Grid>
         <Grid item md={6} xs={12} >
-          <ListaTrabajos />
+          <ListaTrabajos expediente={this.props.expediente}/>
         </Grid>
       </Grid>
     );

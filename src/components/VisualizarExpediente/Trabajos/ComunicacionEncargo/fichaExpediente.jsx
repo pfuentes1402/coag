@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { withStyles, Grid, Button, Paper, Typography, Divider, TextField } from '@material-ui/core';
+import {
+  withStyles, Grid, Paper, Typography, Divider,
+  TextField, Button
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
-import { Add, Edit, Delete } from '@material-ui/icons';
-import { dispatchEditExpedienteEnTrabajo } from '../../../../actions/expedientes';
+import { Add, Edit, Delete, Check } from '@material-ui/icons';
+import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
+import { putExpediente } from '../../../../api';
 
 const styles = theme => ({
   divGrey: {
@@ -72,17 +76,27 @@ class FichaExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      sourceExpediente: this.props.sourceExpediente,
+      isUpdate: false,
+      isAddUbicacion: false
     }
   }
 
   handleChangeDataExpedient = (propertyName) => (event) => {
     let expedienteCopy = {};
-    Object.assign(expedienteCopy, this.props.sourceExpediente);
+    Object.assign(expedienteCopy, this.state.sourceExpediente);
     expedienteCopy[propertyName] = event.target.value;
-    this.props.editExpedienteEnTrabajo(expedienteCopy);
+    this.setState({ sourceExpediente: expedienteCopy });
   }
 
+  async updateExpediente() {
+    this.setState({ isUpdate: true });
+    let result = await putExpediente(this.state.sourceExpediente)
+    if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
+      this.props.fetchErrorExpediente(result.data);
+    }
+    this.setState({ isUpdate: false });
+  }
 
 
   renderUbicationTable() {
@@ -147,16 +161,6 @@ class FichaExpediente extends Component {
             }
           </TableBody>
         </Table>
-
-        <Grid item xs={8}>
-          <TextField
-            id="standard-name"
-            label={<Translate id="languages.fichaExpediente.labelAlias" />}
-            className={classes.textField}
-            placeholder="Sin definir"
-            value={this.props.sourceExpediente.Antecedente}
-            margin="normal" />
-        </Grid>
       </div>
     );
   }
@@ -337,16 +341,22 @@ class FichaExpediente extends Component {
         <Paper className={`${classes.withoutRadius} m-3`}>
           <Grid container spacing={16} className="my-3">
             <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
-                <Translate id="languages.fichaExpediente.titleFichaExpediente" />
-              </Typography>
+              <Grid item xs={12} spacing={0} className="d-flex justify-content-between">
+                <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+                  <Translate id="languages.fichaExpediente.titleFichaExpediente" />
+                </Typography>
+                <Button color="primary" disabled={this.state.isUpdate} onClick={() => this.updateExpediente()}>
+                  Aplicar cambios<Check />
+                </Button>
+              </Grid>
               <Divider style={{ height: 3 }} />
             </Grid>
+
             <ValidatorForm ref="form">
               <Grid container spacing={16}>
                 <Grid item xs={7} className="p-4">
                   <TextValidator
-                    value={this.props.sourceExpediente.Titulo}
+                    value={this.state.sourceExpediente.Titulo}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
                     className={classes.textField}
                     validators={['required']}
@@ -354,7 +364,7 @@ class FichaExpediente extends Component {
                     onChange={this.handleChangeDataExpedient("Titulo")}
                     name="name" />
                   <TextValidator
-                    value={this.props.sourceExpediente.Expediente_Codigo_Estudio}
+                    value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
                     className={`${classes.textField} mt-3`}
                     validators={['required']}
@@ -362,7 +372,7 @@ class FichaExpediente extends Component {
                     onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
                     name="code" />
                   <TextField
-                    value={this.props.sourceExpediente.Antecedente}
+                    value={this.state.sourceExpediente.Antecedente}
                     label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
                     className={`${classes.textField} mt-3`}
                     onChange={this.handleChangeDataExpedient("Antecedente")}
@@ -373,7 +383,7 @@ class FichaExpediente extends Component {
                     <Translate id="languages.fichaExpediente.labelEntryDate" />
                   </Typography>
                   <Typography variant="subtitle1" gutterBottom>
-                    {moment(new Date(this.props.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
+                    {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
                   </Typography>
                 </Grid>
 
@@ -383,7 +393,7 @@ class FichaExpediente extends Component {
                   </Typography>
                   <TextField id="outlined-bare"
                     className={`${classes.textField} m-0`}
-                    defaultValue={this.props.sourceExpediente.Observaciones}
+                    defaultValue={this.state.sourceExpediente.Observaciones}
                     onChange={this.handleChangeDataExpedient("Observaciones")}
                     margin="normal" multiline rows="4"
                     variant="outlined" />
@@ -408,14 +418,13 @@ FichaExpediente.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  expediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
-  sourceExpediente: state.expedientes.ExpedientNew && state.expedientes.ExpedientNew.Expediente.length > 0 ? state.expedientes.ExpedientNew.Expediente[0] : {},
   funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
   state: state
 })
 
 const mapDispatchToProps = {
-  editExpedienteEnTrabajo: dispatchEditExpedienteEnTrabajo
+  editExpedienteEnTrabajo: dispatchEditExpedienteEnTrabajo,
+  fetchErrorExpediente
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(FichaExpediente)));

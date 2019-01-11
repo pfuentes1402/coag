@@ -7,7 +7,7 @@ import {
   Close, FileCopy, CancelPresentation, CloudDownload, ExpandLess,
   ExpandMore
 } from '@material-ui/icons';
-import { List, ListItem, ListSubheader } from '@material-ui/core';
+import { List, ListItem, ListSubheader, CircularProgress } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
@@ -17,6 +17,7 @@ import './index.css';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
 import MenuProyectoEjecucion from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
+import { getExpedienteDatosGeneral } from '../../api';
 
 const styles = theme => ({
   root: {
@@ -58,22 +59,33 @@ const styles = theme => ({
 
 });
 
-
-
 class VisualizarExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: true,
-      renderComponent: "TrabajoComunicacion"
+      renderComponent: "TrabajoComunicacion",
+      expediente: null,
     };
   }
+
+  async componentWillMount() {
+    await this.fetchExpediente();
+  }
+
+  //TODO: Consumir api con el id de expediente espicificado por ur
+  async fetchExpediente() {
+    let response = await getExpedienteDatosGeneral(this.props.match.params.id);
+    if (response.data)
+      this.setState({ expediente: response.data });
+  }
+
 
   handleExpandMenu = () => {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleChangeMenuOption(componentName){
+  handleChangeMenuOption(componentName) {
     this.setState({ renderComponent: componentName });
   }
 
@@ -121,11 +133,12 @@ class VisualizarExpediente extends Component {
         <Divider />
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested} className="pl-1 pr-2" 
+            <ListItem button className={classes.nested} className="pl-1 pr-2"
               onClick={() => this.handleChangeMenuOption("TrabajoComunicacion")}>
               <ListItemText inset primary="Comunicación de Encargo" className="pl-2" />
             </ListItem>
-            <MenuProyectoEjecucion changeOption={componentName => this.handleChangeMenuOption(componentName)}/>
+            <MenuProyectoEjecucion changeOption={componentName => this.handleChangeMenuOption(componentName)}
+              expediente={this.state.expediente} />
           </List>
           <Divider />
         </Collapse>
@@ -134,25 +147,29 @@ class VisualizarExpediente extends Component {
   }
   render() {
     let { classes } = this.props;
-    console.log("this.props-data", this.props);
+    let { expediente } = this.state;
     return (
-      <Grid container>
-        <Grid item md={12} xs={12}>
-          {this.renderNavBar()}
+      this.state.expediente
+        ? <Grid container>
+          <Grid item md={12} xs={12}>
+            {this.renderNavBar()}
+          </Grid>
+          <Grid item md={2} xs={12} className={classes.boredrRight}>
+            {this.renderLeftNav()}
+          </Grid>
+          <Grid item md={10} xs={12} className={classes.backgroundGrey}>
+            {
+              this.state.renderComponent === "TrabajoComunicacion"
+                ? <TrabajoComunicacion expediente={expediente} />
+                : this.state.renderComponent === "TrabajoEjecucion"
+                  ? <TrabajoEjecucion expediente={expediente} />
+                  : <TrabajoComunicacion expediente={expediente} />
+            }
+          </Grid>
         </Grid>
-        <Grid item md={2} xs={12} className={classes.boredrRight}>
-          {this.renderLeftNav()}
-        </Grid>
-        <Grid item md={10} xs={12} className={classes.backgroundGrey}>
-          {
-            this.state.renderComponent === "TrabajoComunicacion"
-              ? <TrabajoComunicacion />
-              : this.state.renderComponent === "TrabajoEjecucion"
-                ? <TrabajoEjecucion />
-                : <TrabajoComunicacion />
-          }
-        </Grid>
-      </Grid>
+        : <div className="text-center my-5">
+          <CircularProgress />
+        </div>
     )
   }
 }

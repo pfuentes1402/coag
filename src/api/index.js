@@ -81,10 +81,16 @@ export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
  * Parametros 
  *    id_expediente
  */
-export const getExpedienteDatosGeneral = id_expediente =>
-  api.get(`/expedientes/${id_expediente}`).then(response => {
+export const getExpedienteDatosGeneral = async (id_expediente) =>{
+  try{
+    let response = await api.get(`/expedientes/${id_expediente}`);
     return response;
-  });
+  }
+  catch(error){
+    return error;
+  }
+}
+  
 
 
 /**
@@ -164,11 +170,15 @@ export const postNuevoExpediente = data => {
  * Parametros 
  *    data->Datos que conforman  el expediente
 */
-export const putExpediente = (data) =>
-  api.put(`${BASE_PATH}/expedientes/`).then(
-    v => v.json()).then(resultado => {
-      return resultado;
-    });
+export const putExpediente = async (data) => {
+  try{
+    let response = await api.put(`/expedientes/${data.Id_Expediente}`,data);
+    return response;
+  }
+  catch(error){
+    return error;
+  }
+}
 
 /*
  *Edita un expediente expediente
