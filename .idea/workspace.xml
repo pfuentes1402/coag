@@ -407,7 +407,7 @@
       <workItem from="1545775154010" duration="19000" />
       <workItem from="1546028183808" duration="753000" />
       <workItem from="1546029034373" duration="1055000" />
-      <workItem from="1547221272053" duration="25000" />
+      <workItem from="1547221272053" duration="48000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -483,7 +483,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229575000" />
+    <option name="totallyTimeSpent" value="229598000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -569,7 +569,8 @@
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js&#10;#&#9;src/components/NewExpedient/AddExpedient.js&#10;#&#9;src/index.js&#10;#&#9;src/routes.js" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="Aceptando merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aceptando merge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
