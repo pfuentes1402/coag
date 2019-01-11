@@ -4,3 +4,20 @@
     border-radius: 0;
     padding: 4px 8px;
 }
+
+.openOption:hover{
+    color: white;
+    background: #2196f3
+}
+.openOption span {
+    color: white;
+}
+.vault-layout.dhx_widget{
+    border: 0 transparent;
+}
+.vault-topbar,.vault-file-grid,.vault.dhx_widget{
+    background-color: white !important
+}
+.vault.dhx_widget .dhx-download-progress{
+    height: 3.5px !important;
+}

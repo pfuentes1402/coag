@@ -11,6 +11,7 @@ import {
     fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz,
     fetchComunicacionencargo, dispatchError
 } from "../../actions/trabajos";
+import { dispatchAddAutorizacion } from "../../actions/expedientes";
 import { connect } from "react-redux";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import { Container } from "reactstrap";
@@ -96,7 +97,8 @@ const mapStateToProps = (state) => (
         tiposAutorizacion: state.trabajos.tiposAutorizacion ? state.trabajos.tiposAutorizacion.Tipos_autorizacion_municipal : [],
         fasesTrabajos: state.trabajos.fasesTrabajos.FasesTrabajos ? state.trabajos.fasesTrabajos.FasesTrabajos : [],
         gruposRaiz: state.trabajos.gruposRaiz ? state.trabajos.gruposRaiz.GruposRaiz : [],
-        comunicacionencargo: state.trabajos.comunicacionEncargo
+        comunicacionencargo: state.trabajos.comunicacionEncargo,
+        currentExpediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
     }
 );
 
@@ -106,7 +108,8 @@ const mapDispatchToProps = {
     fetchFasesTrabajos: fetchFasesTrabajos,
     fetchGruposRaiz: fetchGruposRaiz,
     fetchComunicacionencargo: fetchComunicacionencargo,
-    dispatchError: dispatchError
+    dispatchError: dispatchError,
+    dispatchAddAutorizacion: dispatchAddAutorizacion
 };
 
 
@@ -157,7 +160,6 @@ class ComunicacionEncargo extends React.Component {
                 isSelected: i === 0
             });
         }
-
         this.props.fetchComunicacionencargo(arrayRaiz)
     }
 
@@ -291,13 +293,33 @@ class ComunicacionEncargo extends React.Component {
 
     /**Función que valida la continuación en el wizard */
     handleNext() {
-        if (this.props.trabajos.fasesTrabajos && 
-            this.props.trabajos.fasesTrabajos.FasesTrabajos && 
+        if (this.props.trabajos.fasesTrabajos &&
+            this.props.trabajos.fasesTrabajos.FasesTrabajos &&
             this.props.trabajos.fasesTrabajos.FasesTrabajos.length === 0) {
             this.props.dispatchError("No existen trabajos relacionados para el tipo de obra " +
                 "y la autorización municipal selecccionada");
         }
-        else{
+        else {
+            //Guardar en el expediente la seleccion realizada
+            let grupoRaiz = this.props.comunicacionencargo.find(x => x.isSelected);
+            if (grupoRaiz) {
+                let tramite = grupoRaiz.tiposTramite.find(x => x.Id_Tipo_Autorizacion_Municipal === grupoRaiz.tramiteSelection);
+                let obra = grupoRaiz.tiposObra.find(x => x.Id_Tipo_Grupo_Tematico === grupoRaiz.obraSelection);
+                let dataToExpedient = {
+                    autorizacionMunicipal: {
+                        id: grupoRaiz.tramiteSelection,
+                        title: tramite ? tramite.Nombre : ""
+                    },
+                    grupoTematico: {
+                        id: grupoRaiz.obraSelection,
+                        title: obra ? obra.Nombre : ""
+                    }
+                }
+                let currentExpId = this.props.currentExpediente.Expediente
+                    && this.props.currentExpediente.Expediente.length > 0
+                    ? this.props.currentExpediente.Expediente[0].Id_Expediente : null;
+                this.props.dispatchAddAutorizacion(currentExpId, dataToExpedient);
+            }
             this.props.history.push("/comunicacion/agentes");
         }
     }
@@ -305,6 +327,7 @@ class ComunicacionEncargo extends React.Component {
     render() {
         let { classes } = this.props;
         let { expandedChild, expanded } = this.state;
+        console.log("this.props->CE", this.props);
 
         return (
             <Container className={classes.margin}>

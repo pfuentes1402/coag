@@ -8,10 +8,11 @@ import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import {
   FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
   SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA,
-  ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO
+  ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO, ADD_AUTORIZACION_GRUPO_EXPEDIENTE
 } from "../../actions/expedientes/types";
 
 import { PURGE } from 'redux-persist';
+import { comunicacionEncargo } from "../../actions/trabajos";
 
 export const FETCH_EXPEDIENTES_INIT = 'FETCH_EXPEDIENTES_INIT';
 export const FETCH_EXPEDIENTES_SUCCESS = 'FETCH_EXPEDIENTES_SUCCESS';
@@ -37,7 +38,7 @@ const initialState = {
     }]
   },
   trabajos: [{}],
-  promotores: [{}],
+  promotores: [],
   addressreducida: [],
   adressValidated: [], ExpedientNew: {}, expedientes: {},
   arrayReferencias: [],
@@ -224,9 +225,22 @@ const expedientes = (state = initialState, action) => {
       }
       return newState;
 
+    case ADD_AUTORIZACION_GRUPO_EXPEDIENTE:
+      let expediente = {};
+      Object.assign(expediente, state);
+      if (expediente.ExpedientNew && expediente.ExpedientNew.Expediente) {
+        for (let i = 0; i < expediente.ExpedientNew.Expediente.length; i++)
+          if (expediente.ExpedientNew.Expediente[i].Id_Expediente === action.payload.idExpediente) {
+            expediente.ExpedientNew.Expediente[i]
+              .Id_Tipo_Autorizacion_Municipal_Actual = action.payload.data.autorizacionMunicipal.id;
+            expediente.ExpedientNew.Expediente[i]
+              .Id_Tipo_Grupo_Tematico_Actual = action.payload.data.grupoTematico.id;
+            expediente.ExpedientNew.Expediente[i]["comunicacionEncargo"] = action.payload.data;
+          }
+      }
+      return expediente;
 
     case PURGE:
-
       return initialState;
 
     default:

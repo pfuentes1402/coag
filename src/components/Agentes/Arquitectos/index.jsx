@@ -130,30 +130,44 @@ class Arquitecto extends Component {
       selectedOption: "Nombre",
       searchQuery: "",
       canSearch: false,
-      percent: "",
-      percentChecked: false,
-      acceptTerm1: false,
-      acceptTerm2: false,
-      functionsSelected: [],
       isSearch: false,
 
       currentPage: 0,
       rowsPerPage: 5,
       totalRecords: 1,
       totalPages: 4,
-      showPagination: false
+      showPagination: false,
+      changedProperties: []
     }
   }
 
   componentDidMount() {
     try {
       this.props.fetchFuncionesTipologia(1);
+      this.initDataSelection();
       this.props.fetchBuscador(this.props.loguedUser.Id_Colegiado, "colegiados");
       this.handleCanSearch(false);
     }
     catch (e) {
       console.log("ERROR", e)
     }
+  }
+
+  initDataSelection() {
+    let data = [];
+    for (let i = 0; i < 10; i++) {
+      let dataInit = {
+        Nif: "-1",
+        Id_Colegiado: "-1",
+        percent: 0,
+        percentChecked: false,
+        acceptTerm1: false,
+        acceptTerm2: false,
+        functionsSelected: []
+      };
+      data.push(dataInit);
+    }
+    this.setState({ changedProperties: data });
   }
 
   handleSelectOptionChange = event => {
@@ -176,43 +190,57 @@ class Arquitecto extends Component {
     this.setState({ showPagination: showPag });
   }
 
-  addFunctionToAgent = (functionCode) => (event) => {
-    let tag = event.target.tagName === "SPAN" ? event.target.parentNode : event.target;
-    if (!this.state.functionsSelected.some(x => x === functionCode)) {
-      let previusSelectedFunctions = this.state.functionsSelected;
-      previusSelectedFunctions.push(functionCode);
-      tag.className = tag.className + " slectedFunction";
-      this.setState({ functionsSelected: previusSelectedFunctions });
-    }
-    else {
-      let selections = this.state.functionsSelected.filter(x => x !== functionCode);
-      tag.className = tag.className.replace("slectedFunction", "");
-      this.setState({ functionsSelected: selections });
+  handleAdd() {
+    this.initDataSelection(); 
+    this.handleCanSearch(true);
+    this.mapSearchToProps(this.props.colegiadosSearchResult);
+  }
+
+  notifyPropertyChange = (index, propertyName) => event => {
+    let properties = [];
+    Object.assign(properties, this.state.changedProperties);
+    if (properties) {
+      switch (propertyName) {
+        case "percent":
+          properties[index][propertyName] = event.target.value;
+          this.setState({ changedProperties: properties });
+          break;
+
+        case "functions":
+          let tag = event.target.tagName === "SPAN" ? event.target.parentNode : event.target;
+          let functionCode = event.target.tagName === "SPAN"
+            ? event.target.textContent
+            : event.target.firstChild.textContent;
+
+          if (!properties[index].functionsSelected.some(x => x === functionCode)) {
+            properties[index].functionsSelected.push(functionCode);
+            tag.className = tag.className + " slectedFunction";
+            this.setState({ changedProperties: properties });
+          }
+          else {
+            properties[index].functionsSelected = properties[index].functionsSelected.filter(x => x !== functionCode);
+            tag.className = tag.className.replace("slectedFunction", "");
+            this.setState({ changedProperties: properties });
+          }
+          break;
+
+        default:
+          properties[index][propertyName] = event.target.checked;
+          this.setState({ changedProperties: properties });
+          break;
+      }
     }
   }
 
-  handlePercentChange = (event) => {
-    this.setState({ percent: event.target.value });
-  }
-
-  handleCheckedPersentChange = event => {
-    this.setState({ percentChecked: event.target.checked });
-  };
-
-  handleTerm1Change = event => {
-    this.setState({ acceptTerm1: event.target.checked });
-  };
-
-  handleTerm2Change = event => {
-    this.setState({ acceptTerm2: event.target.checked });
-  };
-
-  async handleSearch(currentPage = 0) {
-    if (this.state.searchQuery !== "") {
+  async handleSearch(currentPage = 0, searchQuery = "") {
+    this.initDataSelection();
+    let searchString = this.state.searchQuery !== "" ? this.state.searchQuery : searchQuery.toString();
+    if (searchString !== "") {
       this.setState({ isSearch: true });
-      let search = await this.props.fetchBuscador(this.state.searchQuery, "colegiados", (currentPage + 1), this.state.rowsPerPage);
-      let pagination = search.data ? search.data.Paginacion[0] : null;
-
+      let searchResult = await this.props.fetchBuscador(searchString, "colegiados", (currentPage + 1), this.state.rowsPerPage);
+      
+      this.mapSearchToProps(searchResult.data ? searchResult.data.Colegiados : []);
+      let pagination = searchResult.data ? searchResult.data.Paginacion[0] : null;
       this.handlePagination(true);
       this.setState({
         isSearch: false,
@@ -223,19 +251,39 @@ class Arquitecto extends Component {
     }
   }
 
+  mapSearchToProps(searchData) {
+    let mappedResult = [];
+    if (searchData && searchData.length > 0) {
+      mappedResult = searchData.map(value => {
+        return {
+          Nif: value.Nif,
+          Id_Colegiado: value.Id_Colegiado,
+          percent: 0,
+          percentChecked: false,
+          acceptTerm1: false,
+          acceptTerm2: false,
+          functionsSelected: []
+        }
+      })
+    }
+    this.setState({ changedProperties: mappedResult });
+  }
+
   addAgenteTrabajoToSelection(id) {
     let agente = this.props.colegiadosSearchResult.find(x => x.Id_Colegiado === id);
+    let properties = this.state.changedProperties.find(x => x.Id_Colegiado === id);
     if (agente) {
       if (this.props.agentesTrabajoSelected.some(x => x.Id_Colegiado === id)) {
         this.deleteAgentSelection(id);
       }
-      agente.Porciento = this.state.percent;
-      agente.Funciones = this.state.functionsSelected;
+      agente.Porciento = properties.percent;
+      agente.Funciones = properties.functionsSelected;
 
       //Adicionando el agente al estdo de redux
       this.props.addAgenteTrabajoSeleccion("", "", agente);
     }
     this.handleCanSearch(false);
+    this.handlePagination(false);
   }
 
   deleteAgentSelection(id) {
@@ -245,16 +293,18 @@ class Arquitecto extends Component {
   editAgenteSeleccion(id) {
     let edit = this.props.agentesTrabajoSelected.find(x => x.Id_Colegiado === id);
     if (edit) {
-      this.setState(
-        {
-          percent: edit.Porciento,
-          functionsSelected: edit.Funciones,
-          acceptTerm1: true,
-          acceptTerm2: true
-        });
+      let properties = {
+        Id_Colegiado: edit.Id_Colegiado,
+        Nif: edit.Nif,
+        percent: edit.Porciento,
+        functionsSelected: edit.Funciones,
+        acceptTerm1: true,
+        acceptTerm2: true
+      };
       this.props.editAgenteTrabajoSeleccion(edit.Agente);
       this.handleCanSearch(true);
       this.handlePagination(false);
+      this.setState({ changedProperties: [properties, ...this.state.changedProperties] });
     }
   }
 
@@ -276,7 +326,7 @@ class Arquitecto extends Component {
           <Grid item md={10} className={classes.subtitle}>Arquitectos</Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab} onClick={() => { this.handleCanSearch(true) }}>
+              className={classes.fab} onClick={() => { this.handleAdd() }}>
               <AddIcon />
             </Fab>
           </Grid>
@@ -413,6 +463,8 @@ class Arquitecto extends Component {
 
   renderSearchResult = () => {
     let { classes } = this.props;
+    console.log("this.state", this.state);
+    console.log("this.props", this.props);
     return (
       <Grid container spacing={8} className="p-1">
         {this.renderPagination()}
@@ -454,13 +506,13 @@ class Arquitecto extends Component {
                   <Grid item xs={12} className="functionTipology">
                     <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
                       <Translate id="languages.agentes.functionsTitle" /> *
-                </Typography>
+                    </Typography>
                     {
-                      this.props.funcionesTipologia.map((value, index) => {
-                        return <Button onClick={this.addFunctionToAgent(value.Codigo)}
-                          className={this.state.functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
+                      this.props.funcionesTipologia.map((value, indexCode) => {
+                        return <Button onClick={this.notifyPropertyChange(index, "functions")}
+                          className={this.state.changedProperties[index].functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
                           variant="contained"
-                          key={index}>{value.Codigo}
+                          key={indexCode}>{value.Codigo}
                         </Button>
                       })
                     }
@@ -475,18 +527,18 @@ class Arquitecto extends Component {
                         <TextField
                           label="%"
                           className={classes.mt0}
-                          value={this.state.percent}
+                          value={this.state.changedProperties[index].percent}
                           placeholder="Ej 25"
                           type="number"
-                          onChange={this.handlePercentChange}
+                          onChange={this.notifyPropertyChange(index, "percent")}
                           margin="normal" />
                       </Grid>
                       <Grid item xs={7}>
                         <FormControlLabel
                           control={
                             <Checkbox
-                              checked={this.state.percentChecked}
-                              onChange={this.handleCheckedPersentChange}
+                              checked={this.state.changedProperties[index].percentChecked}
+                              onChange={this.notifyPropertyChange(index, "percentChecked")}
                               color="primary" />
                           }
                           label={<Translate id="languages.agentes.percentLabel" />} />
@@ -497,8 +549,8 @@ class Arquitecto extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.acceptTerm1}
-                          onChange={this.handleTerm1Change}
+                          checked={this.state.changedProperties[index].acceptTerm1}
+                          onChange={this.notifyPropertyChange(index, "acceptTerm1")}
                           color="primary" />
                       }
                       label={<Translate id="languages.agentes.conditionTermn1" />} />
@@ -506,8 +558,8 @@ class Arquitecto extends Component {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={this.state.acceptTerm2}
-                          onChange={this.handleTerm2Change}
+                          checked={this.state.changedProperties[index].acceptTerm2}
+                          onChange={this.notifyPropertyChange(index, "acceptTerm2")}
                           color="primary" />
                       }
                       label={<Translate id="languages.agentes.conditionTermn2" />} />
@@ -520,8 +572,9 @@ class Arquitecto extends Component {
                     </Button>
                     <Button variant="contained" size="small" color="primary" className={classes.button}
                       onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
-                      disabled={this.state.acceptTerm1 && this.state.acceptTerm2 && this.state.functionsSelected.length > 0
-                        && (this.state.percent !== "" || this.state.percentChecked) ? false : true}>
+                      disabled={this.state.changedProperties[index].acceptTerm1 && this.state.changedProperties[index].acceptTerm2
+                        && this.state.changedProperties[index].functionsSelected.length > 0
+                        && (this.state.changedProperties[index].percent !== "" || this.state.changedProperties[index].percentChecked) ? false : true}>
                       <Translate id="languages.generalButton.added" />
                     </Button>
                   </Grid>

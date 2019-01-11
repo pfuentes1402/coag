@@ -129,7 +129,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *filtro: cadena a buscar
 *tipoBusqueda: expediente, arquitectos, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=25) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -144,11 +144,11 @@ export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=25) =>
         }
 
         dispatch(fetchFiltroUsuario(temp, temp2));
-        try{
-            let searchResult = await getBuscador(temp, tipoBusqueda,page, pageSize);
+        try {
+            let searchResult = await getBuscador(temp, tipoBusqueda, page, pageSize);
             dispatch(fetchDataResults(searchResult, tipoBusqueda));
             return searchResult;
-        } catch(e){
+        } catch (e) {
             fetchErrorExpediente({ error: 'Algo ha salido mal en la busqueda' });
         }
     };
@@ -423,12 +423,31 @@ export const dispatchEditExpedienteEnTrabajo = (expediente) => (dispatch) => {
 export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispatch) => {
     try {
         let response = await addTrabajoEncomendaExpediente(idExpediente, dataPost)
-        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0
-            ? dispatch(fetchErrorExpediente(response.data))
-            : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data));
-        return response.data.MensajesProcesado.length === 0;        
+        if (response.data) {
+            response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0
+                ? dispatch(fetchErrorExpediente(response.data))
+                : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data));
+            return response.data.MensajesProcesado.length === 0;
+        }
+        else if(response.response){
+            let dataResponse = response.response.data;
+            dataResponse.MensajesProcesado && dataResponse.MensajesProcesado.length > 0
+                ? dispatch(fetchErrorExpediente(dataResponse))
+                : dispatch(dispatchAddTrabajoEncomendaExpediente(dataResponse));
+            return dataResponse.MensajesProcesado.length === 0;
+        }
+        return false;
     } catch (error) {
         dispatch(fetchErrorExpediente(formatMenssage(error.message)));
     }
 };
+
+/**Encargado de guardar en el expediente, el objeto Autorizacion municipal 
+ * y Grupo tematico */
+export const dispatchAddAutorizacion = (idExpediente, data) => (dispatch) => {
+    dispatch({
+        type: types.ADD_AUTORIZACION_GRUPO_EXPEDIENTE,
+        payload: { idExpediente, data }
+    })
+}
 

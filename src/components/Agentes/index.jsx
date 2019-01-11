@@ -96,11 +96,11 @@ class Agentes extends Component {
     //Validación para continuar (si el resultado fue 200 se permite continuar)
     if(success)
       this.props.history.push("/visualizar-expediente");
-    console.log("props_state", this.props.state);
   }
 
   render() {
     let { classes } = this.props;
+    console.log("this.porps->",this.props);
     return (
       <Container className={classes.margin}>
         <Grid item xs={12} className="min-height-panel">

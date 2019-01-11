@@ -9,7 +9,7 @@ import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
 import { Add, Edit, Delete } from '@material-ui/icons';
-import { dispatchEditExpedienteEnTrabajo } from '../../actions/expedientes';
+import { dispatchEditExpedienteEnTrabajo } from '../../../../actions/expedientes';
 
 const styles = theme => ({
   divGrey: {
@@ -291,6 +291,10 @@ class FichaExpediente extends Component {
 
   renderExpedientType() {
     let { classes } = this.props;
+    let comunicacionEncargo = this.props.expediente.Expediente
+      && this.props.expediente.Expediente.length > 0
+      ? this.props.expediente.Expediente[0].comunicacionEncargo
+      : null;
     return (
       <Paper className={`${classes.withoutRadius} m-3`}>
         <Grid container spacing={16} className="my-3 p-2">
@@ -304,9 +308,10 @@ class FichaExpediente extends Component {
           <Grid container spacing={16}>
             <Grid item xs={12} className="p-4 mr-3">
               <TextField
-                value={this.props.sourceExpediente.Antecedente}
+                value={comunicacionEncargo ? `${comunicacionEncargo.grupoTematico.title} / ${comunicacionEncargo.autorizacionMunicipal.title}` : ""}
                 label={<Translate id="languages.fichaExpediente.titleExpedientType" />}
                 className={`${classes.textField} mt-3 text-uppercase`}
+                disabled={true}
                 name="expedientType" />
             </Grid>
 
