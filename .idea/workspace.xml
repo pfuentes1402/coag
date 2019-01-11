@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Address/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -75,8 +69,8 @@
       <file leaf-file-name="CatastralTable.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="164" column="47" selection-start-line="164" selection-start-column="34" selection-end-line="164" selection-end-column="47" />
+            <state relative-caret-position="242">
+              <caret line="297" column="4" selection-start-line="297" selection-start-column="4" selection-end-line="297" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -84,7 +78,7 @@
       <file leaf-file-name="AddExpedient.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
+            <state relative-caret-position="267">
               <caret line="255" column="70" selection-start-line="255" selection-start-column="57" selection-end-line="255" selection-end-column="70" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
@@ -97,8 +91,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="115" column="19" lean-forward="true" selection-start-line="115" selection-start-column="19" selection-end-line="115" selection-end-column="19" />
+            <state relative-caret-position="233">
+              <caret line="150" column="39" lean-forward="true" selection-start-line="150" selection-start-column="39" selection-end-line="150" selection-end-column="39" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
                 <element signature="e#646#1589#0" />
@@ -119,7 +113,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Button</find>
       <find>saveAdressTostore</find>
       <find>FETCH_SAVE_ADRESS_TO_STORE</find>
       <find>Fab</find>
@@ -149,6 +142,7 @@
       <find>handleClose</find>
       <find>isValidate</find>
       <find>isShowAddress</find>
+      <find>onSave</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -440,7 +434,7 @@
       <workItem from="1546028183808" duration="753000" />
       <workItem from="1546029034373" duration="1055000" />
       <workItem from="1547221272053" duration="48000" />
-      <workItem from="1547221494479" duration="6083000" />
+      <workItem from="1547221494479" duration="8074000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -512,11 +506,18 @@
       <option name="project" value="LOCAL" />
       <updated>1545407250498</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Componente address separado para reutilizar en editar de expediente">
+      <created>1547234892410</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1547234892410</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235681000" />
+    <option name="totallyTimeSpent" value="237672000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -536,9 +537,9 @@
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27083334" side_tool="true" weight="0.78652966" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7291667" weight="0.24145786" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.7291667" visible="true" weight="0.24145786" />
       <window_info id="npm" order="2" sideWeight="0.29202038" side_tool="true" weight="0.24960506" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32915717" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32915717" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32915717" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -605,7 +606,8 @@
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="Aceptando merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aceptando merge" />
+    <MESSAGE value="Componente address separado para reutilizar en editar de expediente" />
+    <option name="LAST_COMMIT_MESSAGE" value="Componente address separado para reutilizar en editar de expediente" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -957,16 +959,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="164" column="47" selection-start-line="164" selection-start-column="34" selection-end-line="164" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
+        <state relative-caret-position="267">
           <caret line="255" column="70" selection-start-line="255" selection-start-column="57" selection-end-line="255" selection-end-column="70" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
@@ -975,10 +970,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="297" column="4" selection-start-line="297" selection-start-column="4" selection-end-line="297" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="115" column="19" lean-forward="true" selection-start-line="115" selection-start-column="19" selection-end-line="115" selection-end-column="19" />
+        <state relative-caret-position="233">
+          <caret line="150" column="39" lean-forward="true" selection-start-line="150" selection-start-column="39" selection-end-line="150" selection-end-column="39" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#646#1589#0" />
