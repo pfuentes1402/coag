@@ -610,3 +610,17 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
     return error;
   }
 }
+
+/**
+ * Actualizar emplazamientos dentro de un expediente
+ * @param {*} data 
+ */
+export const putEmplazamiento = async (idExpediente,data) => {
+  try{
+    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`,data);
+    return response;
+  }
+  catch(error){
+    return error;
+  }
+}

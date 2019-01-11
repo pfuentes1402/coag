@@ -11,9 +11,11 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
-import { Add, Edit, Delete, Check } from '@material-ui/icons';
+import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
 import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
-import { putExpediente } from '../../../../api';
+import { putExpediente, putEmplazamiento } from '../../../../api';
+import ValidateAddress from '../../../Address';
+import { elimardelatabla, saveAdressTostore } from "../../../../actions/expedientes";
 
 const styles = theme => ({
   divGrey: {
@@ -77,6 +79,7 @@ class FichaExpediente extends Component {
     super(props);
     this.state = {
       sourceExpediente: this.props.sourceExpediente,
+      emplazamientos: this.props.expediente.Emplazamientos,
       isUpdate: false,
       isAddUbicacion: false
     }
@@ -98,6 +101,45 @@ class FichaExpediente extends Component {
     this.setState({ isUpdate: false });
   }
 
+  handleAddUbication(action) {
+    this.setState({ isAddUbicacion: action });
+  }
+
+  async handleSaveAddress() {
+    let address = this.props.addressData.Datos_Completos[0];
+    if (!this.ifEqual(this.props.expediente.Emplazamientos, address)) {
+      //TODO: Llamar metodo de la api para adicionar ubicacion a expediente
+      let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, [this.props.expediente.Emplazamientos, address]);
+      if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
+        this.props.fetchErrorExpediente(response.data);
+      }
+      else if (response.response) {
+        if (response.response.data.MensajesProcesado)
+          this.props.fetchErrorExpediente(response.response.data);
+        else {
+          this.props.fetchErrorExpediente(formatMenssage(response.response.data.Message));
+        }
+      }
+      else {
+        this.setState({ emplazamientos: response.data.Emplazamientos })
+        this.handleAddUbication(false);
+      }
+    }
+  }
+
+  ifEqual(data, address) {
+    let equal = false;
+    if (data.length > 0) {
+      data.map(value => {
+        if (value.Calle === address.Calle && value.Numero === address.Numero
+          && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal
+          && value.municipio === address.Concello) {
+          equal = true
+        }
+      })
+    }
+    return equal;
+  }
 
   renderUbicationTable() {
     let { classes } = this.props;
@@ -111,6 +153,7 @@ class FichaExpediente extends Component {
           </Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
+              onClick={() => this.handleAddUbication(true)}
               className={classes.fab}>
               <Add />
             </Fab>
@@ -136,11 +179,11 @@ class FichaExpediente extends Component {
 
           <TableBody className={classes.tableBodyHeight}>
             {
-              this.props.expediente.Emplazamientos.length === 0 ?
+              this.state.emplazamientos.length === 0 ?
                 <TableRow>
                   <TableCell colSpan={6}></TableCell>
                 </TableRow>
-                : this.props.expediente.Emplazamientos.map((row, index) => {
+                : this.state.emplazamientos.map((row, index) => {
                   return (
                     <TableRow className={classes.row} key={index}>
                       <TableCell component="th" scope="row" className="px-1 text-center">
@@ -161,6 +204,23 @@ class FichaExpediente extends Component {
             }
           </TableBody>
         </Table>
+
+        {
+          this.state.isAddUbicacion &&
+          <Grid item xs={12} className="pt-2">
+            <ValidateAddress />
+            <Grid item xs={12} className="text-right">
+              <Button color="primary" size="small" className={`${classes.button} mx-2`}
+                onClick={() => { this.handleAddUbication(false) }}>
+                <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+              </Button>
+              <Button variant="contained" size="small" color="primary" className={classes.button}
+                onClick={() => this.handleSaveAddress()}>
+                <Translate id="languages.generalButton.added" />
+              </Button>
+            </Grid>
+          </Grid>
+        }
       </div>
     );
   }
@@ -312,7 +372,7 @@ class FichaExpediente extends Component {
           <Grid container spacing={16}>
             <Grid item xs={12} className="p-4 mr-3">
               <TextField
-                value={comunicacionEncargo ? `${comunicacionEncargo.grupoTematico.title} / ${comunicacionEncargo.autorizacionMunicipal.title}` : ""}
+                value={this.state.sourceExpediente.Descripcion_Encomenda_Actual}
                 label={<Translate id="languages.fichaExpediente.titleExpedientType" />}
                 className={`${classes.textField} mt-3 text-uppercase`}
                 disabled={true}
@@ -419,12 +479,16 @@ FichaExpediente.propTypes = {
 
 const mapStateToProps = (state) => ({
   funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
-  state: state
+  catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida : [], /*Contiene arreglo de la tabla de ubicaciones */
+  arrayReferencias: state.expedientes.arrayReferencias ? state.expedientes.arrayReferencias : [] /*Contiene arreglo con las referencial catastrales de cada direccion de la tabla ubicacion*/,
+  addressData: state.expedientes.address ? state.expedientes.address : ''
 })
 
 const mapDispatchToProps = {
   editExpedienteEnTrabajo: dispatchEditExpedienteEnTrabajo,
-  fetchErrorExpediente
+  fetchErrorExpediente,
+  saveAdressTostore: saveAdressTostore,
+  elimardelatabla: elimardelatabla,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(FichaExpediente)));

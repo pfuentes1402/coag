@@ -66,6 +66,7 @@ class VisualizarExpediente extends Component {
       open: true,
       renderComponent: "TrabajoComunicacion",
       expediente: null,
+      currentExpediente: null
     };
   }
 
@@ -76,8 +77,10 @@ class VisualizarExpediente extends Component {
   //TODO: Consumir api con el id de expediente espicificado por ur
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
-    if (response.data)
-      this.setState({ expediente: response.data });
+    if (response.data) {
+      let expediente = response.data;
+      this.setState({ expediente: expediente, currentExpediente: expediente.Expediente.length > 0 ? expediente.Expediente[0] : null});
+    }
   }
 
 
@@ -96,7 +99,7 @@ class VisualizarExpediente extends Component {
         <AppBar position="static" className={`${classes.mainNav} nav-expedient`} color="default">
           <Toolbar>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              {`${this.props.currentExpediente.Id_Expediente} ${this.props.currentExpediente.Titulo}`}
+              {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
             </Typography>
             <Button color="primary" className={classes.button}>
               <Translate id="languages.generalButton.delete" /><Close />
@@ -124,7 +127,7 @@ class VisualizarExpediente extends Component {
       <List component="nav" color="primary" className={classes.leftNav}
         subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1`}
           style={{ lineHeight: 2 }}>
-          {`${this.props.currentExpediente.Id_Expediente} ${this.props.currentExpediente.Titulo}`}
+          {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
         <ListItem button onClick={this.handleExpandMenu} className="pl-1 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
@@ -175,9 +178,6 @@ class VisualizarExpediente extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentExpediente: state.expedientes.ExpedientNew && state.expedientes.ExpedientNew.Expediente.length > 0 ? state.expedientes.ExpedientNew.Expediente[0] : {},
-  expediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
-  state: state
 })
 
 const mapDispatchToProps = {

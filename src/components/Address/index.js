@@ -157,6 +157,7 @@ class ValidateAddress extends Component {
                                     value={this.state.location}
                                     onChange={this.handleChange('location')}
                                     margin="normal"
+                                    placeholder="Ref catastral o coordenadas UTM"
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
