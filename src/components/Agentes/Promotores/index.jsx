@@ -26,13 +26,21 @@ import Close from '@material-ui/icons/Close';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {
-  fetchBuscador, dispatchLimpiarBusquedaPromotores, dispatchAddPromotor,
-  dispatchDeletePromotor, dispatchEditPromotor
-} from '../../../actions/expedientes/index';
+    fetchBuscador,
+    dispatchLimpiarBusquedaPromotores,
+    dispatchAddPromotor,
+    dispatchDeletePromotor,
+    dispatchEditPromotor,
+    fetchErrorExpediente,
+    formatMenssage,
+    fetchFiltroUsuario,
+    fetchDataResults
+} from '../../../actions/expedientes';
 import { Tabs, Tab } from '@material-ui/core';
 import Organismo from './addOrganismo';
 import Person from './addPerson';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {getBuscador} from "../../../api";
 
 const styles = theme => ({
   marginPanel: {
@@ -127,40 +135,40 @@ class Promotores extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      canSearch: false,
-      showAddPromotor: false,
-      showSearchResult: false,
-      selectedOption: "Nombre",
-      searchQuery: "",
-      isSearch: false,
-      editPromotorData: {
-        "Id_Entidad": -1,
-        "Nif": "",
-        "Id_Tipo_Entidad": 1,
-        "Nombre": "",
-        "Apellido1": "",
-        "Apellido2": "",
-        "Observaciones": "",
-        "Id_Tipo_Organismo": "",
-        "Mail": "",
-        "Telefono": "",
-        "Calle": "",
-        "Numero": "",
-        "Piso": "",
-        "Codigo_Postal": "",
-        "porcentaje": null,
-        "PorcentajesEquitativos": 1,
-        "Id_Concello": "",
-        "Id_Provincia": "",
-        "Id_Autonomia": 71,
-        "Id_Pais": 100,
-      },
-      value: 0,
-
-      currentPage: 0,
-      rowsPerPage: 25,
-      totalRecords: 100,
-      totalPages: 4
+        canSearch: false,
+        showAddPromotor: false,
+        showSearchResult: false,
+        selectedOption: "Nombre",
+        searchQuery: "",
+        isSearch: false,
+        editPromotorData: {
+          "Id_Entidad": -1,
+          "Nif": "",
+          "Id_Tipo_Entidad": 1,
+          "Nombre": "",
+          "Apellido1": "",
+          "Apellido2": "",
+          "Observaciones": "",
+          "Id_Tipo_Organismo": "",
+          "Mail": "",
+          "Telefono": "",
+          "Calle": "",
+          "Numero": "",
+          "Piso": "",
+          "Codigo_Postal": "",
+          "porcentaje": null,
+          "PorcentajesEquitativos": 1,
+          "Id_Concello": "",
+          "Id_Provincia": "",
+          "Id_Autonomia": 71,
+          "Id_Pais": 100,
+        },
+        value: 0,
+        currentPage: 0,
+        rowsPerPage: 25,
+        totalRecords: 100,
+        totalPages: 4,
+        selectedPromoters: []
     }
   }
 
@@ -170,9 +178,23 @@ class Promotores extends Component {
       this.setState({ value: promotor.Id_Tipo_Entidad === 1 ? 0 : 1 })
     }
     catch (e) {
-      console.log("ERROR", e)
+      this.props.fetchErrorExpediente(formatMenssage(e));
     }
   }
+
+    async fetchBuscador(filtro, tipoBusqueda, page, pageSize){
+        try{
+            let searchResult = await getBuscador(filtro, tipoBusqueda, page, pageSize);
+           if(searchResult.data.MensajesProcesado && searchResult.data.MensajesProcesado.length > 0){
+               fetchErrorExpediente(searchResult.data)
+           }else{
+               this.setState({selectedPromoters: searchResult.data}) ;
+           }
+
+        } catch(error){
+            fetchErrorExpediente(formatMenssage(error.message));
+        }
+    }
 
 
   handleChange = (event, value) => {
@@ -277,7 +299,7 @@ class Promotores extends Component {
                 <Translate id="languages.agentes.tableColumnName" />
               </CustomTableHead>
               <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
-              <CustomTableHead></CustomTableHead>
+              <CustomTableHead/>
             </TableRow>
           </TableHead>
 
@@ -374,7 +396,7 @@ class Promotores extends Component {
 
 
         </Paper>
-        : <div></div>
+        : <div/>
     );
   }
 
@@ -438,7 +460,7 @@ class Promotores extends Component {
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
       </Paper>
-      : <div></div>
+      : <div/>
     )
   }
 
@@ -479,17 +501,18 @@ class Promotores extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  searchResult: state.expedientes.resultadoBusquedaPromotores,
-  selectedPromoters: state.expedientes.promotores,
-  state: state
+    searchResult: state.expedientes.resultadoBusquedaPromotores,
+    selectedPromoters: state.expedientes.promotores,
+    error: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
 })
 
 const mapDispatchToProps = {
-  fetchBuscador: fetchBuscador,
-  cleanSearch: dispatchLimpiarBusquedaPromotores,
-  addPromotor: dispatchAddPromotor,
-  editPromotor: dispatchEditPromotor,
-  deletePromotor: dispatchDeletePromotor
+    fetchBuscador: fetchBuscador,
+    cleanSearch: dispatchLimpiarBusquedaPromotores,
+    addPromotor: dispatchAddPromotor,
+    editPromotor: dispatchEditPromotor,
+    deletePromotor: dispatchDeletePromotor,
+    fetchErrorExpediente: fetchErrorExpediente
 };
 
 Promotores.propTypes = {

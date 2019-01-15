@@ -414,13 +414,15 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  * @param tipoBusqueda
  * @returns {any}
  */
-export const getBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
-  filtro === ""
-    ? api.get(`/${tipoBusqueda}/?pag=${page}&tam=${pageSize}`)
-    : api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`)
-      .then(response => {
-        return response;
-      });
+export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
+  try {
+      let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+      let response = await api.get(uri);
+      return response;
+  }catch (error) {
+      return error
+  }
+}
 
 /**
  * Proporciona la estructura documental de un trabajo

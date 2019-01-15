@@ -12,7 +12,7 @@ import TablaDatosModal  from '../Busquedas/TablaDatosModal';
 import TablaBusquedaArquitectos  from '../Busquedas/TablaBusquedaArquitectos';
 import {Divider, Typography, IconButton, FormControl, TextField, Button, Select, MenuItem, CircularProgress} from "@material-ui/core";
 import {Close, Search} from "@material-ui/icons";
-import {fetchErrorExpediente} from "../../actions/expedientes";
+import {fetchErrorExpediente, formatMenssage} from "../../actions/expedientes";
 
 const styles = theme => ({
     button: {
@@ -51,9 +51,7 @@ class Modalacciones extends Component {
       }
     handleSearch(text) {
         if(text === 'colegiados' && !text){
-            this.props.fetchErrorExpediente({
-                "MensajesProcesado": [{ "Mensaje": "Debe especificar un filtro para la búsqueda" }]
-            })
+            this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
         }else {
             this.props.fetchBuscador(text, this.props.selectBuscador);
         }
@@ -75,9 +73,7 @@ class Modalacciones extends Component {
         }
         this.props.fetchSelect(value);
         if(value === 'colegiados' && !this.state.text){
-            this.props.fetchErrorExpediente({
-                "MensajesProcesado": [{ "Mensaje": "Debe especificar un filtro para la búsqueda" }]
-            })
+            this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
         }else {
             this.props.fetchBuscador(this.state.text, value);
         }
