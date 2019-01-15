@@ -225,174 +225,6 @@ class FichaExpediente extends Component {
     );
   }
 
-  renderPromotorsTable() {
-    let { classes } = this.props;
-    return (
-      <div className="p-2">
-        <Grid container className={classes.headerBorder}>
-          <Grid item md={10}>
-            <Typography variant="subtitle1" gutterBottom className="m-2">
-              <Translate id="languages.fichaExpediente.titlePromotors" />
-            </Typography>
-          </Grid>
-          <Grid item md={2}>
-            <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab}>
-              <Add />
-            </Fab>
-          </Grid>
-        </Grid>
-
-        <Table className={`${classes.table} ${classes.tableBorder}`}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.fichaExpediente.tableColumnName" />
-              </CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3"></CustomTableHead>
-            </TableRow>
-          </TableHead>
-
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.props.expediente.Promotores.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={4}></TableCell>
-                </TableRow>
-                : this.props.expediente.Promotores.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {row.Nif}
-                      </TableCell>
-                      <TableCell className="pl-3">{row.Nombre}</TableCell>
-                      <TableCell className="p-3">{row.Porcentaje}</TableCell>
-                      <TableCell className="px-2">
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
-                          <Edit />
-                        </IconButton>
-                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete">
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-      </div>
-    );
-  }
-
-  renderAgentsTable() {
-    let { classes } = this.props;
-    return (
-      <div className="p-2">
-        <Grid container className={classes.headerBorder}>
-          <Grid item md={10}>
-            <Typography variant="subtitle1" gutterBottom className="m-2">
-              <Translate id="languages.fichaExpediente.titleAgents" />
-            </Typography>
-          </Grid>
-          <Grid item md={2}>
-            <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab}>
-              <Add />
-            </Fab>
-          </Grid>
-        </Grid>
-
-        <Table className={`${classes.table} ${classes.tableBorder}`}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.fichaExpediente.tableColumnName" />
-              </CustomTableHead>
-              <CustomTableHead className="px-2 text-uppercase">%</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-1 text-center">
-                <Translate id="languages.fichaExpediente.tableColumnFunctions" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-1"></CustomTableHead>
-            </TableRow>
-          </TableHead>
-
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.props.expediente.Colegiados.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={4}></TableCell>
-                </TableRow>
-                : this.props.expediente.Colegiados.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {row.Nif}
-                      </TableCell>
-                      <TableCell className="pl-3">{row.Nombre}</TableCell>
-                      <TableCell className="px-2">{row.Porcentaje}</TableCell>
-                      <TableCell className="px-1 text-center">{row.Ids_Funciones}</TableCell>
-                      <TableCell className="px-1">
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
-                          <Edit />
-                        </IconButton>
-                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete">
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-      </div>
-    );
-  }
-
-  renderExpedientType() {
-    let { classes } = this.props;
-    let comunicacionEncargo = this.props.expediente.Expediente
-      && this.props.expediente.Expediente.length > 0
-      ? this.props.expediente.Expediente[0].comunicacionEncargo
-      : null;
-    return (
-      <Paper className={`${classes.withoutRadius} m-3`}>
-        <Grid container spacing={16} className="my-3 p-2">
-          <Grid item xs={12} className="p-0">
-            <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
-              <Translate id="languages.fichaExpediente.titleExpedientType" />
-            </Typography>
-            <Divider style={{ height: 3 }} />
-          </Grid>
-
-          <Grid container spacing={16}>
-            <Grid item xs={12} className="p-4 mr-3">
-              <TextField
-                value={this.state.sourceExpediente.Descripcion_Encomenda_Actual}
-                label={<Translate id="languages.fichaExpediente.titleExpedientType" />}
-                className={`${classes.textField} mt-3 text-uppercase`}
-                disabled={true}
-                name="expedientType" />
-            </Grid>
-
-            <Grid item xs={12} className="mx-3">
-              {this.renderPromotorsTable()}
-            </Grid>
-
-            <Grid item xs={12} className="mx-3">
-              {this.renderAgentsTable()}
-            </Grid>
-          </Grid>
-
-        </Grid>
-      </Paper>
-    );
-  }
-
   render() {
     let { classes } = this.props;
     console.log("fichaExpediente", this.props);
@@ -401,7 +233,7 @@ class FichaExpediente extends Component {
         <Paper className={`${classes.withoutRadius} m-3`}>
           <Grid container spacing={16} className="my-3">
             <Grid item xs={12}>
-              <Grid item xs={12} spacing={0} className="d-flex justify-content-between">
+              <Grid item xs={12} className="d-flex justify-content-between">
                 <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
                   <Translate id="languages.fichaExpediente.titleFichaExpediente" />
                 </Typography>
@@ -466,8 +298,6 @@ class FichaExpediente extends Component {
             </ValidatorForm>
           </Grid>
         </Paper>
-
-        {this.renderExpedientType()}
       </div>
     )
   }

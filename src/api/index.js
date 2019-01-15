@@ -81,16 +81,16 @@ export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
  * Parametros 
  *    id_expediente
  */
-export const getExpedienteDatosGeneral = async (id_expediente) =>{
-  try{
+export const getExpedienteDatosGeneral = async (id_expediente) => {
+  try {
     let response = await api.get(`/expedientes/${id_expediente}`);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
-  
+
 
 
 /**
@@ -617,12 +617,12 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
  * Actualizar emplazamientos dentro de un expediente
  * @param {*} data 
  */
-export const putEmplazamiento = async (idExpediente,data) => {
-  try{
-    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`,data);
+export const putEmplazamiento = async (idExpediente, data) => {
+  try {
+    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }

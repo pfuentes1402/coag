@@ -35,6 +35,7 @@ import {
 }
   from '../../../actions/trabajos/index';
 import '../indexstyle.css';
+import FormArquitecto from './arquitecto';
 
 const styles = theme => ({
   marginPanel: {
@@ -137,37 +138,18 @@ class Arquitecto extends Component {
       totalRecords: 1,
       totalPages: 4,
       showPagination: false,
-      changedProperties: []
     }
   }
 
   componentDidMount() {
     try {
       this.props.fetchFuncionesTipologia(1);
-      this.initDataSelection();
       this.props.fetchBuscador(this.props.loguedUser.Id_Colegiado, "colegiados");
       this.handleCanSearch(false);
     }
     catch (e) {
       console.log("ERROR", e)
     }
-  }
-
-  initDataSelection() {
-    let data = [];
-    for (let i = 0; i < 10; i++) {
-      let dataInit = {
-        Nif: "-1",
-        Id_Colegiado: "-1",
-        percent: 0,
-        percentChecked: false,
-        acceptTerm1: false,
-        acceptTerm2: false,
-        functionsSelected: []
-      };
-      data.push(dataInit);
-    }
-    this.setState({ changedProperties: data });
   }
 
   handleSelectOptionChange = event => {
@@ -191,55 +173,15 @@ class Arquitecto extends Component {
   }
 
   handleAdd() {
-    this.initDataSelection(); 
     this.handleCanSearch(true);
-    this.mapSearchToProps(this.props.colegiadosSearchResult);
-  }
-
-  notifyPropertyChange = (index, propertyName) => event => {
-    let properties = [];
-    Object.assign(properties, this.state.changedProperties);
-    if (properties) {
-      switch (propertyName) {
-        case "percent":
-          properties[index][propertyName] = event.target.value;
-          this.setState({ changedProperties: properties });
-          break;
-
-        case "functions":
-          let tag = event.target.tagName === "SPAN" ? event.target.parentNode : event.target;
-          let functionCode = event.target.tagName === "SPAN"
-            ? event.target.textContent
-            : event.target.firstChild.textContent;
-
-          if (!properties[index].functionsSelected.some(x => x === functionCode)) {
-            properties[index].functionsSelected.push(functionCode);
-            tag.className = tag.className + " slectedFunction";
-            this.setState({ changedProperties: properties });
-          }
-          else {
-            properties[index].functionsSelected = properties[index].functionsSelected.filter(x => x !== functionCode);
-            tag.className = tag.className.replace("slectedFunction", "");
-            this.setState({ changedProperties: properties });
-          }
-          break;
-
-        default:
-          properties[index][propertyName] = event.target.checked;
-          this.setState({ changedProperties: properties });
-          break;
-      }
-    }
   }
 
   async handleSearch(currentPage = 0, searchQuery = "") {
-    this.initDataSelection();
     let searchString = this.state.searchQuery !== "" ? this.state.searchQuery : searchQuery.toString();
     if (searchString !== "") {
       this.setState({ isSearch: true });
       let searchResult = await this.props.fetchBuscador(searchString, "colegiados", (currentPage + 1), this.state.rowsPerPage);
-      
-      this.mapSearchToProps(searchResult.data ? searchResult.data.Colegiados : []);
+
       let pagination = searchResult.data ? searchResult.data.Paginacion[0] : null;
       this.handlePagination(true);
       this.setState({
@@ -251,36 +193,13 @@ class Arquitecto extends Component {
     }
   }
 
-  mapSearchToProps(searchData) {
-    let mappedResult = [];
-    if (searchData && searchData.length > 0) {
-      mappedResult = searchData.map(value => {
-        return {
-          Nif: value.Nif,
-          Id_Colegiado: value.Id_Colegiado,
-          percent: 0,
-          percentChecked: false,
-          acceptTerm1: false,
-          acceptTerm2: false,
-          functionsSelected: []
-        }
-      })
-    }
-    this.setState({ changedProperties: mappedResult });
-  }
-
-  addAgenteTrabajoToSelection(id) {
-    let agente = this.props.colegiadosSearchResult.find(x => x.Id_Colegiado === id);
-    let properties = this.state.changedProperties.find(x => x.Id_Colegiado === id);
-    if (agente) {
-      if (this.props.agentesTrabajoSelected.some(x => x.Id_Colegiado === id)) {
-        this.deleteAgentSelection(id);
+  addAgenteTrabajoToSelection(agent) {
+    if (agent) {
+      if (this.props.agentesTrabajoSelected.some(x => x.Id_Colegiado === agent.Id_Colegiado)) {
+        this.deleteAgentSelection(agent.Id_Colegiado);
       }
-      agente.Porciento = properties.percent;
-      agente.Funciones = properties.functionsSelected;
-
       //Adicionando el agente al estdo de redux
-      this.props.addAgenteTrabajoSeleccion("", "", agente);
+      this.props.addAgenteTrabajoSeleccion("", "", agent);
     }
     this.handleCanSearch(false);
     this.handlePagination(false);
@@ -462,127 +381,16 @@ class Arquitecto extends Component {
   }
 
   renderSearchResult = () => {
-    let { classes } = this.props;
-    console.log("this.state", this.state);
-    console.log("this.props", this.props);
     return (
       <Grid container spacing={8} className="p-1">
         {this.renderPagination()}
         {
-          this.state.canSearch ? this.props.colegiadosSearchResult.map((value, index) => {
-            return <Grid item xs={12} key={index}>
-              <Paper key={index} className={classes.resultPanel}>
-                <Grid container spacing={24}>
-                  <Grid item xs={8}>
-                    <Typography variant="h6" gutterBottom>Datos del Arquitecto</Typography>
-                    <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
-                    <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
-
-                    <Typography variant="body2" className={classes.subtitleData}>
-                      <Translate id="languages.agentes.tableColumnName" />
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
-
-                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                      <Translate id="languages.agentes.firstName" />
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
-
-                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                      <Translate id="languages.agentes.secondName" />
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
-
-                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                      <Translate id="languages.agentes.observations" />
-                    </Typography>
-                    <Typography variant="subtitle2" gutterBottom></Typography>
-                  </Grid>
-
-                  <Grid item xs={4}>
-                    <UserIcon className={classes.usericon} color="secondary" />
-                  </Grid>
-
-                  <Grid item xs={12} className="functionTipology">
-                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                      <Translate id="languages.agentes.functionsTitle" /> *
-                    </Typography>
-                    {
-                      this.props.funcionesTipologia.map((value, indexCode) => {
-                        return <Button onClick={this.notifyPropertyChange(index, "functions")}
-                          className={this.state.changedProperties[index].functionsSelected.some(x => x === value.Codigo) ? "slectedFunction" : ""}
-                          variant="contained"
-                          key={indexCode}>{value.Codigo}
-                        </Button>
-                      })
-                    }
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                      <Translate id="languages.agentes.percentTitle" />
-                    </Typography>
-                    <Grid container spacing={0}>
-                      <Grid item xs={5}>
-                        <TextField
-                          label="%"
-                          className={classes.mt0}
-                          value={this.state.changedProperties[index].percent}
-                          placeholder="Ej 25"
-                          type="number"
-                          onChange={this.notifyPropertyChange(index, "percent")}
-                          margin="normal" />
-                      </Grid>
-                      <Grid item xs={7}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={this.state.changedProperties[index].percentChecked}
-                              onChange={this.notifyPropertyChange(index, "percentChecked")}
-                              color="primary" />
-                          }
-                          label={<Translate id="languages.agentes.percentLabel" />} />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.changedProperties[index].acceptTerm1}
-                          onChange={this.notifyPropertyChange(index, "acceptTerm1")}
-                          color="primary" />
-                      }
-                      label={<Translate id="languages.agentes.conditionTermn1" />} />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.changedProperties[index].acceptTerm2}
-                          onChange={this.notifyPropertyChange(index, "acceptTerm2")}
-                          color="primary" />
-                      }
-                      label={<Translate id="languages.agentes.conditionTermn2" />} />
-                  </Grid>
-
-                  <Grid item xs={12} className="text-right">
-                    <Button color="primary" size="small" className={classes.button}
-                      onClick={() => { this.handleCanSearch(false) }}>
-                      <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-                    </Button>
-                    <Button variant="contained" size="small" color="primary" className={classes.button}
-                      onClick={() => this.addAgenteTrabajoToSelection(value.Id_Colegiado)}
-                      disabled={this.state.changedProperties[index].acceptTerm1 && this.state.changedProperties[index].acceptTerm2
-                        && this.state.changedProperties[index].functionsSelected.length > 0
-                        && (this.state.changedProperties[index].percent !== "" || this.state.changedProperties[index].percentChecked) ? false : true}>
-                      <Translate id="languages.generalButton.added" />
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
+          this.state.canSearch && !this.state.isSearch && this.props.colegiadosSearchResult && this.props.colegiadosSearchResult.length > 0
+          && this.props.colegiadosSearchResult.map((value, index) => {
+            return <FormArquitecto key={index} arquitecto={value}
+              funcionesTipologia={this.props.funcionesTipologia} handleCanSearch={search => this.handleCanSearch(search)}
+              addAgenteTrabajoToSelection={agent => this.addAgenteTrabajoToSelection(agent)} />
           })
-            : <div></div>
         }
         {this.renderPagination()}
       </Grid>
