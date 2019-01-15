@@ -122,7 +122,7 @@ class MenuProyectoEjecucion extends Component {
                     <div className="py-2">
                       {
                         value.items.map((v, i) => {
-                          return <ListItemText inset primary={v.title} className="pl-3" />
+                          return <ListItemText key={i} inset primary={v.title} className="pl-3" />
                         })
                       }
                     </div>

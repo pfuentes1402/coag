@@ -81,16 +81,16 @@ export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
  * Parametros 
  *    id_expediente
  */
-export const getExpedienteDatosGeneral = async (id_expediente) =>{
-  try{
+export const getExpedienteDatosGeneral = async (id_expediente) => {
+  try {
     let response = await api.get(`/expedientes/${id_expediente}`);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
-  
+
 
 
 /**
@@ -171,11 +171,11 @@ export const postNuevoExpediente = data => {
  *    data->Datos que conforman  el expediente
 */
 export const putExpediente = async (data) => {
-  try{
-    let response = await api.put(`/expedientes/${data.Id_Expediente}`,data);
+  try {
+    let response = await api.put(`/expedientes/${data.Id_Expediente}`, data);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
@@ -414,13 +414,17 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  * @param tipoBusqueda
  * @returns {any}
  */
-export const getBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 25) =>
-  filtro === ""
-    ? api.get(`/${tipoBusqueda}/?pag=${page}&tam=${pageSize}`)
-    : api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`)
-      .then(response => {
-        return response;
-      });
+export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
+  try {
+    let response = filtro === ""
+      ? await api.get(`/${tipoBusqueda}/?pag=${page}&tam=${pageSize}`)
+      : await api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`);
+    return response;
+  }
+  catch(error){
+    return error;
+  }
+}
 
 /**
  * Proporciona la estructura documental de un trabajo
@@ -615,12 +619,12 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
  * Actualizar emplazamientos dentro de un expediente
  * @param {*} data 
  */
-export const putEmplazamiento = async (idExpediente,data) => {
-  try{
-    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`,data);
+export const putEmplazamiento = async (idExpediente, data) => {
+  try {
+    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
