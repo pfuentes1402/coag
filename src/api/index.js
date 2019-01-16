@@ -626,3 +626,70 @@ export const putEmplazamiento = async (idExpediente, data) => {
     return error;
   }
 }
+
+/** Seccion de promotores **/
+/**
+ * Obtiene los colegioados dado el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @returns {Promise<*>}
+ */
+export const getColegiados = async (idExpediente, idTrabajo) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
+        return response;
+    }
+    catch (error) {
+        return error;
+    }
+}
+/**
+ * Inserta los promotores dado el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @param data
+ * @returns {Promise<*>}
+ */
+export const postColegiados = async (idExpediente, idTrabajo, data) => {
+    try {
+        let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+        return response;
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Delete el promotores expecificado en el idColegiado en el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @param idColegiado
+ * @returns {Promise<*>}
+ */
+export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => {
+    try {
+        let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
+        return response;
+    }
+    catch (error) {
+        return error;
+    }
+}
+
+/**
+ * Actualiza los promotores dado el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @param data
+ * @returns {Promise<*>}
+ */
+export const putColegiados = async (idExpediente, idTrabajo, data) => {
+    try {
+        let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`,data);
+        return response;
+    }
+    catch (error) {
+        return error;
+    }
+}

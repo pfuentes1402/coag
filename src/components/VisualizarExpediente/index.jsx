@@ -159,10 +159,10 @@ class VisualizarExpediente extends Component {
               <Grid item md={12} xs={12}>
                 {this.renderNavBar()}
               </Grid>
-              <Grid item md={4} xs={12} className={classes.boredrRight}>
+              <Grid item md={3} xs={12} className={classes.boredrRight}>
                 {this.renderLeftNav()}
               </Grid>
-              <Grid item md={8} xs={12} className={classes.backgroundGrey}>
+              <Grid item md={9} xs={12} className={classes.backgroundGrey}>
                 {
                   this.state.renderComponent === "TrabajoComunicacion"
                     ? <TrabajoComunicacion expediente={expediente} />

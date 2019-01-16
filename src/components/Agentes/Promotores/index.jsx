@@ -174,8 +174,8 @@ class Promotores extends Component {
 
   componentDidMount() {
     try {
-      let { promotor } = this.state;
-      this.setState({ value: promotor.Id_Tipo_Entidad === 1 ? 0 : 1 })
+      let { editPromotorData } = this.state;
+      this.setState({ value: editPromotorData.Id_Tipo_Entidad ? (editPromotorData.Id_Tipo_Entidad === 1 ? 0 : 1) : -1 })
     }
     catch (e) {
       this.props.fetchErrorExpediente(formatMenssage(e));
@@ -199,13 +199,13 @@ class Promotores extends Component {
 
   handleChange = (event, value) => {
     let promotor = {};
-    Object.assign(promotor, this.state.promotor);
+    Object.assign(promotor, this.state.editPromotorData);
     promotor["Id_Tipo_Entidad"] = value === 0 ? 1 : 2;
-    this.setState({ promotor: promotor, value: value })
+    this.setState({ editPromotorData: promotor, value: value })
   };
 
   handleCanSearch = (cansearch, resetSearch = false) => {
-    this.setState({ canSearch: cansearch, showAddPromotor: true })
+    this.setState({ canSearch: cansearch, showAddPromotor: false })
     if (resetSearch) {
       this.props.cleanSearch();
       this.setState({ searchQuery: "" })
@@ -239,6 +239,10 @@ class Promotores extends Component {
       });
     }
   }
+
+  handleCancel(){
+      this.setState({showAddPromotor: false})
+    }
 
   addPromotor(promotor) {
     if (promotor) {
@@ -388,13 +392,7 @@ class Promotores extends Component {
                 {this.state.isSearch ? <CircularProgress size={24} /> : ""}
               </div>
             </Grid>
-
-            <Grid item xs={12} className="text-left">
-              {this.renderSearchResults()}
-            </Grid>
           </ValidatorForm>
-
-
         </Paper>
         : <div/>
     );
@@ -403,7 +401,7 @@ class Promotores extends Component {
   renderSearchResults(){
     let { classes } = this.props;
     return (this.state.showSearchResult ?
-      <Paper className={classes.root}>
+      <Paper>
         <Grid item xs={12} className={`${classes.subtitle} text-left fa-bold px-3`}>
           Resultados
         </Grid>
@@ -476,8 +474,8 @@ class Promotores extends Component {
         <Tab label={<Translate id="languages.agentes.titlePersona" />} />
         <Tab label={<Translate id="languages.agentes.titleOrganismo" />} />
       </Tabs>
-      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onAddPerson={(person) => { this.addPromotor(person) }} />}
-      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
+      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={()=>{this.handleCancel()}} onAddPerson={(person) => { this.addPromotor(person) }} />}
+      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={()=>{this.handleCancel()}} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
     </Paper>
   }
 
@@ -491,6 +489,10 @@ class Promotores extends Component {
         <Grid item xs={12}>
           {this.renderSearchBox()}
         </Grid>
+
+          <Grid item xs={12} className="text-left">
+              {this.renderSearchResults()}
+          </Grid>
 
         <Grid item xs={12} >
           {this.state.showAddPromotor ? this.renderTabsPromotor() : ""}
