@@ -43,9 +43,11 @@ const styles = theme => ({
     fontSize: 13
   },
   headerNav: {
-    background: theme.palette.primary.main,
-    color: "white",
-    marginRight: -2
+      background: theme.palette.primary.main,
+      color: "white",
+      margin: "auto",
+      textAlign: "center"
+
   },
   leftNav: {
     flexGrow: 1,
@@ -154,21 +156,21 @@ class VisualizarExpediente extends Component {
     return (
       this.state.expediente
         ? <Grid container>
-          <Grid item md={12} xs={12}>
-            {this.renderNavBar()}
-          </Grid>
-          <Grid item md={2} xs={12} className={classes.boredrRight}>
-            {this.renderLeftNav()}
-          </Grid>
-          <Grid item md={10} xs={12} className={classes.backgroundGrey}>
-            {
-              this.state.renderComponent === "TrabajoComunicacion"
-                ? <TrabajoComunicacion expediente={expediente} match={this.props.match}/>
-                : this.state.renderComponent === "TrabajoEjecucion"
-                  ? <TrabajoEjecucion expediente={expediente} />
-                  : <TrabajoComunicacion expediente={expediente} />
-            }
-          </Grid>
+              <Grid item md={12} xs={12}>
+                {this.renderNavBar()}
+              </Grid>
+              <Grid item md={3} xs={12} className={classes.boredrRight}>
+                {this.renderLeftNav()}
+              </Grid>
+              <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+                {
+                  this.state.renderComponent === "TrabajoComunicacion"
+                    ? <TrabajoComunicacion expediente={expediente} />
+                    : this.state.renderComponent === "TrabajoEjecucion"
+                      ? <TrabajoEjecucion expediente={expediente} />
+                      : <TrabajoComunicacion expediente={expediente} />
+                }
+              </Grid>
         </Grid>
         : <div className="text-center my-5">
           <CircularProgress />

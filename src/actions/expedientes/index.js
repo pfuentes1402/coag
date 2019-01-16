@@ -157,9 +157,6 @@ export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
         }
     };
 
-
-
-
 /*
 *Obtiene la estructura documental de un trabajo
 *id_expediente

@@ -146,64 +146,67 @@ class FichaExpediente extends Component {
     return (
       <div className="p-2">
         <Grid container >
-          <Grid item md={10}>
+          <Grid item xs={10}>
             <Typography variant="subtitle1" gutterBottom className="m-2">
               <Translate id="languages.fichaExpediente.titleUbication" />
             </Typography>
           </Grid>
-          <Grid item md={2}>
+          <Grid item xs={2}>
             <Fab size="small" color="primary" aria-label="Add"
               onClick={() => this.handleAddUbication(true)}
               className={classes.fab}>
               <Add />
             </Fab>
           </Grid>
-        </Grid>
-        <Table className={`${classes.table} ${classes.tableBorder}`}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">
-                <Translate id="languages.fichaExpediente.tableLabelStret" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase">N</CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">
-                <Translate id="languages.fichaExpediente.tableLabelPiso" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">CP</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">
-                <Translate id="languages.fichaExpediente.tableLabelMunicipe" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3"></CustomTableHead>
-            </TableRow>
-          </TableHead>
+          <Grid item xs={12}>
+              <Table className={`${classes.table} ${classes.tableBorder}`}>
+                  <TableHead>
+                      <TableRow className={classes.headHeight}>
+                          <CustomTableHead className="text-uppercase px-3">
+                              <Translate id="languages.fichaExpediente.tableLabelStret" />
+                          </CustomTableHead>
+                          <CustomTableHead className="text-uppercase">N</CustomTableHead>
+                          <CustomTableHead className="pl-3 text-uppercase">
+                              <Translate id="languages.fichaExpediente.tableLabelPiso" />
+                          </CustomTableHead>
+                          <CustomTableHead className="text-uppercase px-3">CP</CustomTableHead>
+                          <CustomTableHead className="text-uppercase px-3">
+                              <Translate id="languages.fichaExpediente.tableLabelMunicipe" />
+                          </CustomTableHead>
+                          <CustomTableHead className="text-uppercase px-3"></CustomTableHead>
+                      </TableRow>
+                  </TableHead>
 
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.state.emplazamientos.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={6}></TableCell>
-                </TableRow>
-                : this.state.emplazamientos.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {row.Calle}
-                      </TableCell>
-                      <TableCell className="pl-3">{row.Numero}</TableCell>
-                      <TableCell className="p-3">{row.Piso}</TableCell>
-                      <TableCell className="p-0">{row.Codigo_Postal}</TableCell>
-                      <TableCell className="p-0">{row.Concello}</TableCell>
-                      <TableCell className="px-2">
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
-                          <Edit />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
+                  <TableBody className={classes.tableBodyHeight}>
+                      {
+                          this.state.emplazamientos.length === 0 ?
+                              <TableRow>
+                                  <TableCell colSpan={6}></TableCell>
+                              </TableRow>
+                              : this.state.emplazamientos.map((row, index) => {
+                                  return (
+                                      <TableRow className={classes.row} key={index}>
+                                          <TableCell component="th" scope="row" className="px-1 text-center">
+                                              {row.Calle}
+                                          </TableCell>
+                                          <TableCell className="pl-3">{row.Numero}</TableCell>
+                                          <TableCell className="p-3">{row.Piso}</TableCell>
+                                          <TableCell className="p-0">{row.Codigo_Postal}</TableCell>
+                                          <TableCell className="p-0">{row.Concello}</TableCell>
+                                          <TableCell className="px-2">
+                                              <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
+                                                  <Edit />
+                                              </IconButton>
+                                          </TableCell>
+                                      </TableRow>
+                                  );
+                              })
+                      }
+                  </TableBody>
+              </Table>
+          </Grid>
+        </Grid>
+
 
         {
           this.state.isAddUbicacion &&
@@ -243,59 +246,62 @@ class FichaExpediente extends Component {
               </Grid>
               <Divider style={{ height: 3 }} />
             </Grid>
-
-            <ValidatorForm ref="form">
-              <Grid container spacing={16}>
-                <Grid item xs={7} className="p-4">
-                  <TextValidator
-                    value={this.state.sourceExpediente.Titulo}
-                    label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
-                    className={classes.textField}
-                    validators={['required']}
-                    errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
-                    onChange={this.handleChangeDataExpedient("Titulo")}
-                    name="name" />
-                  <TextValidator
-                    value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
-                    label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
-                    className={`${classes.textField} mt-3`}
-                    validators={['required']}
-                    errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
-                    onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
-                    name="code" />
-                  <TextField
-                    value={this.state.sourceExpediente.Antecedente}
-                    label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
-                    className={`${classes.textField} mt-3`}
-                    onChange={this.handleChangeDataExpedient("Antecedente")}
-                    name="antecedente" />
-                </Grid>
-                <Grid item xs={5} className="p-4">
-                  <Typography variant="subtitle1" gutterBottom className="m-0">
-                    <Translate id="languages.fichaExpediente.labelEntryDate" />
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
-                    {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12} className={`${classes.divGrey} p-4`}>
-                  <Typography variant="subtitle1" gutterBottom className="m-0">
-                    <Translate id="languages.fichaExpediente.labelObservations" />
-                  </Typography>
-                  <TextField id="outlined-bare"
-                    className={`${classes.textField} m-0`}
-                    defaultValue={this.state.sourceExpediente.Observaciones}
-                    onChange={this.handleChangeDataExpedient("Observaciones")}
-                    margin="normal" multiline rows="4"
-                    variant="outlined" />
-                </Grid>
-
-                <Grid item xs={12} className="p-4">
-                  {this.renderUbicationTable()}
-                </Grid>
+              <Grid item xs={12}>
+                <ValidatorForm ref="form">
+                  <Grid container spacing={16}>
+                     <Grid item xs={12} className="ml-3 mr-3">
+                      <Grid container spacing={24}>
+                        <Grid item xs={7} >
+                          <TextValidator
+                            value={this.state.sourceExpediente.Titulo}
+                            label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
+                            className={classes.textField}
+                            validators={['required']}
+                            errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
+                            onChange={this.handleChangeDataExpedient("Titulo")}
+                            name="name" />
+                          <TextValidator
+                            value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
+                            label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
+                            className={`${classes.textField} mt-3`}
+                            validators={['required']}
+                            errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
+                            onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
+                            name="code" />
+                          <TextField
+                            value={this.state.sourceExpediente.Antecedente}
+                            label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
+                            className={`${classes.textField} mt-3`}
+                            onChange={this.handleChangeDataExpedient("Antecedente")}
+                            name="antecedente" />
+                        </Grid>
+                        <Grid item xs={5} >
+                          <Typography variant="subtitle1" gutterBottom className="m-0">
+                            <Translate id="languages.fichaExpediente.labelEntryDate" />
+                          </Typography>
+                          <Typography variant="subtitle1" gutterBottom>
+                            {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                     </Grid>
+                    <Grid item xs={12} className={`${classes.divGrey} p-4`}>
+                        <Typography variant="subtitle1" gutterBottom className="m-0">
+                          <Translate id="languages.fichaExpediente.labelObservations" />
+                        </Typography>
+                        <TextField id="outlined-bare"
+                          className={`${classes.textField} m-0`}
+                          defaultValue={this.state.sourceExpediente.Observaciones}
+                          onChange={this.handleChangeDataExpedient("Observaciones")}
+                          margin="normal" multiline rows="4"
+                          variant="outlined" />
+                     </Grid>
+                      <Grid item xs={12} className="p-4">
+                        {this.renderUbicationTable()}
+                      </Grid>
+                   </Grid>
+                </ValidatorForm>
               </Grid>
-            </ValidatorForm>
           </Grid>
         </Paper>
       </div>
