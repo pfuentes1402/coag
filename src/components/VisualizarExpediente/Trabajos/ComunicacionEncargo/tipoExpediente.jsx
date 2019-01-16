@@ -10,6 +10,8 @@ import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import AddAgente from './addAgente';
 import FormArquitecto from '../../../Agentes/Arquitectos/arquitecto';
+import { manageColegiados } from '../../../../api/index';
+import { fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
 
 const styles = theme => ({
   divGrey: {
@@ -89,8 +91,14 @@ class TipoExpediente extends Component {
         agent["Porciento"] = agent.Porcentaje;
         agent["acceptTerm1"] = true;
         agent["acceptTerm2"] = true;
-        if (agent.Funcion)
-          agent["Funciones"] = agent.Funcion.split(",");
+        if (agent.Ids_Funciones) {
+          let arrayIds = agent.Ids_Funciones.split(",");
+          agent["Funciones"] = arrayIds.map(f => {
+            let fun = this.props.funcionesTipologia.find(x => x.id_Funcion === parseInt(f));
+            if (fun) return fun.Codigo;
+          });
+          agent["Funcion"] = agent.Funciones.join(",");
+        }
       }
       return agent;
     })
@@ -105,6 +113,7 @@ class TipoExpediente extends Component {
 
   editAgentToExpedient(agent) {
     this.handleAddAgent(false);
+    this.parseAgents();
     if (agent) {
       this.setState({ editAgent: agent });
     }
@@ -113,31 +122,60 @@ class TipoExpediente extends Component {
     }
   }
 
-  addAgentToExpediente(agent) {
+  async addAgentToExpediente(agent) {
     if (agent) {
       //1- Se actualiza el agente
       agent["Porcentaje"] = agent.Porciento;
-      agent["Funcion"] = agent.Funciones.join(", ");
-      //2- TODO:Se consume el servicio que actualiza los colegiados en un expediente
+      agent["Funcion"] = agent.Funciones.join(",");
+      agent["Ids_Funciones"] = agent.Funciones.map(value => {
+        let idFuncion = this.props.funcionesTipologia.find(x => x.Codigo === value);
+        if (idFuncion) return idFuncion.id_Funcion;
+      }).join(",");
+
+
+      //2- Se consume el servicio que actualiza los colegiados en un expediente
+      let result = {}
+      if (this.state.expediente.Colegiados.some(x => x.Id_Colegiado === agent.Id_Colegiado)) {
+        result = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "PUT", {
+          "Colegiados": [agent],
+          "IgnorarObservaciones": 0
+        })
+      }
+      else {
+        result = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "POST", {
+          "Colegiados": [agent],
+          "IgnorarObservaciones": 0
+        })
+      }
 
       //3- Si el response es success -> actualizar el estado del componente
-      let newExpedient = {}
-      Object.assign(newExpedient, this.state.expediente);
-      newExpedient.Colegiados = newExpedient.Colegiados.filter(x => x.Nif != agent.Nif);
-      newExpedient.Colegiados.push(agent);
-      this.setState({ expediente: newExpedient });
-      this.editAgentToExpedient(null);
+      if (result.status === 200 && result.data && result.data.MensajesProcesado.length === 0) {
+        let newExpedient = {}
+        Object.assign(newExpedient, this.state.expediente);
+        newExpedient.Colegiados = result.data.Colegiados;
+        this.setState({ expediente: newExpedient });
+        this.editAgentToExpedient(null);
+      }
+      else {
+        this.props.fetchErrorExpediente(result.data);
+      }
     }
   }
 
-  deleteAgentToExpediente(agent) {
-    //1- TODO:Se consume el servicio que actualiza los colegiados en un expediente
+  async deleteAgentToExpediente(agent) {
+    //1- Se consume el servicio que actualiza los colegiados en un expediente
+    let response = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "DELETE", agent.Id_Colegiado);
 
     //2- Actualizar el estado local si se realiza correctamente la operacion
-    let newExpedient = {}
-    Object.assign(newExpedient, this.state.expediente);
-    newExpedient.Colegiados = newExpedient.Colegiados.filter(x => x.Nif != agent.Nif);
-    this.setState({ expediente: newExpedient });
+    if (response.data && response.data.MensajesProcesado.length === 0) {
+      let newExpedient = {}
+      Object.assign(newExpedient, this.state.expediente);
+      newExpedient.Colegiados = newExpedient.Colegiados.filter(x => x.Nif != agent.Nif);
+      this.setState({ expediente: newExpedient });
+    }
+    else{
+      this.props.fetchErrorExpediente(response.data);
+    }
   }
 
   renderAgentsTable() {
@@ -274,6 +312,7 @@ class TipoExpediente extends Component {
 
   render() {
     let { classes } = this.props;
+    console.log("tipo", this.props);
     return (
       <Paper className={`${classes.withoutRadius} m-3`}>
         <Grid container spacing={16} className="my-3 p-2">
@@ -321,7 +360,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  fetchErrorExpediente
 };
 
 TipoExpediente.propTypes = {

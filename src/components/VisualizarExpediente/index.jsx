@@ -76,7 +76,7 @@ class VisualizarExpediente extends Component {
     await this.fetchExpediente();
   }
 
-  //TODO: Consumir api con el id de expediente espicificado por ur
+  //Consumir api con el id de expediente espicificado por ur
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     if (response.data) {
