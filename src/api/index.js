@@ -421,7 +421,7 @@ export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25)
       : await api.get(`/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
@@ -622,6 +622,37 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
 export const putEmplazamiento = async (idExpediente, data) => {
   try {
     let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
+    return response;
+  }
+  catch (error) {
+    return error;
+  }
+}
+
+/**
+ * Función para manejar los colegiados (Agentes o Arquitectos) dentro de un trabajo
+ * de un expediente
+ * @param {*Expediente en cuestion} idExpediente 
+ * @param {*Trabajo dentro del expediente} idTrabajo 
+ * @param {*Accion a realizar [POST, PUT, DELETE]} verb 
+ * @param {*Datos a enviar} data 
+ */
+export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
+  try {
+    let response = {};
+    switch (verb) {
+      case "POST":
+        response = api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+        break;
+
+      case "PUT":
+        response = api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+        break;
+
+      case "DELETE":
+        response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
+        break;
+    }
     return response;
   }
   catch (error) {

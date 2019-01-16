@@ -74,7 +74,7 @@ class VisualizarExpediente extends Component {
     await this.fetchExpediente();
   }
 
-  //TODO: Consumir api con el id de expediente espicificado por ur
+  //Consumir api con el id de expediente espicificado por ur
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     if (response.data) {
@@ -163,7 +163,7 @@ class VisualizarExpediente extends Component {
           <Grid item md={10} xs={12} className={classes.backgroundGrey}>
             {
               this.state.renderComponent === "TrabajoComunicacion"
-                ? <TrabajoComunicacion expediente={expediente} />
+                ? <TrabajoComunicacion expediente={expediente} match={this.props.match}/>
                 : this.state.renderComponent === "TrabajoEjecucion"
                   ? <TrabajoEjecucion expediente={expediente} />
                   : <TrabajoComunicacion expediente={expediente} />
