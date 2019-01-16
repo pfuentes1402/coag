@@ -4,11 +4,6 @@
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -76,8 +71,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/api/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-742">
-              <caret line="633" column="19" selection-start-line="633" selection-start-column="19" selection-end-line="633" selection-end-column="19" />
+            <state relative-caret-position="210">
+              <caret line="695" lean-forward="true" selection-start-line="695" selection-end-line="695" />
               <folding>
                 <element signature="e#10689#12152#0" />
               </folding>
@@ -241,10 +236,10 @@
         <option value="$PROJECT_DIR$/src/actions/expedientes/index.js" />
         <option value="$PROJECT_DIR$/src/components/Home/Modalacciones.js" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
-        <option value="$PROJECT_DIR$/src/api/index.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
+        <option value="$PROJECT_DIR$/src/api/index.js" />
       </list>
     </option>
   </component>
@@ -512,7 +507,7 @@
       <workItem from="1547221494479" duration="8074000" />
       <workItem from="1547473519954" duration="3296000" />
       <workItem from="1547483400022" duration="8934000" />
-      <workItem from="1547580215368" duration="11233000" />
+      <workItem from="1547580215368" duration="11832000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -605,11 +600,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547586145621</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/api/index.js">
+      <created>1547653957856</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1547653957856</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="261730000" />
+    <option name="totallyTimeSpent" value="262329000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -622,13 +624,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7033708" visible="true" weight="0.260066" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7033708" visible="true" weight="0.260066" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27083334" side_tool="true" weight="0.78652966" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32930514" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7291667" weight="0.18731117" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.41389728" />
       <window_info id="npm" order="2" sideWeight="0.29662922" side_tool="true" weight="0.260066" />
@@ -1090,8 +1091,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-742">
-          <caret line="633" column="19" selection-start-line="633" selection-start-column="19" selection-end-line="633" selection-end-column="19" />
+        <state relative-caret-position="210">
+          <caret line="695" lean-forward="true" selection-start-line="695" selection-end-line="695" />
           <folding>
             <element signature="e#10689#12152#0" />
           </folding>
