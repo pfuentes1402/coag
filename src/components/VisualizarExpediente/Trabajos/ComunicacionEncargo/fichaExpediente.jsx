@@ -206,8 +206,6 @@ class FichaExpediente extends Component {
               </Table>
           </Grid>
         </Grid>
-
-
         {
           this.state.isAddUbicacion &&
           <Grid item xs={12} className="pt-2">

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import {Paper, Grid, TextField, FormControl, Button, Tooltip, CircularProgress, Fab, Snackbar, IconButton } from '@material-ui/core';
+import {Paper, Grid, TextField, FormControl, Button, CircularProgress, Snackbar, IconButton } from '@material-ui/core';
 import {Check, Clear, Close} from '@material-ui/icons'
 import {Container} from "reactstrap";
-import {validateAddress, postUbicacion, saveAdressTostore, updateAddress } from '../../actions/expedientes';
+import {validateAddress, saveAdressTostore, updateAddress, fetchErrorExpediente } from '../../actions/expedientes';
+import {postNuevoExpediente} from '../../api';
 import { connect } from 'react-redux';
 import CatastralTable from "./CatastralTable";
 import { withLocalize } from "react-localize-redux";
@@ -67,9 +68,9 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps =
      {
         validateAddress: validateAddress,
-        postUbicacion: postUbicacion,
         saveAdressTostore: saveAdressTostore,
-        updateAddress: updateAddress
+        updateAddress: updateAddress,
+         fetchErrorExpediente: fetchErrorExpediente
 
 };
 
@@ -119,12 +120,16 @@ class AddExpedient extends Component {
                 'Emplazamientos' : [data],
                 'IgnorarObservaciones': 1
             }
-            await this.props.postUbicacion(expediente);
-            let errors = this.props.error;
+            let response = await postNuevoExpediente(expediente);
             this.setState({isSave: false});
-            if(!(errors.length > 0)){
-                this.props.history.push("/comunicacion");
+            if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response.data);
             }
+            else {
+
+                this.props.history.push("/comunicacion/" + response.data.Expediente[0].Id_Expediente);
+            }
+
         }
 
     }

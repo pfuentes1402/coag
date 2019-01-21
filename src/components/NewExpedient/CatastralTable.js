@@ -236,7 +236,7 @@ class EnhancedTable extends React.Component {
         order: 'asc',
         orderBy: 'numero',
         selected: [],
-        data: [ ],
+        data: [],
         page: 0,
         rowsPerPage: 5,
     };

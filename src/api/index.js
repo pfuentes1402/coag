@@ -146,25 +146,28 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
  *    ref_catastral
  */
 export const getValidateAddress = async ref_catastral => {
-  let response = await api.get(`/DatosCatastro/${ref_catastral}`);
-  return response;
+  try {
+    let response = await api.get(`/DatosCatastro/${ref_catastral}`);
+    return response;
+  }
+  catch (error) {
+      return formatMenssage(error.message);
+  }
 }
 
-
-/*
- *Graba un nuevo expediente
- * Parametros
- *    data->Datos que conforman un nuevo expediente
-*/
-export const postNuevoExpediente = data => {
-  return new Promise((success, error) => {
-    api.post(`/expedientes/`, data)
-      .then(resultado => {
-        success(resultado)
-      }).catch(function (e) {
-        console.log(e.response.data.Message)
-      });
-  })
+/**
+ * Inserta un nuevo expediente
+ * @param data
+ * @returns {Promise<*>}
+ */
+export const postNuevoExpediente = async data => {
+    try {
+        let response = await api.post(`/expedientes/`, data);
+        return response;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 /*
  *Edita un expediente expediente
