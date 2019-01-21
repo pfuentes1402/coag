@@ -19,22 +19,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import {
-    fetchBuscador,
-    dispatchLimpiarBusquedaPromotores,
-    dispatchAddPromotor,
-    dispatchDeletePromotor,
-    dispatchEditPromotor,
     fetchErrorExpediente,
-    formatMenssage,
-    fetchFiltroUsuario,
-    fetchDataResults
 } from '../../../actions/expedientes';
 import { Tabs, Tab } from '@material-ui/core';
 import Organismo from './addOrganismo';
 import Person from './addPerson';
 import SearchAgente from '../search';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import {getBuscador} from "../../../api";
 
 const styles = theme => ({
   marginPanel: {
@@ -153,7 +143,7 @@ class Promotores extends Component {
           "Numero": "",
           "Piso": "",
           "Codigo_Postal": "",
-          "porcentaje": null,
+          "Porcentaje": null,
           "PorcentajesEquitativos": 1,
           "Id_Concello": "",
           "Id_Provincia": "",
@@ -214,7 +204,7 @@ class Promotores extends Component {
       Object.assign(arrayPromotores, this.state.selectedPromoters);
       let index = arrayPromotores.Promotores.findIndex(x => x.Nif === nif);
       if (index !== -1) {
-          arrayPromotores.Promotores[index].porcentaje = event.target.value;
+          arrayPromotores.Promotores[index].Porcentaje = event.target.value;
           this.setState({ selectedPromoters: arrayPromotores});
           this.props.updateEncomenda(arrayPromotores);
       }
@@ -279,8 +269,8 @@ class Promotores extends Component {
                       <TableCell padding="none" className="p-0">{row.Nombre + (row.Apellido1 ? row.Apellido1 : "") + (row.Apellido2 ? row.Apellido2 : "")}</TableCell>
                       <TableCell padding="none">
                           <Input
-                              id="percentage" style={{width: 30, margin: 0}}
-                              value={row.porcentaje ? row.porcentaje : ""}
+                              id="percentage" style={{width: 45, margin: 0}}
+                              value={row.Porcentaje ? row.Porcentaje : ""}
                               onChange={this.handleChangePercentage(row.Nif)}
                               disabled={!this.state.percentageEdit}
                               type="Number"

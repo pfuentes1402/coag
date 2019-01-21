@@ -4,6 +4,11 @@
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/api/index.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,11 +22,81 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
+      <file leaf-file-name="AddExpedient.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="41" column="6" lean-forward="true" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
+            <state relative-caret-position="170">
+              <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+              <folding>
+                <element signature="n#!!block;n#render#0;n#AddExpedient#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CatastralTable.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="242" lean-forward="true" selection-start-line="242" selection-end-line="242" />
+              <folding>
+                <element signature="n#!!block;n#createData#0" />
+                <element signature="n#!!block;n#desc#0" />
+                <element signature="n#!!block;n#stableSort#0" />
+                <element signature="n#EnhancedTableHead#0" />
+                <element signature="e#4932#5201#0" />
+                <element signature="e#5236#5821#0" />
+                <element signature="e#5861#7262#0" />
+                <element signature="e#7490#7848#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+              <folding>
+                <element signature="e#496#1439#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="68" column="29" lean-forward="true" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="expedientes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="151" column="3" lean-forward="true" selection-start-line="151" selection-start-column="3" selection-end-line="151" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fichaExpediente.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="107" column="8" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="8" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -32,22 +107,11 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="203" column="38" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="38" />
+            <state relative-caret-position="151">
+              <caret line="273" column="77" lean-forward="true" selection-start-line="273" selection-start-column="77" selection-end-line="273" selection-end-column="77" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Agentes/search.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="237" column="2" lean-forward="true" selection-start-line="237" selection-start-column="2" selection-end-line="237" selection-end-column="2" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#1537#2880#0" />
               </folding>
             </state>
           </provider>
@@ -65,29 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>editPromotor</find>
-      <find>editPromotor(</find>
-      <find>editPromotorData</find>
-      <find>handleCanSearch</find>
-      <find>addPromotor</find>
-      <find>handleSubmit</find>
-      <find>close</find>
-      <find>inputlabe</find>
-      <find>but</find>
-      <find>Divid</find>
-      <find>resul</find>
-      <find>resulta</find>
-      <find>textField</find>
-      <find>cantid</find>
-      <find>listactions</find>
-      <find>cantidad</find>
-      <find>red</find>
-      <find>cancel</find>
-      <find>Input</find>
-      <find>handleAddAgent</find>
-      <find>cance</find>
-      <find>handleCancel</find>
-      <find>sea</find>
       <find>selectAgent</find>
       <find>conso</find>
       <find>consol</find>
@@ -95,6 +136,29 @@
       <find>final</find>
       <find>selectedPromoters</find>
       <find>update</find>
+      <find>mens</find>
+      <find>pos</find>
+      <find>router</find>
+      <find>comu</find>
+      <find>postNuevoExpediente</find>
+      <find>getBuscador</find>
+      <find>30</find>
+      <find>nue</find>
+      <find>.data.</find>
+      <find>postUbicacion</find>
+      <find>Porcentaje</find>
+      <find>35</find>
+      <find>cat</find>
+      <find>data</find>
+      <find>{ translate }</find>
+      <find>handleAddUbication</find>
+      <find>location</find>
+      <find>validate</find>
+      <find>save</find>
+      <find>this.props.location</find>
+      <find>validateAddress</find>
+      <find>handleSaveAddress</find>
+      <find>fec</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -157,7 +221,6 @@
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient2.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastroForm.js" />
-        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/routes.js" />
         <option value="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" />
@@ -166,20 +229,21 @@
         <option value="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" />
         <option value="$PROJECT_DIR$/src/actions/trabajos/index.js" />
-        <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
         <option value="$PROJECT_DIR$/src/components/Address/index.js" />
         <option value="$PROJECT_DIR$/src/actions/expedientes/index.js" />
         <option value="$PROJECT_DIR$/src/components/Home/Modalacciones.js" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
-        <option value="$PROJECT_DIR$/src/api/index.js" />
         <option value="$PROJECT_DIR$/src/resources.json" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" />
-        <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/search.jsx" />
+        <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
+        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
+        <option value="$PROJECT_DIR$/src/api/index.js" />
+        <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
       </list>
     </option>
   </component>
@@ -243,6 +307,13 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Address" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Agentes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -252,6 +323,28 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Agentes" type="462c0819:PsiDirectoryNode" />
               <item name="Promotores" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="NewExpedient" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
+              <item name="Trabajos" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -519,7 +612,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="291617000" />
+    <option name="totallyTimeSpent" value="298897000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -531,30 +624,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49966952" weight="0.32930514" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" sideWeight="0.5009914" side_tool="true" weight="0.32930514" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Version Control" sideWeight="0.4990086" visible="true" weight="0.32930514" />
+      <window_info anchor="bottom" id="Version Control" sideWeight="0.4990086" weight="0.32930514" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="npm" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" sideWeight="0.4990086" visible="true" weight="0.32930514" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2536913" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25033557" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" sideWeight="0.4990086" weight="0.32930514" />
       <window_info id="Favorites" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info id="npm" order="2" sideWeight="0.29896906" side_tool="true" weight="0.260066" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7291667" weight="0.18731117" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7010309" visible="true" weight="0.260066" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983476" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49966952" weight="0.32930514" />
       <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.34441087" />
       <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -630,20 +723,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/react-localize-redux/lib/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="210" column="16" selection-start-line="210" selection-start-column="16" selection-end-line="210" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="42" column="52" lean-forward="true" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/login/privateRoute.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -731,13 +810,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="62" column="134" lean-forward="true" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="134" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Home/Modalacciones.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
@@ -784,78 +856,6 @@
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1632" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="297" column="4" selection-start-line="297" selection-start-column="4" selection-end-line="297" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="49" lean-forward="true" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="167" column="38" selection-start-line="167" selection-start-column="38" selection-end-line="167" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="249" column="42" lean-forward="true" selection-start-line="249" selection-start-column="42" selection-end-line="249" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#7176#7867#0" />
-            <element signature="e#8817#10283#0" />
-            <element signature="e#10300#10749#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="695" lean-forward="true" selection-start-line="695" selection-end-line="695" />
-          <folding>
-            <element signature="e#10689#12152#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="8" selection-end-line="12" selection-end-column="1" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/trabajos/types.js">
@@ -922,13 +922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2312">
-          <caret line="146" column="68" selection-start-line="146" selection-start-column="68" selection-end-line="146" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2346">
@@ -953,10 +946,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="203" column="38" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="38" />
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/login/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1615">
+          <caret line="95" column="99" selection-start-line="95" selection-start-column="84" selection-end-line="95" selection-end-column="99" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -965,20 +977,120 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/search.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="237" column="2" lean-forward="true" selection-start-line="237" selection-start-column="2" selection-end-line="237" selection-end-column="2" />
+        <state relative-caret-position="66">
+          <caret line="81" column="34" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="34" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="41" column="6" lean-forward="true" selection-start-line="41" selection-start-column="6" selection-end-line="41" selection-end-column="6" />
+        <state relative-caret-position="151">
+          <caret line="273" column="77" lean-forward="true" selection-start-line="273" selection-start-column="77" selection-end-line="273" selection-end-column="77" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#1537#2880#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="243" column="34" selection-start-line="243" selection-start-column="34" selection-end-line="243" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="151" column="3" lean-forward="true" selection-start-line="151" selection-start-column="3" selection-end-line="151" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="35" lean-forward="true" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="118" column="9" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="242" lean-forward="true" selection-start-line="242" selection-end-line="242" />
+          <folding>
+            <element signature="n#!!block;n#createData#0" />
+            <element signature="n#!!block;n#desc#0" />
+            <element signature="n#!!block;n#stableSort#0" />
+            <element signature="n#EnhancedTableHead#0" />
+            <element signature="e#4932#5201#0" />
+            <element signature="e#5236#5821#0" />
+            <element signature="e#5861#7262#0" />
+            <element signature="e#7490#7848#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+          <folding>
+            <element signature="e#496#1439#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="68" column="29" lean-forward="true" selection-start-line="68" selection-start-column="29" selection-end-line="68" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="19" lean-forward="true" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="107" column="8" selection-start-line="107" selection-start-column="8" selection-end-line="107" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="49" lean-forward="true" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+          <folding>
+            <element signature="n#!!block;n#render#0;n#AddExpedient#0" />
           </folding>
         </state>
       </provider>
