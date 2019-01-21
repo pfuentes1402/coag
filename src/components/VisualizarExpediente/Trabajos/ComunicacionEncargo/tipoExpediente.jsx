@@ -4,14 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { Typography, Grid, Paper, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Typography, Grid, Paper, TextField } from '@material-ui/core';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton, Divider } from '@material-ui/core';
-import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
+import { Add, Edit, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import AddAgente from './addAgente';
-import FormArquitecto from '../../../Agentes/Arquitectos/arquitecto';
-import { manageColegiados } from '../../../../api/index';
-import { fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
+import { fetchErrorExpediente } from '../../../../actions/expedientes';
 
 const styles = theme => ({
   divGrey: {
@@ -75,107 +72,12 @@ class TipoExpediente extends Component {
     super(props);
     this.state = {
       sourceExpediente: this.props.sourceExpediente,
-      expediente: this.props.expediente,
-      canAddAgent: false,
-      editAgent: null
+      expediente: this.props.expediente
     }
   }
 
   componentWillMount() {
-    this.parseAgents();
-  }
-
-  parseAgents() {
-    let agents = this.state.expediente.Colegiados.map((agent, index) => {
-      if (agent) {
-        agent["Porciento"] = agent.Porcentaje;
-        agent["acceptTerm1"] = true;
-        agent["acceptTerm2"] = true;
-        if (agent.Ids_Funciones) {
-          let arrayIds = agent.Ids_Funciones.split(",");
-          agent["Funciones"] = arrayIds.map(f => {
-            let fun = this.props.funcionesTipologia.find(x => x.id_Funcion === parseInt(f));
-            if (fun) return fun.Codigo;
-          });
-          agent["Funcion"] = agent.Funciones.join(",");
-        }
-      }
-      return agent;
-    })
-    let expedient = this.state.expediente;
-    expedient.Colegiados = agents;
-    this.setState({ expediente: expedient })
-  }
-
-  handleAddAgent(action) {
-    this.setState({ canAddAgent: action });
-  }
-
-  editAgentToExpedient(agent) {
-    this.handleAddAgent(false);
-    this.parseAgents();
-    if (agent) {
-      this.setState({ editAgent: agent });
-    }
-    else {
-      this.setState({ editAgent: null });
-    }
-  }
-
-  async addAgentToExpediente(agent) {
-    if (agent) {
-      //1- Se actualiza el agente
-      agent["Porcentaje"] = agent.Porciento;
-      agent["Funcion"] = agent.Funciones.join(",");
-      agent["Ids_Funciones"] = agent.Funciones.map(value => {
-        let idFuncion = this.props.funcionesTipologia.find(x => x.Codigo === value);
-        if (idFuncion) return idFuncion.id_Funcion;
-      }).join(",");
-
-
-      //2- Se consume el servicio que actualiza los colegiados en un expediente
-      let result = {}
-      if (this.state.expediente.Colegiados.some(x => x.Id_Colegiado === agent.Id_Colegiado)) {
-        result = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "PUT", {
-          "Colegiados": [agent],
-          "IgnorarObservaciones": 0
-        })
-      }
-      else {
-        result = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "POST", {
-          "Colegiados": [agent],
-          "IgnorarObservaciones": 0
-        })
-      }
-
-      //3- Si el response es success -> actualizar el estado del componente
-      if (result.status === 200 && result.data && result.data.MensajesProcesado.length === 0) {
-        let newExpedient = {}
-        Object.assign(newExpedient, this.state.expediente);
-        newExpedient.Colegiados = result.data.Colegiados;
-        this.setState({ expediente: newExpedient });
-        this.editAgentToExpedient(null);
-      }
-      else {
-        this.props.fetchErrorExpediente(result.data);
-      }
-    }
-  }
-
-  async deleteAgentToExpediente(agent) {
-    //1- Se consume el servicio que actualiza los colegiados en un expediente
-    let response = await manageColegiados(this.state.sourceExpediente.Id_Expediente, 1, "DELETE", agent.Id_Colegiado);
-
-    //2- Actualizar el estado local si se realiza correctamente la operacion
-    if (response.data && response.data.MensajesProcesado.length === 0) {
-      let newExpedient = {}
-      Object.assign(newExpedient, this.state.expediente);
-      newExpedient.Colegiados = newExpedient.Colegiados.filter(x => x.Nif != agent.Nif);
-      this.setState({ expediente: newExpedient });
-    }
-    else{
-      this.props.fetchErrorExpediente(response.data);
-    }
+    
   }
 
   renderAgentsTable() {
@@ -187,11 +89,6 @@ class TipoExpediente extends Component {
             <Typography variant="subtitle1" gutterBottom className="m-2">
               <Translate id="languages.fichaExpediente.titleAgents" />
             </Typography>
-          </Grid>
-          <Grid item md={2}>
-            <Fab size="small" color="primary" aria-label="Add" onClick={() => this.handleAddAgent(true)}
-              className={classes.fab}> <Add />
-            </Fab>
           </Grid>
         </Grid>
 
@@ -225,25 +122,13 @@ class TipoExpediente extends Component {
                       <TableCell className="pl-3">{row.Nombre}</TableCell>
                       <TableCell className="px-2">{row.Porcentaje}</TableCell>
                       <TableCell className="px-1 text-center">{row.Funcion}</TableCell>
-                      <TableCell className="px-1" style={{ width: 100 }}>
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
-                          onClick={() => this.editAgentToExpedient(row)}>
-                          <Edit />
-                        </IconButton>
-                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete"
-                          onClick={() => this.deleteAgentToExpediente(row)}>
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
+                      <TableCell className="px-1" style={{ width: 100 }}></TableCell>
                     </TableRow>
                   );
                 })
             }
           </TableBody>
         </Table>
-
-        {this.state.canAddAgent && <AddAgente handleAddAgent={action => this.handleAddAgent(action)}
-          addAgentToExpediente={agent => this.addAgentToExpediente(agent)} />}
       </div>
     );
   }
@@ -257,12 +142,6 @@ class TipoExpediente extends Component {
             <Typography variant="subtitle1" gutterBottom className="m-2">
               <Translate id="languages.fichaExpediente.titlePromotors" />
             </Typography>
-          </Grid>
-          <Grid item md={2}>
-            <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab}>
-              <Add />
-            </Fab>
           </Grid>
         </Grid>
 
@@ -292,14 +171,7 @@ class TipoExpediente extends Component {
                       </TableCell>
                       <TableCell className="pl-3">{row.Nombre}</TableCell>
                       <TableCell className="p-3">{row.Porcentaje}</TableCell>
-                      <TableCell className="px-1" style={{ width: 100 }}>
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
-                          <Edit />
-                        </IconButton>
-                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete">
-                          <Delete />
-                        </IconButton>
-                      </TableCell>
+                      <TableCell className="px-1" style={{ width: 100 }}></TableCell>
                     </TableRow>
                   );
                 })
@@ -312,7 +184,6 @@ class TipoExpediente extends Component {
 
   render() {
     let { classes } = this.props;
-    console.log("tipo", this.props);
     return (
       <Paper className={`${classes.withoutRadius} m-3`}>
         <Grid container spacing={16} className="my-3 p-2">
@@ -339,14 +210,6 @@ class TipoExpediente extends Component {
 
             <Grid item xs={12} className="mx-3">
               {this.renderAgentsTable()}
-            </Grid>
-
-            <Grid item xs={12} className="mx-3 px-3">
-              {
-                this.state.editAgent && <FormArquitecto funcionesTipologia={this.props.funcionesTipologia}
-                  handleCanSearch={() => this.editAgentToExpedient(null)} arquitecto={this.state.editAgent}
-                  addAgenteTrabajoToSelection={agent => this.addAgentToExpediente(agent)} />
-              }
             </Grid>
           </Grid>
         </Grid>

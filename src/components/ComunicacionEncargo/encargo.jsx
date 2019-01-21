@@ -309,17 +309,22 @@ class ComunicacionEncargo extends React.Component {
         )
     }
 
-    /**TODO:Función que valida la continuación en el wizard */
+    /**Función que valida la continuación en el wizard */
     handleNext() {
         //1- Valida
-
-        //2- Actualizar la encomenda
-        let newEncomenda = {};
-        Object.assign(newEncomenda, this.state.encomenda);
-        let currentGrupoRaiz = this.state.comunicacionencargo[this.state.indexCurrent];
-        newEncomenda.EncomendaActual[0].Id_Tipo_Grupo_Tematico = currentGrupoRaiz.obraSelection;
-        newEncomenda.EncomendaActual[0].Id_Tipo_Autorizacion_Municipal = currentGrupoRaiz.tramiteSelection;
-        this.props.handleChangeTipoExpediente(newEncomenda);
+        if (this.state.comunicacionencargo[this.state.indexCurrent].fasesTrabajos.length === 0) {
+            //Coger el mensaje del recurso de traducción
+            this.props.dispatchError(<Translate id="languages.messages.comunicationValidation"/>)
+        }
+        else {
+            //2- Actualizar la encomenda
+            let newEncomenda = {};
+            Object.assign(newEncomenda, this.state.encomenda);
+            let currentGrupoRaiz = this.state.comunicacionencargo[this.state.indexCurrent];
+            newEncomenda.EncomendaActual[0].Id_Tipo_Grupo_Tematico = currentGrupoRaiz.obraSelection;
+            newEncomenda.EncomendaActual[0].Id_Tipo_Autorizacion_Municipal = currentGrupoRaiz.tramiteSelection;
+            this.props.handleChangeTipoExpediente(newEncomenda);
+        }
     }
 
     render() {
