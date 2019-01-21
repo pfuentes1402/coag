@@ -427,6 +427,12 @@
                 "Introduce el término de búsqueda",
                 "Introduce el término de búsqueda"
             ]
+        },
+        "messages":{
+            "comunicationValidation":[
+                "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
+                "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada"
+            ]
         }
     }
 }

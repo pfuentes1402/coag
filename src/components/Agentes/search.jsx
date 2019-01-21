@@ -82,13 +82,13 @@ class SearchAgents extends Component {
     this.setState({ isSearch: true });
     let search = await getBuscador(this.state.searchQuery, this.props.tipoBusqueda, (this.state.currentPage + 1), this.state.rowsPerPage);
 
-    if (search && search.data && search.data.Colegiados) {
+    if (search && search.data && search.data[this.props.tipoBusqueda]) {
       let pagination = search.data.Paginacion && search.data.Paginacion.length > 0
         ? search.data.Paginacion[0] : {};
       this.setState({
         showSearchResult: true,
         isSearch: false,
-        searchResult: search.data.Colegiados,
+        searchResult: search.data[this.props.tipoBusqueda],
         totalRecords: pagination.Numero_Total_Registros,
         totalPages: pagination.Numero_Paginas
       });

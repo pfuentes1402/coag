@@ -30,6 +30,9 @@ const styles = theme => ({
 class Agentes extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      encomenda: this.props.encomenda
+    }
   }
 
   mapFuncionesTipologias(codes) {
@@ -98,9 +101,13 @@ class Agentes extends Component {
       this.props.history.push(`/visualizar-expediente/${currentExpId}`);
   }
 
+  updateEncomenda(encomenda){
+    this.setState({encomenda: encomenda});
+    console.log("update-encomenda",this.state.encomenda);
+  }
+
   render() {
     let { classes } = this.props;
-    console.log("this.porps->", this.props);
     return (
       <Container className={classes.margin}>
         <Grid item xs={12} className="min-height-panel">
@@ -113,10 +120,10 @@ class Agentes extends Component {
             <ExpansionPanelDetails>
               <Grid container spacing={24}>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-                  <Arquitecto classes={this.styles} />
+                  <Arquitecto classes={this.styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
                 </Grid>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-                  <Promotores customClass={styles} />
+                  <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
                 </Grid>
               </Grid>
             </ExpansionPanelDetails>

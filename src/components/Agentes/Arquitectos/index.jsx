@@ -17,21 +17,11 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
-import Search from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { fetchBuscador } from '../../../actions/expedientes/index';
-import TablePagination from '@material-ui/core/TablePagination';
-import {
-  fetchFuncionesTipologia, dispatchAddAgenteTrabajoSeleccion,
-  dispatchDeleteAgenteTrabajoSeleccion, dispatchEditAgenteTrabajoSeleccion
-}
-  from '../../../actions/trabajos/index';
+import {fetchFuncionesTipologia} from '../../../actions/trabajos/index';
 import '../indexstyle.css';
 import FormArquitecto from './arquitecto';
+import SearchAgents from '../search';
+import { getBuscador } from '../../../api';
 
 const styles = theme => ({
   marginPanel: {
@@ -127,111 +117,112 @@ class Arquitecto extends Component {
       selectedOption: "Nombre",
       searchQuery: "",
       canSearch: false,
-      isSearch: false,
-
-      currentPage: 0,
-      rowsPerPage: 5,
-      totalRecords: 1,
-      totalPages: 4,
-      showPagination: false,
+      selectedAgent: null,
+      encomenda: this.props.encomenda,
+      tipoBusqueda: "Colegiados"
     }
   }
 
   componentDidMount() {
     try {
       this.props.fetchFuncionesTipologia(1);
-      this.props.fetchBuscador(this.props.loguedUser.Id_Colegiado, "colegiados");
       this.handleCanSearch(false);
+      this.parseAgents();
+      this.loadLoguedAgent();
     }
     catch (e) {
       console.log("ERROR", e)
     }
   }
 
-  handleSelectOptionChange = event => {
-    this.setState({
-      selectedOption: event.target.value,
-    });
-  };
-
-  handleSearchQueryChange = event => {
-    this.setState({
-      searchQuery: event.target.value
-    });
+  parseAgents() {
+    let agents = this.state.encomenda.Colegiados.map((agent) => {
+      if (agent) {
+        agent["Porciento"] = agent.Porcentaje;
+        agent["acceptTerm1"] = true;
+        agent["acceptTerm2"] = true;
+        if (agent.Ids_Funciones) {
+          let arrayIds = agent.Ids_Funciones.split(",");
+          agent["Funciones"] = arrayIds.map(f => {
+            let fun = this.props.funcionesTipologia.find(x => x.id_Funcion === parseInt(f));
+            if (fun) return fun.Codigo;
+          });
+          agent["Funcion"] = agent.Funciones.join(",");
+        }
+      }
+      return agent;
+    })
+    let newEncomenda = {};
+    Object.assign(newEncomenda, this.state.encomenda);
+    newEncomenda.Colegiados = agents;
+    this.setState({ encomenda: newEncomenda })
   }
 
   handleCanSearch = cansearch => {
     this.setState({ canSearch: cansearch })
   }
 
-  handlePagination = showPag => {
-    this.setState({ showPagination: showPag });
-  }
-
   handleAdd() {
     this.handleCanSearch(true);
   }
 
-  async handleSearch(currentPage = 0, searchQuery = "") {
-    let searchString = this.state.searchQuery !== "" ? this.state.searchQuery : searchQuery.toString();
-    if (searchString !== "") {
-      this.setState({ isSearch: true });
-      let searchResult = await this.props.fetchBuscador(searchString, "colegiados", (currentPage + 1), this.state.rowsPerPage);
-
-      let pagination = searchResult.data ? searchResult.data.Paginacion[0] : null;
-      this.handlePagination(true);
-      this.setState({
-        isSearch: false,
-        currentPage: currentPage,
-        totalRecords: pagination ? pagination.Numero_Total_Registros : this.state.totalRecords,
-        totalPages: pagination ? pagination.Numero_Paginas : this.state.totalPages
-      });
-    }
+  handleSelectedAgent(agent) {
+    this.setState({ selectedAgent: agent });
   }
 
   addAgenteTrabajoToSelection(agent) {
     if (agent) {
-      if (this.props.agentesTrabajoSelected.some(x => x.Id_Colegiado === agent.Id_Colegiado)) {
-        this.deleteAgentSelection(agent.Id_Colegiado);
-      }
-      //Adicionando el agente al estdo de redux
-      this.props.addAgenteTrabajoSeleccion("", "", agent);
+      //1- Se actualiza el agente
+      agent["Porcentaje"] = agent.Porciento;
+      agent["Funcion"] = agent.Funciones.join(",");
+      if (agent.Apellido1 && agent.Apellido2)
+        agent["Nombre"] = `${agent.Apellido1} ${agent.Apellido2}, ${agent.Nombre}`
+      agent["Ids_Funciones"] = agent.Funciones.map(value => {
+        let idFuncion = this.props.funcionesTipologia.find(x => x.Codigo === value);
+        if (idFuncion) return idFuncion.id_Funcion;
+      }).join(",");
+
+      //2- Actualizar el estado del componente y con el la encomenda general
+      let newEncomenda = {}
+      Object.assign(newEncomenda, this.state.encomenda);
+      if (newEncomenda.Colegiados.some(x => x.Nif === agent.Nif))
+        newEncomenda.Colegiados = newEncomenda.Colegiados.filter(x => x.Nif !== agent.Nif);
+
+      newEncomenda.Colegiados.push(agent);
+      this.props.updateEncomenda(newEncomenda);
+      this.setState({ encomenda: newEncomenda });
     }
     this.handleCanSearch(false);
-    this.handlePagination(false);
   }
 
   deleteAgentSelection(id) {
-    this.props.deleteAgenteTrabajoSeleccion(id);
+    let newEncomenda = {}
+    Object.assign(newEncomenda, this.state.encomenda);
+    newEncomenda.Colegiados = newEncomenda.Colegiados.filter(x => x.Id_Colegiado !== id);
+    this.props.updateEncomenda(newEncomenda);
+    this.setState({ encomenda: newEncomenda });
   }
 
   editAgenteSeleccion(id) {
-    let edit = this.props.agentesTrabajoSelected.find(x => x.Id_Colegiado === id);
+    let edit = this.state.encomenda.Colegiados.find(x => x.Id_Colegiado === id);
     if (edit) {
-      let properties = {
-        Id_Colegiado: edit.Id_Colegiado,
-        Nif: edit.Nif,
-        percent: edit.Porciento,
-        functionsSelected: edit.Funciones,
-        acceptTerm1: true,
-        acceptTerm2: true
-      };
-      this.props.editAgenteTrabajoSeleccion(edit.Agente);
       this.handleCanSearch(true);
-      this.handlePagination(false);
-      this.setState({ changedProperties: [properties, ...this.state.changedProperties] });
+      this.setState({ selectedAgent: edit });
     }
   }
 
-  handleChangePage = async (event, page) => {
-    this.state.currentPage = page;
-    await this.handleSearch(page);
-  };
-
-  handleChangeRowsPerPage = async (event) => {
-    this.state.rowsPerPage = event.target.value;
-    await this.handleSearch(0);
-  };
+  async loadLoguedAgent() {
+    if (this.state.encomenda.Colegiados && this.state.encomenda.Colegiados.length === 0
+      && !this.state.Colegiados.some(x => x.Id_Colegiado === this.props.loguedUser.Id_Colegiado)) {
+      let search = await getBuscador(this.props.loguedUser.Id_Colegiado, this.state.tipoBusqueda, 1, 1);
+      if (search && search.data && search.data[this.props.tipoBusqueda]
+        && search.data[this.props.tipoBusqueda].length > 0) {
+        let loguedUser = search.data[this.props.tipoBusqueda][0];
+        if (loguedUser)
+          this.setState({ selectedAgent: loguedUser });
+      }
+    }
+  }
 
   renderSelection = () => {
     let { classes } = this.props;
@@ -263,11 +254,11 @@ class Arquitecto extends Component {
 
           <TableBody className={classes.tableBodyHeight}>
             {
-              this.props.agentesTrabajoSelected.length === 0 ?
+              this.state.encomenda.Colegiados.length === 0 ?
                 <TableRow>
                   <TableCell colSpan={5}></TableCell>
                 </TableRow>
-                : this.props.agentesTrabajoSelected.map((row, index) => {
+                : this.state.encomenda.Colegiados.map((row, index) => {
                   return (
                     <TableRow className={classes.row} key={index}>
                       <TableCell component="th" scope="row" className="px-1 text-center">
@@ -275,21 +266,14 @@ class Arquitecto extends Component {
                       </TableCell>
                       <TableCell className="p-0 text-center">{row.Nombre}</TableCell>
                       <TableCell className="p-3 text-center">{row.Porciento ? `${row.Porciento}%` : ""}</TableCell>
-                      <TableCell className="p-0 text-center">
-                        <Grid item xs={12} className="text-center">
-                          {row.Funciones.map((funct, indexFunct) => {
-                            return <span key={indexFunct}>
-                              {`${funct} ${row.Funciones.length === (indexFunct + 1) ? "" : ", "}`}
-                            </span>
-                          })}
-                        </Grid>
-                      </TableCell>
+                      <TableCell className="p-0 text-center">{row.Funcion}</TableCell>
                       <TableCell className="p-0 button-column-static">
                         <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
                           onClick={() => this.editAgenteSeleccion(row.Id_Colegiado)}>
                           <EditIcon />
                         </IconButton >
-                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete" onClick={() => this.deleteAgentSelection(row.Id_Colegiado)}>
+                        <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete"
+                          onClick={() => this.deleteAgentSelection(row.Id_Colegiado)}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
@@ -304,96 +288,23 @@ class Arquitecto extends Component {
   }
 
   renderSearchBox = () => {
-    let { classes } = this.props;
     return (
-      this.state.canSearch ?
-        <Paper className={classes.centerText}>
-          <TextField
-            value={this.state.searchQuery}
-            onChange={this.handleSearchQueryChange}
-            onKeyPress={event => {
-              if (event.key === 'Enter') {
-                this.handleSearch();
-              }
-            }}
-            label={<Translate id="languages.agentes.searchLabelBox" />}
-            className={classes.textField}>
-          </TextField>
+      this.state.canSearch &&
+      <div>
+        <SearchAgents tipoBusqueda={this.state.tipoBusqueda} selectAgent={(selectAgent) => { this.handleSelectedAgent(selectAgent) }}
+          handleAddAgent={() => { this.handleCanSearch(false) }} />
 
-          <TextField
-            select
-            label={<Translate id="languages.agentes.searchLabelOption" />}
-            className={classes.textField}
-            value={this.state.selectedOption}
-            onChange={this.handleSelectOptionChange}>
-            {['Nif', 'Nombre'].map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <Grid item xs={12} className={classes.paddingButtons}>
-            <div style={{ display: "inline-flex", alignItems: "center" }}>
-              <Button color="primary" size="small" className={classes.button}
-                onClick={() => { this.handleCanSearch(false) }}>
-                <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-              </Button>
-              <Button variant="contained" size="small" color="primary" className={classes.button}
-                onClick={() => this.handleSearch()}>
-                <Translate id="languages.agentes.search" /><Search className={classes.rightIcon} />
-              </Button>
-
-              {this.state.isSearch ? <CircularProgress size={24} /> : ""}
-            </div>
-          </Grid>
-        </Paper>
-        : <div></div>
-    );
-  }
-
-  renderPagination = () => {
-    return (
-      this.state.showPagination ?
-        <Grid item xs={12} className="float-right">
-          <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
-            rowsPerPageOptions={[5, 10]}
-            component="div"
-            count={this.state.totalRecords}
-            rowsPerPage={this.state.rowsPerPage}
-            page={this.state.currentPage}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-          />
-        </Grid>
-        : <Grid item xs={12}></Grid>
-    );
-  }
-
-  renderSearchResult = () => {
-    return (
-      <Grid container spacing={8} className="p-1">
-        {this.renderPagination()}
-        {
-          this.state.canSearch && !this.state.isSearch && this.props.colegiadosSearchResult && this.props.colegiadosSearchResult.length > 0
-          && this.props.colegiadosSearchResult.map((value, index) => {
-            return <FormArquitecto key={index} arquitecto={value}
-              funcionesTipologia={this.props.funcionesTipologia} handleCanSearch={search => this.handleCanSearch(search)}
-              addAgenteTrabajoToSelection={agent => this.addAgenteTrabajoToSelection(agent)} />
-          })
+        {this.state.selectedAgent &&
+          <FormArquitecto key={this.state.selectedAgent.Nif} arquitecto={this.state.selectedAgent}
+            funcionesTipologia={this.props.funcionesTipologia} handleCanSearch={() => this.handleSelectedAgent(null)}
+            addAgenteTrabajoToSelection={agent => { this.addAgenteTrabajoToSelection(agent); this.handleSelectedAgent(null); }} />
         }
-        {this.renderPagination()}
-      </Grid>
+      </div>
     );
   }
 
   render() {
+    console.log("this.props", this.props);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -403,28 +314,18 @@ class Arquitecto extends Component {
         <Grid item xs={12}>
           {this.renderSearchBox()}
         </Grid>
-
-        {this.renderSearchResult()}
       </Grid>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  trabajos: state.trabajos,
-  agentesTrabajoSelected: state.trabajos.agentesTrabajoSelected ? state.trabajos.agentesTrabajoSelected : [],
-  agentsSearchResult: state.trabajos.OtrosAgentesTrabajoSelec ? state.trabajos.OtrosAgentesTrabajoSelec : [],
   funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
-  colegiadosSearchResult: state.trabajos.colegiadosAgentesTrabajo ? state.trabajos.colegiadosAgentesTrabajo : [],
   loguedUser: state.user.DatosUsuarioValidado
 })
 
 const mapDispatchToProps = {
-  fetchBuscador: fetchBuscador,
   fetchFuncionesTipologia: fetchFuncionesTipologia,
-  addAgenteTrabajoSeleccion: dispatchAddAgenteTrabajoSeleccion,
-  deleteAgenteTrabajoSeleccion: dispatchDeleteAgenteTrabajoSeleccion,
-  editAgenteTrabajoSeleccion: dispatchEditAgenteTrabajoSeleccion
 };
 
 Arquitecto.propTypes = {
