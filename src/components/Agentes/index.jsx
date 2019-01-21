@@ -44,52 +44,21 @@ class Agentes extends Component {
   }
 
   async addTrabajoEncomenda() {
-    let comunicacionEncargo = this.props.comunicacionEncargo.find(x => x.isSelected)
-      ? this.props.comunicacionEncargo.find(x => x.isSelected)
-      : null;
-    if (comunicacionEncargo === null) return;
+    let encomenda = this.state.encomenda;
     let trabajoEncomenda = {
-      Id_Tipo_Grupo_Tematico: comunicacionEncargo.obraSelection,
-      Id_Tipo_Autorizacion_Municipal: comunicacionEncargo.tramiteSelection,
+      Id_Tipo_Grupo_Tematico: encomenda.EncomendaActual.Id_Tipo_Grupo_Tematico,
+      Id_Tipo_Autorizacion_Municipal: encomenda.EncomendaActual.Id_Tipo_Autorizacion_Municipal,
       Id_Tipo_Fase: 1,
-      Id_Tipo_Trabajo: 219,
-      Id_Tipo_Tramite: 2,
-      Colegiados: this.props.selectedColegiados.map((value) => {
-        return {
-          Id_Colegiado: value.Id_Colegiado,
-          Id_Tipo_Colegiado: value.Agente.Id_Tipo_Colegiado,
-          Id_Sociedad: value.Agente.Id_Tipo_Colegiado !== 1 ? 1 : 0,
-          Porcentaje: value.Porciento,
-          PorcentajesEquitativos: 0,
-          Ids_Funciones: value.Funciones ? this.mapFuncionesTipologias(value.Funciones).join(",") : ""
-        }
-      }),
-      Promotores: this.props.selectedPromoters.map(value => {
-        return {
-          id_entidad: value.Id_Entidad,
-          Nif: value.Nif,
-          Id_Tipo_Entidad: value.Id_Tipo_Entidad,
-          Nombre: value.Nombre,
-          Apellido1: value.Apellido1,
-          Apellido2: value.Apellido2,
-          Observaciones: value.Observaciones ? value.Observaciones : null,
-          Mail: value.Mail ? value.Mail : "",
-          Telefono: value.Telefono ? value.Telefono : null,
-          Calle: value.Calle ? value.Calle : "",
-          Numero: value.Numero ? value.Numero : "",
-          Piso: value.Piso ? value.Piso : "",
-          Codigo_Postal: value.Codigo_Postal ? value.Codigo_Postal : null,
-          Id_Concello: value.Id_Concello ? value.Id_Concello : 0,
-          Id_Provincia: value.Id_Provincia ? value.Id_Provincia : 0,
-          Id_Autonomia: value.Id_Autonomia ? value.Id_Autonomia : 0,
-          Id_Pais: value.Id_Pais ? value.Id_Pais : 0,
-          PorcentajesEquitativos: value.PorcentajesEquitativos ? value.PorcentajesEquitativos : 0,
-        }
-      }),
+      Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
+      Id_Tipo_Tramite: 0, /*0 Visado normal*/
+      Colegiados: encomenda.Colegiados,
+      Promotores: encomenda.Promotores,
       IgnorarObservaciones: 1
     };
 
-    //Obtener el id de expediente del estado de redux y llamar la funcion
+    console.log(trabajoEncomenda);
+
+    /*//Obtener el id de expediente del estado de redux y llamar la funcion
     //postAddTrabajoEncomenda
     let currentExpId = this.props.currentExpediente.Expediente
       && this.props.currentExpediente.Expediente.length > 0
@@ -98,8 +67,9 @@ class Agentes extends Component {
 
     //Validación para continuar (si el resultado fue 200 se permite continuar)
     if (success)
-      this.props.history.push(`/visualizar-expediente/${currentExpId}`);
+      this.props.history.push(`/visualizar-expediente/${currentExpId}`);*/
   }
+
 
   updateEncomenda(encomenda){
     this.setState({encomenda: encomenda});

@@ -10,21 +10,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
-import CheckIcon from '@material-ui/icons/Check';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Search from '@material-ui/icons/Search';
-import Close from '@material-ui/icons/Close';
-import MenuItem from '@material-ui/core/MenuItem';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Input from '@material-ui/core/Input';
 import {
     fetchBuscador,
     dispatchLimpiarBusquedaPromotores,
@@ -39,6 +32,7 @@ import {
 import { Tabs, Tab } from '@material-ui/core';
 import Organismo from './addOrganismo';
 import Person from './addPerson';
+import SearchAgente from '../search';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import {getBuscador} from "../../../api";
 
@@ -118,7 +112,10 @@ const styles = theme => ({
   },
   paddingButtom:{
     padding: "5px 6px 6px 6px"
-  }
+  },
+    percentage: {
+      border: "none"
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -168,34 +165,11 @@ class Promotores extends Component {
         rowsPerPage: 25,
         totalRecords: 100,
         totalPages: 4,
-        selectedPromoters: []
+        selectedPromoters: this.props.encomenda && this.props.encomenda ? this.props.encomenda : [],
+        percentage: "",
+        percentageEdit: false,
     }
   }
-
-  componentDidMount() {
-    try {
-      let { editPromotorData } = this.state;
-      this.setState({ value: editPromotorData.Id_Tipo_Entidad ? (editPromotorData.Id_Tipo_Entidad === 1 ? 0 : 1) : -1 })
-    }
-    catch (e) {
-      this.props.fetchErrorExpediente(formatMenssage(e));
-    }
-  }
-
-    async fetchBuscador(filtro, tipoBusqueda, page, pageSize){
-        try{
-            let searchResult = await getBuscador(filtro, tipoBusqueda, page, pageSize);
-           if(searchResult.data.MensajesProcesado && searchResult.data.MensajesProcesado.length > 0){
-               fetchErrorExpediente(searchResult.data)
-           }else{
-               this.setState({selectedPromoters: searchResult.data}) ;
-           }
-
-        } catch(error){
-            fetchErrorExpediente(formatMenssage(error.message));
-        }
-    }
-
 
   handleChange = (event, value) => {
     let promotor = {};
@@ -204,83 +178,66 @@ class Promotores extends Component {
     this.setState({ editPromotorData: promotor, value: value })
   };
 
-  handleCanSearch = (cansearch, resetSearch = false) => {
-    this.setState({ canSearch: cansearch, showAddPromotor: false })
-    if (resetSearch) {
-      this.props.cleanSearch();
-      this.setState({ searchQuery: "" })
-    }
+  handleCanSearch = () => {
+    this.setState({ canSearch: true, showAddPromotor: false });
   }
 
-  handleSelectOptionChange = event => {
-    this.setState({
-      selectedOption: event.target.value,
-    });
-  };
-
-  handleSearchQueryChange = event => {
-    this.setState({
-      searchQuery: event.target.value
-    });
-  }
-
-  async handleSearch(currentPage = 0) {
-    if (this.state.searchQuery !== "") {
-      this.setState({ isSearch: true })
-      let search = await this.props.fetchBuscador(this.state.searchQuery, "promotores", (currentPage + 1), this.state.rowsPerPage);
-      let pagination = search.data ? search.data.Paginacion[0] : null;
-      this.setState({
-        isSearch: false,
-        showAddPromotor: false,
-        showSearchResult: true,
-        currentPage: currentPage,
-        totalRecords: pagination ? pagination.Numero_Total_Registros : this.state.totalRecords,
-        totalPages: pagination ? pagination.Numero_Paginas : this.state.totalPages
-      });
-    }
-  }
 
   handleCancel(){
-      this.setState({showAddPromotor: false})
+      this.setState({showAddPromotor: false});
     }
 
   addPromotor(promotor) {
-    if (promotor) {
-      if (this.props.selectedPromoters.some(x => x.Nif === promotor.Nif)) {
-        this.props.editPromotor(promotor)
-      }
-      else {
-        this.props.addPromotor(promotor);
-      }
-      this.setState({ showAddPromotor: false })
-    }
+      let objectPromotores = {};
+      Object.assign(objectPromotores, this.state.selectedPromoters);
+      let arrayPromotores = objectPromotores.Promotores;
+        if (promotor) {
+            let index = arrayPromotores.findIndex(x => x.Nif === promotor.Nif);
+            if (index === -1) {
+                arrayPromotores.push(promotor);
+            }
+            else {
+                arrayPromotores[index]= promotor;
+            }
+            objectPromotores.Promotores = arrayPromotores
+            this.setState({ showAddPromotor: false, selectedPromoters: objectPromotores});
+            this.props.updateEncomenda(objectPromotores);
+        }
   }
 
-  editPromotor(nif, isSelection = false) {
-    if(isSelection){
-      let selectionPromotor = this.props.selectedPromoters.find(x => x.Nif === nif);
-      this.setState({ value: selectionPromotor.Id_Tipo_Entidad - 1, editPromotorData: selectionPromotor, showAddPromotor: true });
-    }
-    
-    else{
-      let promotor = this.props.searchResult.find(x => x.Nif === nif);
-      this.setState({ value: promotor.Id_Tipo_Entidad - 1, editPromotorData: promotor, showAddPromotor: true });
-    }
+  editPromotor() {
+      this.setState({percentageEdit: true})
+  }
+
+  handleChangePercentage = nif => event =>{
+      let arrayPromotores = [];
+      Object.assign(arrayPromotores, this.state.selectedPromoters);
+      let index = arrayPromotores.Promotores.findIndex(x => x.Nif === nif);
+      if (index !== -1) {
+          arrayPromotores.Promotores[index].porcentaje = event.target.value;
+          this.setState({ selectedPromoters: arrayPromotores});
+          this.props.updateEncomenda(arrayPromotores);
+      }
+
   }
 
   deletePromotor(nif) {
-    this.props.deletePromotor(nif);
+      let objectPromotores = {};
+      Object.assign(objectPromotores, this.state.selectedPromoters);
+      let arrayPromotores = objectPromotores.Promotores;
+      let index = arrayPromotores.findIndex(x => x.Nif === nif);
+      if(index !== -1){
+          arrayPromotores.splice(index,1);
+          objectPromotores.Promotores = arrayPromotores
+          this.setState({ selectedPromoters: objectPromotores});
+          this.props.updateEncomenda(objectPromotores);
+      }
+
   }
 
-  handleChangePage = async (event, page) => {
-    this.state.currentPage = page;
-    await this.handleSearch(page);
-  };
-
- handleChangeRowsPerPage = async(event) =>{
-    this.state.rowsPerPage = event.target.value;
-    await this.handleSearch(0);
-  };
+    handleSelectAgent(agent){
+      this.setState({editPromotorData: agent, showAddPromotor: true, value: agent.Id_Tipo_Entidad - 1});
+    }
 
   renderSelection = () => {
     let { classes } = this.props;
@@ -290,7 +247,7 @@ class Promotores extends Component {
           <Grid item md={10} className={classes.subtitle}>Promotores</Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab} onClick={() => { this.handleCanSearch(true, true) }}>
+              className={classes.fab} onClick={() => { this.handleCanSearch() }}>
               <AddIcon />
             </Fab>
           </Grid>
@@ -302,32 +259,41 @@ class Promotores extends Component {
               <CustomTableHead className="text-uppercase">
                 <Translate id="languages.agentes.tableColumnName" />
               </CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
+              <CustomTableHead className="p-1 text-uppercase">%</CustomTableHead>
               <CustomTableHead/>
             </TableRow>
           </TableHead>
 
           <TableBody className={classes.tableBodyHeight}>
             {
-              this.props.selectedPromoters.length === 0 ?
+              this.state.selectedPromoters.Promotores.length === 0 ?
                 <TableRow>
                   <TableCell colSpan={5}></TableCell>
                 </TableRow>
-                : this.props.selectedPromoters.map((row, index) => {
+                : this.state.selectedPromoters.Promotores.map((row, index) => {
                   return (
                     <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
+                      <TableCell padding="none" className="px-1 text-center">
                         {row.Nif}
                       </TableCell>
-                      <TableCell className="p-0">{`${row.Nombre} ${row.Apellido1} ${row.Apellido2}`}</TableCell>
-                      <TableCell className="p-3">{row.porcentaje ? `${row.porcentaje}%` : ""}</TableCell>
+                      <TableCell padding="none" className="p-0">{row.Nombre + (row.Apellido1 ? row.Apellido1 : "") + (row.Apellido2 ? row.Apellido2 : "")}</TableCell>
+                      <TableCell padding="none">
+                          <Input
+                              id="percentage" style={{width: 30, margin: 0}}
+                              value={row.porcentaje ? row.porcentaje : ""}
+                              onChange={this.handleChangePercentage(row.Nif)}
+                              disabled={!this.state.percentageEdit}
+                              type="Number"
+                              disableUnderline
+                          />
+                          </TableCell>
                       <TableCell className="p-0 button-column-static">
                         <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
-                          onClick={() => this.editPromotor(row.Nif,true)}>
+                          onClick={() => {this.editPromotor(row.Nif,true)}}>
                           <EditIcon/>
                         </IconButton >
                         <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete"
-                          onClick={() => this.deletePromotor(row.Nif)}>
+                          onClick={() => {this.deletePromotor(row.Nif)}}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
@@ -339,127 +305,6 @@ class Promotores extends Component {
         </Table>
       </Paper>
     );
-  }
-
-  renderSearchBox = () => {
-    let { classes } = this.props;
-    return (
-      this.state.canSearch ?
-        <Paper className={classes.centerText}>
-          <ValidatorForm ref="form" onSubmit={() => { this.handleSearch() }}>
-            <TextValidator
-              value={this.state.searchQuery}
-              onChange={this.handleSearchQueryChange}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.handleSearch();
-                }
-              }}
-              label={<Translate id="languages.agentes.searchLabelBox" />}
-              className={classes.textField}
-              validators={['required']}
-              errorMessages={['el criterio de búsqueda es obligatorio']}
-              name="searchQuery">
-            </TextValidator>
-
-
-            <TextField
-              select
-              label={<Translate id="languages.agentes.searchLabelOption" />}
-              className={classes.textField}
-              value={this.state.selectedOption}
-
-              onChange={this.handleSelectOptionChange}>
-              {['CIF/NIF', 'Nombre'].map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-
-            <Grid item xs={12} className={classes.paddingButtons}>
-              <div style={{ display: "inline-flex", alignItems: "center" }}>
-                <Button color="primary" size="small" className={classes.button}
-                  onClick={() => { this.handleCanSearch(false) }}>
-                  <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-                </Button>
-                <Button variant="contained" size="small" color="primary" className={classes.button}
-                  type="submit">
-                  <Translate id="languages.agentes.search" />
-                  <Search className={classes.rightIcon} />
-                </Button>
-
-                {this.state.isSearch ? <CircularProgress size={24} /> : ""}
-              </div>
-            </Grid>
-          </ValidatorForm>
-        </Paper>
-        : <div/>
-    );
-  }
-
-  renderSearchResults(){
-    let { classes } = this.props;
-    return (this.state.showSearchResult ?
-      <Paper>
-        <Grid item xs={12} className={`${classes.subtitle} text-left fa-bold px-3`}>
-          Resultados
-        </Grid>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">CIF/NIF</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.agentes.tableColumnName" />
-              </CustomTableHead>
-              <CustomTableHead></CustomTableHead>
-            </TableRow>
-          </TableHead>
-
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.props.searchResult.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={3} className="text-center">0 Resultados</TableCell>
-                </TableRow>
-                : this.props.searchResult.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-3">
-                        {row.Nif}
-                      </TableCell>
-                      <TableCell>{`${row.Nombre} ${row.Apellido1} ${row.Apellido2}`}</TableCell>
-                      <TableCell className="px-2 py-0 button-column-short">
-                        <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
-                          onClick={() => this.editPromotor(row.Nif)}>
-                          <CheckIcon />
-                        </IconButton >
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-
-        <TablePagination labelRowsPerPage={<Translate id="languages.promotores.itemsPerPage" />}
-          rowsPerPageOptions={[10, 25]}
-          component="div"
-          count={this.state.totalRecords}
-          rowsPerPage={this.state.rowsPerPage}
-          page={this.state.currentPage}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
-        />
-      </Paper>
-      : <div/>
-    )
   }
 
   renderTabsPromotor = () => {
@@ -487,12 +332,8 @@ class Promotores extends Component {
         </Grid>
 
         <Grid item xs={12}>
-          {this.renderSearchBox()}
+            {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent)=>{this.handleSelectAgent(agent)}}/> : ""}
         </Grid>
-
-          <Grid item xs={12} className="text-left">
-              {this.renderSearchResults()}
-          </Grid>
 
         <Grid item xs={12} >
           {this.state.showAddPromotor ? this.renderTabsPromotor() : ""}
@@ -503,17 +344,10 @@ class Promotores extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    searchResult: state.expedientes.resultadoBusquedaPromotores,
-    selectedPromoters: state.expedientes.promotores,
-    error: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
+
 })
 
 const mapDispatchToProps = {
-    fetchBuscador: fetchBuscador,
-    cleanSearch: dispatchLimpiarBusquedaPromotores,
-    addPromotor: dispatchAddPromotor,
-    editPromotor: dispatchEditPromotor,
-    deletePromotor: dispatchDeletePromotor,
     fetchErrorExpediente: fetchErrorExpediente
 };
 
