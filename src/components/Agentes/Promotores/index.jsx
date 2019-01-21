@@ -155,7 +155,7 @@ class Promotores extends Component {
         rowsPerPage: 25,
         totalRecords: 100,
         totalPages: 4,
-        selectedPromoters: this.props.encomenda && this.props.encomenda ? this.props.encomenda : [],
+        selectedPromoters: this.props.encomenda ? this.props.encomenda : [],
         percentage: "",
         percentageEdit: false,
     }
