@@ -133,7 +133,7 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
     let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`);
     return response;
   }
-  catch(error){
+  catch (error) {
     return formatMenssage(error.message);
   }
 }
@@ -734,6 +734,16 @@ export const putColegiados = async (idExpediente, idTrabajo, data) => {
 export const fetchEncomendaActual = async (idExpediente, languageId) => {
   try {
     let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
+    return response;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}
+
+export const manageEncomenda = async (idExpediente, datapost, languageId = 1) => {
+  try {
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
     return response;
   }
   catch (error) {

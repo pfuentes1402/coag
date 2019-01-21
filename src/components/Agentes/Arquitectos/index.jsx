@@ -265,7 +265,7 @@ class Arquitecto extends Component {
                         {row.Nif}
                       </TableCell>
                       <TableCell className="p-0 text-center">{row.Nombre}</TableCell>
-                      <TableCell className="p-3 text-center">{row.Porciento ? `${row.Porciento}%` : ""}</TableCell>
+                      <TableCell className="p-3 text-center">{row.Porciento ? `${row.Porciento}` : ""}</TableCell>
                       <TableCell className="p-0 text-center">{row.Funcion}</TableCell>
                       <TableCell className="p-0 button-column-static">
                         <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
@@ -292,7 +292,7 @@ class Arquitecto extends Component {
       this.state.canSearch &&
       <div>
         <SearchAgents tipoBusqueda={this.state.tipoBusqueda} selectAgent={(selectAgent) => { this.handleSelectedAgent(selectAgent) }}
-          handleAddAgent={() => { this.handleCanSearch(false) }} />
+          handleAddAgent={() => { this.handleCanSearch(false) }} allowAdd={false}/>
 
         {this.state.selectedAgent &&
           <FormArquitecto key={this.state.selectedAgent.Nif} arquitecto={this.state.selectedAgent}

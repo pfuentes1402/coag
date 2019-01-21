@@ -332,7 +332,7 @@ class Promotores extends Component {
         </Grid>
 
         <Grid item xs={12}>
-            {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent)=>{this.handleSelectAgent(agent)}}/> : ""}
+            {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent)=>{this.handleSelectAgent(agent)}} allowAdd={true}/> : ""}
         </Grid>
 
         <Grid item xs={12} >

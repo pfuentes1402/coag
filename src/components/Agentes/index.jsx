@@ -12,6 +12,9 @@ import Button from '@material-ui/core/Button';
 import Close from '@material-ui/icons/Close';
 import { connect } from "react-redux";
 import { postAddTrabajoEncomenda } from '../../actions/expedientes/index';
+import { addTrabajoEncomendaExpediente, manageEncomenda } from '../../api';
+import { fetchErrorExpediente } from '../../actions/expedientes/index';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   margin: {
@@ -45,35 +48,43 @@ class Agentes extends Component {
 
   async addTrabajoEncomenda() {
     let encomenda = this.state.encomenda;
-    let trabajoEncomenda = {
-      Id_Tipo_Grupo_Tematico: encomenda.EncomendaActual.Id_Tipo_Grupo_Tematico,
-      Id_Tipo_Autorizacion_Municipal: encomenda.EncomendaActual.Id_Tipo_Autorizacion_Municipal,
-      Id_Tipo_Fase: 1,
-      Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
-      Id_Tipo_Tramite: 0, /*0 Visado normal*/
-      Colegiados: encomenda.Colegiados,
-      Promotores: encomenda.Promotores,
-      IgnorarObservaciones: 1
-    };
+    let encomendaActual = encomenda.EncomendaActual && encomenda.EncomendaActual.length > 0
+      ? encomenda.EncomendaActual[0] : null;
 
-    console.log(trabajoEncomenda);
+    if (encomendaActual) {
+      let trabajoEncomenda = {
+        Id_Tipo_Grupo_Tematico: encomendaActual.Id_Tipo_Grupo_Tematico,
+        Id_Tipo_Autorizacion_Municipal: encomendaActual.Id_Tipo_Autorizacion_Municipal,
+        Id_Tipo_Fase: 1,
+        Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
+        Id_Tipo_Tramite: 0, /*0 Visado normal*/
+        Colegiados: encomenda.Colegiados,
+        Promotores: encomenda.Promotores,
+        IgnorarObservaciones: 1
+      };
 
-    /*//Obtener el id de expediente del estado de redux y llamar la funcion
-    //postAddTrabajoEncomenda
-    let currentExpId = this.props.currentExpediente.Expediente
-      && this.props.currentExpediente.Expediente.length > 0
-      ? this.props.currentExpediente.Expediente[0].Id_Expediente : null;
-    let success = await this.props.postAddTrabajoEncomenda(currentExpId, trabajoEncomenda);
-
-    //Validación para continuar (si el resultado fue 200 se permite continuar)
-    if (success)
-      this.props.history.push(`/visualizar-expediente/${currentExpId}`);*/
+      //Obtener el id de expediente del estado de redux y llamar la funcion
+      //postAddTrabajoEncomenda
+      let currentExpId = encomendaActual.Id_Expediente;
+      let result = await manageEncomenda(currentExpId, trabajoEncomenda);
+      //Validación para continuar (si el resultado fue 200 se permite continuar)
+      if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0){
+        let url = `/visualizar-expediente/${currentExpId}`;
+        this.props.history.push(url);
+      }
+      else if (result.response){
+        this.props.fetchErrorExpediente(result.response.data);
+      }
+      else{
+        this.props.fetchErrorExpediente(result.data);
+      }
+    }
   }
 
 
-  updateEncomenda(encomenda){
-    this.setState({encomenda: encomenda});
-    console.log("update-encomenda",this.state.encomenda);
+  updateEncomenda(encomenda) {
+    this.setState({ encomenda: encomenda });
+    console.log("update-encomenda", this.state.encomenda);
   }
 
   render() {
@@ -90,10 +101,10 @@ class Agentes extends Component {
             <ExpansionPanelDetails>
               <Grid container spacing={24}>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-                  <Arquitecto classes={this.styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
+                  <Arquitecto classes={this.styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda) => this.updateEncomenda(encomenda)} />
                 </Grid>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-                  <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
+                  <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda) => this.updateEncomenda(encomenda)} />
                 </Grid>
               </Grid>
             </ExpansionPanelDetails>
@@ -129,7 +140,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  postAddTrabajoEncomenda: postAddTrabajoEncomenda
+  postAddTrabajoEncomenda: postAddTrabajoEncomenda,
+  fetchErrorExpediente
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Agentes));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Agentes)));

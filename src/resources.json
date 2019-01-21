@@ -340,8 +340,8 @@
         },
         "promotores":{
             "itemsPerPage":[
-                "Cantidad de agentes por página",
-                "Cantidad de agentes por página"
+                "por página",
+                "por página"
             ]
         },
         "fichaExpediente":{
