@@ -5,9 +5,8 @@ import MainContainer from './containers/index';
 import AddExpedient from "./components/NewExpedient/AddExpedient";
 import Login from "./components/login/Login";
 import Profile from "./components/Profile/Profile";
-import ComunicacionEncargo from "./components/ComunicacionEncargo";
+import ComunicacionEncargo from "./components/ComunicacionEncargo/index";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
-import Agentes from './components/Agentes';
 import VisualizarExpediente from './components/VisualizarExpediente/index';
 
 class Main extends Component {
@@ -16,15 +15,13 @@ class Main extends Component {
 
         return(
             <div>
-
                 <Switch>
                     <Route exact path='/' component={(props) => <MainContainer {...props}/>} />
                     <Route exact path='/nuevo-expediente' component={(props) => <AddExpedient {...props}/>} />
                     <Route path='/login' component={(props) => <Login {...props}/> }/>
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
-                    <Route exact path='/comunicacion' component={(props) => <ComunicacionEncargo {...props}/>}/>
-                    <Route path="/comunicacion/agentes" component={(props) => <Agentes {...props}/>}/>
+                    <Route exact path='/comunicacion/:id?' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/visualizar-expediente/:id" component={(props) => <VisualizarExpediente {...props}/>}/>
                 </Switch>
             </div>

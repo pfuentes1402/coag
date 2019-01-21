@@ -92,15 +92,15 @@ class Agentes extends Component {
       && this.props.currentExpediente.Expediente.length > 0
       ? this.props.currentExpediente.Expediente[0].Id_Expediente : null;
     let success = await this.props.postAddTrabajoEncomenda(currentExpId, trabajoEncomenda);
-    
+
     //Validación para continuar (si el resultado fue 200 se permite continuar)
-    if(success)
+    if (success)
       this.props.history.push(`/visualizar-expediente/${currentExpId}`);
   }
 
   render() {
     let { classes } = this.props;
-    console.log("this.porps->",this.props);
+    console.log("this.porps->", this.props);
     return (
       <Container className={classes.margin}>
         <Grid item xs={12} className="min-height-panel">
@@ -131,7 +131,7 @@ class Agentes extends Component {
           <Button color="primary" size="small" className="float-right mx-2">
             Cancelar<Close className={classes.rightIcon} />
           </Button>
-          <Button color="primary" size="small" className="float-left px-4" onClick={() => { this.props.history.push("/comunicacion") }}>
+          <Button color="primary" size="small" className="float-left px-4" onClick={() => { this.props.handleBack() }}>
             Volver
           </Button>
         </Grid>

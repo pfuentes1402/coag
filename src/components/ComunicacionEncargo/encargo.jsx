@@ -11,6 +11,7 @@ import {
     fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz,
     fetchComunicacionencargo, dispatchError
 } from "../../actions/trabajos";
+import { getFasesTrabajos } from '../../api/index';
 import { dispatchAddAutorizacion } from "../../actions/expedientes";
 import { connect } from "react-redux";
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
@@ -92,12 +93,9 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => (
     {
-        trabajos: state.trabajos,
         tiposTrabajos: state.trabajos.tiposTrabajos ? state.trabajos.tiposTrabajos.GruposTematicos : [],
         tiposAutorizacion: state.trabajos.tiposAutorizacion ? state.trabajos.tiposAutorizacion.Tipos_autorizacion_municipal : [],
-        fasesTrabajos: state.trabajos.fasesTrabajos.FasesTrabajos ? state.trabajos.fasesTrabajos.FasesTrabajos : [],
         gruposRaiz: state.trabajos.gruposRaiz ? state.trabajos.gruposRaiz.GruposRaiz : [],
-        comunicacionencargo: state.trabajos.comunicacionEncargo,
         currentExpediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
     }
 );
@@ -124,7 +122,10 @@ class ComunicacionEncargo extends React.Component {
             swichTitleChild: 'ver',
             relationWorks: [],
             tiposObra: [],
-            Description: ''
+            Description: '',
+            encomenda: this.props.encomenda,
+            comunicacionencargo: [],
+            indexCurrent: 0
         };
     };
 
@@ -137,30 +138,40 @@ class ComunicacionEncargo extends React.Component {
     async transformGruposRaiz() {
         await this.props.fetchGruposRaiz(this.props.activeLanguage.code);
         await this.comunicacionEncargo();
-
     }
 
     async comunicacionEncargo() {
         let arrayRaiz = [];
         let tiposTramite = this.props.tiposAutorizacion;
         let gruposRaiz = this.props.gruposRaiz;
+        let indexCurrent = 0;
+        let isCurrent = false;
         for (let i = 0; i < gruposRaiz.length; i++) {
             let value = gruposRaiz[i];
             await this.props.fetchTipoTrabajo(value.Id_Tipo_Grupo_Raiz, this.props.activeLanguage.code);
             let tiposTrabajos = this.props.tiposTrabajos;
+            let encomenda = this.state.encomenda.EncomendaActual.length > 0
+                ? this.state.encomenda.EncomendaActual[0] : null;
+
+            if (encomenda !== null) {
+                isCurrent = tiposTrabajos.some(x => x.Id_Tipo_Grupo_Tematico === encomenda.Id_Tipo_Grupo_Tematico);
+                indexCurrent = isCurrent ? i : indexCurrent;
+            }
             arrayRaiz.push({
                 id: value.Id_Tipo_Grupo_Raiz,
                 name: value.Nombre,
                 tiposObra: tiposTrabajos,
                 tiposTramite: tiposTramite,
-                obraSelection: tiposTrabajos.length > 0 ? tiposTrabajos[0].Id_Tipo_Grupo_Tematico : 0,
-                tramiteSelection: tiposTramite.length > 0 ? tiposTramite[0].Id_Tipo_Autorizacion_Municipal : 0,
+                //TODO: Cambiar a datos de la encomenda
+                obraSelection: isCurrent ? encomenda.Id_Tipo_Grupo_Tematico : tiposTrabajos[0].Id_Tipo_Grupo_Tematico,
+                tramiteSelection: isCurrent ? encomenda.Id_Tipo_Autorizacion_Municipal : tiposTramite[0].Id_Tipo_Autorizacion_Municipal,
                 description: tiposTrabajos.length > 0 ? tiposTrabajos[0].Observaciones : '',
-                fasesTrabajos: [[], []],
+                fasesTrabajos: [],
                 isSelected: i === 0
             });
         }
-        this.props.fetchComunicacionencargo(arrayRaiz)
+        this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
+        this.updateFaseTrabajo(indexCurrent);
     }
 
 
@@ -169,11 +180,10 @@ class ComunicacionEncargo extends React.Component {
             expanded: expanded ? panel : false,
         });
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
+        Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
         for (let i = 0; i < updateGrupoRaiz.length; i++) {
             updateGrupoRaiz[i].isSelected = i === index;
         }
-        this.props.fetchComunicacionencargo(updateGrupoRaiz);
     };
 
     handleChildChange = panel => (event, expanded) => {
@@ -183,26 +193,30 @@ class ComunicacionEncargo extends React.Component {
         });
     };
 
-    handleBuildSelect = index => event => {
-        let comunicacionEncargo = this.props.comunicacionencargo[index];
+    handleBuildSelect = index => async (event) => {
+        let comunicacionEncargo = this.state.comunicacionencargo[index];
         let id = event.target.value;
-        this.props.fetchFasesTrabajos(id, comunicacionEncargo.tramiteSelection, this.props.activeLanguage.code);
+        //Llamar directamente a la api para obtener las fases de trabajo
+        let result = await getFasesTrabajos(id, comunicacionEncargo.tramiteSelection, this.props.activeLanguage.code);
         let indexTipoObra = comunicacionEncargo.tiposObra.findIndex(x => x.Id_Tipo_Grupo_Tematico === id);
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
+        Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
         updateGrupoRaiz[index].obraSelection = id;
         updateGrupoRaiz[index].description = comunicacionEncargo.tiposObra[indexTipoObra].Observaciones;
-        this.props.fetchComunicacionencargo(updateGrupoRaiz);
+        updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
+        this.setState({ comunicacionencargo: updateGrupoRaiz });
     };
 
-    handleFormalitySelect = index => event => {
-        let comunicacionEncargo = this.props.comunicacionencargo[index];
+    handleFormalitySelect = index => async (event) => {
+        let comunicacionEncargo = this.state.comunicacionencargo[index];
         let id = event.target.value;
-        this.props.fetchFasesTrabajos(comunicacionEncargo.obraSelection, id, this.props.activeLanguage.code);
+        //Llamar directamente a la api para obtener las fases de trabajo
+        let result = await getFasesTrabajos(comunicacionEncargo.obraSelection, id, this.props.activeLanguage.code);
         let updateGrupoRaiz = [];
-        Object.assign(updateGrupoRaiz, this.props.comunicacionencargo);
+        Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
         updateGrupoRaiz[index].tramiteSelection = id;
-        this.props.fetchComunicacionencargo(updateGrupoRaiz);
+        updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
+        this.setState({ comunicacionencargo: updateGrupoRaiz });
     }
 
     countItems = (relations) => {
@@ -213,19 +227,19 @@ class ComunicacionEncargo extends React.Component {
      *  El resultado será un array de array
      * @returns {*[]} objeto {category : '', items: [{Name: '', id: ''}]}
      */
-    transformRelationsWorks = () => {
+    transformRelationsWorks = (index) => {
         var relations = [];
         var relationsData = [[], []];
-        if (!this.props.trabajos.fasesTrabajos)
+        if (!this.state.comunicacionencargo[index].fasesTrabajos)
             return relationsData;
 
-        this.props.trabajos.fasesTrabajos.FasesTrabajos.map(value => {
+        this.state.comunicacionencargo[index].fasesTrabajos.map(value => {
             const { Fase } = value;
             if (relations.filter(rel => rel.category === Fase).length === 0) {
                 relations.push({ category: Fase, items: [] });
             }
         })
-        this.props.trabajos.fasesTrabajos.FasesTrabajos.filter(value => {
+        this.state.comunicacionencargo[index].fasesTrabajos.filter(value => {
             const { Fase, Trabajo_Titulo, Id_Tipo_Trabajo } = value;
             relations.forEach(element => {
                 if (element.category === Fase) {
@@ -254,13 +268,17 @@ class ComunicacionEncargo extends React.Component {
     }
 
     async updateFaseTrabajo(index) {
-        let comunicacionencargo = this.props.comunicacionencargo[index];
-        await this.props.fetchFasesTrabajos(comunicacionencargo.obraSelection, comunicacionencargo.tramiteSelection, this.props.activeLanguage.code);
+        let comunicacionencargo = this.state.comunicacionencargo[index];
+        let result = await getFasesTrabajos(comunicacionencargo.obraSelection, comunicacionencargo.tramiteSelection, this.props.activeLanguage.code);
+        let updateGrupoRaiz = [];
+        Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
+        updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
+        this.setState({ comunicacionencargo: updateGrupoRaiz });
     }
 
-    renderRelationWorks = () => {
+    renderRelationWorks = (index) => {
         const { classes } = this.props;
-        let relationsData = this.transformRelationsWorks();
+        let relationsData = this.transformRelationsWorks(index);
         return (
             <Grid container spacing={32}>
                 <Grid item xs={6}>
@@ -291,43 +309,22 @@ class ComunicacionEncargo extends React.Component {
         )
     }
 
-    /**Función que valida la continuación en el wizard */
+    /**TODO:Función que valida la continuación en el wizard */
     handleNext() {
-        if (this.props.trabajos.fasesTrabajos &&
-            this.props.trabajos.fasesTrabajos.FasesTrabajos &&
-            this.props.trabajos.fasesTrabajos.FasesTrabajos.length === 0) {
-            this.props.dispatchError("No existen trabajos relacionados para el tipo de obra " +
-                "y la autorización municipal selecccionada");
-        }
-        else {
-            //Guardar en el expediente la seleccion realizada
-            let grupoRaiz = this.props.comunicacionencargo.find(x => x.isSelected);
-            if (grupoRaiz) {
-                let tramite = grupoRaiz.tiposTramite.find(x => x.Id_Tipo_Autorizacion_Municipal === grupoRaiz.tramiteSelection);
-                let obra = grupoRaiz.tiposObra.find(x => x.Id_Tipo_Grupo_Tematico === grupoRaiz.obraSelection);
-                let dataToExpedient = {
-                    autorizacionMunicipal: {
-                        id: grupoRaiz.tramiteSelection,
-                        title: tramite ? tramite.Nombre : ""
-                    },
-                    grupoTematico: {
-                        id: grupoRaiz.obraSelection,
-                        title: obra ? obra.Nombre : ""
-                    }
-                }
-                let currentExpId = this.props.currentExpediente.Expediente
-                    && this.props.currentExpediente.Expediente.length > 0
-                    ? this.props.currentExpediente.Expediente[0].Id_Expediente : null;
-                this.props.dispatchAddAutorizacion(currentExpId, dataToExpedient);
-            }
-            this.props.history.push("/comunicacion/agentes");
-        }
+        //1- Valida
+
+        //2- Actualizar la encomenda
+        let newEncomenda = {};
+        Object.assign(newEncomenda, this.state.encomenda);
+        let currentGrupoRaiz = this.state.comunicacionencargo[this.state.indexCurrent];
+        newEncomenda.EncomendaActual[0].Id_Tipo_Grupo_Tematico = currentGrupoRaiz.obraSelection;
+        newEncomenda.EncomendaActual[0].Id_Tipo_Autorizacion_Municipal = currentGrupoRaiz.tramiteSelection;
+        this.props.handleChangeTipoExpediente(newEncomenda);
     }
 
     render() {
         let { classes } = this.props;
         let { expandedChild, expanded } = this.state;
-        console.log("this.props->CE", this.props);
 
         return (
             <Container className={classes.margin}>
@@ -344,7 +341,7 @@ class ComunicacionEncargo extends React.Component {
                         <Grid container spacing={24} className={classes.marginPanel}>
                             <Grid item xs={12}>
                                 {
-                                    this.props.comunicacionencargo && this.props.comunicacionencargo.map((value, index) => {
+                                    this.state.comunicacionencargo && this.state.comunicacionencargo.map((value, index) => {
                                         return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`, index)}>
                                             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
                                                 expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
@@ -361,7 +358,7 @@ class ComunicacionEncargo extends React.Component {
                                                                     <Translate id="languages.comunicacionEncargo.fieldTipoObra" />
                                                                 </InputLabel>
                                                                 <Select
-                                                                    value={this.props.comunicacionencargo[index].obraSelection}
+                                                                    value={this.state.comunicacionencargo[index].obraSelection}
                                                                     onChange={this.handleBuildSelect(index)}
                                                                     inputProps={{ name: 'build', id: 'build-type' }}>
                                                                     {value.tiposObra.map((value, index) => {
@@ -377,7 +374,7 @@ class ComunicacionEncargo extends React.Component {
                                                                     <Translate id="languages.comunicacionEncargo.fieldTipoTramite" />
                                                                 </InputLabel>
                                                                 <Select
-                                                                    value={this.props.comunicacionencargo[index].tramiteSelection}
+                                                                    value={this.state.comunicacionencargo[index].tramiteSelection}
                                                                     onChange={this.handleFormalitySelect(index)}
                                                                     inputProps={{ name: 'tramite', id: 'tramit-type' }}>
                                                                     {
@@ -396,7 +393,7 @@ class ComunicacionEncargo extends React.Component {
                                                                     <Translate id="languages.comunicacionEncargo.titleVerDescription" />
                                                                 </ExpansionPanelSummary>
                                                                 <ExpansionPanelDetails>
-                                                                    <ReactQuill value={this.props.comunicacionencargo[index].description} onChange={this.handleChange} readOnly theme='bubble' />
+                                                                    <ReactQuill value={this.state.comunicacionencargo[index].description} readOnly theme='bubble' />
                                                                 </ExpansionPanelDetails>
                                                             </ExpansionPanel>
 
@@ -410,7 +407,7 @@ class ComunicacionEncargo extends React.Component {
                                                                 <ExpansionPanelDetails>
                                                                     <Grid container spacing={24} className={classes.marginPanel}>
                                                                         {
-                                                                            this.renderRelationWorks()
+                                                                            this.renderRelationWorks(index)
                                                                         }
                                                                     </Grid>
                                                                 </ExpansionPanelDetails>

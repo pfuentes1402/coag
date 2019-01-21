@@ -128,14 +128,15 @@ export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
  * @param idLanguage
  * @returns {Promise<AxiosResponse<any>>}
  */
-export const getFasesTrabajos = (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 2) =>
-  api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`)
-    .then(response => {
-      return response;
-    })
-    .then(resultado => {
-      return resultado;
-    });
+export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 2) => {
+  try {
+    let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`);
+    return response;
+  }
+  catch(error){
+    return formatMenssage(error.message);
+  }
+}
 
 
 
@@ -171,11 +172,11 @@ export const postNuevoExpediente = data => {
  *    data->Datos que conforman  el expediente
 */
 export const putExpediente = async (data) => {
-  try{
-    let response = await api.put(`/expedientes/${data.Id_Expediente}`,data);
+  try {
+    let response = await api.put(`/expedientes/${data.Id_Expediente}`, data);
     return response;
   }
-  catch(error){
+  catch (error) {
     return error;
   }
 }
@@ -416,11 +417,11 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  */
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
-      let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
-      let response = await api.get(uri);
-      return response;
-  }catch (error) {
-      return error
+    let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+    let response = await api.get(uri);
+    return response;
+  } catch (error) {
+    return error
   }
 }
 
@@ -666,13 +667,13 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
  * @returns {Promise<*>}
  */
 export const getColegiados = async (idExpediente, idTrabajo) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
-        return response;
-    }
-    catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
+    return response;
+  }
+  catch (error) {
+    return error;
+  }
 }
 /**
  * Inserta los promotores dado el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
@@ -682,13 +683,13 @@ export const getColegiados = async (idExpediente, idTrabajo) => {
  * @returns {Promise<*>}
  */
 export const postColegiados = async (idExpediente, idTrabajo, data) => {
-    try {
-        let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
-        return response;
-    }
-    catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+    return response;
+  }
+  catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -699,13 +700,13 @@ export const postColegiados = async (idExpediente, idTrabajo, data) => {
  * @returns {Promise<*>}
  */
 export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => {
-    try {
-        let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
-        return response;
-    }
-    catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
+    return response;
+  }
+  catch (error) {
+    return error;
+  }
 }
 
 /**
@@ -716,11 +717,32 @@ export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => 
  * @returns {Promise<*>}
  */
 export const putColegiados = async (idExpediente, idTrabajo, data) => {
-    try {
-        let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`,data);
-        return response;
-    }
-    catch (error) {
-        return error;
-    }
+  try {
+    let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+    return response;
+  }
+  catch (error) {
+    return error;
+  }
 }
+
+/**
+ * Obtiene los datos de la encomenda actual
+ * @param {*} idExpediente 
+ * @param {*} languageId 
+ */
+export const fetchEncomendaActual = async (idExpediente, languageId) => {
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
+    return response;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}
+
+export const formatMenssage = (error) => (
+  {
+    "MensajesProcesado": [{ "Mensaje": error }]
+  }
+)
