@@ -24,6 +24,7 @@ import Typography from '@material-ui/core/Typography';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { grey } from '@material-ui/core/colors';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -273,7 +274,7 @@ class ComunicacionEncargo extends React.Component {
         let updateGrupoRaiz = [];
         Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
         updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
-        this.setState({ comunicacionencargo: updateGrupoRaiz });
+        this.setState({ comunicacionencargo: updateGrupoRaiz, indexCurrent: index });
     }
 
     renderRelationWorks = (index) => {
@@ -314,15 +315,28 @@ class ComunicacionEncargo extends React.Component {
         //1- Valida
         if (this.state.comunicacionencargo[this.state.indexCurrent].fasesTrabajos.length === 0) {
             //Coger el mensaje del recurso de traducción
-            this.props.dispatchError(<Translate id="languages.messages.comunicationValidation"/>)
+            this.props.dispatchError(<Translate id="languages.messages.comunicationValidation" />)
         }
         else {
             //2- Actualizar la encomenda
             let newEncomenda = {};
             Object.assign(newEncomenda, this.state.encomenda);
             let currentGrupoRaiz = this.state.comunicacionencargo[this.state.indexCurrent];
-            newEncomenda.EncomendaActual[0].Id_Tipo_Grupo_Tematico = currentGrupoRaiz.obraSelection;
-            newEncomenda.EncomendaActual[0].Id_Tipo_Autorizacion_Municipal = currentGrupoRaiz.tramiteSelection;
+            if (newEncomenda.EncomendaActual.length > 0) {
+                newEncomenda.EncomendaActual[0].Id_Tipo_Grupo_Tematico = currentGrupoRaiz.obraSelection;
+                newEncomenda.EncomendaActual[0].Id_Tipo_Autorizacion_Municipal = currentGrupoRaiz.tramiteSelection;
+            }
+            else {
+                newEncomenda.EncomendaActual.push({
+                    Id_Tipo_Grupo_Tematico: currentGrupoRaiz.obraSelection,
+                    Id_Tipo_Autorizacion_Municipal: currentGrupoRaiz.tramiteSelection,
+                    Id_Tipo_Fase: 1,
+                    Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
+                    Id_Tipo_Tramite: 0, /*0 Visado normal*/
+                    Id_Expediente: this.props.match.params.id
+                });
+            }
+
             this.props.handleChangeTipoExpediente(newEncomenda);
         }
     }
@@ -448,4 +462,4 @@ ComunicacionEncargo.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(ComunicacionEncargo)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(ComunicacionEncargo))));

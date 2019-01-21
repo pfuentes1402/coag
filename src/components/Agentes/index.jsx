@@ -81,10 +81,9 @@ class Agentes extends Component {
     }
   }
 
-
   updateEncomenda(encomenda) {
     this.setState({ encomenda: encomenda });
-    console.log("update-encomenda", this.state.encomenda);
+    console.log("update-encomenda-1", encomenda);
   }
 
   render() {
@@ -104,7 +103,7 @@ class Agentes extends Component {
                   <Arquitecto classes={this.styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda) => this.updateEncomenda(encomenda)} />
                 </Grid>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-                  <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda) => this.updateEncomenda(encomenda)} />
+                  <Promotores encomenda={this.state.encomenda} updateEncomenda={(encomenda) => this.updateEncomenda(encomenda)} />
                 </Grid>
               </Grid>
             </ExpansionPanelDetails>

@@ -4,11 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { Typography, Grid, Paper, TextField } from '@material-ui/core';
+import { Typography, Grid, Paper, TextField, Button } from '@material-ui/core';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton, Divider } from '@material-ui/core';
-import { Add, Edit, Delete } from '@material-ui/icons';
+import { Add, Edit, Delete, Check } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { fetchErrorExpediente } from '../../../../actions/expedientes';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   divGrey: {
@@ -77,15 +78,15 @@ class TipoExpediente extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   renderAgentsTable() {
     let { classes } = this.props;
     return (
       <div className="p-2">
-        <Grid container className={classes.headerBorder}>
-          <Grid item md={10}>
+        <Grid container className={`${classes.headerBorder}`}>
+          <Grid item md={12}>
             <Typography variant="subtitle1" gutterBottom className="m-2">
               <Translate id="languages.fichaExpediente.titleAgents" />
             </Typography>
@@ -188,9 +189,14 @@ class TipoExpediente extends Component {
       <Paper className={`${classes.withoutRadius} m-3`}>
         <Grid container spacing={16} className="my-3 p-2">
           <Grid item xs={12} className="p-0">
-            <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
-              <Translate id="languages.fichaExpediente.titleExpedientType" />
-            </Typography>
+            <Grid item xs={12} className=" d-flex justify-content-between">
+              <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+                <Translate id="languages.fichaExpediente.titleExpedientType" />
+              </Typography>
+              <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}`)}>
+                Modificar encomenda<Check />
+              </Button>
+            </Grid>
             <Divider style={{ height: 3 }} />
           </Grid>
 
@@ -230,4 +236,4 @@ TipoExpediente.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(TipoExpediente)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(TipoExpediente))));
