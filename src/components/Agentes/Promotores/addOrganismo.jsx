@@ -144,7 +144,6 @@ class AddOrganismo extends Component{
     render(){
         let {classes} = this.props;
         let {paises, regiones, provincias, municipios} = this.state;
-        console.log(this.props.state)
         return(
             <ValidatorForm
                 ref="form"
@@ -524,7 +523,7 @@ class AddOrganismo extends Component{
                             </Translate>
                         </div>
                         <div className="p-3 text-right">
-                            <Button color="primary" size="small" className={classes.button}>
+                            <Button color="primary" size="small" className={classes.button} onClick={()=>{this.props.onCancelPromotor()}}>
                                 <Translate id="languages.generalButton.cancel"/>
                                 <Close className={classes.rightIcon} />
                             </Button>
