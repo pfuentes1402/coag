@@ -81,10 +81,9 @@ class Agentes extends Component {
     }
   }
 
-
   updateEncomenda(encomenda) {
     this.setState({ encomenda: encomenda });
-    console.log("update-encomenda", this.state.encomenda);
+    console.log("update-encomenda-1", encomenda);
   }
 
   render() {

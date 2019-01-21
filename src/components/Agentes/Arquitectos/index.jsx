@@ -189,8 +189,8 @@ class Arquitecto extends Component {
         newEncomenda.Colegiados = newEncomenda.Colegiados.filter(x => x.Nif !== agent.Nif);
 
       newEncomenda.Colegiados.push(agent);
-      this.props.updateEncomenda(newEncomenda);
       this.setState({ encomenda: newEncomenda });
+      this.props.updateEncomenda(this.state.encomenda);
     }
     this.handleCanSearch(false);
   }
@@ -304,7 +304,6 @@ class Arquitecto extends Component {
   }
 
   render() {
-    console.log("this.props", this.props);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>

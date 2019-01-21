@@ -19,7 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import {
-    fetchErrorExpediente,
+  fetchErrorExpediente,
 } from '../../../actions/expedientes';
 import { Tabs, Tab } from '@material-ui/core';
 import Organismo from './addOrganismo';
@@ -100,12 +100,12 @@ const styles = theme => ({
     padding: 8,
     margin: 4
   },
-  paddingButtom:{
+  paddingButtom: {
     padding: "5px 6px 6px 6px"
   },
-    percentage: {
-      border: "none"
-    }
+  percentage: {
+    border: "none"
+  }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -122,42 +122,42 @@ class Promotores extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        canSearch: false,
-        showAddPromotor: false,
-        showSearchResult: false,
-        selectedOption: "Nombre",
-        searchQuery: "",
-        isSearch: false,
-        editPromotorData: {
-          "Id_Entidad": -1,
-          "Nif": "",
-          "Id_Tipo_Entidad": 1,
-          "Nombre": "",
-          "Apellido1": "",
-          "Apellido2": "",
-          "Observaciones": "",
-          "Id_Tipo_Organismo": "",
-          "Mail": "",
-          "Telefono": "",
-          "Calle": "",
-          "Numero": "",
-          "Piso": "",
-          "Codigo_Postal": "",
-          "Porcentaje": null,
-          "PorcentajesEquitativos": 1,
-          "Id_Concello": "",
-          "Id_Provincia": "",
-          "Id_Autonomia": 71,
-          "Id_Pais": 100,
-        },
-        value: 0,
-        currentPage: 0,
-        rowsPerPage: 25,
-        totalRecords: 100,
-        totalPages: 4,
-        selectedPromoters: this.props.encomenda ? this.props.encomenda : [],
-        percentage: "",
-        percentageEdit: false,
+      canSearch: false,
+      showAddPromotor: false,
+      showSearchResult: false,
+      selectedOption: "Nombre",
+      searchQuery: "",
+      isSearch: false,
+      editPromotorData: {
+        "Id_Entidad": -1,
+        "Nif": "",
+        "Id_Tipo_Entidad": 1,
+        "Nombre": "",
+        "Apellido1": "",
+        "Apellido2": "",
+        "Observaciones": "",
+        "Id_Tipo_Organismo": "",
+        "Mail": "",
+        "Telefono": "",
+        "Calle": "",
+        "Numero": "",
+        "Piso": "",
+        "Codigo_Postal": "",
+        "Porcentaje": null,
+        "PorcentajesEquitativos": 1,
+        "Id_Concello": "",
+        "Id_Provincia": "",
+        "Id_Autonomia": 71,
+        "Id_Pais": 100,
+      },
+      value: 0,
+      currentPage: 0,
+      rowsPerPage: 25,
+      totalRecords: 100,
+      totalPages: 4,
+      encomenda: this.props.encomenda,
+      percentage: "",
+      percentageEdit: false,
     }
   }
 
@@ -173,61 +173,61 @@ class Promotores extends Component {
   }
 
 
-  handleCancel(){
-      this.setState({showAddPromotor: false});
-    }
+  handleCancel() {
+    this.setState({ showAddPromotor: false });
+  }
 
   addPromotor(promotor) {
-      let objectPromotores = {};
-      Object.assign(objectPromotores, this.state.selectedPromoters);
-      let arrayPromotores = objectPromotores.Promotores;
-        if (promotor) {
-            let index = arrayPromotores.findIndex(x => x.Nif === promotor.Nif);
-            if (index === -1) {
-                arrayPromotores.push(promotor);
-            }
-            else {
-                arrayPromotores[index]= promotor;
-            }
-            objectPromotores.Promotores = arrayPromotores
-            this.setState({ showAddPromotor: false, selectedPromoters: objectPromotores});
-            this.props.updateEncomenda(objectPromotores);
-        }
+    let objectPromotores = {};
+    Object.assign(objectPromotores, this.props.encomenda);
+    let arrayPromotores = objectPromotores.Promotores;
+    if (promotor) {
+      let index = arrayPromotores.findIndex(x => x.Nif === promotor.Nif);
+      if (index === -1) {
+        arrayPromotores.push(promotor);
+      }
+      else {
+        arrayPromotores[index] = promotor;
+      }
+      objectPromotores.Promotores = arrayPromotores
+      this.setState({ showAddPromotor: false, encomenda: objectPromotores });
+      this.props.updateEncomenda(objectPromotores);
+    }
   }
 
   editPromotor() {
-      this.setState({percentageEdit: true})
+    this.setState({ percentageEdit: true })
   }
 
-  handleChangePercentage = nif => event =>{
-      let arrayPromotores = [];
-      Object.assign(arrayPromotores, this.state.selectedPromoters);
-      let index = arrayPromotores.Promotores.findIndex(x => x.Nif === nif);
-      if (index !== -1) {
-          arrayPromotores.Promotores[index].Porcentaje = event.target.value;
-          this.setState({ selectedPromoters: arrayPromotores});
-          this.props.updateEncomenda(arrayPromotores);
-      }
+  handleChangePercentage = nif => event => {
+    let arrayPromotores = [];
+    Object.assign(arrayPromotores, this.state.encomenda);
+    let index = arrayPromotores.Promotores.findIndex(x => x.Nif === nif);
+    if (index !== -1) {
+      arrayPromotores.Promotores[index].Porcentaje = event.target.value;
+      this.setState({ encomenda: arrayPromotores });
+      this.props.updateEncomenda(arrayPromotores);
+    }
 
   }
 
   deletePromotor(nif) {
-      let objectPromotores = {};
-      Object.assign(objectPromotores, this.state.selectedPromoters);
-      let arrayPromotores = objectPromotores.Promotores;
-      let index = arrayPromotores.findIndex(x => x.Nif === nif);
-      if(index !== -1){
-          arrayPromotores.splice(index,1);
-          objectPromotores.Promotores = arrayPromotores
-          this.setState({ selectedPromoters: objectPromotores});
-          this.props.updateEncomenda(objectPromotores);
-      }
+    let objectPromotores = {};
+    Object.assign(objectPromotores, this.state.encomenda);
+    let arrayPromotores = objectPromotores.Promotores;
+    let index = arrayPromotores.findIndex(x => x.Nif === nif);
+    if (index !== -1) {
+      arrayPromotores.splice(index, 1);
+      objectPromotores.Promotores = arrayPromotores
+      this.setState({ encomenda: objectPromotores });
+      this.props.updateEncomenda(objectPromotores);
+    }
 
   }
 
-    handleSelectAgent(agent){
-      this.setState({editPromotorData: agent, showAddPromotor: true, value: agent.Id_Tipo_Entidad - 1});
-    }
+  handleSelectAgent(agent) {
+    this.setState({ editPromotorData: agent, showAddPromotor: true, value: agent.Id_Tipo_Entidad - 1 });
+  }
 
   renderSelection = () => {
     let { classes } = this.props;
@@ -250,17 +250,17 @@ class Promotores extends Component {
                 <Translate id="languages.agentes.tableColumnName" />
               </CustomTableHead>
               <CustomTableHead className="p-1 text-uppercase">%</CustomTableHead>
-              <CustomTableHead/>
+              <CustomTableHead />
             </TableRow>
           </TableHead>
 
           <TableBody className={classes.tableBodyHeight}>
             {
-              this.state.selectedPromoters.Promotores.length === 0 ?
+              this.state.encomenda.Promotores.length === 0 ?
                 <TableRow>
                   <TableCell colSpan={5}></TableCell>
                 </TableRow>
-                : this.state.selectedPromoters.Promotores.map((row, index) => {
+                : this.state.encomenda.Promotores.map((row, index) => {
                   return (
                     <TableRow className={classes.row} key={index}>
                       <TableCell padding="none" className="px-1 text-center">
@@ -268,22 +268,22 @@ class Promotores extends Component {
                       </TableCell>
                       <TableCell padding="none" className="p-0">{row.Nombre + (row.Apellido1 ? row.Apellido1 : "") + (row.Apellido2 ? row.Apellido2 : "")}</TableCell>
                       <TableCell padding="none">
-                          <Input
-                              id="percentage" style={{width: 45, margin: 0}}
-                              value={row.Porcentaje ? row.Porcentaje : ""}
-                              onChange={this.handleChangePercentage(row.Nif)}
-                              disabled={!this.state.percentageEdit}
-                              type="Number"
-                              disableUnderline
-                          />
-                          </TableCell>
+                        <Input
+                          id="percentage" style={{ width: 45, margin: 0 }}
+                          value={row.Porcentaje ? row.Porcentaje : ""}
+                          onChange={this.handleChangePercentage(row.Nif)}
+                          disabled={!this.state.percentageEdit}
+                          type="Number"
+                          disableUnderline
+                        />
+                      </TableCell>
                       <TableCell className="p-0 button-column-static">
                         <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary"
-                          onClick={() => {this.editPromotor(row.Nif,true)}}>
-                          <EditIcon/>
+                          onClick={() => { this.editPromotor(row.Nif, true) }}>
+                          <EditIcon />
                         </IconButton >
                         <IconButton className={classes.buttonEdit} color="primary" aria-label="Delete"
-                          onClick={() => {this.deletePromotor(row.Nif)}}>
+                          onClick={() => { this.deletePromotor(row.Nif) }}>
                           <DeleteIcon />
                         </IconButton>
                       </TableCell>
