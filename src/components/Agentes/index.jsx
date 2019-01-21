@@ -30,15 +30,9 @@ const styles = theme => ({
 class Agentes extends Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-      this.state = {
-          encomenda: this.props.encomenda,
-      }
-=======
     this.state = {
       encomenda: this.props.encomenda
     }
->>>>>>> 16a072110cc3f22fc208c712f6dbced8dd4ce62c
   }
 
   mapFuncionesTipologias(codes) {
@@ -76,16 +70,11 @@ class Agentes extends Component {
       this.props.history.push(`/visualizar-expediente/${currentExpId}`);*/
   }
 
-<<<<<<< HEAD
-    handleUpdateEncomenda(encomenda){
-        this.setState({encomenda: encomenda})
-    }
-=======
+
   updateEncomenda(encomenda){
     this.setState({encomenda: encomenda});
     console.log("update-encomenda",this.state.encomenda);
   }
->>>>>>> 16a072110cc3f22fc208c712f6dbced8dd4ce62c
 
   render() {
     let { classes } = this.props;
@@ -104,11 +93,7 @@ class Agentes extends Component {
                   <Arquitecto classes={this.styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
                 </Grid>
                 <Grid item md={6} xs={12} className={classes.marginPanel}>
-<<<<<<< HEAD
-                  <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=>{this.handleUpdateEncomenda(encomenda)}}/>
-=======
                   <Promotores customClass={styles} encomenda={this.state.encomenda} updateEncomenda={(encomenda)=> this.updateEncomenda(encomenda)}/>
->>>>>>> 16a072110cc3f22fc208c712f6dbced8dd4ce62c
                 </Grid>
               </Grid>
             </ExpansionPanelDetails>
