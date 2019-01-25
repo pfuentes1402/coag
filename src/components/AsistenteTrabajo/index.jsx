@@ -46,7 +46,7 @@ class AsistenteTrabajo extends Component {
       }
     }
     catch (error) {
-      console.log("Error", error);
+      
     }
   }
 
@@ -70,7 +70,6 @@ class AsistenteTrabajo extends Component {
 
   async updateTrabajoSeleccion(trabajos) {
     await this.setState({ trabajoSeleccion: trabajos });
-    console.log("seleccion-trabajos", this.state.trabajoSeleccion);
   }
 
   render() {

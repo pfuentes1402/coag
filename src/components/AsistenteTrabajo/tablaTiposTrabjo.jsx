@@ -13,7 +13,7 @@ class EnhancedTableHead extends React.Component {
     const { onSelectAllClick, numSelected, rowCount } = this.props;
     return (
       <TableHead>
-        <TableRow style={{ height: 48 }}>
+        <TableRow style={{ height: 48, backgroundColor: "#faf9f9" }}>
           <TableCell padding="checkbox" className="py-0">
             <Checkbox indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={numSelected === rowCount}

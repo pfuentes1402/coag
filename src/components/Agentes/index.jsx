@@ -15,6 +15,7 @@ import { postAddTrabajoEncomenda } from '../../actions/expedientes/index';
 import { addTrabajoEncomendaExpediente, manageEncomenda } from '../../api';
 import { fetchErrorExpediente } from '../../actions/expedientes/index';
 import { withRouter } from 'react-router-dom';
+import { Translate } from "react-localize-redux";
 
 const styles = theme => ({
   margin: {
@@ -68,14 +69,14 @@ class Agentes extends Component {
       let currentExpId = encomendaActual.Id_Expediente;
       let result = await manageEncomenda(currentExpId, trabajoEncomenda);
       //Validación para continuar (si el resultado fue 200 se permite continuar)
-      if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0){
+      if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
         let url = `/visualizar-expediente/${currentExpId}`;
         this.props.history.push(url);
       }
-      else if (result.response){
+      else if (result.response) {
         this.props.fetchErrorExpediente(result.response.data);
       }
-      else{
+      else {
         this.props.fetchErrorExpediente(result.data);
       }
     }
@@ -84,6 +85,11 @@ class Agentes extends Component {
   updateEncomenda(encomenda) {
     this.setState({ encomenda: encomenda });
     console.log("update-encomenda-1", encomenda);
+  }
+
+  async crearTrabajo() {
+    await this.addTrabajoEncomenda();
+    this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
   }
 
   render() {
@@ -111,15 +117,19 @@ class Agentes extends Component {
         </Grid>
 
         <Grid item xs={12} className="py-5">
+          <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
+            onClick={() => this.crearTrabajo()}>
+            <Translate id="languages.generalButton.crearTrabajo" />
+          </Button>
           <Button variant="contained" size="small" color="primary" className="float-right px-3"
             onClick={() => this.addTrabajoEncomenda()}>
-            Finalizar
+            <Translate id="languages.generalButton.finalizar" />
           </Button>
           <Button color="primary" size="small" className="float-right mx-2">
-            Cancelar<Close className={classes.rightIcon} />
+            <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
           </Button>
           <Button color="primary" size="small" className="float-left px-4" onClick={() => { this.props.handleBack() }}>
-            Volver
+            <Translate id="languages.generalButton.volver" />
           </Button>
         </Grid>
       </Container>
