@@ -99,7 +99,15 @@ class TiposTrabajo extends Component {
     }
     newState.push(trabajos);
     await this.setState(state => ({ ...state, selectTrabajos: newState }));
-    console.log("update-state->", this.state);
+    
+    //Actualizar los trabajos para el componente de crear trabajo
+    let works = [];
+    newState.map((value)=>{
+       if(value.trabajos.length > 0){
+        works = works.concat(value.trabajos);
+       }
+    })
+    this.props.updateTrabajoSeleccion(works);
   }
 
   render() {

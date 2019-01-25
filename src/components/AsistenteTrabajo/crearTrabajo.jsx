@@ -41,30 +41,7 @@ class CrearTrabajo extends Component{
     constructor(props){
         super(props);
         this.state = {
-            tiposTrabajos: [
-                        {
-                            "Id_Tipo_Grupo_Tematico": 1,
-                            "Id_Tipo_Autorizacion_Municipal": 1,
-                            "id_tipo_trabajo": 250,
-                            "Id_Tipo_Tramite": 0,
-                            "es_modificado": 0,
-                            "Fase": "Proyecto",
-                            "Id_Tipo_Fase": 1,
-                            "Trabajo_Titulo": "Proyecto de ejecución",
-                            "Obligatorio": "visado",
-                        },
-                        {
-                            "Id_Tipo_Grupo_Tematico": 1,
-                            "Id_Tipo_Autorizacion_Municipal": 1,
-                            "id_tipo_trabajo": 233,
-                            "Id_Tipo_Tramite": 0,
-                            "es_modificado": 0,
-                            "Fase": "Proyecto",
-                            "Id_Tipo_Fase": 1,
-                            "Trabajo_Titulo": "Estudios previos",
-                            "Obligatorio": null,
-                        }
-                ],
+            tiposTrabajos: this.props.trabajos,
             tiposTramites: [],
             inforCarpetas: [],
             isCarpetas: false,

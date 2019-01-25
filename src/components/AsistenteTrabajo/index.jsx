@@ -30,7 +30,8 @@ class AsistenteTrabajo extends Component {
     this.state = {
       tiposTrabajos: true,
       isLoading: true,
-      encomenda: null
+      encomenda: null,
+      trabajoSeleccion: []
     }
   }
 
@@ -63,8 +64,13 @@ class AsistenteTrabajo extends Component {
     this.setState({ isLoading: false });
   }
 
-  handleNavigation(isTrabajos){
-    this.setState({tiposTrabajos: isTrabajos});
+  handleNavigation(isTrabajos) {
+    this.setState({ tiposTrabajos: isTrabajos });
+  }
+
+  async updateTrabajoSeleccion(trabajos) {
+    await this.setState({ trabajoSeleccion: trabajos });
+    console.log("seleccion-trabajos", this.state.trabajoSeleccion);
   }
 
   render() {
@@ -84,9 +90,11 @@ class AsistenteTrabajo extends Component {
             </ExpansionPanelSummary>
 
             <ExpansionPanelDetails>
-              {this.state.tiposTrabajos ? 
-              <TiposTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}/>
-                  : <CrearTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}/>}
+              {this.state.tiposTrabajos ?
+                <TiposTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
+                  updateTrabajoSeleccion={seleccion => this.updateTrabajoSeleccion(seleccion)} />
+                : <CrearTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
+                  trabajos={this.state.trabajoSeleccion} />}
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </Container>
