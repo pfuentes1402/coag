@@ -447,7 +447,10 @@
             ],
             "correccionBasicaTitle":[
                 "Corrección básica",
-                "Corrección básica"]
+                "Corrección básica"],
+            "previCarpetaTitle":[
+                "Previsualización de carpetas",
+                "Previsualización de carpetas"]
         },
 
         "crearTrabajo":{
