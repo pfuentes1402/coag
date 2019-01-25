@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { infoCarpetasTrabajo, getTiposTramite } from "../../api";
+import { infoCarpetasTrabajo, getTiposTramite, addTrabajoEncomendaExpediente } from "../../api";
 import { groupBy, filter } from 'lodash';
 import { Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select, RadioGroup, FormControlLabel, Radio, CircularProgress } from "@material-ui/core";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -12,6 +12,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/Add';
 import ExpandMore from '@material-ui/icons/Close';
+import {withRouter} from "react-router-dom";
+import {fetchErrorExpediente} from "../../actions/expedientes";
+import {connect} from "react-redux";
 const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
@@ -45,6 +48,7 @@ class CrearTrabajo extends Component {
             tiposTramites: [],
             inforCarpetas: [],
             isCarpetas: false,
+            expanded: null,
         }
     }
 
@@ -54,7 +58,7 @@ class CrearTrabajo extends Component {
     }
 
     getIdTipoTramite(Name) {
-        let id = "";
+        let id = 0;
         if (!Name) return id;
         let tramite = this.state.tiposTramites.find(t => t.Nombre.toUpperCase() === Name.toUpperCase());
         if (tramite) {
@@ -65,11 +69,11 @@ class CrearTrabajo extends Component {
 
     async getTiposTramites() {
         let response = await getTiposTramite(this.props.activeLanguage.code) /*TODO: Poner Idioma*/
-        if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
-            this.props.fetchErrorExpediente(response.data);
+        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+            this.props.fetchErrorExpediente(response);
         }
         else {
-            let tiposTramites = response.data.Tipos_Trabajos_Tramites;
+            let tiposTramites = response.Tipos_Trabajos_Tramites;
             this.setState({ tiposTramites: tiposTramites });
         }
     }
@@ -81,12 +85,12 @@ class CrearTrabajo extends Component {
 
     async getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado) {
         let inforCarpetas = [];
-        let response = await infoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado, this.props.activeLanguage.code);/*TODO: Poner el idioma*/
-        if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
-            this.props.fetchErrorExpediente(response.data);
+        let response = await infoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite ? id_tipo_tramite : 0, es_modificado, this.props.activeLanguage.code);/*TODO: Poner el idioma*/
+        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+            this.props.fetchErrorExpediente(response);
         }
         else {
-            let carpetas = response.data.Carpetas;
+            let carpetas = response.Carpetas;
             let father = filter(carpetas, { 'Id_Documentacion_Padre': null });
             let children = groupBy(carpetas, 'Id_Documentacion_Padre');
             let fatherChildren = [];
@@ -106,11 +110,11 @@ class CrearTrabajo extends Component {
         this.setState({ tiposTrabajos: tiposTrabajos });
     };
 
-    async handleChangePanel(id_tipo_trabajo, id_tipo_tramite, es_modificado) {
-        this.setState({ isCarpetas: true });
-        await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado);
-
-        console.log(this.state.inforCarpetas);
+     handleChangePanel = (id_tipo_trabajo, id_tipo_tramite, es_modificado)  => async(event, expanded) =>{
+        this.setState({  expanded: expanded ? id_tipo_trabajo : false, isCarpetas: true });
+        if(id_tipo_tramite !== undefined){
+            await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado);
+        }
         this.setState({ isCarpetas: false });
     }
 
@@ -121,9 +125,41 @@ class CrearTrabajo extends Component {
         this.setState({ carpetas: carpetas });
     };
 
+     async handleCrearTrabajo(){
+         let idExpediente = this.props.match.params.id;
+         let {tiposTrabajos} = this.state;
+          let trabajos = [];
+          Object.values(tiposTrabajos).map(fase=>{
+              fase.map(t=>{
+                  trabajos.push({
+                      "Id_Tipo_Fase": t.Id_Tipo_Fase,
+                      "Id_Tipo_Trabajo": t.Id_Tipo_Trabajo,
+                      "Id_Tipo_Tramite": t.Id_Tipo_Tramite ? t.Id_Tipo_Tramite : 0,
+                      "Es_Trabajo_Nuevo": t.defaultSelect === "Es_Trabajo_Nuevo" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Correcion_Basica": t.defaultSelect === "Es_Trabajo_Modificado_Correcion_Basica" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Sustancial": t.defaultSelect === "Es_Trabajo_Modificado_Sustancial" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Requerido_Administracion": 0,
+                      "Envio_administracion":0
+                  })
+              })
+          });
+
+          let data = {
+              "Trabajos": trabajos,
+              "IgnorarObservaciones":1
+          }
+         let response = await addTrabajoEncomendaExpediente(idExpediente, data);
+         if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+             this.props.fetchErrorExpediente(response);
+         }
+         else {
+             this.props.history.push("/visualizar-expediente/" + idExpediente + "/" + response.Trabajos[0].Id_Trabajo);
+         }
+     }
+
     render() {
         let { classes } = this.props;
-        let { tiposTrabajos, tiposTramites } = this.state;
+        let { tiposTrabajos, tiposTramites, expanded } = this.state;
         return (
             <Grid container spacing={24}>
                 <Grid item xs={12}>
@@ -132,29 +168,27 @@ class CrearTrabajo extends Component {
                 <Grid item xs={12}>
                     {
                         tiposTramites.length > 0 ?
-                            <div>
-                                {Object.keys(tiposTrabajos).map((fase, indexFase) => {
-                                    let trabajos = tiposTrabajos[fase];
-                                    return <List key={indexFase}
-                                        subheader={<ListSubheader component="div">{fase}</ListSubheader>}
-                                        className={classes.root}
-                                    >
-                                        <ListItem className="pt-0">
-                                            <List
-                                                className={classes.root}>
-                                                {
-                                                    trabajos.map((trabajo, indexTrabajo) => {
-                                                        let idTipoTramite = this.getIdTipoTramite(trabajo.Obligatorio);
-                                                        return <ListItem key={indexTrabajo} className={classes.item}>
-                                                            <Grid container spacing={8}>
-                                                                <Grid item xs={12}>
-                                                                    <Grid container spacing={0}>
-                                                                        <Grid item xs={2} md={2} className="align-self-center">
-                                                                            <Typography variant="button" gutterBottom>
+                            <Grid container spacing={0}>
+                                <Grid item={12}>
+                                    {Object.keys(tiposTrabajos).map((fase, indexFase) => {
+                                        let trabajos = tiposTrabajos[fase];
+                                        return <List key={indexFase}
+                                            subheader={<ListSubheader component="div">{fase}</ListSubheader>}
+                                            className={classes.root}
+                                        >
+                                            <ListItem className="pt-0">
+                                                <List
+                                                    className={classes.root}>
+                                                    {
+                                                        trabajos.map((trabajo, indexTrabajo) => {
+                                                            let idTipoTramite = this.getIdTipoTramite(trabajo.Obligatorio);
+                                                            return <ListItem key={indexTrabajo} className={classes.item}>
+                                                                <Grid container spacing={8}>
+                                                                    <Grid item xs={12}>
+                                                                        <div className="d-flex align-items-center justify-content-between">
+                                                                            <Typography variant="button" gutterBottom className="mb-0">
                                                                                 {trabajo.Trabajo_Titulo}
                                                                             </Typography>
-                                                                        </Grid>
-                                                                        <Grid item xs={3} md={2} className="align-self-center">
                                                                             <FormControl className={classes.formControl}>
                                                                                 <Select
                                                                                     value={idTipoTramite}
@@ -175,8 +209,6 @@ class CrearTrabajo extends Component {
 
                                                                                 </Select>
                                                                             </FormControl>
-                                                                        </Grid>
-                                                                        <Grid item xs={7} md={8} className="align-self-center">
                                                                             <FormControl>
                                                                                 <RadioGroup
                                                                                     aria-label="Gender"
@@ -187,135 +219,146 @@ class CrearTrabajo extends Component {
                                                                                     row
                                                                                 >
                                                                                     <FormControlLabel value="Es_Trabajo_Nuevo"
-                                                                                        control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.nuevoTrabajoTitle" />}
-                                                                                        labelPlacement="start" className="mt-2 text-uppercase" />
+                                                                                                      control={<Radio />} label={<Translate
+                                                                                        id="languages.trabajo.nuevoTrabajoTitle" />}
+                                                                                                      labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Sustancial"
                                                                                         control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.modificacionSustancialTitle" />}
+                                                                                        id="languages.trabajo.modificacionSustancialTitle" />}
                                                                                         labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Correcion_Basica"
                                                                                         control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.correccionBasicaTitle" />}
+                                                                                        id="languages.trabajo.correccionBasicaTitle" />}
                                                                                         labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                 </RadioGroup>
                                                                             </FormControl>
-                                                                        </Grid>
+                                                                        </div>
+
                                                                     </Grid>
-                                                                </Grid>
-                                                                <Divider style={{ width: '100%' }} />
-                                                                <Grid item xs={12}>
-                                                                    <ExpansionPanel className="shadow-none" onChange={() => { this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo") }}>
-                                                                        <ExpansionPanelSummary className="p-0" expandIcon={<ExpandMoreIcon />}>
-                                                                            <Grid container spacing={0}>
-                                                                                <Grid item xs={12}>
-                                                                                    <Typography variant="button" gutterBottom>
-                                                                                        Previsualizacion de carpetas
-                                                                                    </Typography>
-                                                                                </Grid>
-                                                                            </Grid>
-                                                                        </ExpansionPanelSummary>
-                                                                        <ExpansionPanelDetails>
-                                                                            {this.state.isCarpetas ? <CircularProgress />
-                                                                                : <Grid container spacing={0}>
+                                                                    <Divider style={{ width: '100%' }} />
+                                                                    <Grid item xs={12}>
+                                                                        <ExpansionPanel className="shadow-none" expanded={expanded === trabajo.Id_Tipo_Trabajo} onChange={this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo") }>
+                                                                            <ExpansionPanelSummary className="p-0" expandIcon={<ExpandMoreIcon />}>
+                                                                                <Grid container spacing={0}>
                                                                                     <Grid item xs={12}>
-                                                                                        <Grid container spacing={0}>
-                                                                                            <Grid item xs={4}>
-                                                                                                <Typography variant="button" gutterBottom>
-                                                                                                    {trabajo.Trabajo_Titulo}
-                                                                                                </Typography>
-                                                                                            </Grid>
-                                                                                            <Grid item xs={4}>
-                                                                                                <Typography variant="button" gutterBottom>
-                                                                                                    Firmas requeridas
-                                                                                                </Typography>
-                                                                                            </Grid>
-                                                                                            <Grid item xs={4}>
-                                                                                                <Typography variant="button" gutterBottom>
-                                                                                                    Aclaraciones
-                                                                                                </Typography>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            Previsualizacion de carpetas
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            </ExpansionPanelSummary>
+                                                                            <ExpansionPanelDetails>
+                                                                                {this.state.isCarpetas ? <CircularProgress />
+                                                                                    : <Grid container spacing={0}>
+                                                                                        <Grid item xs={12}>
+                                                                                            <Grid container spacing={0}>
+                                                                                                <Grid item xs={4}>
+                                                                                                    <Typography variant="button" gutterBottom>
+                                                                                                        {trabajo.Trabajo_Titulo}
+                                                                                                    </Typography>
+                                                                                                </Grid>
+                                                                                                <Grid item xs={4}>
+                                                                                                    <Typography variant="button" gutterBottom>
+                                                                                                        Firmas requeridas
+                                                                                                    </Typography>
+                                                                                                </Grid>
+                                                                                                <Grid item xs={4}>
+                                                                                                    <Typography variant="button" gutterBottom>
+                                                                                                        Aclaraciones
+                                                                                                    </Typography>
+                                                                                                </Grid>
                                                                                             </Grid>
                                                                                         </Grid>
+                                                                                        <Grid item xs={12}>
+                                                                                            {
+                                                                                                this.state.inforCarpetas.map((carpeta, indexCarpeta) => {
+                                                                                                    return <List key={indexCarpeta} component="div" disablePadding>
+
+                                                                                                        <ListItem button onClick={() => { this.handleClick(indexCarpeta) }} className="pt-0 pb-0">
+                                                                                                            <Grid container spacing={0}>
+                                                                                                                <Grid item xs={4} className="d-flex align-self-center">
+                                                                                                                    {carpeta.open ? <ExpandLess className={classes.expand} /> : <ExpandMore className={classes.expand} />}
+                                                                                                                    <Typography variant="body1" gutterBottom>
+                                                                                                                        {carpeta.Nombre}
+                                                                                                                    </Typography>
+
+                                                                                                                </Grid>
+                                                                                                                <Grid item xs={4} className="align-self-center">
+                                                                                                                    <Typography variant="body1" gutterBottom>
+                                                                                                                        --
+                                                                                                                    </Typography>
+                                                                                                                </Grid>
+                                                                                                                <Grid item xs={4} className="align-self-center">
+                                                                                                                    <Button color="primary">
+                                                                                                                        Más info
+                                                                                                                    </Button>
+                                                                                                                </Grid>
+                                                                                                            </Grid>
+                                                                                                        </ListItem>
+                                                                                                        <Collapse in={carpeta.open ? carpeta.open : false} timeout="auto" unmountOnExit>
+                                                                                                            <List component="div" disablePadding>
+                                                                                                                <ListItem className="pt-0 pb-0 pl-5">
+                                                                                                                    <List component="div" disablePadding style={{ width: '100%' }}>
+                                                                                                                        {carpeta.children && carpeta.children.map((c, i) => {
+                                                                                                                            return <ListItem className="pt-0 pb-0">
+                                                                                                                                <Grid container spacing={0}>
+                                                                                                                                    <Grid item xs={4}>
+                                                                                                                                        <Typography variant="body1" gutterBottom>
+                                                                                                                                            {c.Nombre}
+                                                                                                                                        </Typography>
+                                                                                                                                    </Grid>
+                                                                                                                                    <Grid item xs={4}>
+                                                                                                                                        <Typography variant="body1" gutterBottom>
+                                                                                                                                            {c.Firmas_Requeridas}
+                                                                                                                                        </Typography>
+                                                                                                                                    </Grid>
+                                                                                                                                    <Grid item xs={4}>
+                                                                                                                                        <Button color="primary" className="ml-1">
+                                                                                                                                            Más info
+                                                                                                                                        </Button>
+                                                                                                                                    </Grid>
+                                                                                                                                </Grid>
+                                                                                                                            </ListItem>
+                                                                                                                        })}
+                                                                                                                    </List>
+                                                                                                                </ListItem>
+                                                                                                            </List>
+                                                                                                        </Collapse>
+                                                                                                    </List>
+                                                                                                })
+                                                                                            }
+                                                                                        </Grid>
                                                                                     </Grid>
-                                                                                    <Grid item xs={12}>
-                                                                                        {
-                                                                                            this.state.inforCarpetas.map((carpeta, indexCarpeta) => {
-                                                                                                return <List key={indexCarpeta} component="div" disablePadding>
+                                                                                }
 
-                                                                                                    <ListItem button onClick={() => { this.handleClick(indexCarpeta) }} className="pt-0 pb-0">
-                                                                                                        <Grid container spacing={0}>
-                                                                                                            <Grid item xs={4} className="d-flex align-self-center">
-                                                                                                                {carpeta.open ? <ExpandLess className={classes.expand} /> : <ExpandMore className={classes.expand} />}
-                                                                                                                <Typography variant="body1" gutterBottom>
-                                                                                                                    {carpeta.Nombre}
-                                                                                                                </Typography>
+                                                                            </ExpansionPanelDetails>
+                                                                        </ExpansionPanel>
 
-                                                                                                            </Grid>
-                                                                                                            <Grid item xs={4} className="align-self-center">
-                                                                                                                <Typography variant="body1" gutterBottom>
-                                                                                                                    --
-                                                                                                                </Typography>
-                                                                                                            </Grid>
-                                                                                                            <Grid item xs={4} className="align-self-center">
-                                                                                                                <Button color="primary">
-                                                                                                                    Más info
-                                                                                                                </Button>
-                                                                                                            </Grid>
-                                                                                                        </Grid>
-                                                                                                    </ListItem>
-                                                                                                    <Collapse in={carpeta.open ? carpeta.open : false} timeout="auto" unmountOnExit>
-                                                                                                        <List component="div" disablePadding>
-                                                                                                            <ListItem className="pt-0 pb-0 pl-5">
-                                                                                                                <List component="div" disablePadding style={{ width: '100%' }}>
-                                                                                                                    {carpeta.children && carpeta.children.map((c, i) => {
-                                                                                                                        return <ListItem className="pt-0 pb-0">
-                                                                                                                            <Grid container spacing={0}>
-                                                                                                                                <Grid item xs={4}>
-                                                                                                                                    <Typography variant="body1" gutterBottom>
-                                                                                                                                        {c.Nombre}
-                                                                                                                                    </Typography>
-                                                                                                                                </Grid>
-                                                                                                                                <Grid item xs={4}>
-                                                                                                                                    <Typography variant="body1" gutterBottom>
-                                                                                                                                        {c.Firmas_Requeridas}
-                                                                                                                                    </Typography>
-                                                                                                                                </Grid>
-                                                                                                                                <Grid item xs={4}>
-                                                                                                                                    <Button color="primary" className="ml-1">
-                                                                                                                                        Más info
-                                                                                                                                    </Button>
-                                                                                                                                </Grid>
-                                                                                                                            </Grid>
-                                                                                                                        </ListItem>
-                                                                                                                    })}
-                                                                                                                </List>
-                                                                                                            </ListItem>
-                                                                                                        </List>
-                                                                                                    </Collapse>
-                                                                                                </List>
-                                                                                            })
-                                                                                        }
-                                                                                    </Grid>
-                                                                                </Grid>
-                                                                            }
-
-                                                                        </ExpansionPanelDetails>
-                                                                    </ExpansionPanel>
+                                                                    </Grid>
 
                                                                 </Grid>
 
-                                                            </Grid>
+                                                            </ListItem>
+                                                        })
+                                                    }
+                                                </List>
+                                            </ListItem>
+                                        </List>
+                                    })}
+                                </Grid>
+                                <Grid item xs={12} className="d-flex justify-content-between">
+                                    <Button color="primary" size="small" className="px-4" onClick={() => { this.props.handleNavigation(true) }}>
+                                        <Translate id="languages.generalButton.volver"/>
+                                    </Button>
+                                    <Button variant="contained" size="small" color="primary" className="px-3" onClick={()=> {this.handleCrearTrabajo()}}                                            >
+                                        <Translate id="languages.generalButton.finalizar"/>
+                                    </Button>
 
-                                                        </ListItem>
-                                                    })
-                                                }
-                                            </List>
-                                        </ListItem>
-                                    </List>
-                                })}
-                            </div>
+                                </Grid>
+
+                            </Grid>
                             :
                             <CircularProgress />
                     }
@@ -326,4 +369,10 @@ class CrearTrabajo extends Component {
 
 }
 
-export default withLocalize(withStyles(styles)(CrearTrabajo));
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+    fetchErrorExpediente
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(CrearTrabajo))));

@@ -92,6 +92,14 @@
             "crearTrabajo":[
                 "Crear trabajo",
                 "Crear trabajo"
+            ],
+            "volver":[
+              "Volver",
+              "Volver"
+            ],
+            "finalizar":[
+              "Finalizar",
+              "Finalizar"
             ]
         },
         "generalAddress": {

@@ -145,7 +145,7 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
 export const getTiposTramite = async (idLanguage = 2) => {
     try {
         let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
-        return response;
+        return response.data;
     }
     catch (error) {
         return formatMenssage(error.message);
@@ -620,11 +620,16 @@ export const getTipoOrganismoa = async (idLanguage = 2) => {
     return error;
   }
 }
-
+/**
+ * Permite insertar un trabajo a un expediente existente
+ * @param idExpediente
+ * @param dataPost
+ * @returns {Promise<*>}
+ */
 export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
   try {
     let response = await api.post(`/expedientes/${idExpediente}/trabajos/`, dataPost)
-    return response;
+    return response.data;
   }
   catch (error) {
     return error;
@@ -785,7 +790,7 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 1) =>
 export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 1) => {
     try {
         let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
-        return response;
+        return response.data;
     }
     catch (error) {
         return formatMenssage(error.message);
