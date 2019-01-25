@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { Table, TableCell, TableHead, TableBody, TableRow, Paper, Fab, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   subtitle: {
@@ -50,6 +51,10 @@ class ListaTrabajos extends Component {
     }
   }
 
+  async crearTrabajo() {
+    this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+  }
+
   render() {
     let { classes } = this.props;
     return (
@@ -60,9 +65,9 @@ class ListaTrabajos extends Component {
               <Translate id="languages.fichaExpediente.titleListaTrabajos" />
             </Typography>
           </Grid>
-          <Grid item md={2}>
+          <Grid item md={2} >
             <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab}>
+              className={classes.fab} onClick={()=> {this.crearTrabajo()}}>
               <Add />
             </Fab>
           </Grid>
@@ -120,4 +125,4 @@ ListaTrabajos.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(ListaTrabajos)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(ListaTrabajos))));

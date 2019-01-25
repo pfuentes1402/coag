@@ -415,22 +415,24 @@ class ComunicacionEncargo extends React.Component {
                                                                     <ReactQuill value={this.state.comunicacionencargo[index].description} readOnly theme='bubble' />
                                                                 </ExpansionPanelDetails>
                                                             </ExpansionPanel>
-
-                                                            <ExpansionPanel expanded={expandedChild === 'panel12'}
-                                                                onChange={this.handleChildChange('panel12')} >
-                                                                <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                    className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
-                                                                    style={{ minHeight: 48, height: 48 }}>
-                                                                    {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
-                                                                </ExpansionPanelSummary>
-                                                                <ExpansionPanelDetails>
-                                                                    <Grid container spacing={24} className={classes.marginPanel}>
-                                                                        {
-                                                                            this.renderRelationWorks(index)
-                                                                        }
-                                                                    </Grid>
-                                                                </ExpansionPanelDetails>
-                                                            </ExpansionPanel>
+                                                            {
+                                                                this.state.comunicacionencargo[index].fasesTrabajos.length > 0
+                                                                && <ExpansionPanel expanded={expandedChild === 'panel12'}
+                                                                    onChange={this.handleChildChange('panel12')} >
+                                                                    <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
+                                                                        className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
+                                                                        style={{ minHeight: 48, height: 48 }}>
+                                                                        {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
+                                                                    </ExpansionPanelSummary>
+                                                                    <ExpansionPanelDetails>
+                                                                        <Grid container spacing={24} className={classes.marginPanel}>
+                                                                            {
+                                                                                this.renderRelationWorks(index)
+                                                                            }
+                                                                        </Grid>
+                                                                    </ExpansionPanelDetails>
+                                                                </ExpansionPanel>
+                                                            }
                                                         </Grid>
                                                     </Grid>
                                                 </div>

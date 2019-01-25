@@ -88,6 +88,10 @@
             "annadirNuevo":[
                 "Añadir Nuevo",
                 "Añadir Nuevo"
+            ],
+            "crearTrabajo":[
+                "Crear trabajo",
+                "Crear trabajo"
             ]
         },
         "generalAddress": {
@@ -485,12 +489,20 @@
             "tableSelections":[
                 "elementos seleccionados",
                 "elementos seleccionados"
+            ],
+            "selectionTitle":[
+                "Seleccionar trabajo(s) a tramitar",
+                "Seleccionar trabajo(s) a tramitar"
             ]
         },
         "messages":{
             "comunicationValidation":[
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada"
+            ],
+            "trabajosSelectionValidate":[
+                "Debe seleccionar al menos un trabajo",
+                "Debe seleccionar al menos un trabajo"
             ]
         }
     }
