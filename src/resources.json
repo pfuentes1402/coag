@@ -432,6 +432,40 @@
                 "Introduce el término de búsqueda"
             ]
         },
+        "crearTrabajo":{
+            "panelTitle":[
+                "Expediente",
+                "Expediente"
+            ],
+            "labelExpedienteType":[
+                "Tipo de expediente",
+                "Tipo de expediente"
+            ],
+            "tableTitle":[
+                "Título trabajo",
+                "Título trabajo"
+            ],
+            "tableRequired":[
+                "Obligatorio",
+                "Obligatorio"
+            ],
+            "tableVisado":[
+                "Complejo Visado",
+                "Complejo Visado"
+            ],
+            "tableRegistro":[
+                "Complejo Registro",
+                "Complejo Registro"
+            ],
+            "tableSelection":[
+                "elemento seleccionado",
+                "elemento seleccionado"
+            ],
+            "tableSelections":[
+                "elementos seleccionados",
+                "elementos seleccionados"
+            ]
+        },
         "messages":{
             "comunicationValidation":[
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
