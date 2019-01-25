@@ -45,6 +45,7 @@
     "history": "^4.7.2",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "namor": "^1.0.1",
     "object-assign": "4.1.1",

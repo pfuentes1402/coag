@@ -137,6 +137,20 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
     return formatMenssage(error.message);
   }
 }
+/**
+ * Obtiene los tipos de tramites
+ * @param idLanguage
+ * @returns {Promise<*>}
+ */
+export const getTiposTramite = async (idLanguage = 2) => {
+    try {
+        let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
+        return response;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 
 
@@ -743,7 +757,13 @@ export const fetchEncomendaActual = async (idExpediente, languageId) => {
     return formatMenssage(error.message);
   }
 }
-
+/**
+ * Obtiene informacion del expediente con la encomenda actual
+ * @param idExpediente
+ * @param datapost
+ * @param languageId
+ * @returns {Promise<*>}
+ */
 export const manageEncomenda = async (idExpediente, datapost, languageId = 1) => {
   try {
     let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
@@ -752,6 +772,24 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 1) =>
   catch (error) {
     return formatMenssage(error.message);
   }
+}
+
+/**
+ * Obtiene la estructura de carpetas de un tipo de trabajo
+ * @param id_tipo_trabajo
+ * @param id_tipo_tramite
+ * @param es_modificado
+ * @param languageId
+ * @returns {Promise<*>}
+ */
+export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 1) => {
+    try {
+        let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+        return response;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 export const formatMenssage = (error) => (

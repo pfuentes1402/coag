@@ -11,7 +11,6 @@ import VisualizarExpediente from './components/VisualizarExpediente/index';
 import AsistenteTrabajo from './components/AsistenteTrabajo/index';
 
 class Main extends Component {
-
     render(){
 
         return(

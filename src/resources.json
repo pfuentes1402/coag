@@ -432,6 +432,24 @@
                 "Introduce el término de búsqueda"
             ]
         },
+        "trabajo": {
+            "trabajoTramitarTitle":[
+                "Trabajo(s) a tramitar",
+                "Trabajo(s) a tramitar"
+            ],
+            "nuevoTrabajoTitle":[
+                "Nuevo trabajo",
+                "Nuevo trabajo"
+            ],
+            "modificacionSustancialTitle":[
+                "Modificación sustancial",
+                "Modificación sustancial"
+            ],
+            "correccionBasicaTitle":[
+                "Corrección básica",
+                "Corrección básica"]
+        },
+
         "crearTrabajo":{
             "panelTitle":[
                 "Expediente",

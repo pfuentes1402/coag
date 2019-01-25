@@ -2,85 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/SelectorTipoExpediente/SelectorTipoExpediente.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/containers/SelectorTipoExpedienteContainer.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/actions/expedientes/index_20180420150137.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/actions/expedientes/index_20180423100223.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420142514.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420144745.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420144803.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420145140.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420145441.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420145814.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420145847.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420145956.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420150028.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180420150055.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423085317.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423085557.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423085737.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423085824.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423085938.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423090710.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423090741.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423090810.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423090944.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423091023.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423091050.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423091527.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423091727.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423091921.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092011.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092038.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092056.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092252.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092429.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423092911.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423093030.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423095402.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423100220.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/api/index_20180423101954.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180420142514.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423094250.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423094321.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423094554.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423094752.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423095519.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423100226.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423100347.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423100502.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423101758.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/MainContent/MainContent_20180423101828.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/NewExpedient/NewExpedient2_20180423110859.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/components/NewExpedient/NewExpedient2_20180423112029.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/containers/NuevoExpedienteContainer_20180420142514.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/containers/NuevoExpedienteContainer_20180423112027.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/containers/NuevoExpedienteContainer_20180423112144.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/containers/NuevoExpedienteContainer_20180423125929.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderForTree_20180420143343.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderForTree_20180420144742.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderForTree_20180420144906.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderForTree_20180420150137.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180420143406.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180420144744.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180420145220.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180423091148.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180423091335.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180423091629.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180423092144.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/helpers/orderTree_20180423092730.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/expedientes/expedientes_20180420142514.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/index_20180420142514.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/index_20180423105431.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/user/user_20180423105032.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/user/user_20180423105435.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/user/user_20180423105528.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/user/user_20180423105745.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.history/src/reducers/user/user_20180423110244.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/types.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/types.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient.css" afterPath="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.js" afterPath="$PROJECT_DIR$/src/Main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Address/index.js" afterPath="$PROJECT_DIR$/src/components/Address/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources.json" afterPath="$PROJECT_DIR$/src/resources.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes.js" afterPath="$PROJECT_DIR$/src/routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -97,8 +31,8 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="41" column="20" lean-forward="true" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+            <state relative-caret-position="510">
+              <caret line="41" column="20" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -107,12 +41,9 @@
       <file leaf-file-name="package-lock.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package-lock.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-158066">
+            <state relative-caret-position="262820">
               <caret line="7730" column="6" lean-forward="false" selection-start-line="7730" selection-start-column="6" selection-end-line="7730" selection-end-column="6" />
-              <folding>
-                <marker date="1548432892216" expanded="true" signature="0:475887" ph="{&quot;name&quot;: &quot;coag&quot;...}" />
-                <marker date="1548432892216" expanded="true" signature="104:475885" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,7 +51,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1785">
+            <state relative-caret-position="34">
               <caret line="122" column="40" lean-forward="false" selection-start-line="122" selection-start-column="40" selection-end-line="122" selection-end-column="40" />
               <folding>
                 <element signature="e#0#221#0" expanded="true" />
@@ -305,7 +236,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -348,6 +278,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -492,6 +423,7 @@
       <workItem from="1548095660837" duration="939000" />
       <workItem from="1548109085947" duration="110000" />
       <workItem from="1548430656196" duration="1994000" />
+      <workItem from="1548433172059" duration="7000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -567,7 +499,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="240462000" />
+    <option name="totallyTimeSpent" value="240469000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -580,7 +512,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.43327555" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -996,26 +927,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="41" column="20" lean-forward="true" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+        <state relative-caret-position="510">
+          <caret line="41" column="20" lean-forward="false" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-158066">
+        <state relative-caret-position="262820">
           <caret line="7730" column="6" lean-forward="false" selection-start-line="7730" selection-start-column="6" selection-end-line="7730" selection-end-column="6" />
-          <folding>
-            <marker date="1548432892216" expanded="true" signature="0:475887" ph="{&quot;name&quot;: &quot;coag&quot;...}" />
-            <marker date="1548432892216" expanded="true" signature="104:475885" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1785">
+        <state relative-caret-position="34">
           <caret line="122" column="40" lean-forward="false" selection-start-line="122" selection-start-column="40" selection-end-line="122" selection-end-column="40" />
           <folding>
             <element signature="e#0#221#0" expanded="true" />

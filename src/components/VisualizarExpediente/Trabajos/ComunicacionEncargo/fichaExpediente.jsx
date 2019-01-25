@@ -80,8 +80,10 @@ class FichaExpediente extends Component {
     this.state = {
       sourceExpediente: this.props.sourceExpediente,
       emplazamientos: this.props.expediente.Emplazamientos,
+        location: {},
       isUpdate: false,
-      isAddUbicacion: false
+      isAddUbicacion: false,
+        isShowAddress: false,
     }
   }
 
@@ -101,44 +103,60 @@ class FichaExpediente extends Component {
     this.setState({ isUpdate: false });
   }
 
-  handleAddUbication(action) {
-    this.setState({ isAddUbicacion: action });
+  handleShowUbication(action) {
+    this.setState({ isAddUbicacion: action, isShowAddress: false });
   }
 
+    handleUpdateLocation(location) {
+        this.setState({ location: location });
+    }
+
   async handleSaveAddress() {
-    let address = this.props.addressData.Datos_Completos[0];
-    if (!this.ifEqual(this.props.expediente.Emplazamientos, address)) {
-      //TODO: Llamar metodo de la api para adicionar ubicacion a expediente
-      let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, [this.props.expediente.Emplazamientos, address]);
-      if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
-        this.props.fetchErrorExpediente(response.data);
-      }
-      else if (response.response) {
-        if (response.response.data.MensajesProcesado)
-          this.props.fetchErrorExpediente(response.response.data);
-        else {
-          this.props.fetchErrorExpediente(formatMenssage(response.response.data.Message));
-        }
+    let {location, emplazamientos} = this.state;
+    let locations = [];
+      Object.assign(locations, emplazamientos);
+      let equal = this.ifEqual(emplazamientos, location);
+      if (equal === -1) {
+          locations.push(location);
       }
       else {
-        this.setState({ emplazamientos: response.data.Emplazamientos })
-        this.handleAddUbication(false);
+          locations[equal] = location;
       }
-    }
+
+      let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, {"Emplazamientos": locations, "ignorarobservaciones":1});
+      if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
+          this.props.fetchErrorExpediente(response.data);
+      }
+      else if (response.response) {
+          if (response.response.data.MensajesProcesado)
+              this.props.fetchErrorExpediente(response.response.data);
+          else {
+              this.props.fetchErrorExpediente(formatMenssage(response.response.data.Message));
+          }
+      }
+      else {
+          this.setState({ emplazamientos: response.data.Emplazamientos, isShowAddress: false })
+          this.handleShowUbication(false);
+      }
+
   }
 
   ifEqual(data, address) {
-    let equal = false;
+    let equal = -1;
     if (data.length > 0) {
-      data.map(value => {
+      data.map((value, index) => {
         if (value.Calle === address.Calle && value.Numero === address.Numero
           && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal
           && value.municipio === address.Concello) {
-          equal = true
+          equal = index
         }
       })
     }
     return equal;
+  }
+
+  handleEdit(location){
+      this.setState({isShowAddress: true, isAddUbicacion: true, location: location})
   }
 
   renderUbicationTable() {
@@ -153,7 +171,7 @@ class FichaExpediente extends Component {
           </Grid>
           <Grid item xs={2}>
             <Fab size="small" color="primary" aria-label="Add"
-              onClick={() => this.handleAddUbication(true)}
+              onClick={() => this.handleShowUbication(true)}
               className={classes.fab}>
               <Add />
             </Fab>
@@ -194,7 +212,7 @@ class FichaExpediente extends Component {
                                           <TableCell className="p-0">{row.Codigo_Postal}</TableCell>
                                           <TableCell className="p-0">{row.Concello}</TableCell>
                                           <TableCell className="px-2">
-                                              <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary">
+                                              <IconButton className={classes.buttonEdit} aria-label="Edit" color="primary" onClick={()=>{this.handleEdit(row)}}>
                                                   <Edit />
                                               </IconButton>
                                           </TableCell>
@@ -209,10 +227,10 @@ class FichaExpediente extends Component {
         {
           this.state.isAddUbicacion &&
           <Grid item xs={12} className="pt-2">
-            <ValidateAddress />
+            <ValidateAddress updateLocation={(location)=>{this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} location={this.state.location}/>
             <Grid item xs={12} className="text-right">
               <Button color="primary" size="small" className={`${classes.button} mx-2`}
-                onClick={() => { this.handleAddUbication(false) }}>
+                onClick={() => { this.handleShowUbication(false) }}>
                 <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
               </Button>
               <Button variant="contained" size="small" color="primary" className={classes.button}

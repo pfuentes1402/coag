@@ -12,6 +12,7 @@ import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@m
 import { Typography } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import TiposTrabajo from './tiposTrabajo';
+import CrearTrabajo from './crearTrabajo';
 
 
 const styles = theme => ({
@@ -84,7 +85,8 @@ class AsistenteTrabajo extends Component {
 
             <ExpansionPanelDetails>
               {this.state.tiposTrabajos ? 
-              <TiposTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}/> : <div></div>}
+              <TiposTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}/>
+                  : <CrearTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}/>}
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </Container>

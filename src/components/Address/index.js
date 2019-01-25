@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, TextField, FormControl,  Tooltip, CircularProgress, Fab} from '@material-ui/core';
 import {Check} from '@material-ui/icons'
-import {validateAddress, saveAdressTostore, updateAddress } from '../../actions/expedientes';
+import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes';
 import { connect } from 'react-redux';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
+import {getValidateAddress} from "../../api";
 
 const styles = theme => ({
     paper: {
@@ -56,18 +57,13 @@ const styles = theme => ({
 
 const mapStateToProps = (state) => (
     {
-        addressData: state.expedientes.address ? state.expedientes.address : '',
-        catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida: [], /*Contiene arreglo de la tabla de ubicaciones */
-        error: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
+
     }
 );
 
 const mapDispatchToProps =
     {
-        validateAddress: validateAddress,
-        saveAdressTostore: saveAdressTostore,
-        updateAddress: updateAddress
-
+        fetchErrorExpediente: fetchErrorExpediente
     };
 
 
@@ -84,7 +80,8 @@ class ValidateAddress extends Component {
             isValidate: false,
             isShowAddress: false,
             alert: false,
-            isSave: false
+            isSave: false,
+            data: {},
         };
 
     };
@@ -96,56 +93,39 @@ class ValidateAddress extends Component {
     };
 
     handleChangeAddress(name, event) {
-        let address = {...this.props.addressData};
-        if(address && address.Datos_Completos[0]){
-            if (address.Datos_Completos[0][name] !== event.target.value ) {
-                address.Datos_Completos[0][name] = event.target.value;
-                this.props.updateAddress(address);
-            }
-        }
+        let data = {};
+        let aux = this.props.isShowAddress ? this.props.location : this.state.data;
+        Object.assign(data, aux);
+        data[name] = event.target.value;
+        this.setState({data: data});
+        this.props.updateLocation(data);
+
     };
 
     async handleValidateAddress(){
-        await this.setState({isValidate: true});
+        this.setState({isValidate: true});
         try {
-            await this.props.validateAddress(this.state.location);
-            let errors = this.props.error;
-            if(errors.length > 0){
-                await this.setState({isValidate: false, isShowAddress:  false});
-                this.props.isShowAddress(false);
-            }else {
-                await this.saveAddress();
-                await this.setState({isValidate: false, isShowAddress:  true});
-                this.props.isShowAddress(true);
+            let response = await getValidateAddress(this.state.location);
+            if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response.data);
+                this.setState({isValidate: false, isShowAddress:  false});
+            }
+            else {
+                this.setState({data: response.data.Datos_Completos[0], isValidate: false, isShowAddress:  true});
+                this.props.updateLocation(response.data.Datos_Completos[0]);
             }
         }
         catch (e) {
-            this.setState({ alert: false, msg: e.message });
+            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.setState({isValidate: false, isShowAddress: false});
         }
-    }
 
-    saveAddress(){
-        let address = this.props.addressData ? this.props.addressData.Datos_Completos[0] : [];
-        if (!this.ifEqual(this.props.catastro, address)) {
-            this.props.saveAdressTostore(address, this.props.location);
-        }
-    }
-
-    ifEqual(data, address){
-        let equal = false;
-        if (data.length > 0) {
-            data.map(value => {
-                if (value.Calle === address.Calle && value.Numero === address.Numero && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal && value.municipio === address.Concello) {
-                    equal = true
-                }
-            })
-        }
-        return equal;
     }
 
     render() {
         let {classes} = this.props;
-        let data = this.props.addressData.Datos_Completos[0];
+        let data = this.props.isShowAddress ? this.props.location : this.state.data;
+        let georeferencia = this.props.isShowAddress ? this.props.location.Georeferencia : this.state.location;
         return (
             <Grid container spacing={8}>
                     <Grid item xs={12}>
@@ -154,7 +134,7 @@ class ValidateAddress extends Component {
                                 <TextField
                                     id="location"
                                     helperText={<Translate id="languages.expedients.helperTextAddressValidate"/>}
-                                    value={this.state.location}
+                                    value={georeferencia}
                                     onChange={this.handleChange('location')}
                                     margin="normal"
                                     placeholder="Ref catastral o coordenadas UTM"
@@ -175,7 +155,7 @@ class ValidateAddress extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         {
-                            this.state.isShowAddress ?
+                            this.state.isShowAddress || this.props.isShowAddress ?
                                 <Grid container spacing={16}>
                                     <Grid item xs={12}>
                                         <FormControl className={classes.formControl2}>
@@ -256,8 +236,8 @@ class ValidateAddress extends Component {
                                             <TextField
                                                 id="REGION"
                                                 label="REGION"
-                                                value={data && data.REGION ? data.REGION : ""}
-                                                onChange={(event)=>{this.handleChangeAddress('REGION', event)}}
+                                                value={data && data.Autonomia ? data.Autonomia : ""}
+                                                onChange={(event)=>{this.handleChangeAddress('Autonomia', event)}}
                                                 margin="normal"
                                                 InputLabelProps={{
                                                     shrink: true,
