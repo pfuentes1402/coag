@@ -100,6 +100,14 @@
             "finalizar":[
               "Finalizar",
               "Finalizar"
+            ],
+            "masInfo":[
+                "Más info",
+                "Más info"
+            ],
+            "aceptar":[
+                "Aceptar",
+                "Aceptar"
             ]
         },
         "generalAddress": {

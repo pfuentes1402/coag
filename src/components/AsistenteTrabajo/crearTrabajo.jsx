@@ -4,7 +4,8 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import { infoCarpetasTrabajo, getTiposTramite, addTrabajoEncomendaExpediente } from "../../api";
 import { groupBy, filter } from 'lodash';
-import { Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select, RadioGroup, FormControlLabel, Radio, CircularProgress } from "@material-ui/core";
+import { Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select,
+    RadioGroup, FormControlLabel, Radio, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -15,6 +16,7 @@ import ExpandMore from '@material-ui/icons/Close';
 import {withRouter} from "react-router-dom";
 import {fetchErrorExpediente} from "../../actions/expedientes";
 import {connect} from "react-redux";
+import ReactQuill from "react-quill";
 const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
@@ -22,11 +24,17 @@ const styles = theme => ({
     },
     root: {
         width: '100%',
-        paddingTop: 0
+        paddingTop: 0,
+        borderTop: "solid 1px" + theme.palette.secondary.light,
     },
     item: {
-        border: "solid 1px" + theme.palette.secondary.light,
+        borderTop: "solid 1px" + theme.palette.secondary.light,
         paddingTop: 0, paddingBottom: 0
+    },
+    border: {
+        borderLeft: "solid 1px" + theme.palette.secondary.light,
+        borderRight: "solid 1px" + theme.palette.secondary.light,
+        borderBottom: "solid 1px" + theme.palette.secondary.light,
     },
     nested: {
         paddingLeft: theme.spacing.unit * 4,
@@ -37,6 +45,9 @@ const styles = theme => ({
     expand: {
         marginRight: 8,
         fontSize: 'medium'
+    },
+    subHeader: {
+        backgroundColor: theme.palette.default
     }
 })
 
@@ -49,6 +60,9 @@ class CrearTrabajo extends Component {
             inforCarpetas: [],
             isCarpetas: false,
             expanded: null,
+            dialogOpen: false,
+            dialogTitle: "",
+            dialogContent: ""
         }
     }
 
@@ -68,7 +82,7 @@ class CrearTrabajo extends Component {
     }
 
     async getTiposTramites() {
-        let response = await getTiposTramite(this.props.activeLanguage.code) /*TODO: Poner Idioma*/
+        let response = await getTiposTramite(this.props.activeLanguage.code)
         if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
             this.props.fetchErrorExpediente(response);
         }
@@ -157,26 +171,34 @@ class CrearTrabajo extends Component {
          }
      }
 
+     handleShowDialog(title, content) {
+         this.setState({dialogOpen: true, dialogTitle: title, dialogContent: content});
+     }
+
+    handleCloseDialog = () => {
+        this.setState({ dialogOpen: false });
+    };
+
     render() {
         let { classes } = this.props;
         let { tiposTrabajos, tiposTramites, expanded } = this.state;
         return (
-            <Grid container spacing={24}>
+            <Grid container spacing={0}>
                 <Grid item xs={12}>
                     <Translate id="languages.trabajo.trabajoTramitarTitle" />
                 </Grid>
                 <Grid item xs={12}>
                     {
                         tiposTramites.length > 0 ?
-                            <Grid container spacing={0}>
-                                <Grid item={12}>
+                            <Grid container spacing={0} className={classes.border}>
+                                <Grid item xs={12}>
                                     {Object.keys(tiposTrabajos).map((fase, indexFase) => {
                                         let trabajos = tiposTrabajos[fase];
-                                        return <List key={indexFase}
-                                            subheader={<ListSubheader component="div">{fase}</ListSubheader>}
+                                        return <List key={indexFase} classes={{subheader: classes.subHeader}}
+                                            subheader={<ListSubheader component="div" color="secondary" className={classes.subHeader} classes={{root: classes.subHeader}} >{fase}</ListSubheader>}
                                             className={classes.root}
                                         >
-                                            <ListItem className="pt-0">
+                                            <ListItem className="p-0">
                                                 <List
                                                     className={classes.root}>
                                                     {
@@ -237,7 +259,6 @@ class CrearTrabajo extends Component {
                                                                         </div>
 
                                                                     </Grid>
-                                                                    <Divider style={{ width: '100%' }} />
                                                                     <Grid item xs={12}>
                                                                         <ExpansionPanel className="shadow-none" expanded={expanded === trabajo.Id_Tipo_Trabajo} onChange={this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo") }>
                                                                             <ExpansionPanelSummary className="p-0" expandIcon={<ExpandMoreIcon />}>
@@ -291,8 +312,8 @@ class CrearTrabajo extends Component {
                                                                                                                     </Typography>
                                                                                                                 </Grid>
                                                                                                                 <Grid item xs={4} className="align-self-center">
-                                                                                                                    <Button color="primary">
-                                                                                                                        Más info
+                                                                                                                    <Button color="primary" onClick={()=>{this.handleShowDialog(carpeta.Nombre, carpeta.Aclaraciones)}}>
+                                                                                                                        <Translate id="languages.generalButton.masInfo"/>
                                                                                                                     </Button>
                                                                                                                 </Grid>
                                                                                                             </Grid>
@@ -315,8 +336,8 @@ class CrearTrabajo extends Component {
                                                                                                                                         </Typography>
                                                                                                                                     </Grid>
                                                                                                                                     <Grid item xs={4}>
-                                                                                                                                        <Button color="primary" className="ml-1">
-                                                                                                                                            Más info
+                                                                                                                                        <Button color="primary" onClick={()=>{this.handleShowDialog(c.Nombre, c.Aclaraciones)}}>
+                                                                                                                                            <Translate id="languages.generalButton.masInfo"/>
                                                                                                                                         </Button>
                                                                                                                                     </Grid>
                                                                                                                                 </Grid>
@@ -362,6 +383,28 @@ class CrearTrabajo extends Component {
                             :
                             <CircularProgress />
                     }
+                </Grid>
+                <Grid item xs={12}>
+                    <Dialog
+                        open={this.state.dialogOpen}
+                        onClose={this.handleCloseDialog}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {this.state.dialogTitle}
+                            </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                <ReactQuill value={this.state.dialogContent} readOnly theme='bubble' />
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseDialog} color="primary" autoFocus>
+                                <Translate id="languages.generalButton.aceptar"/>
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
             </Grid>
         );
