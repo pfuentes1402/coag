@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -64,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="155" column="117" selection-start-line="155" selection-start-column="107" selection-end-line="155" selection-end-column="117" />
+            <state relative-caret-position="168">
+              <caret line="153" column="10" lean-forward="true" selection-start-line="153" selection-start-column="10" selection-end-line="153" selection-end-column="10" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="e#10431#13445#0" />
@@ -78,7 +72,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="243">
@@ -152,8 +146,8 @@
       <find>params</find>
       <find>withRouter(</find>
       <find>encomenda</find>
-      <find>api.post(`/expedientes/${idExpediente}/trabajos/</find>
       <find>.Nombre</find>
+      <find>api.post(`/expedientes/${idExpediente}/trabajos/</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -459,7 +453,7 @@
       <workItem from="1548109085947" duration="110000" />
       <workItem from="1548430656196" duration="1994000" />
       <workItem from="1548433172059" duration="658000" />
-      <workItem from="1548435489358" duration="7508000" />
+      <workItem from="1548435489358" duration="8230000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -535,7 +529,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="248628000" />
+    <option name="totallyTimeSpent" value="249350000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -974,6 +968,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
@@ -983,22 +987,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="155" column="117" selection-start-line="155" selection-start-column="107" selection-end-line="155" selection-end-column="117" />
+        <state relative-caret-position="168">
+          <caret line="153" column="10" lean-forward="true" selection-start-line="153" selection-start-column="10" selection-end-line="153" selection-end-column="10" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
             <element signature="e#10431#13445#0" />
             <element signature="e#14097#24261#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
