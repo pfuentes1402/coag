@@ -80,7 +80,8 @@ class AddExpedient extends Component {
         super(props);
         this.state = {
             code: '', codeStudy: '', title: '', antecedent: '', observations: '',
-            location: '', alias: '',
+            location: {},
+            alias: '',
             catastro: [],
             linksMaps: [],
             locations: [],
@@ -137,6 +138,10 @@ class AddExpedient extends Component {
     handleClose = () => {
         this.setState({ alert: false });
     };
+
+    handleUpdateLocation(location) {
+        this.setState({ location: location });
+    }
 
     render() {
         let {classes} = this.props;
@@ -258,7 +263,7 @@ class AddExpedient extends Component {
                                         <CatastralTable location={this.state.location} isShowAddress={this.state.isShowAddress}/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AddressValidate isShowAddress={(show)=> {this.setState({isShowAddress: show})}}/>
+                                        <AddressValidate updateLocation={(location)=>{this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} location={this.state.location}/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>

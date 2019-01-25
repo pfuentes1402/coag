@@ -432,6 +432,24 @@
                 "Introduce el término de búsqueda"
             ]
         },
+        "trabajo": {
+            "trabajoTramitarTitle":[
+                "Trabajo(s) a tramitar",
+                "Trabajo(s) a tramitar"
+            ],
+            "nuevoTrabajoTitle":[
+                "Nuevo trabajo",
+                "Nuevo trabajo"
+            ],
+            "modificacionSustancialTitle":[
+                "Modificación sustancial",
+                "Modificación sustancial"
+            ],
+            "correccionBasicaTitle":[
+                "Corrección básica",
+                "Corrección básica"
+            ]
+        },
         "messages":{
             "comunicationValidation":[
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",

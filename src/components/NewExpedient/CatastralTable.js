@@ -244,7 +244,6 @@ class EnhancedTable extends React.Component {
     handleRequestSort = (event, property) => {
         const orderBy = property;
         let order = 'desc';
-
         if (this.state.orderBy === property && this.state.order === 'desc') {
             order = 'asc';
         }

@@ -8,7 +8,8 @@ import Login from './components/login/Login';
 import { PrivateRoute } from './components/login/privateRoute';
 import Profile from './components/Profile/Profile';
 import AddExpedient from './components/NewExpedient/AddExpedient';
-import ComunicacionEncargo from "./components/ComunicacionEncargo"
+import ComunicacionEncargo from "./components/ComunicacionEncargo";
+
 
 export default (
   <div>
