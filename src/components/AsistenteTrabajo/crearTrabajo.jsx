@@ -76,8 +76,17 @@ class CrearTrabajo extends Component{
         await this.getTiposTramites()
     }
 
+    getIdTipoTramite(Name){
+        let id = "";
+        let tramite = this.state.tiposTramites.find(t=> t.Nombre.toUpperCase() === Name.toUpperCase());
+        if(tramite){
+            id = tramite.Id_Tipo_Tramite;
+        }
+        return id;
+    }
+
    async getTiposTramites(){
-        let response = await getTiposTramite(1) /*TODO: Poner Idioma*/
+        let response = await getTiposTramite(this.props.activeLanguage.code) /*TODO: Poner Idioma*/
         if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
             this.props.fetchErrorExpediente(response.data);
         }
@@ -94,7 +103,7 @@ class CrearTrabajo extends Component{
 
     async getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado){
         let inforCarpetas = [];
-        let response = await infoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado, 1);/*TODO: Poner el idioma*/
+        let response = await infoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado, 2);/*TODO: Poner el idioma*/
         if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
             this.props.fetchErrorExpediente(response.data);
         }
@@ -169,7 +178,7 @@ class CrearTrabajo extends Component{
                                                                         <Grid item xs={3} md={2} className="align-self-center">
                                                                             <FormControl className={classes.formControl}>
                                                                                 <Select
-                                                                                    value={trabajo.Id_Tipo_Tramite}
+                                                                                    value={this.getIdTipoTramite(trabajo.Obligatorio)}
                                                                                     displayEmpty
                                                                                     onChange={this.handleChange(fase,indexTrabajo,'Id_Tipo_Tramite')}
                                                                                     inputProps={{
