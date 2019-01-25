@@ -447,7 +447,41 @@
             ],
             "correccionBasicaTitle":[
                 "Corrección básica",
-                "Corrección básica"
+                "Corrección básica"]
+        },
+
+        "crearTrabajo":{
+            "panelTitle":[
+                "Expediente",
+                "Expediente"
+            ],
+            "labelExpedienteType":[
+                "Tipo de expediente",
+                "Tipo de expediente"
+            ],
+            "tableTitle":[
+                "Título trabajo",
+                "Título trabajo"
+            ],
+            "tableRequired":[
+                "Obligatorio",
+                "Obligatorio"
+            ],
+            "tableVisado":[
+                "Complejo Visado",
+                "Complejo Visado"
+            ],
+            "tableRegistro":[
+                "Complejo Registro",
+                "Complejo Registro"
+            ],
+            "tableSelection":[
+                "elemento seleccionado",
+                "elemento seleccionado"
+            ],
+            "tableSelections":[
+                "elementos seleccionados",
+                "elementos seleccionados"
             ]
         },
         "messages":{

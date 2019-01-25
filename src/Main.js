@@ -8,10 +8,9 @@ import Profile from "./components/Profile/Profile";
 import ComunicacionEncargo from "./components/ComunicacionEncargo/index";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
 import VisualizarExpediente from './components/VisualizarExpediente/index';
-import Prueba from "./components/AsistenteTrabajo/crearTrabajo";
+import AsistenteTrabajo from './components/AsistenteTrabajo/index';
 
 class Main extends Component {
-
     render(){
 
         return(
@@ -24,8 +23,7 @@ class Main extends Component {
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
                     <Route exact path='/comunicacion/:id?' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/visualizar-expediente/:id" component={(props) => <VisualizarExpediente {...props}/>}/>
-                    <Route path="/prueba" component={(props) => <Prueba {...props}/>}/>
-
+                    <Route path="/crear-trabajo/:id" component={(props) => <AsistenteTrabajo {...props}/>}/>
                 </Switch>
             </div>
 

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Vault as VaultBase } from "dhx-vault";
+import { Vault as VaultBase, i18n } from "dhx-vault";
 import "dhx-vault/codebase/vault.css";
 
 class Vault extends Component {
   componentDidMount() {
     var es = {
-      dragAndDrop: "Drag & drop",
-      or: "or",
-      browse: "Arrastrar",
+      dragAndDrop: "Arrastrar",
+      or: "o",
+      browse: "Seleccionar",
       filesOrFoldersHere: "ficheros y carpetas aquí",
       cancel: "Cancelar",
       clearAll: "Limpiar todo",
@@ -31,11 +31,16 @@ class Vault extends Component {
       },
       toolbar: this.props.toolbar,
     });
-    console.log("vault",this.vault);
+    
+    console.log("vault", this.vault);
+    console.log("i18n", i18n);
+    i18n.setLocale("vault",es);
   }
+
   componentWillUnmount() {
     this.vault.destructor();
   }
+
   render() {
     return (
       <div ref={el => this.el = el} className="widget-box"></div>

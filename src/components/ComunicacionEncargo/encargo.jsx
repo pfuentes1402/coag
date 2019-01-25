@@ -163,7 +163,7 @@ class ComunicacionEncargo extends React.Component {
                 name: value.Nombre,
                 tiposObra: tiposTrabajos,
                 tiposTramite: tiposTramite,
-                //TODO: Cambiar a datos de la encomenda
+                //Cambiar a datos de la encomenda
                 obraSelection: isCurrent ? encomenda.Id_Tipo_Grupo_Tematico : tiposTrabajos[0].Id_Tipo_Grupo_Tematico,
                 tramiteSelection: isCurrent ? encomenda.Id_Tipo_Autorizacion_Municipal : tiposTramite[0].Id_Tipo_Autorizacion_Municipal,
                 description: tiposTrabajos.length > 0 ? tiposTrabajos[0].Observaciones : '',
@@ -446,11 +446,11 @@ class ComunicacionEncargo extends React.Component {
 
                 <div className={classes.right}>
                     <Button color="primary" className={classes.button}>
-                        Cancelar<Close className={classes.rightIcon} />
+                        <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
                     </Button>
                     <Button variant="contained" color="primary" className={classes.button}
                         onClick={() => { this.handleNext() }}>
-                        Siguiente<Next className={classes.rightIcon} />
+                        <Translate id="languages.generalButton.next" /><Next className={classes.rightIcon} />
                     </Button>
                 </div>
             </Container>
