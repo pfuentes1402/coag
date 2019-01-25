@@ -88,6 +88,14 @@
             "annadirNuevo":[
                 "Añadir Nuevo",
                 "Añadir Nuevo"
+            ],
+            "volver":[
+              "Volver",
+              "Volver"
+            ],
+            "finalizar":[
+              "Finalizar",
+              "Finalizar"
             ]
         },
         "generalAddress": {

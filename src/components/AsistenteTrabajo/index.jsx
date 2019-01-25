@@ -93,7 +93,7 @@ class AsistenteTrabajo extends Component {
               {this.state.tiposTrabajos ?
                 <TiposTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
                   updateTrabajoSeleccion={seleccion => this.updateTrabajoSeleccion(seleccion)} />
-                : <CrearTrabajo encomenda={this.state.encomenda} handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
+                : <CrearTrabajo handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
                   trabajos={this.state.trabajoSeleccion} />}
             </ExpansionPanelDetails>
           </ExpansionPanel>
