@@ -14,9 +14,10 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import PropTypes from 'prop-types';
 import './index.css';
+import { withRouter } from 'react-router-dom';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
-import MenuProyectoEjecucion from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
+import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
 import { getExpedienteDatosGeneral } from '../../api';
 
 const styles = theme => ({
@@ -68,7 +69,8 @@ class VisualizarExpediente extends Component {
       open: true,
       renderComponent: "TrabajoComunicacion",
       expediente: null,
-      currentExpediente: null
+      currentExpediente: null,
+      idTrabajoActivo: this.props.match.params.idTrabajo
     };
   }
 
@@ -81,7 +83,19 @@ class VisualizarExpediente extends Component {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     if (response.data) {
       let expediente = response.data;
-      this.setState({ expediente: expediente, currentExpediente: expediente.Expediente.length > 0 ? expediente.Expediente[0] : null });
+      let currentExpediente = expediente.Expediente.length > 0 ? expediente.Expediente[0] : null;
+      let activeTrabajo = this.props.match.params.idTrabajo
+        ? this.props.match.params.idTrabajo
+        : currentExpediente
+          ? currentExpediente.Id_Trabajo_Encomenda_Actual
+          : null;
+
+      await this.setState({
+        expediente: expediente,
+        currentExpediente: currentExpediente,
+        idTrabajoActivo: activeTrabajo
+      });
+      this.handleChangeMenuOption(activeTrabajo);
     }
   }
 
@@ -90,8 +104,16 @@ class VisualizarExpediente extends Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  handleChangeMenuOption(componentName) {
-    this.setState({ renderComponent: componentName });
+  async handleChangeMenuOption(idTrabajo) {
+    if (this.state.currentExpediente) {
+      if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
+        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo });
+      }
+      else {
+        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo });
+      }
+    }
+
   }
 
   renderNavBar() {
@@ -138,21 +160,12 @@ class VisualizarExpediente extends Component {
         <Divider />
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested} className="pl-1 pr-2"
-              onClick={() => this.handleChangeMenuOption("TrabajoComunicacion")}>
-              <ListItemText inset primary="Comunicación de Encargo" className="pl-2" />
-            </ListItem>
-            <MenuProyectoEjecucion changeOption={componentName => this.handleChangeMenuOption(componentName)}
-              expediente={this.state.expediente} />
-
             {this.state.expediente.Trabajos.map((trabajo, index) => {
-              return <ListItem key={index} button className={classes.nested} className="pl-1 pr-2"
-                onClick={() => this.handleChangeMenuOption("TrabajoComunicacion")}>
-                <ListItemText inset primary={trabajo.Titulo} className="pl-2" />
-              </ListItem>
+              return <MenuOption key={index} changeOption={idTrabajo => this.handleChangeMenuOption(idTrabajo)}
+                expediente={this.state.expediente} trabajo={trabajo}
+                active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())} />
             })}
           </List>
-          <Divider />
         </Collapse>
       </List>
     );
@@ -196,4 +209,4 @@ VisualizarExpediente.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(VisualizarExpediente)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(VisualizarExpediente))));

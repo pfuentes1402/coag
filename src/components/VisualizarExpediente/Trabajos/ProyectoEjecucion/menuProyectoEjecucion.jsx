@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, ListItem, ListSubheader, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListSubheader, ListItemText, Grid } from '@material-ui/core';
 import {
   Divider, Collapse, ExpansionPanel, ExpansionPanelSummary,
   ExpansionPanelDetails, Typography, withStyles
@@ -20,8 +20,8 @@ class MenuProyectoEjecucion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openExcecutionMenu: false,
-      menuGroups: this.tranformMenuGroups()
+      openExcecutionMenu: this.props.active,
+      menuGroups: []/*this.tranformMenuGroups()*/
     }
   }
 
@@ -78,7 +78,7 @@ class MenuProyectoEjecucion extends Component {
   }
 
   handleExpandMenu = () => {
-    this.setState(state => ({ openExcecutionMenu: !state.openExcecutionMenu }));
+    /*this.setState(state => ({ openExcecutionMenu: !state.openExcecutionMenu }));*/
   };
 
   handleExpandSubMenus(index) {
@@ -99,14 +99,15 @@ class MenuProyectoEjecucion extends Component {
     let { classes } = this.props;
     return (
       <div>
-        <Divider />
-        <ListItem button className={`${this.state.openExcecutionMenu ? classes.openOption : ""} pl-1 pr-2`}
-          onClick={() => { this.handleExpandMenu(); this.props.changeOption("TrabajoEjecucion") }}>
-          <ListItemText inset primary="Proyecto en ejecución" className={`pl-2`} />
-          {this.state.openExcecutionMenu ? <ExpandLess /> : <ExpandMore />}
+        <ListItem button className={`${this.props.active ? classes.openOption : ""} pl-1 pr-2`}
+          onClick={() => { this.props.changeOption(this.props.trabajo.Id_Trabajo)}}>
+          <ListItemText inset primary={this.props.trabajo.Titulo} className={`pl-2`} />
+          {this.props.active ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Divider />
-        <Collapse in={this.state.openExcecutionMenu} timeout="auto" unmountOnExit>
+
+        <Collapse in={this.props.active} timeout="auto" unmountOnExit >
+          <Grid item xs={12} style={{height:100}}></Grid>
           {
             this.state.menuGroups.map((value, index) => {
               return (
@@ -132,6 +133,7 @@ class MenuProyectoEjecucion extends Component {
             })
           }
         </Collapse>
+        <Divider/>
       </div>
     )
   }
