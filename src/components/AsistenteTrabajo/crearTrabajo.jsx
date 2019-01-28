@@ -121,8 +121,13 @@ class CrearTrabajo extends Component {
         let tiposTrabajos = {};
         Object.assign(tiposTrabajos, this.state.tiposTrabajos);
         tiposTrabajos[fase][index][name] = event.target.value;
+        if(name === 'Id_Tipo_Tramite'){
+            let tipoTramite = this.state.tiposTramites.find(t=>t.Id_Tipo_Tramite === event.target.value);
+            tiposTrabajos[fase][index]['Obligatorio']= tipoTramite.Nombre;
+        }
         this.setState({ tiposTrabajos: tiposTrabajos });
     };
+
 
      handleChangePanel = (id_tipo_trabajo, id_tipo_tramite, es_modificado)  => async(event, expanded) =>{
         this.setState({  expanded: expanded ? id_tipo_trabajo : false, isCarpetas: true });

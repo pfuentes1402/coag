@@ -136,7 +136,7 @@ class TiposTrabajo extends Component {
        :<Grid container spacing={8} >
         <Grid item xs={6}>
           <TextField disabled={true}
-            value={this.state.dataEncomenda.Descripcion_Encomenda}
+            value={this.state.dataEncomenda.Descripcion_Encomenda? this.state.dataEncomenda.Descripcion_Encomenda : ""}
             label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
             className={`${classes.textField} my-3 text-uppercase mx-0 pl-0 pr-1`} />
         </Grid>

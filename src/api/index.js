@@ -162,7 +162,7 @@ export const getTiposTramite = async (idLanguage = 2) => {
 export const getValidateAddress = async ref_catastral => {
   try {
     let response = await api.get(`/DatosCatastro/${ref_catastral}`);
-    return response;
+    return response.data;
   }
   catch (error) {
       return formatMenssage(error.message);
@@ -177,7 +177,7 @@ export const getValidateAddress = async ref_catastral => {
 export const postNuevoExpediente = async data => {
     try {
         let response = await api.post(`/expedientes/`, data);
-        return response;
+        return response.data;
     }
     catch (error) {
         return formatMenssage(error.message);

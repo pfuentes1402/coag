@@ -19,8 +19,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {Fab} from '@material-ui/core';
 import {Add} from '@material-ui/icons';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
-import {elimardelatabla, saveAdressTostore} from "../../actions/expedientes";
+import {elimardelatabla,  saveAdressTostore} from "../../actions/expedientes";
 import {connect} from "react-redux";
+import {some, findIndex} from 'lodash';
 
 const mapStateToProps = (state) => (
     {
@@ -236,8 +237,8 @@ class EnhancedTable extends React.Component {
         order: 'asc',
         orderBy: 'numero',
         selected: [],
-        data: [],
-        page: 0,
+        emplazamientos: [],
+        location: {},        page: 0,
         rowsPerPage: 5,
     };
 
@@ -253,7 +254,7 @@ class EnhancedTable extends React.Component {
 
     handleSelectAllClick = data => event => {
         if (event.target.checked) {
-            this.setState(state => ({ selected: data.map(n => n.id) }));
+            this.setState(state => ({ selected: data.map((n, i) => i) }));
             return;
         }
         this.setState({ selected: [] });
@@ -294,55 +295,57 @@ class EnhancedTable extends React.Component {
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-    handleSaveAddress(){
-        let address = this.props.addressData.Datos_Completos[0];
+    async handleSaveAddress(){
+        let {location} = this.props;
+        let {emplazamientos} = this.state;
+        let locations = [];
+        Object.assign(locations, emplazamientos);
+        let equal = this.ifEqual(emplazamientos, location);
+        if (equal === -1) {
+            locations.push(location);
+        }
+        else {
+            locations[equal] = location;
+        }
 
-        if (!this.ifEqual(this.props.catastro,address)) {
-            this.props.saveAdressTostore(address, this.props.location);
-            }
+        await this.setState({ emplazamientos: locations });
+        this.props.updateEmplazamientos(locations);
     }
 
     ifEqual(data, address){
-        let equal = false;
-        if (data.length > 0) {
-            data.map(value => {
-                if (value.Calle === address.Calle && value.Numero === address.Numero && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal && value.municipio === address.Concello) {
-                    equal = true
-                }
-            })
+        let equal = some(data,address);
+        let index = -1;
+        if (equal){
+            index = findIndex(data,address);
         }
-        return equal;
+        return index;
+    }
+
+    async handleDeleteAddress(){
+        const { selected } = this.state;
+        let locations = [...this.state.emplazamientos];
+        selected.map((s, i)=>{
+            locations.splice(s - i, 1);
+        });
+
+        await this.setState({selected: [], emplazamientos: locations});
+        this.props.updateEmplazamientos(locations);
     }
 
     getData(catastro){
         let aux = [];
         Object.keys(catastro).map(key=>{
-             aux.push(createData(catastro[key]));
-         })
-        return aux;
-    }
-
-    handleDeleteAddress(){
-        const { selected } = this.state;
-        let catastro = this.props.catastro;
-
-        selected.map((s,i)=>{
-            let index = catastro.findIndex(c=>c.id === s);
-            if(index !== -1){
-                this.props.elimardelatabla(index, this.props.location);
-            }
+            aux.push(createData(catastro[key]));
         })
-
-        this.setState({selected: []});
-
+        return aux;
     }
 
 
     render() {
         let { classes, catastro } = this.props;
-        let { order, orderBy, selected, rowsPerPage, page } = this.state;
+        let { order, orderBy, selected, rowsPerPage, page, emplazamientos } = this.state;
         let emptyRows = rowsPerPage - Math.min(rowsPerPage, catastro.length - page * rowsPerPage);
-        let data = this.getData({...catastro});
+        let data = emplazamientos;
         return (
             <Paper className={classes.root}>
 
@@ -360,16 +363,16 @@ class EnhancedTable extends React.Component {
                         <TableBody>
                             {stableSort(data, getSorting(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map(n => {
-                                    const isSelected = this.isSelected(n.id);
+                                .map((n, i) => {
+                                    const isSelected = this.isSelected(i);
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={event => this.handleClick(event, n.id)}
+                                            onClick={event => this.handleClick(event, i)}
                                             role="checkbox"
                                             aria-checked={isSelected}
                                             tabIndex={-1}
-                                            key={n.id}
+                                            key={i}
                                             selected={isSelected}
                                         >
                                             <TableCell padding="checkbox">
@@ -381,7 +384,7 @@ class EnhancedTable extends React.Component {
                                             <TableCell numeric>{n.Numero}</TableCell>
                                             <TableCell numeric>{n.Piso}</TableCell>
                                             <TableCell numeric>{n.Codigo_Postal}</TableCell>
-                                            <TableCell numeric>{n.municipio}</TableCell>
+                                            <TableCell numeric>{n.Concello}</TableCell>
                                         </TableRow>
                                     );
                                 })}

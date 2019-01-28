@@ -80,12 +80,11 @@ class AddExpedient extends Component {
         super(props);
         this.state = {
             code: '', codeStudy: '', title: '', antecedent: '', observations: '',
-            location: {},
+            location: null,
             alias: '',
             catastro: [],
             linksMaps: [],
-            locations: [],
-            emplacement: [],
+            emplazamientos: [],
             isValidate: false,
             isShowAddress: false,
             alert: false,
@@ -111,24 +110,23 @@ class AddExpedient extends Component {
             this.setState({isSave: true});
             let fechaEntrada =  new Date();
             fechaEntrada = fechaEntrada.toISOString();
-            let data = this.props.addressData.Datos_Completos[0];
             let expediente = {
                 'Fecha_Entrada' : fechaEntrada,
                 'Titulo' : this.state.title ,
                 'Expediente_Codigo_Estudio' : this.state.codeStudy,
                 'Antecedente' : this.state.antecedent,
                 'Observaciones' : this.state.observations,
-                'Emplazamientos' : [data],
+                'Emplazamientos' : this.state.emplazamientos,
                 'IgnorarObservaciones': 1
             }
             let response = await postNuevoExpediente(expediente);
             this.setState({isSave: false});
-            if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
-                this.props.fetchErrorExpediente(response.data);
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
             }
             else {
 
-                this.props.history.push("/comunicacion/" + response.data.Expediente[0].Id_Expediente);
+                this.props.history.push("/comunicacion/" + response.Expediente[0].Id_Expediente);
             }
 
         }
@@ -139,8 +137,16 @@ class AddExpedient extends Component {
         this.setState({ alert: false });
     };
 
-    handleUpdateLocation(location) {
-        this.setState({ location: location });
+    handleUpdateIsShowAddress(showAddress){
+        this.setState({ isShowAddress: showAddress });
+    }
+
+    async handleUpdateLocation(location) {
+        await this.setState({ location: location });
+    }
+
+    handleUpdateEmplazamientos(emplazamientos){
+        this.setState({ emplazamientos: emplazamientos });
     }
 
     render() {
@@ -260,10 +266,10 @@ class AddExpedient extends Component {
                             <Grid item xs={12} md={6}>
                                 <Grid container spacing={24}>
                                     <Grid item xs={12}>
-                                        <CatastralTable location={this.state.location} isShowAddress={this.state.isShowAddress}/>
+                                        <CatastralTable location={this.state.location} updateEmplazamientos={(emplazamientos)=>{this.handleUpdateEmplazamientos(emplazamientos)}} isShowAddress={this.state.isShowAddress}/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AddressValidate updateLocation={(location)=>{this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} location={this.state.location}/>
+                                        <AddressValidate updateLocation={async (location)=>{await this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} updateIsShowAddress={(showAddress)=>{this.handleUpdateIsShowAddress(showAddress)}}  location={this.state.location}/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>

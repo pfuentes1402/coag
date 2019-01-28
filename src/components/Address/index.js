@@ -71,7 +71,7 @@ class ValidateAddress extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            location: '',
+            location: null,
             alias: '',
             catastro: [],
             linksMaps: [],
@@ -106,13 +106,15 @@ class ValidateAddress extends Component {
         this.setState({isValidate: true});
         try {
             let response = await getValidateAddress(this.state.location);
-            if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
-                this.props.fetchErrorExpediente(response.data);
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
                 this.setState({isValidate: false, isShowAddress:  false});
+                this.props.updateIsShowAddress(false);
             }
             else {
-                this.setState({data: response.data.Datos_Completos[0], isValidate: false, isShowAddress:  true});
-                this.props.updateLocation(response.data.Datos_Completos[0]);
+                this.setState({data: response.Datos_Completos ? response.Datos_Completos[0] : [], isValidate: false, isShowAddress:  true});
+                this.props.updateLocation(response.Datos_Completos ? response.Datos_Completos[0] : []);
+                this.props.updateIsShowAddress(true);
             }
         }
         catch (e) {
@@ -155,7 +157,7 @@ class ValidateAddress extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         {
-                            this.state.isShowAddress || this.props.isShowAddress ?
+                            this.state.isShowAddress || this.props.isShowAddress  ?
                                 <Grid container spacing={16}>
                                     <Grid item xs={12}>
                                         <FormControl className={classes.formControl2}>
