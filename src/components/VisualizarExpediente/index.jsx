@@ -14,10 +14,9 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import PropTypes from 'prop-types';
 import './index.css';
-import { withRouter } from 'react-router-dom';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
-import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
+import MenuProyectoEjecucion from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
 import { getExpedienteDatosGeneral } from '../../api';
 
 const styles = theme => ({
@@ -44,10 +43,10 @@ const styles = theme => ({
     fontSize: 13
   },
   headerNav: {
-    background: theme.palette.primary.main,
-    color: "white",
-    margin: "auto",
-    textAlign: "center"
+      background: theme.palette.primary.main,
+      color: "white",
+      margin: "auto",
+      textAlign: "center"
 
   },
   leftNav: {
@@ -69,8 +68,7 @@ class VisualizarExpediente extends Component {
       open: true,
       renderComponent: "TrabajoComunicacion",
       expediente: null,
-      currentExpediente: null,
-      idTrabajoActivo: this.props.match.params.idTrabajo
+      currentExpediente: null
     };
   }
 
@@ -83,19 +81,7 @@ class VisualizarExpediente extends Component {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     if (response.data) {
       let expediente = response.data;
-      let currentExpediente = expediente.Expediente.length > 0 ? expediente.Expediente[0] : null;
-      let activeTrabajo = this.props.match.params.idTrabajo
-        ? this.props.match.params.idTrabajo
-        : currentExpediente
-          ? currentExpediente.Id_Trabajo_Encomenda_Actual
-          : null;
-
-      await this.setState({
-        expediente: expediente,
-        currentExpediente: currentExpediente,
-        idTrabajoActivo: activeTrabajo
-      });
-      this.handleChangeMenuOption(activeTrabajo);
+      this.setState({ expediente: expediente, currentExpediente: expediente.Expediente.length > 0 ? expediente.Expediente[0] : null});
     }
   }
 
@@ -104,16 +90,8 @@ class VisualizarExpediente extends Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  async handleChangeMenuOption(idTrabajo) {
-    if (this.state.currentExpediente) {
-      if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
-        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo });
-      }
-      else {
-        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo });
-      }
-    }
-
+  handleChangeMenuOption(componentName) {
+    this.setState({ renderComponent: componentName });
   }
 
   renderNavBar() {
@@ -160,12 +138,14 @@ class VisualizarExpediente extends Component {
         <Divider />
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {this.state.expediente.Trabajos.map((trabajo, index) => {
-              return <MenuOption key={index} changeOption={idTrabajo => this.handleChangeMenuOption(idTrabajo)}
-                expediente={this.state.expediente} trabajo={trabajo}
-                active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())} />
-            })}
+            <ListItem button className={classes.nested} className="pl-1 pr-2"
+              onClick={() => this.handleChangeMenuOption("TrabajoComunicacion")}>
+              <ListItemText inset primary="Comunicación de Encargo" className="pl-2" />
+            </ListItem>
+            <MenuProyectoEjecucion changeOption={componentName => this.handleChangeMenuOption(componentName)}
+              expediente={this.state.expediente} />
           </List>
+          <Divider />
         </Collapse>
       </List>
     );
@@ -176,21 +156,21 @@ class VisualizarExpediente extends Component {
     return (
       this.state.expediente
         ? <Grid container>
-          <Grid item md={12} xs={12}>
-            {this.renderNavBar()}
-          </Grid>
-          <Grid item md={3} xs={12} className={classes.boredrRight}>
-            {this.renderLeftNav()}
-          </Grid>
-          <Grid item md={9} xs={12} className={classes.backgroundGrey}>
-            {
-              this.state.renderComponent === "TrabajoComunicacion"
-                ? <TrabajoComunicacion expediente={expediente} />
-                : this.state.renderComponent === "TrabajoEjecucion"
-                  ? <TrabajoEjecucion expediente={expediente} />
-                  : <TrabajoComunicacion expediente={expediente} />
-            }
-          </Grid>
+              <Grid item md={12} xs={12}>
+                {this.renderNavBar()}
+              </Grid>
+              <Grid item md={3} xs={12} className={classes.boredrRight}>
+                {this.renderLeftNav()}
+              </Grid>
+              <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+                {
+                  this.state.renderComponent === "TrabajoComunicacion"
+                    ? <TrabajoComunicacion expediente={expediente} />
+                    : this.state.renderComponent === "TrabajoEjecucion"
+                      ? <TrabajoEjecucion expediente={expediente} trabajo={3} estructura={{id:9151681, nombre:"Memoria Construtiva"}} /> //todo:si estructura=false obtiene todos los archivos
+                      : <TrabajoComunicacion expediente={expediente} />
+                }
+              </Grid>
         </Grid>
         : <div className="text-center my-5">
           <CircularProgress />
@@ -209,4 +189,4 @@ VisualizarExpediente.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(VisualizarExpediente))));
+export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(VisualizarExpediente)));

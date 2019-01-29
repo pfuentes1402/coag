@@ -1,4 +1,4 @@
-import { handleLoggout } from './../helpers/logout.js'
+import {handleLoggout} from './../helpers/logout.js'
 import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
@@ -11,86 +11,66 @@ const BASE_PATH = "http://servicios.coag.es/api";
 *
 */
 const api = axios.create({
-  baseURL: BASE_PATH,
-  timeout: 10000,
-  header: {
-    'Token': localStorage.getItem('token')
-  },
-  transformRequest: [function (data, headers) {
+    baseURL: BASE_PATH,
+    timeout: 10000,
+    header: {
+        'Token': localStorage.getItem('token')
+    },
+    transformRequest: [function (data, headers) {
 
-    return JSON.stringify(data);
-  }],
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Token': localStorage.getItem('token') || ''
-  }
+        return JSON.stringify(data);
+    }],
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Token': localStorage.getItem('token') || ''
+    }
 
 
 });
 
 api.interceptors.response.use(function (response) {
 
-  return response
+    return response
 }, function (error) {
 
-  const originalRequest = error.config
+    const originalRequest = error.config
 
-  if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true
+    if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true
 
 
-    const retryOriginalRequest = new Promise((resolve) => {
-      getToken().then(response => {
-        if (response.headers.token) {
-          originalRequest.headers['Token'] = response.headers.token;
-          resolve(api(originalRequest))
-        } else {
-          handleLoggout();
-        }
-      });
-    })
-    return retryOriginalRequest
-  }
+        const retryOriginalRequest = new Promise((resolve) => {
+            getToken().then(response => {
+                if (response.headers.token) {
+                    originalRequest.headers['Token'] = response.headers.token;
+                    resolve(api(originalRequest))
+                } else {
+                    handleLoggout();
+                }
+            });
+        })
+        return retryOriginalRequest
+    }
 
-  return Promise.reject(error)
+    return Promise.reject(error)
 })
 //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
 
 
 /*
- *Proporciona la extructura documental de un trabajo
- * Parametros 
- *    id_expediente
- *    idtrabajo
- */
-export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
-  api.get(`/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
-    .then(r => {
-      return r;
-    })
-    .then(resultado => {
-      let ordenado = ordertree(resultado);
-      return ordenado;
-    });
-
-
-
-/*
  *Proporciona los datos generales de un expediente
- * Parametros 
+ * Parametros
  *    id_expediente
  */
 export const getExpedienteDatosGeneral = async (id_expediente) => {
-  try {
-    let response = await api.get(`/expedientes/${id_expediente}`);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/expedientes/${id_expediente}`);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
-
 
 
 /**
@@ -100,12 +80,12 @@ export const getExpedienteDatosGeneral = async (id_expediente) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTiposTrabajo = (id_grupo, idLanguage = 1) =>
-  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
-    return response;
-  })
-    .then(resultado => {
-      return resultado;
-    });
+    api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
+        return response;
+    })
+        .then(resultado => {
+            return resultado;
+        });
 
 /**
  * Proporciona los tipos de trámite de un trabajo
@@ -113,13 +93,13 @@ export const getTiposTrabajo = (id_grupo, idLanguage = 1) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
-  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${idLanguage}`)
-    .then(response => {
-      return response;
-    })
-    .then(resultado => {
-      return resultado;
-    });
+    api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${idLanguage}`)
+        .then(response => {
+            return response;
+        })
+        .then(resultado => {
+            return resultado;
+        });
 
 /**
  * Proporciona los tipos de trabajos permitidos de un tipo de obra y tipo de tramite
@@ -129,13 +109,12 @@ export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 2) => {
-  try {
-    let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`);
-    return response;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 /**
  * Obtiene los tipos de tramites
@@ -153,13 +132,13 @@ export const getTiposTramite = async (idLanguage = 2) => {
 }
 
 
-
 /*
  *Valida una dirección a traves de su referencia catastral
- * Parametros 
+ * Parametros
  *    ref_catastral
  */
 export const getValidateAddress = async ref_catastral => {
+
   try {
     let response = await api.get(`/DatosCatastro/${ref_catastral}`);
     return response.data;
@@ -167,6 +146,8 @@ export const getValidateAddress = async ref_catastral => {
   catch (error) {
       return formatMenssage(error.message);
   }
+
+
 }
 
 /**
@@ -177,253 +158,253 @@ export const getValidateAddress = async ref_catastral => {
 export const postNuevoExpediente = async data => {
     try {
         let response = await api.post(`/expedientes/`, data);
+
         return response.data;
     }
     catch (error) {
-        return formatMenssage(error.message);
+
+        return error;
     }
+
 }
 /*
  *Edita un expediente expediente
- * Parametros 
+ * Parametros
  *    data->Datos que conforman  el expediente
 */
 export const putExpediente = async (data) => {
-  try {
-    let response = await api.put(`/expedientes/${data.Id_Expediente}`, data);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.put(`/expedientes/${data.Id_Expediente}`, data);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /*
  *Edita un expediente expediente
- * Parametros 
+ * Parametros
  *    data->Datos que conforman  el expediente
 */
 export function getAgentesInfo(id_Agente) {
-  let data = {
-    Arquitectos: [
-      {
-        nif: '76900827M',
-        nombre: 'Pedro Martinez',
-        porcentage: '60%',
-      },
-      {
-        nif: '35782595X',
-        nombre: 'Martin Alvarez Salgado',
-        porcentage: '20%',
-      }
-    ],
-    Promotores: [
-      {
-        nif: '3578245544T',
-        nombre: 'Joaquin Perez Salgado',
-        porcentage: '10%',
-      },
-      {
-        nif: '233444266H',
-        nombre: 'Juan Alvarez Sousa',
-        porcentage: '10%',
-      }
-    ]
-  }
-  return data;
+    let data = {
+        Arquitectos: [
+            {
+                nif: '76900827M',
+                nombre: 'Pedro Martinez',
+                porcentage: '60%',
+            },
+            {
+                nif: '35782595X',
+                nombre: 'Martin Alvarez Salgado',
+                porcentage: '20%',
+            }
+        ],
+        Promotores: [
+            {
+                nif: '3578245544T',
+                nombre: 'Joaquin Perez Salgado',
+                porcentage: '10%',
+            },
+            {
+                nif: '233444266H',
+                nombre: 'Juan Alvarez Sousa',
+                porcentage: '10%',
+            }
+        ]
+    }
+    return data;
 }
-
 
 
 /*
  *Proporciona los datos generales de un expediente
- * Parametros 
+ * Parametros
  *    id_expediente
  */
 export const test = id_expediente =>
-  api.get(`/expedientes/${id_expediente}`)
-    .then(response => {
+    api.get(`/expedientes/${id_expediente}`)
+        .then(response => {
 
-      return response.json();
-    })
-    .then(resultado => {
+            return response.json();
+        })
+        .then(resultado => {
 
-      return resultado;
-    });
+            return resultado;
+        });
 
 /*
  *Proporciona los trabajos de un expediente
- * Parametros 
+ * Parametros
  *    id_expediente
  */
 export const GettrabajosExpediente = (id_expediente) =>
-  api.get(`/expedientes/${id_expediente}/trabajos/`)
+    api.get(`/expedientes/${id_expediente}/trabajos/`)
 
-    .then(response => {
-      return response.data.Trabajos;
-    }).catch((error) => {
+        .then(response => {
+            return response.data.Trabajos;
+        }).catch((error) => {
     });
 /*
  *Proporciona expedientes de un usuario
- * Parametros 
+ * Parametros
  *    id_expediente
  */
 export const expedientesuser = () =>
-  api.get('/expedientes')
+    api.get('/expedientes')
 
-    .then(response => {
-      return response.data.Expedientes;
-    }).catch((error) => {
+        .then(response => {
+            return response.data.Expedientes;
+        }).catch((error) => {
     });
-
 
 
 /*
 *Proporciona los datos generales de un Trabajo
-* Parametros 
+* Parametros
 *    id_expediente
 *    id_Trabajo
 */
 export const getTrabajoeDatosGenerales = (id_expediente, id_Trabajo) =>
-  api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
-    .then(response => {
-      return response;
+    api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
+        .then(response => {
+            return response;
 
-    })
-    .then(resultado => {
+        })
+        .then(resultado => {
 
-      return resultado;
-    });
+            return resultado;
+        });
 
 export const errorLogin = (data) => (
 
-  {
+    {
 
-    type: types.FETCH_LOGIN_FAIL,
-    payload: data
-  });
+        type: types.FETCH_LOGIN_FAIL,
+        payload: data
+    });
 
 
 /*
  *  Función que loguea a un usuario y consigue identificadores únicos para la generación del token
- *  Parametros 
+ *  Parametros
  *    usuario
  *    password
  */
 export const funcionForma = (datos) =>
-  api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
-    return response;
-  }).catch(error => {
-    //errorLogin(error);
-    return error.response.status;
-  });
+    api.post('/login', {Usuario: datos.usuario, password: datos.password}).then(response => {
+        return response;
+    }).catch(error => {
+        //errorLogin(error);
+        return error.response.status;
+    });
 
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
- * Parametros 
+ * Parametros
  *    Recoge ClienteId y ClienteClave del localStorage del navegador
 */
 export const getToken = () =>
-  axios.post('http://servicios.coag.es/api/authenticate',
-    {
-      ClienteId: localStorage.getItem('clienteid'),
-      ClienteClave: localStorage.getItem('clienteclave')
-    })
-    .then(response => {
-      localStorage.setItem('token', response.headers.token);
+    axios.post('http://servicios.coag.es/api/authenticate',
+        {
+            ClienteId: localStorage.getItem('clienteid'),
+            ClienteClave: localStorage.getItem('clienteclave')
+        })
+        .then(response => {
+            localStorage.setItem('token', response.headers.token);
 
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
-      return response;
-    }).catch(error => {
-      handleLoggout()
-      return error;
+            //  store.dispatch(fetchRefresh(response)).then( response=>{
+            //    return response;
+            //  });
+            return response;
+        }).catch(error => {
+        handleLoggout()
+        return error;
     });
 /*
  * Proporciona las acciones pendientes de un usuario
- * Parametros 
+ * Parametros
  *   Numero de acciones pendientes
 */
 export const getAcciones = () =>
-  api.post('http://servicios.coag.es/api/AccionesPendientes/',
-  )
-    .then(response => {
+    api.post('http://servicios.coag.es/api/AccionesPendientes/',
+    )
+        .then(response => {
 
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
-      return response;
-    }).catch(error => {
+            //  store.dispatch(fetchRefresh(response)).then( response=>{
+            //    return response;
+            //  });
+            return response;
+        }).catch(error => {
 
-      return error;
+        return error;
     });
 /*
- *obtiene las acciones pendientes(todas), luego las pagina el componente 
+ *obtiene las acciones pendientes(todas), luego las pagina el componente
  */
 
 export const getultimosTrabajos = () =>
-  api.get('AccionesPendientes/')
-    .then(response => {
-      //let test=  store ? store.getState().user.token : ''
+    api.get('AccionesPendientes/')
+        .then(response => {
+            //let test=  store ? store.getState().user.token : ''
 
-      return response;
-    });
+            return response;
+        });
 
 //FUNCION DUMMY para obtener los susceptibles de acciones
 export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
-  let data = {
-    Expedientes: [
-      {
-        "Expediente_Codigo": "700043",
-        "Id_Trabajo": 5,
-        "Titulo": "Tramites",
-        "Fecha_Entrada": "12/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 700043,
-      },
-      {
-        "Expediente_Codigo": "1801314",
-        "Id_Trabajo": 5,
-        "Titulo": "Vivienda calle Rosal",
-        "Fecha_Entrada": "11/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 696157,
-      },
-      {
-        "Expediente_Codigo": "1801114",
-        "Id_Trabajo": 2,
-        "Titulo": "Viviendas en Gerona",
-        "Fecha_Entrada": "15/04/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Gerona",
-        "Id_Expediente": 695127,
-      },
-      {
-        "Expediente_Codigo": "1801884",
-        "Id_Trabajo": 3,
-        "Titulo": "Viviendas en Vigo",
-        "Fecha_Entrada": "15/09/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 702103,
-      },
-      {
-        "Expediente_Codigo": "1801314",
-        "Id_Trabajo": 5,
-        "Titulo": "Tramites",
-        "Fecha_Entrada": "19/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Lerida",
-        "Id_Expediente": 702103,
-      },
+    let data = {
+        Expedientes: [
+            {
+                "Expediente_Codigo": "700043",
+                "Id_Trabajo": 5,
+                "Titulo": "Tramites",
+                "Fecha_Entrada": "12/03/2018",
+                "Concello": "A Cañiza",
+                "Emplazamiento": "Calle Rosal",
+                "Id_Expediente": 700043,
+            },
+            {
+                "Expediente_Codigo": "1801314",
+                "Id_Trabajo": 5,
+                "Titulo": "Vivienda calle Rosal",
+                "Fecha_Entrada": "11/03/2018",
+                "Concello": "A Cañiza",
+                "Emplazamiento": "Calle Rosal",
+                "Id_Expediente": 696157,
+            },
+            {
+                "Expediente_Codigo": "1801114",
+                "Id_Trabajo": 2,
+                "Titulo": "Viviendas en Gerona",
+                "Fecha_Entrada": "15/04/2018",
+                "Concello": "A Cañiza",
+                "Emplazamiento": "Calle Gerona",
+                "Id_Expediente": 695127,
+            },
+            {
+                "Expediente_Codigo": "1801884",
+                "Id_Trabajo": 3,
+                "Titulo": "Viviendas en Vigo",
+                "Fecha_Entrada": "15/09/2018",
+                "Concello": "A Cañiza",
+                "Emplazamiento": "Calle Rosal",
+                "Id_Expediente": 702103,
+            },
+            {
+                "Expediente_Codigo": "1801314",
+                "Id_Trabajo": 5,
+                "Titulo": "Tramites",
+                "Fecha_Entrada": "19/03/2018",
+                "Concello": "A Cañiza",
+                "Emplazamiento": "Calle Lerida",
+                "Id_Expediente": 702103,
+            },
 
 
-    ],
-  }
-  return data;
+        ],
+    }
+    return data;
 }
 
 /**
@@ -433,13 +414,13 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
  * @returns {any}
  */
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
-  try {
-    let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
-    let response = await api.get(uri);
-    return response;
-  } catch (error) {
-    return error
-  }
+    try {
+        let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+        let response = await api.get(uri);
+        return response;
+    } catch (error) {
+        return error
+    }
 }
 
 /**
@@ -449,10 +430,10 @@ export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25)
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getestructuradocumental = (idExpediente, idTrabajo) =>
-  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
-    .then(response => {
-      return response.data;
-    });
+    api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
+        .then(response => {
+            return response.data;
+        });
 
 
 /**
@@ -461,10 +442,10 @@ export const getestructuradocumental = (idExpediente, idTrabajo) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getGruposRaiz = (idLanguage = 2) =>
-  api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`)
-    .then(response => {
-      return response;
-    });
+    api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`)
+        .then(response => {
+            return response;
+        });
 
 /**
  * Inserta un trabajo encomenda (comunicacion de encargo) para un expediente
@@ -510,30 +491,30 @@ export const getGruposRaiz = (idLanguage = 2) =>
  * @returns {Promise}
  */
 export const insertTrabajoEncomenda = (data, id_expediente) => {
-  return new Promise((success, error) => {
-    api.post(`/expedientes/${id_expediente}/trabajos/`, data)
-      .then(resultado => {
-        success(resultado)
-      }).catch(function (e) {
-        console.log(e.response.data.message)
-      });
-  })
+    return new Promise((success, error) => {
+        api.post(`/expedientes/${id_expediente}/trabajos/`, data)
+            .then(resultado => {
+                success(resultado)
+            }).catch(function (e) {
+            console.log(e.response.data.message)
+        });
+    })
 };
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
 export const getFuncionesTipologia = (idLanguage = 2) =>
-  api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
-    return response;
-  });
+    api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
+        return response;
+    });
 
 /**Agregar nuevos agentes a un trabajo */
 export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
-  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`, { OtrosAgentes: otrosAgentes })
-    .then(response => {
-      return response;
-    }).catch(error => {
-      console.log("ERROR", error);
-      return 403;
+    api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`, {OtrosAgentes: otrosAgentes})
+        .then(response => {
+            return response;
+        }).catch(error => {
+        console.log("ERROR", error);
+        return 403;
     });
 
 /**
@@ -542,12 +523,12 @@ export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getPaises = async (idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 /**
  * Proporciona la lista de regiones autonomas
@@ -555,12 +536,12 @@ export const getPaises = async (idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getRegionesAutonoma = async (idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -570,12 +551,12 @@ export const getRegionesAutonoma = async (idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getProvincias = async (idAutonomia, idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -585,12 +566,12 @@ export const getProvincias = async (idAutonomia, idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getConcellos = async (id_provincia, idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -599,12 +580,12 @@ export const getConcellos = async (id_provincia, idLanguage = 2) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTipoPromotores = async (idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -613,12 +594,12 @@ export const getTipoPromotores = async (idLanguage = 2) => {
  * @returns {Promise<*>}
  */
 export const getTipoOrganismoa = async (idLanguage = 2) => {
-  try {
-    let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
-    return response;
-  } catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 /**
  * Permite insertar un trabajo a un expediente existente
@@ -627,6 +608,7 @@ export const getTipoOrganismoa = async (idLanguage = 2) => {
  * @returns {Promise<*>}
  */
 export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
+
   try {
     let response = await api.post(`/expedientes/${idExpediente}/trabajos/`, dataPost)
     return response.data;
@@ -634,20 +616,20 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
   catch (error) {
     return error;
   }
+
 }
 
 /**
  * Actualizar emplazamientos dentro de un expediente
- * @param {*} data 
+ * @param {*} data
  */
 export const putEmplazamiento = async (idExpediente, data) => {
-  try {
-    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -659,26 +641,25 @@ export const putEmplazamiento = async (idExpediente, data) => {
  * @param {*Datos a enviar} data
  */
 export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
-  try {
-    let response = {};
-    switch (verb) {
-      case "POST":
-        response = api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
-        break;
+    try {
+        let response = {};
+        switch (verb) {
+            case "POST":
+                response = api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+                break;
 
-      case "PUT":
-        response = api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
-        break;
+            case "PUT":
+                response = api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+                break;
 
-      case "DELETE":
-        response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
-        break;
+            case "DELETE":
+                response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
+                break;
+        }
+        return response;
+    } catch (error) {
+        return error;
     }
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
 }
 
 /** Seccion de promotores **/
@@ -689,13 +670,12 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
  * @returns {Promise<*>}
  */
 export const getColegiados = async (idExpediente, idTrabajo) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 /**
  * Inserta los promotores dado el expediente expecificado por idExpediente y el trabajo correspondiente al idTrabajo
@@ -705,13 +685,12 @@ export const getColegiados = async (idExpediente, idTrabajo) => {
  * @returns {Promise<*>}
  */
 export const postColegiados = async (idExpediente, idTrabajo, data) => {
-  try {
-    let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -722,13 +701,12 @@ export const postColegiados = async (idExpediente, idTrabajo, data) => {
  * @returns {Promise<*>}
  */
 export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => {
-  try {
-    let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
@@ -739,28 +717,26 @@ export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => 
  * @returns {Promise<*>}
  */
 export const putColegiados = async (idExpediente, idTrabajo, data) => {
-  try {
-    let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
-    return response;
-  }
-  catch (error) {
-    return error;
-  }
+    try {
+        let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+        return response;
+    } catch (error) {
+        return error;
+    }
 }
 
 /**
  * Obtiene los datos de la encomenda actual
- * @param {*} idExpediente 
- * @param {*} languageId 
+ * @param {*} idExpediente
+ * @param {*} languageId
  */
 export const fetchEncomendaActual = async (idExpediente, languageId) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
-    return response;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 /**
  * Obtiene informacion del expediente con la encomenda actual
@@ -770,13 +746,12 @@ export const fetchEncomendaActual = async (idExpediente, languageId) => {
  * @returns {Promise<*>}
  */
 export const manageEncomenda = async (idExpediente, datapost, languageId = 1) => {
-  try {
-    let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
-    return response;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 /**
@@ -798,7 +773,89 @@ export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_m
 }
 
 export const formatMenssage = (error) => (
-  {
-    "MensajesProcesado": [{ "Mensaje": error }]
-  }
+    {
+        "MensajesProcesado": [{"Mensaje": error}]
+    }
 )
+/**
+ * Sección de docuemntos de un expediente
+ */
+//obtener la estructura documental de un  trabajo
+export const getEstructuraDocumental = async (idExpediente, idTrabajo, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//obtener todos los archivos de un expediente
+export const getAllArchivos = async (idExpediente, idTrabajo, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/archivos?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//obtener todos los archivos de una carpeta
+export const getFilesFromFolder = async (idExpediente, idTrabajo, folderId, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//obtener los detalles de una carpeta
+export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//Subir un fichero a una carpeta
+export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let data = new FormData();
+            data.append('file', file.data);
+            data.append('filename', file.filename)
+
+            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Token': localStorage.getItem('token'),
+                    }
+
+
+                }
+            );
+            resolve(result)
+
+
+            // let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`,
+            //     {content:data,
+            //         processData: false,
+            //         contentType: false
+            //     },{
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }});
+            //resolve(response);
+        } catch (error) {
+            reject(formatMenssage(error.message));
+        }
+        // setTimeout(()=>{
+        //   console.log(file)
+        //   resolve()
+        // },3000)
+    })
+
+    //
+}
+
