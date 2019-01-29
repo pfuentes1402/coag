@@ -310,7 +310,7 @@ class CrearTrabajo extends Component {
                                                                                                 </Grid>
                                                                                             </Grid>
                                                                                         </Grid>
-                                                                                        <Grid item xs={12}>
+                                                                                        <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
                                                                                             {
                                                                                                 this.state.inforCarpetas.map((carpeta, indexCarpeta) => {
                                                                                                     return <List key={indexCarpeta} component="div" disablePadding>
@@ -338,7 +338,7 @@ class CrearTrabajo extends Component {
                                                                                                         </ListItem>
                                                                                                         <Collapse in={carpeta.open ? carpeta.open : false} timeout="auto" unmountOnExit>
                                                                                                             <List component="div" disablePadding>
-                                                                                                                <ListItem className="pt-0 pb-0 pl-5">
+                                                                                                                <ListItem className="pt-0 pb-0 pl-5" >
                                                                                                                     <List component="div" disablePadding style={{ width: '100%' }}>
                                                                                                                         {carpeta.children && carpeta.children.map((c, i) => {
                                                                                                                             return <ListItem className="pt-0 pb-0">

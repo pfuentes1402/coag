@@ -58,22 +58,6 @@ api.interceptors.response.use(function (response) {
 //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
 
 
-/*
- *Proporciona la extructura documental de un trabajo
- * Parametros 
- *    id_expediente
- *    idtrabajo
- */
-export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
-  api.get(`/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
-    .then(r => {
-      return r;
-    })
-    .then(resultado => {
-      let ordenado = ordertree(resultado);
-      return ordenado;
-    });
-
 
 
 /*
@@ -468,44 +452,7 @@ export const getGruposRaiz = (idLanguage = 2) =>
 
 /**
  * Inserta un trabajo encomenda (comunicacion de encargo) para un expediente
- * @param data object {
- *           "Id_Tipo_Grupo_Tematico": 1,
- *           "Id_Tipo_Autorizacion_Municipal":1,
- *           "Id_Tipo_Fase":1,
- *           "Id_Tipo_Trabajo":219,
- *           "Id_Tipo_Tramite":2,
- *
- *           "Colegiados": [
- *             {   "Id_Colegiado":2853,
- *                "Id_Tipo_Colegiado":1,
- *                "Id_Sociedad":0,
- *                "Porcentaje": 10,
- *                "Ids_Funciones":"31,30",
- *                "PorcentajesEquitativos": 1
- *                     	}
- *
- *                     	],
- *            "Promotores"	:[
- *               {"id_entidad": -1,
- *                 "Nif":"36110129H",
- *                 "Id_Tipo_Entidad":1,
- *                 "Id_Tipo_Encargante":3,
- *                 "Nombre": "Manolo",
- *                 "Apellido1":"Cadenas",
- *                 "Apellido2":"",
- *                 "Observaciones":null,
- *                 "Id_Tipo_Organismo": null,
- *                 "Mail":"cadenas@gamil.com",
- *                 "Telefono":null,
- *                  "Calle":"Gran vía",
- *                 "Numero":null,
- *                 "Piso":null,
- *                 "Codigo_Postal" :null,
- *                 "Id_Concello":36057,
- *                 "PorcentajesEquitativos": 1
- *             	}  	],
- *             "IgnorarObservaciones":1
- *             }
+ * @param object
  * @param id_expediente
  * @returns {Promise}
  */
@@ -753,7 +700,7 @@ export const putColegiados = async (idExpediente, idTrabajo, data) => {
  * @param {*} idExpediente 
  * @param {*} languageId 
  */
-export const fetchEncomendaActual = async (idExpediente, languageId) => {
+export const fetchEncomendaActual = async (idExpediente, languageId = 2) => {
   try {
     let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
     return response;
@@ -769,7 +716,7 @@ export const fetchEncomendaActual = async (idExpediente, languageId) => {
  * @param languageId
  * @returns {Promise<*>}
  */
-export const manageEncomenda = async (idExpediente, datapost, languageId = 1) => {
+export const manageEncomenda = async (idExpediente, datapost, languageId = 2) => {
   try {
     let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
     return response;
@@ -787,9 +734,19 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 1) =>
  * @param languageId
  * @returns {Promise<*>}
  */
-export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 1) => {
+export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 2) => {
     try {
         let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
+export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
+    try {
+        let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
         return response.data;
     }
     catch (error) {
