@@ -117,22 +117,37 @@ class CrearTrabajo extends Component {
         this.setState({ inforCarpetas: inforCarpetas });
     }
 
-    handleChange = (fase, index, name) => event => {
+    handleChange = (fase, index, name) => async event => {
         let tiposTrabajos = {};
         Object.assign(tiposTrabajos, this.state.tiposTrabajos);
         tiposTrabajos[fase][index][name] = event.target.value;
+        let trabajo = tiposTrabajos[fase][index];
+        let tipoTramite = 0;
         if(name === 'Id_Tipo_Tramite'){
-            let tipoTramite = this.state.tiposTramites.find(t=>t.Id_Tipo_Tramite === event.target.value);
+            tipoTramite = this.state.tiposTramites.find(t=>t.Id_Tipo_Tramite === event.target.value);
             tiposTrabajos[fase][index]['Obligatorio']= tipoTramite.Nombre;
+            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, trabajo.defaultSelect, trabajo.Id_Tipo_Trabajo);
+
+        }else {
+            let nombre = tiposTrabajos[fase][index]['Obligatorio'].toUpperCase();
+            tipoTramite = this.state.tiposTramites.find(t=>t.Nombre.toUpperCase() === nombre);
+            console.log(tipoTramite)
+            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, event.target.value, trabajo.Id_Tipo_Trabajo);
         }
+
         this.setState({ tiposTrabajos: tiposTrabajos });
+
     };
 
 
      handleChangePanel = (id_tipo_trabajo, id_tipo_tramite, es_modificado)  => async(event, expanded) =>{
+        await this.updateInfoCarpeta(id_tipo_trabajo, id_tipo_tramite, es_modificado, expanded)
+    }
+
+    async updateInfoCarpeta(id_tipo_trabajo, id_tipo_tramite, es_modificado, expanded){
         this.setState({  expanded: expanded ? id_tipo_trabajo : false, isCarpetas: true });
         if(id_tipo_tramite !== undefined){
-            await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado);
+            await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado === "Es_Trabajo_Nuevo" ? 0 : 1);
         }
         this.setState({ isCarpetas: false });
     }
@@ -226,9 +241,7 @@ class CrearTrabajo extends Component {
                                                                                         id: 'Id_Tipo_Tramite',
                                                                                     }}
                                                                                 >
-                                                                                    <MenuItem value="">
-                                                                                        <em>None</em>
-                                                                                    </MenuItem>
+
                                                                                     {tiposTramites.map(tramite => (
                                                                                         <MenuItem
                                                                                             value={tramite.Id_Tipo_Tramite}>{tramite.Nombre}</MenuItem>
