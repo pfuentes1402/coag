@@ -340,7 +340,7 @@ class TrabajoEjecucion extends Component {
                                                     })
                                                 }
                                                 {
-                                                    this.state.temporalFiles.map((item, pos) => {
+                                                    this.state.temporalFiles&& this.state.temporalFiles.map((item, pos) => {
                                                         return (<ExpansionPanel expanded={this.state.panelExpanded === 't-'+pos}
                                                                                 onChange={() => this.expandPanel('t-'+pos)}>
                                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>

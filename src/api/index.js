@@ -761,15 +761,6 @@ export const formatMenssage = (error) => (
 /**
  * Sección de docuemntos de un expediente
  */
-//obtener la estructura documental de un  trabajo
-export const getEstructuraDocumental = async (idExpediente, idTrabajo, lang = 1) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
-        return response;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
-}
 
 export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
     try {

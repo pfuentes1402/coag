@@ -73,6 +73,7 @@ class VisualizarExpediente extends Component {
         expediente: null,
         currentExpediente: null,
         idTrabajoActivo: this.props.match.params.idTrabajo,
+        idEstructuraActiva: null,
         estructuraDocumental: [],
         isLoadEstructura: false
 
@@ -135,15 +136,19 @@ class VisualizarExpediente extends Component {
   async handleChangeMenuOption(idTrabajo) {
     if (this.state.currentExpediente) {
       if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
-        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo });
+        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null });
       }
       else {
-        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo });
+        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null });
       }
     }
       await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
 
   }
+
+    async handleChangeEstructuran(idEstructura){
+      await this.setState({idEstructuraActiva: idEstructura});
+    }
 
   renderNavBar() {
     let { classes } = this.props;
@@ -191,7 +196,8 @@ class VisualizarExpediente extends Component {
           <List component="div" disablePadding>
             {this.state.expediente.Trabajos.map((trabajo, index) => {
               return <MenuOption key={index}
-                                 changeOption={idTrabajo => this.handleChangeMenuOption(idTrabajo)}
+                                 changeOption={(idTrabajo) => {this.handleChangeMenuOption(idTrabajo)}}
+                                 changeEstructura={(idEstructura) => {this.handleChangeEstructuran(idEstructura)}}
                                  expediente={this.state.expediente}
                                  trabajo={trabajo}
                                  estructuraDocumental={this.state.estructuraDocumental}
@@ -220,10 +226,7 @@ class VisualizarExpediente extends Component {
             {
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
-                : this.state.renderComponent === "TrabajoEjecucion"
-                  ? <TrabajoEjecucion expediente={expediente} trabajo={3}  />
-                  // ? <TrabajoEjecucion expediente={expediente} trabajo={3} estructura={{id:9151681, nombre:"Memoria Construtiva"}} />
-                  : <TrabajoComunicacion expediente={expediente} />
+                : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
             }
           </Grid>
         </Grid>
