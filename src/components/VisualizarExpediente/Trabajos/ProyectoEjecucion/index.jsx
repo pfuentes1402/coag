@@ -17,6 +17,7 @@ import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
+import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
@@ -308,7 +309,7 @@ class TrabajoEjecucion extends Component {
                                                                             <Grid xs={12}>
                                                                                 <List>
                                                                                     {
-                                                                                        this.state.firmasDigitales. length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
+                                                                                        this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
                                                                                             if (fd.Id_Archivo == item.Id_Archivo) {
                                                                                                 return (
                                                                                                     <ListItem >
@@ -401,101 +402,111 @@ class TrabajoEjecucion extends Component {
                                         <Typography variant='button'>ficha del trabajo</Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
-                                        <div style={{width: '100%'}}>
-                                            <Grid container spacing={4}>
-                                                <Grid xs={6} >
-                                                    <Typography variant='overline'>
-                                                        TITULO COMPLEMENTARIO
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Titulo_Complementario?this.state.workDetails.Trabajos[0].Titulo_Complementario:"-"}
-                                                    </Typography>
+                                        <Grid container spacing={24}>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={4}>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            TITULO COMPLEMENTARIO
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Titulo_Complementario?this.state.workDetails.Trabajos[0].Titulo_Complementario:"-"}
+                                                        </Typography>
 
-                                                </Grid>
-                                                <Grid xs={6} className="pl-1">
-                                                    <Typography variant='overline'>
-                                                        fecha de entrada
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}
-                                                    </Typography>
+                                                    </Grid>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            fecha de entrada
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid container spacing={4}>
-                                                <Grid xs={6} >
-                                                    <Typography variant='overline'>
-                                                        ESTADO
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Estado?this.state.workDetails.Trabajos[0].Estado:"-"}
-                                                    </Typography>
+                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                                <Grid container spacing={4}>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            ESTADO
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Estado?this.state.workDetails.Trabajos[0].Estado:"-"}
+                                                        </Typography>
 
-                                                </Grid>
-                                                <Grid xs={6} className="pl-1">
-                                                    <Typography variant='overline'>
-                                                        FECHA DE VISADO
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        ???????
-                                                        {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
-                                                    </Typography>
+                                                    </Grid>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            FECHA DE VISADO
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            ???????
+                                                            {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid container spacing={4}>
-                                                <Grid xs={4} >
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Tipo_Tramite}
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid xs={2} className="pl-1">
-                                                    <Typography variant='subtitle2' style={{fontWeight:this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo?'bold':'none'}}>
-                                                        Nuevo Trabajo
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid xs={3} className="pl-1">
-                                                    <Typography variant='subtitle2' style={{fontWeight:this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial?'bold':'none'}}>
-                                                        Modificación Sustancial
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid xs={3} className="pl-1">
-                                                    <Typography variant='subtitle2' style={{fontWeight:this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica?'bold':'none'}}>
-                                                        Corrección Básica
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid container spacing={4}>
-                                                <Grid xs={12} >
-                                                    <Typography variant='overline'>
-                                                        Observaciones
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Observaciones?this.state.workDetails.Trabajos[0].Observaciones:'-'}
-                                                    </Typography>
-
-                                                </Grid>
-
-                                            </Grid>
-                                            <Grid container spacing={4}>
-                                                <Grid xs={6} >
-                                                    <Typography variant='overline'>
-                                                        Tipo de expediente
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        {this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/{this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}
-                                                    </Typography>
-
-                                                </Grid>
-                                                <Grid xs={6} className="pl-1">
-                                                    <Typography variant='overline'>
-                                                        Documentación de
-                                                    </Typography>
-                                                    <Typography variant='subtitle2'>
-                                                        ???????
-                                                        {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
-                                                    </Typography>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={4}>
+                                                    <Grid xs={3} >
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Tipo_Tramite}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid xs={3} >
+                                                        <Typography variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? 'subtitle2' : "subtitle1"}>
+                                                            Nuevo Trabajo
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid xs={3}>
+                                                        <Typography variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? 'subtitle2' : "subtitle1"} >
+                                                            Modificación Sustancial
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid xs={3} >
+                                                        <Typography variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? 'subtitle2' : "subtitle1"}>
+                                                            Corrección Básica
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
-                                        </div>
+                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                                <Grid container spacing={4}>
+                                                    <Grid xs={12} >
+                                                        <Typography variant='overline'>
+                                                            Observaciones
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Observaciones?this.state.workDetails.Trabajos[0].Observaciones:'-'}
+                                                        </Typography>
+
+                                                    </Grid>
+
+                                                </Grid>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={4}>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            Tipo de expediente
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            {this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/{this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}
+                                                        </Typography>
+
+                                                    </Grid>
+                                                    <Grid xs={6} >
+                                                        <Typography variant='overline'>
+                                                            Documentación de
+                                                        </Typography>
+                                                        <Typography variant='subtitle2'>
+                                                            ???????
+                                                            {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
                                     </ExpansionPanelDetails>
                                 </ExpansionPanel>
                                 : null

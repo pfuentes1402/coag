@@ -64,7 +64,7 @@ class Encomenda extends Component {
                   handleAgentes={(encomenda) => { this.handleChangeComunicacionEncargo(encomenda) }}
                   handleAddComunicacionEncargo={() => { this.handleAddComunicacionEncargo() }}
                   handleBack={() => { this.setState({ activeEncargo: true }) }} />
-                : <div></div>}
+                : ""}
           </Grid>
         </Grid>
     );

@@ -276,11 +276,11 @@ class AddExpedient extends Component {
                                             {<Translate id="languages.generalButton.cancel"/>}
                                             <Clear className={classes.rightIcon}/>
                                         </Button>
-                                        <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}} disabled={!this.state.isShowAddress}>
+                                        <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSave()}} disabled={!this.state.isShowAddress || this.state.isSave}>
                                             {<Translate id="languages.expedients.btnGuardarExpediente"/>}
                                             <Check className={classes.rightIcon}/>
-                                            {this.state.isSave && <CircularProgress size={24}/>}
                                         </Button>
+                                        {this.state.isSave && <CircularProgress size={24}/>}
                                     </Grid>
                                 </Grid>
                             </Grid>
