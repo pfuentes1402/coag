@@ -18,7 +18,9 @@ import { withRouter } from 'react-router-dom';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
 import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
-import { getExpedienteDatosGeneral } from '../../api';
+import { getExpedienteDatosGeneral, getEstructuraDocumental } from '../../api';
+import {fetchErrorExpediente, formatMenssage} from "../../actions/expedientes";
+import { groupBy, filter } from 'lodash';
 
 const styles = theme => ({
   root: {
@@ -66,11 +68,14 @@ class VisualizarExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true,
-      renderComponent: "TrabajoComunicacion",
-      expediente: null,
-      currentExpediente: null,
-      idTrabajoActivo: this.props.match.params.idTrabajo
+        open: true,
+        renderComponent: "TrabajoComunicacion",
+        expediente: null,
+        currentExpediente: null,
+        idTrabajoActivo: this.props.match.params.idTrabajo,
+        estructuraDocumental: [],
+        isLoadEstructura: false
+
     };
   }
 
@@ -78,7 +83,7 @@ class VisualizarExpediente extends Component {
     await this.fetchExpediente();
   }
 
-  //Consumir api con el id de expediente espicificado por ur
+  //Consumir api con el id de expediente espicificado por ur TODO: Pedro arreglar este metodo con control de errores
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     if (response.data) {
@@ -102,7 +107,30 @@ class VisualizarExpediente extends Component {
 
   handleExpandMenu = () => {
     this.setState(state => ({ open: !state.open }));
+
   };
+
+  async getEstructuraDocumental(idExpediente, idTrabajo){
+      await this.setState({isLoadEstructura: true});
+      let filterEstructura = [];
+      let groupEstructura = [];
+      try {
+          let response = await getEstructuraDocumental(idExpediente, idTrabajo);//TODO: poner lenguaje
+          if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+              this.props.fetchErrorExpediente(response);
+              await this.setState({isLoadEstructura: false, estructuraDocumental: []});
+          }
+          else {
+              filterEstructura = filter(response.EstructurasDocumentales, {"Id_Tipo_Estructura": 1});
+              groupEstructura = groupBy(filterEstructura, "Titulo_Padre");
+              await this.setState({estructuraDocumental: groupEstructura, isLoadEstructura: false});
+          }
+      }
+      catch (e) {
+          this.props.fetchErrorExpediente(formatMenssage(e.message));
+          await this.setState({isLoadEstructura: false});
+      }
+  }
 
   async handleChangeMenuOption(idTrabajo) {
     if (this.state.currentExpediente) {
@@ -113,6 +141,7 @@ class VisualizarExpediente extends Component {
         await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo });
       }
     }
+      await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
 
   }
 
@@ -161,9 +190,14 @@ class VisualizarExpediente extends Component {
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {this.state.expediente.Trabajos.map((trabajo, index) => {
-              return <MenuOption key={index} changeOption={idTrabajo => this.handleChangeMenuOption(idTrabajo)}
-                expediente={this.state.expediente} trabajo={trabajo}
-                active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())} />
+              return <MenuOption key={index}
+                                 changeOption={idTrabajo => this.handleChangeMenuOption(idTrabajo)}
+                                 expediente={this.state.expediente}
+                                 trabajo={trabajo}
+                                 estructuraDocumental={this.state.estructuraDocumental}
+                                 isLoadEstructura={this.state.isLoadEstructura}
+                                 active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
+                    />
             })}
           </List>
         </Collapse>
@@ -204,6 +238,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
+    fetchErrorExpediente: fetchErrorExpediente
 };
 
 VisualizarExpediente.propTypes = {

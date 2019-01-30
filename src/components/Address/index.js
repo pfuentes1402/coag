@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, TextField, FormControl,  Tooltip, CircularProgress, Fab} from '@material-ui/core';
-import {Check} from '@material-ui/icons'
+import {Check} from '@material-ui/icons';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes';
 import { connect } from 'react-redux';
 import { withLocalize } from "react-localize-redux";
