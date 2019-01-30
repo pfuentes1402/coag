@@ -56,8 +56,6 @@ api.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 //TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
-
-
 /*
  *Proporciona la extructura documental de un trabajo
  * Parametros 
@@ -143,13 +141,13 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
  * @returns {Promise<*>}
  */
 export const getTiposTramite = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 
@@ -165,7 +163,7 @@ export const getValidateAddress = async ref_catastral => {
     return response;
   }
   catch (error) {
-      return formatMenssage(error.message);
+    return formatMenssage(error.message);
   }
 }
 
@@ -175,13 +173,13 @@ export const getValidateAddress = async ref_catastral => {
  * @returns {Promise<*>}
  */
 export const postNuevoExpediente = async data => {
-    try {
-        let response = await api.post(`/expedientes/`, data);
-        return response;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.post(`/expedientes/`, data);
+    return response;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 /*
  *Edita un expediente expediente
@@ -304,19 +302,23 @@ export const errorLogin = (data) => (
   });
 
 
-/*
+/* TODO: Login paso 2
  *  Función que loguea a un usuario y consigue identificadores únicos para la generación del token
  *  Parametros 
  *    usuario
  *    password
  */
-export const funcionForma = (datos) =>
+/*export const funcionForma = (datos) =>
   api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
     return response;
   }).catch(error => {
     //errorLogin(error);
     return error.response.status;
-  });
+  });*/
+export const funcionForma = async (datos) => {
+  let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+  return response;
+}
 
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
@@ -788,13 +790,13 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 1) =>
  * @returns {Promise<*>}
  */
 export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 1) => {
-    try {
-        let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 export const formatMenssage = (error) => (
