@@ -194,20 +194,25 @@ class SearchAgents extends Component {
       <div>
         <Paper className={`${classes.withoutRadius} text-center`}>
           <ValidatorForm ref="form" onSubmit={() => { this.handleSearch() }}>
-            <TextValidator
-              value={this.state.searchQuery}
-              onChange={this.handleSearchQueryChange}
-              onKeyPress={event => {
-                if (event.key === 'Enter') {
-                  this.handleSearch();
-                }
-              }}
-              label={<Translate id="languages.agentes.searchLabelBox" />}
-              className={classes.textField}
-              validators={['required']}
-              errorMessages={['el criterio de búsqueda es obligatorio']}
-              name="searchQuery">
-            </TextValidator>
+            <Translate>
+              {
+                ({ translate }) => <TextValidator
+                  value={this.state.searchQuery}
+                  onChange={this.handleSearchQueryChange}
+                  onKeyPress={event => {
+                    if (event.key === 'Enter') {
+                      this.handleSearch();
+                    }
+                  }}
+                  label={translate("languages.agentes.searchLabelBox")}
+                  className={classes.textField}
+                  validators={['required']}
+                  errorMessages={[translate("languages.agentes.searchValidation")]}
+                  name="searchQuery">
+                </TextValidator>
+              }
+            </Translate>
+
 
             <Select
               className={classes.textField}
@@ -237,7 +242,7 @@ class SearchAgents extends Component {
             {this.renderSearchResults()}
           </Grid>
         </Paper>
-        { this.props.allowAdd && this.state.showSearchResult ? <Button color="primary" className={classes.button}
+        {this.props.allowAdd && this.state.showSearchResult ? <Button color="primary" className={classes.button}
           onClick={() => {
             this.selectAgent({
               "Id_Entidad": -1, "Id_Tipo_Entidad": 1, "Id_Autonomia": 71,
