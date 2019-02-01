@@ -12,9 +12,9 @@ import { connect } from 'react-redux';
 import { gotrabajos } from './../../actions/usuarios'
 import { setSelectedExpedienteTo, fetchExpedienteDatosGeneral, fetchExpedienteTrabajos } from './../../actions/expedientes'
 import { fetchEstructuraDocumentalTrabajo } from './../../actions/trabajos'
-import estructurahelper  from './../../helpers/estructuraDoc'
 import 'ag-grid/dist/styles/ag-theme-material.css';
 import { Button } from 'reactstrap';
+import {withRouter} from "react-router-dom";
 
 function internationalization (param){
  
@@ -80,17 +80,8 @@ class TramitacionesCurso extends Component {
        
       }
       onSelectionChanged(){
-        var selectedRows = this.gridApi.getSelectedRows();
-        this.props.setSelectedExpedienteTo(selectedRows[0]);
-        
-        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Id_Expediente);
-        this.props.fetchExpedienteTrabajos(selectedRows[0].Id_Expediente);
-        this.props.fetchEstructuraDocumentalTrabajo(selectedRows[0].Id_Expediente,selectedRows[0].Id_Trabajo);
-       
-        //let test = estructurahelper(this.props.datosBrutos)
-        
-        this.props.gotrabajos();
-
+          var selectedRows = this.gridApi.getSelectedRows();
+          this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente);
       }
   
 
@@ -205,5 +196,5 @@ const mapStateToProps = state => ({
   });
 
 
-export default connect(mapStateToProps,{ gotrabajos, setSelectedExpedienteTo, fetchExpedienteDatosGeneral,
-     fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo })(TramitacionesCurso);
+export default withRouter(connect(mapStateToProps,{ gotrabajos, setSelectedExpedienteTo, fetchExpedienteDatosGeneral,
+     fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo })(TramitacionesCurso));

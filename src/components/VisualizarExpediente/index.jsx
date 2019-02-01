@@ -21,6 +21,7 @@ import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
 import { getExpedienteDatosGeneral, getEstructuraDocumental,moveFileFromTemporalToStructure } from '../../api';
 import {fetchErrorExpediente, formatMenssage} from "../../actions/expedientes";
 import { groupBy, filter } from 'lodash';
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
 
 const styles = theme => ({
   root: {
@@ -231,9 +232,32 @@ class VisualizarExpediente extends Component {
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
+    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo == this.state.idTrabajoActivo) : null;
     return (
       this.state.expediente
         ? <Grid container>
+              <Grid item xs={12}>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
+                  {
+                      (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
+                      ?<BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>{trabajoActual ? trabajoActual.Titulo : ""}</BreadcrumbsItem>
+                        : ""
+                  }
+
+              </Grid>
+              <Grid item md={12} xs={12}>
+                {this.renderNavBar()}
+              </Grid>
+              <Grid item md={3} xs={12} className={classes.boredrRight}>
+                {this.renderLeftNav()}
+              </Grid>
+              <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+                {
+                  this.state.renderComponent === "TrabajoComunicacion"
+                    ? <TrabajoComunicacion expediente={expediente} />
+                    : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
+                }
+              </Grid>
           <Grid item md={12} xs={12}>
             {this.renderNavBar()}
           </Grid>

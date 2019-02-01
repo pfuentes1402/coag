@@ -135,7 +135,7 @@ class ValidateAddress extends Component {
                             <FormControl className={classes.formControl1}>
                                 <TextField
                                     id="location"
-                                    helperText={<Translate id="languages.expedients.helperTextAddressValidate"/>}
+                                    helperText={<Translate id="languages.header.titleHome"/>}
                                     value={georeferencia}
                                     onChange={this.handleChange('location')}
                                     margin="normal"

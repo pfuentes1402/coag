@@ -241,7 +241,7 @@ class TrabajoEjecucion extends Component {
                                         }
                                     </Paper>
                                     {
-                                        this.state.data.length > 0 ?
+                                        this.state.data && this.state.data.length > 0 ?
                                             <div className="pl-2">
                                                 <Grid container spacing={16}>
                                                     <Grid xs={6} className="p-3">

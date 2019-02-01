@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="menu de trabajos en modificar expediente">
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="actualizacion trabajo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Address/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Address/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
-    <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,69 +26,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-140">
-              <caret line="150" column="28" lean-forward="true" selection-start-line="150" selection-start-column="28" selection-end-line="150" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#22895#38580#0" />
-              </folding>
+            <state relative-caret-position="102">
+              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="52" column="80" lean-forward="true" selection-start-line="52" selection-start-column="80" selection-end-line="52" selection-end-column="80" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2277">
-              <caret line="107" column="73" selection-start-line="107" selection-start-column="73" selection-end-line="107" selection-end-column="73" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1035">
-              <caret line="45" column="9" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="9" />
+            <state relative-caret-position="1394">
+              <caret line="82" column="15" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/containers/index.js">
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
+            <state relative-caret-position="357">
+              <caret line="60" column="53" lean-forward="true" selection-start-line="60" selection-start-column="53" selection-end-line="60" selection-end-column="53" />
               <folding>
-                <element signature="e#0#27#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5980">
-              <caret line="271" column="71" selection-start-line="271" selection-start-column="71" selection-end-line="271" selection-end-column="71" />
+            <state relative-caret-position="382">
+              <caret line="214" column="33" lean-forward="true" selection-start-line="214" selection-start-column="33" selection-end-line="214" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="986">
+              <caret line="242" column="37" lean-forward="true" selection-start-line="242" selection-start-column="37" selection-end-line="242" selection-end-column="37" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -92,36 +80,35 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/index.js">
+      <file leaf-file-name="Main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="886" column="5" selection-start-line="886" selection-start-column="5" selection-end-line="886" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#54#0" expanded="true" />
-                <element signature="e#20939#22202#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package-lock.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="183" column="12" lean-forward="true" selection-start-line="183" selection-start-column="12" selection-end-line="183" selection-end-column="12" />
+            <state relative-caret-position="255">
+              <caret line="28" column="55" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="55" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="13" />
+              <folding>
+                <element signature="e#531#1474#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resources.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resources.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="22" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -138,22 +125,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>n.id</find>
-      <find>fichaExpediente</find>
-      <find>handleSaveAddress</find>
-      <find>Id_Tipo_Tramite</find>
-      <find>Id_Tipo_Trab</find>
-      <find>handleChange</find>
-      <find>getInfoCarpetasTrabajo</find>
-      <find>menuPro</find>
-      <find>trabajo</find>
-      <find>MenuOption</find>
-      <find>getestructuradocumental</find>
-      <find>getEstructuraDocumental</find>
-      <find>lod</find>
-      <find>group</find>
-      <find>open</find>
-      <find>dialogOpen</find>
       <find>Open</find>
       <find>handleExpandSubMenus</find>
       <find>estructuraDocumental</find>
@@ -167,7 +138,23 @@
       <find>showAddPromotor</find>
       <find>Id</find>
       <find>Id_Expediente</find>
-      <find>focu</find>
+      <find>withLocalize</find>
+      <find>boo</find>
+      <find>Translate</find>
+      <find>tras</find>
+      <find>bootstrap</find>
+      <find>react-bootstrap</find>
+      <find>react-popper</find>
+      <find>/Home</find>
+      <find>history.</find>
+      <find>rowSelection</find>
+      <find>withR</find>
+      <find>withRouter</find>
+      <find>consol</find>
+      <find>currentExpediente</find>
+      <find>reactstrap</find>
+      <find>Id_Tr</find>
+      <find>Id_Traba</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -180,8 +167,8 @@
     <dirStrings>
       <dir>W:\DOCUMENTACIÓN\REACT\coag\src</dir>
       <dir>G:\Yuliet\coag\src\components\VisualizarExpediente</dir>
+      <dir>G:\Yuliet\coag</dir>
       <dir>G:\Yuliet\coag\src</dir>
-      <dir>$PROJECT_DIR$/src</dir>
     </dirStrings>
   </component>
   <component name="FrameworkCommandLineHistory">
@@ -197,14 +184,9 @@
       </map>
     </option>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="dummy://restClient/response9.json" root0="SKIP_INSPECTION" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/actions/expedient/index.js" />
-        <option value="$PROJECT_DIR$/src/reducers/expedientes/index.js" />
         <option value="$PROJECT_DIR$/src/actions/expedients/index.js" />
         <option value="$PROJECT_DIR$/src/containers/NuevoExpedienteContainer.js" />
         <option value="$PROJECT_DIR$/src/reducers/index.js" />
@@ -219,7 +201,6 @@
         <option value="$PROJECT_DIR$/src/components/MainContent/MainContent.js" />
         <option value="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" />
         <option value="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" />
-        <option value="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
         <option value="$PROJECT_DIR$/src/components/SubHeader/SubHeader.js" />
         <option value="$PROJECT_DIR$/coag/coag/src/components/MenuAppBar/MenuAppBar.css" />
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css" />
@@ -231,7 +212,6 @@
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient2.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastroForm.js" />
-        <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/routes.js" />
         <option value="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" />
         <option value="$PROJECT_DIR$/src/components/SelectorTipoTrabajo/SelectorTipoTrabajo.js" />
@@ -244,18 +224,26 @@
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
-        <option value="$PROJECT_DIR$/src/components/Address/index.js" />
+        <option value="$PROJECT_DIR$/src/api/index.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-        <option value="$PROJECT_DIR$/src/api/index.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/components/Address/index.js" />
+        <option value="$PROJECT_DIR$/src/Main.js" />
+        <option value="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
       </list>
     </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="JsFlowSettings">
     <service-enabled>false</service-enabled>
@@ -264,14 +252,27 @@
     <other-services-enabled>false</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/coag/coag/node_modules" />
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/coag/coag/package.json" />
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="112" />
-    <option name="y" value="204" />
-    <option name="width" value="1200" />
-    <option name="height" value="675" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1295" />
+    <option name="height" value="703" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -300,28 +301,7 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Address" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="AsistenteTrabajo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Upload" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="VaultUpload" type="462c0819:PsiDirectoryNode" />
+              <item name="MainContent" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
@@ -359,9 +339,9 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="JSON&#10;XML&#10;JSX Harmony" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../winejaunt" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -377,141 +357,6 @@
       <recent name="D:\alex\proyectos\appcoag\coag\src\components" />
     </key>
   </component>
-  <component name="RestClientSettings">
-    <option name="REQUEST_HISTORY">
-      <list>
-        <RestClientRequest>
-          <option name="httpMethod" value="POST" />
-          <option name="urlBase" value="http://servicios.coag.es" />
-          <option name="urlPath" value="/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos" />
-          <option name="headers">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="Accept" />
-                <option name="value" value="*/*" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="Cache-Control" />
-                <option name="value" value="no-cache" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="token" />
-                <option name="value" value="PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parameters">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="" />
-                <option name="value" value="" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parametersEnabled" value="true" />
-          <option name="haveTextToSend" value="true" />
-          <option name="textToSend" value="{&quot;nombre&quot;:&quot;documento_temporal.pdf&quot;}" />
-          <option name="filesToSend" value="" />
-        </RestClientRequest>
-        <RestClientRequest>
-          <option name="httpMethod" value="POST" />
-          <option name="urlBase" value="http://servicios.coag.es" />
-          <option name="urlPath" value="/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos" />
-          <option name="headers">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="Accept" />
-                <option name="value" value="*/*" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="Cache-Control" />
-                <option name="value" value="no-cache" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="token" />
-                <option name="value" value="PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parameters">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="nombre" />
-                <option name="value" value="pepe.pdf" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parametersEnabled" value="true" />
-          <option name="textToSend" value="" />
-          <option name="filesToSend" value="" />
-        </RestClientRequest>
-        <RestClientRequest>
-          <option name="httpMethod" value="POST" />
-          <option name="urlBase" value="http://servicios.coag.es" />
-          <option name="urlPath" value="/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos" />
-          <option name="headers">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="Accept" />
-                <option name="value" value="*/*" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="Cache-Control" />
-                <option name="value" value="no-cache" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="token" />
-                <option name="value" value="PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parametersEnabled" value="true" />
-          <option name="textToSend" value="" />
-          <option name="filesToSend" value="" />
-        </RestClientRequest>
-        <RestClientRequest>
-          <option name="httpMethod" value="POST" />
-          <option name="urlBase" value="http://servicios.coag.es" />
-          <option name="urlPath" value="/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos" />
-          <option name="headers">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="Accept" />
-                <option name="value" value="*/*" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="Cache-Control" />
-                <option name="value" value="no-cache" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parametersEnabled" value="true" />
-          <option name="textToSend" value="" />
-          <option name="filesToSend" value="" />
-        </RestClientRequest>
-        <RestClientRequest>
-          <option name="httpMethod" value="POST" />
-          <option name="urlBase" value="http://servicios.coag.es" />
-          <option name="urlPath" value="/api" />
-          <option name="headers">
-            <list>
-              <KeyValuePair>
-                <option name="key" value="Accept" />
-                <option name="value" value="*/*" />
-              </KeyValuePair>
-              <KeyValuePair>
-                <option name="key" value="Cache-Control" />
-                <option name="value" value="no-cache" />
-              </KeyValuePair>
-            </list>
-          </option>
-          <option name="parametersEnabled" value="true" />
-          <option name="textToSend" value="" />
-          <option name="filesToSend" value="" />
-        </RestClientRequest>
-      </list>
-    </option>
-  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -525,7 +370,7 @@
     </option>
   </component>
   <component name="RunManager" selected="npm.start">
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -533,9 +378,8 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -543,9 +387,8 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -553,12 +396,11 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="npm.build" />
       <item itemvalue="npm.start" />
       <item itemvalue="npm.test" />
+      <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
       <list>
@@ -637,8 +479,10 @@
       <workItem from="1548718804547" duration="736000" />
       <workItem from="1548720693243" duration="14425000" />
       <workItem from="1548792535316" duration="7361000" />
-      <workItem from="1548854466696" duration="5185000" />
-      <workItem from="1548942118462" duration="13592000" />
+      <workItem from="1548854466696" duration="5954000" />
+      <workItem from="1548943367063" duration="6298000" />
+      <workItem from="1548952863620" duration="4350000" />
+      <workItem from="1548963123157" duration="2724000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -731,11 +575,18 @@
       <option name="project" value="LOCAL" />
       <updated>1548797072605</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="actualizacion trabajo">
+      <created>1548867360782</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1548867360782</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="309169000" />
+    <option name="totallyTimeSpent" value="309077000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -747,52 +598,51 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1600" height="875" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4234234" visible="true" weight="0.19023462" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.5765766" side_tool="true" weight="0.19075908" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="REST Client" weight="0.40903956" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.41560283" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41885966" visible="true" weight="0.17542748" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32779455" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.3897281" />
-      <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.3897281" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31117824" />
+      <window_info id="npm" order="2" sideWeight="0.58114034" side_tool="true" weight="0.18283829" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.326284" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="10" weight="0.32990867" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43125" visible="true" weight="0.23939203" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
-      <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Favorites" order="3" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -833,20 +683,9 @@
         </entry>
       </map>
     </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -860,23 +699,15 @@
     <MESSAGE value="Aceptando merge" />
     <MESSAGE value="actualizacion localizaciones" />
     <MESSAGE value="menu de trabajos en modificar expediente" />
-    <option name="LAST_COMMIT_MESSAGE" value="menu de trabajos en modificar expediente" />
+    <MESSAGE value="actualizacion trabajo" />
+    <option name="LAST_COMMIT_MESSAGE" value="actualizacion trabajo" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="11" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="230" column="22" lean-forward="true" selection-start-line="230" selection-start-column="22" selection-end-line="230" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/NuevoExpedienteContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastroForm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-85">
@@ -888,20 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="15912" column="17" selection-start-line="15912" selection-start-column="17" selection-end-line="15912" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3247">
-          <caret line="207" column="15" selection-start-line="207" selection-start-column="15" selection-end-line="207" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Home/Home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -923,13 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="47" column="55" lean-forward="true" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="42" column="52" lean-forward="true" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -1025,10 +835,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/resources.json">
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        <state relative-caret-position="131410">
+          <caret line="7730" column="6" selection-start-line="7730" selection-start-column="6" selection-end-line="7730" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1079,9 +889,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2686">
           <caret line="170" column="27" selection-start-line="170" selection-start-column="4" selection-end-line="170" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#221#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1109,52 +916,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx">
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="198" column="62" selection-start-line="198" selection-start-column="62" selection-end-line="198" selection-end-column="62" />
+        <state relative-caret-position="595">
+          <caret line="43" column="42" selection-start-line="43" selection-start-column="42" selection-end-line="43" selection-end-column="42" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4641">
+          <caret line="284" column="39" selection-start-line="284" selection-start-column="39" selection-end-line="284" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="198" column="62" selection-start-line="198" selection-start-column="62" selection-end-line="198" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
+        <state relative-caret-position="4556">
           <caret line="291" column="26" selection-start-line="291" selection-start-column="17" selection-end-line="291" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
+        <state relative-caret-position="2057">
           <caret line="142" column="33" selection-start-line="142" selection-start-column="33" selection-end-line="142" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#809#1222#0" />
-            <element signature="e#5548#9715#0" />
-            <element signature="e#9740#12530#0" />
-            <element signature="e#12555#26704#0" />
-            <element signature="e#26729#29480#0" />
-            <element signature="e#29505#30657#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="320" column="34" lean-forward="true" selection-start-line="320" selection-start-column="34" selection-end-line="320" selection-end-column="34" />
-          <folding>
-            <element signature="e#1210#2548#0" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-255">
+        <state>
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -1163,8 +965,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="59" column="25" lean-forward="true" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
+        <state relative-caret-position="867">
+          <caret line="59" column="25" selection-start-line="59" selection-start-column="25" selection-end-line="59" selection-end-column="25" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -1173,76 +975,97 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="446" column="39" lean-forward="true" selection-start-line="446" selection-start-column="39" selection-end-line="446" selection-end-column="39" />
+        <state relative-caret-position="17">
+          <caret line="446" column="39" selection-start-line="446" selection-start-column="39" selection-end-line="446" selection-end-column="39" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#1390#2798#0" />
-            <element signature="e#13991#14460#0" />
-            <element signature="e#14981#22827#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="320" column="34" selection-start-line="320" selection-start-column="34" selection-end-line="320" selection-end-column="34" />
+          <folding>
+            <element signature="e#1210#2548#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="745" column="13" selection-start-line="745" selection-start-column="13" selection-end-line="745" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="22" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2277">
-          <caret line="107" column="73" selection-start-line="107" selection-start-column="73" selection-end-line="107" selection-end-column="73" />
+        <state relative-caret-position="102">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="6" selection-end-column="13" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#531#1474#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="189" column="4" selection-start-line="189" selection-end-line="189" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Home/Home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="48" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/ContenedorCentral.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="28" column="55" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="45" column="9" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="9" />
+        <state relative-caret-position="1394">
+          <caret line="82" column="15" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5980">
-          <caret line="271" column="71" selection-start-line="271" selection-start-column="71" selection-end-line="271" selection-end-column="71" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="886" column="5" selection-start-line="886" selection-start-column="5" selection-end-line="886" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-            <element signature="e#20939#22202#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="52" column="80" lean-forward="true" selection-start-line="52" selection-start-column="80" selection-end-line="52" selection-end-column="80" />
+        <state relative-caret-position="382">
+          <caret line="214" column="33" lean-forward="true" selection-start-line="214" selection-start-column="33" selection-end-line="214" selection-end-column="33" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -1251,19 +1074,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-140">
-          <caret line="150" column="28" lean-forward="true" selection-start-line="150" selection-start-column="28" selection-end-line="150" selection-end-column="28" />
+        <state relative-caret-position="986">
+          <caret line="242" column="37" lean-forward="true" selection-start-line="242" selection-start-column="37" selection-end-line="242" selection-end-column="37" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#22895#38580#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="183" column="12" lean-forward="true" selection-start-line="183" selection-start-column="12" selection-end-line="183" selection-end-column="12" />
+        <state relative-caret-position="357">
+          <caret line="60" column="53" lean-forward="true" selection-start-line="60" selection-start-column="53" selection-end-line="60" selection-end-column="53" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>

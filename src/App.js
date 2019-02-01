@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import {withRouter} from "react-router-dom";
+import {NavLink,Link, withRouter} from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { withLocalize } from "react-localize-redux";
 import globalTranslations from "./resources.json";
 import { renderToStaticMarkup } from "react-dom/server";
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import AppHeader from "./containers/AppHeader";
 import Main from "./Main";
 import "./index.css";
 import Error from "./components/Errors";
 import {connect} from "react-redux";
+import {Breadcrumbs} from "react-breadcrumbs-dynamic";
+import {blue} from '@material-ui/core/colors';
+import {Breadcrumb as BootstrapBreadcrumb} from "reactstrap";
 
 const mapStateToProps = state => ({
     idiomaFavorito: state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
@@ -45,8 +48,29 @@ class App extends Component {
         return (
             <Grid style={{width: '100%'}} >
                 { this.props.history.location.pathname !== "/login" ?
-                    <Grid item >
+                    <Grid >
                         <AppHeader/>
+                        <Breadcrumbs
+                            separator={<b style={{padding: 6}}> // </b>}
+                            item={Link}
+                            finalItem={Typography}
+                            finalProps={{
+                                style: {fontWeight: 500}
+                            }}
+                            container={BootstrapBreadcrumb}
+                            containerProps={{style: {
+                                    display: "flex",
+                                    borderRadius: 0,
+                                    height: 47,
+                                    alignItems: "center",
+                                    fontStyle: "italic",
+                                    position: "fixed",
+                                    width: "100%",
+                                    paddingLeft: 32,
+                                    zIndex: 1,
+                                    color: blue[500]
+                          }}}
+                        />
                     </Grid>
                     : ""
                 }

@@ -9,12 +9,16 @@ import ComunicacionEncargo from "./components/ComunicacionEncargo/index";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
 import VisualizarExpediente from './components/VisualizarExpediente/index';
 import AsistenteTrabajo from './components/AsistenteTrabajo/index';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
 
 class Main extends Component {
     render(){
 
         return(
             <div>
+                <BreadcrumbsItem to='/'><Translate id="languages.header.titleHome"/></BreadcrumbsItem>
                 <Switch>
                     <Route exact path='/' component={(props) => <MainContainer {...props}/>} />
                     <Route exact path='/nuevo-expediente' component={(props) => <AddExpedient {...props}/>} />
@@ -31,4 +35,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(Main)
+export default withRouter(withLocalize(Main));
