@@ -870,10 +870,19 @@ export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
     try {
-        http://servicios.coag.es/api/expedientes/703634/AlmacenTemporalArchivos
+
         let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
         return response.data;
     } catch (error) {
         return formatMenssage(error.message);
+    }
+}
+//mover un arivo desde la carpeta temporal a una estructura
+export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
+    try {
+      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, {archivo:file});
+      return result.data
+    } catch (error ) {
+      throw (formatMenssage("Error 400 en API"))
     }
 }

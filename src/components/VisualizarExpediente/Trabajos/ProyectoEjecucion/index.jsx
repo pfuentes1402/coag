@@ -174,7 +174,7 @@ class TrabajoEjecucion extends Component {
                 let firmasDigitales = response.FirmasDigitales
                 await this.setState({fetching: false, expediente, data: documentos, firmasDigitales,workDetails,temporalFiles})
             }catch (e) {
-
+                this.props.fetchErrorExpediente(e);
             }
 
 
@@ -261,6 +261,51 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                 </Grid>
                                                 {
+                                                    this.state.temporalFiles&& this.state.temporalFiles.map((item, pos) => {
+                                                        return (<ExpansionPanel draggable="true" onDragEnd={()=>{this.props.dragging(false)}} onDragStart={()=>{this.props.dragging(item)}} expanded={this.state.panelExpanded === 't-'+pos}
+                                                                                onChange={() => this.expandPanel('t-'+pos)}>
+                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                <Grid container spacing={16}>
+                                                                    <Grid xs={6}
+                                                                    ><Typography style={{color:'#b26a00'}}>{item.Nombre}</Typography></Grid>
+                                                                    <Grid xs={4}
+                                                                    ><Typography style={{color:'#b26a00'}}>Sin Asignar</Typography></Grid>
+                                                                    <Grid xs={2} className="text-right">
+                                                                        <ErrorOutline style={{color:'#b26a00'}} size={24}/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </ExpansionPanelSummary>
+                                                            <ExpansionPanelDetails>
+                                                                <Grid container spacing={16}>
+                                                                    <Grid xs={6}>
+                                                                        <Grid container spacing={0}>
+                                                                            <Grid xs={12}>
+                                                                                <Typography variant="button" gutterBottom>
+                                                                                    TAMAÑO DEL ARCHIVO
+                                                                                </Typography>
+                                                                            </Grid>
+
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                    <Grid xs={4}>
+                                                                        <Grid container spacing={0}>
+                                                                            <Grid xs={12}>
+                                                                                <Typography variant="button" gutterBottom>
+                                                                                    {this.renderSize(item.Longitud)}
+                                                                                </Typography>
+                                                                            </Grid>
+
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                    <Grid xs={2}>
+                                                                    </Grid>
+                                                                </Grid>
+
+                                                            </ExpansionPanelDetails>
+                                                        </ExpansionPanel>)
+                                                    })
+                                                }
+                                                {
                                                     this.state.data.map((item, pos) => {
                                                         return (<ExpansionPanel expanded={this.state.panelExpanded === pos}
                                                                                 onChange={() => this.expandPanel(pos)}>
@@ -340,51 +385,7 @@ class TrabajoEjecucion extends Component {
                                                         </ExpansionPanel>)
                                                     })
                                                 }
-                                                {
-                                                    this.state.temporalFiles&& this.state.temporalFiles.map((item, pos) => {
-                                                        return (<ExpansionPanel expanded={this.state.panelExpanded === 't-'+pos}
-                                                                                onChange={() => this.expandPanel('t-'+pos)}>
-                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6}
-                                                                    ><Typography style={{color:'#b26a00'}}>{item.Nombre}</Typography></Grid>
-                                                                    <Grid xs={4}
-                                                                    ><Typography style={{color:'#b26a00'}}>Sin Asignar</Typography></Grid>
-                                                                    <Grid xs={2} className="text-right">
-                                                                            <ErrorOutline style={{color:'#b26a00'}} size={24}/>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </ExpansionPanelSummary>
-                                                            <ExpansionPanelDetails>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    TAMAÑO DEL ARCHIVO
-                                                                                </Typography>
-                                                                            </Grid>
 
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={4}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    {this.renderSize(item.Longitud)}
-                                                                                </Typography>
-                                                                            </Grid>
-
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={2}>
-                                                                    </Grid>
-                                                                </Grid>
-
-                                                            </ExpansionPanelDetails>
-                                                        </ExpansionPanel>)
-                                                    })
-                                                }
                                             </div>
                                             :
                                             <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>No hay

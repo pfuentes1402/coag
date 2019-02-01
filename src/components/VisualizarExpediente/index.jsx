@@ -18,7 +18,7 @@ import { withRouter } from 'react-router-dom';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
 import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
-import { getExpedienteDatosGeneral, getEstructuraDocumental } from '../../api';
+import { getExpedienteDatosGeneral, getEstructuraDocumental,moveFileFromTemporalToStructure } from '../../api';
 import {fetchErrorExpediente, formatMenssage} from "../../actions/expedientes";
 import { groupBy, filter } from 'lodash';
 
@@ -200,6 +200,8 @@ class VisualizarExpediente extends Component {
                                  changeEstructura={(idEstructura) => {this.handleChangeEstructuran(idEstructura)}}
                                  expediente={this.state.expediente}
                                  trabajo={trabajo}
+                                 dragTarget={this.state.dragging?this.state.dragging:false}
+                                 moveItemTo={(target)=>this.moveItemTo(target)}
                                  estructuraDocumental={this.state.estructuraDocumental}
                                  isLoadEstructura={this.state.isLoadEstructura}
                                  active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
@@ -209,6 +211,22 @@ class VisualizarExpediente extends Component {
         </Collapse>
       </List>
     );
+  }
+  dragging(action){
+      this.setState({dragging: action})
+  }
+  async moveItemTo(target){
+
+      let item = this.state.dragging
+      try {
+         let response =  await moveFileFromTemporalToStructure(target.Id_Expediente,target.Id_Trabajo,target.Id_Estructura,item.Nombre)
+          if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+              this.props.fetchErrorExpediente(response);
+          }
+      } catch (error ) {
+          this.props.fetchErrorExpediente({MensajeProcesado:["Error de comunicación con la API"]});
+      }
+
   }
   render() {
     let { classes } = this.props;
@@ -226,7 +244,7 @@ class VisualizarExpediente extends Component {
             {
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
-                : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
+                : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} dragging={(action)=>{this.dragging(action)}} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
             }
           </Grid>
         </Grid>
