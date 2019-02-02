@@ -25,8 +25,8 @@ class Main extends Component {
                     <Route path='/login' component={(props) => <Login {...props}/> }/>
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
-                    <Route exact path='/comunicacion/:id?' component={(props) => <ComunicacionEncargo {...props}/>}/>
-                    <Route path="/visualizar-expediente/:id/:idTrabajo?" component={(props) => <VisualizarExpediente {...props}/>}/>
+                    <Route path="/visualizar-expediente/:id/:idTrabajo?/:idEstructura?" component={(props) => <VisualizarExpediente {...props}/>}/>
+                    <Route path='/comunicacion/:id' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/crear-trabajo/:id" component={(props) => <AsistenteTrabajo {...props}/>}/>
                 </Switch>
             </div>

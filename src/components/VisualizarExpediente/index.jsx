@@ -38,8 +38,8 @@ const styles = theme => ({
     height: 900
   },
   mainNav: {
-    background: "#ffffff",
-    backgroundColor: "#ffffff"
+      boxShadow: "none",
+      flexDirection: "row-reverse"
   },
   button: {
     margin: 0,
@@ -75,6 +75,7 @@ class VisualizarExpediente extends Component {
         currentExpediente: null,
         idTrabajoActivo: this.props.match.params.idTrabajo,
         idEstructuraActiva: null,
+        titleEstructuraActiva: "",
         estructuraDocumental: [],
         isLoadEstructura: false
 
@@ -137,18 +138,18 @@ class VisualizarExpediente extends Component {
   async handleChangeMenuOption(idTrabajo) {
     if (this.state.currentExpediente) {
       if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
-        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null });
+        await this.setState({ renderComponent: "TrabajoComunicacion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null, titleEstructuraActiva: "" });
       }
       else {
-        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null });
+        await this.setState({ renderComponent: "TrabajoEjecucion", idTrabajoActivo: idTrabajo, idEstructuraActiva: null, titleEstructuraActiva: "" });
       }
     }
       await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
 
   }
 
-    async handleChangeEstructuran(idEstructura){
-      await this.setState({idEstructuraActiva: idEstructura});
+    async handleChangeEstructuran(idEstructura, titleEstructura){
+      await this.setState({idEstructuraActiva: idEstructura, titleEstructuraActiva: titleEstructura});
     }
 
   renderNavBar() {
@@ -157,9 +158,6 @@ class VisualizarExpediente extends Component {
       <div className={classes.root}>
         <AppBar position="static" className={`${classes.mainNav} nav-expedient`} color="default">
           <Toolbar>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
-            </Typography>
             <Button color="primary" className={classes.button}>
               <Translate id="languages.generalButton.delete" /><Close />
             </Button>
@@ -198,7 +196,7 @@ class VisualizarExpediente extends Component {
             {this.state.expediente.Trabajos.map((trabajo, index) => {
               return <MenuOption key={index}
                                  changeOption={(idTrabajo) => {this.handleChangeMenuOption(idTrabajo)}}
-                                 changeEstructura={(idEstructura) => {this.handleChangeEstructuran(idEstructura)}}
+                                 changeEstructura={(idEstructura, titleEstructura) => {this.handleChangeEstructuran(idEstructura, titleEstructura)}}
                                  expediente={this.state.expediente}
                                  trabajo={trabajo}
                                  estructuraDocumental={this.state.estructuraDocumental}
@@ -222,23 +220,28 @@ class VisualizarExpediente extends Component {
                   <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
-                      ?<BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>{trabajoActual ? trabajoActual.Titulo : ""}</BreadcrumbsItem>
+                      ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
+                              {trabajoActual ? trabajoActual.Titulo : ""}
+                              </BreadcrumbsItem>
                         : ""
                   }
+                  {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
+                      ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
+                          {this.state.titleEstructuraActiva}
+                      </BreadcrumbsItem>
+                      : ""}
 
-              </Grid>
-              <Grid item md={12} xs={12}>
-                {this.renderNavBar()}
               </Grid>
               <Grid item md={3} xs={12} className={classes.boredrRight}>
                 {this.renderLeftNav()}
               </Grid>
               <Grid item md={9} xs={12} className={classes.backgroundGrey}>
-                {
-                  this.state.renderComponent === "TrabajoComunicacion"
-                    ? <TrabajoComunicacion expediente={expediente} />
-                    : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
-                }
+                  {this.renderNavBar()}
+                  {
+                    this.state.renderComponent === "TrabajoComunicacion"
+                      ? <TrabajoComunicacion expediente={expediente} />
+                      : <TrabajoEjecucion key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")} expediente={expediente} trabajo={this.state.idTrabajoActivo} estructura={this.state.idEstructuraActiva?{id:this.state.idEstructuraActiva}:false} />
+                  }
               </Grid>
         </Grid>
         : <div className="text-center my-5">

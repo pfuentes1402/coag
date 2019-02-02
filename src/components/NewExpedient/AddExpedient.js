@@ -10,6 +10,7 @@ import CatastralTable from "./CatastralTable";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import AddressValidate from "../Address";
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
 const styles = theme => ({
     paper: {
         padding: 24,
@@ -178,6 +179,9 @@ class AddExpedient extends Component {
                         </IconButton>,
                     ]}
                 />
+                <BreadcrumbsItem to={'/nuevo-expediente'} >
+                    <Translate id="languages.breadcrumb.nuevoExpediente"/>
+                </BreadcrumbsItem>
                 <Grid container spacing={8}>
                     <Paper className={classes.paper}>
                         <Grid container spacing={24}>

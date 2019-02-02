@@ -52,7 +52,7 @@ class MenuProyectoEjecucion extends Component {
                         <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map(children=>{
-                                    return <ListItem button onClick={()=> { this.props.changeEstructura(children.Id_Estructura)}}>
+                                    return <ListItem button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}>
                                         <ListItemText inset primary={children.Titulo} />
                                     </ListItem>
                                 })}

@@ -7,6 +7,8 @@ import Agentes from '../Agentes/index';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { fetchEncomendaActual, formatMenssage } from '../../api/index';
 import { fetchErrorExpediente } from '../../actions/expedientes/index';
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
+import {NavLink} from "react-router-dom";
 
 class Encomenda extends Component {
   constructor(props) {
@@ -50,23 +52,52 @@ class Encomenda extends Component {
 
   render() {
     return (
-      this.state.isLoading
-        ? <Grid item xs={12} className="text-center">
-          <CircularProgress />
-        </Grid>
-        : <Grid container spacing={0}>
-          <Grid item xs={12}>
-            {this.state.activeEncargo && this.state.encomenda
-              ? <ComunicacionEncargo encomenda={this.state.encomenda}
-                handleChangeTipoExpediente={(encomenda) => { this.handleChangeComunicacionEncargo(encomenda) }} />
-              : !this.state.activeEncargo && this.state.encomenda
-                ? <Agentes encomenda={this.state.encomenda}
-                  handleAgentes={(encomenda) => { this.handleChangeComunicacionEncargo(encomenda) }}
-                  handleAddComunicacionEncargo={() => { this.handleAddComunicacionEncargo() }}
-                  handleBack={() => { this.setState({ activeEncargo: true }) }} />
-                : ""}
-          </Grid>
-        </Grid>
+        <div>
+
+            {
+                this.state.isLoading
+                    ? <Grid item xs={12} className="text-center">
+                        <CircularProgress/>
+                    </Grid>
+                    : <Grid container spacing={0}>
+                        <BreadcrumbsItem to={'/comunicacion/' +  this.props.match.params.id} >
+                            {(this.state.encomenda && this.state.encomenda.EncomendaActual && this.state.encomenda.EncomendaActual.length > 0) ?
+                                <div>
+                                  <NavLink to={'/visualizar-expediente/' + this.props.match.params.id}>
+                                      {this.state.encomenda.EncomendaActual[0].Id_Expediente}
+                                  </NavLink>
+                                    <b style={{padding: 6}}> // </b>
+                                </div>
+                                :
+                                <div>
+                                  <Translate id="languages.breadcrumb.nuevoExpediente"/>
+                                    <b style={{padding: 6}}> - </b>
+                                </div>
+                            }
+                            <Translate id="languages.breadcrumb.comunicacionEncargo"/>
+                        </BreadcrumbsItem>
+                        <Grid item xs={12}>
+                            {this.state.activeEncargo && this.state.encomenda
+                                ? <ComunicacionEncargo encomenda={this.state.encomenda}
+                                                       handleChangeTipoExpediente={(encomenda) => {
+                                                           this.handleChangeComunicacionEncargo(encomenda)
+                                                       }}/>
+                                : !this.state.activeEncargo && this.state.encomenda
+                                    ? <Agentes encomenda={this.state.encomenda}
+                                               handleAgentes={(encomenda) => {
+                                                   this.handleChangeComunicacionEncargo(encomenda)
+                                               }}
+                                               handleAddComunicacionEncargo={() => {
+                                                   this.handleAddComunicacionEncargo()
+                                               }}
+                                               handleBack={() => {
+                                                   this.setState({activeEncargo: true})
+                                               }}/>
+                                    : ""}
+                        </Grid>
+                    </Grid>
+            }
+        </div>
     );
   }
 }
