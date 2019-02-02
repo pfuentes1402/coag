@@ -3,7 +3,7 @@ import {
     getTiposTrabajo,
     getTiposAutorizacionMunicipal,
     getFasesTrabajos,
-    getestructuradocumental,
+    getEstructuraDocumental,
     getGruposRaiz,
     getFuncionesTipologia,
     addAgentesTrabajo
@@ -181,8 +181,7 @@ export const fetchFuncionesTipologia = (idLanguage = 1) => async (dispatch) => {
 
 
 export const fetchEstructuraDocumentalTrabajo = (idExpediente, idTrabajo) => (dispatch) => {
-    getestructuradocumental(idExpediente, idTrabajo).then((estructuraDoc) => {
-
+    getEstructuraDocumental(idExpediente, idTrabajo).then((estructuraDoc) => {
         dispatch(dispatchEstructuraDocumentalTrabajo(estructuraDoc));
     }).catch(
         () => fetchErrorTrabajo({ error: 'Algo ha salido mal' })

@@ -73,7 +73,7 @@ const styles = theme => ({
         borderBottom: '1.5px solid ' + grey[100],
     },
     marginPanel: {
-        margin: '15px 0px'
+        margin: '15px 0px 0 0'
     },
     paddingChildPanel: {
         padding: 15
@@ -134,12 +134,11 @@ class ComunicacionEncargo extends React.Component {
     };
 
     async componentWillMount() {
+        await this.setState({isLoad: true});
         if (this.props.tiposAutorizacion.length === 0)
             await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
-        await this.setState({isLoad: true});
-        await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
         await this.transformGruposRaiz();
-        await this.updateFaseTrabajo(0);
+        //await this.updateFaseTrabajo(0);
         this.setState({isLoad: false});
     }
 
@@ -384,8 +383,8 @@ class ComunicacionEncargo extends React.Component {
                         </Grid>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        {this.state.isLoad ? <CircularProgress/> :
-                            <Grid container spacing={24} className={classes.marginPanel}>
+                        {this.state.isLoad ? <Grid item xs={12} className="text-center py-2"><CircularProgress/></Grid> :
+                            <Grid container spacing={24} className={`${classes.marginPanel} py-0`}>
                                 <Grid item xs={12}>
                                     {
                                         this.state.comunicacionencargo && this.state.comunicacionencargo.map((value, index) => {

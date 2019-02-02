@@ -55,25 +55,6 @@ api.interceptors.response.use(function (response) {
 
   return Promise.reject(error)
 })
-//TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
-/*
- *Proporciona la extructura documental de un trabajo
- * Parametros 
- *    id_expediente
- *    idtrabajo
- */
-export const getEstructuraDocumental = (id_expediente, idtrabajo) =>
-  api.get(`/EstructuraDocumental/${id_expediente}/${idtrabajo}`)
-    .then(r => {
-      return r;
-    })
-    .then(resultado => {
-      let ordenado = ordertree(resultado);
-      return ordenado;
-    });
-
-
-
 /*
  *Proporciona los datos generales de un expediente
  * Parametros 
@@ -442,19 +423,6 @@ export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25)
     return error
   }
 }
-
-/**
- * Proporciona la estructura documental de un trabajo
- * @param idExpediente
- * @param idTrabajo
- * @returns {Promise<AxiosResponse<any>>}
- */
-export const getestructuradocumental = (idExpediente, idTrabajo) =>
-  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
-    .then(response => {
-      return response.data;
-    });
-
 
 /**
  * Proporciona la lista de grupos raiz
