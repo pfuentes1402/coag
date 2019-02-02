@@ -3,7 +3,30 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.js" afterPath="$PROJECT_DIR$/src/Main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Address/index.js" afterPath="$PROJECT_DIR$/src/components/Address/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/AppHeader.js" afterPath="$PROJECT_DIR$/src/containers/AppHeader.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources.json" afterPath="$PROJECT_DIR$/src/resources.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,12 +63,11 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4318">
+            <state relative-caret-position="4726">
               <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
               <folding>
                 <element signature="e#0#221#0" expanded="true" />
                 <marker date="1549125570279" expanded="true" signature="299:331" ph="{...}" />
-                <marker date="1549125570279" expanded="true" signature="6359:6410" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -58,7 +80,6 @@
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
-                <marker date="1549048474411" expanded="true" signature="29699:29739" ph="&lt;Button/&gt;" />
               </folding>
             </state>
           </provider>
@@ -250,8 +271,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -445,6 +466,7 @@
       <workItem from="1549040946469" duration="1342000" />
       <workItem from="1549050057412" duration="682000" />
       <workItem from="1549126676934" duration="513000" />
+      <workItem from="1549128525515" duration="5000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -520,7 +542,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="246696000" />
+    <option name="totallyTimeSpent" value="246701000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -951,12 +973,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4318">
+        <state relative-caret-position="4726">
           <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
           <folding>
             <element signature="e#0#221#0" expanded="true" />
             <marker date="1549125570279" expanded="true" signature="299:331" ph="{...}" />
-            <marker date="1549125570279" expanded="true" signature="6359:6410" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -967,7 +988,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <marker date="1549048474411" expanded="true" signature="29699:29739" ph="&lt;Button/&gt;" />
           </folding>
         </state>
       </provider>
