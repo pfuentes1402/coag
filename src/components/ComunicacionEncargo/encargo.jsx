@@ -9,7 +9,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {
     fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz,
-    fetchComunicacionencargo, dispatchError
+    fetchComunicacionencargo, dispatchError, saveTiposObras
 } from "../../actions/trabajos";
 import { getFasesTrabajos } from '../../api/index';
 import { dispatchAddAutorizacion } from "../../actions/expedientes";
@@ -98,6 +98,7 @@ const mapStateToProps = (state) => (
         tiposAutorizacion: state.trabajos.tiposAutorizacion ? state.trabajos.tiposAutorizacion.Tipos_autorizacion_municipal : [],
         gruposRaiz: state.trabajos.gruposRaiz ? state.trabajos.gruposRaiz.GruposRaiz : [],
         currentExpediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
+        tiposObras: state.trabajos.tiposObras ? state.trabajos.tiposObras : []
     }
 );
 
@@ -108,7 +109,8 @@ const mapDispatchToProps = {
     fetchGruposRaiz: fetchGruposRaiz,
     fetchComunicacionencargo: fetchComunicacionencargo,
     dispatchError: dispatchError,
-    dispatchAddAutorizacion: dispatchAddAutorizacion
+    dispatchAddAutorizacion: dispatchAddAutorizacion,
+    saveTiposObras: saveTiposObras
 };
 
 
@@ -131,14 +133,33 @@ class ComunicacionEncargo extends React.Component {
     };
 
     async componentWillMount() {
-        await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
+        if (this.props.tiposAutorizacion.length === 0)
+            await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
         await this.transformGruposRaiz();
         await this.updateFaseTrabajo(0);
     }
 
     async transformGruposRaiz() {
-        await this.props.fetchGruposRaiz(this.props.activeLanguage.code);
+        if (this.props.gruposRaiz && this.props.gruposRaiz.length === 0) {
+            await this.props.fetchGruposRaiz(this.props.activeLanguage.code);
+        }
         await this.comunicacionEncargo();
+    }
+
+    //Funcion para obtener los tipos de trabajos
+    async getTiposTrabajos(gruposRaiz) {
+        if (this.props.tiposObras.some(x => x.Id_Tipo_Grupo_Raiz === gruposRaiz)) {
+            let tiposTrabajos = this.props.tiposObras.find(x => x.Id_Tipo_Grupo_Raiz === gruposRaiz);
+            return tiposTrabajos.tiposTrabajos;
+        }
+        else {
+            let obras = await this.props.fetchTipoTrabajo(gruposRaiz, this.props.activeLanguage.code);
+            let trabajos = obras && obras.tiposTrabajos ? obras.tiposTrabajos : null;
+            if (trabajos) {
+                this.props.saveTiposObras(obras);
+            }
+            return trabajos;
+        }
     }
 
     async comunicacionEncargo() {
@@ -149,8 +170,10 @@ class ComunicacionEncargo extends React.Component {
         let isCurrent = false;
         for (let i = 0; i < gruposRaiz.length; i++) {
             let value = gruposRaiz[i];
-            await this.props.fetchTipoTrabajo(value.Id_Tipo_Grupo_Raiz, this.props.activeLanguage.code);
-            let tiposTrabajos = this.props.tiposTrabajos;
+            //TODO: separar para metodo que verifique la necesidad de carga
+            /*await this.props.fetchTipoTrabajo(value.Id_Tipo_Grupo_Raiz, this.props.activeLanguage.code);
+            let tiposTrabajos = this.props.tiposTrabajos;*/
+            let tiposTrabajos = await this.getTiposTrabajos(value.Id_Tipo_Grupo_Raiz);
             let encomenda = this.state.encomenda.EncomendaActual.length > 0
                 ? this.state.encomenda.EncomendaActual[0] : null;
 

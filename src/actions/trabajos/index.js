@@ -14,7 +14,7 @@ import * as types from './types';
 
 const formatMenssage = (error) => (
     {
-        "MensajesProcesado": [ {"Mensaje": error}]
+        "MensajesProcesado": [{ "Mensaje": error }]
     }
 )
 export const fetchTiposTrabajo = (gruposTematicos) => ({
@@ -38,7 +38,7 @@ export const fetchErrorTrabajo = (error) => ({
 });
 
 /**Función que dispara un error desde cualquier parte */
-export const dispatchError = (error)=> (dispatch) => {
+export const dispatchError = (error) => (dispatch) => {
     dispatch(fetchErrorTrabajo(formatMenssage(error)));
 }
 
@@ -56,8 +56,8 @@ export const funcionesTipologias = (value) => {
     }
 }
 
-export const comunicacionEncargo = (value) =>{
-    return{
+export const comunicacionEncargo = (value) => {
+    return {
         type: types.FETCH_COMUNICACION_ENCARGO,
         payload: value
     }
@@ -82,14 +82,28 @@ export const cambioContenidoCentralReset = (error) => ({
 export const fetchTipoTrabajo = (idGrupoTematico, idLanguage = 2) => async (dispatch) => {
     try {
         let response = await getTiposTrabajo(idGrupoTematico, idLanguage);
-        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
-            dispatch(fetchErrorTrabajo(response.data))
-            :
-            dispatch(fetchTiposTrabajo(response.data))
-    }catch (error) {
+        response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0
+            ? dispatch(fetchErrorTrabajo(response.data))
+            : dispatch(fetchTiposTrabajo(response.data))
+        return {
+            Id_Tipo_Grupo_Raiz: idGrupoTematico,
+            tiposTrabajos: response.data ? response.data.GruposTematicos : []
+        }
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
+        return null;
     }
 
+};
+
+//Disparador de accion para salvar el tipo de obras
+export const saveObras = (tiposObras) =>({
+    type: types.SAVE_TIPOS_OBRA,
+    payload: tiposObras
+});
+
+export const saveTiposObras = (tiposObras) => (dispatch) => {
+   dispatch(saveObras(tiposObras));
 };
 
 /**
@@ -102,9 +116,8 @@ export const fetchTipoAutorizacion = (idLanguage = 2) => async (dispatch) => {
         let response = await getTiposAutorizacionMunicipal(idLanguage);
         response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
             dispatch(fetchErrorTrabajo(response.data))
-            :
-            dispatch(fetchTiposAutorizacion(response.data))
-    }catch (error) {
+            : dispatch(fetchTiposAutorizacion(response.data))
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }
 };
@@ -117,14 +130,14 @@ export const fetchTipoAutorizacion = (idLanguage = 2) => async (dispatch) => {
  * @param idLanguage
  * @returns {Function}
  */
-export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion, idLanguage=2) => async (dispatch) => {
+export const fetchFasesTrabajos = (idGrupoTematico, idTipoAutorizacion, idLanguage = 2) => async (dispatch) => {
     try {
         let response = await getFasesTrabajos(idGrupoTematico, idTipoAutorizacion, idLanguage);
         response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
             dispatch(fetchErrorTrabajo(response.data))
             :
             dispatch(dispatchFasesTrabajos(response.data))
-    }catch (error) {
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }
 };
@@ -141,7 +154,7 @@ export const fetchGruposRaiz = (idLanguage = 2) => async (dispatch) => {
             dispatch(fetchErrorTrabajo(response.data))
             :
             dispatch(gruposRaiz(response.data))
-    }catch (error) {
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }
 
@@ -156,12 +169,12 @@ export const fetchComunicacionencargo = (value) => async (dispatch) => {
 
 export const fetchFuncionesTipologia = (idLanguage = 1) => async (dispatch) => {
     try {
-        let response = await  getFuncionesTipologia(idLanguage);
+        let response = await getFuncionesTipologia(idLanguage);
         response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
             dispatch(fetchErrorTrabajo(response.data))
             :
             dispatch(funcionesTipologias(response));
-    }catch (error) {
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }
 }
@@ -189,11 +202,11 @@ export const dispachFilesToUpload = (files) => ({
 
 
 //Adicionar Agentes(arquitectos) a un trabajo
-export const dispatchAddAgenteTrabajoSeleccion = (idExpediente,idTrabajo,agent) => async (dispatch) => {
+export const dispatchAddAgenteTrabajoSeleccion = (idExpediente, idTrabajo, agent) => async (dispatch) => {
     try {
         //let response = await addAgentesTrabajo(idExpediente,idTrabajo, dataPost);
         dispatch(addAgenteTrabajoSeleccion(agent));
-    }catch (error) {
+    } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }
 

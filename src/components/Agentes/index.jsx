@@ -69,17 +69,20 @@ class Agentes extends Component {
       //postAddTrabajoEncomenda
       let currentExpId = encomendaActual.Id_Expediente;
       let result = await manageEncomenda(currentExpId, trabajoEncomenda);
-      
+
       //Validación para continuar (si el resultado fue 200 se permite continuar)
       if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
         let url = `/visualizar-expediente/${currentExpId}`;
         this.props.history.push(url);
+        return true;
       }
       else if (result.response) {
         this.props.fetchErrorExpediente(result.response.data);
+        return false;
       }
       else {
         this.props.fetchErrorExpediente(result.data);
+        return false;
       }
     }
   }
@@ -90,8 +93,9 @@ class Agentes extends Component {
   }
 
   async crearTrabajo() {
-    await this.addTrabajoEncomenda();
-    this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+    if (await this.addTrabajoEncomenda()) {
+      this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+    }
   }
 
   render() {
@@ -103,7 +107,7 @@ class Agentes extends Component {
             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
               className={classes.titleMainPanel}>
               <div>
-                <Translate id="languages.agentes.agentSectionTitle"/>
+                <Translate id="languages.agentes.agentSectionTitle" />
               </div>
             </ExpansionPanelSummary>
 
