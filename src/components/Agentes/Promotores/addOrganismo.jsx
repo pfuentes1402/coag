@@ -67,7 +67,7 @@ class AddOrganismo extends Component{
                 "porcentaje": null,
                 "PorcentajesEquitativos": 1,
                 "Id_Concello": "",
-                "Id_Provincia": "",
+                "Id_Provincia": 15,
                 "Id_Autonomia": 71,
                 "Id_Pais": 100,
                 "Nif_Representado": ""
@@ -94,10 +94,12 @@ class AddOrganismo extends Component{
                 let paises = await getPaises(language);
                 let regiones = await getRegionesAutonoma(language);
                 let provincias = await getProvincias(this.state.promotor.Id_Autonomia, language);
+                let municipios = await getConcellos(this.state.promotor.Id_Provincia, language);
                 this.setState({tiposPromotor: tiposPromotor.data.Tipos_Promotores ? tiposPromotor.data.Tipos_Promotores : [],
                     paises: paises.data.AreasGeograficasPaises ? paises.data.AreasGeograficasPaises : [],
                     regiones: regiones.data.AreasGeograficasAutonomias ? regiones.data.AreasGeograficasAutonomias : [],
-                    provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : []
+                    provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : [],
+                    municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : [],
                 })
             }
         }catch (error) {
@@ -123,7 +125,7 @@ class AddOrganismo extends Component{
         let provincias = await getProvincias(event.target.value, this.props.activeLanguage.code);
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor,
+        await this.setState({promotor: promotor,
             provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : [],
             municipios: []})
     };
@@ -133,7 +135,7 @@ class AddOrganismo extends Component{
         let municipios = await getConcellos(event.target.value, this.props.activeLanguage.code);
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor,
+        await this.setState({promotor: promotor,
             municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []})
     };
 

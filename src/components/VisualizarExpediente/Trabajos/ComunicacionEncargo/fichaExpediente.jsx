@@ -16,7 +16,7 @@ import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage }
 import { putExpediente, putEmplazamiento } from '../../../../api';
 import ValidateAddress from '../../../Address';
 import { elimardelatabla, saveAdressTostore } from "../../../../actions/expedientes";
-
+import {some, findIndex} from 'lodash';
 const styles = theme => ({
   divGrey: {
     backgroundColor: grey[100],
@@ -78,11 +78,11 @@ class FichaExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sourceExpediente: this.props.sourceExpediente,
-      emplazamientos: this.props.expediente.Emplazamientos,
+        sourceExpediente: this.props.sourceExpediente,
+        emplazamientos: this.props.expediente.Emplazamientos,
         location: {},
-      isUpdate: false,
-      isAddUbicacion: false,
+        isUpdate: false,
+        isAddUbicacion: false,
         isShowAddress: false,
     }
   }
@@ -111,6 +111,10 @@ class FichaExpediente extends Component {
         this.setState({ location: location });
     }
 
+    handleUpdateIsShowAddress(showAddress){
+        this.setState({ isShowAddress: showAddress });
+    }
+
   async handleSaveAddress() {
     let {location, emplazamientos} = this.state;
     let locations = [];
@@ -135,25 +139,20 @@ class FichaExpediente extends Component {
           }
       }
       else {
-          this.setState({ emplazamientos: response.data.Emplazamientos, isShowAddress: false })
+          this.setState({ emplazamientos: locations, isShowAddress: false })
           this.handleShowUbication(false);
       }
 
   }
 
-  ifEqual(data, address) {
-    let equal = -1;
-    if (data.length > 0) {
-      data.map((value, index) => {
-        if (value.Calle === address.Calle && value.Numero === address.Numero
-          && value.Piso === address.Piso && value.Codigo_Postal === address.Codigo_Postal
-          && value.municipio === address.Concello) {
-          equal = index
+    ifEqual(data, address){
+        let equal = some(data,address);
+        let index = -1;
+        if (equal){
+            index = findIndex(data,address);
         }
-      })
+        return index;
     }
-    return equal;
-  }
 
   handleEdit(location){
       this.setState({isShowAddress: true, isAddUbicacion: true, location: location})
@@ -227,14 +226,14 @@ class FichaExpediente extends Component {
         {
           this.state.isAddUbicacion &&
           <Grid item xs={12} className="pt-2">
-            <ValidateAddress updateLocation={(location)=>{this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} location={this.state.location}/>
+            <ValidateAddress updateLocation={(location)=>{this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} updateIsShowAddress={(showAddress)=>{this.handleUpdateIsShowAddress(showAddress)}} location={this.state.location}/>
             <Grid item xs={12} className="text-right">
               <Button color="primary" size="small" className={`${classes.button} mx-2`}
                 onClick={() => { this.handleShowUbication(false) }}>
                 <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
               </Button>
               <Button variant="contained" size="small" color="primary" className={classes.button}
-                onClick={() => this.handleSaveAddress()}>
+                onClick={() => {this.handleSaveAddress()}}>
                 <Translate id="languages.generalButton.added" />
               </Button>
             </Grid>
@@ -246,7 +245,6 @@ class FichaExpediente extends Component {
 
   render() {
     let { classes } = this.props;
-    console.log("fichaExpediente", this.props);
     return (
       <div>
         <Paper className={`${classes.withoutRadius} m-3`}>

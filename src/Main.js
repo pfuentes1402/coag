@@ -9,20 +9,24 @@ import ComunicacionEncargo from "./components/ComunicacionEncargo/index";
 import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContainer";
 import VisualizarExpediente from './components/VisualizarExpediente/index';
 import AsistenteTrabajo from './components/AsistenteTrabajo/index';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
 
 class Main extends Component {
     render(){
 
         return(
             <div>
+                <BreadcrumbsItem to='/'><Translate id="languages.header.titleHome"/></BreadcrumbsItem>
                 <Switch>
                     <Route exact path='/' component={(props) => <MainContainer {...props}/>} />
                     <Route exact path='/nuevo-expediente' component={(props) => <AddExpedient {...props}/>} />
                     <Route path='/login' component={(props) => <Login {...props}/> }/>
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
-                    <Route exact path='/comunicacion/:id?' component={(props) => <ComunicacionEncargo {...props}/>}/>
-                    <Route path="/visualizar-expediente/:id/:idTrabajo?" component={(props) => <VisualizarExpediente {...props}/>}/>
+                    <Route path="/visualizar-expediente/:id/:idTrabajo?/:idEstructura?" component={(props) => <VisualizarExpediente {...props}/>}/>
+                    <Route path='/comunicacion/:id' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/crear-trabajo/:id" component={(props) => <AsistenteTrabajo {...props}/>}/>
                 </Switch>
             </div>
@@ -31,4 +35,4 @@ class Main extends Component {
     }
 }
 
-export default withRouter(Main)
+export default withRouter(withLocalize(Main));

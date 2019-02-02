@@ -146,7 +146,7 @@ class Promotores extends Component {
         "Porcentaje": null,
         "PorcentajesEquitativos": 1,
         "Id_Concello": "",
-        "Id_Provincia": "",
+        "Id_Provincia": 15,
         "Id_Autonomia": 71,
         "Id_Pais": 100,
       },
@@ -190,7 +190,7 @@ class Promotores extends Component {
         arrayPromotores[index] = promotor;
       }
       objectPromotores.Promotores = arrayPromotores
-      this.setState({ showAddPromotor: false, encomenda: objectPromotores });
+      this.setState({ showAddPromotor: false, encomenda: objectPromotores, canSearch: false });
       this.props.updateEncomenda(objectPromotores);
     }
   }

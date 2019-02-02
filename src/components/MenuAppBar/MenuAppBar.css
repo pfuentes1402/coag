@@ -3,6 +3,9 @@
 }
 .app-frame{
   background-color: white !important;
+  border-top: #e0e0e0 solid 1px;
+  border-left: #e0e0e0 solid 1px;
+  border-right: #e0e0e0 solid 1px;
 }
 .app-frame .btn{
   margin-top:15px;

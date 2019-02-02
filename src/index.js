@@ -11,6 +11,7 @@ import { BrowserRouter} from 'react-router-dom';
 import "../node_modules/uppy/dist/uppy.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reducers from './reducers';
+import {ThroughProvider} from 'react-through';
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -53,11 +54,13 @@ ReactDOM.render((
         <MuiThemeProvider theme={theme}>
             <LocalizeProvider store={store} >
                 <PersistGate loading={null} persistor={persistor}>
-                    <BrowserRouter>
-                        <CookiesProvider>
-                             <App/>
-                        </CookiesProvider>
-                    </BrowserRouter>
+                    <ThroughProvider>
+                        <BrowserRouter>
+                            <CookiesProvider>
+                                 <App/>
+                            </CookiesProvider>
+                        </BrowserRouter>
+                    </ThroughProvider>
                 </PersistGate>
             </LocalizeProvider>
         </MuiThemeProvider>

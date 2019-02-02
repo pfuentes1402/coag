@@ -119,17 +119,37 @@ class CrearTrabajo extends Component {
         this.setState({ inforCarpetas: inforCarpetas });
     }
 
-    handleChange = (fase, index, name) => event => {
+    handleChange = (fase, index, name) => async event => {
         let tiposTrabajos = {};
         Object.assign(tiposTrabajos, this.state.tiposTrabajos);
         tiposTrabajos[fase][index][name] = event.target.value;
+        let trabajo = tiposTrabajos[fase][index];
+        let tipoTramite = 0;
+        if(name === 'Id_Tipo_Tramite'){
+            tipoTramite = this.state.tiposTramites.find(t=>t.Id_Tipo_Tramite === event.target.value);
+            tiposTrabajos[fase][index]['Obligatorio']= tipoTramite.Nombre;
+            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, trabajo.defaultSelect, trabajo.Id_Tipo_Trabajo);
+
+        }else {
+            let nombre = tiposTrabajos[fase][index]['Obligatorio'].toUpperCase();
+            tipoTramite = this.state.tiposTramites.find(t=>t.Nombre.toUpperCase() === nombre);
+            console.log(tipoTramite)
+            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, event.target.value, trabajo.Id_Tipo_Trabajo);
+        }
+
         this.setState({ tiposTrabajos: tiposTrabajos });
+
     };
 
-    handleChangePanel = (id_tipo_trabajo, id_tipo_tramite, es_modificado) => async (event, expanded) => {
-        this.setState({ expanded: expanded ? id_tipo_trabajo : false, isCarpetas: true });
-        if (id_tipo_tramite !== undefined) {
-            await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado);
+
+     handleChangePanel = (id_tipo_trabajo, id_tipo_tramite, es_modificado)  => async(event, expanded) =>{
+        await this.updateInfoCarpeta(id_tipo_trabajo, id_tipo_tramite, es_modificado, expanded)
+    }
+
+    async updateInfoCarpeta(id_tipo_trabajo, id_tipo_tramite, es_modificado, expanded){
+        this.setState({  expanded: expanded ? id_tipo_trabajo : false, isCarpetas: true });
+        if(id_tipo_tramite !== undefined){
+            await this.getInfoCarpetasTrabajo(id_tipo_trabajo, id_tipo_tramite, es_modificado === "Es_Trabajo_Nuevo" ? 0 : 1);
         }
         this.setState({ isCarpetas: false });
     }
@@ -141,41 +161,41 @@ class CrearTrabajo extends Component {
         this.setState({ carpetas: carpetas });
     };
 
-    async handleCrearTrabajo() {
-        let idExpediente = this.props.match.params.id;
-        let { tiposTrabajos } = this.state;
-        let trabajos = [];
-        Object.values(tiposTrabajos).map(fase => {
-            fase.map(t => {
-                trabajos.push({
-                    "Id_Tipo_Fase": t.Id_Tipo_Fase,
-                    "Id_Tipo_Trabajo": t.Id_Tipo_Trabajo,
-                    "Id_Tipo_Tramite": t.Id_Tipo_Tramite ? t.Id_Tipo_Tramite : 0,
-                    "Es_Trabajo_Nuevo": t.defaultSelect === "Es_Trabajo_Nuevo" ? 1 : 0,
-                    "Es_Trabajo_Modificado_Correcion_Basica": t.defaultSelect === "Es_Trabajo_Modificado_Correcion_Basica" ? 1 : 0,
-                    "Es_Trabajo_Modificado_Sustancial": t.defaultSelect === "Es_Trabajo_Modificado_Sustancial" ? 1 : 0,
-                    "Es_Trabajo_Modificado_Requerido_Administracion": 0,
-                    "Envio_administracion": 0
-                })
-            })
-        });
+     async handleCrearTrabajo(){
+         let idExpediente = this.props.match.params.id;
+         let {tiposTrabajos} = this.state;
+          let trabajos = [];
+          Object.values(tiposTrabajos).map(fase=>{
+              fase.map(t=>{
+                  trabajos.push({
+                      "Id_Tipo_Fase": t.Id_Tipo_Fase,
+                      "Id_Tipo_Trabajo": t.Id_Tipo_Trabajo,
+                      "Id_Tipo_Tramite": t.Id_Tipo_Tramite ? t.Id_Tipo_Tramite : 0,
+                      "Es_Trabajo_Nuevo": t.defaultSelect === "Es_Trabajo_Nuevo" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Correcion_Basica": t.defaultSelect === "Es_Trabajo_Modificado_Correcion_Basica" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Sustancial": t.defaultSelect === "Es_Trabajo_Modificado_Sustancial" ? 1 : 0,
+                      "Es_Trabajo_Modificado_Requerido_Administracion": 0,
+                      "Envio_administracion":0
+                  })
+              })
+          });
 
-        let data = {
-            "Trabajos": trabajos,
-            "IgnorarObservaciones": 1
-        }
-        let response = await addTrabajoEncomendaExpediente(idExpediente, data);
-        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-            this.props.fetchErrorExpediente(response);
-        }
-        else {
-            this.props.history.push("/visualizar-expediente/" + idExpediente + "/" + response.Trabajos[0].Id_Trabajo);
-        }
-    }
+          let data = {
+              "Trabajos": trabajos,
+              "IgnorarObservaciones":1
+          }
+         let response = await addTrabajoEncomendaExpediente(idExpediente, data);
+         if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+             this.props.fetchErrorExpediente(response);
+         }
+         else {
+             this.props.history.push("/visualizar-expediente/" + idExpediente + "/" + response.Trabajos[0].Id_Trabajo);
+         }
+     }
 
-    handleShowDialog(title, content) {
-        this.setState({ dialogOpen: true, dialogTitle: title, dialogContent: content });
-    }
+     handleShowDialog(title, content) {
+         this.setState({dialogOpen: true, dialogTitle: title, dialogContent: content});
+     }
 
     handleCloseDialog = () => {
         this.setState({ dialogOpen: false });
@@ -196,9 +216,10 @@ class CrearTrabajo extends Component {
                                 <Grid item xs={12}>
                                     {Object.keys(tiposTrabajos).map((fase, indexFase) => {
                                         let trabajos = tiposTrabajos[fase];
-                                        return <List key={indexFase} classes={{ subheader: classes.subHeader }}
-                                            subheader={<ListSubheader component="div" color="secondary" className={classes.subHeader} classes={{ root: classes.subHeader }} >{fase}</ListSubheader>}
-                                            className={classes.root}>
+                                        return <List key={indexFase} classes={{subheader: classes.subHeader}}
+                                            subheader={<ListSubheader component="div" color="secondary" className={classes.subHeader} classes={{root: classes.subHeader}} >{fase}</ListSubheader>}
+                                            className={classes.root}
+                                        >
                                             <ListItem className="p-0">
                                                 <List
                                                     className={classes.root}>
@@ -220,10 +241,9 @@ class CrearTrabajo extends Component {
                                                                                     inputProps={{
                                                                                         name: 'Id_Tipo_Tramite',
                                                                                         id: 'Id_Tipo_Tramite',
-                                                                                    }}>
-                                                                                    <MenuItem value="">
-                                                                                        <em><Translate id="languages.trabajo.emptyOption" /></em>
-                                                                                    </MenuItem>
+                                                                                    }}
+                                                                                >
+
                                                                                     {tiposTramites.map(tramite => (
                                                                                         <MenuItem
                                                                                             value={tramite.Id_Tipo_Tramite}>{tramite.Nombre}</MenuItem>
@@ -241,18 +261,18 @@ class CrearTrabajo extends Component {
                                                                                     row
                                                                                 >
                                                                                     <FormControlLabel value="Es_Trabajo_Nuevo"
-                                                                                        control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.nuevoTrabajoTitle" />}
-                                                                                        labelPlacement="start" className="mt-2 text-uppercase" />
+                                                                                                      control={<Radio />} label={<Translate
+                                                                                        id="languages.trabajo.nuevoTrabajoTitle" />}
+                                                                                                      labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Sustancial"
                                                                                         control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.modificacionSustancialTitle" />}
+                                                                                        id="languages.trabajo.modificacionSustancialTitle" />}
                                                                                         labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Correcion_Basica"
                                                                                         control={<Radio />} label={<Translate
-                                                                                            id="languages.trabajo.correccionBasicaTitle" />}
+                                                                                        id="languages.trabajo.correccionBasicaTitle" />}
                                                                                         labelPlacement="start" className="mt-2 text-uppercase" />
                                                                                 </RadioGroup>
                                                                             </FormControl>
@@ -260,7 +280,7 @@ class CrearTrabajo extends Component {
 
                                                                     </Grid>
                                                                     <Grid item xs={12}>
-                                                                        <ExpansionPanel className="shadow-none" expanded={expanded === trabajo.Id_Tipo_Trabajo} onChange={this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo")}>
+                                                                        <ExpansionPanel className="shadow-none" expanded={expanded === trabajo.Id_Tipo_Trabajo} onChange={this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo") }>
                                                                             <ExpansionPanelSummary className="p-0" expandIcon={<ExpandMoreIcon />}>
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={12}>
@@ -292,7 +312,7 @@ class CrearTrabajo extends Component {
                                                                                                 </Grid>
                                                                                             </Grid>
                                                                                         </Grid>
-                                                                                        <Grid item xs={12}>
+                                                                                        <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
                                                                                             {
                                                                                                 this.state.inforCarpetas.map((carpeta, indexCarpeta) => {
                                                                                                     return <List key={indexCarpeta} component="div" disablePadding>
@@ -312,15 +332,15 @@ class CrearTrabajo extends Component {
                                                                                                                     </Typography>
                                                                                                                 </Grid>
                                                                                                                 <Grid item xs={4} className="align-self-center">
-                                                                                                                    <Button color="primary" onClick={() => { this.handleShowDialog(carpeta.Nombre, carpeta.Aclaraciones) }}>
-                                                                                                                        <Translate id="languages.generalButton.masInfo" />
+                                                                                                                    <Button color="primary" onClick={()=>{this.handleShowDialog(carpeta.Nombre, carpeta.Aclaraciones)}}>
+                                                                                                                        <Translate id="languages.generalButton.masInfo"/>
                                                                                                                     </Button>
                                                                                                                 </Grid>
                                                                                                             </Grid>
                                                                                                         </ListItem>
                                                                                                         <Collapse in={carpeta.open ? carpeta.open : false} timeout="auto" unmountOnExit>
                                                                                                             <List component="div" disablePadding>
-                                                                                                                <ListItem className="pt-0 pb-0 pl-5">
+                                                                                                                <ListItem className="pt-0 pb-0 pl-5" >
                                                                                                                     <List component="div" disablePadding style={{ width: '100%' }}>
                                                                                                                         {carpeta.children && carpeta.children.map((c, i) => {
                                                                                                                             return <ListItem className="pt-0 pb-0">
@@ -336,8 +356,8 @@ class CrearTrabajo extends Component {
                                                                                                                                         </Typography>
                                                                                                                                     </Grid>
                                                                                                                                     <Grid item xs={4}>
-                                                                                                                                        <Button color="primary" onClick={() => { this.handleShowDialog(c.Nombre, c.Aclaraciones) }}>
-                                                                                                                                            <Translate id="languages.generalButton.masInfo" />
+                                                                                                                                        <Button color="primary" onClick={()=>{this.handleShowDialog(c.Nombre, c.Aclaraciones)}}>
+                                                                                                                                            <Translate id="languages.generalButton.masInfo"/>
                                                                                                                                         </Button>
                                                                                                                                     </Grid>
                                                                                                                                 </Grid>
@@ -371,10 +391,10 @@ class CrearTrabajo extends Component {
                                 </Grid>
                                 <Grid item xs={12} className="d-flex justify-content-between">
                                     <Button color="primary" size="small" className="px-4" onClick={() => { this.props.handleNavigation(true) }}>
-                                        <Translate id="languages.generalButton.volver" />
+                                        <Translate id="languages.generalButton.volver"/>
                                     </Button>
-                                    <Button variant="contained" size="small" color="primary" className="px-3" onClick={() => { this.handleCrearTrabajo() }}                                            >
-                                        <Translate id="languages.generalButton.finalizar" />
+                                    <Button variant="contained" size="small" color="primary" className="px-3" onClick={()=> {this.handleCrearTrabajo()}}                                            >
+                                        <Translate id="languages.generalButton.finalizar"/>
                                     </Button>
 
                                 </Grid>
@@ -393,7 +413,7 @@ class CrearTrabajo extends Component {
                     >
                         <DialogTitle id="alert-dialog-title">
                             {this.state.dialogTitle}
-                        </DialogTitle>
+                            </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
                                 <ReactQuill value={this.state.dialogContent} readOnly theme='bubble' />
@@ -401,7 +421,7 @@ class CrearTrabajo extends Component {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.handleCloseDialog} color="primary" autoFocus>
-                                <Translate id="languages.generalButton.aceptar" />
+                                <Translate id="languages.generalButton.aceptar"/>
                             </Button>
                         </DialogActions>
                     </Dialog>

@@ -90,7 +90,6 @@ export const getExpedienteDatosGeneral = async (id_expediente) => {
 }
 
 
-
 /**
  * Proporciona los grupos temáticos de un trabajo
  * @param id_grupo
@@ -151,16 +150,15 @@ export const getTiposTramite = async (idLanguage = 2) => {
 }
 
 
-
 /*
  *Valida una dirección a traves de su referencia catastral
- * Parametros 
+ * Parametros
  *    ref_catastral
  */
 export const getValidateAddress = async ref_catastral => {
   try {
     let response = await api.get(`/DatosCatastro/${ref_catastral}`);
-    return response;
+    return response.data;
   }
   catch (error) {
     return formatMenssage(error.message);
@@ -173,13 +171,14 @@ export const getValidateAddress = async ref_catastral => {
  * @returns {Promise<*>}
  */
 export const postNuevoExpediente = async data => {
-  try {
-    let response = await api.post(`/expedientes/`, data);
-    return response;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.post(`/expedientes/`, data);
+
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 /*
  *Edita un expediente expediente
@@ -470,44 +469,7 @@ export const getGruposRaiz = (idLanguage = 2) =>
 
 /**
  * Inserta un trabajo encomenda (comunicacion de encargo) para un expediente
- * @param data object {
- *           "Id_Tipo_Grupo_Tematico": 1,
- *           "Id_Tipo_Autorizacion_Municipal":1,
- *           "Id_Tipo_Fase":1,
- *           "Id_Tipo_Trabajo":219,
- *           "Id_Tipo_Tramite":2,
- *
- *           "Colegiados": [
- *             {   "Id_Colegiado":2853,
- *                "Id_Tipo_Colegiado":1,
- *                "Id_Sociedad":0,
- *                "Porcentaje": 10,
- *                "Ids_Funciones":"31,30",
- *                "PorcentajesEquitativos": 1
- *                     	}
- *
- *                     	],
- *            "Promotores"	:[
- *               {"id_entidad": -1,
- *                 "Nif":"36110129H",
- *                 "Id_Tipo_Entidad":1,
- *                 "Id_Tipo_Encargante":3,
- *                 "Nombre": "Manolo",
- *                 "Apellido1":"Cadenas",
- *                 "Apellido2":"",
- *                 "Observaciones":null,
- *                 "Id_Tipo_Organismo": null,
- *                 "Mail":"cadenas@gamil.com",
- *                 "Telefono":null,
- *                  "Calle":"Gran vía",
- *                 "Numero":null,
- *                 "Piso":null,
- *                 "Codigo_Postal" :null,
- *                 "Id_Concello":36057,
- *                 "PorcentajesEquitativos": 1
- *             	}  	],
- *             "IgnorarObservaciones":1
- *             }
+ * @param object
  * @param id_expediente
  * @returns {Promise}
  */
@@ -755,7 +717,7 @@ export const putColegiados = async (idExpediente, idTrabajo, data) => {
  * @param {*} idExpediente 
  * @param {*} languageId 
  */
-export const fetchEncomendaActual = async (idExpediente, languageId) => {
+export const fetchEncomendaActual = async (idExpediente, languageId = 2) => {
   try {
     let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
     return response;
@@ -771,7 +733,7 @@ export const fetchEncomendaActual = async (idExpediente, languageId) => {
  * @param languageId
  * @returns {Promise<*>}
  */
-export const manageEncomenda = async (idExpediente, datapost, languageId = 1) => {
+export const manageEncomenda = async (idExpediente, datapost, languageId = 2) => {
   try {
     let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
     return response;
@@ -789,14 +751,24 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 1) =>
  * @param languageId
  * @returns {Promise<*>}
  */
-export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 1) => {
-  try {
-    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
-    return response.data;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 2) => {
+    try {
+        let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
+export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
+    try {
+        let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 export const formatMenssage = (error) => (
@@ -804,3 +776,122 @@ export const formatMenssage = (error) => (
     "MensajesProcesado": [{ "Mensaje": error }]
   }
 )
+/**
+ * Sección de docuemntos de un expediente
+ */
+
+export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
+//obtener todos los archivos de una carpeta
+export const getFilesFromFolder = async (idExpediente, idTrabajo, folderId, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//obtener los detalles de una carpeta
+export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//obtener los detalles de un trabajo
+export const getWorkDetails = async (idExpediente, idTrabajo, lang = 1) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
+//Subir un fichero a una carpeta
+export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let data = new FormData();
+            data.append('file', file.data);
+            data.append('filename', file.filename)
+
+            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Token': localStorage.getItem('token'),
+                    }
+
+
+                }
+            );
+            resolve(result.data)
+
+
+            // let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`,
+            //     {content:data,
+            //         processData: false,
+            //         contentType: false
+            //     },{
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }});
+            //resolve(response);
+        } catch (error) {
+            reject(formatMenssage(error.message));
+        }
+        // setTimeout(()=>{
+        //   console.log(file)
+        //   resolve()
+        // },3000)
+    })
+
+    //
+}
+
+//subir fichero a carpeta temporal
+export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = new FormData();
+            data.append('file', file.data);
+            data.append('filename', file.filename)
+            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Token': localStorage.getItem('token'),
+                    }
+
+
+                }
+            );
+            resolve(result.data)
+        } catch (error) {
+            reject(formatMenssage(error.message));
+        }
+
+    })
+}
+//Leer la carpeta temporal
+
+export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
+    try {
+        http://servicios.coag.es/api/expedientes/703634/AlmacenTemporalArchivos
+        let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}

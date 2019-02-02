@@ -14,7 +14,7 @@ import {
 import { getFasesTrabajos } from '../../api/index';
 import { dispatchAddAutorizacion } from "../../actions/expedientes";
 import { connect } from "react-redux";
-import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
+import { FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@material-ui/core";
 import { Container } from "reactstrap";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -128,15 +128,19 @@ class ComunicacionEncargo extends React.Component {
             Description: '',
             encomenda: this.props.encomenda,
             comunicacionencargo: [],
-            indexCurrent: 0
+            indexCurrent: 0,
+            isLoad: false,
         };
     };
 
     async componentWillMount() {
         if (this.props.tiposAutorizacion.length === 0)
             await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
+        await this.setState({isLoad: true});
+        await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
         await this.transformGruposRaiz();
         await this.updateFaseTrabajo(0);
+        this.setState({isLoad: false});
     }
 
     async transformGruposRaiz() {
@@ -194,8 +198,8 @@ class ComunicacionEncargo extends React.Component {
                 isSelected: i === 0
             });
         }
-        this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
-        this.updateFaseTrabajo(indexCurrent);
+        await this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
+        await this.updateFaseTrabajo(indexCurrent);
     }
 
 
@@ -380,104 +384,104 @@ class ComunicacionEncargo extends React.Component {
                         </Grid>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        <Grid container spacing={24} className={classes.marginPanel}>
-                            <Grid item xs={12}>
-                                {
-                                    this.state.comunicacionencargo && this.state.comunicacionencargo.map((value, index) => {
-                                        return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`, index)}>
-                                            <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
-                                                expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
-                                                onClick={() => { this.updateFaseTrabajo(index) }}>
-                                                {value.name}
-                                            </ExpansionPanelSummary>
-                                            <ExpansionPanelDetails className={classes.panelBody}>
-                                                <div className={classes.gridRoot}>
-                                                    <Grid container spacing={24}>
-                                                        <Grid item xs={4}>
-                                                            <FormControl className={classes.formControl}>
-                                                                <InputLabel className={classes.selectTitle} htmlFor="build-type">
-                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoObra" />
-                                                                </InputLabel>
-                                                                <Select
-                                                                    value={this.state.comunicacionencargo[index].obraSelection}
-                                                                    onChange={this.handleBuildSelect(index)}
-                                                                    inputProps={{ name: 'build', id: 'build-type' }}>
-                                                                    {value.tiposObra.map((value, index) => {
-                                                                        return <MenuItem key={index} value={value.Id_Tipo_Grupo_Tematico}>{value.Nombre}</MenuItem>
-                                                                    })}
-                                                                </Select>
-                                                            </FormControl>
-                                                        </Grid>
-
-                                                        <Grid item xs={4}>
-                                                            <FormControl className={classes.formControl}>
-                                                                <InputLabel className={classes.selectTitle} htmlFor="tramit-type">
-                                                                    <Translate id="languages.comunicacionEncargo.fieldTipoTramite" />
-                                                                </InputLabel>
-                                                                <Select
-                                                                    value={this.state.comunicacionencargo[index].tramiteSelection}
-                                                                    onChange={this.handleFormalitySelect(index)}
-                                                                    inputProps={{ name: 'tramite', id: 'tramit-type' }}>
-                                                                    {
-                                                                        value.tiposTramite.map((value, index) => {
-                                                                            return <MenuItem key={index} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
+                        {this.state.isLoad ? <CircularProgress/> :
+                            <Grid container spacing={24} className={classes.marginPanel}>
+                                <Grid item xs={12}>
+                                    {
+                                        this.state.comunicacionencargo && this.state.comunicacionencargo.map((value, index) => {
+                                            return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`, index)}>
+                                                <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
+                                                                       expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
+                                                                       className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
+                                                                       onClick={() => { this.updateFaseTrabajo(index) }}>
+                                                    {value.name}
+                                                </ExpansionPanelSummary>
+                                                <ExpansionPanelDetails className={classes.panelBody}>
+                                                    <div className={classes.gridRoot}>
+                                                        <Grid container spacing={24}>
+                                                            <Grid item xs={4}>
+                                                                <FormControl className={classes.formControl}>
+                                                                    <InputLabel className={classes.selectTitle} htmlFor="build-type">
+                                                                        <Translate id="languages.comunicacionEncargo.fieldTipoObra" />
+                                                                    </InputLabel>
+                                                                    <Select
+                                                                        value={this.state.comunicacionencargo[index].obraSelection}
+                                                                        onChange={this.handleBuildSelect(index)}
+                                                                        inputProps={{ name: 'build', id: 'build-type' }}>
+                                                                        {value.tiposObra.map((value, index) => {
+                                                                            return <MenuItem key={index} value={value.Id_Tipo_Grupo_Tematico}>{value.Nombre}</MenuItem>
                                                                         })}
-                                                                </Select>
-                                                            </FormControl>
-                                                        </Grid>
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
 
-                                                        <Grid item xs={12}>
-                                                            <ExpansionPanel expanded={expandedChild === 'panel11'} onChange={this.handleChildChange('panel11')}>
-                                                                <ExpansionPanelSummary expandIcon={expandedChild === 'panel11' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                    className={expandedChild === 'panel11' ? classes.panelExapnded : classes.title}
-                                                                    style={{ minHeight: 48, height: 48 }}>
-                                                                    <Translate id="languages.comunicacionEncargo.titleVerDescription" />
-                                                                </ExpansionPanelSummary>
-                                                                <ExpansionPanelDetails>
-                                                                    <ReactQuill value={this.state.comunicacionencargo[index].description} readOnly theme='bubble' />
-                                                                </ExpansionPanelDetails>
-                                                            </ExpansionPanel>
-                                                            {
-                                                                this.state.comunicacionencargo[index].fasesTrabajos.length > 0
-                                                                && <ExpansionPanel expanded={expandedChild === 'panel12'}
-                                                                    onChange={this.handleChildChange('panel12')} >
-                                                                    <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                        className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
-                                                                        style={{ minHeight: 48, height: 48 }}>
-                                                                        {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
+                                                            <Grid item xs={4}>
+                                                                <FormControl className={classes.formControl}>
+                                                                    <InputLabel className={classes.selectTitle} htmlFor="tramit-type">
+                                                                        <Translate id="languages.comunicacionEncargo.fieldTipoTramite" />
+                                                                    </InputLabel>
+                                                                    <Select
+                                                                        value={this.state.comunicacionencargo[index].tramiteSelection}
+                                                                        onChange={this.handleFormalitySelect(index)}
+                                                                        inputProps={{ name: 'tramite', id: 'tramit-type' }}>
+                                                                        {
+                                                                            value.tiposTramite.map((value, index) => {
+                                                                                return <MenuItem key={index} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
+                                                                            })}
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+
+                                                            <Grid item xs={12}>
+                                                                <ExpansionPanel expanded={expandedChild === 'panel11'} onChange={this.handleChildChange('panel11')}>
+                                                                    <ExpansionPanelSummary expandIcon={expandedChild === 'panel11' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
+                                                                                           className={expandedChild === 'panel11' ? classes.panelExapnded : classes.title}
+                                                                                           style={{ minHeight: 48, height: 48 }}>
+                                                                        <Translate id="languages.comunicacionEncargo.titleVerDescription" />
                                                                     </ExpansionPanelSummary>
                                                                     <ExpansionPanelDetails>
-                                                                        <Grid container spacing={24} className={classes.marginPanel}>
-                                                                            {
-                                                                                this.renderRelationWorks(index)
-                                                                            }
-                                                                        </Grid>
+                                                                        <ReactQuill value={this.state.comunicacionencargo[index].description} readOnly theme='bubble' />
                                                                     </ExpansionPanelDetails>
                                                                 </ExpansionPanel>
-                                                            }
+                                                                {
+                                                                    this.state.comunicacionencargo[index].fasesTrabajos.length > 0
+                                                                    && <ExpansionPanel expanded={expandedChild === 'panel12'}
+                                                                                       onChange={this.handleChildChange('panel12')} >
+                                                                        <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
+                                                                                               className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
+                                                                                               style={{ minHeight: 48, height: 48 }}>
+                                                                            {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
+                                                                        </ExpansionPanelSummary>
+                                                                        <ExpansionPanelDetails>
+                                                                            <Grid container spacing={24} className={classes.marginPanel}>
+                                                                                {
+                                                                                    this.renderRelationWorks(index)
+                                                                                }
+                                                                            </Grid>
+                                                                        </ExpansionPanelDetails>
+                                                                    </ExpansionPanel>
+                                                                }
+                                                            </Grid>
                                                         </Grid>
-                                                    </Grid>
-                                                </div>
-                                            </ExpansionPanelDetails>
-                                        </ExpansionPanel>
-                                    })
-                                }
-                            </Grid>
-                        </Grid>
+                                                    </div>
+                                                </ExpansionPanelDetails>
+                                            </ExpansionPanel>
+                                        })
+                                    }
+                                </Grid>
+                                <Grid item xs={12} className="d-flex justify-content-between">
+                                    <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/visualizar-expediente/" + this.props.match.params.id)}}>
+                                        <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+                                    </Button>
+                                    <Button variant="contained" color="primary" className={classes.button}
+                                            onClick={() => { this.handleNext() }}>
+                                        <Translate id="languages.generalButton.next" /><Next className={classes.rightIcon} />
+                                    </Button>
+                                </Grid>
+                            </Grid>}
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
 
-
-                <div className={classes.right}>
-                    <Button color="primary" className={classes.button}>
-                        <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-                    </Button>
-                    <Button variant="contained" color="primary" className={classes.button}
-                        onClick={() => { this.handleNext() }}>
-                        <Translate id="languages.generalButton.next" /><Next className={classes.rightIcon} />
-                    </Button>
-                </div>
             </Container>
         );
     }

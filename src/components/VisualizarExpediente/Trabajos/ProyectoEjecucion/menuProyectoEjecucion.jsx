@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { List, ListItem, ListSubheader, ListItemText, Grid } from '@material-ui/core';
+import { List, ListItem, CircularProgress, ListItemText,  LinearProgress} from '@material-ui/core';
 import {
-  Divider, Collapse, ExpansionPanel, ExpansionPanelSummary,
-  ExpansionPanelDetails, Typography, withStyles
+  Divider, Collapse,  withStyles
 } from '@material-ui/core';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
@@ -20,118 +19,48 @@ class MenuProyectoEjecucion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openExcecutionMenu: this.props.active,
-      menuGroups: []/*this.tranformMenuGroups()*/
+        openExcecutionMenu: this.props.active,
+        openEstructura: false
     }
   }
 
-  tranformMenuGroups() {
-    return [{
-      title: "Memoria",
-      expand: true,
-      items: [
-        { title: "Memoria urbanística", state: 1, key: 1, required: false },
-        { title: "Memoria descriptiva", state: 2, key: 2, required: false },
-        { title: "Memoria constructiva", state: 3, key: 3, required: true },
-        { title: "Cumplimiento del CTE", state: 2, key: 4, required: true },
-        { title: "Cumplimiento de otra normativa", state: 1, key: 5, required: false }
-      ]
-    },
-    {
-      title: "Anejos a la memoria",
-      expand: true,
-      items: [
-        { title: "Estudio geotécnico", state: 2, key: 1, required: false },
-        { title: "Calculo de estructura", state: 1, key: 2, required: false },
-        { title: "Instalaciones", state: 1, key: 3, required: false },
-        { title: "Eficiencia energética", state: 1, key: 4, required: false },
-        { title: "Control de calidad", state: 1, key: 5, required: false },
-        { title: "Uso y mantenimineto", state: 1, key: 5, required: false }
-      ]
-    },
-    {
-      title: "Planos",
-      expand: true,
-      items: []
-    },
-    {
-      title: "Pliego de condiciones",
-      expand: true,
-      items: []
-    },
-    {
-      title: "Mediciones y presupuestos",
-      expand: true,
-      items: []
-    },
-    {
-      title: "Otros documentos tecnicos",
-      expand: true,
-      items: []
-    },
-    {
-      title: "Documentos del promotor",
-      expand: true,
-      items: []
-    }
-    ];
-  }
 
-  handleExpandMenu = () => {
-    /*this.setState(state => ({ openExcecutionMenu: !state.openExcecutionMenu }));*/
-  };
+    handleClick(estructura) {
+        this.setState(state=>({openEstructura: state.openEstructura === estructura ? -1 : estructura}));
+    };
 
-  handleExpandSubMenus(index) {
-    let oldMenuGroups = [];
-    Object.assign(oldMenuGroups, this.state.menuGroups);
-    if (oldMenuGroups) {
-      let action = oldMenuGroups[index].expand;
-      let newMenuGroups = oldMenuGroups.map((value, i) => {
-        if (i === index)
-          value.expand = !action;
-        return value;
-      });
-      this.setState({ menuGroups: newMenuGroups });
-    }
-  }
 
-  render() {
+    render() {
     let { classes } = this.props;
     return (
       <div>
-        <ListItem button className={`${this.props.active ? classes.openOption : ""} pl-1 pr-2`}
+        <ListItem button className={this.props.active ? classes.openOption : ""}
           onClick={() => { this.props.changeOption(this.props.trabajo.Id_Trabajo)}}>
-          <ListItemText inset primary={this.props.trabajo.Titulo} className={`pl-2`} />
+          <ListItemText primary={this.props.trabajo.Titulo} />
           {this.props.active ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Divider />
+        <Collapse in={this.props.active} timeout="auto" unmountOnExit>
+            {this.props.isLoadEstructura ?
+                <LinearProgress className="m-3"/>
+                : Object.keys(this.props.estructuraDocumental).map(estructura=>{
+                    return  <List component="div" disablePadding>
+                        <ListItem button onClick={()=>{this.handleClick(estructura)}} className="pl-5">
+                            <ListItemText  primary={estructura}/>
+                            {this.state.openEstructura === estructura ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                {this.props.estructuraDocumental[estructura].map(children=>{
+                                    return <ListItem button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}>
+                                        <ListItemText inset primary={children.Titulo} />
+                                    </ListItem>
+                                })}
 
-        <Collapse in={this.props.active} timeout="auto" unmountOnExit >
-          <Grid item xs={12} style={{height:100}}></Grid>
-          {
-            this.state.menuGroups.map((value, index) => {
-              return (
-                <div>
-                  <Divider />
-                  <ListItem button className="px-2 py-2" onClick={this.handleExpandMenu} key={index}
-                    onClick={() => this.handleExpandSubMenus(index)}>
-                    <ListItemText inset primary={value.title} className="pl-2" />
-                    {value.expand ? <ExpandMore /> : <ExpandLess />}
-                  </ListItem>
-                  <Divider />
-                  <Collapse in={value.expand} timeout="auto" unmountOnExit>
-                    <div className="py-2">
-                      {
-                        value.items.map((v, i) => {
-                          return <ListItemText key={i} inset primary={v.title} className="pl-3" />
-                        })
-                      }
-                    </div>
-                  </Collapse>
-                </div>
-              )
-            })
-          }
+                            </List>
+                        </Collapse>
+                    </List>
+                })}
         </Collapse>
         <Divider/>
       </div>
