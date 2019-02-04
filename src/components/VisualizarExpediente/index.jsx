@@ -77,8 +77,7 @@ class VisualizarExpediente extends Component {
         idEstructuraActiva: null,
         titleEstructuraActiva: "",
         estructuraDocumental: [],
-        isLoadEstructura: false
-
+        isLoadEstructura: false,
     };
   }
 
@@ -86,10 +85,22 @@ class VisualizarExpediente extends Component {
     await this.fetchExpediente();
   }
 
-  //Consumir api con el id de expediente espicificado por ur TODO: Pedro arreglar este metodo con control de errores
+  //Consumir api con el id de expediente espicificado por ur 
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
-    if (response.data) {
+    //1- Disparar el error del server
+    if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0){
+      this.props.fetchErrorExpediente(response.data);
+      return;
+    }
+    //2- Error 500
+    else if(response.response){
+      this.props.fetchErrorExpediente(response.response.data);
+      return;
+    }
+
+    //3- Success
+    else if (response.data) {
       let expediente = response.data;
       let currentExpediente = expediente.Expediente.length > 0 ? expediente.Expediente[0] : null;
       let activeTrabajo = this.props.match.params.idTrabajo
@@ -118,7 +129,7 @@ class VisualizarExpediente extends Component {
       let filterEstructura = [];
       let groupEstructura = [];
       try {
-          let response = await getEstructuraDocumental(idExpediente, idTrabajo);//TODO: poner lenguaje
+          let response = await getEstructuraDocumental(idExpediente, idTrabajo,this.props.activeLanguage.code);
           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
               this.props.fetchErrorExpediente(response);
               await this.setState({isLoadEstructura: false, estructuraDocumental: []});

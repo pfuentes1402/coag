@@ -133,7 +133,6 @@ class CrearTrabajo extends Component {
         }else {
             let nombre = tiposTrabajos[fase][index]['Obligatorio'].toUpperCase();
             tipoTramite = this.state.tiposTramites.find(t=>t.Nombre.toUpperCase() === nombre);
-            console.log(tipoTramite)
             await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, event.target.value, trabajo.Id_Tipo_Trabajo);
         }
 

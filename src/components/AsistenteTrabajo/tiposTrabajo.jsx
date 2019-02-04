@@ -49,7 +49,6 @@ class TiposTrabajo extends Component {
 
   async componentDidMount() {
     await this.loadFasesTrabajos();
-    console.log("state-TiposTrabajo", this.state);
   }
 
   async loadFasesTrabajos() {
@@ -120,7 +119,6 @@ class TiposTrabajo extends Component {
 
     await this.setState(state => ({ ...state, selectTrabajos: newState, linealWorksSelection: works }));
     this.props.updateTrabajoSeleccion(works);
-    console.log("works",works);
   }
 
   handleNext() {

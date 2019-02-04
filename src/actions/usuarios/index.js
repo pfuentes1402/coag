@@ -68,8 +68,8 @@ export const errorLogin = (data) => (
 
 //TODO: Login paso 1
 export const fetchUserLogin = (data, props) =>
-    (dispatch) => {
-        funcionForma(data).then((data) => {
+   async (dispatch) => {
+       await funcionForma(data).then((data) => {
             if (data === 401) {
                 dispatch(errorLogin("login: " + data));
             }
@@ -95,7 +95,7 @@ export const fetchUserLogin = (data, props) =>
             }
         })
             .catch(
-                // () => errorLogin(data)
+                (error) => console.log("login-error", { error, data })
             );
     };
 
