@@ -251,14 +251,14 @@ export const GettrabajosExpediente = (id_expediente) =>
  * Parametros 
  *    id_expediente
  */
-export const expedientesuser = () =>
-  api.get('/expedientes')
-
-    .then(response => {
-      return response.data.Expedientes;
-    }).catch((error) => {
-    });
-
+export const expedientesuser = async () => {
+    try {
+        let response = await api.get('/expedientes');
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 
 /*
@@ -293,16 +293,14 @@ export const errorLogin = (data) => (
  *    usuario
  *    password
  */
-/*export const funcionForma = (datos) =>
-  api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
-    return response;
-  }).catch(error => {
-    //errorLogin(error);
-    return error.response.status;
-  });*/
 export const funcionForma = async (datos) => {
-  let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
-  return response;
+  try {
+      let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+      return response;
+  }
+  catch (error) {
+      return formatMenssage(error.message);
+  }
 }
 
 /*
@@ -310,23 +308,21 @@ export const funcionForma = async (datos) => {
  * Parametros 
  *    Recoge ClienteId y ClienteClave del localStorage del navegador
 */
-export const getToken = () =>
-  axios.post('http://servicios.coag.es/api/authenticate',
-    {
-      ClienteId: localStorage.getItem('clienteid'),
-      ClienteClave: localStorage.getItem('clienteclave')
-    })
-    .then(response => {
-      localStorage.setItem('token', response.headers.token);
-
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
+export const getToken = async () => {
+  try {
+      let response = await axios.post('http://servicios.coag.es/api/authenticate',
+          {
+              ClienteId: localStorage.getItem('clienteid'),
+              ClienteClave: localStorage.getItem('clienteclave')
+          });
+      await localStorage.setItem('token', response.headers.token);
       return response;
-    }).catch(error => {
-      handleLoggout()
-      return error;
-    });
+  }catch (error) {
+      handleLoggout();
+      formatMenssage(error.message);
+  }
+}
+
 /*
  * Proporciona las acciones pendientes de un usuario
  * Parametros 
@@ -349,13 +345,15 @@ export const getAcciones = () =>
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
  */
 
-export const getultimosTrabajos = () =>
-  api.get('AccionesPendientes/')
-    .then(response => {
-      //let test=  store ? store.getState().user.token : ''
-
-      return response;
-    });
+export const getultimosTrabajos = async () => {
+    try {
+        let response = await api.get('/AccionesPendientes/');
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 //FUNCION DUMMY para obtener los susceptibles de acciones
 export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
@@ -422,6 +420,7 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
     let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+    //let response = await fetchData(uri,{})
     let response = await api.get(uri);
     return response;
   } catch (error) {
