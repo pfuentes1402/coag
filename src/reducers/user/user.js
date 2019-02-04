@@ -3,7 +3,7 @@ import {
   ACCIONESSOLICITARLI, ACCIONESCONVERTIRDIGITAL, ACCIONESCESAREXPEDIENTE
 } from "../../actions/usuarios/types";
 import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
-import { FETCH_LOGIN_SUCCESS } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_SUCCESS, FETCH_LOADING } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO , FETCH_LANGUAGE} from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
@@ -32,17 +32,22 @@ const initialstate = {
   ultimostrabajos: { Trabajos: [] },
   DatosConfiguracionesUsuario: {
     "Id": "",
-    "Idioma_Predefinido": "",
+    "Idioma_Predefinido": 2,
     "Numero_Trabajos_Acciones_Pendientes": ""
   },
   token: "",
-
   mensaje: "",
+    loading: false,
   data: { Expedientes: [] }
 };
 const reducer = (state = initialstate, action) => {
 
   switch (action.type) {
+      case FETCH_LOADING:
+          return {
+              ...state,
+              loading: action.payload,
+          };
     case FETCH_DATOSDEUSUARIO_SUCCESS:
 
       return {
@@ -80,7 +85,7 @@ const reducer = (state = initialstate, action) => {
     case FETCH_LOGIN_FAIL:
       return {
         ...state,
-        mensaje: 'error en el login',
+        mensaje: action.payload,
       };
     case ULTIMOSTRABAJOS:
 

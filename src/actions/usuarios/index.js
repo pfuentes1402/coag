@@ -1,5 +1,6 @@
 import {  funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
+import {fetchErrorExpediente, formatMenssage} from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
 
@@ -56,51 +57,56 @@ export const fetchCambiaIdioma = (data)=>
             dispatch(confUsuarioActualizada(data));
 };
 
+export const loading = (isLoading) => (
+    {
+        type: types.FETCH_LOADING,
+        payload: isLoading
+    });
 
-export const errorLogin = (data) => (  
-   
+export const fetchLoading = (isLoading) =>
+    async (dispatch) => {
+        dispatch(loading(isLoading));
+    }
+
+
+export const errorLogin = (message) => (
     {
     type: types.FETCH_LOGIN_FAIL,
-    payload: data
+    payload: message
 });
 
-
-
-
-
    export const fetchUserLogin = (data, props) =>
-   (dispatch) => {
-       funcionForma(data).then((data) => {
-           if(data=== 401){
-               
-         
-               dispatch(errorLogin("login: "+data)); 
-           }else{
-               let cienteClave =data.headers ?data.headers.clienteclave : ''; 
-               let clienteid =data.headers ? data.headers.clienteid : ''; 
-              
-               if(cienteClave && clienteid){
-                    localStorage.setItem('clienteclave',cienteClave);
-                    localStorage.setItem('clienteid',clienteid);
-                    getToken().then((response) => {
-                        if(response.status === 200){
-                            data.data.token= response.headers.token;
-                            localStorage.setItem('token', response.headers.token);
-                            dispatch(fetchLoginExito(data));
-                            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));
-                            props.history.push("/")
-                        }else{
-                            data.data.token ='';
-                        }
-                    });
-                }
+   async (dispatch) => {
+       try {
+           let response = await funcionForma(data);
+           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+               dispatch(fetchErrorExpediente(response));
+               dispatch(errorLogin(response.MensajesProcesado[0].Mensaje));
            }
-       })
-            .catch(
-               
-            // () => errorLogin(data)
-        );
-   };
+           else {
+               let cienteClave = response.headers ? response.headers.clienteclave : '';
+               let clienteid = response.headers ? response.headers.clienteid : '';
+
+               if (cienteClave && clienteid) {
+                   localStorage.setItem('clienteclave', cienteClave);
+                   localStorage.setItem('clienteid', clienteid);
+                   let token = await getToken();
+                   if (token.status === 200) {
+                       response.data.token = token.headers.token;
+                       localStorage.setItem('token', token.headers.token);
+                       dispatch(fetchLoginExito(response));
+                       localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
+                       props.history.push("/")
+                   } else {
+                       response.data.token = '';
+                   }
+               }
+           }
+
+       } catch (error) {
+           dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+       }
+   }
 
    export const  purgarStore = () =>
 

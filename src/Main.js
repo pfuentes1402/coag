@@ -21,8 +21,8 @@ class Main extends Component {
                 <BreadcrumbsItem to='/'><Translate id="languages.header.titleHome"/></BreadcrumbsItem>
                 <Switch>
                     <Route exact path='/' component={(props) => <MainContainer {...props}/>} />
-                    <Route exact path='/nuevo-expediente' component={(props) => <AddExpedient {...props}/>} />
                     <Route path='/login' component={(props) => <Login {...props}/> }/>
+                    <Route exact path='/nuevo-expediente' component={(props) => <AddExpedient {...props}/>} />
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
                     <Route path="/visualizar-expediente/:id/:idTrabajo?/:idEstructura?" component={(props) => <VisualizarExpediente {...props}/>}/>

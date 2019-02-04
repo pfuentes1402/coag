@@ -251,14 +251,14 @@ export const GettrabajosExpediente = (id_expediente) =>
  * Parametros 
  *    id_expediente
  */
-export const expedientesuser = () =>
-  api.get('/expedientes')
-
-    .then(response => {
-      return response.data.Expedientes;
-    }).catch((error) => {
-    });
-
+export const expedientesuser = async () => {
+    try {
+        let response = await api.get('/expedientes');
+        return response.data.Expedientes;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 
 /*
@@ -293,36 +293,36 @@ export const errorLogin = (data) => (
  *    usuario
  *    password
  */
-export const funcionForma = (datos) =>
-  api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
-    return response;
-  }).catch(error => {
-    //errorLogin(error);
-    return error.response.status;
-  });
+export const funcionForma = async (datos) => {
+  try {
+      let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+      return response;
+  }
+  catch (error) {
+      return formatMenssage(error.message);
+  }
+}
 
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
  * Parametros 
  *    Recoge ClienteId y ClienteClave del localStorage del navegador
 */
-export const getToken = () =>
-  axios.post('http://servicios.coag.es/api/authenticate',
-    {
-      ClienteId: localStorage.getItem('clienteid'),
-      ClienteClave: localStorage.getItem('clienteclave')
-    })
-    .then(response => {
+export const getToken = async () => {
+  try {
+      let response = await axios.post('http://servicios.coag.es/api/authenticate',
+          {
+              ClienteId: localStorage.getItem('clienteid'),
+              ClienteClave: localStorage.getItem('clienteclave')
+          });
       localStorage.setItem('token', response.headers.token);
-
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
       return response;
-    }).catch(error => {
-      handleLoggout()
-      return error;
-    });
+  }catch (error) {
+      handleLoggout();
+      formatMenssage(error.message);
+  }
+}
+
 /*
  * Proporciona las acciones pendientes de un usuario
  * Parametros 

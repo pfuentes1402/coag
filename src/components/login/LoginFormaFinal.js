@@ -47,7 +47,7 @@ const renderField = ({
 
 
 const LoginFormaFinal = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  let { handleSubmit, pristine, reset } = props
   return (
     <form onSubmit={handleSubmit}>
       <div className="inputDiv">
@@ -57,7 +57,7 @@ const LoginFormaFinal = props => {
           <Field name="password" type="password" component={renderField} label="Contraseña" />
       </div>
       <div>
-        <button className="loginbutton" type="submit" disabled={submitting} >
+        <button className="loginbutton" type="submit" disabled={props.submitting} >
              Entrar
         </button>
       </div>

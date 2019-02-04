@@ -34,13 +34,12 @@ class App extends Component {
             ],
             translation: globalTranslations,
             options: { renderToStaticMarkup,
-                defaultLanguage: this.props.idiomaFavorito.toString() }
+                defaultLanguage: this.props.idiomaFavorito ? this.props.idiomaFavorito.toString() : 2}
         });
     }
 
-    componentWillMount(){
-        let {setActiveLanguage} = this.props;
-        setActiveLanguage(this.props.idiomaFavorito.toString())
+    async componentDidMount(){
+        await this.props.setActiveLanguage(this.props.idiomaFavorito ? this.props.idiomaFavorito.toString() : 2)
     }
 
 
