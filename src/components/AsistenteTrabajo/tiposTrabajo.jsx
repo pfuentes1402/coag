@@ -41,12 +41,15 @@ class TiposTrabajo extends Component {
       language: this.props.activeLanguage.code,
       selectTrabajos: [],
       linealWorksSelection: [],
-      isLoading: true
+      isLoading: true,
+      trabajosPrevios: this.props.encomenda && this.props.encomenda.TrabajosEnEncomendaActual
+        ? this.props.encomenda.TrabajosEnEncomendaActual.map(x => { return x.Id_Trabajo; }) : []
     }
   }
 
   async componentDidMount() {
     await this.loadFasesTrabajos();
+    console.log("state-TiposTrabajo", this.state);
   }
 
   async loadFasesTrabajos() {
@@ -117,6 +120,7 @@ class TiposTrabajo extends Component {
 
     await this.setState(state => ({ ...state, selectTrabajos: newState, linealWorksSelection: works }));
     this.props.updateTrabajoSeleccion(works);
+    console.log("works",works);
   }
 
   handleNext() {
@@ -131,43 +135,45 @@ class TiposTrabajo extends Component {
   render() {
     let { classes } = this.props;
     return (
-      this.state.isLoading?
-       <Grid item xs={12} className="text-center"><CircularProgress/></Grid>
-       :<Grid container spacing={8} >
-        <Grid item xs={6}>
-          <TextField disabled={true}
-            value={this.state.dataEncomenda.Descripcion_Encomenda? this.state.dataEncomenda.Descripcion_Encomenda : ""}
-            label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
-            className={`${classes.textField} my-3 text-uppercase mx-0 pl-0 pr-1`} />
-        </Grid>
+      this.state.isLoading ?
+        <Grid item xs={12} className="text-center"><CircularProgress /></Grid>
+        : <Grid container spacing={8} >
+          <Grid item xs={6}>
+            <TextField disabled={true}
+              value={this.state.dataEncomenda.Descripcion_Encomenda ? this.state.dataEncomenda.Descripcion_Encomenda : ""}
+              label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
+              className={`${classes.textField} my-3 text-uppercase mx-0 pl-0 pr-1`} />
+          </Grid>
 
-        <Grid item xs={12} className="py-2">
-          <Typography variant="subtitle2" gutterBottom className="mb-0">
-            <Translate id="languages.crearTrabajo.selectionTitle" />
-          </Typography>
-          <Grid container spacing={16}>
-            <Grid item xs={6} className="pt-0">
-              {this.state.gruposTrabajos[0].map((value, index) => {
-                return <Grid item xs={12} key={index} ><EnhancedTable data={value} className="my-2"
-                  updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} /></Grid>
-              })}
-            </Grid>
+          <Grid item xs={12} className="py-2">
+            <Typography variant="subtitle2" gutterBottom className="mb-0">
+              <Translate id="languages.crearTrabajo.selectionTitle" />
+            </Typography>
+            <Grid container spacing={16}>
+              <Grid item xs={6} className="pt-0">
+                {this.state.gruposTrabajos[0].map((value, index) => {
+                  return <Grid item xs={12} key={index} ><EnhancedTable data={value} className="my-2"
+                    updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} 
+                    previusSelection={this.state.trabajosPrevios}/></Grid>
+                })}
+              </Grid>
 
-            <Grid item xs={6} className="pt-0">
-              {this.state.gruposTrabajos[1].map((value, index) => {
-                return <Grid item xs={12} key={index}><EnhancedTable data={value} className="my-2"
-                  updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} /></Grid>
-              })}
+              <Grid item xs={6} className="pt-0">
+                {this.state.gruposTrabajos[1].map((value, index) => {
+                  return <Grid item xs={12} key={index}><EnhancedTable data={value} className="my-2"
+                    updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} 
+                    previusSelection={this.state.trabajosPrevios}/></Grid>
+                })}
+              </Grid>
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" className="float-right py-1"
+              onClick={() => this.handleNext()}>
+              <Translate id="languages.generalButton.next" /><NavigateNext className={classes.rightIcon} />
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Button variant="contained" color="primary" className="float-right py-1"
-            onClick={() => this.handleNext()}>
-            <Translate id="languages.generalButton.next" /><NavigateNext className={classes.rightIcon} />
-          </Button>
-        </Grid>
-      </Grid>
     )
   }
 
