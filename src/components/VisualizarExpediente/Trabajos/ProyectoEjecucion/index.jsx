@@ -326,6 +326,19 @@ class TrabajoEjecucion extends Component {
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
                                                                                           className={classes.buttonProgress}/>}
                                                         </div>
+                                                        <div className={classes.wrapper}>
+                                                            <Button
+                                                                variant="contained"
+                                                                color="primary"
+                                                                onClick={() => {
+                                                                    this.handleRemove()
+                                                                }}
+                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
+                                                                Eliminar archivos
+                                                            </Button>
+                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
+                                                                                                              className={classes.buttonProgress}/>}
+                                                        </div>
 
                                                     </Grid>
                                                 </Grid>
