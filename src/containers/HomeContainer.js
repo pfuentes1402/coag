@@ -7,8 +7,8 @@ import { getTrabajos } from '../actions/usuarios/index';
 class HomeContainer extends Component {
 
     async componentWillMount(){
-        await this.props.fetchexpedientesUser();
-        this.props.getTrabajos();       
+       await this.props.fetchexpedientesUser();
+       await this.props.getTrabajos();
     }
    
 

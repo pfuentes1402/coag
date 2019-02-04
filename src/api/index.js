@@ -254,7 +254,7 @@ export const GettrabajosExpediente = (id_expediente) =>
 export const expedientesuser = async () => {
     try {
         let response = await api.get('/expedientes');
-        return response.data.Expedientes;
+        return response.data;
     } catch (error) {
         return formatMenssage(error.message);
     }
@@ -315,7 +315,7 @@ export const getToken = async () => {
               ClienteId: localStorage.getItem('clienteid'),
               ClienteClave: localStorage.getItem('clienteclave')
           });
-      localStorage.setItem('token', response.headers.token);
+      await localStorage.setItem('token', response.headers.token);
       return response;
   }catch (error) {
       handleLoggout();
@@ -345,13 +345,15 @@ export const getAcciones = () =>
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
  */
 
-export const getultimosTrabajos = () =>
-  api.get('AccionesPendientes/')
-    .then(response => {
-      //let test=  store ? store.getState().user.token : ''
-
-      return response;
-    });
+export const getultimosTrabajos = async () => {
+    try {
+        let response = await api.get('/AccionesPendientes/');
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 //FUNCION DUMMY para obtener los susceptibles de acciones
 export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
@@ -418,6 +420,7 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
     let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+    //let response = await fetchData(uri,{})
     let response = await api.get(uri);
     return response;
   } catch (error) {
@@ -904,3 +907,4 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     throw (formatMenssage("Error 400 en API"))
   }
 }
+

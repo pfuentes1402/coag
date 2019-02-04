@@ -12,7 +12,6 @@ const reducer = (state = initialState, action) => {
  
   switch (action.type) {
     case FETCH_EXPEDIENTES_SUCCESS:
-     
       return {
         ...state,            
         loading: false,

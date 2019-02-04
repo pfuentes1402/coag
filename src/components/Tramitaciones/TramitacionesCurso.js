@@ -35,9 +35,6 @@ const styles = ({
 class TramitacionesCurso extends Component {
     constructor(props) {
         super(props);
-       
-       
-
         this.state = {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                

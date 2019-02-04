@@ -1,8 +1,9 @@
-import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
+import {funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo, expedientesuser} from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
 import {fetchErrorExpediente, formatMenssage} from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
+import {fetchSuccess} from "../expedientes";
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -88,17 +89,15 @@ export const errorLogin = (message) => (
                let clienteid = response.headers ? response.headers.clienteid : '';
 
                if (cienteClave && clienteid) {
-                   localStorage.setItem('clienteclave', cienteClave);
-                   localStorage.setItem('clienteid', clienteid);
+                   await localStorage.setItem('clienteclave', cienteClave);
+                   await localStorage.setItem('clienteid', clienteid);
                    let token = await getToken();
                    if (token.status === 200) {
-                       response.data.token = token.headers.token;
-                       localStorage.setItem('token', token.headers.token);
                        dispatch(fetchLoginExito(response));
-                       localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
+                       await localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
                        props.history.push("/")
                    } else {
-                       response.data.token = '';
+                       dispatch(fetchErrorExpediente(formatMenssage('Error de autenticación')));
                    }
                }
            }
@@ -150,10 +149,6 @@ export const gotrabajos = () =>
 
     };
 
-
-
-
-
 /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)(Debajo esta la final)
 
@@ -165,13 +160,16 @@ let data = getultimosTrabajos();
 */
 
 export const getTrabajos = () =>
-    (dispatch) => {
-        getultimosTrabajos().then((data) => {
-            dispatch(fetchUltimosTrabajos(data));
-        })
-            .catch(
-                () => fetchError({ error: 'Algo ha salido mal' })
-            );
+    async (dispatch) => {
+        try {
+            let response = await getultimosTrabajos();
+            response.MensajesProcesado && response.MensajesProcesado.length > 0
+                ? dispatch(fetchErrorExpediente(response))
+                : dispatch(fetchUltimosTrabajos(response));
+
+        }catch (error) {
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
     };
 
 

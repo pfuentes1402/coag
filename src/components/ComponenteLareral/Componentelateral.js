@@ -3,12 +3,6 @@ import { connect } from 'react-redux';
 import {fetchEstructuraDocumentalTrabajo, fetchExpedienteDatosGeneral, fetchExpedienteSelected,fetchSelectedExpediente} from '../../actions/expedientes/index';
 
 import "./styles.css";
-
-
-
-
-
-
 const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetchSelectedExpediente, expedientes,fetchEstructuraDocumentalTrabajo,fetchExpedienteDatosGeneral,fetchExpedienteSelected})=>{
   
     const click = datos=>{
@@ -17,10 +11,6 @@ const Componentelateral = ({selectedExpFromstore, trabajos, onSelectedLevel,fetc
         fetchSelectedExpediente(datos);    
        
     }
-
-
-
-
     const strToComponentExp = expedientes =>(
         
         expedientes.map((expediente,i) =>(
@@ -54,7 +44,7 @@ Componentelateral.defaultProps = {
 
 const mapStateToProps = state => (
     {
-    expedientes: state.expedientes.expedientes || [{}],
+    expedientes: state.expedientes.expedientes ? state.expedientes.expedientes : [{}],
     selectedExpFromstore: state.seleccionado.selectedExp ? state.seleccionado.selectedExp : "",
     trabajos: state.expedientes.expedienteData? state.expedientes.expedienteData.Trabajos:[],
   }

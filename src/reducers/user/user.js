@@ -88,11 +88,9 @@ const reducer = (state = initialstate, action) => {
         mensaje: action.payload,
       };
     case ULTIMOSTRABAJOS:
-
-
       return {
         ...state,
-        ultimostrabajos: action.payload.data,
+        ultimostrabajos: action.payload,
       };
     case EXPEDIENTESSUSCEPTIBLESTRABAJO:
       

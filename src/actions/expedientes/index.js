@@ -233,7 +233,10 @@ export const fetchexpedientesUser = () =>
     async (dispatch) => {
     try {
         let response = await expedientesuser();
-        dispatch(fetchSuccess(response));
+        response.MensajesProcesado && response.MensajesProcesado.length > 0
+            ? dispatch(fetchErrorExpediente(response))
+            : dispatch(fetchSuccess(response.Expedientes));
+
     }catch (error) {
         dispatch(fetchErrorExpediente(formatMenssage(error.message)));
     }
