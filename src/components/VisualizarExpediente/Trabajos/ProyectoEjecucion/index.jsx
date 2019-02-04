@@ -57,7 +57,9 @@ const styles = theme => ({
     },
 });
 const mapStateToProps = (state) => (
-    {}
+    {
+
+    }
 );
 
 const mapDispatchToProps =
@@ -76,7 +78,7 @@ class TrabajoEjecucion extends Component {
             panelExpanded: false,
             folderInfo: false,
             expediente: false,
-            workDetails: false,
+            workDetails:false,
             aclaracionesOpen: false,
             uploadInProgress: false,
             uploadLength: 0,
@@ -134,7 +136,7 @@ class TrabajoEjecucion extends Component {
                         }
                     } catch (e) {
                         this.props.fetchErrorExpediente(formatMenssage(e.message));
-                        this.abortUpload()
+                       this.abortUpload()
                     }
 
                     resolve()
@@ -219,8 +221,8 @@ class TrabajoEjecucion extends Component {
     };
 
     itemsToRemove() {
-        let temporalFiles = this.state.temporalFiles.filter((item) => item.checked)
-        let files = this.state.data.filter((item) => item.checked)
+        let temporalFiles = this.state.temporalFiles?this.state.temporalFiles.filter((item) => item.checked):[]
+        let files = this.state.data?this.state.data.filter((item) => item.checked):[]
         return {files, temporalFiles}
     }
 
@@ -325,6 +327,19 @@ class TrabajoEjecucion extends Component {
                                                             </Button>
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
                                                                                           className={classes.buttonProgress}/>}
+                                                        </div>
+                                                        <div className={classes.wrapper}>
+                                                            <Button
+                                                                variant="contained"
+                                                                color="primary"
+                                                                onClick={() => {
+                                                                    this.handleRemove()
+                                                                }}
+                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
+                                                                Eliminar archivos
+                                                            </Button>
+                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
+                                                                                                              className={classes.buttonProgress}/>}
                                                         </div>
 
                                                     </Grid>
