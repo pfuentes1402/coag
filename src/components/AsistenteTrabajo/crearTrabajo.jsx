@@ -4,8 +4,10 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import { infoCarpetasTrabajo, getTiposTramite, addTrabajoEncomendaExpediente } from "../../api";
 import { groupBy, filter } from 'lodash';
-import { Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select,
-    RadioGroup, FormControlLabel, Radio, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import {
+    Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select,
+    RadioGroup, FormControlLabel, Radio, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+} from "@material-ui/core";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -13,9 +15,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/Add';
 import ExpandMore from '@material-ui/icons/Close';
-import {withRouter} from "react-router-dom";
-import {fetchErrorExpediente} from "../../actions/expedientes";
-import {connect} from "react-redux";
+import { withRouter } from "react-router-dom";
+import { fetchErrorExpediente } from "../../actions/expedientes";
+import { connect } from "react-redux";
 import ReactQuill from "react-quill";
 const styles = theme => ({
     formControl: {
@@ -283,7 +285,7 @@ class CrearTrabajo extends Component {
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={12}>
                                                                                         <Typography variant="button" gutterBottom>
-                                                                                            Previsualizacion de carpetas
+                                                                                            <Translate id="languages.trabajo.previCarpetaTitle" />
                                                                                         </Typography>
                                                                                     </Grid>
                                                                                 </Grid>

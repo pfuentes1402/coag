@@ -1,4 +1,4 @@
-import {  funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
+import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
 import {fetchErrorExpediente, formatMenssage} from '../../actions/expedientes/index';
 import * as types from './types';
@@ -7,11 +7,11 @@ import { PURGE } from 'redux-persist';
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
 });
-export const fetchSuccessusuario = (data) => (   
+export const fetchSuccessusuario = (data) => (
     {
-    type: types.FETCH_DATOSDEUSUARIO_SUCCESS,
-    payload: data
-});
+        type: types.FETCH_DATOSDEUSUARIO_SUCCESS,
+        payload: data
+    });
 
 export const fetchError = (error) => ({
     type: types.FETCH_EXPEDIENTES_ERROR,
@@ -33,29 +33,29 @@ export const fetchUltimosTrabajos = (data) => ({
 });
 export const CambiaSelect = (data) => ({
     type: types.CAMBIASELECT,
-   payload:data
+    payload: data
 });
 export const confUsuarioActualizada = (data) => ({
     type: types.NUEVA_CONF_USUARIO,
-   payload:data
+    payload: data
 });
 
 export const fetchLanguage = (language) => (
     {
-    type: types.FETCH_LANGUAGE,
-    payload: language
-});
+        type: types.FETCH_LANGUAGE,
+        payload: language
+    });
 
-export const fetchSelect = (data)=>
+export const fetchSelect = (data) =>
     (dispatch) => {
-        
-            dispatch(CambiaSelect(data));
-};
-export const fetchCambiaIdioma = (data)=>
+
+        dispatch(CambiaSelect(data));
+    };
+export const fetchCambiaIdioma = (data) =>
     (dispatch) => {
-        
-            dispatch(confUsuarioActualizada(data));
-};
+
+        dispatch(confUsuarioActualizada(data));
+    };
 
 export const loading = (isLoading) => (
     {
@@ -71,9 +71,9 @@ export const fetchLoading = (isLoading) =>
 
 export const errorLogin = (message) => (
     {
-    type: types.FETCH_LOGIN_FAIL,
-    payload: message
-});
+        type: types.FETCH_LOGIN_FAIL,
+        payload: message
+    });
 
    export const fetchUserLogin = (data, props) =>
    async (dispatch) => {
@@ -108,57 +108,59 @@ export const errorLogin = (message) => (
        }
    }
 
-   export const  purgarStore = () =>
 
-        (dispatch) => {
-           
-            dispatch({
+
+export const purgarStore = () =>
+
+    (dispatch) => {
+
+        dispatch({
             type: PURGE,
-            key: "root",   
-            result: () => null        
-    }); 
-        
-    };
-   export const  goHome = () =>
+            key: "root",
+            result: () => null
+        });
 
-        (dispatch) => {
-           
-            dispatch({
+    };
+export const goHome = () =>
+
+    (dispatch) => {
+
+        dispatch({
             type: types.BORRASELECTED,
-             
-    });   
-        
+
+        });
+
     };
-   export const  goExpedientesUser = () =>
+export const goExpedientesUser = () =>
 
-        (dispatch) => {
-          
-            dispatch({
-            type: types.GOEXPEDIENTES,             
-    });   
-        
+    (dispatch) => {
+
+        dispatch({
+            type: types.GOEXPEDIENTES,
+        });
+
     };
-   export const  gotrabajos = () =>
+export const gotrabajos = () =>
 
-        (dispatch) => {
-          
-            dispatch({
-            type: types.GOTRABAJOS,             
-    });   
-        
+    (dispatch) => {
+
+        dispatch({
+            type: types.GOTRABAJOS,
+        });
+
     };
 
-   
 
 
 
-   /*
+
+/*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)(Debajo esta la final)
 
 export const getTrabajos = () => 
 (dispatch) => {    
-  let data = getultimosTrabajos();
-        dispatch(fetchUltimosTrabajos(data));
+let data = getultimosTrabajos();
+     dispatch(fetchUltimosTrabajos(data));
 };
 */
 
@@ -205,44 +207,44 @@ export const fetchCesarExpediente = (data, id) => ({
 /*
 *Obtiene los expedientes susceptibles de tramitar trabajo (Datos dummy desde el api)
 */
-export const fetchSuscepAcciones = (id) => 
-(dispatch) => {
-    let data="";
-    switch(id) {        
-        case 0:
-        data = getExpedienteSuscepNuevoTrabajo(id);
-        dispatch(fetchExpedientesSusceptibles(data,id));
-            break;
-        case 1:         
-        dispatch(fetchExpedientesTrabajosTest(data,id));
-            break;
-        case 2:         
-        dispatch(fetchSolicitarLoa(data,id));
-            break;
-        case 3:         
-        dispatch(fetchSolicitarLi(data,id));
-            break;
-        case 4:         
-        dispatch(fetchConvertirDigital(data,id));
-            break;
-        case 5:         
-        dispatch(fetchCesarExpediente(data,id));
-            break;
-        default:
-    }
-    dispatch(fetchCambiaStadoModal());
+export const fetchSuscepAcciones = (id) =>
+    (dispatch) => {
+        let data = "";
+        switch (id) {
+            case 0:
+                data = getExpedienteSuscepNuevoTrabajo(id);
+                dispatch(fetchExpedientesSusceptibles(data, id));
+                break;
+            case 1:
+                dispatch(fetchExpedientesTrabajosTest(data, id));
+                break;
+            case 2:
+                dispatch(fetchSolicitarLoa(data, id));
+                break;
+            case 3:
+                dispatch(fetchSolicitarLi(data, id));
+                break;
+            case 4:
+                dispatch(fetchConvertirDigital(data, id));
+                break;
+            case 5:
+                dispatch(fetchCesarExpediente(data, id));
+                break;
+            default:
+        }
+        dispatch(fetchCambiaStadoModal());
 
 
-};
+    };
 
 
 
-export const setSelected = (data) => 
-(dispatch) => {  
-    dispatch(fetchsetSelected(data));  
-};
+export const setSelected = (data) =>
+    (dispatch) => {
+        dispatch(fetchsetSelected(data));
+    };
 
-export const fetchsetSelected = (data) => ({    
+export const fetchsetSelected = (data) => ({
     type: types.SELECTAGENTTOADD,
     payload: data
 });

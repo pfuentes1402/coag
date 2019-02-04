@@ -126,13 +126,13 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
  * @returns {Promise<*>}
  */
 export const getTiposTramite = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 
@@ -147,7 +147,7 @@ export const getValidateAddress = async ref_catastral => {
     return response.data;
   }
   catch (error) {
-      return formatMenssage(error.message);
+    return formatMenssage(error.message);
   }
 }
 
@@ -870,10 +870,37 @@ export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
     try {
-        http://servicios.coag.es/api/expedientes/703634/AlmacenTemporalArchivos
+
         let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
         return response.data;
     } catch (error) {
         return formatMenssage(error.message);
     }
+}
+//mover un arivo desde la carpeta temporal a una estructura
+export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
+    try {
+      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, {nombre:file});
+      return result.data
+    } catch (error ) {
+      throw (formatMenssage("Error 400 en API"))
+    }
+}
+//eliminar un archivo de la carpeta temporal
+export const removeFileFromTemporalFolder = async (idExpediente,  filename) => {
+  try {
+    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {nombre:filename});
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
+  }
+}
+//eliminar un archivo de una estructura
+export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId) => {
+  try {
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
+  }
 }

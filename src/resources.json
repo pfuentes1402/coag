@@ -366,12 +366,28 @@
             "titleOrganismo": [
                 "organismo",
                 "organismo"
+            ],
+            "searchValidation":[
+                "el criterio de búsqueda es obligatorio",
+                "el criterio de búsqueda es obligatorio"
+            ],
+            "agentSectionTitle":[
+                "Introducir agentes del expediente",
+                "Introducir agentes del expediente"
+            ],
+            "arquitectDataTitle":[
+                "Datos del Arquitecto",
+                "Datos del Arquitecto"
             ]
         },
         "promotores":{
             "itemsPerPage":[
                 "por página",
                 "por página"
+            ],
+            "mainTitle":[
+                "Promotores",
+                "Promotores"
             ]
         },
         "fichaExpediente":{
@@ -446,6 +462,10 @@
             "tableColumnFunctions":[
                 "Función",
                 "Función"
+            ],
+            "editExpOptionTitle":[
+                "Modificar encomenda",
+                "Modificar encomenda"
             ]
         },
         "search": {
@@ -480,7 +500,31 @@
                 "Corrección básica"],
             "previCarpetaTitle":[
                 "Previsualización de carpetas",
-                "Previsualización de carpetas"]
+                "Previsualización de carpetas"],
+            "emptyOption":[
+                "None",
+                "None"
+            ],
+            "tableColumnTitle":[
+                "Título del trabajo",
+                "Título del trabajo"
+            ],
+            "tableColumnState":[
+                "Estado",
+                "Estado"
+            ],
+            "tableColumnEntry":[
+                "Entrada",
+                "Entrada"
+            ],
+            "tableColumnVisado":[
+                "Visado",
+                "Visado"
+            ],
+            "tableColumnInc":[
+                "Inc",
+                "Inc"
+            ]
         },
 
         "crearTrabajo":{

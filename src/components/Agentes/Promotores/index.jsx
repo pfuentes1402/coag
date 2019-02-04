@@ -234,7 +234,9 @@ class Promotores extends Component {
     return (
       <Paper className={classes.root}>
         <Grid container >
-          <Grid item md={10} className={classes.subtitle}>Promotores</Grid>
+          <Grid item md={10} className={classes.subtitle}>
+            <Translate id="languages.promotores.mainTitle"/>
+          </Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
               className={classes.fab} onClick={() => { this.handleCanSearch() }}>
@@ -309,8 +311,8 @@ class Promotores extends Component {
         <Tab label={<Translate id="languages.agentes.titlePersona" />} />
         <Tab label={<Translate id="languages.agentes.titleOrganismo" />} />
       </Tabs>
-      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={()=>{this.handleCancel()}} onAddPerson={(person) => { this.addPromotor(person) }} />}
-      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={()=>{this.handleCancel()}} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
+      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} />}
+      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
     </Paper>
   }
 
@@ -322,7 +324,7 @@ class Promotores extends Component {
         </Grid>
 
         <Grid item xs={12}>
-            {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent)=>{this.handleSelectAgent(agent)}} allowAdd={true}/> : ""}
+          {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent) => { this.handleSelectAgent(agent) }} allowAdd={true} /> : ""}
         </Grid>
 
         <Grid item xs={12} >
@@ -338,7 +340,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchErrorExpediente: fetchErrorExpediente
+  fetchErrorExpediente: fetchErrorExpediente
 };
 
 Promotores.propTypes = {

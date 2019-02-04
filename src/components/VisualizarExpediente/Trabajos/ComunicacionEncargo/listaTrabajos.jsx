@@ -67,7 +67,7 @@ class ListaTrabajos extends Component {
           </Grid>
           <Grid item md={2} >
             <Fab size="small" color="primary" aria-label="Add"
-              className={classes.fab} onClick={()=> {this.crearTrabajo()}}>
+              className={classes.fab} onClick={() => { this.crearTrabajo() }}>
               <Add />
             </Fab>
           </Grid>
@@ -79,11 +79,21 @@ class ListaTrabajos extends Component {
           <TableHead>
             <TableRow className={classes.headHeight}>
               <CustomTableHead className="text-uppercase px-3">N</CustomTableHead>
-              <CustomTableHead className="text-uppercase">Título del trabajo</CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">Estado</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">Entrada</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">Visado</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">Inc</CustomTableHead>
+              <CustomTableHead className="text-uppercase">
+                <Translate id="languages.trabajo.tableColumnTitle" />
+              </CustomTableHead>
+              <CustomTableHead className="pl-3 text-uppercase">
+                <Translate id="languages.trabajo.tableColumnState" />
+              </CustomTableHead>
+              <CustomTableHead className="text-uppercase px-3">
+                <Translate id="languages.trabajo.tableColumnEntry" />
+              </CustomTableHead>
+              <CustomTableHead className="text-uppercase px-3">
+                <Translate id="languages.trabajo.tableColumnVisado" />
+              </CustomTableHead>
+              <CustomTableHead className="text-uppercase px-3">
+                <Translate id="languages.trabajo.tableColumnInc" />
+              </CustomTableHead>
             </TableRow>
           </TableHead>
 

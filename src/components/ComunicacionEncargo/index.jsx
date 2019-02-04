@@ -45,11 +45,6 @@ class Encomenda extends Component {
     this.setState({ encomenda: encomenda, activeEncargo: !this.state.activeEncargo });
   }
 
-  //TODO: Consumir api para el manejo de la encomenda
-  handleAddComunicacionEncargo() {
-
-  }
-
   render() {
     return (
         <div>

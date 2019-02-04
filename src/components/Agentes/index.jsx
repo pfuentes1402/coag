@@ -47,6 +47,7 @@ class Agentes extends Component {
     return functionsId;
   }
 
+  //Funcion que consume la api para crear un nuevo trabajo encomenda
   async addTrabajoEncomenda() {
     let encomenda = this.state.encomenda;
     let encomendaActual = encomenda.EncomendaActual && encomenda.EncomendaActual.length > 0
@@ -68,16 +69,20 @@ class Agentes extends Component {
       //postAddTrabajoEncomenda
       let currentExpId = encomendaActual.Id_Expediente;
       let result = await manageEncomenda(currentExpId, trabajoEncomenda);
+
       //Validación para continuar (si el resultado fue 200 se permite continuar)
       if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
         let url = `/visualizar-expediente/${currentExpId}`;
         this.props.history.push(url);
+        return true;
       }
       else if (result.response) {
         this.props.fetchErrorExpediente(result.response.data);
+        return false;
       }
       else {
         this.props.fetchErrorExpediente(result.data);
+        return false;
       }
     }
   }
@@ -88,8 +93,9 @@ class Agentes extends Component {
   }
 
   async crearTrabajo() {
-    await this.addTrabajoEncomenda();
-    this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+    if (await this.addTrabajoEncomenda()) {
+      this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+    }
   }
 
   render() {
@@ -100,7 +106,9 @@ class Agentes extends Component {
           <ExpansionPanel expanded={true}>
             <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
               className={classes.titleMainPanel}>
-              <div>Introducir agentes del expediente</div>
+              <div>
+                <Translate id="languages.agentes.agentSectionTitle" />
+              </div>
             </ExpansionPanelSummary>
 
             <ExpansionPanelDetails>
@@ -116,7 +124,7 @@ class Agentes extends Component {
           </ExpansionPanel>
         </Grid>
 
-        <Grid item xs={12} className="py-5">
+        <Grid item xs={12} className="py-2">
           <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
             onClick={() => this.crearTrabajo()}>
             <Translate id="languages.generalButton.crearTrabajo" />

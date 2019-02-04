@@ -459,8 +459,7 @@ class AddPerson extends Component{
                                             id: 'pais',
                                         }}
                                         validators={['required']}
-                                        errorMessages={[translate("languages.generalText.fieldRequired")]}
-                                    >
+                                        errorMessages={[translate("languages.generalText.fieldRequired")]}>
                                         {
                                             paises ?
                                                 paises.map(value=>{
@@ -531,8 +530,7 @@ class AddPerson extends Component{
                                         name: 'representado',
                                         id: 'representado',
                                     }}
-                                    displayEmpty
-                                >
+                                    displayEmpty>
                                     <MenuItem value="" disabled>
                                         {translate("languages.agentes.selecciona") + " " +
                                         translate("languages.agentes.promotor")}

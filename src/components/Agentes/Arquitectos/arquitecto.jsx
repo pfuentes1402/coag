@@ -37,17 +37,17 @@ class FormArquitecto extends Component {
     super(props);
     this.state = {
       arquitecto: this.props.arquitecto
-    }    
+    }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.initSelectedProperties();
   }
 
-  initSelectedProperties(){
-    let arquitect={};
-    Object.assign(arquitect,this.state.arquitecto);
-    if(!arquitect.Funciones){
+  initSelectedProperties() {
+    let arquitect = {};
+    Object.assign(arquitect, this.state.arquitecto);
+    if (!arquitect.Funciones) {
       arquitect["Funciones"] = [];
       arquitect["Porciento"] = 0;
       arquitect["percentChecked"] = false;
@@ -99,7 +99,9 @@ class FormArquitecto extends Component {
         <Paper className={classes.resultPanel}>
           <Grid container spacing={24}>
             <Grid item xs={8}>
-              <Typography variant="h6" gutterBottom>Datos del Arquitecto</Typography>
+              <Typography variant="h6" gutterBottom>
+                <Translate id="languages.agentes.arquitectDataTitle"/>
+              </Typography>
               <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
               <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
