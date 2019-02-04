@@ -4,17 +4,6 @@
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/HomeContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/HomeContainer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/user/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/user/user.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -97,8 +86,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="236" column="17" selection-start-line="236" selection-start-column="17" selection-end-line="236" selection-end-column="17" />
+            <state relative-caret-position="90">
+              <caret line="240" column="3" lean-forward="true" selection-start-line="240" selection-start-column="3" selection-end-line="240" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -144,7 +133,7 @@
       <find>changeEstructura</find>
       <find>activeEncargo</find>
       <find>comuni</find>
-      <find />
+      <find>NUEVO TRABA</find>
       <find>this.props.match.params.id</find>
       <find>fetchEr</find>
       <find>funcionForma</find>
@@ -577,7 +566,7 @@
       <workItem from="1548854466696" duration="5954000" />
       <workItem from="1548943367063" duration="6298000" />
       <workItem from="1548952863620" duration="4350000" />
-      <workItem from="1548963123157" duration="31209000" />
+      <workItem from="1548963123157" duration="31499000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -691,11 +680,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549119403444</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="correpcion en carga de expediente y log de login">
+      <created>1549293943295</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1549293943295</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="337562000" />
+    <option name="totallyTimeSpent" value="337852000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -811,7 +807,8 @@
     <MESSAGE value="actualizacion trabajo" />
     <MESSAGE value="preparando el breacrubs" />
     <MESSAGE value="modificado estilo y completado las paginas trabajo expediente en el Breadcrumb" />
-    <option name="LAST_COMMIT_MESSAGE" value="modificado estilo y completado las paginas trabajo expediente en el Breadcrumb" />
+    <MESSAGE value="correpcion en carga de expediente y log de login" />
+    <option name="LAST_COMMIT_MESSAGE" value="correpcion en carga de expediente y log de login" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1222,8 +1219,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="236" column="17" selection-start-line="236" selection-start-column="17" selection-end-line="236" selection-end-column="17" />
+        <state relative-caret-position="90">
+          <caret line="240" column="3" lean-forward="true" selection-start-line="240" selection-start-column="3" selection-end-line="240" selection-end-column="3" />
         </state>
       </provider>
     </entry>
