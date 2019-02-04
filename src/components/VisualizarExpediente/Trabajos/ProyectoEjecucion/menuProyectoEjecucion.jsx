@@ -60,6 +60,8 @@ class MenuProyectoEjecucion extends Component {
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map((children,pos)=>{
                                     return <ListItem onDrop={()=>this.props.moveItemTo(children)} className={this.props.dragTarget ? classes.dragTarget: ''} onDragOver={()=>{this.setState({drop:pos})}} button onClick={()=> { this.props.changeEstructura(children.Id_Estructura)}}>
+                                {this.props.estructuraDocumental[estructura].map(children=>{
+                                    return <ListItem button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}>
                                         <ListItemText inset primary={children.Titulo} />
                                     </ListItem>
                                 })}

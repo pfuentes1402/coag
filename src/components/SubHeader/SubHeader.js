@@ -14,7 +14,7 @@ class SubHeader extends Component {
                             <Row>
                                 <Col sm="3" className="titulo">{this.props.title}</Col>
                                 <Col sm="9">
-
+                                   
                                 </Col>
                             </Row>
                         </Container>

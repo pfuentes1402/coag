@@ -6,7 +6,8 @@ import {
   FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO,
   FILES_TO_UPLOAD,
   FETCH_GRUPOS_RAIZ, FETCH_COMUNICACION_ENCARGO, FETCH_FUNCIONES_TIPOLOGIA, ADD_AGENTE_TRABAJO,
-  DELETE_AGENTE_TRABAJO, EDIT_AGENTE_TRABAJO
+  DELETE_AGENTE_TRABAJO, EDIT_AGENTE_TRABAJO,
+  SAVE_TIPOS_OBRA
 } from "../../actions/trabajos/types";
 
 import { RESULTADOSBUSQUEDA } from "../../actions/expedientes/types";
@@ -23,7 +24,8 @@ const initialState = {
   /**Este es el resultado de la busqueda */
   OtrosAgentesTrabajoSelec: [],
   funcionesTipologia: [],
-  colegiadosAgentesTrabajo: []
+  colegiadosAgentesTrabajo: [],
+  tiposObras: []
 };
 const reducer = (state = initialState, action) => {
 
@@ -122,6 +124,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         filesToUpload: action.payload,
       };
+    
+    case SAVE_TIPOS_OBRA:
+      return {
+        ...state,
+        tiposObras: [...state.tiposObras, action.payload]
+      }
     case FETCH_TRABAJOS_ERROR:
       return {
         ...state,

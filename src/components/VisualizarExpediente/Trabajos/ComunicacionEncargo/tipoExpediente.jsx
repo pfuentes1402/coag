@@ -194,7 +194,7 @@ class TipoExpediente extends Component {
                 <Translate id="languages.fichaExpediente.titleExpedientType" />
               </Typography>
               <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}`)}>
-                Modificar encomenda<Check />
+                <Translate id="languages.fichaExpediente.editExpOptionTitle" /><Check />
               </Button>
             </Grid>
             <Divider style={{ height: 3 }} />

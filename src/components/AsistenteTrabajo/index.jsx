@@ -13,6 +13,8 @@ import { Typography } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import TiposTrabajo from './tiposTrabajo';
 import CrearTrabajo from './crearTrabajo';
+import {NavLink} from "react-router-dom";
+import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
 
 
 const styles = theme => ({
@@ -80,6 +82,14 @@ class AsistenteTrabajo extends Component {
           <CircularProgress />
         </Grid>
         : <Container className="my-4 px-4">
+              <BreadcrumbsItem to={'/crear-trabajo/' +  this.props.match.params.id} >
+                  <Translate id="languages.trabajo.nuevoTrabajoTitle"/>
+                    <b style={{padding: 6}}> - </b>
+                  <NavLink to={'/visualizar-expediente/' + this.props.match.params.id}>
+                      <Translate id="languages.crearTrabajo.panelTitle"/>
+                      {` ${this.props.match.params.id}`}
+                  </NavLink>
+              </BreadcrumbsItem>
           <ExpansionPanel expanded={true} className={classes.withoutRadius}>
             <ExpansionPanelSummary className={classes.titleMainPanel}
               style={{ minHeight: 48, height: 48 }}>

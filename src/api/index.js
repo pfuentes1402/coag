@@ -55,11 +55,6 @@ api.interceptors.response.use(function (response) {
 
   return Promise.reject(error)
 })
-//TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
-
-
-
-
 /*
  *Proporciona los datos generales de un expediente
  * Parametros 
@@ -126,13 +121,13 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
  * @returns {Promise<*>}
  */
 export const getTiposTramite = async (idLanguage = 2) => {
-    try {
-        let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 
@@ -147,7 +142,7 @@ export const getValidateAddress = async ref_catastral => {
     return response.data;
   }
   catch (error) {
-      return formatMenssage(error.message);
+    return formatMenssage(error.message);
   }
 }
 
@@ -287,19 +282,23 @@ export const errorLogin = (data) => (
   });
 
 
-/*
+/* TODO: Login paso 2
  *  Función que loguea a un usuario y consigue identificadores únicos para la generación del token
  *  Parametros 
  *    usuario
  *    password
  */
-export const funcionForma = (datos) =>
+/*export const funcionForma = (datos) =>
   api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
     return response;
   }).catch(error => {
     //errorLogin(error);
     return error.response.status;
-  });
+  });*/
+export const funcionForma = async (datos) => {
+  let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+  return response;
+}
 
 /*
  * Proporciona un token de autorización necesario para autentificar las peticiones API
@@ -424,19 +423,6 @@ export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25)
     return error
   }
 }
-
-/**
- * Proporciona la estructura documental de un trabajo
- * @param idExpediente
- * @param idTrabajo
- * @returns {Promise<AxiosResponse<any>>}
- */
-export const getestructuradocumental = (idExpediente, idTrabajo) =>
-  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
-    .then(response => {
-      return response.data;
-    });
-
 
 /**
  * Proporciona la lista de grupos raiz

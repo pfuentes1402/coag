@@ -14,6 +14,7 @@ import {Breadcrumbs} from "react-breadcrumbs-dynamic";
 import {blue} from '@material-ui/core/colors';
 import {Breadcrumb as BootstrapBreadcrumb} from "reactstrap";
 
+
 const mapStateToProps = state => ({
     idiomaFavorito: state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
 
@@ -55,20 +56,24 @@ class App extends Component {
                             item={Link}
                             finalItem={Typography}
                             finalProps={{
-                                style: {fontWeight: 500}
+                                style: {fontWeight: 500,
+                                    fontSize: 20,
+                                    display: "flex",
+                                    alignItems: "center"}
                             }}
                             container={BootstrapBreadcrumb}
                             containerProps={{style: {
-                                    display: "flex",
-                                    borderRadius: 0,
-                                    height: 47,
                                     alignItems: "center",
-                                    fontStyle: "italic",
-                                    position: "fixed",
-                                    width: "100%",
                                     paddingLeft: 32,
-                                    zIndex: 1,
-                                    color: blue[500]
+                                    color: blue[500],
+                                    border: "1px solid #e0e0e0",
+                                    boxShadow: "0px 6px 5px -4px rgba(0, 0, 0, 0.3)",
+                                    backgroundColor: "#ffffff",
+                                    borderRadius: "inherit",
+                                    marginBottom: 4,
+                                    fontSize: 20,
+                                    fontWeight: 500,
+                                    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                           }}}
                         />
                     </Grid>
