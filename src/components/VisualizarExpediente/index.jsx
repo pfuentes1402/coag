@@ -38,8 +38,8 @@ const styles = theme => ({
     height: 900
   },
   mainNav: {
-    background: "#ffffff",
-    backgroundColor: "#ffffff"
+      boxShadow: "none",
+      flexDirection: "row-reverse"
   },
   button: {
     margin: 0,
@@ -163,9 +163,6 @@ class VisualizarExpediente extends Component {
             <div className={classes.root}>
                 <AppBar position="static" className={`${classes.mainNav} nav-expedient`} color="default">
                     <Toolbar>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>
-                            {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
-                        </Typography>
                         <Button color="primary" className={classes.button}>
                             <Translate id="languages.generalButton.delete"/><Close/>
                         </Button>
@@ -208,8 +205,8 @@ class VisualizarExpediente extends Component {
                                                changeOption={(idTrabajo) => {
                                                    this.handleChangeMenuOption(idTrabajo)
                                                }}
-                                               changeEstructura={(idEstructura) => {
-                                                   this.handleChangeEstructuran(idEstructura)
+                                               changeEstructura={(idEstructura, titleEstructura) => {
+                                                   this.handleChangeEstructuran(idEstructura, titleEstructura)
                                                }}
                                                expediente={this.state.expediente}
                                                trabajo={trabajo}
@@ -253,23 +250,26 @@ class VisualizarExpediente extends Component {
             this.state.expediente
                 ? <Grid container>
                     <Grid item xs={12}>
-                        <BreadcrumbsItem
-                            to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
+                        <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
                         {
                             (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
-                                ? <BreadcrumbsItem
-                                    to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>{trabajoActual ? trabajoActual.Titulo : ""}</BreadcrumbsItem>
+                                ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
+                                    {trabajoActual ? trabajoActual.Titulo : ""}
+                                </BreadcrumbsItem>
                                 : ""
                         }
+                        {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
+                            ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
+                                {this.state.titleEstructuraActiva}
+                            </BreadcrumbsItem>
+                            : ""}
 
-                    </Grid>
-                    <Grid item md={12} xs={12}>
-                        {this.renderNavBar()}
                     </Grid>
                     <Grid item md={3} xs={12} className={classes.boredrRight}>
                         {this.renderLeftNav()}
                     </Grid>
                     <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+                        {this.renderNavBar()}
                         {
                             this.state.renderComponent === "TrabajoComunicacion"
                                 ? <TrabajoComunicacion expediente={expediente}/>

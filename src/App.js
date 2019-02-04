@@ -73,7 +73,7 @@ class App extends Component {
                                     fontSize: 20,
                                     fontWeight: 500,
                                     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-                          }}}
+                                }}}
                         />
                     </Grid>
                     : ""
