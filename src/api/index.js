@@ -908,3 +908,19 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     throw (formatMenssage("Error 400 en API"))
   }
 }
+//Asignación automática de archivos
+export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
+  try {
+    'http://servicios.coag.es/api/expedientes/{Id_Expediente}/AlmacenTemporalArchivos/AsignacionAutomatica'
+    let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
+        {
+          Id_Trabajo:idTrabajo,
+          Archivos:file,
+          InsertarArchivos:1
+        }
+        );
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
+  }
+}

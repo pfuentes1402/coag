@@ -64,7 +64,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps =
     {
-        fetchErrorExpediente: fetchErrorExpediente
+        fetchErrorExpediente: fetchErrorExpediente,
+        formatMessage:formatMenssage
     };
 
 class TrabajoEjecucion extends Component {
@@ -86,7 +87,8 @@ class TrabajoEjecucion extends Component {
             itemSelected: [],
             currentUploadItem: false,
             pendingUploadList: [],
-            fetchingRemove:0
+            fetchingRemove:0,
+            disableAutoAsignButton:true
 
 
         }
@@ -218,6 +220,12 @@ class TrabajoEjecucion extends Component {
         } else {
             this.setState({showDeleteButton: false})
         }
+        if(files.length===0 && temporalFiles.length>0)
+        {
+            this.setState({disableAutoAsignButton: false})
+        } else {
+            this.setState({disableAutoAsignButton: true})
+        }
     };
 
     itemsToRemove() {
@@ -261,6 +269,39 @@ class TrabajoEjecucion extends Component {
 
         } else {
             throw "Debe seleccionar al menos un archivo para eliminar"
+        }
+    }
+    async handleAutoAsign(){
+        let {temporalFiles} = this.itemsToRemove();
+        if(temporalFiles.length>0){
+            try{
+                await this.setState({fetchingAutoAsign:true})
+                let files=[];
+                temporalFiles.map(item=>{
+                    files.push({
+                        Nombre:item.Nombre
+                    })
+                });
+                let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
+                if(result.Archivos){
+                    result.Archivos.map(item=>{
+                        if(item.Insertado!==1){
+                            this.props.formatMessage(`El documento ${item.Nombre} no fue insertado.`)
+                        }else{
+                            this.props.formatMessage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`)
+                        }
+                    })
+                }else{
+                    throw "Error procesando la petición"
+                }
+                await this.setState({fetchingAutoAsign:false})
+                await this.loadInformation();
+            }catch (e) {
+                await this.setState({fetchingAutoAsign:false})
+                //todo: Importar format Message para sacar una alerta
+            }
+
+
         }
     }
 
@@ -315,32 +356,36 @@ class TrabajoEjecucion extends Component {
                                                 </Grid>
                                                 <Grid container>
                                                     <Grid item xs={12} className="pr-3 text-right">
-                                                        <div className={classes.wrapper}>
+                                                        <div className={classes.wrapper} style={{float:'right'}}>
                                                             <Button
-                                                                variant="contained"
+
                                                                 color="primary"
                                                                 onClick={() => {
                                                                     this.handleRemove()
                                                                 }}
                                                                 disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
-                                                                Eliminar archivos
+                                                                Eliminar
                                                             </Button>
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
                                                                                           className={classes.buttonProgress}/>}
                                                         </div>
-                                                        <div className={classes.wrapper}>
-                                                            <Button
-                                                                variant="contained"
-                                                                color="primary"
-                                                                onClick={() => {
-                                                                    this.handleRemove()
-                                                                }}
-                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
-                                                                Eliminar archivos
-                                                            </Button>
-                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
-                                                                                                              className={classes.buttonProgress}/>}
-                                                        </div>
+                                                        {
+                                                            this.state.temporalFiles?
+                                                                <div className={classes.wrapper} style={{float:'right'}}>
+                                                                    <Button
+
+                                                                        color="primary"
+                                                                        onClick={() => {
+                                                                            this.handleAutoAsign()
+                                                                        }}
+                                                                        disabled={this.state.disableAutoAsignButton }>
+                                                                        Selección automática
+                                                                    </Button>
+                                                                    {this.state.fetchingAutoSign>0 && <CircularProgress size={24}
+                                                                                                                      className={classes.buttonProgress}/>}
+                                                                </div>:null
+                                                        }
+
 
                                                     </Grid>
                                                 </Grid>
