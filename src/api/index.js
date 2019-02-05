@@ -12,7 +12,7 @@ const BASE_PATH = "http://servicios.coag.es/api";
 */
 const api = axios.create({
   baseURL: BASE_PATH,
-  timeout: 10000,
+  timeout: 60000,
   header: {
     'Token': localStorage.getItem('token')
   },
