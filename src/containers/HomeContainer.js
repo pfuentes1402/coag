@@ -6,9 +6,9 @@ import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } fro
 import { getTrabajos } from '../actions/usuarios/index';
 class HomeContainer extends Component {
 
-    componentWillMount(){
-        this.props.fetchexpedientesUser();
-        this.props.getTrabajos();       
+    async componentWillMount(){
+       await this.props.fetchexpedientesUser();
+       await this.props.getTrabajos();
     }
    
 

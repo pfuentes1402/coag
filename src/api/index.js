@@ -246,14 +246,14 @@ export const GettrabajosExpediente = (id_expediente) =>
  * Parametros 
  *    id_expediente
  */
-export const expedientesuser = () =>
-  api.get('/expedientes')
-
-    .then(response => {
-      return response.data.Expedientes;
-    }).catch((error) => {
-    });
-
+export const expedientesuser = async () => {
+    try {
+        let response = await api.get('/expedientes');
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 
 /*
@@ -297,24 +297,11 @@ export const errorLogin = (data) => (
   });*/
 export const funcionForma = async (datos) => {
   try {
-    /*let response = await fetch('http://servicios.coag.es/api/login', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*"
-      },
-      body: JSON.stringify({ "Usuario": datos.usuario, "Password": datos.password })
-    }).then(response => response.json())
-      .catch(e => e);
-    console.log("response", response);
-    return response;*/
-
-    let response = await api.post('/login', { Usuario: datos.usuario, Password: datos.password });
-    return response;
+      let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+      return response;
   }
   catch (error) {
-    console.log("error-funcionForma", error);
+      return formatMenssage(error.message);
   }
 }
 
@@ -323,23 +310,21 @@ export const funcionForma = async (datos) => {
  * Parametros 
  *    Recoge ClienteId y ClienteClave del localStorage del navegador
 */
-export const getToken = () =>
-  axios.post('http://servicios.coag.es/api/authenticate',
-    {
-      ClienteId: localStorage.getItem('clienteid'),
-      ClienteClave: localStorage.getItem('clienteclave')
-    })
-    .then(response => {
-      localStorage.setItem('token', response.headers.token);
-
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
+export const getToken = async () => {
+  try {
+      let response = await axios.post('http://servicios.coag.es/api/authenticate',
+          {
+              ClienteId: localStorage.getItem('clienteid'),
+              ClienteClave: localStorage.getItem('clienteclave')
+          });
+      await localStorage.setItem('token', response.headers.token);
       return response;
-    }).catch(error => {
-      handleLoggout()
-      return error;
-    });
+  }catch (error) {
+      handleLoggout();
+      formatMenssage(error.message);
+  }
+}
+
 /*
  * Proporciona las acciones pendientes de un usuario
  * Parametros 
@@ -362,13 +347,15 @@ export const getAcciones = () =>
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
  */
 
-export const getultimosTrabajos = () =>
-  api.get('AccionesPendientes/')
-    .then(response => {
-      //let test=  store ? store.getState().user.token : ''
-
-      return response;
-    });
+export const getultimosTrabajos = async () => {
+    try {
+        let response = await api.get('/AccionesPendientes/');
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 
 //FUNCION DUMMY para obtener los susceptibles de acciones
 export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
@@ -435,12 +422,26 @@ export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
     let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+    //let response = await fetchData(uri,{})
     let response = await api.get(uri);
     return response;
   } catch (error) {
     return error
   }
 }
+
+/**
+ * Proporciona la estructura documental de un trabajo
+ * @param idExpediente
+ * @param idTrabajo
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getestructuradocumental = (idExpediente, idTrabajo) =>
+  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
+    .then(response => {
+      return response.data;
+    });
+
 
 /**
  * Proporciona la lista de grupos raiz
@@ -738,23 +739,23 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 2) =>
  * @returns {Promise<*>}
  */
 export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 2) => {
-  try {
-    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
-    return response.data;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
-  try {
-    let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
-    return response.data;
-  }
-  catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 export const formatMenssage = (error) => (
@@ -767,117 +768,145 @@ export const formatMenssage = (error) => (
  */
 
 export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
-    return response.data;
-  } catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 //obtener todos los archivos de una carpeta
 export const getFilesFromFolder = async (idExpediente, idTrabajo, folderId, lang = 1) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
-    return response;
-  } catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 //obtener los detalles de una carpeta
 export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang = 1) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
-    return response;
-  } catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 //obtener los detalles de un trabajo
 export const getWorkDetails = async (idExpediente, idTrabajo, lang = 1) => {
-  try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
-    return response;
-  } catch (error) {
-    return formatMenssage(error.message);
-  }
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
+        return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
 }
 
 //Subir un fichero a una carpeta
 export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
-  return new Promise(async (resolve, reject) => {
-    try {
+    return new Promise(async (resolve, reject) => {
+        try {
 
-      let data = new FormData();
-      data.append('file', file.data);
-      data.append('filename', file.filename)
+            let data = new FormData();
+            data.append('file', file.data);
+            data.append('filename', file.filename)
 
-      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Token': localStorage.getItem('token'),
-          }
+            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Token': localStorage.getItem('token'),
+                    }
 
 
+                }
+            );
+            resolve(result.data)
+
+
+            // let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`,
+            //     {content:data,
+            //         processData: false,
+            //         contentType: false
+            //     },{
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }});
+            //resolve(response);
+        } catch (error) {
+            reject(formatMenssage(error.message));
         }
-      );
-      resolve(result.data)
+        // setTimeout(()=>{
+        //   console.log(file)
+        //   resolve()
+        // },3000)
+    })
 
-
-      // let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`,
-      //     {content:data,
-      //         processData: false,
-      //         contentType: false
-      //     },{
-      //     headers: {
-      //         'Content-Type': 'multipart/form-data'
-      //     }});
-      //resolve(response);
-    } catch (error) {
-      reject(formatMenssage(error.message));
-    }
-    // setTimeout(()=>{
-    //   console.log(file)
-    //   resolve()
-    // },3000)
-  })
-
-  //
+    //
 }
 
 //subir fichero a carpeta temporal
-export const uploadFileToTemporalFolder = async (idExpediente, file) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let data = new FormData();
-      data.append('file', file.data);
-      data.append('filename', file.filename)
-      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Token': localStorage.getItem('token'),
-          }
+export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = new FormData();
+            data.append('file', file.data);
+            data.append('filename', file.filename)
+            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Token': localStorage.getItem('token'),
+                    }
 
 
+                }
+            );
+            resolve(result.data)
+        } catch (error) {
+            reject(formatMenssage(error.message));
         }
-      );
-      resolve(result.data)
-    } catch (error) {
-      reject(formatMenssage(error.message));
-    }
 
-  })
+    })
 }
 //Leer la carpeta temporal
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
+    try {
+
+        let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+//mover un arivo desde la carpeta temporal a una estructura
+export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
+    try {
+      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, {nombre:file});
+      return result.data
+    } catch (error ) {
+      throw (formatMenssage("Error 400 en API"))
+    }
+}
+//eliminar un archivo de la carpeta temporal
+export const removeFileFromTemporalFolder = async (idExpediente,  filename) => {
   try {
-    http://servicios.coag.es/api/expedientes/703634/AlmacenTemporalArchivos
-    let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
-    return response.data;
-  } catch (error) {
-    return formatMenssage(error.message);
+    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {nombre:filename});
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
   }
 }
+//eliminar un archivo de una estructura
+export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId) => {
+  try {
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
+  }
+}
+

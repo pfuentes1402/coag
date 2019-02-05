@@ -1,7 +1,9 @@
-import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
+import {funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo, expedientesuser} from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
+import {fetchErrorExpediente, formatMenssage} from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
+import {fetchSuccess} from "../expedientes";
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -56,48 +58,56 @@ export const fetchCambiaIdioma = (data) =>
         dispatch(confUsuarioActualizada(data));
     };
 
-
-export const errorLogin = (data) => (
-
+export const loading = (isLoading) => (
     {
-        type: types.FETCH_LOGIN_FAIL,
-        payload: data
+        type: types.FETCH_LOADING,
+        payload: isLoading
     });
 
+export const fetchLoading = (isLoading) =>
+    async (dispatch) => {
+        dispatch(loading(isLoading));
+    }
 
 
-//TODO: Login paso 1
-export const fetchUserLogin = (data, props) =>
+export const errorLogin = (message) => (
+    {
+        type: types.FETCH_LOGIN_FAIL,
+        payload: message
+    });
+
+   export const fetchUserLogin = (data, props) =>
    async (dispatch) => {
-       await funcionForma(data).then((data) => {
-            if (data === 401) {
-                dispatch(errorLogin("login: " + data));
-            }
-            else {
-                let cienteClave = data.headers ? data.headers.clienteclave : '';
-                let clienteid = data.headers ? data.headers.clienteid : '';
+       try {
+           let response = await funcionForma(data);
+           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+               dispatch(fetchErrorExpediente(response));
+               dispatch(errorLogin(response.MensajesProcesado[0].Mensaje));
+           }
+           else {
+               let cienteClave = response.headers ? response.headers.clienteclave : '';
+               let clienteid = response.headers ? response.headers.clienteid : '';
 
-                if (cienteClave && clienteid) {
-                    localStorage.setItem('clienteclave', cienteClave);
-                    localStorage.setItem('clienteid', clienteid);
-                    getToken().then((response) => {
-                        if (response.status === 200) {
-                            data.data.token = response.headers.token;
-                            localStorage.setItem('token', response.headers.token);
-                            dispatch(fetchLoginExito(data));
-                            localStorage.setItem('user', JSON.stringify(data.data.DatosUsuarioValidado[0]));
-                            props.history.push("/")
-                        } else {
-                            data.data.token = '';
-                        }
-                    });
-                }
-            }
-        })
-            .catch(
-                (error) => console.log("login-error", { error, data })
-            );
-    };
+               if (cienteClave && clienteid) {
+                   await localStorage.setItem('clienteclave', cienteClave);
+                   await localStorage.setItem('clienteid', clienteid);
+                   let token = await getToken();
+                   if (token.status === 200) {
+                       dispatch(fetchLoginExito(response));
+                       await localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
+                       props.history.push("/")
+                   } else {
+                       dispatch(fetchErrorExpediente(formatMenssage('Error de autenticación')));
+                   }
+               }
+           }
+
+       } catch (error) {
+           dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+       }
+   }
+
+
 
 export const purgarStore = () =>
 
@@ -139,10 +149,6 @@ export const gotrabajos = () =>
 
     };
 
-
-
-
-
 /*
 *Obtiene los expedientes de usuario (Datos dummy desde el api)(Debajo esta la final)
 
@@ -154,13 +160,16 @@ let data = getultimosTrabajos();
 */
 
 export const getTrabajos = () =>
-    (dispatch) => {
-        getultimosTrabajos().then((data) => {
-            dispatch(fetchUltimosTrabajos(data));
-        })
-            .catch(
-                () => fetchError({ error: 'Algo ha salido mal' })
-            );
+    async (dispatch) => {
+        try {
+            let response = await getultimosTrabajos();
+            response.MensajesProcesado && response.MensajesProcesado.length > 0
+                ? dispatch(fetchErrorExpediente(response))
+                : dispatch(fetchUltimosTrabajos(response));
+
+        }catch (error) {
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
     };
 
 

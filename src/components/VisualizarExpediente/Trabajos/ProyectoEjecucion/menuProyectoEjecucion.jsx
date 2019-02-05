@@ -12,7 +12,14 @@ const styles = theme => ({
   openOption: {
     background: theme.palette.primary.main,
     color: "white"
-  }
+  },
+    dragTarget: {
+
+
+            border:'solid 1px #b26a00',
+            borderRadius:5
+
+    }
 });
 
 class MenuProyectoEjecucion extends Component {
@@ -51,8 +58,8 @@ class MenuProyectoEjecucion extends Component {
                         </ListItem>
                         <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
-                                {this.props.estructuraDocumental[estructura].map(children=>{
-                                    return <ListItem button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}>
+                                {this.props.estructuraDocumental[estructura].map((children,pos)=>{
+                                    return <ListItem onDrop={()=>this.props.moveItemTo(children)} className={this.props.dragTarget ? classes.dragTarget: ''} onDragOver={()=>{this.setState({drop:pos})}} button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}>
                                         <ListItemText inset primary={children.Titulo} />
                                     </ListItem>
                                 })}

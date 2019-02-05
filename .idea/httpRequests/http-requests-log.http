@@ -1,0 +1,45 @@
+POST http://servicios.coag.es/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos?=
+Accept: */*
+Cache-Control: no-cache
+token: PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==
+
+{"nombre":"documento_temporal.pdf"}
+
+<> 2019-01-31T015041.400.json
+
+###
+
+POST http://servicios.coag.es/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos?nombre=pepe.pdf
+Accept: */*
+Cache-Control: no-cache
+token: PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==
+
+<> 2019-01-31T014955.400.json
+
+###
+
+POST http://servicios.coag.es/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos
+Accept: */*
+Cache-Control: no-cache
+token: PWafDiRvijCBnUamb4Zt5UxoOn05KDEees9LWNZncs8YSba5rNN+CHcjsxXELXq0OGvagUqALAEqcrwtj53Wow==
+
+<> 2019-01-31T014929.400.json
+
+###
+
+POST http://servicios.coag.es/api/expedientes/703634/trabajos/3/estructuradocumental/9151681/archivos
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-01-31T014904.401.json
+
+###
+
+POST http://servicios.coag.es/api
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-01-31T014847.404.html
+
+###
+

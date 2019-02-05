@@ -230,15 +230,16 @@ export const updateAddress = (address) =>
 *
 */
 export const fetchexpedientesUser = () =>
+    async (dispatch) => {
+    try {
+        let response = await expedientesuser();
+        response.MensajesProcesado && response.MensajesProcesado.length > 0
+            ? dispatch(fetchErrorExpediente(response))
+            : dispatch(fetchSuccess(response.Expedientes));
 
-    (dispatch) => {
-        expedientesuser().then((response) => {
-
-            dispatch(fetchSuccess(response));
-        })
-            .catch(
-                () => fetchErrorExpediente({ error: 'Algo ha salido mal' })
-            );
+    }catch (error) {
+        dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+    }
     };
 /**
  * Insertar nuevo expediente con emplazamientos
