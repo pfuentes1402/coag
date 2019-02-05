@@ -101,6 +101,9 @@ class AddPerson extends Component{
                     provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : []
                 })
             }
+            if(this.props.promotor){
+                await this.loadMunicipes(this.props.promotor.Id_Provincia);
+            }
         }catch (error) {
             this.props.onErrorExpediente(formatMenssage(error.message))
         }
@@ -131,12 +134,16 @@ class AddPerson extends Component{
 
     handleProvincias = name => async event => {
         let promotor = {};
-        let municipios = await getConcellos(event.target.value, this.props.activeLanguage.code);
+        await this.loadMunicipes(event.target.value);
         Object.assign(promotor, this.state.promotor);
         promotor[name] = event.target.value;
-        this.setState({promotor: promotor,
-            municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []})
+        this.setState({promotor: promotor});
     };
+
+   async loadMunicipes(idProvince){
+        let municipios = await getConcellos(idProvince, this.props.activeLanguage.code); 
+        this.setState({municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : []});
+    }
 
     handleSubmit(){
         this.props.onAddPerson(this.state.promotor)

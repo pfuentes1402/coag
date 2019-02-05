@@ -108,6 +108,17 @@ class EnhancedTable extends React.Component {
     dataTable: this.props.data
   };
 
+  async componentDidMount() {
+    await this.loadPreviusSelection();
+  }
+
+  async loadPreviusSelection() {
+    let worksSelecteds = this.state.dataTable.trabajos.filter(f =>
+      this.props.previusSelection.some(x => x === f.Id_Tipo_Trabajo)).map(x => { return x.Id_Tipo_Trabajo; });
+    this.updateSelectWorks(worksSelecteds);
+    await this.setState({selected: worksSelecteds});
+  }
+
   handleSelectAllClick = event => {
     if (event.target.checked) {
       let selections = this.state.dataTable.trabajos.map(n => n.Id_Tipo_Trabajo);
@@ -143,7 +154,9 @@ class EnhancedTable extends React.Component {
     this.updateSelectWorks(newSelected);
   };
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  isSelected(id) {
+    return this.state.selected.indexOf(id) !== -1;
+  };
 
   updateSelectWorks(selection) {
     let worksSelected = this.state.dataTable.trabajos.filter(f =>
