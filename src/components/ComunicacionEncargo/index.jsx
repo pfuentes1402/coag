@@ -48,7 +48,6 @@ class Encomenda extends Component {
   render() {
     return (
         <div>
-
             {
                 this.state.isLoading
                     ? <Grid item xs={12} className="text-center">

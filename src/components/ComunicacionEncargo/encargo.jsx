@@ -197,8 +197,8 @@ class ComunicacionEncargo extends React.Component {
                 isSelected: i === 0
             });
         }
-        await this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
-        await this.updateFaseTrabajo(indexCurrent);
+        this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
+        this.updateFaseTrabajo(indexCurrent);
     }
 
 

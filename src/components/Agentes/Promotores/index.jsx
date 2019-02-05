@@ -235,7 +235,7 @@ class Promotores extends Component {
       <Paper className={classes.root}>
         <Grid container >
           <Grid item md={10} className={classes.subtitle}>
-            <Translate id="languages.promotores.mainTitle"/>
+            <Translate id="languages.promotores.mainTitle" />
           </Grid>
           <Grid item md={2}>
             <Fab size="small" color="primary" aria-label="Add"
@@ -272,7 +272,7 @@ class Promotores extends Component {
                       <TableCell padding="none">
                         <Input
                           id="percentage" style={{ width: 45, margin: 0 }}
-                          value={row.Porcentaje ? row.Porcentaje : ""}
+                          value={row.Porcentaje ? row.Porcentaje : row.porcentaje ? row.porcentaje : ""}
                           onChange={this.handleChangePercentage(row.Nif)}
                           disabled={!this.state.percentageEdit}
                           type="Number"

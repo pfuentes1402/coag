@@ -12,7 +12,7 @@ const BASE_PATH = "http://servicios.coag.es/api";
 */
 const api = axios.create({
   baseURL: BASE_PATH,
-  timeout: 10000,
+  timeout: 60000,
   header: {
     'Token': localStorage.getItem('token')
   },
@@ -36,7 +36,7 @@ api.interceptors.response.use(function (response) {
 
   const originalRequest = error.config
 
-  if (error.response.status === 401 && !originalRequest._retry) {
+  if (error.response && error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true
 
 
@@ -55,11 +55,6 @@ api.interceptors.response.use(function (response) {
 
   return Promise.reject(error)
 })
-//TODO:Aquí podriamos poner el manejo para en caso que ya sea un retry nos haga logout
-
-
-
-
 /*
  *Proporciona los datos generales de un expediente
  * Parametros 
@@ -157,14 +152,14 @@ export const getValidateAddress = async ref_catastral => {
  * @returns {Promise<*>}
  */
 export const postNuevoExpediente = async data => {
-    try {
-        let response = await api.post(`/expedientes/`, data);
+  try {
+    let response = await api.post(`/expedientes/`, data);
 
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 /*
  *Edita un expediente expediente
@@ -287,12 +282,19 @@ export const errorLogin = (data) => (
   });
 
 
-/*
+/* TODO: Login paso 2
  *  Función que loguea a un usuario y consigue identificadores únicos para la generación del token
  *  Parametros 
  *    usuario
  *    password
  */
+/*export const funcionForma = (datos) =>
+  api.post('/login', { Usuario: datos.usuario, password: datos.password }).then(response => {
+    return response;
+  }).catch(error => {
+    //errorLogin(error);
+    return error.response.status;
+  });*/
 export const funcionForma = async (datos) => {
   try {
       let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
@@ -907,4 +909,19 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     throw (formatMenssage("Error 400 en API"))
   }
 }
-
+//Asignación automática de archivos
+export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
+  try {
+    'http://servicios.coag.es/api/expedientes/{Id_Expediente}/AlmacenTemporalArchivos/AsignacionAutomatica'
+    let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
+        {
+          Id_Trabajo:idTrabajo,
+          Archivos:file,
+          InsertarArchivos:1
+        }
+        );
+    return result.data
+  } catch (error ) {
+    throw (formatMenssage("Error 400 en API"))
+  }
+}
