@@ -38,7 +38,7 @@ class Login extends Component {
                 <div className="box-position">
                     <div className="white-box">
                         <img src={require('./images/loginlogo.png')}/>
-                        <LoginFormaFinal submitting={this.state.submitting} onSubmit={async (data)=> {await this.userLogin(data, this.props)}}/>
+                        <LoginFormaFinal submitting={this.state.submitting} onSubmit={async (data)=> {await this.userLogin(data)}}/>
                         <div className="mensaje">{this.props.mensaje}</div>
 
                     </div>

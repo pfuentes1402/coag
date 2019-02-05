@@ -2,33 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastroForm.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastroTable.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient2.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/routes.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.js" afterPath="$PROJECT_DIR$/src/Main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/usuarios/types.js" afterPath="$PROJECT_DIR$/src/actions/usuarios/types.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComponenteLareral/Componentelateral.js" afterPath="$PROJECT_DIR$/src/components/ComponenteLareral/Componentelateral.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/login/Login.js" afterPath="$PROJECT_DIR$/src/components/login/Login.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" afterPath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/HomeContainer.js" afterPath="$PROJECT_DIR$/src/containers/HomeContainer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/index.js" afterPath="$PROJECT_DIR$/src/containers/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/status/status.js" afterPath="$PROJECT_DIR$/src/reducers/status/status.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/user/user.js" afterPath="$PROJECT_DIR$/src/reducers/user/user.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -469,7 +443,7 @@
       <workItem from="1549126676934" duration="513000" />
       <workItem from="1549128525515" duration="1254000" />
       <workItem from="1549373844614" duration="14000" />
-      <workItem from="1549375240589" duration="7000" />
+      <workItem from="1549375240589" duration="52000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -545,7 +519,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="247971000" />
+    <option name="totallyTimeSpent" value="248016000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
