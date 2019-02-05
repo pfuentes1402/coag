@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -35,17 +32,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="262820">
               <caret line="7730" column="6" lean-forward="false" selection-start-line="7730" selection-start-column="6" selection-end-line="7730" selection-end-column="6" />
-              <folding>
-                <marker date="1549128990554" expanded="true" signature="0:480196" ph="{&quot;name&quot;: &quot;coag&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="104:480194" ph="{...}" />
-                <marker date="1549128990554" expanded="true" signature="142:382" ph="{&quot;version&quot;: &quot;7.0.0&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="355:382" ph="{&quot;@babel/types&quot;: &quot;7.0.0&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="479756:479770" ph="{&quot;camelcase&quot;: &quot;3.0.0&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="479756:480015" ph="{&quot;version&quot;: &quot;5.0.0&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="479794:480009" ph="{...}" />
-                <marker date="1549128990554" expanded="true" signature="479817:480001" ph="{&quot;version&quot;: &quot;3.0.0&quot;...}" />
-                <marker date="1549128990554" expanded="true" signature="480030:480190" ph="{&quot;version&quot;: &quot;0.1.2&quot;...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -53,21 +40,10 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4726">
+            <state relative-caret-position="4318">
               <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
               <folding>
                 <element signature="e#0#221#0" expanded="true" />
-                <marker date="1549128891900" expanded="true" signature="5403:5561" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="5636:5719" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
-                <marker date="1549128891900" expanded="true" signature="5771:5826" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
-                <marker date="1549128891900" expanded="true" signature="5982:6228" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="5992:6135" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="6150:6225" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="6358:6409" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="6487:6540" ph="{...}" />
-                <marker date="1549128891900" expanded="true" signature="6596:6655" ph="{&quot;type&quot;: types.ADD_AGENTE_TRABAJO...}" />
-                <marker date="1549128891900" expanded="true" signature="6716:6778" ph="{&quot;type&quot;: types.DELETE_AGENTE_TRABAJO...}" />
-                <marker date="1549128891900" expanded="true" signature="6837:6897" ph="{&quot;type&quot;: types.EDIT_AGENTE_TRABAJO...}" />
               </folding>
             </state>
           </provider>
@@ -271,7 +247,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -315,6 +290,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -467,6 +443,7 @@
       <workItem from="1549050057412" duration="682000" />
       <workItem from="1549126676934" duration="513000" />
       <workItem from="1549128525515" duration="1254000" />
+      <workItem from="1549373844614" duration="14000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -542,7 +519,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="247950000" />
+    <option name="totallyTimeSpent" value="247964000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -560,7 +537,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.67346936" sideWeight="0.27395833" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.67346936" sideWeight="0.7260417" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.67346936" sideWeight="0.7260417" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5652174" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -966,37 +943,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262820">
           <caret line="7730" column="6" lean-forward="false" selection-start-line="7730" selection-start-column="6" selection-end-line="7730" selection-end-column="6" />
-          <folding>
-            <marker date="1549128990554" expanded="true" signature="0:480196" ph="{&quot;name&quot;: &quot;coag&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="104:480194" ph="{...}" />
-            <marker date="1549128990554" expanded="true" signature="142:382" ph="{&quot;version&quot;: &quot;7.0.0&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="355:382" ph="{&quot;@babel/types&quot;: &quot;7.0.0&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="479756:479770" ph="{&quot;camelcase&quot;: &quot;3.0.0&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="479756:480015" ph="{&quot;version&quot;: &quot;5.0.0&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="479794:480009" ph="{...}" />
-            <marker date="1549128990554" expanded="true" signature="479817:480001" ph="{&quot;version&quot;: &quot;3.0.0&quot;...}" />
-            <marker date="1549128990554" expanded="true" signature="480030:480190" ph="{&quot;version&quot;: &quot;0.1.2&quot;...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4726">
+        <state relative-caret-position="4318">
           <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
           <folding>
             <element signature="e#0#221#0" expanded="true" />
-            <marker date="1549128891900" expanded="true" signature="5403:5561" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="5636:5719" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
-            <marker date="1549128891900" expanded="true" signature="5771:5826" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
-            <marker date="1549128891900" expanded="true" signature="5982:6228" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="5992:6135" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="6150:6225" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="6358:6409" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="6487:6540" ph="{...}" />
-            <marker date="1549128891900" expanded="true" signature="6596:6655" ph="{&quot;type&quot;: types.ADD_AGENTE_TRABAJO...}" />
-            <marker date="1549128891900" expanded="true" signature="6716:6778" ph="{&quot;type&quot;: types.DELETE_AGENTE_TRABAJO...}" />
-            <marker date="1549128891900" expanded="true" signature="6837:6897" ph="{&quot;type&quot;: types.EDIT_AGENTE_TRABAJO...}" />
           </folding>
         </state>
       </provider>

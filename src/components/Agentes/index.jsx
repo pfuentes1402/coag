@@ -76,6 +76,10 @@ class Agentes extends Component {
         this.props.history.push(url);
         return true;
       }
+      else if(result.MensajesProcesado && result.MensajesProcesado.length > 0){
+        this.props.fetchErrorExpediente(result);
+        return false;
+      }
       else if (result.response) {
         this.props.fetchErrorExpediente(result.response.data);
         return false;
