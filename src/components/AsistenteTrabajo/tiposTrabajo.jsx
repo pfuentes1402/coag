@@ -11,6 +11,7 @@ import { grey } from '@material-ui/core/colors';
 import { getFasesTrabajos } from '../../api/index';
 import { dispatchError } from '../../actions/trabajos';
 import EnhancedTable from './tablaTiposTrabjo';
+import { groupBy, filter } from 'lodash';
 
 const styles = theme => ({
   titleMainPanel: {
@@ -40,15 +41,32 @@ class TiposTrabajo extends Component {
       gruposTrabajos: [[], []],
       language: this.props.activeLanguage.code,
       selectTrabajos: [],
-      linealWorksSelection: [],
-      isLoading: true,
-      trabajosPrevios: this.props.encomenda && this.props.encomenda.TrabajosEnEncomendaActual
-        ? this.props.encomenda.TrabajosEnEncomendaActual.map(x => { return x.Id_Trabajo; }) : []
+      linealWorksSelection: this.props.previusSelection ? this.props.previusSelection : [],
+      isLoading: true
     }
   }
 
   async componentDidMount() {
     await this.loadFasesTrabajos();
+    this.loadPreviusSelection();
+  }
+
+  loadPreviusSelection() {
+    if (this.props.previusSelection && this.props.previusSelection.length > 0) {
+      let trabajosSeleccion = [];
+      Object.assign(trabajosSeleccion, this.state.selectTrabajos);
+
+      for (let i = 0; i < this.props.previusSelection.length; i++) {
+        let work = this.props.previusSelection[i];
+        let groupIndex = trabajosSeleccion.findIndex(x => x.fase === work.Id_Tipo_Fase);
+        if (groupIndex !== -1)
+          trabajosSeleccion[groupIndex].trabajos.push(work);
+        else {
+          trabajosSeleccion.push({ fase: work.Id_Tipo_Fase, trabajos: [work] })
+        }
+      }
+      this.setState({ selectTrabajos: trabajosSeleccion });
+    }
   }
 
   async loadFasesTrabajos() {
@@ -118,7 +136,7 @@ class TiposTrabajo extends Component {
     })
 
     await this.setState(state => ({ ...state, selectTrabajos: newState, linealWorksSelection: works }));
-    this.props.updateTrabajoSeleccion(works);
+    await this.props.updateTrabajoSeleccion(works);
   }
 
   handleNext() {
@@ -128,6 +146,13 @@ class TiposTrabajo extends Component {
     else {
       this.props.handleNavigation(false);
     }
+  }
+
+  getSelections(dataSource) {
+    let worksSelecteds = dataSource.filter(f =>
+      this.state.linealWorksSelection.some(x => x.Id_Tipo_Trabajo === f.Id_Tipo_Trabajo))
+      .map(x => { return x.Id_Tipo_Trabajo; });
+    return worksSelecteds;
   }
 
   render() {
@@ -150,17 +175,25 @@ class TiposTrabajo extends Component {
             <Grid container spacing={16}>
               <Grid item xs={6} className="pt-0">
                 {this.state.gruposTrabajos[0].map((value, index) => {
-                  return <Grid item xs={12} key={index} ><EnhancedTable data={value} className="my-2"
-                    updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} 
-                    previusSelection={this.state.trabajosPrevios}/></Grid>
+                  let selection = this.getSelections(value.trabajos);
+
+                  return <Grid item xs={12} key={index} >
+                    <EnhancedTable data={value} className="my-2"
+                      updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
+                      previusSelection={selection} />
+                  </Grid>
                 })}
               </Grid>
 
               <Grid item xs={6} className="pt-0">
                 {this.state.gruposTrabajos[1].map((value, index) => {
-                  return <Grid item xs={12} key={index}><EnhancedTable data={value} className="my-2"
-                    updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)} 
-                    previusSelection={this.state.trabajosPrevios}/></Grid>
+
+                  let dataSelection = this.getSelections(value.trabajos);
+                  return <Grid item xs={12} key={index}>
+                    <EnhancedTable data={value} className="my-2"
+                      updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
+                      previusSelection={dataSelection} />
+                  </Grid>
                 })}
               </Grid>
             </Grid>
