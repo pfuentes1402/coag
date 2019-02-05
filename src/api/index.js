@@ -824,27 +824,12 @@ export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
                 }
             );
             resolve(result.data)
-
-
-            // let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`,
-            //     {content:data,
-            //         processData: false,
-            //         contentType: false
-            //     },{
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }});
-            //resolve(response);
         } catch (error) {
-            reject(formatMenssage(error.message));
+            return(formatMenssage(error.message));
         }
-        // setTimeout(()=>{
-        //   console.log(file)
-        //   resolve()
-        // },3000)
+
     })
 
-    //
 }
 
 //subir fichero a carpeta temporal
@@ -888,7 +873,7 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
       let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, {nombre:file});
       return result.data
     } catch (error ) {
-      throw (formatMenssage("Error 400 en API"))
+      return formatMenssage("Error 400 en API")
     }
 }
 //eliminar un archivo de la carpeta temporal
@@ -897,7 +882,7 @@ export const removeFileFromTemporalFolder = async (idExpediente,  filename) => {
     let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {nombre:filename});
     return result.data
   } catch (error ) {
-    throw (formatMenssage("Error 400 en API"))
+      return formatMenssage("Error 400 en API")
   }
 }
 //eliminar un archivo de una estructura
@@ -906,7 +891,7 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
     return result.data
   } catch (error ) {
-    throw (formatMenssage("Error 400 en API"))
+      return formatMenssage("Error 400 en API")
   }
 }
 //Asignación automática de archivos
@@ -922,6 +907,6 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
         );
     return result.data
   } catch (error ) {
-    throw (formatMenssage("Error 400 en API"))
+    return formatMenssage("Error 400 en API")
   }
 }
