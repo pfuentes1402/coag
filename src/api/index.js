@@ -28,7 +28,10 @@ const api = axios.create({
 
 
 });
-
+api.interceptors.request.use(async function (request) {
+  request.headers['Token']= await localStorage.getItem('token') || '';
+  return request
+})
 api.interceptors.response.use(function (response) {
 
   return response
@@ -885,7 +888,7 @@ export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
 //mover un arivo desde la carpeta temporal a una estructura
 export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
     try {
-      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, {nombre:file});
+      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, {Nombre:file});
       return result.data
     } catch (error ) {
       throw (formatMenssage("Error 400 en API"))

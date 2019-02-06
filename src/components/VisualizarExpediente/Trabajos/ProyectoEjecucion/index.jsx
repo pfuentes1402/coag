@@ -194,6 +194,7 @@ class TrabajoEjecucion extends Component {
         await this.setState({fetchingCenter: true})
         if (this.props.estructura) {
             let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
+            console.log(response)
             let documentos = response.data.Archivos;
             let firmasDigitales = response.data.FirmasDigitales;
             await this.setState({fetchingCenter: false, data: documentos, firmasDigitales})
@@ -509,6 +510,7 @@ class TrabajoEjecucion extends Component {
                                                                                     onChange={this.handleChange("checked", pos, 'data')}
                                                                                     value={item.Archivo}
                                                                                 />
+
                                                                                 <Typography
                                                                                     style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{item.Archivo}</Typography></Grid>
                                                                             <Grid xs={4}

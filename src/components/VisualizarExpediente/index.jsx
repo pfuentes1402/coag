@@ -217,6 +217,8 @@ class VisualizarExpediente extends Component {
                                  changeEstructura={(idEstructura, titleEstructura) => {this.handleChangeEstructuran(idEstructura, titleEstructura)}}
                                  expediente={this.state.expediente}
                                  trabajo={trabajo}
+                                 dragTarget={this.state.dragging ? this.state.dragging : false}
+                                 moveItemTo={(target) => this.moveItemTo(target)}
                                  estructuraDocumental={this.state.estructuraDocumental}
                                  isLoadEstructura={this.state.isLoadEstructura}
                                  active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
@@ -226,6 +228,22 @@ class VisualizarExpediente extends Component {
         </Collapse>
       </List>
     );
+  }
+    async moveItemTo(target) {
+
+        let item = this.state.dragging
+        try {
+            let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
+            }
+        } catch (error) {
+            this.props.fetchErrorExpediente("Error de comunicación con la API");
+        }
+
+    }
+  dragging(action) {
+        this.setState({dragging: action})
   }
   render() {
     let { classes } = this.props;
