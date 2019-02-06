@@ -42,7 +42,7 @@ const styles = theme => ({
 
         position: 'absolute',
         top: '50%',
-        left: '80%',
+        left: '50%',
         marginTop: -12,
         marginLeft: -12,
     },
@@ -64,7 +64,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps =
     {
-        fetchErrorExpediente: fetchErrorExpediente
+        fetchErrorExpediente: fetchErrorExpediente,
+
     };
 
 class TrabajoEjecucion extends Component {
@@ -86,7 +87,8 @@ class TrabajoEjecucion extends Component {
             itemSelected: [],
             currentUploadItem: false,
             pendingUploadList: [],
-            fetchingRemove:0
+            fetchingRemove:0,
+            disableAutoAsignButton:true
 
 
         }
@@ -113,24 +115,27 @@ class TrabajoEjecucion extends Component {
             p = p.then(_ => new Promise(async resolve => {
 
                     try {
-
+                        let newList = [...b.state.pendingUploadList]
+                        newList.splice(0, 1);
+                        await b.setState({
+                            currentUpload: i + 1,
+                            currentUploadItem: item,
+                            pendingUploadList: newList,
+                        });
                         let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
                         if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                             this.props.fetchErrorExpediente(response);
                             this.abortUpload()
                         } else {
-                            let newList = [...b.state.pendingUploadList]
-                            newList.splice(0, 1);
-                            await b.setState({
-                                currentUpload: i + 1,
-                                currentUploadItem: item,
-                                pendingUploadList: newList,
-                            });
+
                             if (newList.length === 0) {
                                 await b.setState({
                                     uploadInProgress: false
                                 });
-                                await this.loadInformation()
+                                setTimeout(async ()=>{
+                                    await this.loadInformation()
+                                },1000)
+
 
                             }
                         }
@@ -160,46 +165,58 @@ class TrabajoEjecucion extends Component {
     }
 
     async componentDidMount() {
-        await this.loadInformation()
+        await this.loadGeneralInformation()
     }
-
-    async loadInformation() {
+    async loadGeneralInformation(){
         await this.setState({fetching: true})
-        let expediente = this.props.expediente.Expediente[0]
-        console.log('trabajo', this.props.trabajo, expediente)
+        let expediente = this.props.expediente.Expediente[0];
         if (this.props.estructura) {
-            let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
-            let documentos = response.data.Archivos
-            let firmasDigitales = response.data.FirmasDigitales
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
-
-            let folderInfo = folderInfoResponse.data.Carpetas[0]
-            await this.setState({fetching: false, expediente, data: documentos, folderInfo, firmasDigitales})
+            let folderInfo = folderInfoResponse.data.Carpetas[0];
+            await this.setState({ expediente,  folderInfo})
+        } else {
+            try {
+                let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
+                workDetails = workDetails.data;
+                await this.setState({
+                    expediente,
+                    workDetails,
+                })
+            } catch (e) {
+                this.props.fetchErrorExpediente(e);
+            }
+        }
+        await this.loadInformation();
+        await this.setState({fetching: false});
+    }
+    async loadInformation() {
+        let expediente= this.state.expediente;
+        await this.setState({fetchingCenter: true})
+        if (this.props.estructura) {
+            let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
+            console.log(response)
+            let documentos = response.data.Archivos;
+            let firmasDigitales = response.data.FirmasDigitales;
+            await this.setState({fetchingCenter: false, data: documentos, firmasDigitales})
         } else {
             try {
                 let response = await api.getAllFiles(expediente.Id_Expediente, this.props.trabajo);
                 let temporalFiles = await api.getFilesFromTemporalFolder(expediente.Id_Expediente)
-                temporalFiles = temporalFiles.Archivos
-                let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
-                workDetails = workDetails.data;
+                temporalFiles = temporalFiles.Archivos;
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
                 }
                 let documentos = response.Archivos
                 let firmasDigitales = response.FirmasDigitales
                 await this.setState({
-                    fetching: false,
-                    expediente,
+                    fetchingCenter: false,
                     data: documentos,
                     firmasDigitales,
-                    workDetails,
                     temporalFiles
                 })
             } catch (e) {
                 this.props.fetchErrorExpediente(e);
             }
-
-
         }
     }
 
@@ -217,6 +234,12 @@ class TrabajoEjecucion extends Component {
             this.setState({showDeleteButton: true})
         } else {
             this.setState({showDeleteButton: false})
+        }
+        if(files.length===0 && temporalFiles.length>0)
+        {
+            this.setState({disableAutoAsignButton: false})
+        } else {
+            this.setState({disableAutoAsignButton: true})
         }
     };
 
@@ -261,6 +284,40 @@ class TrabajoEjecucion extends Component {
 
         } else {
             throw "Debe seleccionar al menos un archivo para eliminar"
+        }
+    }
+    async handleAutoAsign(){
+        let {temporalFiles} = this.itemsToRemove();
+        if(temporalFiles.length>0){
+            try{
+                await this.setState({fetchingAutoAsign:true})
+                let files=[];
+                temporalFiles.map(item=>{
+                    files.push({
+                        Nombre:item.Nombre
+                    })
+                });
+                let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
+                if(result.Archivos){
+                    result.Archivos.map(item=>{
+                        if(item.Insertado!==1){
+                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} no fue insertado.`))
+
+                        }else{
+                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`))
+                        }
+                    })
+                }else{
+                    throw "Error procesando la petición"
+                }
+                await this.setState({fetchingAutoAsign:false})
+                await this.loadInformation();
+            }catch (e) {
+                await this.setState({fetchingAutoAsign:false})
+                //todo: Importar format Message para sacar una alerta
+            }
+
+
         }
     }
 
@@ -315,211 +372,230 @@ class TrabajoEjecucion extends Component {
                                                 </Grid>
                                                 <Grid container>
                                                     <Grid item xs={12} className="pr-3 text-right">
-                                                        <div className={classes.wrapper}>
+
+                                                        {
+                                                            this.state.temporalFiles?
+                                                                <div className={classes.wrapper} style={{float:'right'}}>
+                                                                    <Button
+
+                                                                        color="primary"
+                                                                        onClick={() => {
+                                                                            this.handleAutoAsign()
+                                                                        }}
+                                                                        disabled={this.state.disableAutoAsignButton ||this.state.fetchingAutoAsign>0}>
+                                                                        Selección automática
+                                                                    </Button>
+                                                                    {this.state.fetchingAutoAsign>0 && <CircularProgress size={24}
+                                                                                                                      className={classes.buttonProgress}/>}
+                                                                </div>:null
+                                                        }
+                                                        <div className={classes.wrapper} style={{float:'right'}}>
                                                             <Button
-                                                                variant="contained"
+
                                                                 color="primary"
                                                                 onClick={() => {
                                                                     this.handleRemove()
                                                                 }}
                                                                 disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
-                                                                Eliminar archivos
-                                                            </Button>
-                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
-                                                                                          className={classes.buttonProgress}/>}
-                                                        </div>
-                                                        <div className={classes.wrapper}>
-                                                            <Button
-                                                                variant="contained"
-                                                                color="primary"
-                                                                onClick={() => {
-                                                                    this.handleRemove()
-                                                                }}
-                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
-                                                                Eliminar archivos
+                                                                Eliminar
                                                             </Button>
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
                                                                                                               className={classes.buttonProgress}/>}
                                                         </div>
+
 
                                                     </Grid>
                                                 </Grid>
                                             </div>
                                         }
                                     </Paper>
-                                    {
-                                        (this.state.data && this.state.data.length > 0)|| (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
-                                            <div className="pl-2">
-                                                <Grid container spacing={16}>
-                                                    <Grid xs={6} className="p-3">
-                                                        <Typography variant="subtitle2">
-                                                            NOMBRE DEL ARCHIVO
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid xs={4} className="p-3">
-                                                        <Typography variant="subtitle2">
-                                                            {this.props.estructura ? 'ÚLTIMA MODIFICACIÓN' : 'CARPETA'}
-                                                        </Typography>
-                                                    </Grid>
-                                                    <Grid xs={2} className="p-3">
-                                                        <Typography variant="subtitle2">
-                                                            FIRMA
-                                                        </Typography>
-                                                    </Grid>
+                                    {this.state.fetchingCenter?
+                                        <Paper>
+                                            <Grid container spacing={24}>
+                                                <Grid item xs={12} className='p-3 text-center'>
+                                                    <CircularProgress/>
                                                 </Grid>
-                                                {
-                                                    this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                        return (<ExpansionPanel draggable="true" onDragEnd={() => {
-                                                            this.props.dragging(false)
-                                                        }} onDragStart={() => {
-                                                            this.props.dragging(item)
-                                                        }} expanded={this.state.panelExpanded === item.Nombre}
-                                                                                onChange={this.expandPanel(item.Nombre)}>
-                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6} className='d-flex'
-                                                                    >
-                                                                        <Checkbox
-                                                                            checked={item.checked ? item.checked : false}
-                                                                            onChange={this.handleChange("checked", pos, 'temporalFiles')}
-                                                                            value={item.Nombre}
-                                                                        />
-                                                                        <Typography
-                                                                            style={{color: '#b26a00'}}>{item.Nombre}</Typography>
-                                                                    </Grid>
-                                                                    <Grid xs={4}
-                                                                    ><Typography style={{color: '#b26a00'}}>Sin
-                                                                        Asignar</Typography></Grid>
-                                                                    <Grid xs={2} className="text-right">
-                                                                        <ErrorOutline style={{color: '#b26a00'}} size={24}/>
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </ExpansionPanelSummary>
-                                                            <ExpansionPanelDetails>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    TAMAÑO DEL ARCHIVO
-                                                                                </Typography>
-                                                                            </Grid>
+                                            </Grid>
 
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={4}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    {this.renderSize(item.Longitud)}
-                                                                                </Typography>
+                                        </Paper>:
+                                        <div>
+                                            {
+                                                (this.state.data && this.state.data.length > 0)|| (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
+                                                    <div className="pl-2">
+                                                        <Grid container spacing={16}>
+                                                            <Grid xs={6} className="p-3">
+                                                                <Typography variant="subtitle2">
+                                                                    NOMBRE DEL ARCHIVO
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid xs={4} className="p-3">
+                                                                <Typography variant="subtitle2">
+                                                                    {this.props.estructura ? 'ÚLTIMA MODIFICACIÓN' : 'CARPETA'}
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid xs={2} className="p-3">
+                                                                <Typography variant="subtitle2">
+                                                                    FIRMA
+                                                                </Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                        {
+                                                            this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
+                                                                return (<ExpansionPanel draggable="true" onDragEnd={() => {
+                                                                    this.props.dragging(false)
+                                                                }} onDragStart={() => {
+                                                                    this.props.dragging(item)
+                                                                }} expanded={this.state.panelExpanded === item.Nombre}
+                                                                                        onChange={this.expandPanel(item.Nombre)}>
+                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                        <Grid container spacing={16}>
+                                                                            <Grid xs={6} className='d-flex'
+                                                                            >
+                                                                                <Checkbox
+                                                                                    checked={item.checked ? item.checked : false}
+                                                                                    onChange={this.handleChange("checked", pos, 'temporalFiles')}
+                                                                                    value={item.Nombre}
+                                                                                />
+                                                                                <Typography
+                                                                                    style={{color: '#b26a00'}}>{item.Nombre}</Typography>
                                                                             </Grid>
-
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={2}>
-                                                                    </Grid>
-                                                                </Grid>
-
-                                                            </ExpansionPanelDetails>
-                                                        </ExpansionPanel>)
-                                                    })
-                                                }
-                                                {
-                                                    this.state.data.map((item, pos) => {
-                                                        return (<ExpansionPanel expanded={this.state.panelExpanded === pos}
-                                                                                onChange={() => this.expandPanel(pos)}>
-                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6} className='d-flex'
-                                                                    >
-                                                                        <Checkbox
-                                                                            checked={item.checked ? item.checked : false}
-                                                                            onChange={this.handleChange("checked", pos, 'data')}
-                                                                            value={item.Archivo}
-                                                                        />
-                                                                        <Typography
-                                                                            style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{item.Archivo}</Typography></Grid>
-                                                                    <Grid xs={4}
-                                                                    ><Typography
-                                                                        style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{this.props.estructura ? '' : item.Carpeta}</Typography></Grid>
-                                                                    <Grid xs={2} className="text-right">
-                                                                        {item.Requisitos_Firma_Completos ?
-                                                                            <CheckCircle/> :
-                                                                            <Close style={{color: 'red'}}/>
-                                                                        }
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </ExpansionPanelSummary>
-                                                            <ExpansionPanelDetails>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid xs={6}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    TAMAÑO DEL ARCHIVO
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    FIRMAS DEL ARCHIVO
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    FIRMAS REQUERIDAS
-                                                                                </Typography>
+                                                                            <Grid xs={4}
+                                                                            ><Typography style={{color: '#b26a00'}}>Sin
+                                                                                Asignar</Typography></Grid>
+                                                                            <Grid xs={2} className="text-right">
+                                                                                <ErrorOutline style={{color: '#b26a00'}} size={24}/>
                                                                             </Grid>
                                                                         </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={4}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    ?????
-                                                                                </Typography>
+                                                                    </ExpansionPanelSummary>
+                                                                    <ExpansionPanelDetails>
+                                                                        <Grid container spacing={16}>
+                                                                            <Grid xs={6}>
+                                                                                <Grid container spacing={0}>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            TAMAÑO DEL ARCHIVO
+                                                                                        </Typography>
+                                                                                    </Grid>
+
+                                                                                </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={12}>
-                                                                                <List>
-                                                                                    {
-                                                                                        this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
-                                                                                                if (fd.Id_Archivo == item.Id_Archivo) {
-                                                                                                    return (
-                                                                                                        <ListItem>
-                                                                                                            <ListItemText
-                                                                                                                primary={fd.Nombre}/>
-                                                                                                        </ListItem>)
-                                                                                                } else {
-                                                                                                    return "";
-                                                                                                }
-                                                                                            }) :
-                                                                                            <ListItem>
-                                                                                                <ListItemText primary="--"/>
-                                                                                            </ListItem>
-                                                                                    }
-                                                                                </List>
+                                                                            <Grid xs={4}>
+                                                                                <Grid container spacing={0}>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            {this.renderSize(item.Longitud)}
+                                                                                        </Typography>
+                                                                                    </Grid>
+
+                                                                                </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    ???????
-                                                                                </Typography>
+                                                                            <Grid xs={2}>
                                                                             </Grid>
                                                                         </Grid>
-                                                                    </Grid>
-                                                                    <Grid xs={2}>
-                                                                    </Grid>
-                                                                </Grid>
 
-                                                            </ExpansionPanelDetails>
-                                                        </ExpansionPanel>)
-                                                    })
-                                                }
+                                                                    </ExpansionPanelDetails>
+                                                                </ExpansionPanel>)
+                                                            })
+                                                        }
+                                                        {
+                                                            this.state.data.map((item, pos) => {
+                                                                return (<ExpansionPanel expanded={this.state.panelExpanded === pos}
+                                                                                        onChange={() => this.expandPanel(pos)}>
+                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                        <Grid container spacing={16}>
+                                                                            <Grid xs={6} className='d-flex'
+                                                                            >
+                                                                                <Checkbox
+                                                                                    checked={item.checked ? item.checked : false}
+                                                                                    onChange={this.handleChange("checked", pos, 'data')}
+                                                                                    value={item.Archivo}
+                                                                                />
 
-                                            </div>
-                                            :
-                                            <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>No hay
-                                                resultados que mostrar</h1>
+                                                                                <Typography
+                                                                                    style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{item.Archivo}</Typography></Grid>
+                                                                            <Grid xs={4}
+                                                                            ><Typography
+                                                                                style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{this.props.estructura ? '' : item.Carpeta}</Typography></Grid>
+                                                                            <Grid xs={2} className="text-right">
+                                                                                {item.Requisitos_Firma_Completos ?
+                                                                                    <CheckCircle/> :
+                                                                                    <Close style={{color: 'red'}}/>
+                                                                                }
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </ExpansionPanelSummary>
+                                                                    <ExpansionPanelDetails>
+                                                                        <Grid container spacing={16}>
+                                                                            <Grid xs={6}>
+                                                                                <Grid container spacing={0}>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            TAMAÑO DEL ARCHIVO
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            FIRMAS DEL ARCHIVO
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            FIRMAS REQUERIDAS
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                            <Grid xs={4}>
+                                                                                <Grid container spacing={0}>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            ?????
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                    <Grid xs={12}>
+                                                                                        <List>
+                                                                                            {
+                                                                                                this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
+                                                                                                        if (fd.Id_Archivo == item.Id_Archivo) {
+                                                                                                            return (
+                                                                                                                <ListItem>
+                                                                                                                    <ListItemText
+                                                                                                                        primary={fd.Nombre}/>
+                                                                                                                </ListItem>)
+                                                                                                        } else {
+                                                                                                            return "";
+                                                                                                        }
+                                                                                                    }) :
+                                                                                                    <ListItem>
+                                                                                                        <ListItemText primary="--"/>
+                                                                                                    </ListItem>
+                                                                                            }
+                                                                                        </List>
+                                                                                    </Grid>
+                                                                                    <Grid xs={12}>
+                                                                                        <Typography variant="button" gutterBottom>
+                                                                                            ???????
+                                                                                        </Typography>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                            <Grid xs={2}>
+                                                                            </Grid>
+                                                                        </Grid>
+
+                                                                    </ExpansionPanelDetails>
+                                                                </ExpansionPanel>)
+                                                            })
+                                                        }
+
+                                                    </div>
+                                                    :
+                                                    <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>No hay
+                                                        resultados que mostrar</h1>
+                                            }
+                                        </div>
                                     }
+
                                 </div>
                         }
                     </Grid>
@@ -698,7 +774,7 @@ class TrabajoEjecucion extends Component {
                                         <Grid container spacing={16}>
                                             <Grid xs={7} className="p-3">
                                                 <label style={{fontSize: 12}}>Subiendo
-                                                    archivo {this.state.currentUpload} de {this.state.uploadLength}</label>
+                                                   Subido archivo {this.state.currentUpload} de {this.state.uploadLength}</label>
                                             </Grid>
                                             <Grid xs={5} className="p-3"
                                                   style={{paddingRight: 10, paddingLeft: 0, textAlign: 'right'}}>
