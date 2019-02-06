@@ -239,9 +239,13 @@ class VisualizarExpediente extends Component {
             let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
             if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                 this.props.fetchErrorExpediente(response);
+                return false
+            }else{
+                return true
             }
         } catch (error) {
             this.props.fetchErrorExpediente("Error de comunicación con la API");
+            return false
         }
 
     }

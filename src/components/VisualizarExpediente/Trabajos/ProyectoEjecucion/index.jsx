@@ -29,6 +29,7 @@ import connect from "react-redux/es/connect/connect";
 import {withLocalize} from "react-localize-redux";
 import {getValidateAddress} from "../../../../api";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
+import {moveFileFromTemporalToStructure} from "../../../../api";
 
 const styles = theme => ({
     root: {
@@ -255,30 +256,51 @@ class TrabajoEjecucion extends Component {
         count+=files.length
         count+=temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove:count})
+            await this.setState({fetchingRemove:true})
             let a =this;
-            for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
-                console.log(a.state.fetchingRemove)
-                p = p.then(_ => new Promise(async resolve => {
-                    let item = files[i];
-                    await api.removeFileFromStructure(a.state.expediente.Id_Expediente, a.props.trabajo, item.Id_Estructura)
-                    let newData = this.state.data.filter(current=>current.Id_Estructura!=item.Id_Estructura)
-                    await this.setState({fetchingRemove: this.state.fetchingRemove-1,data:newData})
-                    console.log(this.state.fetchingRemove)
-                    resolve()
-                    }
-                ));
-            }
-            for (let i = 0, p = Promise.resolve(); i < temporalFiles.length; i++) {
+            if(files.length){
+                let arrayArchivos = [];
+                files.map(item=>{
+                    arrayArchivos.push({id_estructura:item.Id_Estructura})
+                });
+                let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
+                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                    this.props.fetchErrorExpediente(response);
+                }
+                let newData=[...this.state.data];
+                files.map(item=>{
+                     newData = newData.filter(current=>current.Id_Estructura!=item.Id_Estructura)
+                });
 
-                p.then(async resolve => {
-                    let item = temporalFiles[i];
-                    await api.removeFileFromTemporalFolder(a.state.expediente.Id_Expediente, item.Nombre)
-                    await a.setState({fetchingRemove: a.state.fetchingRemove--})
-                    resolve()
-
-                })
+                await this.setState({data:newData})
             }
+            if(temporalFiles.length){
+                let arrayArchivos = [];
+                temporalFiles.map(item=>{
+                    arrayArchivos.push({Nombre:item.Nombre})
+                });
+                let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
+                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                    this.props.fetchErrorExpediente(response);
+                }
+                let newData=[...this.state.temporalFiles];
+                temporalFiles.map(item=>{
+                    newData = newData.filter(current=>current.Nombre!=item.Nombre)
+                });
+
+                await this.setState({temporalFiles:newData})
+            }
+            await this.setState({fetchingRemove:false})
+            // for (let i = 0, p = Promise.resolve(); i < temporalFiles.length; i++) {
+            //
+            //     p.then(async resolve => {
+            //         let item = temporalFiles[i];
+            //         await api.removeFileFromTemporalFolder(a.state.expediente.Id_Expediente, item.Nombre)
+            //         await a.setState({fetchingRemove: a.state.fetchingRemove--})
+            //         resolve()
+            //
+            //     })
+            // }
             this.setState({showDeleteButton: false})
 
 
