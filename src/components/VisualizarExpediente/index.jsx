@@ -77,6 +77,7 @@ class VisualizarExpediente extends Component {
         idEstructuraActiva: null,
         titleEstructuraActiva: "",
         estructuraDocumental: [],
+        estructurasPadre: [],
         isLoadEstructura: false,
     };
   }
@@ -128,6 +129,7 @@ class VisualizarExpediente extends Component {
       await this.setState({isLoadEstructura: true});
       let filterEstructura = [];
       let groupEstructura = [];
+      let estructurasNivel1 = []
       try {
           let response = await getEstructuraDocumental(idExpediente, idTrabajo,this.props.activeLanguage.code);
           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -136,8 +138,9 @@ class VisualizarExpediente extends Component {
           }
           else {
               filterEstructura = filter(response.EstructurasDocumentales, {"Id_Tipo_Estructura": 1});
+              estructurasNivel1 = filter(response.EstructurasDocumentales, {"Nivel_Documentacion": 1});
               groupEstructura = groupBy(filterEstructura, "Titulo_Padre");
-              await this.setState({estructuraDocumental: groupEstructura, isLoadEstructura: false});
+              await this.setState({estructuraDocumental: groupEstructura, estructurasPadre: estructurasNivel1, isLoadEstructura: false});
           }
       }
       catch (e) {
@@ -220,6 +223,7 @@ class VisualizarExpediente extends Component {
                                  dragTarget={this.state.dragging ? this.state.dragging : false}
                                  moveItemTo={(target) => this.moveItemTo(target)}
                                  estructuraDocumental={this.state.estructuraDocumental}
+                                 estructurasPadre={this.state.estructurasPadre}
                                  isLoadEstructura={this.state.isLoadEstructura}
                                  active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
                     />
