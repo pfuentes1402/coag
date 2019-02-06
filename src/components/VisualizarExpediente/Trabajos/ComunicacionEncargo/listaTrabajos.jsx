@@ -30,6 +30,9 @@ const styles = theme => ({
   },
   withoutRadius: {
     borderRadius: 0
+  },
+  titleColor:{
+    color: theme.palette.primary.main
   }
 });
 
@@ -109,7 +112,7 @@ class ListaTrabajos extends Component {
                       <TableCell component="th" scope="row" className="px-1 text-center">
                         {index + 1}
                       </TableCell>
-                      <TableCell className="p-0"><a href="!#">{row.Titulo}</a></TableCell>
+                      <TableCell className="p-0"><span className={classes.titleColor}>{row.Titulo}</span></TableCell>
                       <TableCell className="p-3">{row.Estado}</TableCell>
                       <TableCell className="p-0">{}</TableCell>
                       <TableCell className="p-0"></TableCell>

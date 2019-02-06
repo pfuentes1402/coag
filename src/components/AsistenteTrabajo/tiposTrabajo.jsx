@@ -9,7 +9,7 @@ import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import { NavigateNext } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
 import { getFasesTrabajos } from '../../api/index';
-import { dispatchError } from '../../actions/trabajos';
+import { dispatchError, fetchErrorTrabajo } from '../../actions/trabajos';
 import EnhancedTable from './tablaTiposTrabjo';
 import { groupBy, filter } from 'lodash';
 
@@ -51,6 +51,7 @@ class TiposTrabajo extends Component {
     this.loadPreviusSelection();
   }
 
+  /**Carga la preseleccion de los elementos */
   loadPreviusSelection() {
     if (this.props.previusSelection && this.props.previusSelection.length > 0) {
       let trabajosSeleccion = [];
@@ -73,6 +74,10 @@ class TiposTrabajo extends Component {
     try {
       let fases = await getFasesTrabajos(this.state.dataEncomenda.Id_Tipo_Grupo_Tematico,
         this.state.dataEncomenda.Id_Tipo_Autorizacion_Municipal, this.state.language);
+      if (fases.MensajesProcesado && fases.MensajesProcesado.length > 0)
+        this.props.fetchErrorTrabajo(fases);
+      if (fases.data.MensajesProcesado && fases.data.MensajesProcesado.length > 0)
+        this.props.fetchErrorTrabajo(fases.data);
       if (fases.data && fases.data.FasesTrabajos) {
         let result = [];
         let groupResult = [[], []];
@@ -92,12 +97,10 @@ class TiposTrabajo extends Component {
         }
 
         result.forEach(element => {
-          if (groupResult[0].length === 0) {
+          if (groupResult[0].length === 0)
             groupResult[0].push(element);
-          }
-          else if (groupResult[1].length === 0) {
+          else if (groupResult[1].length === 0)
             groupResult[1].push(element);
-          }
           else {
             if (this.countItems(groupResult[0]) <= this.countItems(groupResult[1])) {
               groupResult[0].push(element);
@@ -160,51 +163,52 @@ class TiposTrabajo extends Component {
     return (
       this.state.isLoading ?
         <Grid item xs={12} className="text-center"><CircularProgress /></Grid>
-        : <Grid container spacing={8} >
-          <Grid item xs={6}>
-            <TextField disabled={true}
-              value={this.state.dataEncomenda.Descripcion_Encomenda ? this.state.dataEncomenda.Descripcion_Encomenda : ""}
-              label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
-              className={`${classes.textField} my-3 text-uppercase mx-0 pl-0 pr-1`} />
-          </Grid>
+        : !this.state.dataEncomenda ? <Grid></Grid>
+          : <Grid container spacing={8} >
+            <Grid item xs={6}>
+              <TextField disabled={true}
+                value={this.state.dataEncomenda.Descripcion_Encomenda ? this.state.dataEncomenda.Descripcion_Encomenda : ""}
+                label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
+                className={`${classes.textField} my-3 text-uppercase mx-0 pl-0 pr-1`} />
+            </Grid>
 
-          <Grid item xs={12} className="py-2">
-            <Typography variant="subtitle2" gutterBottom className="mb-0">
-              <Translate id="languages.crearTrabajo.selectionTitle" />
-            </Typography>
-            <Grid container spacing={16}>
-              <Grid item xs={6} className="pt-0">
-                {this.state.gruposTrabajos[0].map((value, index) => {
-                  let selection = this.getSelections(value.trabajos);
+            <Grid item xs={12} className="py-2">
+              <Typography variant="subtitle2" gutterBottom className="mb-0">
+                <Translate id="languages.crearTrabajo.selectionTitle" />
+              </Typography>
+              <Grid container spacing={16}>
+                <Grid item xs={6} className="pt-0">
+                  {this.state.gruposTrabajos[0].map((value, index) => {
+                    let selection = this.getSelections(value.trabajos);
 
-                  return <Grid item xs={12} key={index} >
-                    <EnhancedTable data={value} className="my-2"
-                      updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
-                      previusSelection={selection} />
-                  </Grid>
-                })}
-              </Grid>
+                    return <Grid item xs={12} key={`${index}_0`} >
+                      <EnhancedTable data={value} className="my-2" key={`${index}_0table`}
+                        updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
+                        previusSelection={selection} />
+                    </Grid>
+                  })}
+                </Grid>
 
-              <Grid item xs={6} className="pt-0">
-                {this.state.gruposTrabajos[1].map((value, index) => {
+                <Grid item xs={6} className="pt-0">
+                  {this.state.gruposTrabajos[1].map((value, index) => {
 
-                  let dataSelection = this.getSelections(value.trabajos);
-                  return <Grid item xs={12} key={index}>
-                    <EnhancedTable data={value} className="my-2"
-                      updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
-                      previusSelection={dataSelection} />
-                  </Grid>
-                })}
+                    let dataSelection = this.getSelections(value.trabajos);
+                    return <Grid item xs={12} key={`${index}_1`}>
+                      <EnhancedTable data={value} className="my-2" key={`${index}_1table`}
+                        updateSelectTrabajos={(trabajos) => this.updateSelectTrabajos(trabajos)}
+                        previusSelection={dataSelection} />
+                    </Grid>
+                  })}
+                </Grid>
               </Grid>
             </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" className="float-right py-1"
+                onClick={() => this.handleNext()}>
+                <Translate id="languages.generalButton.next" /><NavigateNext className={classes.rightIcon} />
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" className="float-right py-1"
-              onClick={() => this.handleNext()}>
-              <Translate id="languages.generalButton.next" /><NavigateNext className={classes.rightIcon} />
-            </Button>
-          </Grid>
-        </Grid>
     )
   }
 
@@ -214,6 +218,7 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
   dispatchError: dispatchError,
+  fetchErrorTrabajo: fetchErrorTrabajo
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(TiposTrabajo)));
