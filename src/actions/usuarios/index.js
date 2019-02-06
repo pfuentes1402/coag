@@ -1,9 +1,9 @@
-import {funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo, expedientesuser} from '../../api';
+import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo, expedientesuser } from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
-import {fetchErrorExpediente, formatMenssage} from '../../actions/expedientes/index';
+import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
-import {fetchSuccess} from "../expedientes";
+import { fetchSuccess } from "../expedientes";
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -76,36 +76,39 @@ export const errorLogin = (message) => (
         payload: message
     });
 
-   export const fetchUserLogin = (data, props) =>
-   async (dispatch) => {
-       try {
-           let response = await funcionForma(data);
-           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-               dispatch(fetchErrorExpediente(response));
-               dispatch(errorLogin(response.MensajesProcesado[0].Mensaje));
-           }
-           else {
-               let cienteClave = response.headers ? response.headers.clienteclave : '';
-               let clienteid = response.headers ? response.headers.clienteid : '';
+export const fetchUserLogin = (data, props) =>
+    async (dispatch) => {
+        try {
+            let response = await funcionForma(data);
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                dispatch(fetchErrorExpediente(response));
+                dispatch(errorLogin(response.MensajesProcesado[0].Mensaje));
+            }
+            else {
+                let cienteClave = response.headers ? response.headers.clienteclave : '';
+                let clienteid = response.headers ? response.headers.clienteid : '';
 
-               if (cienteClave && clienteid) {
-                   await localStorage.setItem('clienteclave', cienteClave);
-                   await localStorage.setItem('clienteid', clienteid);
-                   let token = await getToken();
-                   if (token.status === 200) {
-                       dispatch(fetchLoginExito(response));
-                       await localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
-                       props.history.push("/")
-                   } else {
-                       dispatch(fetchErrorExpediente(formatMenssage('Error de autenticación')));
-                   }
-               }
-           }
+                if (cienteClave && clienteid) {
+                    await localStorage.setItem('clienteclave', cienteClave);
+                    await localStorage.setItem('clienteid', clienteid);
+                    let token = await getToken();
+                    if (token.status === 200) {
+                        dispatch(fetchLoginExito(response));
+                        await localStorage.setItem('user', JSON.stringify(response.data.DatosUsuarioValidado[0]));
+                        props.history.push("/")
+                    } else {
+                        dispatch(fetchErrorExpediente(formatMenssage('Error de autenticación')));
+                    }
+                }
+                else {
+                    dispatch(fetchErrorExpediente(formatMenssage('Headers error')));
+                }
+            }
 
-       } catch (error) {
-           dispatch(fetchErrorExpediente(formatMenssage(error.message)));
-       }
-   }
+        } catch (error) {
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
+    }
 
 
 
@@ -167,7 +170,7 @@ export const getTrabajos = () =>
                 ? dispatch(fetchErrorExpediente(response))
                 : dispatch(fetchUltimosTrabajos(response));
 
-        }catch (error) {
+        } catch (error) {
             dispatch(fetchErrorExpediente(formatMenssage(error.message)));
         }
     };
