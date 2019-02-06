@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
 import { ExpandLess, ExpandMore, Close, Check, Block } from '@material-ui/icons';
 import {red, green, orange} from '@material-ui/core/colors';
+import classNames from 'classnames';
 
 import '../../index.css'
 
@@ -15,6 +16,9 @@ const styles = theme => ({
     background: theme.palette.primary.main,
     color: "white"
   },
+    textWhite: {
+        color: "white"
+    },
     dragTarget: {
             border:'solid 1px #b26a00',
             borderRadius:5
@@ -52,7 +56,7 @@ class MenuProyectoEjecucion extends Component {
       <div>
         <ListItem button className={this.props.active ? classes.openOption : ""}
           onClick={() => { this.props.changeOption(this.props.trabajo.Id_Trabajo)}}>
-          <ListItemText primary={this.props.trabajo.Titulo} />
+          <ListItemText primary={this.props.trabajo.Titulo} classes={{primary: this.props.active ? classes.textWhite : ""}}/>
           {this.props.active ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Divider />
@@ -71,12 +75,21 @@ class MenuProyectoEjecucion extends Component {
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map((children,pos)=>{
                                     return <ListItem onDrop={()=>this.props.moveItemTo(children)}
-                                                     className={this.props.dragTarget ? classes.dragTarget: ''} onDragOver={()=>{this.setState({drop:pos})}} button onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}
-                                                     style={children.Estado_Visual === 0 ? {color: red[500]} : (children.Estado_Visual === 1 ? {color: green[500]} : {color: orange[500]})}>
-                                        <ListItemIcon style={{marginRight: 0, marginLeft: 24}} className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )}>
+                                                     className={classNames((this.props.dragTarget ? classes.dragTarget: ''),
+                                                         (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""),
+                                                         (children.Estado_Visual === 0 ? {color: red[500]} : (children.Estado_Visual === 1 ? {color: green[500]} : {color: orange[500]})))}
+                                                     onDragOver={()=>{this.setState({drop:pos})}} button
+                                                     onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}
+                                                     >
+                                        <ListItemIcon style={{marginRight: 0, marginLeft: 24}}
+                                                      className={classNames((children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green ))
+                                                                            , (children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""))}>
                                             {children.Estado_Visual === 0 ? <Close/> : (children.Estado_Visual === 1 ? <Check/> : <Block/>) }
                                         </ListItemIcon>
-                                        <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido === 1 ? ' *' : '')} classes={{primary: children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )} }/>
+                                        <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido === 1 ? ' *' : '')}
+                                                      classes={{primary: classNames((children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""),
+                                                              ( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )))}}
+                                                      />
                                     </ListItem>
                                 })}
 

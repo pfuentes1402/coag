@@ -61,7 +61,10 @@ const styles = theme => ({
   headerBorder: {
     border: "2px solid " + grey[200],
     borderBottom: 0
-  }
+  },
+    tableWrapper: {
+        overflowX: 'auto',
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -176,6 +179,7 @@ class FichaExpediente extends Component {
             </Fab>
           </Grid>
           <Grid item xs={12}>
+              <div className={classes.tableWrapper}>
               <Table className={`${classes.table} ${classes.tableBorder}`}>
                   <TableHead>
                       <TableRow className={classes.headHeight}>
@@ -221,6 +225,7 @@ class FichaExpediente extends Component {
                       }
                   </TableBody>
               </Table>
+              </div>
           </Grid>
         </Grid>
         {

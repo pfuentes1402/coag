@@ -30,7 +30,10 @@ const styles = theme => ({
   },
   withoutRadius: {
     borderRadius: 0
-  }
+  },
+    tableWrapper: {
+        overflowX: 'auto',
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -75,7 +78,8 @@ class ListaTrabajos extends Component {
             <Divider style={{ height: 3 }} />
           </Grid>
         </Grid>
-        <Table className={classes.table}>
+          <div className={classes.tableWrapper}>
+           <Table className={classes.table}>
           <TableHead>
             <TableRow className={classes.headHeight}>
               <CustomTableHead className="text-uppercase px-3">N</CustomTableHead>
@@ -120,6 +124,7 @@ class ListaTrabajos extends Component {
             }
           </TableBody>
         </Table>
+          </div>
       </Paper>
     );
   }

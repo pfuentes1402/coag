@@ -29,11 +29,17 @@ const api = axios.create({
 
 });
 api.interceptors.request.use(async function (request) {
-  request.headers['Token']= await localStorage.getItem('token') || '';
+  let token = await localStorage.getItem('token');
+  if(token){
+      request.headers['Token'] = token;
+  }else {
+      let response = await getToken();
+      request.headers['Token'] = response.headers.token
+  }
   return request
 })
-api.interceptors.response.use(function (response) {
 
+api.interceptors.response.use(function (response) {
   return response
 }, function (error) {
 
@@ -43,8 +49,8 @@ api.interceptors.response.use(function (response) {
     originalRequest._retry = true
 
 
-    const retryOriginalRequest = new Promise((resolve) => {
-      getToken().then(response => {
+    const retryOriginalRequest = new Promise(async (resolve) => {
+      await getToken().then(response => {
         if (response.headers.token) {
           originalRequest.headers['Token'] = response.headers.token;
           resolve(api(originalRequest))

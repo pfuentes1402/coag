@@ -47,10 +47,10 @@ const styles = theme => ({
     fontSize: 13
   },
   headerNav: {
-    background: theme.palette.primary.main,
-    color: "white",
     margin: "auto",
-    textAlign: "center"
+    textAlign: "center",
+      borderBottom: "solid 1px " + grey[300],
+      position: "relative"
 
   },
   leftNav: {
@@ -202,7 +202,7 @@ class VisualizarExpediente extends Component {
   renderLeftNav() {
     let { classes } = this.props;
     return (
-      <List component="nav" color="primary" className={classes.leftNav}
+      <List component="nav" className={classes.leftNav}
         subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1`}
           style={{ lineHeight: 2 }}>
           {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
@@ -224,6 +224,7 @@ class VisualizarExpediente extends Component {
                                  moveItemTo={(target) => this.moveItemTo(target)}
                                  estructuraDocumental={this.state.estructuraDocumental}
                                  estructurasPadre={this.state.estructurasPadre}
+                                 idEstructuraActiva={this.state.idEstructuraActiva}
                                  isLoadEstructura={this.state.isLoadEstructura}
                                  active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
                     />
@@ -257,7 +258,7 @@ class VisualizarExpediente extends Component {
       this.state.expediente
         ? <Grid container>
               <Grid item xs={12}>
-                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{this.state.currentExpediente.Id_Expediente}</BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
                       ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>

@@ -213,7 +213,7 @@ class Arquitecto extends Component {
 
   async loadLoguedAgent() {
     if (this.state.encomenda.Colegiados && this.state.encomenda.Colegiados.length === 0
-      && !this.state.Colegiados.some(x => x.Id_Colegiado === this.props.loguedUser.Id_Colegiado)) {
+      && this.state.Colegiados && !this.state.Colegiados.some(x => x.Id_Colegiado === this.props.loguedUser.Id_Colegiado)) {
       let search = await getBuscador(this.props.loguedUser.Id_Colegiado, this.state.tipoBusqueda, 1, 1);
       if (search && search.data && search.data[this.props.tipoBusqueda]
         && search.data[this.props.tipoBusqueda].length > 0) {
