@@ -33,7 +33,10 @@ const styles = theme => ({
   },
     tableWrapper: {
         overflowX: 'auto',
-    }
+    },
+  titleColor:{
+    color: theme.palette.primary.main
+  }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -113,7 +116,7 @@ class ListaTrabajos extends Component {
                       <TableCell component="th" scope="row" className="px-1 text-center">
                         {index + 1}
                       </TableCell>
-                      <TableCell className="p-0"><a href="!#">{row.Titulo}</a></TableCell>
+                      <TableCell className="p-0"><span className={classes.titleColor}>{row.Titulo}</span></TableCell>
                       <TableCell className="p-3">{row.Estado}</TableCell>
                       <TableCell className="p-0">{}</TableCell>
                       <TableCell className="p-0"></TableCell>

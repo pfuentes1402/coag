@@ -885,10 +885,10 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
       return formatMenssage("Error 400 en API")
     }
 }
-//eliminar un archivo de la carpeta temporal
-export const removeFileFromTemporalFolder = async (idExpediente,  filename) => {
+//eliminar multiples archivos de la carpeta temporal
+export const removeFilesFromTemporalFolder = async (idExpediente,  arrayFiles) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {nombre:filename});
+    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {data:{Archivos:arrayFiles}});
     return result.data
   } catch (error ) {
       return formatMenssage("Error 400 en API")
@@ -903,6 +903,22 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
       return formatMenssage("Error 400 en API")
   }
 }
+//Eliminar multiples archivos de una estructura
+export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, arrayArchivos) => {
+  try {
+    let url = `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/archivos`
+    let result = await api.delete(url,
+        {data:{ Archivos:arrayArchivos,
+
+            ignorarobservaciones:1}
+
+        });
+    return result.data
+  } catch (error ) {
+    return formatMenssage("Error 400 en API")
+  }
+}
+
 //Asignación automática de archivos
 export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
   try {

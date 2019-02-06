@@ -40,7 +40,6 @@ class Login extends Component {
                         <img src={require('./images/loginlogo.png')}/>
                         <LoginFormaFinal submitting={this.state.submitting} onSubmit={async (data)=> {await this.userLogin(data)}}/>
                         <div className="mensaje">{this.props.mensaje}</div>
-
                     </div>
                 </div>
             </div>

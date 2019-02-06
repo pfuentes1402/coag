@@ -104,20 +104,21 @@ const styles = theme => ({
 /**Tabla */
 class EnhancedTable extends React.Component {
   state = {
-    selected: [],
+    selected: this.props.previusSelection ? this.props.previusSelection : [],
     dataTable: this.props.data
   };
 
-  async componentDidMount() {
-    await this.loadPreviusSelection();
+  /*async componentDidMount() {
+    this.updateSelectWorks(this.state.selected);
   }
 
   async loadPreviusSelection() {
     let worksSelecteds = this.state.dataTable.trabajos.filter(f =>
-      this.props.previusSelection.some(x => x === f.Id_Tipo_Trabajo)).map(x => { return x.Id_Tipo_Trabajo; });
-    this.updateSelectWorks(worksSelecteds);
-    await this.setState({selected: worksSelecteds});
-  }
+      this.props.previusSelection.some(x => x.Id_Tipo_Trabajo === f.Id_Tipo_Trabajo))
+      .map(x => { return x.Id_Tipo_Trabajo; });
+    
+    await this.setState({ selected: worksSelecteds });
+  }*/
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
@@ -161,7 +162,10 @@ class EnhancedTable extends React.Component {
   updateSelectWorks(selection) {
     let worksSelected = this.state.dataTable.trabajos.filter(f =>
       selection.some(x => x === f.Id_Tipo_Trabajo));
-    this.props.updateSelectTrabajos({ fase: this.props.data.Id_Tipo_Fase, trabajos: worksSelected });
+    this.props.updateSelectTrabajos({
+      fase: this.props.data.Id_Tipo_Fase,
+      trabajos: worksSelected
+    });
   }
 
   render() {

@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import {
-    AppBar, Toolbar, Typography, withStyles, Grid, Button, Collapse,
-    ListItemText, Divider
+  AppBar, Toolbar, Typography, withStyles, Grid, Button, Collapse,
+  ListItemText, Divider
 } from '@material-ui/core';
 import {
-    Close, FileCopy, CancelPresentation, CloudDownload, ExpandLess,
-    ExpandMore
+  Close, FileCopy, CancelPresentation, CloudDownload, ExpandLess,
+  ExpandMore
 } from '@material-ui/icons';
-import {List, ListItem, ListSubheader, CircularProgress} from '@material-ui/core';
-import {grey} from '@material-ui/core/colors';
-import {connect} from "react-redux";
-import {withLocalize} from "react-localize-redux";
-import {Translate} from "react-localize-redux";
+import { List, ListItem, ListSubheader, CircularProgress } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { connect } from "react-redux";
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
 import PropTypes from 'prop-types';
 import './index.css';
-import {withRouter} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import TrabajoComunicacion from './Trabajos/ComunicacionEncargo/index';
 import TrabajoEjecucion from './Trabajos/ProyectoEjecucion/index';
 import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
-import {getExpedienteDatosGeneral, getEstructuraDocumental, moveFileFromTemporalToStructure} from '../../api';
-import {fetchErrorExpediente, formatMenssage} from "../../actions/expedientes";
-import {groupBy, filter} from 'lodash';
-import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
+import { getExpedienteDatosGeneral, getEstructuraDocumental, moveFileFromTemporalToStructure } from '../../api';
+import { fetchErrorExpediente, formatMenssage } from "../../actions/expedientes";
+import { groupBy, filter } from 'lodash';
+import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 const styles = theme => ({
   root: {
@@ -38,8 +38,8 @@ const styles = theme => ({
     height: 900
   },
   mainNav: {
-      boxShadow: "none",
-      flexDirection: "row-reverse"
+    boxShadow: "none",
+    flexDirection: "row-reverse"
   },
   button: {
     margin: 0,
@@ -82,20 +82,20 @@ class VisualizarExpediente extends Component {
     };
   }
 
-    async componentWillMount() {
-        await this.fetchExpediente();
-    }
+  async componentWillMount() {
+    await this.fetchExpediente();
+  }
 
   //Consumir api con el id de expediente espicificado por ur
   async fetchExpediente() {
     let response = await getExpedienteDatosGeneral(this.props.match.params.id);
     //1- Disparar el error del server
-    if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0){
+    if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
       this.props.fetchErrorExpediente(response.data);
       return;
     }
     //2- Error 500
-    else if(response.response){
+    else if (response.response) {
       this.props.fetchErrorExpediente(response.response.data);
       return;
     }
@@ -120,10 +120,9 @@ class VisualizarExpediente extends Component {
   }
 
 
-    handleExpandMenu = () => {
-        this.setState(state => ({open: !state.open}));
-
-    };
+  handleExpandMenu = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
 
   async getEstructuraDocumental(idExpediente, idTrabajo){
       await this.setState({isLoadEstructura: true});
@@ -241,9 +240,13 @@ class VisualizarExpediente extends Component {
             let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
             if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                 this.props.fetchErrorExpediente(response);
+                return false
+            }else{
+                return true
             }
         } catch (error) {
             this.props.fetchErrorExpediente("Error de comunicación con la API");
+            return false
         }
 
     }

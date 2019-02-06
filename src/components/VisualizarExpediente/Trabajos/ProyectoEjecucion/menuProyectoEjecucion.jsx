@@ -74,7 +74,11 @@ class MenuProyectoEjecucion extends Component {
                         <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map((children,pos)=>{
-                                    return <ListItem onDrop={()=>this.props.moveItemTo(children)}
+                                    return <ListItem onDrop={async ()=>{
+                                                        let response = await this.props.moveItemTo(children)
+                                                        if (response)
+                                                            this.props.changeEstructura(children.Id_Estructura, children.Titulo)
+                                                    }}
                                                      className={classNames((this.props.dragTarget ? classes.dragTarget: ''),
                                                          (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""),
                                                          (children.Estado_Visual === 0 ? {color: red[500]} : (children.Estado_Visual === 1 ? {color: green[500]} : {color: orange[500]})))}
