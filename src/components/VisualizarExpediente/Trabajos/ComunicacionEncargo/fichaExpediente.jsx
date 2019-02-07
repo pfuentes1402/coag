@@ -11,7 +11,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
-import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
+import { Add, Edit, Check, Close } from '@material-ui/icons';
 import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
 import { putExpediente, putEmplazamiento } from '../../../../api';
 import ValidateAddress from '../../../Address';

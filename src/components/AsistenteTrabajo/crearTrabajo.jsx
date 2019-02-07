@@ -5,7 +5,7 @@ import { Translate } from "react-localize-redux";
 import { infoCarpetasTrabajo, getTiposTramite, addTrabajoEncomendaExpediente } from "../../api";
 import { groupBy, filter } from 'lodash';
 import {
-    Grid, List, ListItem, ListSubheader, Divider, Button, Typography, FormControl, MenuItem, Select,
+    Grid, List, ListItem, ListSubheader,  Button, Typography, FormControl, MenuItem, Select,
     RadioGroup, FormControlLabel, Radio, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
 } from "@material-ui/core";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -113,6 +113,7 @@ class CrearTrabajo extends Component {
             father.map(value => {
                 value["children"] = children[value.Id_Documentacion]
                 fatherChildren.push(value);
+                return null
             })
             inforCarpetas = fatherChildren;
         }
@@ -176,7 +177,9 @@ class CrearTrabajo extends Component {
                       "Es_Trabajo_Modificado_Requerido_Administracion": 0,
                       "Envio_administracion":0
                   })
+                  return null
               })
+              return null
           });
 
           let data = {

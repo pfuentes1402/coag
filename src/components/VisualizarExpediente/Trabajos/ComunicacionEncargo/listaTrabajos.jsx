@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { withStyles, Grid, Button, Divider } from '@material-ui/core';
+import { withStyles, Grid, Divider } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { Table, TableCell, TableHead, TableBody, TableRow, Paper, Fab, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';

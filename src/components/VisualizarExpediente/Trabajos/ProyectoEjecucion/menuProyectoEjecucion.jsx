@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, ListItem, CircularProgress, ListItemText,  LinearProgress} from '@material-ui/core';
+import { List, ListItem, ListItemText,  LinearProgress} from '@material-ui/core';
 import {
   Divider, Collapse,  withStyles, ListItemIcon
 } from '@material-ui/core';

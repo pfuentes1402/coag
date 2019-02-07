@@ -145,7 +145,10 @@ class Arquitecto extends Component {
           let arrayIds = agent.Ids_Funciones.split(",");
           agent["Funciones"] = arrayIds.map(f => {
             let fun = this.props.funcionesTipologia.find(x => x.id_Funcion === parseInt(f));
-            if (fun) return fun.Codigo;
+            if (fun)
+              return fun.Codigo;
+            else
+              return null
           });
           agent["Funcion"] = agent.Funciones.join(",");
         }
@@ -179,7 +182,11 @@ class Arquitecto extends Component {
         agent["Nombre"] = `${agent.Apellido1} ${agent.Apellido2}, ${agent.Nombre}`
       agent["Ids_Funciones"] = agent.Funciones.map(value => {
         let idFuncion = this.props.funcionesTipologia.find(x => x.Codigo === value);
-        if (idFuncion) return idFuncion.id_Funcion;
+        if (idFuncion)
+          return idFuncion.id_Funcion;
+        else
+          return null
+
       }).join(",");
 
       //2- Actualizar el estado del componente y con el la encomenda general

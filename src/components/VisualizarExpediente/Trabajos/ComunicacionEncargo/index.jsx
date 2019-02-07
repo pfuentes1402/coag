@@ -5,9 +5,6 @@ import ListaTrabajos from './listaTrabajos';
 import TipoExpediente from './tipoExpediente';
 
 class TrabajoComunicacion extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types';
+
 
 class AccionRenderer extends Component {
     constructor(props) {
@@ -21,8 +21,5 @@ class AccionRenderer extends Component {
         );
     }
 };
-const propTypes = {
-  data: PropTypes.array,
-}
 
 export default AccionRenderer;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  AppBar, Toolbar, Typography, withStyles, Grid, Button, Collapse,
+  AppBar, Toolbar, withStyles, Grid, Button, Collapse,
   ListItemText, Divider
 } from '@material-ui/core';
 import {
@@ -258,7 +258,7 @@ class VisualizarExpediente extends Component {
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
-    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo == this.state.idTrabajoActivo) : null;
+    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo === this.state.idTrabajoActivo) : null;
     return (
       this.state.expediente
         ? <Grid container>

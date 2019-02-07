@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
+import {Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
 import { fetchSuscepAcciones } from './../../actions/usuarios/index'

@@ -1,5 +1,4 @@
 import { handleLoggout } from './../helpers/logout.js'
-import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
 
@@ -630,6 +629,8 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
       case "DELETE":
         response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
         break;
+      default:
+        return null
     }
     return response;
   }
@@ -935,7 +936,6 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
 //Asignación automática de archivos
 export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
   try {
-    'http://servicios.coag.es/api/expedientes/{Id_Expediente}/AlmacenTemporalArchivos/AsignacionAutomatica'
     let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
         {
           Id_Trabajo:idTrabajo,

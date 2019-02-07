@@ -4,7 +4,6 @@ import {
     Paper,
     CircularProgress,
     Typography,
-    Toolbar,
     TextField,
     Button,
     ExpansionPanel,
@@ -13,12 +12,12 @@ import {
     ExpansionPanelDetails,
     LinearProgress, withStyles, ListItem, List
 } from '@material-ui/core';
-import UploadFile from './uploadFile';
+
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/Check';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
-import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
+
 import Close from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
@@ -304,11 +303,12 @@ class TrabajoEjecucion extends Component {
         count+=temporalFiles.length
         if (count) {
             await this.setState({fetchingRemove:true})
-            let a =this;
+
             if(files.length){
                 let arrayArchivos = [];
                 files.map(item=>{
                     arrayArchivos.push({id_estructura:item.Id_Estructura})
+                    return null
                 });
                 let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -316,7 +316,8 @@ class TrabajoEjecucion extends Component {
                 }
                 let newData=[...this.state.data];
                 files.map(item=>{
-                     newData = newData.filter(current=>current.Id_Estructura!=item.Id_Estructura)
+                     newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
+                    return null
                 });
 
                 await this.setState({data:newData})
@@ -325,6 +326,7 @@ class TrabajoEjecucion extends Component {
                 let arrayArchivos = [];
                 temporalFiles.map(item=>{
                     arrayArchivos.push({Nombre:item.Nombre})
+                    return null
                 });
                 let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -332,7 +334,8 @@ class TrabajoEjecucion extends Component {
                 }
                 let newData=[...this.state.temporalFiles];
                 temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!=item.Nombre)
+                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                    return null
                 });
 
                 await this.setState({temporalFiles:newData})
@@ -351,8 +354,6 @@ class TrabajoEjecucion extends Component {
             this.setState({showDeleteButton: false})
 
 
-        } else {
-            throw "Debe seleccionar al menos un archivo para eliminar"
         }
     }
     async handleAutoAsign(){
@@ -365,6 +366,7 @@ class TrabajoEjecucion extends Component {
                     files.push({
                         Nombre:item.Nombre
                     })
+                    return null
                 });
                 let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
                 if(result.Archivos){
@@ -375,6 +377,7 @@ class TrabajoEjecucion extends Component {
                         }else{
                             this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`))
                         }
+                        return null
                     })
                 }else{
                     throw "Error procesando la petición"
@@ -638,7 +641,7 @@ class TrabajoEjecucion extends Component {
                                                                                             <List>
                                                                                                 {
                                                                                                     this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
-                                                                                                            if (fd.Id_Archivo == item.Id_Archivo) {
+                                                                                                            if (fd.Id_Archivo === item.Id_Archivo) {
                                                                                                                 return (
                                                                                                                     <ListItem>
                                                                                                                         <ListItemText

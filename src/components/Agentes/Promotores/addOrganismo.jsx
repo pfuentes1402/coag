@@ -164,7 +164,7 @@ class AddOrganismo extends Component{
                                         name="cif"
                                         id="cif"
                                         label="Nif *"
-                                        placeholder={translate("languages.agentes.introduce") + " " + "CIF"}
+                                        placeholder={`${translate("languages.agentes.introduce")}  CIF`}
                                         value={this.state.promotor.Nif ? this.state.promotor.Nif : ""}
                                         onChange={this.handleChange('Nif')}
                                         margin="normal"

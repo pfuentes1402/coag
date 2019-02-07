@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import { Typography, Grid, Paper, Button, TextField, FormControlLabel, Checkbox } from '@material-ui/core';

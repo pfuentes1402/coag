@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import 'ag-grid/dist/styles/ag-theme-material.css';
-import PropTypes from 'prop-types';
+
 import {traduccionGrid, traduccionGridGallego} from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
@@ -183,11 +183,6 @@ class TramitacionesCurso extends Component {
             );
     }
 }
-
-const propTypes = {
-    data: PropTypes.array,
-}
-
 const mapStateToProps = state => ({
     datosBrutos: state.trabajos.estructuraDocumentalTrabajo ? state.trabajos.estructuraDocumentalTrabajo : '',
   });

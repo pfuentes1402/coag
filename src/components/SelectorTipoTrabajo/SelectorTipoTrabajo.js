@@ -83,7 +83,7 @@ class SelectorTipoTrabajo extends Component {
   }
 
   render() {
-    let {tiposAutorizacion} = this.props;
+
     return (
       <div className="container">
           {/* <h3 className="page-header"></h3> */}
@@ -143,6 +143,7 @@ class SelectorTipoTrabajo extends Component {
                           if(trabajo.Fase === "Proyecto"){
                             return <p key={i} >{trabajo.Trabajo_Titulo}</p>
                           }
+                          return null
                         })}
                       </div>
                       <div className="trabajos-tramitar">
@@ -150,7 +151,8 @@ class SelectorTipoTrabajo extends Component {
                         {this.props.trabajos.fasesTrabajos.data.FasesTrabajos.map((trabajo,i) =>{
                           if(trabajo.Fase === "Dirección de ejec."){
                             return <p key={i}>{trabajo.Trabajo_Titulo}</p>
-                          }
+                          }else
+                            return null
                         })}
                       </div>
                       <div className="trabajos-tramitar">
@@ -158,7 +160,8 @@ class SelectorTipoTrabajo extends Component {
                         {this.props.trabajos.fasesTrabajos.data.FasesTrabajos.map((trabajo,i) =>{
                           if(trabajo.Fase === "Seguridad y salud"){
                             return <p key={i}>{trabajo.Trabajo_Titulo}</p>
-                          }
+                          }else
+                            return null
                         })}
                       </div>
                       </Col>
@@ -168,7 +171,8 @@ class SelectorTipoTrabajo extends Component {
                         {this.props.trabajos.fasesTrabajos.data.FasesTrabajos.map((trabajo,i) =>{
                           if(trabajo.Fase === "Dirección de obra"){
                             return <p key={i}>{trabajo.Trabajo_Titulo}</p>
-                          };
+                          }else
+                            return null;
                         })}
                       </div>
                       </Col>

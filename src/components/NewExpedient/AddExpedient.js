@@ -152,7 +152,6 @@ class AddExpedient extends Component {
 
     render() {
         let {classes} = this.props;
-        let data = this.props.addressData.Datos_Completos[0];
         return (
             <Container className={classes.margin}>
                 <Snackbar

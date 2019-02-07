@@ -170,7 +170,7 @@ class AddPerson extends Component{
                                     name="nif"
                                     id="nif"
                                     label="Nif *"
-                                    placeholder={translate("languages.agentes.introduce") + " " + "NIF"}
+                                    placeholder={`${translate("languages.agentes.introduce")} NIF`}
                                     value={this.state.promotor.Nif ? this.state.promotor.Nif : ""}
                                     onChange={this.handleChange('Nif')}
                                     margin="normal"
