@@ -91,8 +91,8 @@ class MenuProyectoEjecucion extends Component {
                                             {children.Estado_Visual === 0 ? <Close/> : (children.Estado_Visual === 1 ? <Check/> : <Block/>) }
                                         </ListItemIcon>
                                         <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido === 1 ? ' *' : '')}
-                                                      classes={{primary: classNames((children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""),
-                                                              ( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )))}}
+                                                      classes={{primary: classNames(( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )),
+                                                              (children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""))}}
                                                       />
                                     </ListItem>
                                 })}

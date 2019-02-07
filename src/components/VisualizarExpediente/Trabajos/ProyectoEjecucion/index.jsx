@@ -16,7 +16,7 @@ import {
 import UploadFile from './uploadFile';
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
-import CheckCircle from '@material-ui/icons/CheckCircle';
+import CheckCircle from '@material-ui/icons/Check';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
@@ -26,10 +26,11 @@ import renderHTML from 'react-render-html';
 import Dropzone from "react-dropzone";
 import {fetchErrorExpediente, formatMenssage} from '../../../../actions/expedientes';
 import connect from "react-redux/es/connect/connect";
-import {withLocalize} from "react-localize-redux";
-import {getValidateAddress} from "../../../../api";
+import {Translate, withLocalize} from "react-localize-redux";
+import {getDetallesArchivo} from "../../../../api";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
-import {moveFileFromTemporalToStructure} from "../../../../api";
+import {red, green, orange} from '@material-ui/core/colors';
+import {PanoramaFishEye, Lens} from '@material-ui/icons'
 
 const styles = theme => ({
     root: {
@@ -56,6 +57,33 @@ const styles = theme => ({
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
     },
+    red: {
+        color: red[500],
+
+    },
+    green: {
+        color: green[500]
+    },
+    orange: {
+        color: orange[500]
+    },
+    size: {
+        fontSize: 12,
+        marginTop: 6
+    },
+    textFieldInput: {
+        borderRadius: 4,
+        backgroundColor: theme.palette.common.white,
+        border: '1px solid #ced4da',
+        padding: '10px 12px',
+        width: 'calc(100% - 24px)',
+        '&:focus': {
+            borderColor: theme.palette.primary.main,
+        },
+    },
+    black: {
+        fontWeight: 700
+    }
 });
 const mapStateToProps = (state) => (
     {
@@ -80,7 +108,7 @@ class TrabajoEjecucion extends Component {
             panelExpanded: false,
             folderInfo: false,
             expediente: false,
-            workDetails:false,
+            workDetails: false,
             aclaracionesOpen: false,
             uploadInProgress: false,
             uploadLength: 0,
@@ -88,10 +116,10 @@ class TrabajoEjecucion extends Component {
             itemSelected: [],
             currentUploadItem: false,
             pendingUploadList: [],
-            fetchingRemove:0,
-            disableAutoAsignButton:true
-
-
+            fetchingRemove: 0,
+            disableAutoAsignButton: true,
+            detallesArchivo: null,
+            loadingDetallesArchivo: false
         }
     }
 
@@ -216,13 +244,31 @@ class TrabajoEjecucion extends Component {
                     temporalFiles
                 })
             } catch (e) {
-                this.props.fetchErrorExpediente(e);
+                this.props.fetchErrorExpediente(formatMenssage(e.message));
             }
         }
     }
 
-    expandPanel = nombre => async (event, expanded) => {
-        this.setState({panelExpanded: expanded ? nombre : false})
+    expandPanel = (nombre, idEstructura) => async (event, expanded) => {
+        this.setState({panelExpanded: expanded ? nombre : false, loadingDetallesArchivo: true});
+        try {
+            if(expanded){
+            let response = await getDetallesArchivo(this.state.expediente.Id_Expediente,this.props.trabajo,idEstructura);
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
+                this.setState({loadingDetallesArchivo: false});
+            }
+            else {
+                this.setState({detallesArchivo: response, loadingDetallesArchivo: false});
+            }
+            }
+        }
+        catch (e) {
+            this.props.fetchErrorExpediente(e.message);
+            this.setState({loadingDetallesArchivo: false})
+
+        }
+
     };
 
     handleChange = (name, index, arrName) => event => {
@@ -468,30 +514,31 @@ class TrabajoEjecucion extends Component {
                                                                 }} onDragStart={() => {
                                                                     this.props.dragging(item)
                                                                 }} expanded={this.state.panelExpanded === item.Nombre}
-                                                                                        onChange={this.expandPanel(item.Nombre)}>
+                                                                                        onChange={this.expandPanel(item.Nombre, item.Id_Estructura)}>
                                                                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6} className='d-flex'
+                                                                            <Grid xs={6} className='d-flex align-items-center'
                                                                             >
                                                                                 <Checkbox
                                                                                     checked={item.checked ? item.checked : false}
                                                                                     onChange={this.handleChange("checked", pos, 'temporalFiles')}
                                                                                     value={item.Nombre}
                                                                                 />
-                                                                                <Typography
-                                                                                    style={{color: '#b26a00'}}>{item.Nombre}</Typography>
+                                                                                <Typography className={classes.orange}>{item.Nombre}</Typography>
                                                                             </Grid>
-                                                                            <Grid xs={4}
-                                                                            ><Typography style={{color: '#b26a00'}}>Sin
-                                                                                Asignar</Typography></Grid>
-                                                                            <Grid xs={2} className="text-right">
-                                                                                <ErrorOutline style={{color: '#b26a00'}} size={24}/>
+                                                                            <Grid xs={4} className="align-self-center">
+                                                                                <Typography className={classes.orange}>
+                                                                                    Sin Asignar
+                                                                                </Typography>
+                                                                            </Grid>
+                                                                            <Grid xs={2} className="text-right align-self-center">
+                                                                                <ErrorOutline className={classes.orange} size={24}/>
                                                                             </Grid>
                                                                         </Grid>
                                                                     </ExpansionPanelSummary>
                                                                     <ExpansionPanelDetails>
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6}>
+                                                                            <Grid xs={6} className="align-items-center">
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid xs={12}>
                                                                                         <Typography variant="button" gutterBottom>
@@ -501,7 +548,7 @@ class TrabajoEjecucion extends Component {
 
                                                                                 </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={4}>
+                                                                            <Grid xs={4} className="align-self-center">
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid xs={12}>
                                                                                         <Typography variant="button" gutterBottom>
@@ -511,7 +558,7 @@ class TrabajoEjecucion extends Component {
 
                                                                                 </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={2}>
+                                                                            <Grid xs={2} className="align-self-center">
                                                                             </Grid>
                                                                         </Grid>
 
@@ -521,89 +568,110 @@ class TrabajoEjecucion extends Component {
                                                         }
                                                         {
                                                             this.state.data.map((item, pos) => {
-                                                                return (<ExpansionPanel expanded={this.state.panelExpanded === pos}
-                                                                                        onChange={() => this.expandPanel(pos)}>
+                                                                return (<ExpansionPanel expanded={this.state.panelExpanded === item.Archivo}
+                                                                                        onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
                                                                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6} className='d-flex'
-                                                                            >
+                                                                            <Grid xs={6} className='d-flex align-items-center'>
                                                                                 <Checkbox
                                                                                     checked={item.checked ? item.checked : false}
                                                                                     onChange={this.handleChange("checked", pos, 'data')}
                                                                                     value={item.Archivo}
                                                                                 />
-
-                                                                                <Typography
-                                                                                    style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{item.Archivo}</Typography></Grid>
-                                                                            <Grid xs={4}
-                                                                            ><Typography
-                                                                                style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{this.props.estructura ? '' : item.Carpeta}</Typography></Grid>
-                                                                            <Grid xs={2} className="text-right">
+                                                                                <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                                    {item.Archivo}
+                                                                                    </Typography>
+                                                                            </Grid>
+                                                                            <Grid xs={4} className="align-self-center">
+                                                                                <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                                    {this.props.estructura ? '' : item.Carpeta}
+                                                                                </Typography>
+                                                                            </Grid>
+                                                                            <Grid xs={2} className="text-right align-self-center">
                                                                                 {item.Requisitos_Firma_Completos ?
-                                                                                    <CheckCircle/> :
-                                                                                    <Close style={{color: 'red'}}/>
+                                                                                    <CheckCircle className={classes.green}/> :
+                                                                                    <Close className={classes.red}/>
                                                                                 }
                                                                             </Grid>
                                                                         </Grid>
                                                                     </ExpansionPanelSummary>
                                                                     <ExpansionPanelDetails>
-                                                                        <Grid container spacing={16}>
-                                                                            <Grid xs={6}>
-                                                                                <Grid container spacing={0}>
-                                                                                    <Grid xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            TAMAÑO DEL ARCHIVO
-                                                                                        </Typography>
-                                                                                    </Grid>
-                                                                                    <Grid xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            FIRMAS DEL ARCHIVO
-                                                                                        </Typography>
-                                                                                    </Grid>
-                                                                                    <Grid xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            FIRMAS REQUERIDAS
-                                                                                        </Typography>
+                                                                        {this.state.loadingDetallesArchivo ? <CircularProgress/> :
+                                                                            <Grid container spacing={16}>
+                                                                                <Grid item xs={12}>
+                                                                                    <Grid container spacing={0}>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography variant="button" gutterBottom>
+                                                                                                TAMAÑO DEL ARCHIVO
+                                                                                            </Typography>
+                                                                                        </Grid>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography  gutterBottom>
+                                                                                                {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.renderSize(this.state.detallesArchivo.Archivos[0].Longitud) : ""}
+                                                                                            </Typography>
+                                                                                        </Grid>
                                                                                     </Grid>
                                                                                 </Grid>
-                                                                            </Grid>
-                                                                            <Grid xs={4}>
-                                                                                <Grid container spacing={0}>
-                                                                                    <Grid xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            ?????
-                                                                                        </Typography>
-                                                                                    </Grid>
-                                                                                    <Grid xs={12}>
-                                                                                        <List>
-                                                                                            {
-                                                                                                this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
-                                                                                                        if (fd.Id_Archivo == item.Id_Archivo) {
-                                                                                                            return (
-                                                                                                                <ListItem>
-                                                                                                                    <ListItemText
-                                                                                                                        primary={fd.Nombre}/>
-                                                                                                                </ListItem>)
-                                                                                                        } else {
-                                                                                                            return "";
-                                                                                                        }
-                                                                                                    }) :
-                                                                                                    <ListItem>
-                                                                                                        <ListItemText primary="--"/>
-                                                                                                    </ListItem>
-                                                                                            }
-                                                                                        </List>
-                                                                                    </Grid>
-                                                                                    <Grid xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            ???????
-                                                                                        </Typography>
+                                                                                <Grid item xs={12}>
+                                                                                    <Grid container spacing={0}>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography variant="button" gutterBottom>
+                                                                                                ULTIMA MODIFICACION
+                                                                                            </Typography>
+                                                                                        </Grid>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography gutterBottom>
+                                                                                                {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Fecha : ""}
+                                                                                            </Typography>
+                                                                                        </Grid>
                                                                                     </Grid>
                                                                                 </Grid>
+                                                                                <Grid item xs={12}>
+                                                                                    <Grid container spacing={0}>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography variant="button" gutterBottom>
+                                                                                                FIRMAS DEL ARCHIVO
+                                                                                            </Typography>
+                                                                                        </Grid>
+                                                                                        <Grid item xs={6}>
+                                                                                            <List>
+                                                                                                {
+                                                                                                    this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
+                                                                                                            if (fd.Id_Archivo == item.Id_Archivo) {
+                                                                                                                return (
+                                                                                                                    <ListItem>
+                                                                                                                        <ListItemText
+                                                                                                                            primary={fd.Nombre}/>
+                                                                                                                    </ListItem>)
+                                                                                                            } else {
+                                                                                                                return "";
+                                                                                                            }
+                                                                                                        }) :
+                                                                                                        <ListItem>
+                                                                                                            <ListItemText primary="--"/>
+                                                                                                        </ListItem>
+                                                                                                }
+                                                                                            </List>
+                                                                                        </Grid>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                                <Grid item xs={12}>
+                                                                                    <Grid container spacing={0}>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography variant="button" gutterBottom>
+                                                                                                FIRMAS REQUERIDAS
+                                                                                            </Typography>
+                                                                                        </Grid>
+                                                                                        <Grid item xs={6}>
+                                                                                            <Typography  gutterBottom>
+                                                                                                {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Firmas_Requeridas : ""}
+                                                                                            </Typography>
+                                                                                        </Grid>
+                                                                                    </Grid>
+                                                                                </Grid>
+
                                                                             </Grid>
-                                                                            <Grid xs={2}>
-                                                                            </Grid>
-                                                                        </Grid>
+                                                                        }
 
                                                                     </ExpansionPanelDetails>
                                                                 </ExpansionPanel>)
@@ -668,49 +736,65 @@ class TrabajoEjecucion extends Component {
                                                             FECHA DE VISADO
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
-                                                            ???????
-                                                            {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
-                                                        </Typography>
+                                                            {this.state.workDetails.Trabajos[0].Fecha_Tramitacion ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_Tramitacion)).format("DD/MM/YYYY") : "-"}
+                                                            </Typography>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <Grid container spacing={4}>
-                                                    <Grid xs={3}>
-                                                        <Typography variant='subtitle2'>
+                                                <div className="d-flex">
+                                                    <div className="pr-4">
+                                                        <Typography variant='subtitle2' >
                                                             {this.state.workDetails.Trabajos[0].Tipo_Tramite}
                                                         </Typography>
-                                                    </Grid>
-                                                    <Grid xs={3}>
-                                                        <Typography
-                                                            variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? 'subtitle2' : "subtitle1"}>
+                                                    </div>
+                                                    <div className="d-flex px-2">
+                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
+
+                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? classes.black : ""}
+                                                            variant='subtitle2'>
                                                             Nuevo Trabajo
                                                         </Typography>
-                                                    </Grid>
-                                                    <Grid xs={3}>
-                                                        <Typography
-                                                            variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? 'subtitle2' : "subtitle1"}>
+                                                    </div>
+                                                    <div className="d-flex  px-2">
+                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
+                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? classes.black : ""}
+                                                            variant='subtitle2'>
                                                             Modificación Sustancial
                                                         </Typography>
-                                                    </Grid>
-                                                    <Grid xs={3}>
-                                                        <Typography
-                                                            variant={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? 'subtitle2' : "subtitle1"}>
+                                                    </div>
+                                                    <div className="d-flex px-2">
+                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
+                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? classes.black : ""}
+                                                            variant='subtitle2'>
                                                             Corrección Básica
                                                         </Typography>
-                                                    </Grid>
-                                                </Grid>
+                                                    </div>
+                                                </div>
                                             </Grid>
                                             <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
                                                 <Grid container spacing={4}>
                                                     <Grid xs={12}>
-                                                        <Typography variant='overline'>
-                                                            Observaciones
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Observaciones ? this.state.workDetails.Trabajos[0].Observaciones : '-'}
-                                                        </Typography>
-
+                                                        <TextField
+                                                            disabled
+                                                            id="observations"
+                                                            label={<Translate id="languages.expedients.fieldObservaciones"/>}
+                                                            value={this.state.workDetails.Trabajos[0].Observaciones ? this.state.workDetails.Trabajos[0].Observaciones : '-'}
+                                                            margin="normal"
+                                                            multiline
+                                                            rows={4}
+                                                            helperText={"110/500"}
+                                                            fullWidth
+                                                            InputProps={{
+                                                                disableUnderline: true,
+                                                                classes: {
+                                                                    input: classes.textFieldInput,
+                                                                },
+                                                            }}
+                                                            InputLabelProps={{
+                                                                shrink: true,
+                                                            }}
+                                                        />
                                                     </Grid>
 
                                                 </Grid>
@@ -746,45 +830,52 @@ class TrabajoEjecucion extends Component {
                             this.state.folderInfo ?
                                 <Paper
                                     style={{borderColor: '#cecece', borderWidth: 1, marginTop: -7, marginBottom: 10}}>
-                                    <div style={{padding: 6}}>
-                                        <b style={{fontSize: 12}}>{this.state.folderInfo.Nombre}</b>
+                                    <div className="px-4 py-2">
+                                        <Typography variant='button'>{this.state.folderInfo.Nombre}</Typography>
                                     </div>
                                     <div style={{backgroundColor: '#f5f5f5', marginTop: 10, marginBottom: 10}}>
-                                        <Grid container spacing={16}>
-                                            <Grid xs={6} className="p-3">
-                                                <label style={{textTransform: 'uppercase', fontSize: 12}}>Firmas
-                                                    Requeridas</label><br/>
-                                                <b style={{
-                                                    textTransform: 'uppercase',
-                                                    fontSize: 12
-                                                }}>{this.state.folderInfo.Firmas_Requeridas}</b>
-                                            </Grid>
-                                            <Grid xs={6} className="p-3">
-                                                <label style={{textTransform: 'uppercase', fontSize: 12}}>Fecha
-                                                    entrada</label><br/>
-                                                <b style={{
-                                                    textTransform: 'uppercase',
-                                                    fontSize: 12
-                                                }}>{moment(new Date(this.state.expediente.Fecha_Entrada)).format("DD/MM/YYYY")}</b>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid container spacing={16}>
-                                            <Grid xs={12} className="p-3">
-                                                <ExpansionPanel expanded={this.state.aclaracionesOpen}
-                                                                onChange={() => this.setState({aclaracionesOpen: !this.state.aclaracionesOpen})}>
-                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                                        {this.state.aclaracionesOpen ? "Ocultar aclaraciones de contenido" : "Mostrar aclaraciones de contenido"}
-                                                    </ExpansionPanelSummary>
-                                                    <ExpansionPanelDetails>
-                                                        <div style={{width: '100%'}}>
+                                        <Grid container spacing={24}>
+                                          <Grid item xs={12} className="px-4">
+                                              <Grid container spacing={16}>
+                                                  <Grid xs={6} className="p-3">
+                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>Firmas
+                                                          Requeridas</label><br/>
+                                                      <b style={{
+                                                          textTransform: 'uppercase',
+                                                          fontSize: 12
+                                                      }}>{this.state.folderInfo.Firmas_Requeridas}</b>
+                                                  </Grid>
+                                                  <Grid xs={6} className="p-3">
+                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>Fecha
+                                                          entrada</label><br/>
+                                                      <b style={{
+                                                          textTransform: 'uppercase',
+                                                          fontSize: 12
+                                                      }}>{moment(new Date(this.state.expediente.Fecha_Entrada)).format("DD/MM/YYYY")}</b>
+                                                  </Grid>
+                                              </Grid>
+                                          </Grid>
+                                            <Grid item xs={12} className="px-4">
+                                                <Grid container spacing={16}>
+                                                    <Grid xs={12} className="p-3">
+                                                        <ExpansionPanel expanded={this.state.aclaracionesOpen}
+                                                                        onChange={() => this.setState({aclaracionesOpen: !this.state.aclaracionesOpen})}>
+                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                {this.state.aclaracionesOpen ? "Ocultar aclaraciones de contenido" : "Mostrar aclaraciones de contenido"}
+                                                            </ExpansionPanelSummary>
+                                                            <ExpansionPanelDetails>
+                                                                <div style={{width: '100%'}}>
                                                             <span>
                                                               {renderHTML(this.state.folderInfo.Aclaraciones)}
                                                             </span>
-                                                        </div>
-                                                    </ExpansionPanelDetails>
-                                                </ExpansionPanel>
+                                                                </div>
+                                                            </ExpansionPanelDetails>
+                                                        </ExpansionPanel>
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
                                         </Grid>
+
                                     </div>
                                 </Paper>
                                 : null

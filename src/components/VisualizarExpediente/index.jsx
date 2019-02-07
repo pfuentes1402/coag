@@ -25,7 +25,8 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+      flexGrow: 1,
+      overflowX: 'auto',
   },
   grow: {
     flexGrow: 1,

@@ -29,14 +29,8 @@ const api = axios.create({
 
 });
 api.interceptors.request.use(async function (request) {
-  let token = await localStorage.getItem('token');
-  if(token){
-      request.headers['Token'] = token;
-  }else {
-      let response = await getToken();
-      request.headers['Token'] = response.headers.token
-  }
-  return request
+    request.headers['Token']= await localStorage.getItem('token') || '';
+    return request
 })
 
 api.interceptors.response.use(function (response) {
@@ -321,10 +315,12 @@ export const funcionForma = async (datos) => {
 */
 export const getToken = async () => {
   try {
+      let clienteId = await localStorage.getItem('clienteid') ;
+      let clienteClave = await localStorage.getItem('clienteclave') ;
       let response = await axios.post('http://servicios.coag.es/api/authenticate',
           {
-              ClienteId: localStorage.getItem('clienteid'),
-              ClienteClave: localStorage.getItem('clienteclave')
+              ClienteId: clienteId,
+              ClienteClave: clienteClave
           });
       await localStorage.setItem('token', response.headers.token);
       return response;
@@ -799,6 +795,22 @@ export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang =
     try {
         let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
         return response;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
+/**
+ * Obtiene los detalles de un archivo
+ * @param idExpediente
+ * @param idTrabajo
+ * @param idEstructura id de la estructura de un archivo
+ * @returns {Promise<*>}
+ */
+export const getDetallesArchivo = async (idExpediente, idTrabajo, idEstructura) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1`);
+        return response.data;
     } catch (error) {
         return formatMenssage(error.message);
     }
