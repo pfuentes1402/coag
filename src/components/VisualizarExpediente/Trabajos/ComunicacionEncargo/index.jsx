@@ -10,7 +10,7 @@ class TrabajoComunicacion extends Component {
   }
 
   render() {
-    console.log("this.props.match", this.props);
+
     return (
       <Grid container spacing={0}>
         <Grid item md={6} xs={12} >

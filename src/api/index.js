@@ -322,6 +322,7 @@ export const getToken = async () => {
               ClienteId: clienteId,
               ClienteClave: clienteClave
           });
+      console.log(response.headers)
       await localStorage.setItem('token', response.headers.token);
       return response;
   }catch (error) {

@@ -63,9 +63,9 @@ class MenuProyectoEjecucion extends Component {
         <Collapse in={this.props.active} timeout="auto" unmountOnExit>
             {this.props.isLoadEstructura ?
                 <LinearProgress className="m-3"/>
-                : Object.keys(this.props.estructuraDocumental).map(estructura=>{
+                : Object.keys(this.props.estructuraDocumental).map((estructura,position)=>{
                     let estructuraPadre = this.props.estructurasPadre ? this.props.estructurasPadre.find(e => e.Titulo === estructura) : "";
-                    return  <List component="div" disablePadding>
+                    return  <List key={'menu-'+position} component="div" disablePadding>
                         <ListItem button onClick={()=>{this.handleClick(estructura)}} className="pl-5" >
 
                             <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido === 1) ? ' *' : '')}/>
@@ -74,7 +74,7 @@ class MenuProyectoEjecucion extends Component {
                         <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map((children,pos)=>{
-                                    return <ListItem onDrop={async ()=>{
+                                    return <ListItem key={'menu-item'+pos} onDrop={async ()=>{
                                                         let response = await this.props.moveItemTo(children)
                                                         if (response)
                                                             this.props.changeEstructura(children.Id_Estructura, children.Titulo)

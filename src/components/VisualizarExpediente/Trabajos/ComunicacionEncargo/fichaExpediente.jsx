@@ -266,7 +266,7 @@ class FichaExpediente extends Component {
               <Divider style={{ height: 3 }} />
             </Grid>
               <Grid item xs={12}>
-                <ValidatorForm ref="form">
+                <ValidatorForm ref="form" onSubmit={()=>false}>
                   <Grid container spacing={16}>
                      <Grid item xs={12} className="ml-3 mr-3">
                       <Grid container spacing={24}>

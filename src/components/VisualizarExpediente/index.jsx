@@ -83,8 +83,8 @@ class VisualizarExpediente extends Component {
     };
   }
 
-  async componentWillMount() {
-    await this.fetchExpediente();
+   componentWillMount() {
+     this.fetchExpediente();
   }
 
   //Consumir api con el id de expediente espicificado por ur
@@ -164,8 +164,9 @@ class VisualizarExpediente extends Component {
                     idEstructuraActiva: null
                 });
             }
+            await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
         }
-        await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
+
 
   }
 
