@@ -682,12 +682,12 @@ class TrabajoEjecucion extends Component {
                                                                                             </Typography>
                                                                                         </Grid>
                                                                                         <Grid item xs={6}>
-                                                                                            <List>
+                                                                                            <List className="pt-0">
                                                                                                 {
                                                                                                     this.state.detallesArchivo&& this.state.detallesArchivo.FirmasDigitales &&  this.state.detallesArchivo.FirmasDigitales.length > 0 ?  this.state.detallesArchivo.FirmasDigitales.map((fd, pos) => {
                                                                                                             if (fd.Id_Archivo === item.Id_Archivo) {
                                                                                                                 return (
-                                                                                                                    <ListItem>
+                                                                                                                    <ListItem className="pt-0 pb-2 px-0">
                                                                                                                         <ListItemText
                                                                                                                             primary={fd.Nombre}/>
                                                                                                                     </ListItem>)
