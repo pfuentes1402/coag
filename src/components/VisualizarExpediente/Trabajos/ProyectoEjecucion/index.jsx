@@ -278,9 +278,9 @@ class TrabajoEjecucion extends Component {
         this.setState({[arrName]: a, panelExpanded: -1});
         let {files, temporalFiles} = this.itemsToRemove();
         if (files.length || temporalFiles.length) {
-            this.setState({showDeleteButton: true})
+            this.setState({showDeleteButton: true,showDownloadButton: true})
         } else {
-            this.setState({showDeleteButton: false})
+            this.setState({showDeleteButton: false,showDownloadButton: false})
         }
         if(files.length===0 && temporalFiles.length>0)
         {
@@ -303,7 +303,6 @@ class TrabajoEjecucion extends Component {
         count+=temporalFiles.length
         if (count) {
             await this.setState({fetchingRemove:true})
-
             if(files.length){
                 let arrayArchivos = [];
                 files.map(item=>{
@@ -341,18 +340,50 @@ class TrabajoEjecucion extends Component {
                 await this.setState({temporalFiles:newData})
             }
             await this.setState({fetchingRemove:false})
-            // for (let i = 0, p = Promise.resolve(); i < temporalFiles.length; i++) {
-            //
-            //     p.then(async resolve => {
-            //         let item = temporalFiles[i];
-            //         await api.removeFileFromTemporalFolder(a.state.expediente.Id_Expediente, item.Nombre)
-            //         await a.setState({fetchingRemove: a.state.fetchingRemove--})
-            //         resolve()
-            //
-            //     })
-            // }
             this.setState({showDeleteButton: false})
+        }
+    }
+    async handleDownload() {
+        let {files, temporalFiles} = this.itemsToRemove();
+        let count = 0;
+        count+=files.length
+        count+=temporalFiles.length
+        if (count) {
+            await this.setState({fetchingDownload:true})
+            if(files.length){
+                let arrayArchivos = [];
+                files.map(item=>{
+                    arrayArchivos.push({id_estructura:item.Id_Estructura})
+                    return null
+                });
+                let response =  await api.getUrlDownladFiles(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
+                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                    this.props.fetchErrorExpediente(response);
+                }
+                console.log(response)
+                //todo: Pendiente terminar
 
+
+            }
+            // if(temporalFiles.length){
+            //     let arrayArchivos = [];
+            //     temporalFiles.map(item=>{
+            //         arrayArchivos.push({Nombre:item.Nombre})
+            //         return null
+            //     });
+            //     let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
+            //     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+            //         this.props.fetchErrorExpediente(response);
+            //     }
+            //     let newData=[...this.state.temporalFiles];
+            //     temporalFiles.map(item=>{
+            //         newData = newData.filter(current=>current.Nombre!==item.Nombre)
+            //         return null
+            //     });
+            //
+            //     await this.setState({temporalFiles:newData})
+            // }
+            await this.setState({fetchingDownload:false})
 
         }
     }
@@ -472,6 +503,19 @@ class TrabajoEjecucion extends Component {
                                                                 Eliminar
                                                             </Button>
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
+                                                                                                              className={classes.buttonProgress}/>}
+                                                        </div>
+                                                        <div className={classes.wrapper} style={{float:'right'}}>
+                                                            <Button
+
+                                                                color="primary"
+                                                                onClick={() => {
+                                                                    this.handleDownload()
+                                                                }}
+                                                                disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
+                                                                Descargar
+                                                            </Button>
+                                                            {this.state.fetchingDownload && <CircularProgress size={24}
                                                                                                               className={classes.buttonProgress}/>}
                                                         </div>
 
@@ -640,7 +684,7 @@ class TrabajoEjecucion extends Component {
                                                                                         <Grid item xs={6}>
                                                                                             <List>
                                                                                                 {
-                                                                                                    this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
+                                                                                                    this.state.detallesArchivo&& this.state.detallesArchivo.FirmasDigitales &&  this.state.detallesArchivo.FirmasDigitales.length > 0 ?  this.state.detallesArchivo.FirmasDigitales.map((fd, pos) => {
                                                                                                             if (fd.Id_Archivo === item.Id_Archivo) {
                                                                                                                 return (
                                                                                                                     <ListItem>

@@ -948,3 +948,18 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
     return formatMenssage("Error 400 en API")
   }
 }
+//Obtener Url de Descarga de archivos En carpetas
+export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
+  try {
+
+    let arc= archivos;
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivoDescarga`,
+        {
+          Archivos:archivos
+        }
+    );
+    return result.data
+  } catch (error ) {
+    return formatMenssage("Error 400 en API")
+  }
+}
