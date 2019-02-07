@@ -4,7 +4,6 @@ import {
     Paper,
     CircularProgress,
     Typography,
-    Toolbar,
     TextField,
     Button,
     ExpansionPanel,
@@ -13,12 +12,12 @@ import {
     ExpansionPanelDetails,
     LinearProgress, withStyles, ListItem, List
 } from '@material-ui/core';
-import UploadFile from './uploadFile';
+
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/Check';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
-import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
+
 import Close from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
@@ -117,6 +116,7 @@ class TrabajoEjecucion extends Component {
             currentUploadItem: false,
             pendingUploadList: [],
             fetchingRemove: 0,
+            allowUpload:true,
             disableAutoAsignButton: true,
             detallesArchivo: null,
             loadingDetallesArchivo: false
@@ -202,7 +202,8 @@ class TrabajoEjecucion extends Component {
         if (this.props.estructura) {
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
             let folderInfo = folderInfoResponse.data.Carpetas[0];
-            await this.setState({ expediente,  folderInfo})
+
+            await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='0'?false:true})
         } else {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
@@ -223,7 +224,6 @@ class TrabajoEjecucion extends Component {
         await this.setState({fetchingCenter: true})
         if (this.props.estructura) {
             let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
-            console.log(response)
             let documentos = response.data.Archivos;
             let firmasDigitales = response.data.FirmasDigitales;
             await this.setState({fetchingCenter: false, data: documentos, firmasDigitales})
@@ -303,11 +303,12 @@ class TrabajoEjecucion extends Component {
         count+=temporalFiles.length
         if (count) {
             await this.setState({fetchingRemove:true})
-            let a =this;
+
             if(files.length){
                 let arrayArchivos = [];
                 files.map(item=>{
                     arrayArchivos.push({id_estructura:item.Id_Estructura})
+                    return null
                 });
                 let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -315,7 +316,8 @@ class TrabajoEjecucion extends Component {
                 }
                 let newData=[...this.state.data];
                 files.map(item=>{
-                     newData = newData.filter(current=>current.Id_Estructura!=item.Id_Estructura)
+                     newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
+                    return null
                 });
 
                 await this.setState({data:newData})
@@ -324,6 +326,7 @@ class TrabajoEjecucion extends Component {
                 let arrayArchivos = [];
                 temporalFiles.map(item=>{
                     arrayArchivos.push({Nombre:item.Nombre})
+                    return null
                 });
                 let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -331,7 +334,8 @@ class TrabajoEjecucion extends Component {
                 }
                 let newData=[...this.state.temporalFiles];
                 temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!=item.Nombre)
+                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                    return null
                 });
 
                 await this.setState({temporalFiles:newData})
@@ -350,8 +354,6 @@ class TrabajoEjecucion extends Component {
             this.setState({showDeleteButton: false})
 
 
-        } else {
-            throw "Debe seleccionar al menos un archivo para eliminar"
         }
     }
     async handleAutoAsign(){
@@ -364,6 +366,7 @@ class TrabajoEjecucion extends Component {
                     files.push({
                         Nombre:item.Nombre
                     })
+                    return null
                 });
                 let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
                 if(result.Archivos){
@@ -374,15 +377,16 @@ class TrabajoEjecucion extends Component {
                         }else{
                             this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`))
                         }
+                        return null
                     })
                 }else{
-                    throw "Error procesando la petición"
+                    this.props.fetchErrorExpediente(formatMenssage('Error procesando la petición'));
                 }
                 await this.setState({fetchingAutoAsign:false})
                 await this.loadInformation();
             }catch (e) {
                 await this.setState({fetchingAutoAsign:false})
-                //todo: Importar format Message para sacar una alerta
+                this.props.fetchErrorExpediente(formatMenssage(e.message));
             }
 
 
@@ -422,7 +426,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                     <Grid item xs={6} className="p-3 text-right">
                                                         {
-                                                            this.state.uploadInProgress ? null :
+                                                            this.state.uploadInProgress||!this.state.allowUpload ? null :
                                                                 <Dropzone style={{
                                                                     width: 'auto',
                                                                     height: 'auto',
@@ -491,17 +495,17 @@ class TrabajoEjecucion extends Component {
                                                 (this.state.data && this.state.data.length > 0)|| (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
                                                     <div className="pl-2">
                                                         <Grid container spacing={16}>
-                                                            <Grid xs={6} className="p-3">
+                                                            <Grid item xs={6} className="p-3">
                                                                 <Typography variant="subtitle2">
                                                                     NOMBRE DEL ARCHIVO
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid xs={4} className="p-3">
+                                                            <Grid item xs={4} className="p-3">
                                                                 <Typography variant="subtitle2">
                                                                     {this.props.estructura ? 'ÚLTIMA MODIFICACIÓN' : 'CARPETA'}
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid xs={2} className="p-3">
+                                                            <Grid item xs={2} className="p-3">
                                                                 <Typography variant="subtitle2">
                                                                     FIRMA
                                                                 </Typography>
@@ -509,15 +513,15 @@ class TrabajoEjecucion extends Component {
                                                         </Grid>
                                                         {
                                                             this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                return (<ExpansionPanel draggable="true" onDragEnd={() => {
+                                                                return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" onDragEnd={() => {
                                                                     this.props.dragging(false)
                                                                 }} onDragStart={() => {
                                                                     this.props.dragging(item)
                                                                 }} expanded={this.state.panelExpanded === item.Nombre}
                                                                                         onChange={this.expandPanel(item.Nombre, item.Id_Estructura)}>
-                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} className="m-0">
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6} className='d-flex align-items-center'
+                                                                            <Grid item xs={6} className='d-flex align-items-center'
                                                                             >
                                                                                 <Checkbox
                                                                                     checked={item.checked ? item.checked : false}
@@ -526,21 +530,21 @@ class TrabajoEjecucion extends Component {
                                                                                 />
                                                                                 <Typography className={classes.orange}>{item.Nombre}</Typography>
                                                                             </Grid>
-                                                                            <Grid xs={4} className="align-self-center">
+                                                                            <Grid item xs={4} className="align-self-center">
                                                                                 <Typography className={classes.orange}>
                                                                                     Sin Asignar
                                                                                 </Typography>
                                                                             </Grid>
-                                                                            <Grid xs={2} className="text-right align-self-center">
+                                                                            <Grid item xs={2} className="text-right align-self-center">
                                                                                 <ErrorOutline className={classes.orange} size={24}/>
                                                                             </Grid>
                                                                         </Grid>
                                                                     </ExpansionPanelSummary>
                                                                     <ExpansionPanelDetails>
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6} className="align-items-center">
+                                                                            <Grid item xs={6} className="align-items-center">
                                                                                 <Grid container spacing={0}>
-                                                                                    <Grid xs={12}>
+                                                                                    <Grid item xs={12}>
                                                                                         <Typography variant="button" gutterBottom>
                                                                                             TAMAÑO DEL ARCHIVO
                                                                                         </Typography>
@@ -548,9 +552,9 @@ class TrabajoEjecucion extends Component {
 
                                                                                 </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={4} className="align-self-center">
+                                                                            <Grid item xs={4} className="align-self-center">
                                                                                 <Grid container spacing={0}>
-                                                                                    <Grid xs={12}>
+                                                                                    <Grid item xs={12}>
                                                                                         <Typography variant="button" gutterBottom>
                                                                                             {this.renderSize(item.Longitud)}
                                                                                         </Typography>
@@ -558,7 +562,7 @@ class TrabajoEjecucion extends Component {
 
                                                                                 </Grid>
                                                                             </Grid>
-                                                                            <Grid xs={2} className="align-self-center">
+                                                                            <Grid item xs={2} className="align-self-center">
                                                                             </Grid>
                                                                         </Grid>
 
@@ -568,11 +572,11 @@ class TrabajoEjecucion extends Component {
                                                         }
                                                         {
                                                             this.state.data.map((item, pos) => {
-                                                                return (<ExpansionPanel expanded={this.state.panelExpanded === item.Archivo}
+                                                                return (<ExpansionPanel key={'file-'+pos}  expanded={this.state.panelExpanded === item.Archivo}
                                                                                         onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
                                                                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                                                         <Grid container spacing={16}>
-                                                                            <Grid xs={6} className='d-flex align-items-center'>
+                                                                            <Grid item xs={6} className='d-flex align-items-center'>
                                                                                 <Checkbox
                                                                                     checked={item.checked ? item.checked : false}
                                                                                     onChange={this.handleChange("checked", pos, 'data')}
@@ -582,12 +586,12 @@ class TrabajoEjecucion extends Component {
                                                                                     {item.Archivo}
                                                                                     </Typography>
                                                                             </Grid>
-                                                                            <Grid xs={4} className="align-self-center">
+                                                                            <Grid item xs={4} className="align-self-center">
                                                                                 <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
                                                                                     {this.props.estructura ? '' : item.Carpeta}
                                                                                 </Typography>
                                                                             </Grid>
-                                                                            <Grid xs={2} className="text-right align-self-center">
+                                                                            <Grid item xs={2} className="text-right align-self-center">
                                                                                 {item.Requisitos_Firma_Completos ?
                                                                                     <CheckCircle className={classes.green}/> :
                                                                                     <Close className={classes.red}/>
@@ -637,7 +641,7 @@ class TrabajoEjecucion extends Component {
                                                                                             <List>
                                                                                                 {
                                                                                                     this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
-                                                                                                            if (fd.Id_Archivo == item.Id_Archivo) {
+                                                                                                            if (fd.Id_Archivo === item.Id_Archivo) {
                                                                                                                 return (
                                                                                                                     <ListItem>
                                                                                                                         <ListItemText
@@ -700,8 +704,8 @@ class TrabajoEjecucion extends Component {
                                     <ExpansionPanelDetails>
                                         <Grid container spacing={24}>
                                             <Grid item xs={12}>
-                                                <Grid container spacing={4}>
-                                                    <Grid xs={6}>
+                                                <Grid container spacing={0}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             TITULO COMPLEMENTARIO
                                                         </Typography>
@@ -710,7 +714,7 @@ class TrabajoEjecucion extends Component {
                                                         </Typography>
 
                                                     </Grid>
-                                                    <Grid xs={6}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             fecha de entrada
                                                         </Typography>
@@ -721,8 +725,8 @@ class TrabajoEjecucion extends Component {
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
-                                                <Grid container spacing={4}>
-                                                    <Grid xs={6}>
+                                                <Grid container spacing={0}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             ESTADO
                                                         </Typography>
@@ -731,7 +735,7 @@ class TrabajoEjecucion extends Component {
                                                         </Typography>
 
                                                     </Grid>
-                                                    <Grid xs={6}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             FECHA DE VISADO
                                                         </Typography>
@@ -773,8 +777,8 @@ class TrabajoEjecucion extends Component {
                                                 </div>
                                             </Grid>
                                             <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
-                                                <Grid container spacing={4}>
-                                                    <Grid xs={12}>
+                                                <Grid container spacing={0}>
+                                                    <Grid item xs={12}>
                                                         <TextField
                                                             disabled
                                                             id="observations"
@@ -800,8 +804,8 @@ class TrabajoEjecucion extends Component {
                                                 </Grid>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <Grid container spacing={4}>
-                                                    <Grid xs={6}>
+                                                <Grid container spacing={0}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             Tipo de expediente
                                                         </Typography>
@@ -810,7 +814,7 @@ class TrabajoEjecucion extends Component {
                                                         </Typography>
 
                                                     </Grid>
-                                                    <Grid xs={6}>
+                                                    <Grid item xs={6}>
                                                         <Typography variant='overline'>
                                                             Documentación de
                                                         </Typography>
@@ -837,7 +841,7 @@ class TrabajoEjecucion extends Component {
                                         <Grid container spacing={24}>
                                           <Grid item xs={12} className="px-4">
                                               <Grid container spacing={16}>
-                                                  <Grid xs={6} className="p-3">
+                                                  <Grid item xs={6} className="p-3">
                                                       <label style={{textTransform: 'uppercase', fontSize: 12}}>Firmas
                                                           Requeridas</label><br/>
                                                       <b style={{
@@ -845,7 +849,7 @@ class TrabajoEjecucion extends Component {
                                                           fontSize: 12
                                                       }}>{this.state.folderInfo.Firmas_Requeridas}</b>
                                                   </Grid>
-                                                  <Grid xs={6} className="p-3">
+                                                  <Grid item xs={6} className="p-3">
                                                       <label style={{textTransform: 'uppercase', fontSize: 12}}>Fecha
                                                           entrada</label><br/>
                                                       <b style={{
@@ -857,7 +861,7 @@ class TrabajoEjecucion extends Component {
                                           </Grid>
                                             <Grid item xs={12} className="px-4">
                                                 <Grid container spacing={16}>
-                                                    <Grid xs={12} className="p-3">
+                                                    <Grid item xs={12} className="p-3">
                                                         <ExpansionPanel expanded={this.state.aclaracionesOpen}
                                                                         onChange={() => this.setState({aclaracionesOpen: !this.state.aclaracionesOpen})}>
                                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
@@ -885,11 +889,11 @@ class TrabajoEjecucion extends Component {
                                 <div style={{marginTop: 20}}>
                                     <Paper>
                                         <Grid container spacing={16}>
-                                            <Grid xs={7} className="p-3">
+                                            <Grid item xs={7} className="p-3">
                                                 <label style={{fontSize: 12}}>Subiendo
                                                    Subido archivo {this.state.currentUpload} de {this.state.uploadLength}</label>
                                             </Grid>
-                                            <Grid xs={5} className="p-3"
+                                            <Grid item xs={5} className="p-3"
                                                   style={{paddingRight: 10, paddingLeft: 0, textAlign: 'right'}}>
                                                 <a onClick={() => this.abortUpload()} style={{
                                                     fontSize: 12,
@@ -899,18 +903,18 @@ class TrabajoEjecucion extends Component {
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={5}>
-                                            <Grid xs={12} className="p-3">
+                                            <Grid item xs={12} className="p-3">
                                                 <LinearProgress style={{height: 20}} variant="determinate"
                                                                 value={this.state.currentUpload * 100 / this.state.uploadLength}/>
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
-                                            <Grid xs={12} className="p-3">
+                                            <Grid item xs={12} className="p-3">
                                                 <b style={{fontSize: 12}}>{this.state.currentUploadItem ? this.state.currentUploadItem.filename : null}</b>
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
-                                            <Grid xs={12} className="p-3">
+                                            <Grid item xs={12} className="p-3">
                                                 <ul style={{listStyle: 'none', overflowX: 'hidden'}}>
                                                     {
                                                         this.state.pendingUploadList.map((item, pos) => {

@@ -1,9 +1,8 @@
-import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo, expedientesuser } from '../../api';
+import { funcionForma, getToken, getultimosTrabajos, getExpedienteSuscepNuevoTrabajo } from '../../api';
 import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
-import { fetchSuccess } from "../expedientes";
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT

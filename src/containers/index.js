@@ -8,12 +8,6 @@ import {CircularProgress} from "@material-ui/core";
 
 
 class MainContainer extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-      }
-  
     render() {
         let classeOpacidad = this.props.mostrarModal === true ? 'mainContainer opacidadApp': 'mainContainer';
 

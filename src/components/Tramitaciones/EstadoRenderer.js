@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import PropTypes from 'prop-types';
+
 import './estados.css';
 class AccionRenderer extends Component {
     constructor(props) {
@@ -30,13 +30,12 @@ class AccionRenderer extends Component {
       cadena = cadena.replace(/ñ/gi,"n");
       return cadena;
     }
-
     colorea = (nombre) => {
       let nombreLimpio = this.getCleanedString(nombre);
-      if(nombreLimpio != '')
+      if(nombreLimpio !== '')
         return( 
         <span className={nombreLimpio}>
-          <img src={require(`./IconosEstados/${nombreLimpio}.jpg`)}></img>
+          <img alt={200} src={require(`./IconosEstados/${nombreLimpio}.jpg`)}></img>
           {nombre}
         </span>);
     }
@@ -48,8 +47,4 @@ class AccionRenderer extends Component {
         );
     }
 };
-const propTypes = {
-  data: PropTypes.array,
-}
-
 export default AccionRenderer;

@@ -48,7 +48,7 @@ class MenuUser extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
+
         let {open} = this.state;
 
         return (

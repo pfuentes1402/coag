@@ -265,6 +265,7 @@ class ComunicacionEncargo extends React.Component {
             if (relations.filter(rel => rel.category === Fase).length === 0) {
                 relations.push({ category: Fase, items: [] });
             }
+            return false
         })
         this.state.comunicacionencargo[index].fasesTrabajos.filter(value => {
             const { Fase, Trabajo_Titulo, Id_Tipo_Trabajo } = value;
@@ -273,6 +274,7 @@ class ComunicacionEncargo extends React.Component {
                     element.items.push({ Name: Trabajo_Titulo, id: Id_Tipo_Trabajo });
                 }
             });
+            return null
         })
 
         relations.forEach(element => {

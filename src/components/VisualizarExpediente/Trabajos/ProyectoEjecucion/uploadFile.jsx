@@ -11,10 +11,6 @@ const styles = theme => ({
 });
 
 class UploadFile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let {classes} = this.props;
     return (

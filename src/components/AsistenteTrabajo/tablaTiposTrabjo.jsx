@@ -188,7 +188,7 @@ class EnhancedTable extends React.Component {
                     <TableRow key={n.Id_Tipo_Trabajo} hover style={{ height: 40 }}
                       onClick={event => this.handleClick(event, n.Id_Tipo_Trabajo)}
                       role="checkbox" aria-checked={isSelected}
-                      tabIndex={-1} key={n.id} selected={isSelected}>
+                      tabIndex={-1}  selected={isSelected}>
                       <TableCell padding="checkbox" className="py-0">
                         <Checkbox checked={isSelected} color="primary" padding="none" className="py-1" />
                       </TableCell>

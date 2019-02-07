@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {blue, pink, grey} from '@material-ui/core/colors';
+import {blue, grey} from '@material-ui/core/colors';
 import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import { BrowserRouter} from 'react-router-dom';
