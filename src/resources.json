@@ -526,7 +526,6 @@
                 "Inc"
             ]
         },
-
         "crearTrabajo":{
             "panelTitle":[
                 "Expediente",
@@ -565,6 +564,32 @@
                 "Seleccionar trabajo(s) a tramitar"
             ]
         },
+        "fileUpload":{
+            "noInsertion":[
+                "no fue insertado.",
+                "no fue insertado."
+            ],
+            "successInsertion":[
+                "fue insertado en la estructura",
+                "fue insertado en la estructura"
+            ],
+            "filesInFolder":[
+                "Archivos de carpeta",
+                "Archivos de carpeta"
+            ],
+            "filesOfWork":[
+                "Archivos de trabajo",
+                "Archivos de trabajo"
+            ],
+            "addFiles":[
+                "Añadir archivos",
+                "Añadir archivos"
+            ],
+            "fileName":[
+                "Nombre del Archivo",
+                "Nombre del Archivo"
+            ]
+        },
         "messages":{
             "comunicationValidation":[
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
@@ -573,6 +598,14 @@
             "trabajosSelectionValidate":[
                 "Debe seleccionar al menos un trabajo",
                 "Debe seleccionar al menos un trabajo"
+            ],
+            "filesDeleteMessage":[
+                "Debe seleccionar al menos un archivo para eliminar",
+                "Debe seleccionar al menos un archivo para eliminar"
+            ],
+            "fetchError":[
+                "Error procesando la petición",
+                "Error procesando la petición"
             ]
         }
     }

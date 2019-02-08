@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Grid,
     Paper,
@@ -18,18 +18,19 @@ import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
+import { Translate } from "react-localize-redux";
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import Close from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
 import renderHTML from 'react-render-html';
 import Dropzone from "react-dropzone";
-import {fetchErrorExpediente, formatMenssage} from '../../../../actions/expedientes';
+import { fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
 import connect from "react-redux/es/connect/connect";
-import {withLocalize} from "react-localize-redux";
-import {getValidateAddress} from "../../../../api";
+import { withLocalize } from "react-localize-redux";
+import { getValidateAddress } from "../../../../api";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
-import {moveFileFromTemporalToStructure} from "../../../../api";
+import { moveFileFromTemporalToStructure } from "../../../../api";
 
 const styles = theme => ({
     root: {
@@ -64,10 +65,9 @@ const mapStateToProps = (state) => (
 );
 
 const mapDispatchToProps =
-    {
-        fetchErrorExpediente: fetchErrorExpediente,
-
-    };
+{
+    fetchErrorExpediente: fetchErrorExpediente,
+};
 
 class TrabajoEjecucion extends Component {
     constructor(props) {
@@ -80,7 +80,7 @@ class TrabajoEjecucion extends Component {
             panelExpanded: false,
             folderInfo: false,
             expediente: false,
-            workDetails:false,
+            workDetails: false,
             aclaracionesOpen: false,
             uploadInProgress: false,
             uploadLength: 0,
@@ -88,10 +88,8 @@ class TrabajoEjecucion extends Component {
             itemSelected: [],
             currentUploadItem: false,
             pendingUploadList: [],
-            fetchingRemove:0,
-            disableAutoAsignButton:true
-
-
+            fetchingRemove: 0,
+            disableAutoAsignButton: true
         }
     }
 
@@ -115,39 +113,39 @@ class TrabajoEjecucion extends Component {
             let item = files[i];
             p = p.then(_ => new Promise(async resolve => {
 
-                    try {
-                        let newList = [...b.state.pendingUploadList]
-                        newList.splice(0, 1);
-                        await b.setState({
-                            currentUpload: i + 1,
-                            currentUploadItem: item,
-                            pendingUploadList: newList,
-                        });
-                        let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
-                        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                            this.props.fetchErrorExpediente(response);
-                            this.abortUpload()
-                        } else {
+                try {
+                    let newList = [...b.state.pendingUploadList]
+                    newList.splice(0, 1);
+                    await b.setState({
+                        currentUpload: i + 1,
+                        currentUploadItem: item,
+                        pendingUploadList: newList,
+                    });
+                    let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
+                    if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                        this.props.fetchErrorExpediente(response);
+                        this.abortUpload()
+                    } else {
 
-                            if (newList.length === 0) {
-                                await b.setState({
-                                    uploadInProgress: false
-                                });
-                                setTimeout(async ()=>{
-                                    await this.loadInformation()
-                                },1000)
+                        if (newList.length === 0) {
+                            await b.setState({
+                                uploadInProgress: false
+                            });
+                            setTimeout(async () => {
+                                await this.loadInformation()
+                            }, 1000)
 
 
-                            }
                         }
-                    } catch (e) {
-                        this.props.fetchErrorExpediente(formatMenssage(e.message));
-                       this.abortUpload()
                     }
-
-                    resolve()
-
+                } catch (e) {
+                    this.props.fetchErrorExpediente(formatMenssage(e.message));
+                    this.abortUpload()
                 }
+
+                resolve()
+
+            }
             ));
         }
 
@@ -168,13 +166,13 @@ class TrabajoEjecucion extends Component {
     async componentDidMount() {
         await this.loadGeneralInformation()
     }
-    async loadGeneralInformation(){
-        await this.setState({fetching: true})
+    async loadGeneralInformation() {
+        await this.setState({ fetching: true })
         let expediente = this.props.expediente.Expediente[0];
         if (this.props.estructura) {
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
             let folderInfo = folderInfoResponse.data.Carpetas[0];
-            await this.setState({ expediente,  folderInfo})
+            await this.setState({ expediente, folderInfo })
         } else {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
@@ -188,17 +186,17 @@ class TrabajoEjecucion extends Component {
             }
         }
         await this.loadInformation();
-        await this.setState({fetching: false});
+        await this.setState({ fetching: false });
     }
     async loadInformation() {
-        let expediente= this.state.expediente;
-        await this.setState({fetchingCenter: true})
+        let expediente = this.state.expediente;
+        await this.setState({ fetchingCenter: true })
         if (this.props.estructura) {
             let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
             console.log(response)
             let documentos = response.data.Archivos;
             let firmasDigitales = response.data.FirmasDigitales;
-            await this.setState({fetchingCenter: false, data: documentos, firmasDigitales})
+            await this.setState({ fetchingCenter: false, data: documentos, firmasDigitales })
         } else {
             try {
                 let response = await api.getAllFiles(expediente.Id_Expediente, this.props.trabajo);
@@ -222,75 +220,74 @@ class TrabajoEjecucion extends Component {
     }
 
     expandPanel = nombre => async (event, expanded) => {
-        this.setState({panelExpanded: expanded ? nombre : false})
+        this.setState({ panelExpanded: expanded ? nombre : false })
     };
 
     handleChange = (name, index, arrName) => event => {
         let a = [];
         Object.assign(a, this.state[arrName]);
         a[index][name] = event.target.checked;
-        this.setState({[arrName]: a, panelExpanded: -1});
-        let {files, temporalFiles} = this.itemsToRemove();
+        this.setState({ [arrName]: a, panelExpanded: -1 });
+        let { files, temporalFiles } = this.itemsToRemove();
         if (files.length || temporalFiles.length) {
-            this.setState({showDeleteButton: true})
+            this.setState({ showDeleteButton: true })
         } else {
-            this.setState({showDeleteButton: false})
+            this.setState({ showDeleteButton: false })
         }
-        if(files.length===0 && temporalFiles.length>0)
-        {
-            this.setState({disableAutoAsignButton: false})
+        if (files.length === 0 && temporalFiles.length > 0) {
+            this.setState({ disableAutoAsignButton: false })
         } else {
-            this.setState({disableAutoAsignButton: true})
+            this.setState({ disableAutoAsignButton: true })
         }
     };
 
     itemsToRemove() {
-        let temporalFiles = this.state.temporalFiles?this.state.temporalFiles.filter((item) => item.checked):[]
-        let files = this.state.data?this.state.data.filter((item) => item.checked):[]
-        return {files, temporalFiles}
+        let temporalFiles = this.state.temporalFiles ? this.state.temporalFiles.filter((item) => item.checked) : []
+        let files = this.state.data ? this.state.data.filter((item) => item.checked) : []
+        return { files, temporalFiles }
     }
 
     async handleRemove() {
-        let {files, temporalFiles} = this.itemsToRemove();
+        let { files, temporalFiles } = this.itemsToRemove();
         let count = 0;
-        count+=files.length
-        count+=temporalFiles.length
+        count += files.length
+        count += temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove:true})
-            let a =this;
-            if(files.length){
+            await this.setState({ fetchingRemove: true })
+            let a = this;
+            if (files.length) {
                 let arrayArchivos = [];
-                files.map(item=>{
-                    arrayArchivos.push({id_estructura:item.Id_Estructura})
+                files.map(item => {
+                    arrayArchivos.push({ id_estructura: item.Id_Estructura })
                 });
-                let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
+                let response = await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente, this.props.trabajo, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
                 }
-                let newData=[...this.state.data];
-                files.map(item=>{
-                     newData = newData.filter(current=>current.Id_Estructura!=item.Id_Estructura)
+                let newData = [...this.state.data];
+                files.map(item => {
+                    newData = newData.filter(current => current.Id_Estructura != item.Id_Estructura)
                 });
 
-                await this.setState({data:newData})
+                await this.setState({ data: newData })
             }
-            if(temporalFiles.length){
+            if (temporalFiles.length) {
                 let arrayArchivos = [];
-                temporalFiles.map(item=>{
-                    arrayArchivos.push({Nombre:item.Nombre})
+                temporalFiles.map(item => {
+                    arrayArchivos.push({ Nombre: item.Nombre })
                 });
-                let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
+                let response = await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
                 }
-                let newData=[...this.state.temporalFiles];
-                temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!=item.Nombre)
+                let newData = [...this.state.temporalFiles];
+                temporalFiles.map(item => {
+                    newData = newData.filter(current => current.Nombre != item.Nombre)
                 });
 
-                await this.setState({temporalFiles:newData})
+                await this.setState({ temporalFiles: newData })
             }
-            await this.setState({fetchingRemove:false})
+            await this.setState({ fetchingRemove: false })
             // for (let i = 0, p = Promise.resolve(); i < temporalFiles.length; i++) {
             //
             //     p.then(async resolve => {
@@ -301,41 +298,38 @@ class TrabajoEjecucion extends Component {
             //
             //     })
             // }
-            this.setState({showDeleteButton: false})
-
-
+            this.setState({ showDeleteButton: false })
         } else {
-            throw "Debe seleccionar al menos un archivo para eliminar"
+            throw <Translate id="languages.messages.filesDeleteMessage" />
         }
     }
-    async handleAutoAsign(){
-        let {temporalFiles} = this.itemsToRemove();
-        if(temporalFiles.length>0){
-            try{
-                await this.setState({fetchingAutoAsign:true})
-                let files=[];
-                temporalFiles.map(item=>{
+    async handleAutoAsign() {
+        let { temporalFiles } = this.itemsToRemove();
+        if (temporalFiles.length > 0) {
+            try {
+                await this.setState({ fetchingAutoAsign: true })
+                let files = [];
+                temporalFiles.map(item => {
                     files.push({
-                        Nombre:item.Nombre
+                        Nombre: item.Nombre
                     })
                 });
                 let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
-                if(result.Archivos){
-                    result.Archivos.map(item=>{
-                        if(item.Insertado!==1){
-                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} no fue insertado.`))
-
-                        }else{
-                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`))
+                if (result.Archivos) {
+                    result.Archivos.map(item => {
+                        if (item.Insertado !== 1) {
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.noInsertion" />}`))
+                        } else {
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.successInsertion" />} ${item.Carpeta}`))
                         }
                     })
-                }else{
-                    throw "Error procesando la petición"
+                } else {
+                    throw <Translate id="languages.messages.fetchError" />
                 }
-                await this.setState({fetchingAutoAsign:false})
+                await this.setState({ fetchingAutoAsign: false })
                 await this.loadInformation();
-            }catch (e) {
-                await this.setState({fetchingAutoAsign:false})
+            } catch (e) {
+                await this.setState({ fetchingAutoAsign: false })
                 //todo: Importar format Message para sacar una alerta
             }
 
@@ -356,23 +350,25 @@ class TrabajoEjecucion extends Component {
     }
 
     render() {
-        let {classes}=this.props
+        let { classes } = this.props
         return (
-            <div style={{minHeight: 800}} className="m-2">
+            <div style={{ minHeight: 800 }} className="m-2">
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} className="p-3">
                         {
                             this.state.fetching ?
                                 <div className="text-center">
-                                    <CircularProgress/>
+                                    <CircularProgress />
                                 </div>
                                 : <div>
-                                    <Paper style={{paddingLeft: 10}}>
+                                    <Paper style={{ paddingLeft: 10 }}>
                                         {
                                             <div>
                                                 <Grid container spacing={16}>
                                                     <Grid item xs={6} className="p-3">
-                                                        <h6>{this.props.estructura ? 'Archivos de carpeta' : 'Archivos de trabajo'}</h6>
+                                                        <h6>{this.props.estructura
+                                                            ? <Translate id="languages.fileUpload.filesInFolder" />
+                                                            : <Translate id="languages.fileUpload.filesOfWork" />}</h6>
                                                     </Grid>
                                                     <Grid item xs={6} className="p-3 text-right">
                                                         {
@@ -382,11 +378,11 @@ class TrabajoEjecucion extends Component {
                                                                     height: 'auto',
                                                                     borderStyle: 'none'
                                                                 }}
-                                                                          accept="application/pdf"
-                                                                          onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                                                                    accept="application/pdf"
+                                                                    onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
                                                                     <Button color="primary">
-                                                                        Añadir archivos <CloudUpload
-                                                                        style={{marginLeft: 5}}/>
+                                                                        <Translate id="languages.fileUpload.addFiles" />
+                                                                        <CloudUpload style={{ marginLeft: 5 }} />
                                                                     </Button>
                                                                 </Dropzone>
                                                         }
@@ -396,33 +392,31 @@ class TrabajoEjecucion extends Component {
                                                     <Grid item xs={12} className="pr-3 text-right">
 
                                                         {
-                                                            this.state.temporalFiles?
-                                                                <div className={classes.wrapper} style={{float:'right'}}>
+                                                            this.state.temporalFiles ?
+                                                                <div className={classes.wrapper} style={{ float: 'right' }}>
                                                                     <Button
 
                                                                         color="primary"
                                                                         onClick={() => {
                                                                             this.handleAutoAsign()
                                                                         }}
-                                                                        disabled={this.state.disableAutoAsignButton ||this.state.fetchingAutoAsign>0}>
+                                                                        disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
                                                                         Selección automática
                                                                     </Button>
-                                                                    {this.state.fetchingAutoAsign>0 && <CircularProgress size={24}
-                                                                                                                      className={classes.buttonProgress}/>}
-                                                                </div>:null
+                                                                    {this.state.fetchingAutoAsign > 0 && <CircularProgress size={24}
+                                                                        className={classes.buttonProgress} />}
+                                                                </div> : null
                                                         }
-                                                        <div className={classes.wrapper} style={{float:'right'}}>
-                                                            <Button
-
-                                                                color="primary"
+                                                        <div className={classes.wrapper} style={{ float: 'right' }}>
+                                                            <Button color="primary"
                                                                 onClick={() => {
                                                                     this.handleRemove()
                                                                 }}
-                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
+                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove > 0}>
                                                                 Eliminar
                                                             </Button>
-                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
-                                                                                                              className={classes.buttonProgress}/>}
+                                                            {this.state.fetchingRemove > 0 && <CircularProgress size={24}
+                                                                className={classes.buttonProgress} />}
                                                         </div>
 
 
@@ -431,23 +425,23 @@ class TrabajoEjecucion extends Component {
                                             </div>
                                         }
                                     </Paper>
-                                    {this.state.fetchingCenter?
+                                    {this.state.fetchingCenter ?
                                         <Paper>
                                             <Grid container spacing={24}>
                                                 <Grid item xs={12} className='p-3 text-center'>
-                                                    <CircularProgress/>
+                                                    <CircularProgress />
                                                 </Grid>
                                             </Grid>
 
-                                        </Paper>:
+                                        </Paper> :
                                         <div>
                                             {
-                                                (this.state.data && this.state.data.length > 0)|| (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
+                                                (this.state.data && this.state.data.length > 0) || (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
                                                     <div className="pl-2">
                                                         <Grid container spacing={16}>
                                                             <Grid xs={6} className="p-3">
-                                                                <Typography variant="subtitle2">
-                                                                    NOMBRE DEL ARCHIVO
+                                                                <Typography variant="subtitle2" className="text-uppercase">
+                                                                    <Translate id="languages.fileUpload.fileName" />
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid xs={4} className="p-3">
@@ -468,8 +462,8 @@ class TrabajoEjecucion extends Component {
                                                                 }} onDragStart={() => {
                                                                     this.props.dragging(item)
                                                                 }} expanded={this.state.panelExpanded === item.Nombre}
-                                                                                        onChange={this.expandPanel(item.Nombre)}>
-                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                    onChange={this.expandPanel(item.Nombre)}>
+                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                                                         <Grid container spacing={16}>
                                                                             <Grid xs={6} className='d-flex'
                                                                             >
@@ -479,13 +473,13 @@ class TrabajoEjecucion extends Component {
                                                                                     value={item.Nombre}
                                                                                 />
                                                                                 <Typography
-                                                                                    style={{color: '#b26a00'}}>{item.Nombre}</Typography>
+                                                                                    style={{ color: '#b26a00' }}>{item.Nombre}</Typography>
                                                                             </Grid>
                                                                             <Grid xs={4}
-                                                                            ><Typography style={{color: '#b26a00'}}>Sin
+                                                                            ><Typography style={{ color: '#b26a00' }}>Sin
                                                                                 Asignar</Typography></Grid>
                                                                             <Grid xs={2} className="text-right">
-                                                                                <ErrorOutline style={{color: '#b26a00'}} size={24}/>
+                                                                                <ErrorOutline style={{ color: '#b26a00' }} size={24} />
                                                                             </Grid>
                                                                         </Grid>
                                                                     </ExpansionPanelSummary>
@@ -522,8 +516,8 @@ class TrabajoEjecucion extends Component {
                                                         {
                                                             this.state.data.map((item, pos) => {
                                                                 return (<ExpansionPanel expanded={this.state.panelExpanded === pos}
-                                                                                        onChange={() => this.expandPanel(pos)}>
-                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                                    onChange={() => this.expandPanel(pos)}>
+                                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                                                         <Grid container spacing={16}>
                                                                             <Grid xs={6} className='d-flex'
                                                                             >
@@ -534,14 +528,14 @@ class TrabajoEjecucion extends Component {
                                                                                 />
 
                                                                                 <Typography
-                                                                                    style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{item.Archivo}</Typography></Grid>
+                                                                                    style={{ color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c' }}>{item.Archivo}</Typography></Grid>
                                                                             <Grid xs={4}
                                                                             ><Typography
-                                                                                style={{color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c'}}>{this.props.estructura ? '' : item.Carpeta}</Typography></Grid>
+                                                                                style={{ color: item.Requisitos_Firma_Completos ? '#1b5e20' : '#b71c1c' }}>{this.props.estructura ? '' : item.Carpeta}</Typography></Grid>
                                                                             <Grid xs={2} className="text-right">
                                                                                 {item.Requisitos_Firma_Completos ?
-                                                                                    <CheckCircle/> :
-                                                                                    <Close style={{color: 'red'}}/>
+                                                                                    <CheckCircle /> :
+                                                                                    <Close style={{ color: 'red' }} />
                                                                                 }
                                                                             </Grid>
                                                                         </Grid>
@@ -578,18 +572,18 @@ class TrabajoEjecucion extends Component {
                                                                                         <List>
                                                                                             {
                                                                                                 this.state.firmasDigitales && this.state.firmasDigitales.length > 0 ? this.state.firmasDigitales.map((fd, pos) => {
-                                                                                                        if (fd.Id_Archivo == item.Id_Archivo) {
-                                                                                                            return (
-                                                                                                                <ListItem>
-                                                                                                                    <ListItemText
-                                                                                                                        primary={fd.Nombre}/>
-                                                                                                                </ListItem>)
-                                                                                                        } else {
-                                                                                                            return "";
-                                                                                                        }
-                                                                                                    }) :
+                                                                                                    if (fd.Id_Archivo == item.Id_Archivo) {
+                                                                                                        return (
+                                                                                                            <ListItem>
+                                                                                                                <ListItemText
+                                                                                                                    primary={fd.Nombre} />
+                                                                                                            </ListItem>)
+                                                                                                    } else {
+                                                                                                        return "";
+                                                                                                    }
+                                                                                                }) :
                                                                                                     <ListItem>
-                                                                                                        <ListItemText primary="--"/>
+                                                                                                        <ListItemText primary="--" />
                                                                                                     </ListItem>
                                                                                             }
                                                                                         </List>
@@ -612,7 +606,7 @@ class TrabajoEjecucion extends Component {
 
                                                     </div>
                                                     :
-                                                    <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>No hay
+                                                    <h1 className="text-center" style={{ color: '#cecece', marginTop: 15 }}>No hay
                                                         resultados que mostrar</h1>
                                             }
                                         </div>
@@ -625,8 +619,8 @@ class TrabajoEjecucion extends Component {
                         {
                             this.state.workDetails ?
                                 <ExpansionPanel expanded={this.state.fichaTrabajoOpen}
-                                                onChange={() => this.setState({fichaTrabajoOpen: !this.state.fichaTrabajoOpen})}>
-                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                    onChange={() => this.setState({ fichaTrabajoOpen: !this.state.fichaTrabajoOpen })}>
+                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                         <Typography variant='button'>ficha del trabajo</Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
@@ -652,7 +646,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12} style={{ backgroundColor: "#fafafa" }}>
                                                 <Grid container spacing={4}>
                                                     <Grid xs={6}>
                                                         <Typography variant='overline'>
@@ -701,7 +695,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12} style={{ backgroundColor: "#fafafa" }}>
                                                 <Grid container spacing={4}>
                                                     <Grid xs={12}>
                                                         <Typography variant='overline'>
@@ -745,23 +739,23 @@ class TrabajoEjecucion extends Component {
                         {
                             this.state.folderInfo ?
                                 <Paper
-                                    style={{borderColor: '#cecece', borderWidth: 1, marginTop: -7, marginBottom: 10}}>
-                                    <div style={{padding: 6}}>
-                                        <b style={{fontSize: 12}}>{this.state.folderInfo.Nombre}</b>
+                                    style={{ borderColor: '#cecece', borderWidth: 1, marginTop: -7, marginBottom: 10 }}>
+                                    <div style={{ padding: 6 }}>
+                                        <b style={{ fontSize: 12 }}>{this.state.folderInfo.Nombre}</b>
                                     </div>
-                                    <div style={{backgroundColor: '#f5f5f5', marginTop: 10, marginBottom: 10}}>
+                                    <div style={{ backgroundColor: '#f5f5f5', marginTop: 10, marginBottom: 10 }}>
                                         <Grid container spacing={16}>
                                             <Grid xs={6} className="p-3">
-                                                <label style={{textTransform: 'uppercase', fontSize: 12}}>Firmas
-                                                    Requeridas</label><br/>
+                                                <label style={{ textTransform: 'uppercase', fontSize: 12 }}>Firmas
+                                                    Requeridas</label><br />
                                                 <b style={{
                                                     textTransform: 'uppercase',
                                                     fontSize: 12
                                                 }}>{this.state.folderInfo.Firmas_Requeridas}</b>
                                             </Grid>
                                             <Grid xs={6} className="p-3">
-                                                <label style={{textTransform: 'uppercase', fontSize: 12}}>Fecha
-                                                    entrada</label><br/>
+                                                <label style={{ textTransform: 'uppercase', fontSize: 12 }}>Fecha
+                                                    entrada</label><br />
                                                 <b style={{
                                                     textTransform: 'uppercase',
                                                     fontSize: 12
@@ -771,14 +765,14 @@ class TrabajoEjecucion extends Component {
                                         <Grid container spacing={16}>
                                             <Grid xs={12} className="p-3">
                                                 <ExpansionPanel expanded={this.state.aclaracionesOpen}
-                                                                onChange={() => this.setState({aclaracionesOpen: !this.state.aclaracionesOpen})}>
-                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                                    onChange={() => this.setState({ aclaracionesOpen: !this.state.aclaracionesOpen })}>
+                                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                                         {this.state.aclaracionesOpen ? "Ocultar aclaraciones de contenido" : "Mostrar aclaraciones de contenido"}
                                                     </ExpansionPanelSummary>
                                                     <ExpansionPanelDetails>
-                                                        <div style={{width: '100%'}}>
+                                                        <div style={{ width: '100%' }}>
                                                             <span>
-                                                              {renderHTML(this.state.folderInfo.Aclaraciones)}
+                                                                {renderHTML(this.state.folderInfo.Aclaraciones)}
                                                             </span>
                                                         </div>
                                                     </ExpansionPanelDetails>
@@ -791,15 +785,15 @@ class TrabajoEjecucion extends Component {
                         }
                         {
                             this.state.uploadInProgress ?
-                                <div style={{marginTop: 20}}>
+                                <div style={{ marginTop: 20 }}>
                                     <Paper>
                                         <Grid container spacing={16}>
                                             <Grid xs={7} className="p-3">
-                                                <label style={{fontSize: 12}}>Subiendo
+                                                <label style={{ fontSize: 12 }}>Subiendo
                                                    Subido archivo {this.state.currentUpload} de {this.state.uploadLength}</label>
                                             </Grid>
                                             <Grid xs={5} className="p-3"
-                                                  style={{paddingRight: 10, paddingLeft: 0, textAlign: 'right'}}>
+                                                style={{ paddingRight: 10, paddingLeft: 0, textAlign: 'right' }}>
                                                 <a onClick={() => this.abortUpload()} style={{
                                                     fontSize: 12,
                                                     textDecoration: 'underline',
@@ -809,18 +803,18 @@ class TrabajoEjecucion extends Component {
                                         </Grid>
                                         <Grid container spacing={5}>
                                             <Grid xs={12} className="p-3">
-                                                <LinearProgress style={{height: 20}} variant="determinate"
-                                                                value={this.state.currentUpload * 100 / this.state.uploadLength}/>
+                                                <LinearProgress style={{ height: 20 }} variant="determinate"
+                                                    value={this.state.currentUpload * 100 / this.state.uploadLength} />
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
                                             <Grid xs={12} className="p-3">
-                                                <b style={{fontSize: 12}}>{this.state.currentUploadItem ? this.state.currentUploadItem.filename : null}</b>
+                                                <b style={{ fontSize: 12 }}>{this.state.currentUploadItem ? this.state.currentUploadItem.filename : null}</b>
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
                                             <Grid xs={12} className="p-3">
-                                                <ul style={{listStyle: 'none', overflowX: 'hidden'}}>
+                                                <ul style={{ listStyle: 'none', overflowX: 'hidden' }}>
                                                     {
                                                         this.state.pendingUploadList.map((item, pos) => {
 
