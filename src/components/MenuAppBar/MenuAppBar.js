@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import { Button, IconButton } from '@material-ui/core';
+import { Button, IconButton, Grid } from '@material-ui/core';
 import { Container, Row, Col } from 'reactstrap';
 import coag from './images/coag.jpg';
 import './MenuAppBar.css';
@@ -40,6 +40,13 @@ const styles = theme => ({
     },
     col: {
         alignSelf: "center"
+    },
+    menuUser: {
+            display: "flex",
+            textAlign: "right",
+            [theme.breakpoints.down('sm')]: {
+                display: "inline",
+        },
     }
 });
 
@@ -80,16 +87,16 @@ class MenuAppBar extends React.Component {
 
         return (
             <Container className="full">
-                <Row>
-                    <Col xs={9} sm={9} md={4} lg={3} className={classes.col}>
+                <Grid container spacing={16}>
+                    <Grid item xs={9} sm={9} md={4} lg={3} className={classes.col}>
                         <div><img src={coag} alt="logo" height="50" className="logo-coag" /></div>
-                    </Col>
-                    <Col xs={3} sm={3} md={2} lg={2} className={classes.col}>
+                    </Grid>
+                    <Grid item xs={3} sm={3} md={2} lg={2} className={classes.col}>
                         <Button color="secondary" className={classes.button} onClick={() => { this.handleNav("/") }}>
                             <Translate id="languages.header.titleHome" />
                         </Button>
-                    </Col>
-                    <Col xs={10} sm={8} md={5} lg={5} className={classes.col}>
+                    </Grid>
+                    <Grid item xs={10} sm={8} md={5} lg={5} className={classes.col}>
                         <div className="botonesBarra">
                             <Button variant="contained" color="primary" className={classes.button} onClick={() => { this.props.history.push("/nuevo-expediente") }}>
                                 <Translate id="languages.header.btnNewExpedient" />
@@ -106,14 +113,14 @@ class MenuAppBar extends React.Component {
                             </IconButton>
                         </div>
 
-                    </Col>
-                    <Col xs={2} sm={4} md={1} lg={2} className={classes.col} >
-                        <div style={{ display: "flex", textAlign: "right" }}>
+                    </Grid>
+                    <Grid item xs={2} sm={4} md={1} lg={2} className={classes.col} >
+                        <div className={classes.menuUser}>
                             <MenuLanguage />
                             <MenuUser />
                         </div>
-                    </Col>
-                </Row>
+                    </Grid>
+                </Grid>
                 <div>
                     <CSSTransitionGroup
                         transitionName="acciones"

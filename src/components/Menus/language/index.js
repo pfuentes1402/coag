@@ -43,7 +43,7 @@ class MenuLanguage extends React.Component {
     }
 
     render() {
-        let {classes, languages} = this.props;
+        let {languages} = this.props;
         let {open} = this.state;
 
         return (

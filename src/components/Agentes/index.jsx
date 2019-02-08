@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Close from '@material-ui/icons/Close';
 import { connect } from "react-redux";
 import { postAddTrabajoEncomenda } from '../../actions/expedientes/index';
-import { addTrabajoEncomendaExpediente, manageEncomenda } from '../../api';
+import { manageEncomenda } from '../../api';
 import { fetchErrorExpediente } from '../../actions/expedientes/index';
 import { withRouter } from 'react-router-dom';
 import { Translate } from "react-localize-redux";

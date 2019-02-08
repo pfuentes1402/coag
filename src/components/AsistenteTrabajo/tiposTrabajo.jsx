@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+
 import { withStyles } from '@material-ui/core/styles';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
@@ -11,7 +11,7 @@ import { grey } from '@material-ui/core/colors';
 import { getFasesTrabajos } from '../../api/index';
 import { dispatchError, fetchErrorTrabajo } from '../../actions/trabajos';
 import EnhancedTable from './tablaTiposTrabjo';
-import { groupBy, filter } from 'lodash';
+
 
 const styles = theme => ({
   titleMainPanel: {
@@ -136,6 +136,7 @@ class TiposTrabajo extends Component {
       if (value.trabajos.length > 0) {
         works = works.concat(value.trabajos);
       }
+      return null
     })
 
     await this.setState(state => ({ ...state, selectTrabajos: newState, linealWorksSelection: works }));

@@ -5,8 +5,8 @@ import { grey } from '@material-ui/core/colors';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import { Typography, Grid, Paper, TextField, Button } from '@material-ui/core';
-import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton, Divider } from '@material-ui/core';
-import { Add, Edit, Delete, Check } from '@material-ui/icons';
+import { Table, TableCell, TableHead, TableBody, TableRow, Divider } from '@material-ui/core';
+import {  Check } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { fetchErrorExpediente } from '../../../../actions/expedientes';
 import { withRouter } from 'react-router-dom';
@@ -32,6 +32,9 @@ const styles = theme => ({
   table: {
     minWidth: 200,
   },
+    tableArquitecto: {
+        minWidth: 190,
+    },
   tableBodyHeight: {
     minHeight: 100
   },
@@ -55,7 +58,10 @@ const styles = theme => ({
   headerBorder: {
     border: "2px solid " + grey[200],
     borderBottom: 0
-  }
+  },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -84,7 +90,7 @@ class TipoExpediente extends Component {
   renderAgentsTable() {
     let { classes } = this.props;
     return (
-      <div className="p-2">
+      <div className="p-3">
         <Grid container className={`${classes.headerBorder}`}>
           <Grid item md={12}>
             <Typography variant="subtitle1" gutterBottom className="m-2">
@@ -92,8 +98,8 @@ class TipoExpediente extends Component {
             </Typography>
           </Grid>
         </Grid>
-
-        <Table className={`${classes.table} ${classes.tableBorder}`}>
+          <div className={classes.tableWrapper}>
+            <Table className={`${classes.tableArquitecto} ${classes.tableBorder}`}>
           <TableHead>
             <TableRow className={classes.headHeight}>
               <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
@@ -130,6 +136,7 @@ class TipoExpediente extends Component {
             }
           </TableBody>
         </Table>
+          </div>
       </div>
     );
   }
@@ -137,7 +144,7 @@ class TipoExpediente extends Component {
   renderPromotorsTable() {
     let { classes } = this.props;
     return (
-      <div className="p-2">
+      <div className="p-3">
         <Grid container className={classes.headerBorder}>
           <Grid item md={10}>
             <Typography variant="subtitle1" gutterBottom className="m-2">
@@ -145,8 +152,8 @@ class TipoExpediente extends Component {
             </Typography>
           </Grid>
         </Grid>
-
-        <Table className={`${classes.table} ${classes.tableBorder}`}>
+          <div className={classes.tableWrapper}>
+            <Table className={`${classes.table} ${classes.tableBorder}`}>
           <TableHead>
             <TableRow className={classes.headHeight}>
               <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
@@ -154,7 +161,6 @@ class TipoExpediente extends Component {
                 <Translate id="languages.fichaExpediente.tableColumnName" />
               </CustomTableHead>
               <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3"></CustomTableHead>
             </TableRow>
           </TableHead>
 
@@ -172,13 +178,13 @@ class TipoExpediente extends Component {
                       </TableCell>
                       <TableCell className="pl-3">{row.Nombre}</TableCell>
                       <TableCell className="p-3">{row.Porcentaje}</TableCell>
-                      <TableCell className="px-1" style={{ width: 100 }}></TableCell>
                     </TableRow>
                   );
                 })
             }
           </TableBody>
         </Table>
+          </div>
       </div>
     );
   }
@@ -200,8 +206,8 @@ class TipoExpediente extends Component {
             <Divider style={{ height: 3 }} />
           </Grid>
 
-          <Grid container spacing={16}>
-            <Grid item xs={12} className="p-4 mr-3">
+          <Grid container spacing={24}>
+            <Grid item xs={12} className="p-4">
               <TextField
                 value={this.state.sourceExpediente.Descripcion_Encomenda_Actual}
                 label={<Translate id="languages.fichaExpediente.titleExpedientType" />}
@@ -210,11 +216,11 @@ class TipoExpediente extends Component {
                 name="expedientType" />
             </Grid>
 
-            <Grid item xs={12} className="mx-3">
+            <Grid item xs={12}>
               {this.renderPromotorsTable()}
             </Grid>
 
-            <Grid item xs={12} className="mx-3">
+            <Grid item xs={12} >
               {this.renderAgentsTable()}
             </Grid>
           </Grid>

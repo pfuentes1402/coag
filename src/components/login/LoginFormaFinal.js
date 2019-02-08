@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form';
-import { Button } from 'reactstrap';
+
 
 const asyncValidate = async (values, dispatch, props, fieldString) => {
   const errors = {}
@@ -47,7 +47,7 @@ const renderField = ({
 
 
 const LoginFormaFinal = props => {
-  let { handleSubmit, pristine, reset } = props
+  let { handleSubmit } = props
   return (
     <form onSubmit={handleSubmit}>
       <div className="inputDiv">

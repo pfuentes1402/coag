@@ -301,9 +301,6 @@ export const fetchDatosExpeFichaTrabajo = (datos) => ({
 // });
 
 export const setSelectedExpediente = payload => {
-
-    const { id_expediente, id_Trabajo } = payload;
-
     return dispatch => {
         dispatch(setExpediente(payload));
         dispatch(setExpedienteSelected(payload));

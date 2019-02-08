@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  AppBar, Toolbar, Typography, withStyles, Grid, Button, Collapse,
+  AppBar, Toolbar, withStyles, Grid, Button, Collapse,
   ListItemText, Divider
 } from '@material-ui/core';
 import {
@@ -25,7 +25,8 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+      flexGrow: 1,
+      overflowX: 'auto',
   },
   grow: {
     flexGrow: 1,
@@ -47,10 +48,10 @@ const styles = theme => ({
     fontSize: 13
   },
   headerNav: {
-    background: theme.palette.primary.main,
-    color: "white",
     margin: "auto",
-    textAlign: "center"
+    textAlign: "center",
+      borderBottom: "solid 1px " + grey[300],
+      position: "relative"
 
   },
   leftNav: {
@@ -82,8 +83,8 @@ class VisualizarExpediente extends Component {
     };
   }
 
-  async componentWillMount() {
-    await this.fetchExpediente();
+   componentWillMount() {
+     this.fetchExpediente();
   }
 
   //Consumir api con el id de expediente espicificado por ur
@@ -163,8 +164,9 @@ class VisualizarExpediente extends Component {
                     idEstructuraActiva: null
                 });
             }
+            await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
         }
-        await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
+
 
   }
 
@@ -201,7 +203,7 @@ class VisualizarExpediente extends Component {
   renderLeftNav() {
     let { classes } = this.props;
     return (
-      <List component="nav" color="primary" className={classes.leftNav}
+      <List component="nav" className={classes.leftNav}
         subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1`}
           style={{ lineHeight: 2 }}>
           {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
@@ -223,6 +225,7 @@ class VisualizarExpediente extends Component {
                                  moveItemTo={(target) => this.moveItemTo(target)}
                                  estructuraDocumental={this.state.estructuraDocumental}
                                  estructurasPadre={this.state.estructurasPadre}
+                                 idEstructuraActiva={this.state.idEstructuraActiva}
                                  isLoadEstructura={this.state.isLoadEstructura}
                                  active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
                     />
@@ -255,12 +258,12 @@ class VisualizarExpediente extends Component {
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
-    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo == this.state.idTrabajoActivo) : null;
+    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo === this.state.idTrabajoActivo) : null;
     return (
       this.state.expediente
         ? <Grid container>
               <Grid item xs={12}>
-                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}</BreadcrumbsItem>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{this.state.currentExpediente.Id_Expediente}</BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
                       ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>

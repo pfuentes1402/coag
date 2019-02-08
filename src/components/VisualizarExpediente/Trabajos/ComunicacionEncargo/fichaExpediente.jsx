@@ -11,7 +11,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
 import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
-import { Add, Edit, Delete, Check, Close } from '@material-ui/icons';
+import { Add, Edit, Check, Close } from '@material-ui/icons';
 import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
 import { putExpediente, putEmplazamiento } from '../../../../api';
 import ValidateAddress from '../../../Address';
@@ -61,7 +61,10 @@ const styles = theme => ({
   headerBorder: {
     border: "2px solid " + grey[200],
     borderBottom: 0
-  }
+  },
+    tableWrapper: {
+        overflowX: 'auto',
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -176,6 +179,7 @@ class FichaExpediente extends Component {
             </Fab>
           </Grid>
           <Grid item xs={12}>
+              <div className={classes.tableWrapper}>
               <Table className={`${classes.table} ${classes.tableBorder}`}>
                   <TableHead>
                       <TableRow className={classes.headHeight}>
@@ -221,6 +225,7 @@ class FichaExpediente extends Component {
                       }
                   </TableBody>
               </Table>
+              </div>
           </Grid>
         </Grid>
         {
@@ -261,7 +266,7 @@ class FichaExpediente extends Component {
               <Divider style={{ height: 3 }} />
             </Grid>
               <Grid item xs={12}>
-                <ValidatorForm ref="form">
+                <ValidatorForm ref="form" onSubmit={()=>false}>
                   <Grid container spacing={16}>
                      <Grid item xs={12} className="ml-3 mr-3">
                       <Grid container spacing={24}>

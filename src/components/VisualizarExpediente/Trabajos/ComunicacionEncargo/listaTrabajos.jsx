@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { withStyles, Grid, Button, Divider } from '@material-ui/core';
+import { withStyles, Grid, Divider } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { Table, TableCell, TableHead, TableBody, TableRow, Paper, Fab, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
@@ -31,6 +31,9 @@ const styles = theme => ({
   withoutRadius: {
     borderRadius: 0
   },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
   titleColor:{
     color: theme.palette.primary.main
   }
@@ -78,7 +81,8 @@ class ListaTrabajos extends Component {
             <Divider style={{ height: 3 }} />
           </Grid>
         </Grid>
-        <Table className={classes.table}>
+          <div className={classes.tableWrapper}>
+           <Table className={classes.table}>
           <TableHead>
             <TableRow className={classes.headHeight}>
               <CustomTableHead className="text-uppercase px-3">N</CustomTableHead>
@@ -123,6 +127,7 @@ class ListaTrabajos extends Component {
             }
           </TableBody>
         </Table>
+          </div>
       </Paper>
     );
   }

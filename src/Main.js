@@ -10,9 +10,6 @@ import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContai
 import VisualizarExpediente from './components/VisualizarExpediente/index';
 import AsistenteTrabajo from './components/AsistenteTrabajo/index';
 import { withLocalize } from "react-localize-redux";
-import { Translate } from "react-localize-redux";
-import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
-
 class Main extends Component {
     render(){
 

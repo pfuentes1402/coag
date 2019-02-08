@@ -1,5 +1,4 @@
 import { handleLoggout } from './../helpers/logout.js'
-import ordertree from "../helpers/orderTree";
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
 
@@ -29,11 +28,11 @@ const api = axios.create({
 
 });
 api.interceptors.request.use(async function (request) {
-  request.headers['Token']= await localStorage.getItem('token') || '';
-  return request
+    request.headers['Token']= await localStorage.getItem('token') || '';
+    return request
 })
-api.interceptors.response.use(function (response) {
 
+api.interceptors.response.use(function (response) {
   return response
 }, function (error) {
 
@@ -43,8 +42,8 @@ api.interceptors.response.use(function (response) {
     originalRequest._retry = true
 
 
-    const retryOriginalRequest = new Promise((resolve) => {
-      getToken().then(response => {
+    const retryOriginalRequest = new Promise(async (resolve) => {
+      await getToken().then(response => {
         if (response.headers.token) {
           originalRequest.headers['Token'] = response.headers.token;
           resolve(api(originalRequest))
@@ -315,11 +314,14 @@ export const funcionForma = async (datos) => {
 */
 export const getToken = async () => {
   try {
+      let clienteId = await localStorage.getItem('clienteid') ;
+      let clienteClave = await localStorage.getItem('clienteclave') ;
       let response = await axios.post('http://servicios.coag.es/api/authenticate',
           {
-              ClienteId: localStorage.getItem('clienteid'),
-              ClienteClave: localStorage.getItem('clienteclave')
+              ClienteId: clienteId,
+              ClienteClave: clienteClave
           });
+      console.log(response.headers)
       await localStorage.setItem('token', response.headers.token);
       return response;
   }catch (error) {
@@ -627,6 +629,8 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
       case "DELETE":
         response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
         break;
+      default:
+        return null
     }
     return response;
   }
@@ -797,6 +801,22 @@ export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang =
         return formatMenssage(error.message);
     }
 }
+
+/**
+ * Obtiene los detalles de un archivo
+ * @param idExpediente
+ * @param idTrabajo
+ * @param idEstructura id de la estructura de un archivo
+ * @returns {Promise<*>}
+ */
+export const getDetallesArchivo = async (idExpediente, idTrabajo, idEstructura) => {
+    try {
+        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1`);
+        return response.data;
+    } catch (error) {
+        return formatMenssage(error.message);
+    }
+}
 //obtener los detalles de un trabajo
 export const getWorkDetails = async (idExpediente, idTrabajo, lang = 1) => {
     try {
@@ -916,7 +936,6 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
 //Asignación automática de archivos
 export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
   try {
-    'http://servicios.coag.es/api/expedientes/{Id_Expediente}/AlmacenTemporalArchivos/AsignacionAutomatica'
     let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
         {
           Id_Trabajo:idTrabajo,
@@ -924,6 +943,21 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
           InsertarArchivos:1
         }
         );
+    return result.data
+  } catch (error ) {
+    return formatMenssage("Error 400 en API")
+  }
+}
+//Obtener Url de Descarga de archivos En carpetas
+export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
+  try {
+
+    let arc= archivos;
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivoDescarga`,
+        {
+          Archivos:archivos
+        }
+    );
     return result.data
   } catch (error ) {
     return formatMenssage("Error 400 en API")

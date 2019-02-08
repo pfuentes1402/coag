@@ -5,12 +5,9 @@ import ListaTrabajos from './listaTrabajos';
 import TipoExpediente from './tipoExpediente';
 
 class TrabajoComunicacion extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    console.log("this.props.match", this.props);
+
     return (
       <Grid container spacing={0}>
         <Grid item md={6} xs={12} >

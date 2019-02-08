@@ -7,14 +7,10 @@ import { FETCH_SAVE_AGENTES_DATA } from "../../actions/expedientes/types";
 import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import {
   FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
-  SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA, FETCH_EXPEDIENTES_SUCCESS, FETCH_EXPEDIENTES_INIT, FETCH_EXPEDIENTES_ERROR,
+  SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA, FETCH_EXPEDIENTES_SUCCESS, FETCH_EXPEDIENTES_ERROR,
   ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO, ADD_AUTORIZACION_GRUPO_EXPEDIENTE
 } from "../../actions/expedientes/types";
-
 import { PURGE } from 'redux-persist';
-import { comunicacionEncargo } from "../../actions/trabajos";
-
-
 const initialState = {
   arbolEstructuraDocumentalTrabajo: {}, loading: true, address: {
     Datos_Completos: [{
@@ -57,7 +53,6 @@ const expedientes = (state = initialState, action) => {
         ...state,
         arbolEstructuraTrabajoRefactor: action.payload
       };
-
     case FETCH_EXPEDIENTES_ERROR:
       return {
         ...state,
@@ -68,13 +63,11 @@ const expedientes = (state = initialState, action) => {
         ...state,
         address: action.payload,
       };
-      break;
     case FETCH_UBICACION_UPDATE:
       return {
         ...state,
         address: action.payload,
       };
-      break;
     case ELIMINAR_TABLA:
       let arraytEMP = state.addressreducida;
       let arraytEMP2 = state.arrayReferencias;

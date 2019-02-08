@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {NavLink,Link, withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
 import { withLocalize } from "react-localize-redux";
 import globalTranslations from "./resources.json";
@@ -44,7 +44,7 @@ class App extends Component {
 
 
     render() {
-        const {classes} = this.props;
+
         return (
             <Grid style={{width: '100%'}} >
                 { this.props.history.location.pathname !== "/login" ?
