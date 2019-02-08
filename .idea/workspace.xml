@@ -3,49 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.js" afterPath="$PROJECT_DIR$/src/Main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/search.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/search.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Errors/index.js" afterPath="$PROJECT_DIR$/src/components/Errors/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" afterPath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Menus/language/index.js" afterPath="$PROJECT_DIR$/src/components/Menus/language/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Menus/user/index.js" afterPath="$PROJECT_DIR$/src/components/Menus/user/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/SelectorTipoTrabajo/SelectorTipoTrabajo.js" afterPath="$PROJECT_DIR$/src/components/SelectorTipoTrabajo/SelectorTipoTrabajo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/EstadoRenderer.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/EstadoRenderer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/uploadFile.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/uploadFile.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/login/Login.js" afterPath="$PROJECT_DIR$/src/components/login/Login.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" afterPath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/AppHeader.js" afterPath="$PROJECT_DIR$/src/containers/AppHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/index.js" afterPath="$PROJECT_DIR$/src/containers/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/seleccionado/seleccionado.js" afterPath="$PROJECT_DIR$/src/reducers/seleccionado/seleccionado.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources.json" afterPath="$PROJECT_DIR$/src/resources.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -488,7 +447,7 @@
       <workItem from="1549470435811" duration="9000" />
       <workItem from="1549470767092" duration="1359000" />
       <workItem from="1549638401537" duration="181000" />
-      <workItem from="1549640052896" duration="9000" />
+      <workItem from="1549640052896" duration="598000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -564,7 +523,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250467000" />
+    <option name="totallyTimeSpent" value="251056000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
