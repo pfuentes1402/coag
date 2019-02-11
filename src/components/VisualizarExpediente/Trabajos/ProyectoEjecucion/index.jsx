@@ -403,15 +403,15 @@ class TrabajoEjecucion extends Component {
                 if(result.Archivos){
                     result.Archivos.map(item=>{
                         if(item.Insertado!==1){
-                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} no fue insertado.`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.noInsertion" />}`))
 
                         }else{
-                            this.props.fetchErrorExpediente(api.formatMenssage(`El documento ${item.Nombre} fue insertado en la estructura ${item.Carpeta}`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.successInsertion" />} ${item.Carpeta}`))
                         }
                         return null
                     })
                 }else{
-                    this.props.fetchErrorExpediente(formatMenssage('Error procesando la petición'));
+                    this.props.fetchErrorExpediente(formatMenssage(<Translate id="languages.messages.fetchError" />));
                 }
                 await this.setState({fetchingAutoAsign:false})
                 await this.loadInformation();
@@ -453,7 +453,9 @@ class TrabajoEjecucion extends Component {
                                             <div>
                                                 <Grid container spacing={16}>
                                                     <Grid item xs={6} className="p-3">
-                                                        <h6>{this.props.estructura ? 'Archivos de carpeta' : 'Archivos de trabajo'}</h6>
+                                                        <h6>{this.props.estructura 
+                                                            ? <Translate id="languages.fileUpload.filesInFolder" />
+                                                            : <Translate id="languages.fileUpload.filesOfWork" />}</h6>
                                                     </Grid>
                                                     <Grid item xs={6} className="p-3 text-right">
                                                         {
@@ -466,7 +468,7 @@ class TrabajoEjecucion extends Component {
                                                                           accept="application/pdf"
                                                                           onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
                                                                     <Button color="primary">
-                                                                        Añadir archivos <CloudUpload
+                                                                        <Translate id="languages.fileUpload.addFiles" /> <CloudUpload
                                                                         style={{marginLeft: 5}}/>
                                                                     </Button>
                                                                 </Dropzone>
@@ -486,7 +488,7 @@ class TrabajoEjecucion extends Component {
                                                                             this.handleAutoAsign()
                                                                         }}
                                                                         disabled={this.state.disableAutoAsignButton ||this.state.fetchingAutoAsign>0}>
-                                                                        Selección automática
+                                                                        <Translate id="languages.fileUpload.automaticSection" />
                                                                     </Button>
                                                                     {this.state.fetchingAutoAsign>0 && <CircularProgress size={24}
                                                                                                                       className={classes.buttonProgress}/>}
@@ -500,7 +502,7 @@ class TrabajoEjecucion extends Component {
                                                                     this.handleRemove()
                                                                 }}
                                                                 disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
-                                                                Eliminar
+                                                                <Translate id="languages.generalButton.delete" />
                                                             </Button>
                                                             {this.state.fetchingRemove>0 && <CircularProgress size={24}
                                                                                                               className={classes.buttonProgress}/>}
@@ -513,7 +515,7 @@ class TrabajoEjecucion extends Component {
                                                                     this.handleDownload()
                                                                 }}
                                                                 disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
-                                                                Descargar
+                                                                <Translate id="languages.generalButton.download" />
                                                             </Button>
                                                             {this.state.fetchingDownload && <CircularProgress size={24}
                                                                                                               className={classes.buttonProgress}/>}
@@ -540,18 +542,20 @@ class TrabajoEjecucion extends Component {
                                                     <div className="pl-2">
                                                         <Grid container spacing={16}>
                                                             <Grid item xs={6} className="p-3">
-                                                                <Typography variant="subtitle2">
-                                                                    NOMBRE DEL ARCHIVO
+                                                                <Typography variant="subtitle2" className="text-uppercase">
+                                                                   <Translate id="languages.fileUpload.fileName" />
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={4} className="p-3">
-                                                                <Typography variant="subtitle2">
-                                                                    {this.props.estructura ? 'ÚLTIMA MODIFICACIÓN' : 'CARPETA'}
+                                                                <Typography variant="subtitle2" className="text-uppercase">
+                                                                    {this.props.estructura 
+                                                                        ? <Translate id="languages.fileUpload.lastModification" /> 
+                                                                        : <Translate id="languages.fileUpload.folder" />}
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid item xs={2} className="p-3">
+                                                            <Grid item xs={2} className="p-3" className="text-uppercase">
                                                                 <Typography variant="subtitle2">
-                                                                    FIRMA
+                                                                    <Translate id="languages.fileUpload.firm" />
                                                                 </Typography>
                                                             </Grid>
                                                         </Grid>
@@ -576,7 +580,7 @@ class TrabajoEjecucion extends Component {
                                                                             </Grid>
                                                                             <Grid item xs={4} className="align-self-center">
                                                                                 <Typography className={classes.orange}>
-                                                                                    Sin Asignar
+                                                                                    <Translate id="languages.fileUpload.unAssigned" />
                                                                                 </Typography>
                                                                             </Grid>
                                                                             <Grid item xs={2} className="text-right align-self-center">
@@ -589,8 +593,8 @@ class TrabajoEjecucion extends Component {
                                                                             <Grid item xs={6} className="align-items-center">
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={12}>
-                                                                                        <Typography variant="button" gutterBottom>
-                                                                                            TAMAÑO DEL ARCHIVO
+                                                                                        <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                            <Translate id="languages.fileUpload.fileSize" />
                                                                                         </Typography>
                                                                                     </Grid>
 
@@ -649,8 +653,8 @@ class TrabajoEjecucion extends Component {
                                                                                 <Grid item xs={12}>
                                                                                     <Grid container spacing={0}>
                                                                                         <Grid item xs={6}>
-                                                                                            <Typography variant="button" gutterBottom>
-                                                                                                TAMAÑO DEL ARCHIVO
+                                                                                            <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                                <Translate id="languages.fileUpload.fileSize" />
                                                                                             </Typography>
                                                                                         </Grid>
                                                                                         <Grid item xs={6}>
@@ -663,8 +667,8 @@ class TrabajoEjecucion extends Component {
                                                                                 <Grid item xs={12}>
                                                                                     <Grid container spacing={0}>
                                                                                         <Grid item xs={6}>
-                                                                                            <Typography variant="button" gutterBottom>
-                                                                                                ULTIMA MODIFICACION
+                                                                                            <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                                <Translate id="languages.fileUpload.lastLocation" />
                                                                                             </Typography>
                                                                                         </Grid>
                                                                                         <Grid item xs={6}>
@@ -678,7 +682,7 @@ class TrabajoEjecucion extends Component {
                                                                                     <Grid container spacing={0}>
                                                                                         <Grid item xs={6}>
                                                                                             <Typography variant="button" gutterBottom>
-                                                                                                FIRMAS DEL ARCHIVO
+                                                                                                <Translate id="languages.fileUpload.fileFirms" />
                                                                                             </Typography>
                                                                                         </Grid>
                                                                                         <Grid item xs={6}>
@@ -707,7 +711,7 @@ class TrabajoEjecucion extends Component {
                                                                                     <Grid container spacing={0}>
                                                                                         <Grid item xs={6}>
                                                                                             <Typography variant="button" gutterBottom>
-                                                                                                FIRMAS REQUERIDAS
+                                                                                                <Translate id="languages.fileUpload.requiredFirms" />
                                                                                             </Typography>
                                                                                         </Grid>
                                                                                         <Grid item xs={6}>
@@ -728,8 +732,9 @@ class TrabajoEjecucion extends Component {
 
                                                     </div>
                                                     :
-                                                    <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>No hay
-                                                        resultados que mostrar</h1>
+                                                    <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>
+                                                        <Translate id="languages.fileUpload.noResult" />   
+                                                    </h1>
                                             }
                                         </div>
                                     }
@@ -743,15 +748,17 @@ class TrabajoEjecucion extends Component {
                                 <ExpansionPanel expanded={this.state.fichaTrabajoOpen}
                                                 onChange={() => this.setState({fichaTrabajoOpen: !this.state.fichaTrabajoOpen})}>
                                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                        <Typography variant='button'>ficha del trabajo</Typography>
+                                        <Typography variant='button'>
+                                            <Translate id="languages.fileUpload.formWork" />
+                                        </Typography>
                                     </ExpansionPanelSummary>
                                     <ExpansionPanelDetails>
                                         <Grid container spacing={24}>
                                             <Grid item xs={12}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            TITULO COMPLEMENTARIO
+                                                        <Typography variant='overline' className="text-uppercase">
+                                                            <Translate id="languages.fileUpload.complementaryTitle" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             {this.state.workDetails.Trabajos[0].Titulo_Complementario ? this.state.workDetails.Trabajos[0].Titulo_Complementario : "-"}
@@ -760,7 +767,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography variant='overline'>
-                                                            fecha de entrada
+                                                            <Translate id="languages.fileUpload.entryDate" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             {this.state.workDetails.Trabajos[0].Fecha_entrada ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY") : "-"}
@@ -771,8 +778,8 @@ class TrabajoEjecucion extends Component {
                                             <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            ESTADO
+                                                        <Typography variant='overline' className="text-uppercase">
+                                                            <Translate id="languages.fileUpload.state" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             {this.state.workDetails.Trabajos[0].Estado ? this.state.workDetails.Trabajos[0].Estado : "-"}
@@ -780,8 +787,8 @@ class TrabajoEjecucion extends Component {
 
                                                     </Grid>
                                                     <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            FECHA DE VISADO
+                                                        <Typography variant='overline' className="text-uppercase">
+                                                            <Translate id="languages.fileUpload.visaDate" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             {this.state.workDetails.Trabajos[0].Fecha_Tramitacion ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_Tramitacion)).format("DD/MM/YYYY") : "-"}
@@ -801,21 +808,21 @@ class TrabajoEjecucion extends Component {
 
                                                         <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? classes.black : ""}
                                                             variant='subtitle2'>
-                                                            Nuevo Trabajo
+                                                            <Translate id="languages.fileUpload.newWork" />
                                                         </Typography>
                                                     </div>
                                                     <div className="d-flex  px-2">
                                                         {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
                                                         <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? classes.black : ""}
                                                             variant='subtitle2'>
-                                                            Modificación Sustancial
+                                                            <Translate id="languages.fileUpload.modification" />
                                                         </Typography>
                                                     </div>
                                                     <div className="d-flex px-2">
                                                         {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
                                                         <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? classes.black : ""}
                                                             variant='subtitle2'>
-                                                            Corrección Básica
+                                                            <Translate id="languages.fileUpload.basicCorection" />
                                                         </Typography>
                                                     </div>
                                                 </div>
@@ -851,7 +858,7 @@ class TrabajoEjecucion extends Component {
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={6}>
                                                         <Typography variant='overline'>
-                                                            Tipo de expediente
+                                                            <Translate id="languages.fileUpload.expedientType" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             {this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/{this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}
@@ -860,7 +867,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography variant='overline'>
-                                                            Documentación de
+                                                            <Translate id="languages.fileUpload.documentation" />
                                                         </Typography>
                                                         <Typography variant='subtitle2'>
                                                             ???????
@@ -886,16 +893,16 @@ class TrabajoEjecucion extends Component {
                                           <Grid item xs={12} className="px-4">
                                               <Grid container spacing={16}>
                                                   <Grid item xs={6} className="p-3">
-                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>Firmas
-                                                          Requeridas</label><br/>
+                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>
+                                                        <Translate id="languages.fileUpload.requiredFirms" /></label><br/>
                                                       <b style={{
                                                           textTransform: 'uppercase',
                                                           fontSize: 12
                                                       }}>{this.state.folderInfo.Firmas_Requeridas}</b>
                                                   </Grid>
                                                   <Grid item xs={6} className="p-3">
-                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>Fecha
-                                                          entrada</label><br/>
+                                                      <label style={{textTransform: 'uppercase', fontSize: 12}}>
+                                                        <Translate id="languages.fileUpload.entryDate" /></label><br/>
                                                       <b style={{
                                                           textTransform: 'uppercase',
                                                           fontSize: 12
@@ -909,7 +916,9 @@ class TrabajoEjecucion extends Component {
                                                         <ExpansionPanel expanded={this.state.aclaracionesOpen}
                                                                         onChange={() => this.setState({aclaracionesOpen: !this.state.aclaracionesOpen})}>
                                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                                                {this.state.aclaracionesOpen ? "Ocultar aclaraciones de contenido" : "Mostrar aclaraciones de contenido"}
+                                                                {this.state.aclaracionesOpen 
+                                                                    ? <Translate id="languages.fileUpload.hideAclarations" /> 
+                                                                    : <Translate id="languages.fileUpload.showAclarations" />}
                                                             </ExpansionPanelSummary>
                                                             <ExpansionPanelDetails>
                                                                 <div style={{width: '100%'}}>
@@ -934,8 +943,9 @@ class TrabajoEjecucion extends Component {
                                     <Paper>
                                         <Grid container spacing={16}>
                                             <Grid item xs={7} className="p-3">
-                                                <label style={{fontSize: 12}}>Subiendo
-                                                   Subido archivo {this.state.currentUpload} de {this.state.uploadLength}</label>
+                                                <label style={{fontSize: 12}}>
+                                                   <Translate id="languages.fileUpload.uploadingProgress" />
+                                                   {this.state.currentUpload} de {this.state.uploadLength}</label>
                                             </Grid>
                                             <Grid item xs={5} className="p-3"
                                                   style={{paddingRight: 10, paddingLeft: 0, textAlign: 'right'}}>
