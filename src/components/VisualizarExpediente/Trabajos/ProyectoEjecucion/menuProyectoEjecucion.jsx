@@ -81,19 +81,16 @@ class MenuProyectoEjecucion extends Component {
                                                     }}
                                                      style={{paddingLeft: 48}}
                                                      className={classNames((this.props.dragTarget ? classes.dragTarget: ''),
-                                                         (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""),
-                                                         (children.Estado_Visual === 0 ? {color: red[500]} : (children.Estado_Visual === 1 ? {color: green[500]} : {color: orange[500]})))}
+                                                         (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""))}
                                                      onDragOver={()=>{this.setState({drop:pos})}} button
                                                      onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}
                                                      >
                                         <ListItemIcon style={{marginRight: 0, marginLeft: 24}}
-                                                      className={classNames((children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green ))
-                                                                            , (children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""))}>
+                                                      className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )}>
                                             {children.Estado_Visual === 0 ? <Close/> : (children.Estado_Visual === 1 ? <Check/> : <Block/>) }
                                         </ListItemIcon>
                                         <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido === 1 ? ' *' : '')}
-                                                      classes={{primary: classNames(( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )),
-                                                              (children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ""))}}
+                                                      classes={{primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green ))}}
                                                       />
                                     </ListItem>
                                 })}

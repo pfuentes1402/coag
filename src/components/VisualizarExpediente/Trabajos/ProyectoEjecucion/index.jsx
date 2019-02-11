@@ -85,6 +85,12 @@ const styles = theme => ({
     },
     margin: {
         margin: 0
+    },
+    backgroundColor: {
+        backgroundColor: "#f5f5f5"
+    },
+    rootPanel: {
+        position: "inherit"
     }
 });
 const mapStateToProps = (state) => (
@@ -566,13 +572,12 @@ class TrabajoEjecucion extends Component {
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" onDragEnd={() => {
-                                                                            this.props.dragging(false)
-                                                                        }} onDragStart={() => {
-                                                                            this.props.dragging(item)
-                                                                        }} expanded={this.state.panelExpanded === item.Nombre}
+                                                                        return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" classes={{root: classes.rootPanel}}
+                                                                                                onDragEnd={() => {this.props.dragging(false)}}
+                                                                                                onDragStart={() => {this.props.dragging(item)}}
+                                                                                                expanded={this.state.panelExpanded === item.Nombre}
                                                                                                 onChange={this.expandPanel(item.Nombre, false)}>
-                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin}}>
+                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={6} className='d-flex align-items-center'
                                                                                     >
@@ -593,7 +598,7 @@ class TrabajoEjecucion extends Component {
                                                                                     </Grid>
                                                                                 </Grid>
                                                                             </ExpansionPanelSummary>
-                                                                            <ExpansionPanelDetails>
+                                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
                                                                                 <Grid container spacing={16}>
                                                                                     <Grid item xs={6} className="align-items-center">
                                                                                         <Grid container spacing={0}>
@@ -625,9 +630,10 @@ class TrabajoEjecucion extends Component {
                                                                 }
                                                                 {
                                                                     this.state.data.map((item, pos) => {
-                                                                        return (<ExpansionPanel key={'file-'+pos}  expanded={this.state.panelExpanded === item.Id_Estructura}
+                                                                        return (<ExpansionPanel key={'file-'+pos}  classes={{root: classes.rootPanel}}
+                                                                                                expanded={this.state.panelExpanded === item.Id_Estructura}
                                                                                                 onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
-                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin}}>
+                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={6} className='d-flex align-items-center'>
                                                                                         <Checkbox
@@ -652,7 +658,7 @@ class TrabajoEjecucion extends Component {
                                                                                     </Grid>
                                                                                 </Grid>
                                                                             </ExpansionPanelSummary>
-                                                                            <ExpansionPanelDetails>
+                                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
                                                                                 {this.state.loadingDetallesArchivo ? <CircularProgress/> :
                                                                                     <Grid container spacing={16}>
                                                                                         <Grid item xs={12}>
@@ -784,7 +790,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12} className={classes.backgroundColor}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={6}>
                                                         <Typography variant='overline' className="text-uppercase">
@@ -836,7 +842,7 @@ class TrabajoEjecucion extends Component {
                                                     </div>
                                                 </div>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12}  className={classes.backgroundColor}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={12}>
                                                         <TextField
