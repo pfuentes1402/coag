@@ -1,51 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Modificaciones en el disenno del firmas">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/search.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/search.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Errors/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Errors/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menus/language/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menus/language/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Menus/user/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Menus/user/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SelectorTipoTrabajo/SelectorTipoTrabajo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectorTipoTrabajo/SelectorTipoTrabajo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tramitaciones/EstadoRenderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/EstadoRenderer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/uploadFile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/uploadFile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/AppHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/AppHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/seleccionado/seleccionado.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/seleccionado/seleccionado.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -59,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MenuAppBar.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MenuAppBar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="52" column="42" lean-forward="true" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+            <state>
+              <caret line="46" column="45" selection-start-line="46" selection-start-column="45" selection-end-line="46" selection-end-column="45" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -74,7 +32,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Menus/user/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="778">
+            <state relative-caret-position="1530">
               <caret line="97" column="15" selection-start-line="97" selection-start-column="15" selection-end-line="97" selection-end-column="15" />
             </state>
           </provider>
@@ -89,20 +47,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TramitacionesCurso.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="77" column="7" lean-forward="true" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
+            <state relative-caret-position="68">
+              <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TramitacionesCurso.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1037">
+              <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="642" column="156" selection-start-line="642" selection-start-column="141" selection-end-line="642" selection-end-column="156" />
+            <state relative-caret-position="408">
+              <caret line="717" column="25" selection-start-line="717" selection-start-column="25" selection-end-line="717" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -119,7 +89,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>headHeight</find>
       <find>&lt;Ta</find>
       <find>&lt;Table</find>
       <find>tableWrapper</find>
@@ -147,8 +116,9 @@
       <find>cat</find>
       <find>throw</find>
       <find>ID_tra</find>
-      <find>firma</find>
       <find>Down</find>
+      <find>firma</find>
+      <find>get info</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -229,9 +199,9 @@
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
         <option value="$PROJECT_DIR$/src/api/index.js" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
       </list>
     </option>
   </component>
@@ -262,16 +232,17 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
     <option name="width" value="1295" />
-    <option name="height" value="703" />
+    <option name="height" value="704" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -303,11 +274,34 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="MenuAppBar" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
+              <item name="Trabajos" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
+              <item name="Trabajos" type="462c0819:PsiDirectoryNode" />
+              <item name="ProyectoEjecucion" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -462,6 +456,7 @@
       <workItem from="1549302706530" duration="978000" />
       <workItem from="1549304212622" duration="13612000" />
       <workItem from="1549559267898" duration="514000" />
+      <workItem from="1549896041241" duration="252000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -610,11 +605,25 @@
       <option name="project" value="LOCAL" />
       <updated>1549479307790</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Modificaciones en el disenno del header">
+      <created>1549571636613</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1549571636613</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Modificaciones en el disenno del firmas">
+      <created>1549572226694</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1549572226694</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="405295000" />
+    <option name="totallyTimeSpent" value="407287000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -626,60 +635,48 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4116424" visible="true" weight="0.17542748" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41087613" visible="true" weight="0.17491749" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.38825214" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31088826" />
-      <window_info id="npm" order="2" sideWeight="0.58835757" side_tool="true" weight="0.17542748" />
+      <window_info id="npm" order="2" sideWeight="0.58912385" side_tool="true" weight="0.17491749" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31088826" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3252149" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info id="npm" order="2" sideWeight="0.58835757" side_tool="true" visible="true" weight="0.17542748" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4116424" visible="true" weight="0.17542748" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.38825214" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31088826" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3252149" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="10" weight="0.32990867" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Messages" order="7" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
       <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43125" visible="true" weight="0.23939203" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
       <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -735,7 +732,6 @@
     <MESSAGE value="cambios home" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js&#10;#&#9;src/components/NewExpedient/AddExpedient.js&#10;#&#9;src/index.js&#10;#&#9;src/routes.js" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js" />
-    <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="Aceptando merge" />
     <MESSAGE value="actualizacion localizaciones" />
     <MESSAGE value="menu de trabajos en modificar expediente" />
@@ -747,7 +743,11 @@
     <MESSAGE value="arreglado los errores de peticiones en la api con respecto al token" />
     <MESSAGE value="Estado de firma en las estructuras de carpeta con los colores correspondientes" />
     <MESSAGE value="merge Trabajo" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge Trabajo" />
+    <MESSAGE value="Modificaciones en response en el header" />
+    <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
+    <MESSAGE value="Modificaciones en el disenno del header" />
+    <MESSAGE value="Modificaciones en el disenno del firmas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modificaciones en el disenno del firmas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -755,13 +755,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="15918" column="12" selection-start-line="15918" selection-start-column="12" selection-end-line="15918" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/index.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -944,11 +937,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-204" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx">
@@ -1029,9 +1018,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1411">
           <caret line="94" column="62" selection-start-line="94" selection-start-column="62" selection-end-line="94" selection-end-column="62" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1039,14 +1025,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3383">
           <caret line="222" column="26" selection-start-line="222" selection-start-column="7" selection-end-line="222" selection-end-column="26" />
-          <folding>
-            <element signature="e#8167#8395#0" />
-            <element signature="e#8442#8631#0" />
-            <element signature="n#!!block;n#onSelected#0;n#EnhancedTable#0" />
-            <element signature="n#!!block;n#handleSaveAddress#0;n#EnhancedTable#0" />
-            <element signature="n#!!block;n#ifEqual#0;n#EnhancedTable#0" />
-            <element signature="n#!!block;n#handleDeleteAddress#0;n#EnhancedTable#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1054,9 +1032,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="986">
           <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1074,16 +1049,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1093,15 +1058,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="77" column="7" lean-forward="true" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="642" column="156" selection-start-line="642" selection-start-column="141" selection-end-line="642" selection-end-column="156" />
+        <state relative-caret-position="1037">
+          <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -1114,18 +1072,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Menus/user/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="778">
+        <state relative-caret-position="1530">
           <caret line="97" column="15" selection-start-line="97" selection-start-column="15" selection-end-line="97" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="52" column="42" lean-forward="true" selection-start-line="52" selection-start-column="42" selection-end-line="52" selection-end-column="42" />
+        <state>
+          <caret line="46" column="45" selection-start-line="46" selection-start-column="45" selection-end-line="46" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/03_Estructura Documental.postman_collection.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="303" column="29" selection-start-line="303" selection-start-column="29" selection-end-line="303" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="717" column="25" selection-start-line="717" selection-start-column="25" selection-end-line="717" selection-end-column="25" />
         </state>
       </provider>
     </entry>
