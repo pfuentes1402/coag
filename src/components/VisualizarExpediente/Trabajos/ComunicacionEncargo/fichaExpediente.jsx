@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { grey } from '@material-ui/core/colors';
 import moment from 'moment';
-import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton } from '@material-ui/core';
+import { Table, TableCell, TableHead, TableBody, TableRow, Fab, IconButton, CircularProgress } from '@material-ui/core';
 import { Add, Edit, Check, Close } from '@material-ui/icons';
 import { dispatchEditExpedienteEnTrabajo, fetchErrorExpediente, formatMenssage } from '../../../../actions/expedientes';
 import { putExpediente, putEmplazamiento } from '../../../../api';
@@ -87,6 +87,7 @@ class FichaExpediente extends Component {
         isUpdate: false,
         isAddUbicacion: false,
         isShowAddress: false,
+        isLoadingSave: false,
     }
   }
 
@@ -120,6 +121,7 @@ class FichaExpediente extends Component {
 
   async handleSaveAddress() {
     let {location, emplazamientos} = this.state;
+    await this.setState({isLoadingSave: true});
     let locations = [];
       Object.assign(locations, emplazamientos);
       let equal = this.ifEqual(emplazamientos, location);
@@ -133,16 +135,21 @@ class FichaExpediente extends Component {
       let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, {"Emplazamientos": locations, "ignorarobservaciones":1});
       if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
           this.props.fetchErrorExpediente(response.data);
+          this.setState({ isLoadingSave: false });
+
       }
       else if (response.response) {
-          if (response.response.data.MensajesProcesado)
+          if (response.response.data.MensajesProcesado) {
               this.props.fetchErrorExpediente(response.response.data);
-          else {
+              this.setState({isLoadingSave: false});
+          }
+      else {
               this.props.fetchErrorExpediente(formatMenssage(response.response.data.Message));
+              this.setState({ isLoadingSave: false })
           }
       }
       else {
-          this.setState({ emplazamientos: locations, isShowAddress: false })
+          this.setState({ emplazamientos: locations, isShowAddress: false, isLoadingSave: false })
           this.handleShowUbication(false);
       }
 
@@ -237,9 +244,10 @@ class FichaExpediente extends Component {
                 onClick={() => { this.handleShowUbication(false) }}>
                 <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
               </Button>
-              <Button variant="contained" size="small" color="primary" className={classes.button}
+              <Button variant="contained" size="small" color="primary" className={classes.button} disabled={this.state.isLoadingSave}
                 onClick={() => {this.handleSaveAddress()}}>
                 <Translate id="languages.generalButton.added" />
+                  {this.state.isLoadingSave && <CircularProgress size={24}/>}
               </Button>
             </Grid>
           </Grid>

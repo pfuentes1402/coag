@@ -132,9 +132,8 @@ class CrearTrabajo extends Component {
             await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, trabajo.defaultSelect, trabajo.Id_Tipo_Trabajo);
 
         }else {
-            let nombre = tiposTrabajos[fase][index]['Obligatorio'].toUpperCase();
-            tipoTramite = this.state.tiposTramites.find(t=>t.Nombre.toUpperCase() === nombre);
-            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, tipoTramite.Id_Tipo_Tramite, event.target.value, trabajo.Id_Tipo_Trabajo);
+            let idTipoTramite = this.getIdTipoTramite(tiposTrabajos[fase][index]['Obligatorio']);
+            await this.updateInfoCarpeta(trabajo.Id_Tipo_Trabajo, idTipoTramite, event.target.value, trabajo.Id_Tipo_Trabajo);
         }
 
         this.setState({ tiposTrabajos: tiposTrabajos });

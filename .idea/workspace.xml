@@ -4,7 +4,11 @@
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Address/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Address/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="263" column="26" lean-forward="true" selection-start-line="263" selection-start-column="26" selection-end-line="263" selection-end-column="26" />
+            <state relative-caret-position="190">
+              <caret line="300" column="39" lean-forward="true" selection-start-line="300" selection-start-column="20" selection-end-line="300" selection-end-column="39" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -30,20 +34,96 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menuProyectoEjecucion.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="79" column="128" lean-forward="true" selection-start-line="79" selection-start-column="128" selection-end-line="79" selection-end-column="128" />
+            <state relative-caret-position="153">
+              <caret line="13" column="19" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fichaExpediente.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="479">
+              <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3181">
-              <caret line="631" column="129" lean-forward="true" selection-start-line="631" selection-start-column="129" selection-end-line="631" selection-end-column="129" />
+            <state relative-caret-position="224">
+              <caret line="104" column="82" selection-start-line="104" selection-start-column="60" selection-end-line="104" selection-end-column="82" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tiposTrabajo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="57" column="8" selection-start-line="57" selection-start-column="8" selection-end-line="57" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="629">
+              <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resources.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resources.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="186" column="19" selection-start-line="186" selection-start-column="9" selection-end-line="186" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-124">
+              <caret line="136" column="49" lean-forward="true" selection-start-line="136" selection-start-column="49" selection-end-line="136" selection-end-column="49" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#5446#13418#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,23 +140,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>black</find>
-      <find>red</find>
-      <find>panelExpanded</find>
-      <find>Id_Expediente</find>
-      <find>trabajo</find>
-      <find>formatMenssage</find>
-      <find>fetchErrorExpediente</find>
-      <find>loadingDetallesArchivo</find>
-      <find>/estructuradocumental</find>
-      <find>firmasDigitales</find>
-      <find>12</find>
       <find>cat</find>
       <find>throw</find>
       <find>ID_tra</find>
       <find>Down</find>
       <find>firma</find>
-      <find />
+      <find>get info</find>
       <find>search.generalDescription</find>
       <find>GOEXPEDIENTES</find>
       <find>goExpedientesUser</find>
@@ -89,7 +158,18 @@
       <find>pl-1</find>
       <find>nombre</find>
       <find>classes={</find>
+      <find>backgroundColor</find>
+      <find>rootPanel</find>
       <find>expandPanel</find>
+      <find>autom</find>
+      <find>title</find>
+      <find>cir</find>
+      <find>Obligatorio</find>
+      <find>defaultSelect</find>
+      <find>tiposTrabajos</find>
+      <find>trabajoSeleccion</find>
+      <find>obliga</find>
+      <find>getIdTipoTramite</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -122,7 +202,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/package-lock.json" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/NewExpedient2.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastroForm.js" />
@@ -133,12 +212,10 @@
         <option value="$PROJECT_DIR$/src/actions/trabajos/index.js" />
         <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
-        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addOrganismo.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/components/Address/index.js" />
         <option value="$PROJECT_DIR$/src/containers/AppHeader.js" />
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
@@ -161,7 +238,6 @@
         <option value="$PROJECT_DIR$/src/actions/usuarios/index.js" />
         <option value="$PROJECT_DIR$/src/containers/HomeContainer.js" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/api/index.js" />
@@ -170,9 +246,13 @@
         <option value="$PROJECT_DIR$/src/components/Home/Modalacciones.js" />
         <option value="$PROJECT_DIR$/src/components/Busquedas/TablaDatosModal.js" />
         <option value="$PROJECT_DIR$/src/components/Busquedas/TablaBusquedaArquitectos.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/components/Address/index.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
+        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
       </list>
     </option>
   </component>
@@ -224,6 +304,11 @@
             <path>
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
               <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -237,31 +322,7 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
-              <item name="Trabajos" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
-              <item name="Trabajos" type="462c0819:PsiDirectoryNode" />
-              <item name="ProyectoEjecucion" type="462c0819:PsiDirectoryNode" />
+              <item name="AsistenteTrabajo" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -591,11 +652,25 @@
       <option name="project" value="LOCAL" />
       <updated>1549912589504</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="volviendo a modificar el estado del breadcrumbs que se habia cambiado y no estaba bien">
+      <created>1549913212793</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1549913212793</updated>
+    </task>
+    <task id="LOCAL-00026" summary="modificado el estilo de la lista de ficheros eb trabajo">
+      <created>1549917200535</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1549917200535</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="416037000" />
+    <option name="totallyTimeSpent" value="423402000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -615,7 +690,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27395833" side_tool="true" weight="0.3791541" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" visible="true" weight="0.3882175" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.4425982" />
       <window_info id="npm" order="2" sideWeight="0.59080964" side_tool="true" weight="0.17491749" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.30966768" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -733,7 +808,9 @@
     <MESSAGE value="modificado link de las busquedas en expediente y trabajo" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="arreglado error de desplegar los detalles del archivo cuando los nombre de los archivos son iguales pero estan en estructuras diferentes" />
-    <option name="LAST_COMMIT_MESSAGE" value="arreglado error de desplegar los detalles del archivo cuando los nombre de los archivos son iguales pero estan en estructuras diferentes" />
+    <MESSAGE value="volviendo a modificar el estado del breadcrumbs que se habia cambiado y no estaba bien" />
+    <MESSAGE value="modificado el estilo de la lista de ficheros eb trabajo" />
+    <option name="LAST_COMMIT_MESSAGE" value="modificado el estilo de la lista de ficheros eb trabajo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -741,34 +818,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/NewExpedient.js" />
-    <entry file="file://$PROJECT_DIR$/src/routes.js" />
-    <entry file="file://$PROJECT_DIR$/src/components/SubHeader/SubHeader.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-51" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ComponenteLareral/Componentelateral.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="46" selection-start-line="48" selection-start-column="32" selection-end-line="48" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="47">
@@ -849,23 +898,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="22" lean-forward="true" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-204" />
@@ -910,13 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="228" column="17" lean-forward="true" selection-start-line="228" selection-start-column="17" selection-end-line="228" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -987,13 +1012,6 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="475" column="31" selection-start-line="475" selection-start-column="13" selection-end-line="475" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1082,22 +1100,104 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="79" column="128" lean-forward="true" selection-start-line="79" selection-start-column="128" selection-end-line="79" selection-end-column="128" />
+        <state relative-caret-position="228">
+          <caret line="81" column="78" lean-forward="true" selection-start-line="81" selection-start-column="78" selection-end-line="81" selection-end-column="78" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/favicon.ico">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3181">
-          <caret line="631" column="129" lean-forward="true" selection-start-line="631" selection-start-column="129" selection-end-line="631" selection-end-column="129" />
+        <state relative-caret-position="122">
+          <caret line="629" column="103" lean-forward="true" selection-start-line="629" selection-start-column="103" selection-end-line="629" selection-end-column="103" />
+          <folding>
+            <element signature="e#32244#44695#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="186" column="19" selection-start-line="186" selection-start-column="9" selection-end-line="186" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-124">
+          <caret line="136" column="49" lean-forward="true" selection-start-line="136" selection-start-column="49" selection-end-line="136" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#5446#13418#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="13" column="19" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="263" column="26" lean-forward="true" selection-start-line="263" selection-start-column="26" selection-end-line="263" selection-end-column="26" />
+        <state relative-caret-position="190">
+          <caret line="300" column="39" lean-forward="true" selection-start-line="300" selection-start-column="20" selection-end-line="300" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="104" column="82" selection-start-line="104" selection-start-column="60" selection-end-line="104" selection-end-column="82" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="57" column="8" selection-start-line="57" selection-start-column="8" selection-end-line="57" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
