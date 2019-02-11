@@ -383,16 +383,17 @@ class TrabajoEjecucion extends Component {
         count+=files.length
         count+=temporalFiles.length
         if (count) {
+
+
             await this.setState({fetchingDownload:0})
             if(files.length){
-
-                files.map(async item=>{
+                if (files.length===1){
+                    let item=files[0];
                     await this.setState({fetchingDownload:this.state.fetchingDownload++})
                     let response =  await api.getUrlDownladOneFile(this.state.expediente.Id_Expediente,this.props.trabajo, item.Id_Estructura)
                     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                         this.props.fetchErrorExpediente(response);
                     }
-
                     if(response.Archivos&&response.Archivos.length===1){
                         this.download_file(response.Archivos[0].Url,response.Archivos[0].Nombre);
                         let state_files =this.state.data
@@ -400,35 +401,60 @@ class TrabajoEjecucion extends Component {
                             if (_item.Id_Estructura===item.Id_Estructura)
                                 await this.handleChange("checked", _pos, 'data')
                         })
+                    }
+                    await this.setState({fetchingDownload:this.state.fetchingDownload--})
+                }else{
+                    let arrayFiles=[]
+                    files.map(async item=>{
+                        await this.setState({fetchingDownload:this.state.fetchingDownload++})
+                        arrayFiles.push({
+                            Id_Estructura:item.Id_Estructura
+                        })
+                    });
+                    let response =  await api.getUrlDownladFiles(this.state.expediente.Id_Expediente,this.props.trabajo, arrayFiles)
+                    if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                        this.props.fetchErrorExpediente(response);
+                    }
 
+                    if(response.Archivos){
+                        response.Archivos.map((i,p)=>{
+                            this.download_file(i.Url,i.Nombre);
+                            return null
+                        })
                     }
 
                     await this.setState({fetchingDownload:this.state.fetchingDownload--})
-                    return null
-                });
+
+                }
+
+
+
 
 
 
 
             }
-            // if(temporalFiles.length){
-            //     let arrayArchivos = [];
-            //     temporalFiles.map(item=>{
-            //         arrayArchivos.push({Nombre:item.Nombre})
-            //         return null
-            //     });
-            //     let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
-            //     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-            //         this.props.fetchErrorExpediente(response);
-            //     }
-            //     let newData=[...this.state.temporalFiles];
-            //     temporalFiles.map(item=>{
-            //         newData = newData.filter(current=>current.Nombre!==item.Nombre)
-            //         return null
-            //     });
-            //
-            //     await this.setState({temporalFiles:newData})
-            // }
+            if(temporalFiles.length){
+                let arrayArchivos = [];
+
+                temporalFiles.map(item=>{
+                    arrayArchivos.push({Nombre:item.Nombre})
+                    return null
+                });
+                let response =  await api.getUrlDownladFilesTempFolder(this.state.expediente.Id_Expediente, arrayArchivos)
+                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                    this.props.fetchErrorExpediente(response);
+                }
+                let newData=[...this.state.temporalFiles];
+                temporalFiles.map(item=>{
+                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                    return null
+                });
+
+                await this.setState({temporalFiles:newData})
+            }
+
+
 
 
         }

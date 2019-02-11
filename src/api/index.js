@@ -963,6 +963,20 @@ export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
     return formatMenssage("Error 400 en API")
   }
 }
+export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
+    try {
+
+
+        let result = await api.get(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivoDescarga`,
+            {
+                Archivos:archivos
+            }
+        );
+        return result.data
+    } catch (error ) {
+        return formatMenssage(`Error 404 en la API`)
+    }
+}
 
 //Obtener Url de Descarga de 1 archivo
 export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
@@ -973,7 +987,7 @@ export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
         );
         return result.data
     } catch (error ) {
-        return formatMenssage("Error 400 en API")
+        return formatMenssage("Error 404 en API")
     }
 }
 export const download=async (urlFile,fileName)=>{
