@@ -208,7 +208,7 @@ class VisualizarExpediente extends Component {
           style={{ lineHeight: 2 }}>
           {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={this.handleExpandMenu} className="pl-1 pr-2">
+        <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -258,12 +258,14 @@ class VisualizarExpediente extends Component {
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
-    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo === this.state.idTrabajoActivo) : null;
+    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo == this.state.idTrabajoActivo) : null;
     return (
       this.state.expediente
         ? <Grid container>
               <Grid item xs={12}>
-                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{this.state.currentExpediente.Id_Expediente}</BreadcrumbsItem>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
+                      {this.state.currentExpediente.Id_Expediente}
+                      </BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
                       ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>

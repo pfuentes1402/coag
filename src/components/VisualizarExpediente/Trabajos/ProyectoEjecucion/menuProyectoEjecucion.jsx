@@ -79,6 +79,7 @@ class MenuProyectoEjecucion extends Component {
                                                         if (response)
                                                             this.props.changeEstructura(children.Id_Estructura, children.Titulo)
                                                     }}
+                                                     style={{paddingLeft: 48}}
                                                      className={classNames((this.props.dragTarget ? classes.dragTarget: ''),
                                                          (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""),
                                                          (children.Estado_Visual === 0 ? {color: red[500]} : (children.Estado_Visual === 1 ? {color: green[500]} : {color: orange[500]})))}

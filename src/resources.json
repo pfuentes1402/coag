@@ -526,7 +526,6 @@
                 "Inc"
             ]
         },
-
         "crearTrabajo":{
             "panelTitle":[
                 "Expediente",
@@ -565,6 +564,124 @@
                 "Seleccionar trabajo(s) a tramitar"
             ]
         },
+        "fileUpload":{
+            "noInsertion":[
+                "no fue insertado.",
+                "no fue insertado."
+            ],
+            "successInsertion":[
+                "fue insertado en la estructura",
+                "fue insertado en la estructura"
+            ],
+            "filesInFolder":[
+                "Archivos de carpeta",
+                "Archivos de carpeta"
+            ],
+            "filesOfWork":[
+                "Archivos de trabajo",
+                "Archivos de trabajo"
+            ],
+            "addFiles":[
+                "Añadir archivos",
+                "Añadir archivos"
+            ],
+            "automaticSection":[
+                "Selección automática",
+                "Selección automática"
+            ],
+            "fileName":[
+                "Nombre del Archivo",
+                "Nombre del Archivo"
+            ],
+            "lastModification":[
+                "Última modificación",
+                "Última modificación"
+            ],
+            "folder":[
+                "Carpeta",
+                "Carpeta"
+            ],
+            "firm":[
+                "Firma",
+                "Firma"
+            ],
+            "unAssigned":[
+                "Sin Asignar",
+                "Sin Asignar"
+            ],
+            "fileSize":[
+                "Tamaño del archivo",
+                "Tamaño del archivo"
+            ],
+            "lastLocation":[
+                "Última ubicación",
+                "Última ubicación"
+            ],
+            "fileFirms":[
+                "Firmas del archivo",
+                "Firmas del archivo"
+            ],
+            "requiredFirms":[
+                "Firmas requeridas",
+                "Firmas requeridas"
+            ],
+            "noResult":[
+                "No hay resultados a mostrar",
+                "No hay resultados a mostrar"
+            ],
+            "formWork":[
+                "ficha del trabajo",
+                "ficha del trabajo"
+            ],
+            "complementaryTitle":[
+                "Título complementario",
+                "Título complementario"
+            ],
+            "entryDate":[
+                "Fecha de entrada",
+                "Fecha de entrada"
+            ],
+            "state":[
+                "Estado",
+                "Estado"
+            ],
+            "visaDate":[
+                "Fecha de Visado",
+                "Fecha de Visado"
+            ],
+            "newWork":[
+                "Nuevo Trabajo",
+                "Nuevo Trabajo"
+            ],
+            "modification":[
+                "Modificación Sustancial",
+                "Modificación Sustancial"
+            ],
+            "basicCorection":[
+                "Corrección Básica",
+                "Corrección Básica"
+            ],
+            "expedientType":[
+                "Tipo de expediente",
+                "Tipo de expediente"
+            ],
+            "documentation":[
+                "Documentación de",
+                "Documentación de"
+            ],
+            "hideAclarations":[
+                "Ocultar aclaraciones de contenido",
+                "Ocultar aclaraciones de contenido"
+            ],
+            "showAclarations":[
+                "Mostrar aclaraciones de contenido",
+                "Mostrar aclaraciones de contenido"
+            ],
+            "uploadingProgress":[
+                "Subiendo archivo",
+                "Subiendo archivo"
+            ]
+        },
         "messages":{
             "comunicationValidation":[
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
@@ -573,6 +690,14 @@
             "trabajosSelectionValidate":[
                 "Debe seleccionar al menos un trabajo",
                 "Debe seleccionar al menos un trabajo"
+            ],
+            "filesDeleteMessage":[
+                "Debe seleccionar al menos un archivo para eliminar",
+                "Debe seleccionar al menos un archivo para eliminar"
+            ],
+            "fetchError":[
+                "Error procesando la petición",
+                "Error procesando la petición"
             ]
         }
     }

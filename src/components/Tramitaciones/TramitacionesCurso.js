@@ -78,7 +78,7 @@ class TramitacionesCurso extends Component {
       }
       onSelectionChanged(){
           var selectedRows = this.gridApi.getSelectedRows();
-          this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente);
+          this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
       }
   
 

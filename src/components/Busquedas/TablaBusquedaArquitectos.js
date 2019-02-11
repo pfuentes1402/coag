@@ -52,7 +52,7 @@ class TablaBusquedaArquitectos extends Component {
         /*A traves de este evento se envia al redux los datos de la fila seleccionada, estos datos son consumidos por el propio componente
         para en un redux form poder editar estos datos y añadir más agentes*/
         var selectedRows = this.gridApi.getSelectedRows();
-        console.table(selectedRows[0]);
+        //console.table(selectedRows[0]);
         this.props.setSelected(selectedRows[0]);
        
     };    

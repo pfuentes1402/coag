@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import {traduccionGrid} from './../../helpers/traducciones';
 import { goExpedientesUser } from './../../actions/usuarios/index';
-import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
 import {Button} from "@material-ui/core";
 const stateExpedientes = {
     columnDefs: [
@@ -51,8 +51,14 @@ class TablaDatosModal extends Component {
     };
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
-        this.props.goExpedientesUser();
-        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);
+        this.props.goExpedientesUser(); /*para ocultarl el modal de busqueda*/
+        if(this.props.isTrabajo){
+            this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
+        }else
+        {
+            this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente);
+
+        }
     };
 
     onBtExport() {
@@ -134,9 +140,8 @@ const mapStateToProps = state => ({
   });
 
 const mapDispatchToProps = {
-    goExpedientesUser,
-    fetchExpedienteDatosGeneral
+    goExpedientesUser
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(TablaDatosModal);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TablaDatosModal));

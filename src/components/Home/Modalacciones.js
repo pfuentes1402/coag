@@ -104,7 +104,7 @@ class Modalacciones extends Component {
                 );
             }else{
                 return (
-                    <TablaDatosModal data={this.props.datosTablaResult}/>
+                    <TablaDatosModal data={this.props.datosTablaResult} isTrabajo={this.state.types === "trabajos"}/>
                 );
             }
             
@@ -220,7 +220,7 @@ class Modalacciones extends Component {
                                     <Divider/>
                                     <Row>
                                         <Col xs={12}>
-                                            {modal ? RenderTipoTabla() : <TablaDatosModal data={this.props.datosTabla} />}
+                                            {modal ? RenderTipoTabla() : <TablaDatosModal data={this.props.datosTabla} isTrabajo={this.state.types === "trabajos"}/>}
                                         </Col>
                                     </Row>
                                 </Col>
