@@ -208,7 +208,7 @@ class VisualizarExpediente extends Component {
           style={{ lineHeight: 2 }}>
           {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={this.handleExpandMenu} className="pl-1 pr-2">
+        <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
