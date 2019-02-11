@@ -258,12 +258,14 @@ class VisualizarExpediente extends Component {
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
-    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo === this.state.idTrabajoActivo) : null;
+    let trabajoActual= this.state.expediente ? this.state.expediente.Trabajos.find(t=>t.Id_Trabajo == this.state.idTrabajoActivo) : null;
     return (
       this.state.expediente
         ? <Grid container>
               <Grid item xs={12}>
-                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>{this.state.currentExpediente.Id_Expediente}</BreadcrumbsItem>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
+                      {this.state.currentExpediente.Id_Expediente}
+                      </BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
                       ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
