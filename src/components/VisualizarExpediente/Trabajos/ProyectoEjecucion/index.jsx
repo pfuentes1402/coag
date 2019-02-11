@@ -343,25 +343,68 @@ class TrabajoEjecucion extends Component {
             this.setState({showDeleteButton: false})
         }
     }
+    download_file(fileURL, fileName) {
+        // for non-IE
+        if (!window.ActiveXObject) {
+            var save = document.createElement('a');
+            save.href = fileURL;
+            save.target = '_blank';
+            var filename = fileURL.substring(fileURL.lastIndexOf('/')+1);
+            save.download = fileName || filename;
+            if ( navigator.userAgent.toLowerCase().match(/(ipad|iphone|safari)/) && navigator.userAgent.search("Chrome") < 0) {
+                document.location = save.href;
+// window event not working here
+            }else{
+                var evt = new MouseEvent('click', {
+                    'view': window,
+                    'bubbles': true,
+                    'cancelable': false
+                });
+                save.dispatchEvent(evt);
+                (window.URL || window.webkitURL).revokeObjectURL(save.href);
+            }
+        }
+
+        // for IE < 11
+        else if ( !! window.ActiveXObject && document.execCommand)     {
+            var _window = window.open(fileURL, '_blank');
+            _window.document.close();
+            _window.document.execCommand('SaveAs', true, fileName || fileURL)
+            _window.close();
+        }
+    }
+
     async handleDownload() {
         let {files, temporalFiles} = this.itemsToRemove();
         let count = 0;
         count+=files.length
         count+=temporalFiles.length
         if (count) {
-            await this.setState({fetchingDownload:true})
+            await this.setState({fetchingDownload:0})
             if(files.length){
-                let arrayArchivos = [];
-                files.map(item=>{
-                    arrayArchivos.push({id_estructura:item.Id_Estructura})
+
+                files.map(async item=>{
+                    await this.setState({fetchingDownload:this.state.fetchingDownload++})
+                    let response =  await api.getUrlDownladOneFile(this.state.expediente.Id_Expediente,this.props.trabajo, item.Id_Estructura)
+                    if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                        this.props.fetchErrorExpediente(response);
+                    }
+
+                    if(response.Archivos&&response.Archivos.length===1){
+                        this.download_file(response.Archivos[0].Url,response.Archivos[0].Nombre);
+                        let state_files =this.state.data
+                        state_files.map(async (_item,_pos)=>{
+                            if (_item.Id_Estructura===item.Id_Estructura)
+                                await this.handleChange("checked", _pos, 'data')
+                        })
+
+                    }
+
+                    await this.setState({fetchingDownload:this.state.fetchingDownload--})
                     return null
                 });
-                let response =  await api.getUrlDownladFiles(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
-                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                    this.props.fetchErrorExpediente(response);
-                }
-                console.log(response)
-                //todo: Pendiente terminar
+
+
 
 
             }
@@ -383,7 +426,7 @@ class TrabajoEjecucion extends Component {
             //
             //     await this.setState({temporalFiles:newData})
             // }
-            await this.setState({fetchingDownload:false})
+
 
         }
     }
@@ -515,8 +558,8 @@ class TrabajoEjecucion extends Component {
                                                                 disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
                                                                 Descargar
                                                             </Button>
-                                                            {this.state.fetchingDownload && <CircularProgress size={24}
-                                                                                                              className={classes.buttonProgress}/>}
+                                                            {this.state.fetchingDownload? <CircularProgress size={24}
+                                                                                                              className={classes.buttonProgress}/>:null}
                                                         </div>
 
 
