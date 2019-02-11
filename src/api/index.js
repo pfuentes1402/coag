@@ -963,3 +963,29 @@ export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
     return formatMenssage("Error 400 en API")
   }
 }
+
+//Obtener Url de Descarga de 1 archivo
+export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
+    try {
+
+
+        let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${archivo}/InfoArchivoDescarga`
+        );
+        return result.data
+    } catch (error ) {
+        return formatMenssage("Error 400 en API")
+    }
+}
+export const download=async (urlFile,fileName)=>{
+    let response =await  axios.get(urlFile,{
+        responseType:'blob'
+    })
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+
+}
+
