@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="correccones en crear trabajo">
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -40,20 +39,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="listaTrabajos.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="listaTrabajos.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="129" column="16" lean-forward="true" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
+            <state relative-caret-position="101">
+              <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/api/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="329" column="1" lean-forward="true" selection-start-line="329" selection-start-column="1" selection-end-line="329" selection-end-column="1" />
+            <state relative-caret-position="143">
+              <caret line="972" column="10" lean-forward="true" selection-start-line="972" selection-start-column="10" selection-end-line="972" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -138,7 +137,7 @@
       <find>ID_tra</find>
       <find>Down</find>
       <find>firma</find>
-      <find />
+      <find>get info</find>
       <find>search.generalDescription</find>
       <find>GOEXPEDIENTES</find>
       <find>goExpedientesUser</find>
@@ -245,8 +244,8 @@
         <option value="$PROJECT_DIR$/src/components/Address/index.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
-        <option value="$PROJECT_DIR$/src/api/index.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" />
+        <option value="$PROJECT_DIR$/src/api/index.js" />
       </list>
     </option>
   </component>
@@ -673,11 +672,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549921207861</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="correcciones en lista trabajo">
+      <created>1549923492813</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1549923492813</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="425353000" />
+    <option name="totallyTimeSpent" value="426651000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -692,12 +698,12 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4091904" visible="true" weight="0.17491749" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4091904" visible="true" weight="0.17491749" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.27395833" side_tool="true" weight="0.3791541" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.4425982" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" visible="true" weight="0.4425982" />
       <window_info id="npm" order="2" sideWeight="0.59080964" side_tool="true" weight="0.17491749" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.30966768" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -793,7 +799,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Componente Arbol beta1" />
     <MESSAGE value="Redux Catastro" />
     <MESSAGE value="cambios home" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/ComunicacionEncargo/index.js&#10;#&#9;src/components/NewExpedient/AddExpedient.js&#10;#&#9;src/index.js&#10;#&#9;src/routes.js" />
@@ -818,7 +823,8 @@
     <MESSAGE value="volviendo a modificar el estado del breadcrumbs que se habia cambiado y no estaba bien" />
     <MESSAGE value="modificado el estilo de la lista de ficheros eb trabajo" />
     <MESSAGE value="correccones en crear trabajo" />
-    <option name="LAST_COMMIT_MESSAGE" value="correccones en crear trabajo" />
+    <MESSAGE value="correcciones en lista trabajo" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcciones en lista trabajo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1198,17 +1204,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="329" column="1" lean-forward="true" selection-start-line="329" selection-start-column="1" selection-end-line="329" selection-end-column="1" />
+        <state relative-caret-position="101">
+          <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx">
+    <entry file="file://$PROJECT_DIR$/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="129" column="16" lean-forward="true" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
+        <state relative-caret-position="143">
+          <caret line="972" column="10" lean-forward="true" selection-start-line="972" selection-start-column="10" selection-end-line="972" selection-end-column="10" />
         </state>
       </provider>
     </entry>

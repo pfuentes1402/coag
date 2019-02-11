@@ -895,7 +895,7 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
       let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, {Nombre:file});
       return result.data
     } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
     }
 }
 //eliminar multiples archivos de la carpeta temporal
@@ -904,7 +904,7 @@ export const removeFilesFromTemporalFolder = async (idExpediente,  arrayFiles) =
     let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {data:{Archivos:arrayFiles}});
     return result.data
   } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
   }
 }
 //eliminar un archivo de una estructura
@@ -913,7 +913,7 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
     return result.data
   } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
   }
 }
 //Eliminar multiples archivos de una estructura
@@ -928,7 +928,7 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
         });
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 
@@ -944,7 +944,7 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
         );
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 //Obtener Url de Descarga de archivos En carpetas
@@ -959,7 +959,7 @@ export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
     );
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
@@ -973,7 +973,7 @@ export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
         );
         return result.data
     } catch (error ) {
-        return formatMenssage(`Error 404 en la API`)
+        return formatMenssage(`Error 404`)
     }
 }
 
@@ -986,7 +986,7 @@ export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
         );
         return result.data
     } catch (error ) {
-        return formatMenssage("Error 404 en API")
+        return formatMenssage("Error 404")
     }
 }
 export const download=async (urlFile,fileName)=>{
