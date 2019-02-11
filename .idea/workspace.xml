@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="DAndo tratamiento a los warning mostrados al compilar">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Descargar ficheros que se encuentren dentro de estructuras" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -20,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="393" column="97" lean-forward="true" selection-start-line="393" selection-start-column="97" selection-end-line="393" selection-end-column="97" />
+            <state relative-caret-position="436">
+              <caret line="400" column="21" lean-forward="true" selection-start-line="400" selection-start-column="21" selection-end-line="400" selection-end-column="21" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -411,7 +407,7 @@
       <workItem from="1549304212622" duration="13612000" />
       <workItem from="1549632633006" duration="1318000" />
       <workItem from="1549640445565" duration="1293000" />
-      <workItem from="1549895912849" duration="7308000" />
+      <workItem from="1549895912849" duration="7550000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -574,11 +570,18 @@
       <option name="project" value="LOCAL" />
       <updated>1549559022929</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Descargar ficheros que se encuentren dentro de estructuras">
+      <created>1549916969022</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1549916969023</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="422848000" />
+    <option name="totallyTimeSpent" value="423090000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -591,7 +594,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6596154" weight="0.30047444" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -714,7 +716,8 @@
     <MESSAGE value="merge Trabajo" />
     <MESSAGE value="Solucionando errrores no importantes de React.&#10;Ocultar botón subir archivos a carpeta cuadno esta no admite alojar archivos" />
     <MESSAGE value="DAndo tratamiento a los warning mostrados al compilar" />
-    <option name="LAST_COMMIT_MESSAGE" value="DAndo tratamiento a los warning mostrados al compilar" />
+    <MESSAGE value="Descargar ficheros que se encuentren dentro de estructuras" />
+    <option name="LAST_COMMIT_MESSAGE" value="Descargar ficheros que se encuentren dentro de estructuras" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/containers/HomeContainer.js">
@@ -1149,8 +1152,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="393" column="97" lean-forward="true" selection-start-line="393" selection-start-column="97" selection-end-line="393" selection-end-column="97" />
+        <state relative-caret-position="436">
+          <caret line="400" column="21" lean-forward="true" selection-start-line="400" selection-start-column="21" selection-end-line="400" selection-end-column="21" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
