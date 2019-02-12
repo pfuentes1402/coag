@@ -98,7 +98,7 @@ class FichaExpediente extends Component {
     this.setState({ sourceExpediente: expedienteCopy });
   }
 
-  async updateExpediente() {
+  async handleSubmit() {
     this.setState({ isUpdate: true });
     let result = await putExpediente(this.state.sourceExpediente)
     if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
@@ -261,75 +261,77 @@ class FichaExpediente extends Component {
     return (
       <div>
         <Paper className={`${classes.withoutRadius} m-3`}>
-          <Grid container spacing={16} className="my-3">
-            <Grid item xs={12}>
-              <Grid item xs={12} className="d-flex justify-content-between">
-                <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
-                  <Translate id="languages.fichaExpediente.titleFichaExpediente" />
-                </Typography>
-                <Button color="primary" disabled={this.state.isUpdate} onClick={() => this.updateExpediente()}>
-                  Aplicar cambios<Check />
-                </Button>
+            <ValidatorForm ref="form" onSubmit={async () => {await this.handleSubmit()}}>
+              <Grid container spacing={16} className="my-3">
+                <Grid item xs={12}>
+                  <Grid item xs={12} className="d-flex justify-content-between">
+                    <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+                      <Translate id="languages.fichaExpediente.titleFichaExpediente" />
+                    </Typography>
+                    <Button type="submit" color="primary" disabled={this.state.isUpdate} >
+                      Aplicar cambios <Check />
+                    </Button>
+                  </Grid>
+                  <Divider style={{ height: 3 }} />
+                </Grid>
+                  <Grid item xs={12}>
+
+                      <Grid container spacing={16}>
+                         <Grid item xs={12} className="ml-3 mr-3">
+                          <Grid container spacing={24}>
+                            <Grid item xs={7} >
+                              <TextValidator
+                                value={this.state.sourceExpediente.Titulo}
+                                label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
+                                className={classes.textField}
+                                validators={['required']}
+                                errorMessages={[this.props.translate("languages.fichaExpediente.requiredField")]}
+                                onChange={this.handleChangeDataExpedient("Titulo")}
+                                name="name" />
+                              <TextValidator
+                                value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
+                                label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
+                                className={`${classes.textField} mt-3`}
+                                validators={['required']}
+                                errorMessages={[this.props.translate("languages.fichaExpediente.requiredField")]}
+                                onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
+                                name="code" />
+                              <TextField
+                                value={this.state.sourceExpediente.Antecedente}
+                                label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
+                                className={`${classes.textField} mt-3`}
+                                onChange={this.handleChangeDataExpedient("Antecedente")}
+                                name="antecedente" />
+                            </Grid>
+                            <Grid item xs={5} >
+                              <Typography variant="subtitle1" gutterBottom className="m-0">
+                                <Translate id="languages.fichaExpediente.labelEntryDate" />
+                              </Typography>
+                              <Typography variant="subtitle1" gutterBottom>
+                                {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                         </Grid>
+                        <Grid item xs={12} className={`${classes.divGrey} p-4`}>
+                            <Typography variant="subtitle1" gutterBottom className="m-0">
+                              <Translate id="languages.fichaExpediente.labelObservations" />
+                            </Typography>
+                            <TextField id="outlined-bare"
+                              className={`${classes.textField} m-0`}
+                              defaultValue={this.state.sourceExpediente.Observaciones}
+                              onChange={this.handleChangeDataExpedient("Observaciones")}
+                              margin="normal" multiline rows="4"
+                              variant="outlined" />
+                         </Grid>
+                          <Grid item xs={12} className="p-4">
+                            {this.renderUbicationTable()}
+                          </Grid>
+                       </Grid>
+
+                  </Grid>
               </Grid>
-              <Divider style={{ height: 3 }} />
-            </Grid>
-              <Grid item xs={12}>
-                <ValidatorForm ref="form" onSubmit={()=>false}>
-                  <Grid container spacing={16}>
-                     <Grid item xs={12} className="ml-3 mr-3">
-                      <Grid container spacing={24}>
-                        <Grid item xs={7} >
-                          <TextValidator
-                            value={this.state.sourceExpediente.Titulo}
-                            label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
-                            className={classes.textField}
-                            validators={['required']}
-                            errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
-                            onChange={this.handleChangeDataExpedient("Titulo")}
-                            name="name" />
-                          <TextValidator
-                            value={this.state.sourceExpediente.Expediente_Codigo_Estudio}
-                            label={<Translate id="languages.fichaExpediente.labelExpedienteCode" />}
-                            className={`${classes.textField} mt-3`}
-                            validators={['required']}
-                            errorMessages={[`${<Translate id="languages.fichaExpediente.requiredField" />}`]}
-                            onChange={this.handleChangeDataExpedient("Expediente_Codigo_Estudio")}
-                            name="code" />
-                          <TextField
-                            value={this.state.sourceExpediente.Antecedente}
-                            label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
-                            className={`${classes.textField} mt-3`}
-                            onChange={this.handleChangeDataExpedient("Antecedente")}
-                            name="antecedente" />
-                        </Grid>
-                        <Grid item xs={5} >
-                          <Typography variant="subtitle1" gutterBottom className="m-0">
-                            <Translate id="languages.fichaExpediente.labelEntryDate" />
-                          </Typography>
-                          <Typography variant="subtitle1" gutterBottom>
-                            {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                     </Grid>
-                    <Grid item xs={12} className={`${classes.divGrey} p-4`}>
-                        <Typography variant="subtitle1" gutterBottom className="m-0">
-                          <Translate id="languages.fichaExpediente.labelObservations" />
-                        </Typography>
-                        <TextField id="outlined-bare"
-                          className={`${classes.textField} m-0`}
-                          defaultValue={this.state.sourceExpediente.Observaciones}
-                          onChange={this.handleChangeDataExpedient("Observaciones")}
-                          margin="normal" multiline rows="4"
-                          variant="outlined" />
-                     </Grid>
-                      <Grid item xs={12} className="p-4">
-                        {this.renderUbicationTable()}
-                      </Grid>
-                   </Grid>
-                </ValidatorForm>
-              </Grid>
-          </Grid>
+            </ValidatorForm>
         </Paper>
       </div>
     )

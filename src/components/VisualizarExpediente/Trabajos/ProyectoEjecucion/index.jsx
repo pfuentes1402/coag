@@ -311,7 +311,7 @@ class TrabajoEjecucion extends Component {
         count+=files.length
         count+=temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove:true})
+            await this.setState({fetchingRemove:true, showDownloadButton:false})
             if(files.length){
                 let arrayArchivos = [];
                 files.map(item=>{
@@ -321,14 +321,16 @@ class TrabajoEjecucion extends Component {
                 let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
-                }
-                let newData=[...this.state.data];
-                files.map(item=>{
-                     newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
-                    return null
-                });
+                }else {
+                    let newData=[...this.state.data];
+                    files.map(item=>{
+                        newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
+                        return null
+                    });
 
-                await this.setState({data:newData})
+                    await this.setState({data:newData})
+                }
+
             }
             if(temporalFiles.length){
                 let arrayArchivos = [];
@@ -339,17 +341,18 @@ class TrabajoEjecucion extends Component {
                 let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
-                }
-                let newData=[...this.state.temporalFiles];
-                temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
-                    return null
-                });
+                }else{
+                    let newData=[...this.state.temporalFiles];
+                    temporalFiles.map(item=>{
+                        newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                        return null
+                    });
 
-                await this.setState({temporalFiles:newData})
+                    await this.setState({temporalFiles:newData})
+                }
+
             }
-            await this.setState({fetchingRemove:false})
-            this.setState({showDeleteButton: false})
+            await this.setState({fetchingRemove:false, showDeleteButton: false, showDownloadButton:false})
         }
     }
     download_file(fileURL, fileName) {
@@ -432,13 +435,6 @@ class TrabajoEjecucion extends Component {
                     await this.setState({fetchingDownload:this.state.fetchingDownload--})
 
                 }
-
-
-
-
-
-
-
             }
             if(temporalFiles.length){
                 let arrayArchivos = [];
@@ -451,13 +447,7 @@ class TrabajoEjecucion extends Component {
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
                 }
-                let newData=[...this.state.temporalFiles];
-                temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
-                    return null
-                });
 
-                await this.setState({temporalFiles:newData})
             }
 
 
@@ -481,24 +471,22 @@ class TrabajoEjecucion extends Component {
                 if(result.Archivos){
                     result.Archivos.map(item=>{
                         if(item.Insertado!==1){
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.noInsertion" />}`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.noInsertion")}`))
 
                         }else{
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.successInsertion" />} ${item.Carpeta}`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.successInsertion")} ${item.Carpeta}`))
                         }
                         return null
                     })
                 }else{
-                    this.props.fetchErrorExpediente(formatMenssage(<Translate id="languages.messages.fetchError" />));
+                    this.props.fetchErrorExpediente(formatMenssage(this.props.translate("languages.messages.fetchError")));
                 }
-                await this.setState({fetchingAutoAsign:false})
+                await this.setState({fetchingAutoAsign:false, showDeleteButton: false, showDownloadButton:false})
                 await this.loadInformation();
             }catch (e) {
                 await this.setState({fetchingAutoAsign:false})
                 this.props.fetchErrorExpediente(formatMenssage(e.message));
             }
-
-
         }
     }
 
