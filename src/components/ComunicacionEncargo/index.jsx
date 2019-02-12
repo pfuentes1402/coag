@@ -34,6 +34,7 @@ class Encomenda extends Component {
     let result = await fetchEncomendaActual(idExpediente, this.props.activeLanguage.code);
     if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
       this.props.fetchErrorExpediente(result.data);
+      this.props.history.push("/visualizar-expediente/" + this.props.match.params.id)
     }
     else {
       this.setState({ encomenda: result.data });

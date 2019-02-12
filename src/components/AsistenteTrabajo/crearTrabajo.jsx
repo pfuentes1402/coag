@@ -321,7 +321,7 @@ class CrearTrabajo extends Component {
                                                                                                         <ListItem button onClick={() => { this.handleClick(indexCarpeta) }} className="pt-0 pb-0">
                                                                                                             <Grid container spacing={0}>
                                                                                                                 <Grid item xs={4} className="d-flex align-self-center">
-                                                                                                                    {carpeta.open ? <ExpandLess className={classes.expand} /> : <ExpandMore className={classes.expand} />}
+                                                                                                                    {carpeta.open ?  <ExpandMore className={classes.expand} /> : <ExpandLess className={classes.expand} />}
                                                                                                                     <Typography variant="body1" gutterBottom>
                                                                                                                         {carpeta.Nombre}
                                                                                                                     </Typography>
