@@ -10,7 +10,7 @@ import {
     Checkbox,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    LinearProgress, withStyles, ListItem, List
+    LinearProgress, withStyles, ListItem, List, ListItemText
 } from '@material-ui/core';
 
 import * as api from '../../../../api'
@@ -24,10 +24,9 @@ import moment from 'moment'
 import renderHTML from 'react-render-html';
 import Dropzone from "react-dropzone";
 import {fetchErrorExpediente, formatMenssage} from '../../../../actions/expedientes';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import {Translate, withLocalize} from "react-localize-redux";
 import {getDetallesArchivo} from "../../../../api";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import {red, green, orange} from '@material-ui/core/colors';
 import {PanoramaFishEye, Lens} from '@material-ui/icons'
 
