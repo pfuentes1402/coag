@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -69,6 +68,58 @@
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
+                <marker date="1550520919105" expanded="true" signature="2104:30730" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="4471:5105" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="5087:5105" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="20560:21137" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:22739" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:22855" ph="&lt;ListItem/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:27399" ph="&lt;List/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:27497" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="20560:27688" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:27780" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:27964" ph="&lt;ExpansionPanelDetails/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28054" ph="&lt;ExpansionPanel/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28131" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28204" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28277" ph="&lt;ListItem/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28335" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="20560:28446" ph="&lt;List/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28502" ph="&lt;ListItem/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28550" ph="&lt;List/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:28588" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="20560:28630" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:29419" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:29544" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:30710" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="20560:30727" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="20708:21016" ph="&lt;Typography/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="21250:21829" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="21415:21709" ph="&lt;Typography/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="21942:22623" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="22107:22503" ph="&lt;Button/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="22960:27291" ph="&lt;Collapse/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="23149:27175" ph="&lt;List/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="23299:27059" ph="&lt;ListItem/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="23454:26935" ph="&lt;List/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="23690:26809" ph="{...}" />
+                <marker date="1550520919105" expanded="true" signature="23823:26687" ph="&lt;ListItem/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="23984:26551" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="24145:24782" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="24300:24642" ph="&lt;Typography/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="24915:25563" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="25070:25423" ph="&lt;Typography/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="25696:26415" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="25851:26275" ph="&lt;Button/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="28663:29382" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="28762:29005" ph="&lt;Button/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="29561:30690" ph="&lt;Grid/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="29601:30666" ph="&lt;Dialog/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="29894:30027" ph="&lt;DialogTitle/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="30052:30339" ph="&lt;DialogContent/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="30096:30298" ph="&lt;DialogContentText/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="30408:30595" ph="&lt;Button/&gt;" />
+                <marker date="1550520919105" expanded="true" signature="30801:30829" ph="{&quot;fetchErrorExpediente&quot;: fetchErrorExpediente...}" />
               </folding>
             </state>
           </provider>
@@ -463,7 +514,7 @@
       <workItem from="1549638401537" duration="181000" />
       <workItem from="1549640052896" duration="1203000" />
       <workItem from="1550505302265" duration="418000" />
-      <workItem from="1550520794113" duration="76000" />
+      <workItem from="1550520794113" duration="405000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -539,7 +590,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252155000" />
+    <option name="totallyTimeSpent" value="252484000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -974,6 +1025,58 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+            <marker date="1550520919105" expanded="true" signature="2104:30730" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="4471:5105" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="5087:5105" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="20560:21137" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:22739" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:22855" ph="&lt;ListItem/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:27399" ph="&lt;List/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:27497" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="20560:27688" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:27780" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:27964" ph="&lt;ExpansionPanelDetails/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28054" ph="&lt;ExpansionPanel/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28131" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28204" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28277" ph="&lt;ListItem/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28335" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="20560:28446" ph="&lt;List/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28502" ph="&lt;ListItem/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28550" ph="&lt;List/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:28588" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="20560:28630" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:29419" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:29544" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:30710" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="20560:30727" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="20708:21016" ph="&lt;Typography/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="21250:21829" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="21415:21709" ph="&lt;Typography/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="21942:22623" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="22107:22503" ph="&lt;Button/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="22960:27291" ph="&lt;Collapse/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="23149:27175" ph="&lt;List/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="23299:27059" ph="&lt;ListItem/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="23454:26935" ph="&lt;List/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="23690:26809" ph="{...}" />
+            <marker date="1550520919105" expanded="true" signature="23823:26687" ph="&lt;ListItem/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="23984:26551" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="24145:24782" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="24300:24642" ph="&lt;Typography/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="24915:25563" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="25070:25423" ph="&lt;Typography/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="25696:26415" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="25851:26275" ph="&lt;Button/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="28663:29382" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="28762:29005" ph="&lt;Button/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="29561:30690" ph="&lt;Grid/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="29601:30666" ph="&lt;Dialog/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="29894:30027" ph="&lt;DialogTitle/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="30052:30339" ph="&lt;DialogContent/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="30096:30298" ph="&lt;DialogContentText/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="30408:30595" ph="&lt;Button/&gt;" />
+            <marker date="1550520919105" expanded="true" signature="30801:30829" ph="{&quot;fetchErrorExpediente&quot;: fetchErrorExpediente...}" />
           </folding>
         </state>
       </provider>
