@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/usuarios/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/usuarios/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Busquedas/TablaDatosModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Busquedas/TablaDatosModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Home/Modalacciones.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Home/Modalacciones.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/status/status.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/status/status.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/user/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/user/user.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -503,7 +493,7 @@
       <workItem from="1549896041241" duration="252000" />
       <workItem from="1549974956183" duration="7695000" />
       <workItem from="1550458860458" duration="614000" />
-      <workItem from="1550495815788" duration="20904000" />
+      <workItem from="1550495815788" duration="21567000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -729,11 +719,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550075721255</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="agregado las busquedas por el tipo de accion con los redireccionamientos correspondiente en cada tipo">
+      <created>1550522257071</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1550522257071</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="463919000" />
+    <option name="totallyTimeSpent" value="464582000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -746,7 +743,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4068768" visible="true" weight="0.16782774" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
@@ -838,7 +834,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Aceptando merge" />
     <MESSAGE value="actualizacion localizaciones" />
     <MESSAGE value="menu de trabajos en modificar expediente" />
     <MESSAGE value="actualizacion trabajo" />
@@ -863,7 +858,8 @@
     <MESSAGE value="coreccion de datos que faltaban en las tablas de busqueda, inicio y trabajos" />
     <MESSAGE value="modificaciones de algunos detalles en la reunion como: % por defecto en arquitecto y un cargando cuando esta finalizando o va al crear un trabajo" />
     <MESSAGE value="modificado un error de importacion que interferia en el build" />
-    <option name="LAST_COMMIT_MESSAGE" value="modificado un error de importacion que interferia en el build" />
+    <MESSAGE value="agregado las busquedas por el tipo de accion con los redireccionamientos correspondiente en cada tipo" />
+    <option name="LAST_COMMIT_MESSAGE" value="agregado las busquedas por el tipo de accion con los redireccionamientos correspondiente en cada tipo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
