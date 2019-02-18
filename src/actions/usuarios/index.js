@@ -203,37 +203,58 @@ export const fetchCesarExpediente = (data, id) => ({
     payload: { data, id }
 });
 
+export const fetchIdAccion = (id) => ({
+    type: types.FETCH_ID_ACCION,
+    payload: id
+})
 
-/*
-*Obtiene los expedientes susceptibles de tramitar trabajo (Datos dummy desde el api)
-*/
-export const fetchSuscepAcciones = (id) =>
-    (dispatch) => {
-        let data = "";
-        switch (id) {
-            case 0:
-                data = getExpedienteSuscepNuevoTrabajo(id);
-                dispatch(fetchExpedientesSusceptibles(data, id));
-                break;
-            case 1:
-                dispatch(fetchExpedientesTrabajosTest(data, id));
-                break;
-            case 2:
-                dispatch(fetchSolicitarLoa(data, id));
-                break;
-            case 3:
-                dispatch(fetchSolicitarLi(data, id));
-                break;
-            case 4:
-                dispatch(fetchConvertirDigital(data, id));
-                break;
-            case 5:
-                dispatch(fetchCesarExpediente(data, id));
-                break;
-            default:
-        }
-        dispatch(fetchCambiaStadoModal());
 
+/**
+ *
+ * @param filtro
+ * @param idAccion
+ * @param page
+ * @param pageSize
+ * @returns {Function}
+ */
+export const fetchSuscepAcciones =  (filtro, idAccion, page, pageSize) =>
+    async (dispatch) => {
+            try {
+                let data = await getExpedienteSuscepNuevoTrabajo(filtro, idAccion, page, pageSize);
+                if( data.MensajesProcesado && data.MensajesProcesado.length > 0){
+                    dispatch(fetchErrorExpediente(data));
+                    dispatch(fetchCambiaStadoModal());
+                }
+                else
+                {
+                    switch (idAccion) {
+                        case 1:
+                            dispatch(fetchExpedientesSusceptibles(data.Expedientes, idAccion));
+                            break;
+                        case 2:
+                            dispatch(fetchExpedientesTrabajosTest(data.Expedientes, idAccion));
+                            break;
+                        case 3:
+                            dispatch(fetchSolicitarLoa(data.Expedientes, idAccion));
+                            break;
+                        case 4:
+                            dispatch(fetchSolicitarLi(data.Expedientes, idAccion));
+                            break;
+                        case 5:
+                            dispatch(fetchConvertirDigital(data.Expedientes, idAccion));
+                            break;
+                        case 6:
+                            dispatch(fetchCesarExpediente(data.Expedientes, idAccion));
+                            break;
+
+                    }
+                    dispatch(fetchCambiaStadoModal());
+                }
+            }
+            catch (e) {
+                dispatch(fetchErrorExpediente(formatMenssage(e.message)));
+                dispatch(fetchCambiaStadoModal());
+            }
 
     };
 

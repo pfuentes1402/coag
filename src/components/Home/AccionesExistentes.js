@@ -2,24 +2,24 @@ import React, {Component} from 'react';
 import {Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
-import { fetchSuscepAcciones } from './../../actions/usuarios/index'
+import { fetchIdAccion } from './../../actions/usuarios/index'
 import { withLocalize, Translate } from 'react-localize-redux';
 import AccionesTranslations from './../../traducciones/Actions.json';
 
 import './styles.css';
 
 const acciones =[
-    {Id:0,nombre:'Modificar datos expediente'},
-    {Id:1,nombre:'Tramitar nuevo trabajo'},
-    {Id:2,nombre:'Solicitar Loa(libro de órdenes y asistencias)'},
-    {Id:3,nombre:'Solicitar Li(libro de incidencias)'},
-    {Id:4,nombre:'convertir a digital expediente papel'},
-    {Id:5,nombre:'cesar/cerrar expediente'}
+    {Id:1,nombre:'Modificar datos expediente'},
+    {Id:2,nombre:'Tramitar nuevo trabajo'},
+    {Id:3,nombre:'Solicitar Loa(libro de órdenes y asistencias)'},
+    {Id:4,nombre:'Solicitar Li(libro de incidencias)'},
+    {Id:5,nombre:'convertir a digital expediente papel'},
+    {Id:6,nombre:'cesar/cerrar expediente'}
 ];
 
 function RenderAccion(acciones, props) {
     const click = (accion)=>{
-        props.fetchSuscepAcciones(accion.Id);
+        props.fetchIdAccion(accion.Id);
         props.fetchMuestraModal(accion.Id);
         props.fetchCambiaStatoModalAcciones();
     }
@@ -45,7 +45,7 @@ const styles = ({
 class AccionesExistentes extends Component { 
     constructor(props) {
         super(props);
-       this.props.addTranslation(AccionesTranslations);
+        this.props.addTranslation(AccionesTranslations);
       }
 
     render() {
@@ -53,7 +53,7 @@ class AccionesExistentes extends Component {
             <div>
             <Row>
                 <Col>
-                    <label style={styles.title}><Translate id="Actions.title"></Translate></label>
+                    <label style={styles.title}><Translate id="Actions.title"/></label>
                 </Col>
             </Row>
             <Row>
@@ -80,6 +80,6 @@ const mapStateToProps = state => ({
   
   
 
-export default connect(mapStateToProps,{ fetchMuestraModal, fetchSuscepAcciones, fetchCambiaStatoModalAcciones })(withLocalize(AccionesExistentes));
+export default connect(mapStateToProps,{ fetchMuestraModal, fetchIdAccion, fetchCambiaStatoModalAcciones })(withLocalize(AccionesExistentes));
 
 

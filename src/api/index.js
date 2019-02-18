@@ -350,7 +350,6 @@ export const getAcciones = () =>
 /*
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
  */
-
 export const getultimosTrabajos = async () => {
     try {
         let response = await api.get('/AccionesPendientes/');
@@ -361,60 +360,38 @@ export const getultimosTrabajos = async () => {
     }
 }
 
-//FUNCION DUMMY para obtener los susceptibles de acciones
-export function getExpedienteSuscepNuevoTrabajo(idUsuario) {
-  let data = {
-    Expedientes: [
-      {
-        "Expediente_Codigo": "700043",
-        "Id_Trabajo": 5,
-        "Titulo": "Tramites",
-        "Fecha_Entrada": "12/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 700043,
-      },
-      {
-        "Expediente_Codigo": "1801314",
-        "Id_Trabajo": 5,
-        "Titulo": "Vivienda calle Rosal",
-        "Fecha_Entrada": "11/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 696157,
-      },
-      {
-        "Expediente_Codigo": "1801114",
-        "Id_Trabajo": 2,
-        "Titulo": "Viviendas en Gerona",
-        "Fecha_Entrada": "15/04/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Gerona",
-        "Id_Expediente": 695127,
-      },
-      {
-        "Expediente_Codigo": "1801884",
-        "Id_Trabajo": 3,
-        "Titulo": "Viviendas en Vigo",
-        "Fecha_Entrada": "15/09/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Rosal",
-        "Id_Expediente": 702103,
-      },
-      {
-        "Expediente_Codigo": "1801314",
-        "Id_Trabajo": 5,
-        "Titulo": "Tramites",
-        "Fecha_Entrada": "19/03/2018",
-        "Concello": "A Cañiza",
-        "Emplazamiento": "Calle Lerida",
-        "Id_Expediente": 702103,
-      },
+/**
+ * Obtiene los expedientes en dependencia de la accion expecificada
+ * @param filtro
+ * @param idAccion
+ * 1- Modificar datos
+ * 2 - Nuevo Trabajo
+ * 3 - Libro de Ordenes
+ * 4 - Libro de Incidencias
+ * 5 - Convertir exp. a digital
+ * 6 - Ceses
+ * @param page
+ * @param pageSize
+ * @returns {Promise<*>}
+ */
+export const getExpedienteSuscepNuevoTrabajo = async(filtro, idAccion, page = 1, pageSize = 25) => {
+    try {
+        let response = await api.get(`/expedientes?filtro=${filtro}&pag=${page}&tam=${pageSize}&id_tipo_accion=${idAccion}`);
+        return response.data;
+    }
+    catch (e) {
+        return formatMenssage(e.message);
+    }
+}
 
-
-    ],
-  }
-  return data;
+export const postExpedienteAccion = async(id_expediente, idAccion, ignorarObservaciones) => {
+    try {
+        let response = await api.post(`/expedientes/${id_expediente}/Accion?id_tipo_accion=${idAccion}&ignorarobservaciones=${ignorarObservaciones}`);
+        return response.data;
+    }
+    catch (e) {
+        return formatMenssage(e.message);
+    }
 }
 
 /**
