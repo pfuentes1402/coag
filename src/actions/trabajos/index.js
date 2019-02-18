@@ -97,13 +97,13 @@ export const fetchTipoTrabajo = (idGrupoTematico, idLanguage = 2) => async (disp
 };
 
 //Disparador de accion para salvar el tipo de obras
-export const saveObras = (tiposObras) =>({
+export const saveObras = (tiposObras) => ({
     type: types.SAVE_TIPOS_OBRA,
     payload: tiposObras
 });
 
 export const saveTiposObras = (tiposObras) => (dispatch) => {
-   dispatch(saveObras(tiposObras));
+    dispatch(saveObras(tiposObras));
 };
 
 /**
@@ -167,13 +167,12 @@ export const fetchComunicacionencargo = (value) => async (dispatch) => {
     dispatch(comunicacionEncargo(value))
 };
 
-export const fetchFuncionesTipologia = (idLanguage = 1) => async (dispatch) => {
+export const fetchFuncionesTipologia = (idLanguage = 1, idGrupoTematico = 0, idAutorizacionMunicipal = 0) => async (dispatch) => {
     try {
-        let response = await getFuncionesTipologia(idLanguage);
+        let response = await getFuncionesTipologia(idLanguage, idGrupoTematico, idAutorizacionMunicipal);
         response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0 ?
             dispatch(fetchErrorTrabajo(response.data))
-            :
-            dispatch(funcionesTipologias(response));
+            : dispatch(funcionesTipologias(response));
     } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
     }

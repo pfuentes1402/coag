@@ -477,10 +477,11 @@ export const insertTrabajoEncomenda = (data, id_expediente) => {
 };
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
-export const getFuncionesTipologia = (idLanguage = 2) =>
-  api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
-    return response;
-  });
+export const getFuncionesTipologia = (idLanguage = 2, idGrupoTematico = 0, idAutorizacionMunicipal = 0) =>
+  api.get(`/tipos/guia/funciones?idioma=${idLanguage}&id_tipo_grupo_tematico=${idGrupoTematico}&id_tipo_autorizacion_municipal=${idAutorizacionMunicipal}`)
+    .then(response => {
+      return response;
+    });
 
 /**Agregar nuevos agentes a un trabajo */
 export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
@@ -896,7 +897,7 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
       let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, {Nombre:file});
       return result.data
     } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
     }
 }
 //eliminar multiples archivos de la carpeta temporal
@@ -905,7 +906,7 @@ export const removeFilesFromTemporalFolder = async (idExpediente,  arrayFiles) =
     let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {data:{Archivos:arrayFiles}});
     return result.data
   } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
   }
 }
 //eliminar un archivo de una estructura
@@ -914,7 +915,7 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
     let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
     return result.data
   } catch (error ) {
-      return formatMenssage("Error 400 en API")
+      return formatMenssage("Error 400")
   }
 }
 //Eliminar multiples archivos de una estructura
@@ -929,7 +930,7 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
         });
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 
@@ -945,7 +946,7 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
         );
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 //Obtener Url de Descarga de archivos En carpetas
@@ -959,7 +960,7 @@ export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
     );
     return result.data
   } catch (error ) {
-    return formatMenssage("Error 400 en API")
+    return formatMenssage("Error 400")
   }
 }
 export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
@@ -973,7 +974,7 @@ export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
         );
         return result.data
     } catch (error ) {
-        return formatMenssage(`Error 404 en la API`)
+        return formatMenssage(`Error 404`)
     }
 }
 
@@ -986,7 +987,7 @@ export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
         );
         return result.data
     } catch (error ) {
-        return formatMenssage("Error 404 en API")
+        return formatMenssage("Error 404")
     }
 }
 export const download=async (urlFile,fileName)=>{
@@ -1002,3 +1003,16 @@ export const download=async (urlFile,fileName)=>{
 
 }
 
+
+/**Obtener los tipos de autorización municipal segun el grupo
+ * temático seleccionado
+ */
+export const getAutorizacionMunicipal = async (grupoTematico, languageId = 1) => {
+  try {
+    let result = await api.get(`/tipos/guia/tiposautorizacionmunicipal?idioma=${languageId}&id_tipo_grupo_tematico=${grupoTematico}`);
+    return result.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}

@@ -231,7 +231,7 @@ class TipoExpediente extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
+  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Tunciones : [],
 })
 
 const mapDispatchToProps = {

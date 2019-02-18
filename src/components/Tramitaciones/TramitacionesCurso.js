@@ -39,8 +39,8 @@ class TramitacionesCurso extends Component {
             columnDefs: [
                 {headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140},                
                 {headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200},
-                {headerName: "TITULO TRABAJO", field: "Titulo_Documento", width: 200},
-                {headerName: "MUNICIPIO", field: "Municipio", width: 200},
+                {headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200},
+                {headerName: "MUNICIPIO", field: "Concello", width: 200},
                 {headerName: "ESTADO", field: "Estado", cellRenderer:'estadoRenderer', colId: "estado", width: 180},
                 {headerName: "ACCIONES", field: "acciones", cellRenderer:'accionRenderer', colId: "params", width: 140},
             ]          

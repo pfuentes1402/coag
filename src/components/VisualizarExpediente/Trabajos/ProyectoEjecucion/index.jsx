@@ -10,7 +10,7 @@ import {
     Checkbox,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    LinearProgress, withStyles, ListItem, List
+    LinearProgress, withStyles, ListItem, List, ListItemText
 } from '@material-ui/core';
 
 import * as api from '../../../../api'
@@ -24,10 +24,9 @@ import moment from 'moment'
 import renderHTML from 'react-render-html';
 import Dropzone from "react-dropzone";
 import {fetchErrorExpediente, formatMenssage} from '../../../../actions/expedientes';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 import {Translate, withLocalize} from "react-localize-redux";
 import {getDetallesArchivo} from "../../../../api";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import {red, green, orange} from '@material-ui/core/colors';
 import {PanoramaFishEye, Lens} from '@material-ui/icons'
 
@@ -85,6 +84,12 @@ const styles = theme => ({
     },
     margin: {
         margin: 0
+    },
+    backgroundColor: {
+        backgroundColor: "#f5f5f5"
+    },
+    rootPanel: {
+        position: "inherit"
     }
 });
 const mapStateToProps = (state) => (
@@ -305,7 +310,7 @@ class TrabajoEjecucion extends Component {
         count+=files.length
         count+=temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove:true})
+            await this.setState({fetchingRemove:true, showDownloadButton:false})
             if(files.length){
                 let arrayArchivos = [];
                 files.map(item=>{
@@ -315,14 +320,16 @@ class TrabajoEjecucion extends Component {
                 let response =  await api.removeMultipleFilesFromStructure(this.state.expediente.Id_Expediente,this.props.trabajo, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
-                }
-                let newData=[...this.state.data];
-                files.map(item=>{
-                     newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
-                    return null
-                });
+                }else {
+                    let newData=[...this.state.data];
+                    files.map(item=>{
+                        newData = newData.filter(current=>current.Id_Estructura!==item.Id_Estructura)
+                        return null
+                    });
 
-                await this.setState({data:newData})
+                    await this.setState({data:newData})
+                }
+
             }
             if(temporalFiles.length){
                 let arrayArchivos = [];
@@ -333,17 +340,18 @@ class TrabajoEjecucion extends Component {
                 let response =  await api.removeFilesFromTemporalFolder(this.state.expediente.Id_Expediente, arrayArchivos)
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
-                }
-                let newData=[...this.state.temporalFiles];
-                temporalFiles.map(item=>{
-                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
-                    return null
-                });
+                }else{
+                    let newData=[...this.state.temporalFiles];
+                    temporalFiles.map(item=>{
+                        newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                        return null
+                    });
 
-                await this.setState({temporalFiles:newData})
+                    await this.setState({temporalFiles:newData})
+                }
+
             }
-            await this.setState({fetchingRemove:false})
-            this.setState({showDeleteButton: false})
+            await this.setState({fetchingRemove:false, showDeleteButton: false, showDownloadButton:false})
         }
     }
     download_file(fileURL, fileName) {
@@ -426,13 +434,6 @@ class TrabajoEjecucion extends Component {
                     await this.setState({fetchingDownload:this.state.fetchingDownload--})
 
                 }
-
-
-
-
-
-
-
             }
             if(temporalFiles.length){
                 let arrayArchivos = [];
@@ -457,7 +458,6 @@ class TrabajoEjecucion extends Component {
                     return null
                 });
 
-                await this.setState({temporalFiles:newData})
             }
 
 
@@ -481,24 +481,22 @@ class TrabajoEjecucion extends Component {
                 if(result.Archivos){
                     result.Archivos.map(item=>{
                         if(item.Insertado!==1){
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.noInsertion" />}`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.noInsertion")}`))
 
                         }else{
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${<Translate id="languages.fileUpload.successInsertion" />} ${item.Carpeta}`))
+                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.successInsertion")} ${item.Carpeta}`))
                         }
                         return null
                     })
                 }else{
-                    this.props.fetchErrorExpediente(formatMenssage(<Translate id="languages.messages.fetchError" />));
+                    this.props.fetchErrorExpediente(formatMenssage(this.props.translate("languages.messages.fetchError")));
                 }
-                await this.setState({fetchingAutoAsign:false})
+                await this.setState({fetchingAutoAsign:false, showDeleteButton: false, showDownloadButton:false})
                 await this.loadInformation();
             }catch (e) {
                 await this.setState({fetchingAutoAsign:false})
                 this.props.fetchErrorExpediente(formatMenssage(e.message));
             }
-
-
         }
     }
 
@@ -641,13 +639,12 @@ class TrabajoEjecucion extends Component {
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" onDragEnd={() => {
-                                                                            this.props.dragging(false)
-                                                                        }} onDragStart={() => {
-                                                                            this.props.dragging(item)
-                                                                        }} expanded={this.state.panelExpanded === item.Nombre}
+                                                                        return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" classes={{root: classes.rootPanel}}
+                                                                                                onDragEnd={() => {this.props.dragging(false)}}
+                                                                                                onDragStart={() => {this.props.dragging(item)}}
+                                                                                                expanded={this.state.panelExpanded === item.Nombre}
                                                                                                 onChange={this.expandPanel(item.Nombre, false)}>
-                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin}}>
+                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={6} className='d-flex align-items-center'
                                                                                     >
@@ -668,7 +665,7 @@ class TrabajoEjecucion extends Component {
                                                                                     </Grid>
                                                                                 </Grid>
                                                                             </ExpansionPanelSummary>
-                                                                            <ExpansionPanelDetails>
+                                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
                                                                                 <Grid container spacing={16}>
                                                                                     <Grid item xs={6} className="align-items-center">
                                                                                         <Grid container spacing={0}>
@@ -700,9 +697,10 @@ class TrabajoEjecucion extends Component {
                                                                 }
                                                                 {
                                                                     this.state.data.map((item, pos) => {
-                                                                        return (<ExpansionPanel key={'file-'+pos}  expanded={this.state.panelExpanded === item.Id_Estructura}
+                                                                        return (<ExpansionPanel key={'file-'+pos}  classes={{root: classes.rootPanel}}
+                                                                                                expanded={this.state.panelExpanded === item.Id_Estructura}
                                                                                                 onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
-                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin}}>
+                                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
                                                                                 <Grid container spacing={0}>
                                                                                     <Grid item xs={6} className='d-flex align-items-center'>
                                                                                         <Checkbox
@@ -727,7 +725,7 @@ class TrabajoEjecucion extends Component {
                                                                                     </Grid>
                                                                                 </Grid>
                                                                             </ExpansionPanelSummary>
-                                                                            <ExpansionPanelDetails>
+                                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
                                                                                 {this.state.loadingDetallesArchivo ? <CircularProgress/> :
                                                                                     <Grid container spacing={16}>
                                                                                         <Grid item xs={12}>
@@ -859,7 +857,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12} className={classes.backgroundColor}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={6}>
                                                         <Typography variant='overline' className="text-uppercase">
@@ -911,7 +909,7 @@ class TrabajoEjecucion extends Component {
                                                     </div>
                                                 </div>
                                             </Grid>
-                                            <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                            <Grid item xs={12}  className={classes.backgroundColor}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={12}>
                                                         <TextField

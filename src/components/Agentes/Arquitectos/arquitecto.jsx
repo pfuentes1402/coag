@@ -49,7 +49,7 @@ class FormArquitecto extends Component {
     if (!arquitect.Funciones) {
       arquitect["Funciones"] = [];
       arquitect["Porciento"] = 0;
-      arquitect["percentChecked"] = false;
+      arquitect["percentChecked"] = true;
       arquitect["acceptTerm1"] = false;
       arquitect["acceptTerm2"] = false;
       this.setState({ arquitecto: arquitect });

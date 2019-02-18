@@ -11,7 +11,7 @@ import {
     fetchFasesTrabajos, fetchTipoAutorizacion, fetchTipoTrabajo, fetchGruposRaiz,
     fetchComunicacionencargo, dispatchError, saveTiposObras
 } from "../../actions/trabajos";
-import { getFasesTrabajos } from '../../api/index';
+import { getFasesTrabajos, getAutorizacionMunicipal } from '../../api/index';
 import { dispatchAddAutorizacion } from "../../actions/expedientes";
 import { connect } from "react-redux";
 import { FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@material-ui/core";
@@ -130,16 +130,17 @@ class ComunicacionEncargo extends React.Component {
             comunicacionencargo: [],
             indexCurrent: 0,
             isLoad: false,
+            tramitacionesUrbanistica: []
         };
     };
 
     async componentWillMount() {
-        await this.setState({isLoad: true});
-        if (this.props.tiposAutorizacion.length === 0)
-            await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);
+        await this.setState({ isLoad: true });
+        //TODO: Eliminar cuando se realize el cambio
+        /*if (this.props.tiposAutorizacion.length === 0)
+            await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);*/
         await this.transformGruposRaiz();
-        //await this.updateFaseTrabajo(0);
-        this.setState({isLoad: false});
+        this.setState({ isLoad: false });
     }
 
     async transformGruposRaiz() {
@@ -167,50 +168,77 @@ class ComunicacionEncargo extends React.Component {
 
     async comunicacionEncargo() {
         let arrayRaiz = [];
-        let tiposTramite = this.props.tiposAutorizacion;
         let gruposRaiz = this.props.gruposRaiz;
         let indexCurrent = 0;
         let isCurrent = false;
+        let encomenda = this.state.encomenda.EncomendaActual.length > 0
+            ? this.state.encomenda.EncomendaActual[0] : null;
         for (let i = 0; i < gruposRaiz.length; i++) {
             let value = gruposRaiz[i];
-            //TODO: separar para metodo que verifique la necesidad de carga
+            //Separado para método que verifique la necesidad de carga
             /*await this.props.fetchTipoTrabajo(value.Id_Tipo_Grupo_Raiz, this.props.activeLanguage.code);
             let tiposTrabajos = this.props.tiposTrabajos;*/
             let tiposTrabajos = await this.getTiposTrabajos(value.Id_Tipo_Grupo_Raiz);
-            let encomenda = this.state.encomenda.EncomendaActual.length > 0
-                ? this.state.encomenda.EncomendaActual[0] : null;
-
             if (encomenda !== null) {
                 isCurrent = tiposTrabajos.some(x => x.Id_Tipo_Grupo_Tematico === encomenda.Id_Tipo_Grupo_Tematico);
                 indexCurrent = isCurrent ? i : indexCurrent;
             }
-            arrayRaiz.push({
+            let grupo = {
                 id: value.Id_Tipo_Grupo_Raiz,
                 name: value.Nombre,
                 tiposObra: tiposTrabajos,
-                tiposTramite: tiposTramite,
+                tiposTramite: [],
                 //Cambiar a datos de la encomenda
                 obraSelection: isCurrent ? encomenda.Id_Tipo_Grupo_Tematico : tiposTrabajos[0].Id_Tipo_Grupo_Tematico,
-                tramiteSelection: isCurrent ? encomenda.Id_Tipo_Autorizacion_Municipal : tiposTramite[0].Id_Tipo_Autorizacion_Municipal,
+                //tramiteSelection: isCurrent ? encomenda.Id_Tipo_Autorizacion_Municipal : tiposTramite[0].Id_Tipo_Autorizacion_Municipal,
                 description: tiposTrabajos.length > 0 ? tiposTrabajos[0].Observaciones : '',
                 fasesTrabajos: [],
                 isSelected: i === 0
-            });
+            };
+            arrayRaiz.push(grupo);
+            let tiposTramite = await this.loadDataAutorizacion(arrayRaiz, i);
+            arrayRaiz[i].tiposTramite = tiposTramite;
+            arrayRaiz[i].tramiteSelection = isCurrent
+                ? encomenda.Id_Tipo_Autorizacion_Municipal
+                : tiposTramite.length > 0
+                    ? tiposTramite[0].Id_Tipo_Autorizacion_Municipal : null;
         }
         this.setState({ comunicacionencargo: arrayRaiz, expanded: `panel${indexCurrent}`, indexCurrent: indexCurrent });
         this.updateFaseTrabajo(indexCurrent);
     }
 
+    async loadAutorizacionByGrupoTematico(comunicacion, index) {
+        let result = await getAutorizacionMunicipal(comunicacion[index].obraSelection, this.props.activeLanguage.code);
+        if (result && result.Tipos_Autorizacion_Municipal) {
+            comunicacion[index].tiposTramite = result.Tipos_Autorizacion_Municipal;
+            this.setState({ comunicacionencargo: comunicacion })
+        }
+        else {
+            comunicacion[index].tiposTramite = [];
+            this.setState({ comunicacionencargo: comunicacion })
+        }
+    }
 
-    handleChange = (panel, index) => (event, expanded) => {
-        this.setState({
-            expanded: expanded ? panel : false,
-        });
+    async loadDataAutorizacion(comunicacion, index) {
+        let result = await getAutorizacionMunicipal(comunicacion[index].obraSelection, this.props.activeLanguage.code);
+        if (result && result.Tipos_Autorizacion_Municipal) {
+            return result.Tipos_Autorizacion_Municipal;
+        }
+        else {
+            return [];
+        }
+    }
+
+
+    handleChange = (panel, index) => async (event, expanded) => {
         let updateGrupoRaiz = [];
         Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
-        for (let i = 0; i < updateGrupoRaiz.length; i++) {
+        for (let i = 0; i < updateGrupoRaiz.length; i++)
             updateGrupoRaiz[i].isSelected = i === index;
-        }
+        this.setState({
+            expanded: expanded ? panel : false,
+            comunicacionEncargo: updateGrupoRaiz
+        });
     };
 
     handleChildChange = panel => (event, expanded) => {
@@ -224,13 +252,21 @@ class ComunicacionEncargo extends React.Component {
         let comunicacionEncargo = this.state.comunicacionencargo[index];
         let id = event.target.value;
         //Llamar directamente a la api para obtener las fases de trabajo
-        let result = await getFasesTrabajos(id, comunicacionEncargo.tramiteSelection, this.props.activeLanguage.code);
+
         let indexTipoObra = comunicacionEncargo.tiposObra.findIndex(x => x.Id_Tipo_Grupo_Tematico === id);
         let updateGrupoRaiz = [];
         Object.assign(updateGrupoRaiz, this.state.comunicacionencargo);
         updateGrupoRaiz[index].obraSelection = id;
         updateGrupoRaiz[index].description = comunicacionEncargo.tiposObra[indexTipoObra].Observaciones;
-        updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
+
+        updateGrupoRaiz[index].tiposTramite = await this.loadDataAutorizacion(updateGrupoRaiz, index);
+        let selectTramite = updateGrupoRaiz[index].tiposTramite.length > 0
+            ? updateGrupoRaiz[index].tiposTramite[0].Id_Tipo_Autorizacion_Municipal : null;
+        if (selectTramite !== null) {
+            let result = await getFasesTrabajos(id, selectTramite, this.props.activeLanguage.code);
+            updateGrupoRaiz[index].fasesTrabajos = result.data ? result.data.FasesTrabajos : [];
+        }
+        updateGrupoRaiz[index].tramiteSelection = selectTramite;
         this.setState({ comunicacionencargo: updateGrupoRaiz });
     };
 
@@ -305,7 +341,7 @@ class ComunicacionEncargo extends React.Component {
         this.setState({ comunicacionencargo: updateGrupoRaiz, indexCurrent: index });
     }
 
-    renderRelationWorks = (index) => {
+    renderRelationWorks(index) {
         const { classes } = this.props;
         let relationsData = this.transformRelationsWorks(index);
         return (
@@ -385,16 +421,16 @@ class ComunicacionEncargo extends React.Component {
                         </Grid>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                        {this.state.isLoad ? <Grid item xs={12} className="text-center py-2"><CircularProgress/></Grid> :
+                        {this.state.isLoad ? <Grid item xs={12} className="text-center py-2"><CircularProgress /></Grid> :
                             <Grid container spacing={24} className={`${classes.marginPanel} py-0`}>
                                 <Grid item xs={12}>
                                     {
                                         this.state.comunicacionencargo && this.state.comunicacionencargo.map((value, index) => {
                                             return <ExpansionPanel key={index} expanded={expanded === `panel${index}`} onChange={this.handleChange(`panel${index}`, index)}>
                                                 <ExpansionPanelSummary style={{ minHeight: 48, height: 48 }}
-                                                                       expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                       className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
-                                                                       onClick={() => { this.updateFaseTrabajo(index) }}>
+                                                    expandIcon={expanded === `panel${index}` ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
+                                                    className={expanded === `panel${index}` ? classes.panelExapnded : classes.title}
+                                                    onClick={() => { this.updateFaseTrabajo(index) }}>
                                                     {value.name}
                                                 </ExpansionPanelSummary>
                                                 <ExpansionPanelDetails className={classes.panelBody}>
@@ -425,10 +461,9 @@ class ComunicacionEncargo extends React.Component {
                                                                         value={this.state.comunicacionencargo[index].tramiteSelection}
                                                                         onChange={this.handleFormalitySelect(index)}
                                                                         inputProps={{ name: 'tramite', id: 'tramit-type' }}>
-                                                                        {
-                                                                            value.tiposTramite.map((value, index) => {
-                                                                                return <MenuItem key={index} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
-                                                                            })}
+                                                                        {value.tiposTramite.map((value, index) => {
+                                                                            return <MenuItem key={`item_${index}`} value={value.Id_Tipo_Autorizacion_Municipal}>{value.Nombre}</MenuItem>
+                                                                        })}
                                                                     </Select>
                                                                 </FormControl>
                                                             </Grid>
@@ -436,8 +471,8 @@ class ComunicacionEncargo extends React.Component {
                                                             <Grid item xs={12}>
                                                                 <ExpansionPanel expanded={expandedChild === 'panel11'} onChange={this.handleChildChange('panel11')}>
                                                                     <ExpansionPanelSummary expandIcon={expandedChild === 'panel11' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                                           className={expandedChild === 'panel11' ? classes.panelExapnded : classes.title}
-                                                                                           style={{ minHeight: 48, height: 48 }}>
+                                                                        className={expandedChild === 'panel11' ? classes.panelExapnded : classes.title}
+                                                                        style={{ minHeight: 48, height: 48 }}>
                                                                         <Translate id="languages.comunicacionEncargo.titleVerDescription" />
                                                                     </ExpansionPanelSummary>
                                                                     <ExpansionPanelDetails>
@@ -447,10 +482,10 @@ class ComunicacionEncargo extends React.Component {
                                                                 {
                                                                     this.state.comunicacionencargo[index].fasesTrabajos.length > 0
                                                                     && <ExpansionPanel expanded={expandedChild === 'panel12'}
-                                                                                       onChange={this.handleChildChange('panel12')} >
+                                                                        onChange={this.handleChildChange('panel12')} >
                                                                         <ExpansionPanelSummary expandIcon={expandedChild === 'panel12' ? <ExpandMoreIcon color="primary" /> : <ExpandMoreIcon color="secondary" />}
-                                                                                               className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
-                                                                                               style={{ minHeight: 48, height: 48 }}>
+                                                                            className={expandedChild === 'panel12' ? classes.panelExapnded : classes.title}
+                                                                            style={{ minHeight: 48, height: 48 }}>
                                                                             {this.state.swichTitleChild} <Translate id="languages.comunicacionEncargo.titleTrabajoPosiblesTramitar" />
                                                                         </ExpansionPanelSummary>
                                                                         <ExpansionPanelDetails>
@@ -471,11 +506,11 @@ class ComunicacionEncargo extends React.Component {
                                     }
                                 </Grid>
                                 <Grid item xs={12} className="d-flex justify-content-between">
-                                    <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/visualizar-expediente/" + this.props.match.params.id)}}>
+                                    <Button color="primary" className={classes.button} onClick={() => { this.props.history.push("/visualizar-expediente/" + this.props.match.params.id) }}>
                                         <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
                                     </Button>
                                     <Button variant="contained" color="primary" className={classes.button}
-                                            onClick={() => { this.handleNext() }}>
+                                        onClick={() => { this.handleNext() }}>
                                         <Translate id="languages.generalButton.next" /><Next className={classes.rightIcon} />
                                     </Button>
                                 </Grid>

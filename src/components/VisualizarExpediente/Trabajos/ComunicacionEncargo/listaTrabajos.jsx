@@ -8,6 +8,7 @@ import { Table, TableCell, TableHead, TableBody, TableRow, Paper, Fab, Typograph
 import { Add } from '@material-ui/icons';
 import { grey } from '@material-ui/core/colors';
 import { withRouter } from 'react-router-dom';
+import moment from "moment";
 
 const styles = theme => ({
   subtitle: {
@@ -118,9 +119,9 @@ class ListaTrabajos extends Component {
                       </TableCell>
                       <TableCell className="p-0"><span className={classes.titleColor}>{row.Titulo}</span></TableCell>
                       <TableCell className="p-3">{row.Estado}</TableCell>
-                      <TableCell className="p-0">{}</TableCell>
-                      <TableCell className="p-0"></TableCell>
-                      <TableCell className="p-0"></TableCell>
+                      <TableCell className="p-0 text-center">{row.Fecha_Entrada ? moment(row.Fecha_Entrada).format("DD/MM/YYYY") : "-"}</TableCell>
+                      <TableCell className="p-0 text-center">{row.Fecha_Tramitacion ? moment(row.Fecha_Tramitacion).format("DD/MM/YYYY") : "-"}</TableCell>
+                      <TableCell>{row.Incidencias !==  undefined ? row.Incidencias : 0}</TableCell>
                     </TableRow>
                   );
                 })
