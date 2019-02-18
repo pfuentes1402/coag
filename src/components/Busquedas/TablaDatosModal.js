@@ -1,46 +1,40 @@
 import React, { Component } from 'react';
+import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import {traduccionGrid} from './../../helpers/traducciones';
 import { goExpedientesUser } from './../../actions/usuarios/index';
-import { fetchExpedienteDatosGeneral } from './../../actions/expedientes/index';
 import {Button} from "@material-ui/core";
-const stateExpedientes = {
-    columnDefs: [
-        {headerName: "COD. EXP", field: "Expediente_Codigo", width: 93},                
-        {headerName: "TITULO", field: "Titulo", width: 140},                
-        {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
-        {headerName: "MUNICIPIO", field: "Concello", width: 120},
-        {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 148},             
-    ]          
-    ,
-    components: {
-            rowNodeIdRenderer: function (params) {
-                return params.node.id + 1;
-            }
-        },
-        
-        rowGroupPanelShow: "always",
-        quickFilterText: null,
-        paginationPageSize: 20,
-        localeText: traduccionGrid,
-        rowSelection: "single",
-    rowData: [
-        {numero: "Aragón", Titulo: "", estado: 3, fecha_entrada: 36202, fecha_visado: "Vigo", inc: ""}
-    ],
-    trabajo:[
-        {Id_Trabajo: "", Titulo: "", Estado: "", fecha_entrada:"", fecha_visado: "", inc: ""}
-    ],
-}
+
 
 
 
 class TablaDatosModal extends Component {
     constructor(props) {
         super(props);
-        this.state = stateExpedientes;
+        this.state =  {
+            columnDefs: [
+                {headerName: "COD. EXP", field: "Id_Expediente", width: 93},
+                {headerName: "TITULO", field: "Titulo", width: 140},
+                {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
+                {headerName: "MUNICIPIO", field: "Concello", width: 120},
+                {headerName: "EMPLAZAMIENTO", field: "Emplazamiento", width: 148},
+            ]
+            ,
+            components: {
+                rowNodeIdRenderer: function (params) {
+                    return params.node.id + 1;
+                }
+            },
+
+            rowGroupPanelShow: "always",
+            quickFilterText: null,
+            paginationPageSize: 20,
+            localeText: traduccionGrid,
+            rowSelection: "single",
+        };
 
 
     }
@@ -51,8 +45,14 @@ class TablaDatosModal extends Component {
     };
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
-        this.props.goExpedientesUser();
-        this.props.fetchExpedienteDatosGeneral(selectedRows[0].Expediente_Codigo);
+        this.props.goExpedientesUser(); /*para ocultarl el modal de busqueda*/
+        if(this.props.isTrabajo){
+            this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
+        }else
+        {
+            this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente);
+
+        }
     };
 
     onBtExport() {
@@ -134,9 +134,8 @@ const mapStateToProps = state => ({
   });
 
 const mapDispatchToProps = {
-    goExpedientesUser,
-    fetchExpedienteDatosGeneral
+    goExpedientesUser
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(TablaDatosModal);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TablaDatosModal));
