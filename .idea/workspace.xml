@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -41,7 +42,22 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4318">
               <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
-              <folding />
+              <folding>
+                <marker date="1550506468858" expanded="true" signature="5134:5181" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="5196:5271" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="5367:5605" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="5446:5523" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="5680:5763" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
+                <marker date="1550506468858" expanded="true" signature="5815:5870" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
+                <marker date="1550506468858" expanded="true" signature="6026:6272" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="6036:6179" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="6194:6269" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="6402:6453" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="6531:6584" ph="{...}" />
+                <marker date="1550506468858" expanded="true" signature="6640:6699" ph="{&quot;type&quot;: types.ADD_AGENTE_TRABAJO...}" />
+                <marker date="1550506468858" expanded="true" signature="6760:6822" ph="{&quot;type&quot;: types.DELETE_AGENTE_TRABAJO...}" />
+                <marker date="1550506468858" expanded="true" signature="6881:6941" ph="{&quot;type&quot;: types.EDIT_AGENTE_TRABAJO...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -447,6 +463,7 @@
       <workItem from="1549638401537" duration="181000" />
       <workItem from="1549640052896" duration="1203000" />
       <workItem from="1550505302265" duration="418000" />
+      <workItem from="1550520794113" duration="76000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -522,7 +539,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="252079000" />
+    <option name="totallyTimeSpent" value="252155000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -535,6 +552,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.43327555" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -931,7 +949,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4318">
           <caret line="139" column="20" lean-forward="false" selection-start-line="139" selection-start-column="20" selection-end-line="139" selection-end-column="20" />
-          <folding />
+          <folding>
+            <marker date="1550506468858" expanded="true" signature="5134:5181" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="5196:5271" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="5367:5605" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="5446:5523" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="5680:5763" ph="{&quot;type&quot;: types.FETCH_ESTRUCTURA_DOCUMENTAL_TRABAJO...}" />
+            <marker date="1550506468858" expanded="true" signature="5815:5870" ph="{&quot;type&quot;: types.FILES_TO_UPLOAD...}" />
+            <marker date="1550506468858" expanded="true" signature="6026:6272" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="6036:6179" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="6194:6269" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="6402:6453" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="6531:6584" ph="{...}" />
+            <marker date="1550506468858" expanded="true" signature="6640:6699" ph="{&quot;type&quot;: types.ADD_AGENTE_TRABAJO...}" />
+            <marker date="1550506468858" expanded="true" signature="6760:6822" ph="{&quot;type&quot;: types.DELETE_AGENTE_TRABAJO...}" />
+            <marker date="1550506468858" expanded="true" signature="6881:6941" ph="{&quot;type&quot;: types.EDIT_AGENTE_TRABAJO...}" />
+          </folding>
         </state>
       </provider>
     </entry>
