@@ -321,6 +321,7 @@ export const getToken = async () => {
               ClienteId: clienteId,
               ClienteClave: clienteClave
           });
+      console.log(response.headers)
       await localStorage.setItem('token', response.headers.token);
       return response;
   }catch (error) {
@@ -453,10 +454,11 @@ export const insertTrabajoEncomenda = (data, id_expediente) => {
 };
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
-export const getFuncionesTipologia = (idLanguage = 2) =>
-  api.get(`/tipos/guia/funciones?idioma=${idLanguage}`).then(response => {
-    return response;
-  });
+export const getFuncionesTipologia = (idLanguage = 2, idGrupoTematico = 0, idAutorizacionMunicipal = 0) =>
+  api.get(`/tipos/guia/funciones?idioma=${idLanguage}&id_tipo_grupo_tematico=${idGrupoTematico}&id_tipo_autorizacion_municipal=${idAutorizacionMunicipal}`)
+    .then(response => {
+      return response;
+    });
 
 /**Agregar nuevos agentes a un trabajo */
 export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
@@ -979,3 +981,16 @@ export const download=async (urlFile,fileName)=>{
 
 }
 
+
+/**Obtener los tipos de autorización municipal segun el grupo
+ * temático seleccionado
+ */
+export const getAutorizacionMunicipal = async (grupoTematico, languageId = 1) => {
+  try {
+    let result = await api.get(`/tipos/guia/tiposautorizacionmunicipal?idioma=${languageId}&id_tipo_grupo_tematico=${grupoTematico}`);
+    return result.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}

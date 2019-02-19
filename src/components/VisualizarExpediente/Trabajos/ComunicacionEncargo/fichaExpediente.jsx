@@ -343,7 +343,7 @@ FichaExpediente.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
+  funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Tunciones : [],
   catastro: state.expedientes.addressreducida ? state.expedientes.addressreducida : [], /*Contiene arreglo de la tabla de ubicaciones */
   arrayReferencias: state.expedientes.arrayReferencias ? state.expedientes.arrayReferencias : [] /*Contiene arreglo con las referencial catastrales de cada direccion de la tabla ubicacion*/,
   addressData: state.expedientes.address ? state.expedientes.address : ''

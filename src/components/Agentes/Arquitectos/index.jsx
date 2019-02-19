@@ -17,11 +17,11 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
-import {fetchFuncionesTipologia} from '../../../actions/trabajos/index';
+import { fetchFuncionesTipologia } from '../../../actions/trabajos/index';
 import '../indexstyle.css';
 import FormArquitecto from './arquitecto';
 import SearchAgents from '../search';
-import { getBuscador } from '../../../api';
+import { getBuscador, getFuncionesTipologia } from '../../../api';
 
 const styles = theme => ({
   marginPanel: {
@@ -119,13 +119,17 @@ class Arquitecto extends Component {
       canSearch: false,
       selectedAgent: null,
       encomenda: this.props.encomenda,
+      encomendaActual: this.props.encomenda.EncomendaActual && this.props.encomenda.EncomendaActual.length > 0
+        ? this.props.encomenda.EncomendaActual[0] : null,
       tipoBusqueda: "Colegiados"
     }
   }
 
   componentDidMount() {
     try {
-      this.props.fetchFuncionesTipologia(1);
+      this.props.fetchFuncionesTipologia(this.props.activeLanguage.code,
+        this.state.encomendaActual.Id_Tipo_Grupo_Tematico, 
+        this.state.encomendaActual.Id_Tipo_Autorizacion_Municipal);
       this.handleCanSearch(false);
       this.parseAgents();
       this.loadLoguedAgent();
@@ -299,7 +303,7 @@ class Arquitecto extends Component {
       this.state.canSearch &&
       <div>
         <SearchAgents tipoBusqueda={this.state.tipoBusqueda} selectAgent={(selectAgent) => { this.handleSelectedAgent(selectAgent) }}
-          handleAddAgent={() => { this.handleCanSearch(false) }} allowAdd={false}/>
+          handleAddAgent={() => { this.handleCanSearch(false) }} allowAdd={false} />
 
         {this.state.selectedAgent &&
           <FormArquitecto key={this.state.selectedAgent.Nif} arquitecto={this.state.selectedAgent}
@@ -311,6 +315,7 @@ class Arquitecto extends Component {
   }
 
   render() {
+    console.log("this.props",this.props);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -326,8 +331,9 @@ class Arquitecto extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
-  loguedUser: state.user.DatosUsuarioValidado
+  funcionesTipologia: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Tunciones : [],
+  loguedUser: state.user.DatosUsuarioValidado,
+  state
 })
 
 const mapDispatchToProps = {

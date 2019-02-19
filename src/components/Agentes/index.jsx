@@ -187,7 +187,7 @@ const mapStateToProps = (state) => ({
   loguedUser: state.user.DatosUsuarioValidado,
   comunicacionEncargo: state.trabajos.comunicacionEncargo,
   expedientes: state.expedientes,
-  funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Funciones : [],
+  funcionesTipologicas: state.trabajos.funcionesTipologia.data ? state.trabajos.funcionesTipologia.data.Tipos_Trabajos_Tunciones : [],
   currentExpediente: state.expedientes.ExpedientNew ? state.expedientes.ExpedientNew : {},
   state: state
 })
