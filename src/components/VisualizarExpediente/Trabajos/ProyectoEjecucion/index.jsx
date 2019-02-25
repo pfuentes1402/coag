@@ -446,6 +446,17 @@ class TrabajoEjecucion extends Component {
                 if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
                     this.props.fetchErrorExpediente(response);
                 }
+                if(response.Archivos){
+                    response.Archivos.map((i,p)=>{
+                        this.download_file(i.Url,i.Nombre);
+                        return null
+                    })
+                }
+                let newData=[...this.state.temporalFiles];
+                temporalFiles.map(item=>{
+                    newData = newData.filter(current=>current.Nombre!==item.Nombre)
+                    return null
+                });
 
             }
 

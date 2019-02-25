@@ -930,8 +930,7 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
 export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
   try {
 
-    let arc= archivos;
-    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivoDescarga`,
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivosDescarga`,
         {
           Archivos:archivos
         }
@@ -945,7 +944,7 @@ export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
     try {
 
 
-        let result = await api.get(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivoDescarga`,
+        let result = await api.post(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivosDescarga`,
             {
                 Archivos:archivos
             }
