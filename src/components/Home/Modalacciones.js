@@ -25,7 +25,7 @@ const styles = theme => ({
         top: 0,
         backgroundColor: "white",
         border: "grey solid 0.5px",
-        height: "100vh",
+        height: "100%",
         [theme.breakpoints.down('xs')]: {
             width: "100%"
         },
