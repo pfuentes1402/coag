@@ -80,6 +80,7 @@ class VisualizarExpediente extends Component {
         estructuraDocumental: [],
         estructurasPadre: [],
         isLoadEstructura: false,
+        active: false
     };
   }
 
@@ -150,24 +151,25 @@ class VisualizarExpediente extends Component {
   }
 
     async handleChangeMenuOption(idTrabajo) {
+      let active = this.state.active == idTrabajo ? -1 : idTrabajo;
         if (this.state.currentExpediente) {
             if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
                 await this.setState({
                     renderComponent: "TrabajoComunicacion",
                     idTrabajoActivo: idTrabajo,
-                    idEstructuraActiva: null
+                    idEstructuraActiva: null,
+                    active: active
                 });
             } else {
                 await this.setState({
                     renderComponent: "TrabajoEjecucion",
                     idTrabajoActivo: idTrabajo,
-                    idEstructuraActiva: null
+                    idEstructuraActiva: null,
+                    active: active
                 });
             }
             await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
         }
-
-
   }
 
     async handleChangeEstructuran(idEstructura, titleEstructura){
@@ -227,7 +229,7 @@ class VisualizarExpediente extends Component {
                                  estructurasPadre={this.state.estructurasPadre}
                                  idEstructuraActiva={this.state.idEstructuraActiva}
                                  isLoadEstructura={this.state.isLoadEstructura}
-                                 active={this.state.idTrabajoActivo && (this.state.idTrabajoActivo.toString() === trabajo.Id_Trabajo.toString())}
+                                 active={this.state.active  == trabajo.Id_Trabajo}
                     />
             })}
           </List>

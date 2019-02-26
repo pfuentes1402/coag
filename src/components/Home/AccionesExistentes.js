@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Row, Col, ListGroup, ListGroupItem} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
+import {withStyles} from '@material-ui/core/styles';
+import {List, ListItem, Typography, Divider} from '@material-ui/core';
 import { connect } from 'react-redux';
 import { fetchMuestraModal, fetchCambiaStatoModalAcciones } from './../../actions/interfaz/index'
 import { fetchIdAccion } from './../../actions/usuarios/index'
@@ -17,50 +19,47 @@ const acciones =[
     {Id:6,nombre:'cesar/cerrar expediente'}
 ];
 
-function RenderAccion(acciones, props) {
-    const click = (accion)=>{
-        props.fetchIdAccion(accion.Id);
-        props.fetchMuestraModal(accion.Id);
-        props.fetchCambiaStatoModalAcciones();
-    }
-    return <Translate>
-        {({translate})=>
-            acciones.map((accion,i) =>(
-                <ListGroupItem key={i} onClick={()=>click(accion)}>
-                        <text style={{cursor: "pointer"}} className="text-primary">{translate(`Actions.listactions.action${i}`).toUpperCase()}</text>
-                </ListGroupItem>
-            ))}
-    </Translate>
-}
-const styles = ({
-    title: {
-        fontWeight: 600,
-        padding: "16px 8px 0px 16px"
-    },
-    col: {
-        padding: 0
-    },
 
+const styles = theme => ({
+   borderBottom: {
+       borderBottom: "solid 1px rgba(0, 0, 0, 0.12)"
+   }
 });
+
 class AccionesExistentes extends Component { 
     constructor(props) {
         super(props);
         this.props.addTranslation(AccionesTranslations);
       }
 
+      handleClick(accion){
+          this.props.fetchIdAccion(accion.Id);
+          this.props.fetchMuestraModal(accion.Id);
+          this.props.fetchCambiaStatoModalAcciones();
+      }
+
     render() {
+        let {classes} = this.props;
         return (
             <div>
             <Row>
                 <Col>
-                    <label style={styles.title}><Translate id="Actions.title"/></label>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <ListGroup>
-                        {RenderAccion(acciones, this.props)}
-                    </ListGroup>
+                    <List component="nav"
+                    subheader={<Typography variant="h6" gutterBottom className="px-4 pt-4 pb-3" style={{fontSize: 18}}>
+                                <Translate id="Actions.title"/>
+                            </Typography>}>
+                        <Divider/>
+                        {
+                            acciones.map((accion,i) => (
+                                <ListItem key={i} onClick={() => {this.handleClick(accion)}} button className={classes.borderBottom}>
+                                    <Typography variant="button" gutterBottom color="primary" className="mb-1 mt-1">
+                                        {this.props.translate(`Actions.listactions.action${i}`)}
+                                    </Typography>
+                                    <Divider/>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
                 </Col>
             </Row>
             </div>
@@ -70,16 +69,10 @@ class AccionesExistentes extends Component {
 }
 
 
-
-
 const mapStateToProps = state => ({
   
   });
+export default connect(mapStateToProps,{ fetchMuestraModal, fetchIdAccion, fetchCambiaStatoModalAcciones })(withLocalize(withStyles(styles)(AccionesExistentes)))
 
-
-  
-  
-
-export default connect(mapStateToProps,{ fetchMuestraModal, fetchIdAccion, fetchCambiaStatoModalAcciones })(withLocalize(AccionesExistentes));
 
 

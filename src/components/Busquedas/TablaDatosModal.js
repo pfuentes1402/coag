@@ -61,7 +61,7 @@ class TablaDatosModal extends Component {
                     this.props.history.push("/visualizar-expediente/" + idExpediente);
                     break;
                 case 2:
-                    this.props.history.push("/crear-trabajo/" + idExpediente);
+                    await this.urlAccion(idExpediente,idAccion, 0)
                     break;
                 case 3:
                     await this.urlAccion(idExpediente,idAccion, 0)
@@ -93,7 +93,15 @@ class TablaDatosModal extends Component {
                     if(id === 4){
                         await this.props.history.push("/visualizar-expediente/" + id_expediente + "/" + response.Trabajos[0].Id_Trabajo);
                     }else {
-                        window.open(response.InfoAccion[0].Url, '_blank');
+                        if(id === 2){
+                            if(response.InfoAccion[0].Id_Asistente == 1){
+                                await this.props.history.push("/crear-trabajo/" + id_expediente);
+                            }else {
+                                await this.props.history.push("/comunicacion/" + id_expediente );
+                            }
+                        }else {
+                            window.open(response.InfoAccion[0].Url, '_blank');
+                        }
                     }
 
                 }

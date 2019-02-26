@@ -68,7 +68,7 @@ class MenuProyectoEjecucion extends Component {
                     return  <List key={'menu-'+position} component="div" disablePadding>
                         <ListItem button onClick={()=>{this.handleClick(estructura)}} className="pl-5" >
 
-                            <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido === 1) ? ' *' : '')}/>
+                            <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}/>
                             {this.state.openEstructura === estructura ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
                         <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
@@ -89,7 +89,7 @@ class MenuProyectoEjecucion extends Component {
                                                       className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )}>
                                             {children.Estado_Visual === 0 ? <Close/> : (children.Estado_Visual === 1 ? <Check/> : <Block/>) }
                                         </ListItemIcon>
-                                        <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido === 1 ? ' *' : '')}
+                                        <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido == 1 ? ' *' : '')}
                                                       classes={{primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : ( children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green ))}}
                                                       />
                                     </ListItem>
