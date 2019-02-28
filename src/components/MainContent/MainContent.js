@@ -14,7 +14,7 @@ class MainContent extends Component {
             <div>
                 <Container className="full">
                     <Row className="principal">
-                        <Col xs="12" md={4} lg={3} style={{backgroundColor: "#FFFFFF"}}>
+                        <Col xs="12" md={4} lg={3} className="p-0" style={{backgroundColor: "#FFFFFF"}}>
                             <AccionesExistentes />
                         </Col>
                         <Col xs="12" md={8} lg={9}>

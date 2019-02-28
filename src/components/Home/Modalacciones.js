@@ -6,7 +6,7 @@ import { withLocalize } from 'react-localize-redux';
 import { Translate } from "react-localize-redux";
 import { fetchocultaModal, fetchCambiaStadoModalFalse } from '../../actions/interfaz/index'
 import {fetchBuscador } from '../../actions/expedientes/index'
-import {fetchSelect } from '../../actions/usuarios/index'
+import {fetchSelect, fetchSuscepAcciones } from '../../actions/usuarios/index'
 import './styles.css';
 import TablaDatosModal  from '../Busquedas/TablaDatosModal';
 import TablaBusquedaArquitectos  from '../Busquedas/TablaBusquedaArquitectos';
@@ -25,7 +25,7 @@ const styles = theme => ({
         top: 0,
         backgroundColor: "white",
         border: "grey solid 0.5px",
-        height: "100vh",
+        height: "100%",
         [theme.breakpoints.down('xs')]: {
             width: "100%"
         },
@@ -50,11 +50,17 @@ class Modalacciones extends Component {
        
       }
     handleSearch(text) {
-        if(text === 'colegiados' && !text){
-            this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
-        }else {
-            this.props.fetchBuscador(text, this.props.selectBuscador);
+        if(this.props.modal){
+            if(text === 'colegiados' && !text){
+                this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
+            }else {
+                this.props.fetchBuscador(text, this.props.selectBuscador);
+            }
         }
+        else {
+            this.props.fetchSuscepAcciones(text, this.props.idAccion, 1, 10000);
+        }
+
     }
 
     handleCancel() {
@@ -80,9 +86,15 @@ class Modalacciones extends Component {
 
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         this.props.fetchSelect(this.state.types);
-        this.props.fetchBuscador(this.state.text, this.state.types);
+        if(this.props.modal){
+           await this.props.fetchBuscador(this.state.text, this.state.types);
+        }
+        else {
+            await this.props.fetchSuscepAcciones(this.state.text, this.props.idAccion, 1, 10000);
+        }
+
     }
 
     handleClose(){
@@ -118,7 +130,7 @@ class Modalacciones extends Component {
                 <Container className="full">
                     <Row>
                         {
-                            this.props.loading === true ? <CircularProgress size={24}/> :
+                            this.props.loading === true ? <CircularProgress/> :
                                 <Col xs={12}>
                                     <Row>
                                         <Col xs={12} className="d-flex justify-content-between align-items-center">
@@ -237,12 +249,13 @@ class Modalacciones extends Component {
 
 
 const mapStateToProps = state => ({
-    loading: state.status.modalLoading ? state.status.modalLoading : '',
+    loading: state.status.modalLoading ? state.status.modalLoading : false,
     datosTabla: state.user.datosModal.expedientes ? state.user.datosModal.expedientes : '',
     datosTablaResult: state.user.datosModal.resultados ? state.user.datosModal.resultados :'',
     tituloModal:state.user.datosModal.tituloModal ? state.user.datosModal.tituloModal : '',
     descripcion: state.user.datosModal.descripcion ? state.user.datosModal.descripcion : '',
     modal: state.status.modal ? state.status.modal : '',
+    idAccion: state.user.idAccion ? state.user.idAccion : 0,
     filtroBusqueda: state.user.filtroBusqueda ? state.user.filtroBusqueda : '',
     selectBuscador: state.user.selectBusqueda ? state.user.selectBusqueda : 'expedientes',
    
@@ -253,7 +266,8 @@ const mapDispatchToProps = {
     fetchCambiaStadoModalFalse,
     fetchBuscador,
     fetchSelect,
-    fetchErrorExpediente
+    fetchErrorExpediente,
+    fetchSuscepAcciones
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(Modalacciones)));

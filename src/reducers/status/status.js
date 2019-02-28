@@ -4,7 +4,7 @@ import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL,
 import { GOEXPEDIENTES } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false,selectedAction:0,modalLoading:true,modal:false,muestraFiltros:true,contenedorAdd:false,contenedorPromo:false};
+const initialState = { loading : true, modalAcciones:false, selectedAction:0, modalLoading:true, modal:false, muestraFiltros:true, contenedorAdd:false, contenedorPromo:false};
 
 
 

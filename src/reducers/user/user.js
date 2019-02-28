@@ -3,7 +3,7 @@ import {
   ACCIONESSOLICITARLI, ACCIONESCONVERTIRDIGITAL, ACCIONESCESAREXPEDIENTE
 } from "../../actions/usuarios/types";
 import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
-import { FETCH_LOGIN_SUCCESS, FETCH_LOADING } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_SUCCESS, FETCH_LOADING, FETCH_ID_ACCION } from "../../actions/usuarios/types";
 import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO , FETCH_LANGUAGE} from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
@@ -92,12 +92,17 @@ const reducer = (state = initialstate, action) => {
         ...state,
         ultimostrabajos: action.payload,
       };
+      case FETCH_ID_ACCION:
+        return {
+            ...state,
+            idAccion: action.payload
+        }
     case EXPEDIENTESSUSCEPTIBLESTRABAJO:
       
       return {
         ...state,
         datosModal: {
-          expedientes: action.payload.data.Expedientes,
+          expedientes: action.payload.data,
           tituloModal: 'Expedientes que se pueden modificar',
           descripcion: 'Utiliza los filtros para encontrar el expediente que quieres modificar y pulsa sobre él.'
         }

@@ -117,7 +117,11 @@ class ListaTrabajos extends Component {
                       <TableCell component="th" scope="row" className="px-1 text-center">
                         {index + 1}
                       </TableCell>
-                      <TableCell className="p-0"><span className={classes.titleColor}>{row.Titulo}</span></TableCell>
+                      <TableCell className="p-0">
+                        <a href={`/visualizar-expediente/${this.props.expediente.Expediente[0].Id_Expediente}/${row.Id_Trabajo}`}>
+                            {row.Titulo}
+                        </a>
+                      </TableCell>
                       <TableCell className="p-3">{row.Estado}</TableCell>
                       <TableCell className="p-0 text-center">{row.Fecha_Entrada ? moment(row.Fecha_Entrada).format("DD/MM/YYYY") : "-"}</TableCell>
                       <TableCell className="p-0 text-center">{row.Fecha_Tramitacion ? moment(row.Fecha_Tramitacion).format("DD/MM/YYYY") : "-"}</TableCell>

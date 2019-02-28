@@ -811,11 +811,7 @@ class TrabajoEjecucion extends Component {
                                                         </Grid>
                                                     </Grid>
                                                     :
-                                                    <Grid item xs={12}>
-                                                        <h1 className="text-center" style={{color: '#cecece', marginTop: 15}}>
-                                                            <Translate id="languages.fileUpload.noResult" />
-                                                        </h1>
-                                                    </Grid>
+                                                    ""
 
                                             }
                                         </Grid>

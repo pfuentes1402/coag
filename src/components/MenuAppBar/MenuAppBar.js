@@ -128,7 +128,7 @@ class MenuAppBar extends React.Component {
                         transitionLeaveTimeout={3000}>
                         {
                             this.props.mostrarModal === true ?
-                                <Modalacciones />
+                                <Modalacciones key={this.props.idAccion}/>
                                 : ''}
                     </CSSTransitionGroup>
                 </div>
@@ -144,6 +144,7 @@ const mapStateToProps = state => (
     {
         usuario: state.user.DatosUsuarioValidado.Usuario ? state.user.DatosUsuarioValidado.Usuario : 'Login',
         mostrarModal: state.status.modalAcciones,
+        idAccion: state.user.idAccion ? state.user.idAccion : 0,
     }
 );
 
