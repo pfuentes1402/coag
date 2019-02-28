@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Errors/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Errors/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -88,8 +85,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Errors/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+            <state relative-caret-position="170">
+              <caret line="55" column="66" lean-forward="true" selection-start-line="55" selection-start-column="66" selection-end-line="55" selection-end-column="66" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -479,7 +476,7 @@
       <workItem from="1550591717031" duration="113000" />
       <workItem from="1551109938482" duration="12469000" />
       <workItem from="1551209418024" duration="8304000" />
-      <workItem from="1551365677311" duration="2339000" />
+      <workItem from="1551365677311" duration="2999000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -733,11 +730,18 @@
       <option name="project" value="LOCAL" />
       <updated>1551220543910</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="estilo de los mensajes">
+      <created>1551368057706</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1551368057706</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="490250000" />
+    <option name="totallyTimeSpent" value="490910000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -752,10 +756,10 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4025974" visible="true" weight="0.13333334" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4025974" visible="true" weight="0.13333334" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50165015" side_tool="true" visible="true" weight="0.3021148" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="7" sideWeight="0.50165015" side_tool="true" visible="true" weight="0.3021148" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.59141916" weight="0.3882175" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49834985" visible="true" weight="0.3021148" />
@@ -842,7 +846,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="actualizacion trabajo" />
     <MESSAGE value="preparando el breacrubs" />
     <MESSAGE value="modificado estilo y completado las paginas trabajo expediente en el Breadcrumb" />
     <MESSAGE value="correpcion en carga de expediente y log de login" />
@@ -867,7 +870,8 @@
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="correpciones acciones directas, textos ficheros y encojer trabajo" />
     <MESSAGE value="correpciones links lista de trabajos" />
-    <option name="LAST_COMMIT_MESSAGE" value="correpciones links lista de trabajos" />
+    <MESSAGE value="estilo de los mensajes" />
+    <option name="LAST_COMMIT_MESSAGE" value="estilo de los mensajes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1247,8 +1251,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Errors/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+        <state relative-caret-position="170">
+          <caret line="55" column="66" lean-forward="true" selection-start-line="55" selection-start-column="66" selection-end-line="55" selection-end-column="66" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
