@@ -59,11 +59,11 @@ class TramitacionesCurso extends Component {
                 }
             },
             rowGroupPanelShow: "always",
-            paginationPageSize: 100,
+            paginationPageSize: 30,
             localeText: internationalization(this.props.lang),
             rowSelection: "single",
             rowData: this.props.data,
-            pageSize: 100,
+            pageSize: 30,
             gridApi: null,
             gridColumnApi: null,
             openChooser: false

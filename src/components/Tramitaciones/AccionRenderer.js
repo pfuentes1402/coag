@@ -19,8 +19,11 @@ class AccionRenderer extends Component {
     render() {
         return (
             <span>
-                <IconButton
-                    style={{border:"2px solid", padding:"6px", margin:"4px"}} aria-label="Edit" color="primary">
+                <IconButton style={
+                    {
+                        border: "2px solid",
+                        padding: "6px", margin: "4px"
+                    }} aria-label="Edit" color="primary">
                     <Edit />
                 </IconButton >
             </span>
