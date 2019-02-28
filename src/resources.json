@@ -118,6 +118,10 @@
             "aceptar":[
                 "Aceptar",
                 "Aceptar"
+            ],
+            "mensaje":[
+                "Mensaje",
+                "Mensaje"
             ]
         },
         "generalAddress": {
