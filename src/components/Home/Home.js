@@ -6,7 +6,6 @@ import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
 
 class ContenedorExpedientes extends Component {
     render() {       
-
         return (
             <div>
                 <Container className="full">

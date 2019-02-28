@@ -24,9 +24,13 @@ import { groupBy, filter } from 'lodash';
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 
 const styles = theme => ({
+  fichaExpediente:{
+    backgroundColor: theme.palette.primary.main,
+    color: "white"
+  },
   root: {
-      flexGrow: 1,
-      overflowX: 'auto',
+    flexGrow: 1,
+    overflowX: 'auto',
   },
   grow: {
     flexGrow: 1,
@@ -50,9 +54,9 @@ const styles = theme => ({
   headerNav: {
     margin: "auto",
     textAlign: "center",
-      borderBottom: "solid 1px " + grey[300],
-      position: "relative"
-
+    borderBottom: "solid 1px " + grey[300],
+    position: "relative",
+    cursor: "pointer"
   },
   leftNav: {
     flexGrow: 1,
@@ -70,17 +74,17 @@ class VisualizarExpediente extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        open: true,
-        renderComponent: "TrabajoComunicacion",
-        expediente: null,
-        currentExpediente: null,
-        idTrabajoActivo: this.props.match.params.idTrabajo,
-        idEstructuraActiva: null,
-        titleEstructuraActiva: "",
-        estructuraDocumental: [],
-        estructurasPadre: [],
-        isLoadEstructura: false,
-        active: false
+      open: true,
+      renderComponent: "TrabajoComunicacion",
+      expediente: null,
+      currentExpediente: null,
+      idTrabajoActivo: null/*this.props.match.params.idTrabajo*/,
+      idEstructuraActiva: null,
+      titleEstructuraActiva: "",
+      estructuraDocumental: [],
+      estructurasPadre: [],
+      isLoadEstructura: false,
+      active: false
     };
   }
 
@@ -108,8 +112,8 @@ class VisualizarExpediente extends Component {
       let currentExpediente = expediente.Expediente.length > 0 ? expediente.Expediente[0] : null;
       let activeTrabajo = this.props.match.params.idTrabajo
         ? this.props.match.params.idTrabajo
-        : currentExpediente
-          ? currentExpediente.Id_Trabajo_Encomenda_Actual
+        /*: currentExpediente
+          ? currentExpediente.Id_Trabajo_Encomenda_Actual*/
           : null;
 
       await this.setState({
@@ -150,26 +154,33 @@ class VisualizarExpediente extends Component {
       }
   }
 
-    async handleChangeMenuOption(idTrabajo) {
-      let active = this.state.active == idTrabajo ? -1 : idTrabajo;
-        if (this.state.currentExpediente) {
-            if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual.toString() === idTrabajo.toString()) {
-                await this.setState({
-                    renderComponent: "TrabajoComunicacion",
-                    idTrabajoActivo: idTrabajo,
-                    idEstructuraActiva: null,
-                    active: active
-                });
-            } else {
-                await this.setState({
-                    renderComponent: "TrabajoEjecucion",
-                    idTrabajoActivo: idTrabajo,
-                    idEstructuraActiva: null,
-                    active: active
-                });
-            }
-            await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
-        }
+  async handleChangeMenuOption(idTrabajo) {
+    let active = this.state.active == idTrabajo ? -1 : idTrabajo;
+    if (this.state.currentExpediente) {
+      if (null === idTrabajo) {
+        await this.setState({
+          renderComponent: "TrabajoComunicacion",
+          idTrabajoActivo: idTrabajo,
+          idEstructuraActiva: null,
+            active: active
+        });
+      } else {
+        await this.setState({
+          renderComponent: "TrabajoEjecucion",
+          idTrabajoActivo: idTrabajo,
+          idEstructuraActiva: null,
+          active: active
+        });
+      }
+      await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
+    }
+  }
+
+  handleTrabajoComunicacion() {
+    this.setState({
+      renderComponent: "TrabajoComunicacion", idEstructuraActiva: null,
+      idTrabajoActivo: null
+    });
   }
 
     async handleChangeEstructuran(idEstructura, titleEstructura){
@@ -206,8 +217,8 @@ class VisualizarExpediente extends Component {
     let { classes } = this.props;
     return (
       <List component="nav" className={classes.leftNav}
-        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1`}
-          style={{ lineHeight: 2 }}>
+        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1 ${this.state.idTrabajoActivo === null ? classes.fichaExpediente : ''}`}
+          style={{ lineHeight: 2 }} onClick={()=>this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
         <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
