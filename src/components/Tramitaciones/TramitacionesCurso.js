@@ -15,13 +15,14 @@ import { fetchEstructuraDocumentalTrabajo } from './../../actions/trabajos'
 import 'ag-grid/dist/styles/ag-theme-material.css';
 import { Button } from 'reactstrap';
 import { withRouter } from "react-router-dom";
-import { Select, MenuItem, Checkbox, ListItemText } from '@material-ui/core';
+import { Select, MenuItem, Checkbox, ListItemText, Typography } from '@material-ui/core';
+import {withStyles} from "@material-ui/core/styles/index";
 
 function internationalization(param) {
     return param === '1' ? traduccionGrid : traduccionGridGallego
 }
 
-const styles = ({
+const styles = theme => ({
     title: {
         fontWeight: 600,
         padding: "12px 8px 0px 12px"
@@ -29,6 +30,14 @@ const styles = ({
     col: {
         padding: 0
     },
+    head: {
+        display: "flex",
+        [theme.breakpoints.down('sm')]: {
+            display: "inline",
+        },
+        justifyContent: "space-between"
+    },
+
 })
 
 class TramitacionesCurso extends Component {
@@ -157,7 +166,7 @@ class TramitacionesCurso extends Component {
         }
     }
     render() {
-        console.log("data", this.props.data);
+        let {classes} = this.props;
         return (
             <CardBody className="card-body-Trabajos">
                 <Row style={{
@@ -165,17 +174,19 @@ class TramitacionesCurso extends Component {
                     border: '#E0E0E0 solid 1.5px', backgroundColor: "#FFFFFF"
                 }}>
                     <Col style={styles.col}>
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "space-between"
-                        }}>
-                            <div>
-                                <label style={styles.title}>Tramitaciones en Curso <label className="text-primary">{"(" + (this.props.data ? this.props.data.length : 0) + ")"}</label></label>
+                        <div className={classes.head}>
+                            <div className="d-flex p-2">
+                                <Typography variant="h6" gutterBottom className="mb-0">
+                                    Tramitaciones en Curso
+                                </Typography>
+                                <Typography variant="h6" color="primary" gutterBottom className="mb-0">
+                                    {"(" + (this.props.data ? this.props.data.length : 0) + ")"}
+                                </Typography>
                             </div>
-                            <div>
-                                <label style={styles.title}>
+                            <div className="d-flex p-2">
+                                <Typography variant="h6"  gutterBottom className="mb-0">
                                     Mostrar
-                                </label>
+                                </Typography>
                                 <Select style={{ width: 230 }}
                                     value={this.state.columnDefs}
                                     multiple
@@ -265,4 +276,4 @@ const mapStateToProps = state => ({
 export default withRouter(connect(mapStateToProps, {
     gotrabajos, setSelectedExpedienteTo, fetchExpedienteDatosGeneral,
     fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo
-})(TramitacionesCurso));
+})(withStyles(styles)(TramitacionesCurso)));

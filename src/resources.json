@@ -2,8 +2,10 @@
     "languages": {
         "header": {
             "titleHome": ["INICIO", "INICIO"],
-            "btnNewExpedient": ["Nuevo expediente","Meus Expedentes"],
-            "btnTramitacionLote": ["Tramitacion en lote","Tramitacion en lote\""]
+            "btnNewExpedient": ["Nuevo expediente",
+                "Nuevo expediente"],
+            "btnTramitacionLote": ["Tramitación en lote",
+                "Tramitacion en lote\""]
         },
         "leftMenu": {
             "titleMenu": [
