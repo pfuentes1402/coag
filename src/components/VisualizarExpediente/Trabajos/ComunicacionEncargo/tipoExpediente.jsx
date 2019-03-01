@@ -6,7 +6,7 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import { Typography, Grid, Paper, TextField, Button } from '@material-ui/core';
 import { Table, TableCell, TableHead, TableBody, TableRow, Divider } from '@material-ui/core';
-import {  Check } from '@material-ui/icons';
+import { Check } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { fetchErrorExpediente } from '../../../../actions/expedientes';
 import { withRouter } from 'react-router-dom';
@@ -32,9 +32,9 @@ const styles = theme => ({
   table: {
     minWidth: 200,
   },
-    tableArquitecto: {
-        minWidth: 190,
-    },
+  tableArquitecto: {
+    minWidth: 190,
+  },
   tableBodyHeight: {
     minHeight: 100
   },
@@ -59,9 +59,9 @@ const styles = theme => ({
     border: "2px solid " + grey[200],
     borderBottom: 0
   },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
+  tableWrapper: {
+    overflowX: 'auto',
+  },
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -84,7 +84,6 @@ class TipoExpediente extends Component {
   }
 
   componentWillMount() {
-
   }
 
   renderAgentsTable() {
@@ -98,45 +97,45 @@ class TipoExpediente extends Component {
             </Typography>
           </Grid>
         </Grid>
-          <div className={classes.tableWrapper}>
-            <Table className={`${classes.tableArquitecto} ${classes.tableBorder}`}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.fichaExpediente.tableColumnName" />
-              </CustomTableHead>
-              <CustomTableHead className="px-2 text-uppercase">%</CustomTableHead>
-              <CustomTableHead className="text-uppercase px-1 text-center">
-                <Translate id="languages.fichaExpediente.tableColumnFunctions" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-1"></CustomTableHead>
-            </TableRow>
-          </TableHead>
+        <div className={classes.tableWrapper}>
+          <Table className={`${classes.tableArquitecto} ${classes.tableBorder}`}>
+            <TableHead>
+              <TableRow className={classes.headHeight}>
+                <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
+                <CustomTableHead className="text-uppercase">
+                  <Translate id="languages.fichaExpediente.tableColumnName" />
+                </CustomTableHead>
+                <CustomTableHead className="px-2 text-uppercase">%</CustomTableHead>
+                <CustomTableHead className="text-uppercase px-1 text-center">
+                  <Translate id="languages.fichaExpediente.tableColumnFunctions" />
+                </CustomTableHead>
+                <CustomTableHead className="text-uppercase px-1"></CustomTableHead>
+              </TableRow>
+            </TableHead>
 
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.state.expediente.Colegiados.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={4}></TableCell>
-                </TableRow>
-                : this.state.expediente.Colegiados.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {row.Nif}
-                      </TableCell>
-                      <TableCell className="pl-3">{row.Nombre}</TableCell>
-                      <TableCell className="px-2">{row.Porcentaje}</TableCell>
-                      <TableCell className="px-1 text-center">{row.Funcion}</TableCell>
-                      <TableCell className="px-1" style={{ width: 100 }}></TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-          </div>
+            <TableBody className={classes.tableBodyHeight}>
+              {
+                this.state.expediente.Colegiados.length === 0 ?
+                  <TableRow>
+                    <TableCell colSpan={4}></TableCell>
+                  </TableRow>
+                  : this.state.expediente.Colegiados.map((row, index) => {
+                    return (
+                      <TableRow className={classes.row} key={index}>
+                        <TableCell component="th" scope="row" className="px-1 text-center">
+                          {row.Nif}
+                        </TableCell>
+                        <TableCell className="pl-3">{row.Nombre}</TableCell>
+                        <TableCell className="px-2">{row.Porcentaje}</TableCell>
+                        <TableCell className="px-1 text-center">{row.Funcion}</TableCell>
+                        <TableCell className="px-1" style={{ width: 100 }}></TableCell>
+                      </TableRow>
+                    );
+                  })
+              }
+            </TableBody>
+          </Table>
+        </div>
       </div>
     );
   }
@@ -152,39 +151,39 @@ class TipoExpediente extends Component {
             </Typography>
           </Grid>
         </Grid>
-          <div className={classes.tableWrapper}>
-            <Table className={`${classes.table} ${classes.tableBorder}`}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.fichaExpediente.tableColumnName" />
-              </CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
-            </TableRow>
-          </TableHead>
+        <div className={classes.tableWrapper}>
+          <Table className={`${classes.table} ${classes.tableBorder}`}>
+            <TableHead>
+              <TableRow className={classes.headHeight}>
+                <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
+                <CustomTableHead className="text-uppercase">
+                  <Translate id="languages.fichaExpediente.tableColumnName" />
+                </CustomTableHead>
+                <CustomTableHead className="pl-3 text-uppercase">%</CustomTableHead>
+              </TableRow>
+            </TableHead>
 
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.props.expediente.Promotores.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={4}></TableCell>
-                </TableRow>
-                : this.props.expediente.Promotores.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {row.Nif}
-                      </TableCell>
-                      <TableCell className="pl-3">{row.Nombre}</TableCell>
-                      <TableCell className="p-3">{row.Porcentaje}</TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-          </div>
+            <TableBody className={classes.tableBodyHeight}>
+              {
+                this.props.expediente.Promotores.length === 0 ?
+                  <TableRow>
+                    <TableCell colSpan={4}></TableCell>
+                  </TableRow>
+                  : this.props.expediente.Promotores.map((row, index) => {
+                    return (
+                      <TableRow className={classes.row} key={index}>
+                        <TableCell component="th" scope="row" className="px-1 text-center">
+                          {row.Nif}
+                        </TableCell>
+                        <TableCell className="pl-3">{row.Nombre}</TableCell>
+                        <TableCell className="p-3">{row.Porcentaje}</TableCell>
+                      </TableRow>
+                    );
+                  })
+              }
+            </TableBody>
+          </Table>
+        </div>
       </div>
     );
   }
@@ -200,7 +199,11 @@ class TipoExpediente extends Component {
                 <Translate id="languages.fichaExpediente.titleExpedientType" />
               </Typography>
               <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}`)}>
-                <Translate id="languages.fichaExpediente.editExpOptionTitle" /><Check />
+                {this.state.sourceExpediente.Id_Trabajo_Encomenda_Actual
+                  ? <Translate id="languages.fichaExpediente.editExpOptionTitle" />
+                  : <Translate id="languages.fichaExpediente.addCurrentEncomenda" />
+                }
+                <Check />
               </Button>
             </Grid>
             <Divider style={{ height: 3 }} />

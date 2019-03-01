@@ -124,6 +124,18 @@
             "mensaje":[
                 "Mensaje",
                 "Mensaje"
+            ],
+            "backExpedient":[
+                "Regresar al expediente",
+                "Regresar al expediente"
+            ],
+            "addEncomenda":[
+                "Agregar encomenda",
+                "Agregar encomenda"
+            ],
+            "edit":[
+                "Editar",
+                "Editar"
             ]
         },
         "generalAddress": {
@@ -384,6 +396,10 @@
             "arquitectDataTitle":[
                 "Datos del Arquitecto",
                 "Datos del Arquitecto"
+            ],
+            "termsValidation":[
+                "Los términos y condiciones son obligatorios",
+                "Los términos y condiciones son obligatorios"
             ]
         },
         "promotores":{
@@ -472,6 +488,10 @@
             "editExpOptionTitle":[
                 "Modificar encomenda",
                 "Modificar encomenda"
+            ],
+            "addCurrentEncomenda":[
+                "Adicionar encomenda",
+                "Adicionar encomenda"
             ]
         },
         "search": {
@@ -704,6 +724,10 @@
             "fetchError":[
                 "Error procesando la petición",
                 "Error procesando la petición"
+            ],
+            "noEncomenda":[
+                "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo.",
+                "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo."
             ]
         }
     }
