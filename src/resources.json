@@ -2,8 +2,10 @@
     "languages": {
         "header": {
             "titleHome": ["INICIO", "INICIO"],
-            "btnNewExpedient": ["Nuevo expediente","Meus Expedentes"],
-            "btnTramitacionLote": ["Tramitacion en lote","Tramitacion en lote\""]
+            "btnNewExpedient": ["Nuevo expediente",
+                "Nuevo expediente"],
+            "btnTramitacionLote": ["Tramitación en lote",
+                "Tramitacion en lote\""]
         },
         "leftMenu": {
             "titleMenu": [
@@ -118,6 +120,10 @@
             "aceptar":[
                 "Aceptar",
                 "Aceptar"
+            ],
+            "mensaje":[
+                "Mensaje",
+                "Mensaje"
             ]
         },
         "generalAddress": {
@@ -201,8 +207,8 @@
                 "OBSERVACIONES",
                 "OBSERVACIONS"],
             "helperTextObservaciones": [
-                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio.",
-                "Introduce aqui las observaciones que consideres pertinentes. Estas obserbaciones solo serán visisble para el estudio."],
+                "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio.",
+                "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio."],
             "labelAddressValidate": [
             "Ref catastral o coordenadas UTM",
             "Ref catastral o coordenadas UTM"],
@@ -216,8 +222,8 @@
                 "Introducir un Alias para la dirección",
                 "Introducir un Alias para la dirección"],
             "btnGuardarExpediente": [
-                "Guardary crear expediente",
-                "Guardary crear expediente"]
+                "Guardar y crear expediente",
+                "Guardar y crear expediente"]
         },
         "comunicacionEncargo":{
             "titleEligeTipoExpeiente": [
