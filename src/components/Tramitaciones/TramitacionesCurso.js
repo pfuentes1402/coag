@@ -89,10 +89,6 @@ class TramitacionesCurso extends Component {
     }
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
-        let data = [];
-        this.gridApi.forEachNode(function (rowNode, index) {
-            data.push(rowNode);
-        });
         this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
     }
     onBtExport() {
