@@ -4,7 +4,7 @@ import {
 } from "../../actions/usuarios/types";
 import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS, FETCH_LOADING, FETCH_ID_ACCION } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO , FETCH_LANGUAGE} from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO, FETCH_LANGUAGE } from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
 
@@ -20,7 +20,7 @@ const initialstate = {
     "Es_Sociedad": "",
     "Mail": "",
     "Fecha_Ultima_Conexion": "",
-    "Nif" : ""
+    "Nif": ""
   },
 
   datosModal: [{ tituloModal: 0 }],
@@ -37,17 +37,17 @@ const initialstate = {
   },
   token: "",
   mensaje: "",
-    loading: false,
+  loading: false,
   data: { Expedientes: [] }
 };
 const reducer = (state = initialstate, action) => {
 
   switch (action.type) {
-      case FETCH_LOADING:
-          return {
-              ...state,
-              loading: action.payload,
-          };
+    case FETCH_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case FETCH_DATOSDEUSUARIO_SUCCESS:
 
       return {
@@ -88,17 +88,18 @@ const reducer = (state = initialstate, action) => {
         mensaje: action.payload,
       };
     case ULTIMOSTRABAJOS:
-      return {
+      let newState = {
         ...state,
         ultimostrabajos: action.payload,
       };
-      case FETCH_ID_ACCION:
-        return {
-            ...state,
-            idAccion: action.payload
-        }
+      return newState;
+    case FETCH_ID_ACCION:
+      return {
+        ...state,
+        idAccion: action.payload
+      }
     case EXPEDIENTESSUSCEPTIBLESTRABAJO:
-      
+
       return {
         ...state,
         datosModal: {
@@ -118,15 +119,15 @@ const reducer = (state = initialstate, action) => {
 
             }
           }
-          case 'colegiados':
-              const { Colegiados } = action.payload.data.data;
-              return {
-                  ...state,
-                  datosModal: {
-                      resultados: Colegiados,
+        case 'colegiados':
+          const { Colegiados } = action.payload.data.data;
+          return {
+            ...state,
+            datosModal: {
+              resultados: Colegiados,
 
-                  }
-              }
+            }
+          }
         case 'promotores':
           const { Promotores } = action.payload.data.data;
           return {
@@ -136,15 +137,15 @@ const reducer = (state = initialstate, action) => {
 
             }
           }
-          case 'otrosAgentes':
-              const { OtrosAgentes } = action.payload.data.data;
-              return {
-                  ...state,
-                  datosModal: {
-                      resultados: OtrosAgentes,
+        case 'otrosAgentes':
+          const { OtrosAgentes } = action.payload.data.data;
+          return {
+            ...state,
+            datosModal: {
+              resultados: OtrosAgentes,
 
-                  }
-              }
+            }
+          }
         default:
           const { Expedientes } = action.payload.data.data;
           return {
@@ -224,11 +225,11 @@ const reducer = (state = initialstate, action) => {
           expedientes: []
         }
       }
-      case FETCH_LANGUAGE:
-          return {
-              ...state,
-             language: action.payload
-          }
+    case FETCH_LANGUAGE:
+      return {
+        ...state,
+        language: action.payload
+      }
 
     case PURGE:
 

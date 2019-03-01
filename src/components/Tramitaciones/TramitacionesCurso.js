@@ -38,15 +38,6 @@ class TramitacionesCurso extends Component {
         this.state = {
             columnDefs: this.renderColumns().filter(x => x.selected),
             allColumns: this.renderColumns(),
-            defaultColDef: {
-                editable: true,
-                enableRowGroup: true,
-                enablePivot: true,
-                enableValue: true,
-                sortable: true,
-                resizable: true,
-                filter: true
-            },
             renderValue: "Columnas por defecto",
             context: { componentParent: this },
             frameworkComponents: {
@@ -98,6 +89,10 @@ class TramitacionesCurso extends Component {
     }
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
+        let data = [];
+        this.gridApi.forEachNode(function (rowNode, index) {
+            data.push(rowNode);
+        });
         this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
     }
     onBtExport() {
@@ -117,9 +112,12 @@ class TramitacionesCurso extends Component {
 
     resizeTable(rows) {
         if (rows > 0) {
+            rows = rows <= this.props.data.length
+                ? rows : this.props.data.length;
+
             let minRowHeight = 48;
-            document.getElementById("myGrid").style.height = `${rows * minRowHeight + 200}px`;
-            document.getElementById("myGrid").style.minHeight = `${rows * minRowHeight + 200}px`;
+            document.getElementById("myGrid").style.height = `${rows * minRowHeight + 170}px`;
+            document.getElementById("myGrid").style.minHeight = `${rows * minRowHeight + 170}px`;
             document.getElementsByClassName("ag-body-viewport")[0].style.height = `${rows * minRowHeight + 20}px`;
         }
     }
@@ -226,7 +224,6 @@ class TramitacionesCurso extends Component {
                         }}>
                             <AgGridReact id="table-grid"
                                 columnDefs={this.state.columnDefs}
-                                defaultColDef={this.state.defaultColDef}
                                 context={this.state.context}
                                 frameworkComponents={this.state.frameworkComponents}
                                 rowData={this.props.data}
