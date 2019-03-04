@@ -136,6 +136,22 @@
             "edit":[
                 "Editar",
                 "Editar"
+            ],
+            "uploadFile":[
+                "Subir Archivo",
+                "Subir Archivo"
+            ],
+            "urgent":[
+                "Urgente",
+                "Urgente"
+            ],
+            "present":[
+                "Presentar",
+                "Presentar"
+            ],
+            "addFile":[
+                "Añadir archivo",
+                "Añadir archivo"
             ]
         },
         "generalAddress": {
@@ -298,12 +314,12 @@
                 "Porcentaje equitativo con el resto de los Arquitectos"
             ],
             "conditionTermn1":[
-                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables.",
-                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables."
+                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables. *",
+                "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables. *"
             ],
             "conditionTermn2":[
-                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente",
-                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente"
+                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente. *",
+                "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente. *"
             ],
             "titleDatosPersonales": [
                 "Datos personales",

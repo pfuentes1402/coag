@@ -993,3 +993,14 @@ export const getAutorizacionMunicipal = async (grupoTematico, languageId = 1) =>
     return formatMenssage(error.message);
   }
 }
+
+/**Eliminar un expediente */
+export const deleteExpediente = async (idExpediente) => {
+  try {
+    let result = await api.delete(`/expedientes/${idExpediente}`);
+    return result.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}

@@ -3,13 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
-import { Grid, Paper, Button, CircularProgress, Select,  MenuItem } from '@material-ui/core';
-import { Table, TableCell, TableHead, TableBody, TableRow,  IconButton, Divider, Typography } from '@material-ui/core';
+import { Grid, Paper, Button, CircularProgress, Select, MenuItem } from '@material-ui/core';
+import { Table, TableCell, TableHead, TableBody, TableRow, IconButton, Divider, Typography } from '@material-ui/core';
 import { Check, Close, Search } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import TablePagination from '@material-ui/core/TablePagination';
 import { getBuscador } from '../../api';
+import "./indexstyle.css";
 
 const styles = theme => ({
   textField: {
@@ -32,6 +33,9 @@ const styles = theme => ({
   },
   withoutRadius: {
     borderRadius: 0
+  },
+  selectRowColor: {
+    backgroundColor: theme.palette.background.main
   }
 });
 
@@ -103,9 +107,10 @@ class SearchAgents extends Component {
 
   selectAgent = (agent, showSearchResult = false) => {
     if (showSearchResult) {
-      this.setState({ showSearchResult: false });
+      this.setState({ showSearchResult: false, selectAgent: agent });
     }
     this.props.selectAgent(agent);
+    this.setState({ selectAgent: agent });
   }
 
   handleCancel() {
@@ -119,6 +124,7 @@ class SearchAgents extends Component {
 
   renderSearchResults() {
     let { classes } = this.props;
+    let { selectAgent } = this.state;
     return (
       this.state.showSearchResult &&
       <div>
@@ -147,8 +153,10 @@ class SearchAgents extends Component {
                   </TableCell>
                 </TableRow>
                 : this.state.searchResult.map((row, index) => {
+                  var isSelect = selectAgent && (selectAgent.Nif === row.Nif);
                   return (
-                    <TableRow className={classes.row} key={index}>
+                    <TableRow className={classes.row} key={index}
+                      style={{ border: isSelect ? "2px solid dodgerblue" : "" }}>
                       <TableCell component="th" scope="row" className="px-3">
                         {row.Nif}
                       </TableCell>
