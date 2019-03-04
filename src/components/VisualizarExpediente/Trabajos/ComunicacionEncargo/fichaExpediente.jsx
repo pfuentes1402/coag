@@ -17,6 +17,8 @@ import { putExpediente, putEmplazamiento } from '../../../../api';
 import ValidateAddress from '../../../Address';
 import { elimardelatabla, saveAdressTostore } from "../../../../actions/expedientes";
 import { some, findIndex } from 'lodash';
+import classNames from 'classnames';
+
 const styles = theme => ({
   divGrey: {
     backgroundColor: grey[100],
@@ -64,7 +66,11 @@ const styles = theme => ({
   },
   tableWrapper: {
     overflowX: 'auto',
-  }
+  },
+    disable: {
+      pointerEvents: "none",
+        opacity: 0.6
+    }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -262,7 +268,7 @@ class FichaExpediente extends Component {
       <div>
         <Paper className={`${classes.withoutRadius} m-3`}>
           <ValidatorForm ref="form" onSubmit={async () => { await this.handleSubmit() }}>
-            <Grid container spacing={16} className="my-3">
+            <Grid container spacing={16} className={classNames("my-3", this.props.disable ? classes.disable : "")} >
               <Grid item xs={12}>
                 <Grid item xs={12} className="d-flex justify-content-between">
                   <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">

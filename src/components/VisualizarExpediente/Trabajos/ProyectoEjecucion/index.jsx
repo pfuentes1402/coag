@@ -624,9 +624,7 @@ class TrabajoEjecucion extends Component {
                                                             </Grid>
                                                             <Grid item xs={4}>
                                                                 <Typography variant="subtitle2" className="text-uppercase">
-                                                                    {this.props.estructura
-                                                                        ? <Translate id="languages.fileUpload.lastModification" />
-                                                                        : <Translate id="languages.fileUpload.folder" />}
+                                                                    <Translate id="languages.fileUpload.folder" />
                                                                 </Typography>
                                                             </Grid>
                                                             <Grid item xs={2} className="p-3" className="text-uppercase">
@@ -714,7 +712,7 @@ class TrabajoEjecucion extends Component {
                                                                                     </Grid>
                                                                                     <Grid item xs={4} className="align-self-center">
                                                                                         <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
-                                                                                            {this.props.estructura ? '' : item.Carpeta}
+                                                                                            {item.Carpeta}
                                                                                         </Typography>
                                                                                     </Grid>
                                                                                     <Grid item xs={2} className="text-right align-self-center">
