@@ -135,12 +135,13 @@ class ComunicacionEncargo extends React.Component {
     };
 
     async componentWillMount() {
-        await this.setState({ isLoad: true });
-        //TODO: Eliminar cuando se realize el cambio
-        /*if (this.props.tiposAutorizacion.length === 0)
-            await this.props.fetchTipoAutorizacion(this.props.activeLanguage.code);*/
-        await this.transformGruposRaiz();
-        this.setState({ isLoad: false });
+        try {
+            await this.setState({ isLoad: true });
+            await this.transformGruposRaiz();
+            this.setState({ isLoad: false });
+        } catch (e) {
+
+        }
     }
 
     async transformGruposRaiz() {

@@ -37,10 +37,16 @@ class FormArquitecto extends Component {
     this.state = {
       arquitecto: this.props.arquitecto
     }
+    if (this.element)
+      this.element.scrollIntoView({ behavior: 'smooth', block: "start" });
   }
 
   componentWillMount() {
     this.initSelectedProperties();
+  }
+
+  componentDidMount() {
+    this.element.scrollIntoView({ behavior: 'smooth', block: "start" });
   }
 
   initSelectedProperties() {
@@ -94,119 +100,128 @@ class FormArquitecto extends Component {
     let value = this.props.arquitecto;
     let { classes } = this.props;
     return (
-      <Grid item xs={12}>
-        <Paper className={classes.resultPanel}>
-          <Grid container spacing={24}>
-            <Grid item xs={8}>
-              <Typography variant="h6" gutterBottom>
-                <Translate id="languages.agentes.arquitectDataTitle"/>
-              </Typography>
-              <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
-              <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
+      <div ref={element => { this.element = element; }}>
+        <Grid item xs={12} >
+          <Paper className={classes.resultPanel}>
+            <Grid container spacing={24}>
+              <Grid item xs={8}>
+                <Typography variant="h6" gutterBottom>
+                  <Translate id="languages.agentes.arquitectDataTitle" />
+                </Typography>
+                <Typography variant="body2" className={classes.subtitleData}>NIF</Typography>
+                <Typography variant="subtitle2" gutterBottom>{value.Nif}</Typography>
 
-              <Typography variant="body2" className={classes.subtitleData}>
-                <Translate id="languages.agentes.tableColumnName" />
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
+                <Typography variant="body2" className={classes.subtitleData}>
+                  <Translate id="languages.agentes.tableColumnName" />
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom>{value.Nombre}</Typography>
 
-              <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                <Translate id="languages.agentes.firstName" />
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.firstName" />
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom>{value.Apellido1}</Typography>
 
-              <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                <Translate id="languages.agentes.secondName" />
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.secondName" />
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom>{value.Apellido2}</Typography>
 
-              <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                <Translate id="languages.agentes.observations" />
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom></Typography>
-            </Grid>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.observations" />
+                </Typography>
+                <Typography variant="subtitle2" gutterBottom></Typography>
+              </Grid>
 
-            <Grid item xs={4}>
-              <UserIcon className={classes.usericon} color="secondary" />
-            </Grid>
+              <Grid item xs={4}>
+                <UserIcon className={classes.usericon} color="secondary" />
+              </Grid>
 
-            <Grid item xs={12} className="functionTipology">
-              <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                <Translate id="languages.agentes.functionsTitle" /> *
+              <Grid item xs={12} className="functionTipology">
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.functionsTitle" /> *
               </Typography>
-              {
-                this.props.funcionesTipologia.map((valueTiplogia, indexCode) => {
-                  return <Button onClick={this.notifyPropertyChange("Funciones")}
-                    className={this.state.arquitecto.Funciones.some(x => x === valueTiplogia.Codigo) ? "slectedFunction" : ""}
-                    variant="contained"
-                    key={indexCode}>{valueTiplogia.Codigo}
-                  </Button>
-                })
-              }
-            </Grid>
+                {
+                  this.props.funcionesTipologia.map((valueTiplogia, indexCode) => {
+                    return <Button onClick={this.notifyPropertyChange("Funciones")}
+                      className={this.state.arquitecto.Funciones.some(x => x === valueTiplogia.Codigo) ? "slectedFunction" : ""}
+                      variant="contained"
+                      key={indexCode}>{valueTiplogia.Codigo}
+                    </Button>
+                  })
+                }
+              </Grid>
 
-            <Grid item xs={12}>
-              <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
-                <Translate id="languages.agentes.percentTitle" />
-              </Typography>
-              <Grid container spacing={0}>
-                <Grid item xs={5}>
-                  <TextField
-                    label="%"
-                    className={classes.mt0}
-                    value={this.state.arquitecto.Porciento}
-                    placeholder="Ej 25"
-                    type="number"
-                    onChange={this.notifyPropertyChange("Porciento")}
-                    margin="normal" />
-                </Grid>
-                <Grid item xs={7}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.arquitecto.percentChecked}
-                        onChange={this.notifyPropertyChange("percentChecked")}
-                        color="primary" />
-                    }
-                    label={<Translate id="languages.agentes.percentLabel" />} />
+              <Grid item xs={12}>
+                <Typography variant="body2" className={`${classes.subtitleData} text-uppercase`}>
+                  <Translate id="languages.agentes.percentTitle" />
+                </Typography>
+                <Grid container spacing={0}>
+                  <Grid item xs={5}>
+                    <TextField
+                      label="%"
+                      className={classes.mt0}
+                      value={this.state.arquitecto.Porciento}
+                      placeholder="Ej 25"
+                      type="number"
+                      onChange={this.notifyPropertyChange("Porciento")}
+                      margin="normal" />
+                  </Grid>
+                  <Grid item xs={7}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.arquitecto.percentChecked}
+                          onChange={this.notifyPropertyChange("percentChecked")}
+                          color="primary" />
+                      }
+                      label={<Translate id="languages.agentes.percentLabel" />} />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.arquitecto.acceptTerm1}
-                    onChange={this.notifyPropertyChange("acceptTerm1")}
-                    color="primary" />
+              <Grid item xs={12}>
+                {!this.state.arquitecto.acceptTerm1 || !this.state.arquitecto.acceptTerm2
+                  ? <Typography variant="caption" gutterBottom color="error" className="ml-3 pl-3">
+                    *<Translate id="languages.agentes.termsValidation" />
+                  </Typography> : ""
                 }
-                label={<Translate id="languages.agentes.conditionTermn1" />} />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={this.state.arquitecto.acceptTerm1}
+                      onChange={this.notifyPropertyChange("acceptTerm1")}
+                      color="primary" />
+                  }
+                  label={<Translate id="languages.agentes.conditionTermn1" />} />
 
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={this.state.arquitecto.acceptTerm2}
-                    onChange={this.notifyPropertyChange("acceptTerm2")}
-                    color="primary" />
-                }
-                label={<Translate id="languages.agentes.conditionTermn2" />} />
-            </Grid>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={this.state.arquitecto.acceptTerm2}
+                      onChange={this.notifyPropertyChange("acceptTerm2")}
+                      color="primary" />
+                  }
+                  label={<Translate id="languages.agentes.conditionTermn2" />} />
+              </Grid>
 
-            <Grid item xs={12} className="text-right">
-              <Button color="primary" size="small" className={classes.button}
-                onClick={() => { this.props.handleCanSearch(false) }}>
-                <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
-              </Button>
-              <Button variant="contained" size="small" color="primary" className={classes.button}
-                onClick={() => this.props.addAgenteTrabajoToSelection(this.state.arquitecto)}
-                disabled={this.state.arquitecto.acceptTerm1 && this.state.arquitecto.acceptTerm2
-                  && this.state.arquitecto.Funciones.length > 0
-                  && (this.state.arquitecto.Porciento !== "" || this.state.arquitecto.percentChecked) ? false : true}>
-                <Translate id="languages.generalButton.added" />
-              </Button>
+              <Grid item xs={12} className="text-right">
+                <Button color="primary" size="small" className={classes.button}
+                  onClick={() => { this.props.handleCanSearch(false) }}>
+                  <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
+                </Button>
+                <Button variant="contained" size="small" color="primary" className={classes.button}
+                  onClick={() => this.props.addAgenteTrabajoToSelection(this.state.arquitecto)}
+                  disabled={this.state.arquitecto.acceptTerm1 && this.state.arquitecto.acceptTerm2
+                    && this.state.arquitecto.Funciones.length > 0
+                    && (this.state.arquitecto.Porciento !== "" || this.state.arquitecto.percentChecked) ? false : true}>
+                  {this.props.existAgentSelected(this.state.arquitecto.Id_Colegiado)
+                    ? <Translate id="languages.generalButton.edit" />
+                    : <Translate id="languages.generalButton.added" />}
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
+          </Paper>
+        </Grid>
+      </div>
     );
   }
 }

@@ -3,14 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Address/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Address/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Agentes/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/user/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/user/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -88,8 +89,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="111" column="60" lean-forward="true" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
+            <state relative-caret-position="129">
+              <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
             </state>
           </provider>
         </entry>
@@ -767,7 +768,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="513587000" />
+    <option name="totallyTimeSpent" value="513602000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -782,46 +783,58 @@
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4004329" visible="true" weight="0.19632679" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4004329" visible="true" weight="0.19632679" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49966997" weight="0.32930514" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5022166" side_tool="true" visible="true" weight="0.28653294" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.4091197" side_tool="true" visible="true" weight="0.38681948" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.59141916" weight="0.3882175" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977834" visible="true" weight="0.28653294" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.5908803" visible="true" weight="0.38681948" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977834" weight="0.28653294" />
       <window_info id="npm" order="2" sideWeight="0.5995671" side_tool="true" weight="0.13333334" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49966997" weight="0.3247734" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info id="npm" order="2" sideWeight="0.5995671" side_tool="true" weight="0.13333334" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4004329" visible="true" weight="0.19632679" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49966997" weight="0.32930514" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.59141916" weight="0.3882175" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4977834" visible="true" weight="0.28653294" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="10" weight="0.32990867" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5022166" side_tool="true" visible="true" weight="0.28653294" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49966997" weight="0.3247734" />
+      <window_info id="Favorites" order="3" side_tool="true" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
       <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43125" visible="true" weight="0.23939203" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
       <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -1129,9 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7157">
           <caret line="441" column="102" selection-start-line="441" selection-start-column="84" selection-end-line="441" selection-end-column="102" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1248,9 +1258,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="62" column="34" selection-start-line="62" selection-start-column="21" selection-end-line="62" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1281,8 +1288,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Address/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="111" column="60" lean-forward="true" selection-start-line="111" selection-start-column="60" selection-end-line="111" selection-end-column="60" />
+        <state relative-caret-position="129">
+          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
         </state>
       </provider>
     </entry>

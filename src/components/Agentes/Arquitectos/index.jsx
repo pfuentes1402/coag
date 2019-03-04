@@ -128,7 +128,7 @@ class Arquitecto extends Component {
   componentDidMount() {
     try {
       this.props.fetchFuncionesTipologia(this.props.activeLanguage.code,
-        this.state.encomendaActual.Id_Tipo_Grupo_Tematico, 
+        this.state.encomendaActual.Id_Tipo_Grupo_Tematico,
         this.state.encomendaActual.Id_Tipo_Autorizacion_Municipal);
       this.handleCanSearch(false);
       this.parseAgents();
@@ -222,6 +222,10 @@ class Arquitecto extends Component {
     }
   }
 
+  existAgentSelected(id) {
+    return this.state.encomenda.Colegiados.some(x => x.Id_Colegiado === id);
+  }
+
   async loadLoguedAgent() {
     if (this.state.encomenda.Colegiados && this.state.encomenda.Colegiados.length === 0
       && this.state.Colegiados && !this.state.Colegiados.some(x => x.Id_Colegiado === this.props.loguedUser.Id_Colegiado)) {
@@ -308,14 +312,14 @@ class Arquitecto extends Component {
         {this.state.selectedAgent &&
           <FormArquitecto key={this.state.selectedAgent.Nif} arquitecto={this.state.selectedAgent}
             funcionesTipologia={this.props.funcionesTipologia} handleCanSearch={() => this.handleSelectedAgent(null)}
-            addAgenteTrabajoToSelection={agent => { this.addAgenteTrabajoToSelection(agent); this.handleSelectedAgent(null); }} />
+            addAgenteTrabajoToSelection={agent => { this.addAgenteTrabajoToSelection(agent); this.handleSelectedAgent(null); }}
+            existAgentSelected={agent => this.existAgentSelected(agent)} />
         }
       </div>
     );
   }
 
   render() {
-    console.log("this.props",this.props);
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
