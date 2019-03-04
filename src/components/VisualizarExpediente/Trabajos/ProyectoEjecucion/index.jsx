@@ -639,7 +639,7 @@ class TrabajoEjecucion extends Component {
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<ExpansionPanel key={'temp-file-'+pos} draggable="true" classes={{root: classes.rootPanel}}
+                                                                        return (<div key={'temp-file-'+pos} draggable><ExpansionPanel  classes={{root: classes.rootPanel}}
                                                                                                 onDragEnd={() => {this.props.dragging(false)}}
                                                                                                 onDragStart={() => {this.props.dragging(item)}}
                                                                                                 expanded={this.state.panelExpanded === item.Nombre}
@@ -692,7 +692,7 @@ class TrabajoEjecucion extends Component {
                                                                                 </Grid>
 
                                                                             </ExpansionPanelDetails>
-                                                                        </ExpansionPanel>)
+                                                                        </ExpansionPanel></div>)
                                                                     })
                                                                 }
                                                                 {
