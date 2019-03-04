@@ -238,7 +238,8 @@ class EnhancedTable extends React.Component {
         orderBy: 'numero',
         selected: [],
         emplazamientos: [],
-        location: {},        page: 0,
+        location: {},
+        page: 0,
         rowsPerPage: 5,
     };
 
@@ -295,42 +296,17 @@ class EnhancedTable extends React.Component {
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
-    async handleSaveAddress(){
-        let {location} = this.props;
-        let {emplazamientos} = this.state;
-        let locations = [];
-        Object.assign(locations, emplazamientos);
-        let equal = this.ifEqual(emplazamientos, location);
-        if (equal === -1) {
-            locations.push(location);
-        }
-        else {
-            locations[equal] = location;
-        }
-
-        await this.setState({ emplazamientos: locations });
-        this.props.updateEmplazamientos(locations);
-    }
-
-    ifEqual(data, address){
-        let equal = some(data,address);
-        let index = -1;
-        if (equal){
-            index = findIndex(data,address);
-        }
-        return index;
-    }
 
     async handleDeleteAddress(){
         const { selected } = this.state;
-        let locations = [...this.state.emplazamientos];
+        let locations = [...this.props.emplazamientos];
         selected.map((s, i)=>{
             locations.splice(s - i, 1);
             return null
         });
 
-        await this.setState({selected: [], emplazamientos: locations});
-        this.props.updateEmplazamientos(locations);
+        await this.setState({selected: []});
+        this.props.deleteAddress(locations);
     }
 
     getData(catastro){
@@ -345,13 +321,13 @@ class EnhancedTable extends React.Component {
 
     render() {
         let { classes, catastro } = this.props;
-        let { order, orderBy, selected, rowsPerPage, page, emplazamientos } = this.state;
+        let { order, orderBy, selected, rowsPerPage, page } = this.state;
         let emptyRows = rowsPerPage - Math.min(rowsPerPage, catastro.length - page * rowsPerPage);
-        let data = emplazamientos;
+        let data = this.props.emplazamientos;
         return (
             <Paper className={classes.root}>
 
-                <EnhancedTableToolbar numSelected={selected.length} isShowAddress={this.props.isShowAddress} onSave={()=>{this.handleSaveAddress()}} onDelete={()=>{this.handleDeleteAddress()}}/>
+                <EnhancedTableToolbar numSelected={selected.length} isShowAddress={this.props.isShowAddress} onSave={()=>{this.props.saveAddress()}} onDelete={()=>{this.handleDeleteAddress()}}/>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby="tableTitle">
                         <EnhancedTableHead

@@ -199,7 +199,7 @@ class TipoExpediente extends Component {
               <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
                 <Translate id="languages.fichaExpediente.titleExpedientType" />
               </Typography>
-              <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}`)}>
+              <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}/1`)}>
                 <Translate id="languages.fichaExpediente.editExpOptionTitle" /><Check />
               </Button>
             </Grid>

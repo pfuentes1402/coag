@@ -78,7 +78,7 @@ class Encomenda extends Component {
                                                            this.handleChangeComunicacionEncargo(encomenda)
                                                        }}/>
                                 : !this.state.activeEncargo && this.state.encomenda
-                                    ? <Agentes encomenda={this.state.encomenda}
+                                    ? <Agentes encomenda={this.state.encomenda} isModificacion={this.props.match.params && this.props.match.params.modificado ?  this.props.match.params.modificado : false}
                                                handleAgentes={(encomenda) => {
                                                    this.handleChangeComunicacionEncargo(encomenda)
                                                }}

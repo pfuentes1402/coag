@@ -162,6 +162,7 @@ class VisualizarExpediente extends Component {
           renderComponent: "TrabajoComunicacion",
           idTrabajoActivo: idTrabajo,
           idEstructuraActiva: null,
+            titleEstructuraActiva: "",
             active: active
         });
       } else {
@@ -169,6 +170,7 @@ class VisualizarExpediente extends Component {
           renderComponent: "TrabajoEjecucion",
           idTrabajoActivo: idTrabajo,
           idEstructuraActiva: null,
+            titleEstructuraActiva: "",
           active: active
         });
       }
@@ -178,7 +180,7 @@ class VisualizarExpediente extends Component {
 
   handleTrabajoComunicacion() {
     this.setState({
-      renderComponent: "TrabajoComunicacion", idEstructuraActiva: null,
+      renderComponent: "TrabajoComunicacion", idEstructuraActiva: null, titleEstructuraActiva: "",
       idTrabajoActivo: null
     });
   }
