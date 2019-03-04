@@ -11,6 +11,7 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import AddressValidate from "../Address";
 import {BreadcrumbsItem} from "react-breadcrumbs-dynamic";
+import {some, findIndex} from 'lodash';
 const styles = theme => ({
     paper: {
         padding: 24,
@@ -91,7 +92,8 @@ class AddExpedient extends Component {
             alert: false,
             msg: "",
             observationsLength: 0,
-            isSave: false
+            isSave: false,
+            validate: false
         };
 
     };
@@ -143,11 +145,41 @@ class AddExpedient extends Component {
     }
 
     async handleUpdateLocation(location) {
-        await this.setState({ location: location });
+        await this.setState({ location: location});
     }
+
 
     handleUpdateEmplazamientos(emplazamientos){
         this.setState({ emplazamientos: emplazamientos });
+    }
+
+    async handleDeleteAddress(emplazamientos){
+        await this.setState({ emplazamientos: emplazamientos });
+    }
+
+    async handleSaveAddress(){
+        let {location, emplazamientos} = this.state;
+        let locations = [];
+        Object.assign(locations, emplazamientos);
+        let equal = this.ifEqual(emplazamientos, location);
+        if (equal === -1) {
+            locations.push(location);
+        }
+        else {
+            locations[equal] = location;
+        }
+
+        await this.setState({ emplazamientos: locations });
+        this.handleUpdateEmplazamientos(locations);
+    }
+
+    ifEqual(data, address){
+        let equal = some(data,address);
+        let index = -1;
+        if (equal){
+            index = findIndex(data,address);
+        }
+        return index;
     }
 
     render() {
@@ -269,10 +301,10 @@ class AddExpedient extends Component {
                             <Grid item xs={12} md={6}>
                                 <Grid container spacing={24}>
                                     <Grid item xs={12}>
-                                        <CatastralTable location={this.state.location} updateEmplazamientos={(emplazamientos)=>{this.handleUpdateEmplazamientos(emplazamientos)}} isShowAddress={this.state.isShowAddress}/>
+                                        <CatastralTable location={this.state.location} emplazamientos={this.state.emplazamientos} saveAddress={async ()=>{await this.handleSaveAddress()}} deleteAddress={async (emplazamientos)=>{await this.handleDeleteAddress(emplazamientos)}} isShowAddress={this.state.isShowAddress}/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AddressValidate updateLocation={async (location)=>{await this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} updateIsShowAddress={(showAddress)=>{this.handleUpdateIsShowAddress(showAddress)}}  location={this.state.location}/>
+                                        <AddressValidate updateLocation={async (location)=>{await this.handleUpdateLocation(location)}} isShowAddress={this.state.isShowAddress} validate={async ()=>await this.handleSaveAddress()} updateIsShowAddress={(showAddress)=>{this.handleUpdateIsShowAddress(showAddress)}} location={this.state.location}/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Button color="primary" className={classes.button} onClick={()=>{this.props.history.push("/")}}>

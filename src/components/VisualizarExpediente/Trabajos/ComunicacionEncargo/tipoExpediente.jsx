@@ -198,11 +198,11 @@ class TipoExpediente extends Component {
               <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
                 <Translate id="languages.fichaExpediente.titleExpedientType" />
               </Typography>
-              <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}`)}>
-                {this.state.sourceExpediente.Id_Trabajo_Encomenda_Actual
-                  ? <Translate id="languages.fichaExpediente.editExpOptionTitle" />
-                  : <Translate id="languages.fichaExpediente.addCurrentEncomenda" />
-                }
+              <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}/1`)}>
+                  {this.state.sourceExpediente.Id_Trabajo_Encomenda_Actual
+                      ? <Translate id="languages.fichaExpediente.editExpOptionTitle" />
+                      : <Translate id="languages.fichaExpediente.addCurrentEncomenda" />
+                  }
                 <Check />
               </Button>
             </Grid>

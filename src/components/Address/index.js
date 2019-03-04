@@ -107,19 +107,20 @@ class ValidateAddress extends Component {
         try {
             let response = await getValidateAddress(this.state.location);
             if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                this.props.fetchErrorExpediente(response);
-                this.setState({isValidate: false, isShowAddress:  false});
-                this.props.updateIsShowAddress(false);
+                await this.props.fetchErrorExpediente(response);
+                await this.setState({isValidate: false, isShowAddress:  false});
+                await this.props.updateIsShowAddress(false);
             }
             else {
-                this.setState({data: response.Datos_Completos ? response.Datos_Completos[0] : [], isValidate: false, isShowAddress:  true});
-                this.props.updateLocation(response.Datos_Completos ? response.Datos_Completos[0] : []);
-                this.props.updateIsShowAddress(true);
+                await this.setState({data: response.Datos_Completos ? response.Datos_Completos[0] : [], isValidate: false, isShowAddress:  true});
+                await this.props.updateLocation(response.Datos_Completos ? response.Datos_Completos[0] : []);
+                await this.props.updateIsShowAddress(true);
+                await this.props.validate();
             }
         }
         catch (e) {
-            this.props.fetchErrorExpediente(formatMenssage(e.message));
-            this.setState({isValidate: false, isShowAddress: false});
+            await this.props.fetchErrorExpediente(formatMenssage(e.message));
+            await this.setState({isValidate: false, isShowAddress: false});
         }
 
     }
@@ -127,7 +128,8 @@ class ValidateAddress extends Component {
     render() {
         let {classes} = this.props;
         let data = this.props.isShowAddress ? this.props.location : this.state.data;
-        let georeferencia = this.props.isShowAddress ? this.props.location.Georeferencia : this.state.location;
+        //let georeferencia = this.props.isShowAddress ? this.props.location.Georeferencia : this.state.location;
+        let georeferencia = this.state.location;
         return (
             <Grid container spacing={8}>
                     <Grid item xs={12}>
