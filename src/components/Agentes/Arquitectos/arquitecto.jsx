@@ -214,7 +214,7 @@ class FormArquitecto extends Component {
                     && this.state.arquitecto.Funciones.length > 0
                     && (this.state.arquitecto.Porciento !== "" || this.state.arquitecto.percentChecked) ? false : true}>
                   {this.props.existAgentSelected(this.state.arquitecto.Id_Colegiado)
-                    ? <Translate id="languages.generalButton.edit" />
+                    ? <Translate id="languages.generalButton.save" />
                     : <Translate id="languages.generalButton.added" />}
                 </Button>
               </Grid>
