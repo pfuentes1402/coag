@@ -25,9 +25,10 @@ import {
 import { fetchErrorExpediente, formatMenssage } from "../../actions/expedientes";
 import { groupBy, filter } from 'lodash';
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import ExpedienteGeneral from "./Trabajos/ComunicacionEncargo/general";
 
 const styles = theme => ({
-  fichaExpediente: {
+  fichaExpediente:{
     backgroundColor: theme.palette.primary.main,
     color: "white"
   },
@@ -56,10 +57,11 @@ const styles = theme => ({
   },
   headerNav: {
     margin: "auto",
-    textAlign: "center",
     borderBottom: "solid 1px " + grey[300],
     position: "relative",
-    cursor: "pointer"
+    cursor: "pointer",
+      lineHeight: 2,
+      fontSize: 16
   },
   leftNav: {
     flexGrow: 1,
@@ -92,8 +94,8 @@ class VisualizarExpediente extends Component {
     };
   }
 
-  componentWillMount() {
-    this.fetchExpediente();
+   componentWillMount() {
+     this.fetchExpediente();
   }
 
   switcToolbar(option) {
@@ -122,7 +124,7 @@ class VisualizarExpediente extends Component {
         ? this.props.match.params.idTrabajo
         /*: currentExpediente
           ? currentExpediente.Id_Trabajo_Encomenda_Actual*/
-        : null;
+          : null;
 
       await this.setState({
         expediente: expediente,
@@ -138,28 +140,28 @@ class VisualizarExpediente extends Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  async getEstructuraDocumental(idExpediente, idTrabajo) {
-    await this.setState({ isLoadEstructura: true });
-    let filterEstructura = [];
-    let groupEstructura = [];
-    let estructurasNivel1 = []
-    try {
-      let response = await getEstructuraDocumental(idExpediente, idTrabajo, this.props.activeLanguage.code);
-      if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-        this.props.fetchErrorExpediente(response);
-        await this.setState({ isLoadEstructura: false, estructuraDocumental: [] });
+  async getEstructuraDocumental(idExpediente, idTrabajo){
+      await this.setState({isLoadEstructura: true});
+      let filterEstructura = [];
+      let groupEstructura = [];
+      let estructurasNivel1 = []
+      try {
+          let response = await getEstructuraDocumental(idExpediente, idTrabajo,this.props.activeLanguage.code);
+          if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+              this.props.fetchErrorExpediente(response);
+              await this.setState({isLoadEstructura: false, estructuraDocumental: []});
+          }
+          else {
+              filterEstructura = filter(response.EstructurasDocumentales, {"Id_Tipo_Estructura": 1});
+              estructurasNivel1 = filter(response.EstructurasDocumentales, {"Nivel_Documentacion": 1});
+              groupEstructura = groupBy(filterEstructura, "Titulo_Padre");
+              await this.setState({estructuraDocumental: groupEstructura, estructurasPadre: estructurasNivel1, isLoadEstructura: false});
+          }
       }
-      else {
-        filterEstructura = filter(response.EstructurasDocumentales, { "Id_Tipo_Estructura": 1 });
-        estructurasNivel1 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 1 });
-        groupEstructura = groupBy(filterEstructura, "Titulo_Padre");
-        await this.setState({ estructuraDocumental: groupEstructura, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
+      catch (e) {
+          this.props.fetchErrorExpediente(formatMenssage(e.message));
+          await this.setState({isLoadEstructura: false});
       }
-    }
-    catch (e) {
-      this.props.fetchErrorExpediente(formatMenssage(e.message));
-      await this.setState({ isLoadEstructura: false });
-    }
   }
 
   async handleChangeMenuOption(idTrabajo) {
@@ -167,20 +169,31 @@ class VisualizarExpediente extends Component {
     if (this.state.currentExpediente) {
       if (null === idTrabajo) {
         await this.setState({
-          renderComponent: "TrabajoComunicacion",
+          renderComponent: "ExpedienteGeneral",
           idTrabajoActivo: idTrabajo,
           idEstructuraActiva: null,
-          titleEstructuraActiva: "",
-          active: active
+            titleEstructuraActiva: "",
+            active: active
         });
       } else {
-        await this.setState({
-          renderComponent: "TrabajoEjecucion",
-          idTrabajoActivo: idTrabajo,
-          idEstructuraActiva: null,
-          titleEstructuraActiva: "",
-          active: active
-        });
+          if(this.state.currentExpediente.Id_Trabajo_Encomenda_Actual == idTrabajo){
+              await this.setState({
+                  renderComponent: "TrabajoComunicacion",
+                  idTrabajoActivo: idTrabajo,
+                  idEstructuraActiva: null,
+                  titleEstructuraActiva: "",
+                  active: active
+              });
+          }else {
+              await this.setState({
+                  renderComponent: "TrabajoEjecucion",
+                  idTrabajoActivo: idTrabajo,
+                  idEstructuraActiva: null,
+                  titleEstructuraActiva: "",
+                  active: active
+              });
+          }
+
       }
       await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
     }
@@ -188,15 +201,19 @@ class VisualizarExpediente extends Component {
 
   handleTrabajoComunicacion() {
     this.setState({
-      renderComponent: "TrabajoComunicacion", idEstructuraActiva: null, titleEstructuraActiva: "",
-      idTrabajoActivo: null
+          idTrabajoActivo: null,
+          active: false,
+          renderComponent: "ExpedienteGeneral",
+          idEstructuraActiva: null,
+          titleEstructuraActiva: "",
+
     });
     this.switcToolbar(1);
   }
 
-  async handleChangeEstructuran(idEstructura, titleEstructura) {
-    await this.setState({ idEstructuraActiva: idEstructura, titleEstructuraActiva: titleEstructura });
-  }
+    async handleChangeEstructuran(idEstructura, titleEstructura){
+      await this.setState({idEstructuraActiva: idEstructura, titleEstructuraActiva: titleEstructura});
+    }
 
   renderNavBar() {
     let { classes } = this.props;
@@ -257,9 +274,9 @@ class VisualizarExpediente extends Component {
     let { classes } = this.props;
     return (
       <List component="nav" className={classes.leftNav}
-        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1 ${this.state.idTrabajoActivo === null ? classes.fichaExpediente : ''}`}
-          style={{ lineHeight: 2 }} onClick={() => this.handleTrabajoComunicacion()}>
-          {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
+        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 ${this.state.idTrabajoActivo === null ? classes.fichaExpediente : ''}`}
+          onClick={()=>this.handleTrabajoComunicacion()}>
+          {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
         <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
@@ -294,25 +311,25 @@ class VisualizarExpediente extends Component {
       </List>
     );
   }
-  async moveItemTo(target) {
+    async moveItemTo(target) {
 
-    let item = this.state.dragging
-    try {
-      let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
-      if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-        this.props.fetchErrorExpediente(response);
-        return false
-      } else {
-        return true
-      }
-    } catch (error) {
-      this.props.fetchErrorExpediente("Error de comunicación con la API");
-      return false
+        let item = this.state.dragging
+        try {
+            let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
+                return false
+            }else{
+                return true
+            }
+        } catch (error) {
+            this.props.fetchErrorExpediente("Error de comunicación con la API");
+            return false
+        }
+
     }
-
-  }
   dragging(action) {
-    this.setState({ dragging: action })
+        this.setState({dragging: action})
   }
   render() {
     let { classes } = this.props;
@@ -321,56 +338,58 @@ class VisualizarExpediente extends Component {
     return (
       this.state.expediente
         ? <Grid container>
-          <Grid item xs={12}>
-            <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
-              {this.state.currentExpediente.Id_Expediente}
-            </BreadcrumbsItem>
-            {
-              (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
-                ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
-                  {trabajoActual ? trabajoActual.Titulo : ""}
-                </BreadcrumbsItem>
-                : ""
-            }
-            {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
-              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
-                {this.state.titleEstructuraActiva}
-              </BreadcrumbsItem>
-              : ""}
+              <Grid item xs={12}>
+                  <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
+                      {this.state.currentExpediente.Expediente_Codigo_Estudio + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
+                      </BreadcrumbsItem>
+                  {
+                      (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
+                      ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
+                              {trabajoActual ? trabajoActual.Titulo : ""}
+                              </BreadcrumbsItem>
+                        : ""
+                  }
+                  {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
+                      ?     <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
+                          {this.state.titleEstructuraActiva}
+                      </BreadcrumbsItem>
+                      : ""}
 
-          </Grid>
-          <Grid item md={3} xs={12} className={classes.boredrRight}>
-            {this.renderLeftNav()}
-          </Grid>
-          <Grid item md={9} xs={12} className={classes.backgroundGrey}>
-            {this.renderNavBar()}
-            {
-              this.state.renderComponent === "TrabajoComunicacion"
-                ? <TrabajoComunicacion expediente={expediente} />
-                : <TrabajoEjecucion
-                  key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
-                  expediente={expediente} trabajo={this.state.idTrabajoActivo}
-                  dragging={(state) => this.dragging(state)}
-                  estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false} />
-            }
-          </Grid>
+                    </Grid>
+                    <Grid item md={3} xs={12} className={classes.boredrRight}>
+                        {this.renderLeftNav()}
+                    </Grid>
+                    <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+                        {this.renderNavBar()}
+                        {
+                            this.state.renderComponent === "TrabajoComunicacion"
+                                ? <TrabajoComunicacion expediente={expediente}/>
+                                : ( this.state.renderComponent === "ExpedienteGeneral" ?
+                                   <ExpedienteGeneral expediente={expediente}/> :
+                                    <TrabajoEjecucion
+                                    key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
+                                    expediente={expediente} trabajo={this.state.idTrabajoActivo}
+                                    dragging={(state) => this.dragging(state)}
+                                    estructura={this.state.idEstructuraActiva ? {id: this.state.idEstructuraActiva} : false}/>)
+                        }
+                    </Grid>
 
-        </Grid>
-        : <div className="text-center my-5">
-          <CircularProgress />
-        </div>
-    )
-  }
+                </Grid>
+                : <div className="text-center my-5">
+                    <CircularProgress/>
+                </div>
+        )
+    }
 }
 
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
-  fetchErrorExpediente: fetchErrorExpediente
+    fetchErrorExpediente: fetchErrorExpediente
 };
 
 VisualizarExpediente.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(VisualizarExpediente))));
