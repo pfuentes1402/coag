@@ -3,13 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/arquitecto.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" afterPath="$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources.json" afterPath="$PROJECT_DIR$/src/resources.json" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -198,8 +193,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -242,6 +235,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -405,7 +400,8 @@
       <workItem from="1551366262025" duration="186000" />
       <workItem from="1551367031746" duration="1336000" />
       <workItem from="1551459373119" duration="125000" />
-      <workItem from="1551459557345" duration="628000" />
+      <workItem from="1551459557345" duration="1232000" />
+      <workItem from="1551720564741" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -481,7 +477,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255456000" />
+    <option name="totallyTimeSpent" value="256068000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
