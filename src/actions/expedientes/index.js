@@ -129,7 +129,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *filtro: cadena a buscar
 *tipoBusqueda: expediente,trabajos, colegiados, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=25) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';

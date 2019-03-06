@@ -142,7 +142,7 @@ class AsistenteTrabajo extends Component {
                     handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
                     updateTrabajoSeleccion={seleccion => this.updateTrabajoSeleccion(seleccion)} key={1} />
 
-                  : <CrearTrabajo handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)}
+                  : <CrearTrabajo handleNavigation={isTrabajos => this.handleNavigation(isTrabajos)} encomenda={this.state.encomenda}
                     trabajos={this.state.trabajoSeleccion} />}
               </ExpansionPanelDetails>
             </ExpansionPanel>
