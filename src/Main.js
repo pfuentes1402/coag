@@ -23,7 +23,7 @@ class Main extends Component {
                     <Route path='/profile' component={(props) => <Profile {...props}/>}/>
                     <Route path='/selector-expediente' component={(props) => <SelectorTipoTrabajoContainer {...props}/>}/>
                     <Route path="/visualizar-expediente/:id/:idTrabajo?/:idEstructura?" component={(props) => <VisualizarExpediente {...props}/>}/>
-                    <Route path='/comunicacion/:id' component={(props) => <ComunicacionEncargo {...props}/>}/>
+                    <Route path='/comunicacion/:id/:modificado?' component={(props) => <ComunicacionEncargo {...props}/>}/>
                     <Route path="/crear-trabajo/:id" component={(props) => <AsistenteTrabajo {...props}/>}/>
                 </Switch>
             </div>

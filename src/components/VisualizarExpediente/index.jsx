@@ -22,6 +22,7 @@ import { getExpedienteDatosGeneral, getEstructuraDocumental, moveFileFromTempora
 import { fetchErrorExpediente, formatMenssage } from "../../actions/expedientes";
 import { groupBy, filter } from 'lodash';
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
+import ExpedienteGeneral from "./Trabajos/ComunicacionEncargo/general";
 
 const styles = theme => ({
   fichaExpediente:{
@@ -53,10 +54,11 @@ const styles = theme => ({
   },
   headerNav: {
     margin: "auto",
-    textAlign: "center",
     borderBottom: "solid 1px " + grey[300],
     position: "relative",
-    cursor: "pointer"
+    cursor: "pointer",
+      lineHeight: 2,
+      fontSize: 16
   },
   leftNav: {
     flexGrow: 1,
@@ -159,18 +161,31 @@ class VisualizarExpediente extends Component {
     if (this.state.currentExpediente) {
       if (null === idTrabajo) {
         await this.setState({
-          renderComponent: "TrabajoComunicacion",
+          renderComponent: "ExpedienteGeneral",
           idTrabajoActivo: idTrabajo,
           idEstructuraActiva: null,
+            titleEstructuraActiva: "",
             active: active
         });
       } else {
-        await this.setState({
-          renderComponent: "TrabajoEjecucion",
-          idTrabajoActivo: idTrabajo,
-          idEstructuraActiva: null,
-          active: active
-        });
+          if(this.state.currentExpediente.Id_Trabajo_Encomenda_Actual == idTrabajo){
+              await this.setState({
+                  renderComponent: "TrabajoComunicacion",
+                  idTrabajoActivo: idTrabajo,
+                  idEstructuraActiva: null,
+                  titleEstructuraActiva: "",
+                  active: active
+              });
+          }else {
+              await this.setState({
+                  renderComponent: "TrabajoEjecucion",
+                  idTrabajoActivo: idTrabajo,
+                  idEstructuraActiva: null,
+                  titleEstructuraActiva: "",
+                  active: active
+              });
+          }
+
       }
       await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
     }
@@ -178,8 +193,12 @@ class VisualizarExpediente extends Component {
 
   handleTrabajoComunicacion() {
     this.setState({
-      renderComponent: "TrabajoComunicacion", idEstructuraActiva: null,
-      idTrabajoActivo: null
+          idTrabajoActivo: null,
+          active: false,
+          renderComponent: "ExpedienteGeneral",
+          idEstructuraActiva: null,
+          titleEstructuraActiva: "",
+
     });
   }
 
@@ -217,9 +236,9 @@ class VisualizarExpediente extends Component {
     let { classes } = this.props;
     return (
       <List component="nav" className={classes.leftNav}
-        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 pl-1 ${this.state.idTrabajoActivo === null ? classes.fichaExpediente : ''}`}
-          style={{ lineHeight: 2 }} onClick={()=>this.handleTrabajoComunicacion()}>
-          {`${this.state.currentExpediente.Id_Expediente} ${this.state.currentExpediente.Titulo}`}
+        subheader={<ListSubheader component="div" className={`${classes.headerNav} py-3 ${this.state.idTrabajoActivo === null ? classes.fichaExpediente : ''}`}
+          onClick={()=>this.handleTrabajoComunicacion()}>
+          {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
         <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
@@ -277,7 +296,7 @@ class VisualizarExpediente extends Component {
         ? <Grid container>
               <Grid item xs={12}>
                   <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
-                      {this.state.currentExpediente.Id_Expediente}
+                      {this.state.currentExpediente.Expediente_Codigo_Estudio + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
                       </BreadcrumbsItem>
                   {
                       (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
@@ -301,11 +320,13 @@ class VisualizarExpediente extends Component {
                         {
                             this.state.renderComponent === "TrabajoComunicacion"
                                 ? <TrabajoComunicacion expediente={expediente}/>
-                                : <TrabajoEjecucion
+                                : ( this.state.renderComponent === "ExpedienteGeneral" ?
+                                   <ExpedienteGeneral expediente={expediente}/> :
+                                    <TrabajoEjecucion
                                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                                     expediente={expediente} trabajo={this.state.idTrabajoActivo}
                                     dragging={(state) => this.dragging(state)}
-                                    estructura={this.state.idEstructuraActiva ? {id: this.state.idEstructuraActiva} : false}/>
+                                    estructura={this.state.idEstructuraActiva ? {id: this.state.idEstructuraActiva} : false}/>)
                         }
                     </Grid>
 
