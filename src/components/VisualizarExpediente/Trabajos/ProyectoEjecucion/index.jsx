@@ -216,8 +216,10 @@ class TrabajoEjecucion extends Component {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
                 workDetails = workDetails.data;
+                console.log(workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado,'estado!');
                 await this.setState({
                     expediente,
+                    allowUpload:workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado=='Tramitado'?false :true,
                     workDetails,
                 })
             } catch (e) {
@@ -225,6 +227,7 @@ class TrabajoEjecucion extends Component {
             }
         }
         await this.loadInformation();
+
         await this.setState({fetching: false});
     }
     async loadInformation() {
@@ -639,7 +642,7 @@ class TrabajoEjecucion extends Component {
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<div key={'temp-file-'+pos} draggable><ExpansionPanel  classes={{root: classes.rootPanel}}
+                                                                        return (<div key={'temp-file-'+pos} data-draggable="item"><ExpansionPanel  classes={{root: classes.rootPanel}}
                                                                                                 onDragEnd={() => {this.props.dragging(false)}}
                                                                                                 onDragStart={() => {this.props.dragging(item)}}
                                                                                                 expanded={this.state.panelExpanded === item.Nombre}
