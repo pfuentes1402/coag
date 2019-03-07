@@ -45,7 +45,7 @@ const theme = createMuiTheme({
     palette: {
         primary: blue,
         secondary: grey,
-        default: grey[0]        
+        default: grey[100]
     },
 });
 

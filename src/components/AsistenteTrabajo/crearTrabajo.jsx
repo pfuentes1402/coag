@@ -33,11 +33,15 @@ const styles = theme => ({
     },
     item: {
         borderTop: "solid 1px" + theme.palette.secondary.light,
-        paddingTop: 0, paddingBottom: 0
+        padding: 0
     },
     border: {
         borderLeft: "solid 1px" + theme.palette.secondary.light,
         borderRight: "solid 1px" + theme.palette.secondary.light,
+        borderBottom: "solid 1px" + theme.palette.secondary.light,
+    },
+    headerProyect: {
+        backgroundColor:  theme.palette.default,
         borderBottom: "solid 1px" + theme.palette.secondary.light,
     },
     nested: {
@@ -88,6 +92,13 @@ const styles = theme => ({
     },
     tableWrapper: {
         overflowX: 'auto',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: "100%",
+        textAlign: 'left',
+        marginTop: 5
     },
 })
 const CustomTableHead = withStyles(theme => ({
@@ -359,11 +370,11 @@ class CrearTrabajo extends Component {
         return (
             <Grid container spacing={0}>
                 <Grid item xs={12}>
-                    <Typography variant="subtitle2" gutterBottom>
+                    <Typography variant="h7" gutterBottom>
                         <Translate id="languages.trabajo.datosEncargo" />
                     </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={6}>
                     <TextField disabled={true}
                                value={this.state.dataEncomenda.Descripcion_Encomenda ? this.state.dataEncomenda.Descripcion_Encomenda : ""}
                                label={<Translate id="languages.crearTrabajo.labelExpedienteType" />}
@@ -372,15 +383,16 @@ class CrearTrabajo extends Component {
                 <Grid item xs={12}>
                     <Grid container spacing={0}>
                         <Grid item xs={12} sm={6}>
-                            {this.renderPromotorsTable()}
+                            {this.renderAgentsTable()}
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            {this.renderAgentsTable()}
+                            {this.renderPromotorsTable()}
                         </Grid>
                     </Grid>
                 </Grid>
+
                 <Grid item xs={12}>
-                    <Typography variant="subtitle2" gutterBottom>
+                    <Typography variant="h7" gutterBottom className="py-3">
                         <Translate id="languages.trabajo.trabajoTramitarTitle" />
                     </Typography>
                 </Grid>
@@ -391,8 +403,8 @@ class CrearTrabajo extends Component {
                                 <Grid item xs={12}>
                                     {Object.keys(tiposTrabajos).map((fase, indexFase) => {
                                         let trabajos = tiposTrabajos[fase];
-                                        return <List key={indexFase} classes={{subheader: classes.subHeader}}
-                                            subheader={<ListSubheader component="div" color="secondary" className={classes.subHeader} classes={{root: classes.subHeader}} >{fase}</ListSubheader>}
+                                        return <List key={indexFase}
+                                            subheader={<Typography variant="subtitle2" gutterBottom className="py-2 pl-3">{fase}</Typography>}
                                             className={classes.root}
                                         >
                                             <ListItem className="p-0">
@@ -402,8 +414,8 @@ class CrearTrabajo extends Component {
                                                         trabajos.map((trabajo, indexTrabajo) => {
                                                             let idTipoTramite = this.getIdTipoTramite(trabajo.Obligatorio);
                                                             return <ListItem key={indexTrabajo} className={classes.item}>
-                                                                <Grid container spacing={8}>
-                                                                    <Grid item xs={12}>
+                                                                <Grid container spacing={0}>
+                                                                    <Grid item xs={12} className={`${classes.headerProyect} px-3`}>
                                                                         <div className="d-flex align-items-center justify-content-between">
                                                                             <Typography variant="button" gutterBottom className="mb-0">
                                                                                 {trabajo.Trabajo_Titulo}
@@ -436,25 +448,25 @@ class CrearTrabajo extends Component {
                                                                                     row
                                                                                 >
                                                                                     <FormControlLabel value="Es_Trabajo_Nuevo"
-                                                                                                      control={<Radio />} label={<Translate
-                                                                                        id="languages.trabajo.nuevoTrabajoTitle" />}
-                                                                                                      labelPlacement="start" className="mt-2 text-uppercase" />
+                                                                                                      control={<Radio color={ trabajo.defaultSelect === undefined || trabajo.defaultSelect === "Es_Trabajo_Nuevo" ? "primary" : "secondary"}/>}
+                                                                                                      label={<Translate id="languages.trabajo.nuevoTrabajoTitle" />}
+                                                                                                      className="m-0 text-uppercase"
+                                                                                                      labelPlacement="end"/>
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Sustancial"
-                                                                                        control={<Radio />} label={<Translate
-                                                                                        id="languages.trabajo.modificacionSustancialTitle" />}
-                                                                                        labelPlacement="start" className="mt-2 text-uppercase" />
+                                                                                        control={<Radio color={ trabajo.defaultSelect &&  trabajo.defaultSelect === "Es_Trabajo_Modificado_Sustancial" ? "primary" : "secondary"}/>}
+                                                                                        label={<Translate id="languages.trabajo.modificacionSustancialTitle" />}
+                                                                                        className="m-0  text-uppercase" />
                                                                                     <FormControlLabel
                                                                                         value="Es_Trabajo_Modificado_Correcion_Basica"
-                                                                                        control={<Radio />} label={<Translate
-                                                                                        id="languages.trabajo.correccionBasicaTitle" />}
-                                                                                        labelPlacement="start" className="mt-2 text-uppercase" />
+                                                                                        control={<Radio color={ trabajo.defaultSelect &&  trabajo.defaultSelect === "Es_Trabajo_Modificado_Correcion_Basica" ? "primary" : "secondary"}/>}
+                                                                                        label={<Translate id="languages.trabajo.correccionBasicaTitle" />}
+                                                                                       className="m-0  text-uppercase" />
                                                                                 </RadioGroup>
                                                                             </FormControl>
                                                                         </div>
-
                                                                     </Grid>
-                                                                    <Grid item xs={12}>
+                                                                    <Grid item xs={12} className="px-3">
                                                                         <ExpansionPanel className="shadow-none" expanded={expanded === trabajo.Id_Tipo_Trabajo} onChange={this.handleChangePanel(trabajo.Id_Tipo_Trabajo, idTipoTramite, trabajo.defaultSelect ? trabajo.defaultSelect : "Es_Trabajo_Nuevo") }>
                                                                             <ExpansionPanelSummary className="p-0" expandIcon={<ExpandMoreIcon />}>
                                                                                 <Grid container spacing={0}>
@@ -468,7 +480,7 @@ class CrearTrabajo extends Component {
                                                                             <ExpansionPanelDetails>
                                                                                 {this.state.isCarpetas ? <CircularProgress />
                                                                                     : <Grid container spacing={0}>
-                                                                                        <Grid item xs={12}>
+                                                                                        <Grid item xs={12} className="px-3">
                                                                                             <Grid container spacing={0}>
                                                                                                 <Grid item xs={4}>
                                                                                                     <Typography variant="button" gutterBottom>
@@ -487,7 +499,7 @@ class CrearTrabajo extends Component {
                                                                                                 </Grid>
                                                                                             </Grid>
                                                                                         </Grid>
-                                                                                        <Grid item xs={12} style={{backgroundColor: "#fafafa"}}>
+                                                                                        <Grid item xs={12} style={{backgroundColor: "#fafafa"}} className="px-3">
                                                                                             {
                                                                                                 this.state.inforCarpetas.map((carpeta, indexCarpeta) => {
                                                                                                     return <List key={indexCarpeta} component="div" disablePadding>
@@ -551,7 +563,6 @@ class CrearTrabajo extends Component {
 
                                                                             </ExpansionPanelDetails>
                                                                         </ExpansionPanel>
-
                                                                     </Grid>
 
                                                                 </Grid>
