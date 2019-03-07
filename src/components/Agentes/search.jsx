@@ -246,7 +246,7 @@ class SearchAgents extends Component {
           onClick={() => {
             this.selectAgent({
               "Id_Entidad": -1, "Id_Tipo_Entidad": 1, "Id_Autonomia": 71,
-              "Id_Pais": 100
+              "Id_Pais": 100, "Id_Provincia": 15,
             }, true)
           }}>
           <Translate id="languages.generalButton.annadirNuevo" />

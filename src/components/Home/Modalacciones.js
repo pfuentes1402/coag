@@ -46,26 +46,62 @@ class Modalacciones extends Component {
             tablaArquitectos: false,
             text: "",
             types: "expedientes",
+            loading: false,
+            loadingSearch: false
         };
        
       }
-    handleSearch(text) {
-        if(this.props.modal){
-            if(text === 'colegiados' && !text){
-                this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
-            }else {
-                this.props.fetchBuscador(text, this.props.selectBuscador);
+
+    async componentDidMount(){
+        this.props.fetchSelect(this.state.types);
+        this.setState({loading: true});
+        try {
+            if(this.props.modal){
+                await this.props.fetchBuscador(this.state.text, this.state.types, 1, 10000 );
             }
+            else {
+                await this.props.fetchSuscepAcciones(this.state.text, this.props.idAccion, 1, 10000);
+            }
+            this.setState({loading: false});
         }
-        else {
-            this.props.fetchSuscepAcciones(text, this.props.idAccion, 1, 10000);
+        catch (e) {
+            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.setState({loading: false});
+        }
+
+    }
+    async handleSearch(text) {
+        this.setState({loadingSearch: true});
+        try {
+            if(this.props.modal){
+                if(text === 'colegiados' && !text){
+                    this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
+                }else {
+                    await this.props.fetchBuscador(text, this.props.selectBuscador);
+                }
+            }
+            else {
+                await this.props.fetchSuscepAcciones(text, this.props.idAccion, 1, 10000);
+            }
+            this.setState({loadingSearch: false})
+        }
+        catch (e) {
+            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.setState({loadingSearch: false});
         }
 
     }
 
-    handleCancel() {
-        this.setState({text: ""});
-        this.props.fetchBuscador("", this.props.selectBuscador);
+    async handleCancel() {
+        this.setState({text: "",loadingSearch: true});
+        try {
+            await this.props.fetchBuscador("", this.props.selectBuscador);
+            this.setState({loadingSearch: false});
+        }
+        catch (e) {
+            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.setState({loadingSearch: false});
+        }
     }
 
     handleSelectChange(e){ 
@@ -86,16 +122,6 @@ class Modalacciones extends Component {
 
     }
 
-    async componentDidMount(){
-        this.props.fetchSelect(this.state.types);
-        if(this.props.modal){
-           await this.props.fetchBuscador(this.state.text, this.state.types);
-        }
-        else {
-            await this.props.fetchSuscepAcciones(this.state.text, this.props.idAccion, 1, 10000);
-        }
-
-    }
 
     handleClose(){
         this.props.fetchocultaModal();
@@ -130,7 +156,10 @@ class Modalacciones extends Component {
                 <Container className="full">
                     <Row>
                         {
-                            this.props.loading === true ? <CircularProgress/> :
+                            this.props.loading === true || this.state.loading ?
+                                <div style={{margin: "50%"}}>
+                                    <CircularProgress/>
+                                </div> :
                                 <Col xs={12}>
                                     <Row>
                                         <Col xs={12} className="d-flex justify-content-between align-items-center">
@@ -207,13 +236,14 @@ class Modalacciones extends Component {
                                                         }
                                                     </Row>
                                                     <div className="d-flex justify-content-center">
-                                                        <Button variant="outlined" color="primary" className={classes.button} onClick={()=>{this.handleCancel()}}>
+                                                        <Button variant="outlined" color="primary" className={classes.button} disabled={this.state.loadingSearch} onClick={async ()=>{await this.handleCancel()}}>
                                                             <Translate id="languages.generalButton.cancel"/>
                                                         </Button>
-                                                        <Button variant="contained" color="primary" className={classes.button} onClick={()=>{this.handleSearch(this.state.text)}}>
+                                                        <Button variant="contained" color="primary" className={classes.button} disabled={this.state.loadingSearch} onClick={async ()=>{await this.handleSearch(this.state.text)}}>
                                                             <Translate id="languages.generalButton.search"/>
-                                                            <Search className="ml-3"/>
+                                                            <Search className="ml-3" />
                                                         </Button>
+                                                        {this.state.loadingSearch && <CircularProgress className="align-self-center" size={24}/>}
                                                     </div>
                                                 </div>
                                         </Col>

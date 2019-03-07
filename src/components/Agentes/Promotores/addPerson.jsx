@@ -68,7 +68,7 @@ class AddPerson extends Component{
                 "porcentaje": null,
                 "PorcentajesEquitativos": 1,
                 "Id_Concello": "",
-                "Id_Provincia": "",
+                "Id_Provincia": 15,
                 "Id_Autonomia": 71,
                 "Id_Pais": 100,
                 "Nif_Representado": ""
