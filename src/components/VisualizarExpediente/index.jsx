@@ -82,6 +82,7 @@ class VisualizarExpediente extends Component {
       currentExpediente: null,
       idTrabajoActivo: null/*this.props.match.params.idTrabajo*/,
       idEstructuraActiva: null,
+      estructurasAbiertas:[],
       titleEstructuraActiva: "",
       estructuraDocumental: [],
       estructurasPadre: [],
@@ -203,6 +204,7 @@ class VisualizarExpediente extends Component {
   }
 
     async handleChangeEstructuran(idEstructura, titleEstructura){
+
       await this.setState({idEstructuraActiva: idEstructura, titleEstructuraActiva: titleEstructura});
     }
 
