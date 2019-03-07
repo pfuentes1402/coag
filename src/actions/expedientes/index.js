@@ -5,6 +5,7 @@ import {
 } from '../../api';
 
 import * as types from './types';
+import * as api from "../../api";
 
 export const formatMenssage = (error) => (
     {
@@ -59,6 +60,89 @@ export const fetchExpedienteSelected = (response) => ({
     type: types.FETCH_SAVE_SELECTED_EXP_TO_STORE,
     payload: response
 });
+
+export const fetchShowUploadFiles = (show) => (
+    {
+        type: types.FETCH_SHOW_UPLOAD_FILES,
+        payload: show
+    });
+
+export const showUploadFiles = (show) =>
+    async (dispatch) => {
+        dispatch(fetchShowUploadFiles(show));
+    };
+
+export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
+    {
+        type: types.FETCH_FILES,
+        payload: {uploadInProgress, pendingUploadList, uploadLength}
+    });
+
+export const fetchUploadFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
+    {
+        type: types.FETCH_UPLOAD_FILES,
+        payload: {uploadInProgress, pendingUploadList, uploadLength}
+    });
+
+export const uploadFiles = (acceptedFiles) =>
+    async (dispatch) => {
+      try {
+          let files = []
+          acceptedFiles.forEach(file => {
+              files.push({
+                  filename: file.name,
+                  data: file
+              })
+          });
+          if (files.length === 0)
+              return null;
+
+          dispatch(fetchFiles(true, files, files.length));
+
+          let b = this;
+          for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
+              let item = files[i];
+              p = p.then(_ => new Promise(async resolve => {
+                      try {
+                          let newList = [...b.state.pendingUploadList]
+                          newList.splice(0, 1);
+                          await b.setState({
+                              currentUpload: i + 1,
+                              currentUploadItem: item,
+                              pendingUploadList: newList,
+                          });
+                          let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
+                          if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                              this.props.fetchErrorExpediente(response);
+                              this.abortUpload()
+                          } else {
+
+                              if (newList.length === 0) {
+                                  await b.setState({
+                                      uploadInProgress: false
+                                  });
+                                  setTimeout(async ()=>{
+                                      await this.loadInformation()
+                                  },1000)
+
+
+                              }
+                          }
+                      } catch (e) {
+                          this.props.fetchErrorExpediente(formatMenssage(e.message));
+                          this.abortUpload()
+                      }
+
+                      resolve()
+
+                  }
+              ));
+          }
+      }catch (e) {
+
+      }
+
+    };
 
 
 /*

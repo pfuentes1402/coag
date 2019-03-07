@@ -1,25 +1,45 @@
-import { FETCH_EXPEDIENTES_SUCCESS } from "../../actions/expedientes/types";
+import { FETCH_EXPEDIENTES_SUCCESS, FETCH_SHOW_UPLOAD_FILES, FETCH_UPLOAD_FILES, FETCH_FILES } from "../../actions/expedientes/types";
 import { FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL,
        OCULTACAMBIAESTADOMODAL, SHOWBUSCADOR, SHOWACCIONES, BUTTON_ADD } from "../../actions/interfaz/types"
 import { GOEXPEDIENTES } from "../../actions/usuarios/types"
 import { PURGE } from 'redux-persist';
 
-const initialState = { loading : true, modalAcciones:false, selectedAction:0, modalLoading:true, modal:false, muestraFiltros:true, contenedorAdd:false, contenedorPromo:false};
+const initialState = { showUploadFiles: false, loading : true, modalAcciones:false, selectedAction:0, modalLoading:true, modal:false, muestraFiltros:true, contenedorAdd:false, contenedorPromo:false};
 
 
 
 const reducer = (state = initialState, action) => {
  
   switch (action.type) {
-    case FETCH_EXPEDIENTES_SUCCESS:
+
+      case FETCH_FILES:
+          return {
+              ...state,
+              files: {uploadInProgress: action.payload.uploadInProgress,
+                  pendingUploadList: action.payload.pendingUploadList,
+                  uploadLength: action.payload.uploadLength},
+          };
+
+      case FETCH_UPLOAD_FILES:
+          return {
+              ...state,
+              uploadFiles: {uploadInProgress: action.payload.uploadInProgress,
+                            pendingUploadList: action.payload.pendingUploadList,
+                            uploadLength: action.payload.uploadLength},
+          };
+      case FETCH_SHOW_UPLOAD_FILES:
+          return {
+              ...state,
+              showUploadFiles: action.payload,
+          };
+
+      case FETCH_EXPEDIENTES_SUCCESS:
       return {
         ...state,            
         loading: false,
       };
-      
 
     case FETCH_SHOW_MODAL:
-    
       return {
         ...state,            
         modalAcciones: true,
