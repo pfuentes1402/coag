@@ -136,7 +136,7 @@ class TiposTrabajo extends Component {
       if (value.trabajos.length > 0) {
         works = works.concat(value.trabajos);
       }
-      return null
+
     })
 
     await this.setState(state => ({ ...state, selectTrabajos: newState, linealWorksSelection: works }));

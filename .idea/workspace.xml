@@ -5,8 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/expedientes/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/status/status.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/status/status.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,28 +23,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tiposTrabajo.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-187">
-              <caret line="36" column="19" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="19" />
+            <state relative-caret-position="935">
+              <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tiposTrabajo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2958">
+              <caret line="186" column="94" selection-start-line="186" selection-start-column="86" selection-end-line="186" selection-end-column="94" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tablaTiposTrabjo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2618">
+              <caret line="161" column="2" selection-start-line="161" selection-start-column="2" selection-end-line="161" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-94">
-              <caret line="386" column="31" lean-forward="true" selection-start-line="386" selection-start-column="31" selection-end-line="386" selection-end-column="31" />
+            <state relative-caret-position="297">
+              <caret line="645" column="24" lean-forward="true" selection-start-line="645" selection-start-column="24" selection-end-line="645" selection-end-column="24" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
                 <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
-                <element signature="e#18404#23867#0" />
-                <element signature="e#24104#36694#0" />
-                <element signature="e#25412#27336#0" />
-                <element signature="e#37680#38809#0" />
               </folding>
             </state>
           </provider>
@@ -50,7 +67,7 @@
       <file leaf-file-name="tipoExpediente.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
+            <state relative-caret-position="17">
               <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -62,8 +79,8 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="181" column="21" lean-forward="true" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
+            <state relative-caret-position="1955">
+              <caret line="145" column="29" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="29" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -74,20 +91,17 @@
       <file leaf-file-name="status.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="19" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#76#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="1836">
+              <caret line="115" column="155" selection-start-line="115" selection-start-column="145" selection-end-line="115" selection-end-column="155" />
             </state>
           </provider>
         </entry>
@@ -95,8 +109,8 @@
       <file leaf-file-name="types.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="646">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -113,23 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>updateIsShowAddress</find>
-      <find>observaciones</find>
-      <find>lastModification</find>
-      <find>this.props.estructura</find>
-      <find>TrabajoComunicacion</find>
-      <find>classNames</find>
-      <find>expediente</find>
-      <find>active</find>
-      <find>Id_Expediente</find>
-      <find>Expediente_Codigo_Estudio</find>
-      <find>AreasGeograficasConcellos</find>
-      <find>Id_Provincia</find>
-      <find>annadirNuevo</find>
-      <find>nada</find>
-      <find>loadingOoo</find>
-      <find>loadMunicipes</find>
-      <find>TablaBusquedaArquitectos</find>
       <find>fetchErrorExpediente</find>
       <find>fetchBuscador</find>
       <find>handleSearch</find>
@@ -142,7 +139,24 @@
       <find>subHeader</find>
       <find>borderBottom</find>
       <find>textField</find>
+      <find>add</find>
+      <find>ExpandLess</find>
+      <find>updateSelectTrabajos</find>
+      <find>border</find>
       <find>headerProyect</find>
+      <find>h7</find>
+      <find>stro</find>
+      <find>volver</find>
+      <find>formatMenssage</find>
+      <find>return null</find>
+      <find>trabajoSeleccion</find>
+      <find>generalButton.cance</find>
+      <find>CheckIcon</find>
+      <find>visualizar</find>
+      <find>Expediente</find>
+      <find>handleCancel</find>
+      <find>circular</find>
+      <find>cancel</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -154,9 +168,9 @@
     </replaceStrings>
     <dirStrings>
       <dir>W:\DOCUMENTACIÓN\REACT\coag\src</dir>
-      <dir>G:\Yuliet\coag\src\components</dir>
       <dir>G:\Yuliet\coag</dir>
       <dir>G:\Yuliet\coag\src\components\VisualizarExpediente</dir>
+      <dir>G:\Yuliet\coag\src\components</dir>
       <dir>G:\Yuliet\coag\src</dir>
     </dirStrings>
   </component>
@@ -208,7 +222,6 @@
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
-        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
         <option value="$PROJECT_DIR$/src/components/Address/index.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
@@ -220,13 +233,14 @@
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/search.jsx" />
         <option value="$PROJECT_DIR$/src/components/Home/Modalacciones.js" />
-        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
         <option value="$PROJECT_DIR$/src/resources.json" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
         <option value="$PROJECT_DIR$/src/actions/expedientes/types.js" />
         <option value="$PROJECT_DIR$/src/reducers/status/status.js" />
         <option value="$PROJECT_DIR$/src/actions/expedientes/index.js" />
+        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
+        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
+        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
       </list>
     </option>
   </component>
@@ -303,6 +317,13 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="AsistenteTrabajo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
+              <item name="coag" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="VisualizarExpediente" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -327,13 +348,6 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="reducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="expedientes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
@@ -512,7 +526,8 @@
       <workItem from="1551423592089" duration="14252000" />
       <workItem from="1551724090871" duration="1784000" />
       <workItem from="1551726073450" duration="14371000" />
-      <workItem from="1551901513208" duration="13346000" />
+      <workItem from="1551901513208" duration="27410000" />
+      <workItem from="1551989509472" duration="3151000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -808,11 +823,18 @@
       <option name="project" value="LOCAL" />
       <updated>1551963226748</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="para upload file">
+      <created>1551966590466</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1551966590466</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="543840000" />
+    <option name="totallyTimeSpent" value="561055000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -827,13 +849,14 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.39479393" visible="true" weight="0.20462047" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.39240506" visible="true" weight="0.20462047" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49905002" weight="0.32808024" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.41122112" side_tool="true" visible="true" weight="0.18731117" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.58877885" visible="true" weight="0.18731117" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49438944" weight="0.2839879" />
-      <window_info id="npm" order="2" sideWeight="0.6052061" side_tool="true" weight="0.20462047" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5069307" side_tool="true" visible="true" weight="0.2839879" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.5874587" weight="0.1860817" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49306932" visible="true" weight="0.2839879" />
+      <window_info id="npm" order="2" sideWeight="0.6075949" side_tool="true" weight="0.20462047" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49966997" weight="0.3247734" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -847,26 +870,25 @@
       <window_info anchor="bottom" id="Messages" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
       <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43125" visible="true" weight="0.23939203" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
       <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -917,7 +939,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="merge con archivos" />
     <MESSAGE value="arreglado los errores de peticiones en la api con respecto al token" />
     <MESSAGE value="Estado de firma en las estructuras de carpeta con los colores correspondientes" />
     <MESSAGE value="merge Trabajo" />
@@ -942,28 +963,15 @@
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
     <MESSAGE value="modificaciones en la busqueda" />
     <MESSAGE value="modificaciones en maqueta crear trabajo" />
-    <option name="LAST_COMMIT_MESSAGE" value="modificaciones en maqueta crear trabajo" />
+    <MESSAGE value="para upload file" />
+    <option name="LAST_COMMIT_MESSAGE" value="para upload file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Agentes/Arquitectos/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="140" column="46" selection-start-line="140" selection-start-column="46" selection-end-line="140" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/trabajos/trabajos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="88" column="9" selection-start-line="88" selection-start-column="9" selection-end-line="88" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/interfaz/types.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1045,9 +1053,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2686">
           <caret line="176" column="54" selection-start-line="176" selection-start-column="54" selection-end-line="176" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1065,13 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
@@ -1083,9 +1081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4981">
           <caret line="306" column="185" selection-start-line="306" selection-start-column="177" selection-end-line="306" selection-end-column="185" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1100,9 +1095,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="72" column="5" lean-forward="true" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1110,9 +1102,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1127,9 +1116,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1158,9 +1144,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="263" column="27" lean-forward="true" selection-start-line="263" selection-start-column="27" selection-end-line="263" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1189,9 +1172,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1213,9 +1193,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="111" column="9" lean-forward="true" selection-start-line="109" selection-start-column="8" selection-end-line="111" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1223,18 +1200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="236" column="58" lean-forward="true" selection-start-line="236" selection-start-column="58" selection-end-line="236" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#972#1433#0" />
-            <element signature="e#7282#10158#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="140" column="29" selection-start-line="140" selection-start-column="29" selection-end-line="140" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1249,9 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="49" column="3" lean-forward="true" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1262,53 +1224,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-527">
           <caret line="151" column="9" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
-          <caret line="36" column="19" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-94">
-          <caret line="386" column="31" lean-forward="true" selection-start-line="386" selection-start-column="31" selection-end-line="386" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
-            <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
-            <element signature="e#18404#23867#0" />
-            <element signature="e#24104#36694#0" />
-            <element signature="e#25412#27336#0" />
-            <element signature="e#37680#38809#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="181" column="21" lean-forward="true" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1321,18 +1240,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-816">
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-        </state>
+        <state relative-caret-position="-816" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/index.js">
@@ -1342,20 +1250,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
+    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="19" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="19" />
+        <state relative-caret-position="646">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="145" column="29" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="29" />
           <folding>
-            <element signature="e#0#76#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2958">
+          <caret line="186" column="94" selection-start-line="186" selection-start-column="86" selection-end-line="186" selection-end-column="94" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="1836">
+          <caret line="115" column="155" selection-start-line="115" selection-start-column="145" selection-end-line="115" selection-end-column="155" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="161" column="2" selection-start-line="161" selection-start-column="2" selection-end-line="161" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-through/coverage/lcov-report/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="294" column="6" lean-forward="true" selection-start-line="294" selection-start-column="6" selection-end-line="294" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="645" column="24" lean-forward="true" selection-start-line="645" selection-start-column="24" selection-end-line="645" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
+            <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
+          </folding>
         </state>
       </provider>
     </entry>

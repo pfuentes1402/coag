@@ -106,6 +106,8 @@ export const uploadFiles = (acceptedFiles) =>
                       try {
                           let newList = [...b.state.pendingUploadList]
                           newList.splice(0, 1);
+                          dispatch(fetchFiles(true, files, files.length));
+
                           await b.setState({
                               currentUpload: i + 1,
                               currentUploadItem: item,
