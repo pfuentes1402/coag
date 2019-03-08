@@ -4,19 +4,19 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid/dist/styles/ag-grid.css';
 import 'ag-grid/dist/styles/ag-theme-balham.css';
 import 'ag-grid/dist/styles/ag-theme-material.css';
-
 import { traduccionGrid, traduccionGridGallego } from './../../helpers/traducciones';
 import AccionRenderer from './AccionRenderer';
 import EstadoRenderer from './EstadoRenderer';
 import { connect } from 'react-redux';
 import { gotrabajos } from './../../actions/usuarios'
 import { setSelectedExpedienteTo, fetchExpedienteDatosGeneral, fetchExpedienteTrabajos } from './../../actions/expedientes'
-import { fetchEstructuraDocumentalTrabajo } from './../../actions/trabajos'
+import { fetchEstructuraDocumentalTrabajo } from './../../actions/trabajos';
+import { dispatchTablePersonalization } from './../../actions/expedientes';
 import 'ag-grid/dist/styles/ag-theme-material.css';
 import { Button } from 'reactstrap';
 import { withRouter } from "react-router-dom";
 import { Select, MenuItem, Checkbox, ListItemText, Typography } from '@material-ui/core';
-import {withStyles} from "@material-ui/core/styles/index";
+import { withStyles } from "@material-ui/core/styles/index";
 
 function internationalization(param) {
     return param === '1' ? traduccionGrid : traduccionGridGallego
@@ -47,7 +47,7 @@ class TramitacionesCurso extends Component {
         this.state = {
             columnDefs: this.renderColumns().filter(x => x.selected),
             allColumns: this.renderColumns(),
-            renderValue: "Columnas por defecto",
+            //renderValue: null,
             context: { componentParent: this },
             frameworkComponents: {
                 accionRenderer: AccionRenderer,
@@ -63,28 +63,37 @@ class TramitacionesCurso extends Component {
             localeText: internationalization(this.props.lang),
             rowSelection: "single",
             rowData: this.props.data,
-            pageSize: 30,
+            pageSize: this.props.tablePersonalization.pageSize,
             gridApi: null,
             gridColumnApi: null,
             openChooser: false
         }
     }
 
+    componentDidMount() {
+        this.setState({ renderValue: this.props.tablePersonalization.renderValue });
+    }
+
     renderColumns() {
-        return [
-            { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 100, pinned: null, selected: false },
-            { headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140, pinned: null, selected: true },
-            { headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200, selected: true },
-            { headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200, selected: true },
-            { headerName: "MUNICIPIO", field: "Concello", width: 200, selected: true },
-            { headerName: "ESTADO", field: "Estado", cellRenderer: 'estadoRenderer', colId: "estado", width: 180, selected: true },
-            { headerName: "ACCIONES", field: "acciones", cellRenderer: 'accionRenderer', colId: "params", width: 140, selected: true },
-            { headerName: "ANTECEDENTES", field: "Antecedente", width: 140, selected: false, pinned: null },
-            { headerName: "FECHA ENTRADA", field: "Fecha_Entrada", width: 140, selected: false, pinned: null },
-            { headerName: "FECHA TRAMITACIÓN", field: "Fecha_Tramitacion", width: 140, selected: false, pinned: null },
-            { headerName: "PROMOTOR", field: "Promotor", width: 140, selected: false, pinned: null },
-            { headerName: "ÚLTIMA MODIFICACIÓN", field: "Ultima_Modificacion", width: 140, selected: false, pinned: null }
-        ];
+        if (this.props.tablePersonalization.columnDefs.length === 0) {
+            let columns = [
+                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 100, pinned: null, selected: false },
+                { headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140, pinned: null, selected: true },
+                { headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200, selected: true },
+                { headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200, selected: true },
+                { headerName: "MUNICIPIO", field: "Concello", width: 200, selected: true },
+                { headerName: "ESTADO", field: "Estado", cellRenderer: 'estadoRenderer', colId: "estado", width: 180, selected: true },
+                { headerName: "ACCIONES", field: "acciones", cellRenderer: 'accionRenderer', colId: "params", width: 140, selected: true, cellClass: 'no-border', sortable: false, pinned: null, filter: null },
+                { headerName: "ANTECEDENTES", field: "Antecedente", width: 140, selected: false, pinned: null },
+                { headerName: "FECHA ENTRADA", field: "Fecha_Entrada", width: 140, selected: false, pinned: null },
+                { headerName: "FECHA TRAMITACIÓN", field: "Fecha_Tramitacion", width: 140, selected: false, pinned: null },
+                { headerName: "PROMOTOR", field: "Promotor", width: 140, selected: false, pinned: null },
+                { headerName: "ÚLTIMA MODIFICACIÓN", field: "Ultima_Modificacion", width: 140, selected: false, pinned: null }
+            ];
+            this.props.dispatchTablePersonalization(
+                this.state && this.state.pageSize ? this.state.pageSize : 30, columns, "Columnas por defecto");
+        }
+        return this.props.tablePersonalization.columnDefs;
     }
 
     onGridReady(params) {
@@ -93,11 +102,16 @@ class TramitacionesCurso extends Component {
     };
     onPageSizeChanged(event) {
         this.setState({ pageSize: event.target.value })
+        this.props.dispatchTablePersonalization(event.target.value, this.state.allColumns,
+            this.props.tablePersonalization.renderValue);
         this.gridApi.paginationSetPageSize(event.target.value);
         this.resizeTable(event.target.value);
     }
     onSelectionChanged() {
         var selectedRows = this.gridApi.getSelectedRows();
+        let column = this.gridApi.getFocusedCell();
+        if (column && column.column && column.column.colId === "params")
+            return;
         this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
     }
     onBtExport() {
@@ -121,8 +135,8 @@ class TramitacionesCurso extends Component {
                 ? rows : this.props.data.length;
 
             let minRowHeight = 48;
-            document.getElementById("myGrid").style.height = `${rows * minRowHeight + 170}px`;
-            document.getElementById("myGrid").style.minHeight = `${rows * minRowHeight + 170}px`;
+            document.getElementById("myGrid").style.height = `${rows * minRowHeight + 190}px`;
+            document.getElementById("myGrid").style.minHeight = `${rows * minRowHeight + 190}px`;
             document.getElementsByClassName("ag-body-viewport")[0].style.height = `${rows * minRowHeight + 20}px`;
         }
     }
@@ -138,19 +152,21 @@ class TramitacionesCurso extends Component {
                 let selectColumn = allColumns.findIndex(x => x.field === newColumn);
                 if (selectColumn > -1) {
                     allColumns[selectColumn].selected = !allColumns[selectColumn].selected;
-                    await this.setState({
+                    this.setState({
                         allColumns: allColumns,
                         columnDefs: allColumns.filter(x => x.selected),
-                        renderValue: "Columnas personalizadas"
+                        //renderValue: "Columnas personalizadas"
                     });
+                    await this.props.dispatchTablePersonalization(this.state.pageSize, allColumns, "Columnas personalizadas");
                     this.gridApi.setColumnDefs(this.state.columnDefs);
                 }
             }
             else {
-                await this.setState({
+                await this.props.dispatchTablePersonalization(this.state.pageSize, [], "Columnas por defecto");
+                this.setState({
                     allColumns: this.renderColumns(),
                     columnDefs: this.renderColumns().filter(x => x.selected),
-                    renderValue: "Columnas por defecto",
+                    //renderValue: "Columnas por defecto",
                     openChooser: false
                 });
                 this.gridApi.setColumnDefs(this.state.columnDefs);
@@ -160,7 +176,7 @@ class TramitacionesCurso extends Component {
         }
     }
     render() {
-        let {classes} = this.props;
+        let { classes } = this.props;
         return (
             <CardBody className="card-body-Trabajos">
                 <Row style={{
@@ -178,7 +194,7 @@ class TramitacionesCurso extends Component {
                                 </Typography>
                             </div>
                             <div className="d-flex p-2">
-                                <Typography variant="h6"  gutterBottom className="mb-0">
+                                <Typography variant="h6" gutterBottom className="mb-0">
                                     Mostrar
                                 </Typography>
                                 <Select style={{ width: 230 }}
@@ -186,7 +202,7 @@ class TramitacionesCurso extends Component {
                                     multiple
                                     onChange={this.handleSelectColumn}
                                     className="mx-3"
-                                    renderValue={x => this.state.renderValue}
+                                    renderValue={x => this.props.tablePersonalization.renderValue}
                                     onOpen={() => { this.setState({ openChooser: true }) }}
                                     onClose={() => { this.setState({ openChooser: false }) }}
                                     open={this.state.openChooser}>
@@ -263,10 +279,11 @@ class TramitacionesCurso extends Component {
 }
 const mapStateToProps = state => ({
     datosBrutos: state.trabajos.estructuraDocumentalTrabajo ? state.trabajos.estructuraDocumentalTrabajo : '',
+    tablePersonalization: state.expedientes.tablePersonalization
 });
 
 
 export default withRouter(connect(mapStateToProps, {
     gotrabajos, setSelectedExpedienteTo, fetchExpedienteDatosGeneral,
-    fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo
+    fetchExpedienteTrabajos, fetchEstructuraDocumentalTrabajo, dispatchTablePersonalization
 })(withStyles(styles)(TramitacionesCurso)));

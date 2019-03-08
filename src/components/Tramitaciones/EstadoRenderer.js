@@ -36,7 +36,7 @@ class AccionRenderer extends Component {
     if (nombreLimpio !== '')
       return (
         <span className={nombreLimpio}>
-          <img alt={200} src={require(`./IconosEstados/${nombreLimpio}.jpg`)}></img>
+          <img alt={200} src={require(`./IconosEstados/${nombreLimpio}.svg`)}></img>
           {nombre}
         </span>);
   }

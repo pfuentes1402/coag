@@ -39,6 +39,8 @@ export const FETCH_FILES = 'FETCH_FILES';
 export const FETCH_DONE = 'FETCH_DONE';
 
 
+export const TABLE_PERSONALIZATION = 'TABLE_PERSONALIZATION';
+
 
 
 

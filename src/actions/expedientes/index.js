@@ -218,7 +218,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *filtro: cadena a buscar
 *tipoBusqueda: expediente,trabajos, colegiados, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=25) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -536,6 +536,17 @@ export const dispatchAddAutorizacion = (idExpediente, data) => (dispatch) => {
     dispatch({
         type: types.ADD_AUTORIZACION_GRUPO_EXPEDIENTE,
         payload: { idExpediente, data }
+    })
+}
+
+export const dispatchTablePersonalization = (pageSize, defColumns, renderValue) => (dispatch) => {
+    dispatch({
+        type: types.TABLE_PERSONALIZATION,
+        payload: {
+            pageSize: pageSize,
+            columnDefs: defColumns,
+            renderValue: renderValue
+        }
     })
 }
 
