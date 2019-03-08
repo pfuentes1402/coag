@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Edit } from '@material-ui/icons';
+import { Edit, Notifications, RemoveRedEye, FileCopy, Check, 
+    ArrowDownwardSharp , Input, EditSharp} from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-
+import { withStyles } from "@material-ui/core/styles/index";
+const styles = theme => ({
+    buttonAction: {
+        border: "2px solid",
+        padding: "4px", margin: "4px"
+    }
+});
 class AccionRenderer extends Component {
     constructor(props) {
         super(props);
@@ -14,21 +21,67 @@ class AccionRenderer extends Component {
 
     invokeParentMethod() {
         alert("Id del trabajo: " + this.state.idTrabajo);
+        return;
+    }
+
+    renderActions = () => {
+        let { classes } = this.props;
+        switch (this.props.data.Id_Estado) {
+            //Borrador
+            case 0:
+                return <div>
+                    <span>
+                        <IconButton className={classes.buttonAction} aria-label="View" color="primary">
+                            <EditSharp />
+                        </IconButton >
+                    </span>
+                </div>;
+            //En Tramitación - Presentado
+            case 1:
+                return <div>
+                    <span>
+                        <IconButton className={classes.buttonAction} aria-label="View" color="primary">
+                            <RemoveRedEye />
+                        </IconButton >
+                    </span>
+                    <span>
+                        <IconButton className={classes.buttonAction} aria-label="View" color="primary">
+                            <Notifications />
+                        </IconButton >
+                    </span>
+                </div>;
+            //En Tramitación - Pendente Modificacións
+            case 2:
+                return null;
+            //Tramitado
+            case 3:
+                return <div>
+                    <span>
+                        <IconButton className={classes.buttonAction} aria-label="View" color="primary">
+                            <FileCopy />
+                        </IconButton >
+                    </span>
+                </div>;
+            //Tramitado - Pendente retirada
+            case 4:
+            return <div>
+            <span>
+                <IconButton className={classes.buttonAction} aria-label="View" color="primary">
+                    <Input />
+                </IconButton >
+            </span>
+        </div>;
+            //Tramitado - Retirado
+            case 5:
+                return null;
+        }
     }
 
     render() {
         return (
-            <span>
-                <IconButton style={
-                    {
-                        border: "2px solid",
-                        padding: "6px", margin: "4px"
-                    }} aria-label="Edit" color="primary">
-                    <Edit />
-                </IconButton >
-            </span>
+            <div>{this.renderActions()}</div>
         );
     }
 };
 
-export default AccionRenderer;
+export default withStyles(styles)(AccionRenderer)
