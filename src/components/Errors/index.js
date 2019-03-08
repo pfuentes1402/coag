@@ -6,17 +6,21 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from "react-redux";
-import {fetchErrorExpediente} from "../../actions/expedientes";
-import {fetchErrorTrabajo} from "../../actions/trabajos";
-import {Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Button} from "@material-ui/core";
+import { fetchErrorExpediente } from "../../actions/expedientes";
+import { fetchErrorTrabajo } from "../../actions/trabajos";
+import { Dialog, DialogTitle, DialogActions, DialogContent, DialogContentText, Button } from "@material-ui/core";
 import ReactQuill from "react-quill";
 
-const mapStateToProps = (state) => (
-    {
-        errorExpediente: state.expedientes.error && state.expedientes.error.MensajesProcesado ? state.expedientes.error.MensajesProcesado : [],
-        errorTrabajo: state.trabajos.error && state.trabajos.error.MensajesProcesado ? state.trabajos.error.MensajesProcesado : [],
+const mapStateToProps = (state) => {
+    return {
+        errorExpediente: loadErros(state.expedientes.error),
+        errorTrabajo: loadErros(state.trabajos.error)
     }
-);
+} 
+
+function loadErros(error){
+    return error && error.MensajesProcesado ? error.MensajesProcesado : []
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -35,8 +39,8 @@ class ErrorSnackbars extends React.Component {
 
     handleClose = () => {
         let reset = {
-            "MensajesProcesado": [ ]
-            }
+            "MensajesProcesado": []
+        }
         this.props.onErrorExpediente(reset);
         this.props.onErrorTrabajo(reset)
     };
@@ -47,22 +51,22 @@ class ErrorSnackbars extends React.Component {
         return (
             <div>
                 <Dialog
-                    open={this.props.errorExpediente.length >0 || this.props.errorTrabajo.length >0}
+                    open={this.props.errorExpediente.length > 0 || this.props.errorTrabajo.length > 0}
                     onClose={this.handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                        <Translate id="languages.generalButton.mensaje"/>
+                        <Translate id="languages.generalButton.mensaje" />
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            <ReactQuill value={this.props.errorExpediente.length > 0 ? this.props.errorExpediente[0].Mensaje : (this.props.errorTrabajo.length >0 ? this.props.errorTrabajo[0].Mensaje: "")} readOnly theme='bubble' />
+                            <ReactQuill value={this.props.errorExpediente.length > 0 ? this.props.errorExpediente[0].Mensaje : (this.props.errorTrabajo.length > 0 ? this.props.errorTrabajo[0].Mensaje : "")} readOnly theme='bubble' />
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary" autoFocus>
-                            <Translate id="languages.generalButton.aceptar"/>
+                            <Translate id="languages.generalButton.aceptar" />
                         </Button>
                     </DialogActions>
                 </Dialog>
