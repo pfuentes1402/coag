@@ -67,10 +67,10 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
-    disable: {
-      pointerEvents: "none",
-        opacity: 0.6
-    }
+  disable: {
+    pointerEvents: "none",
+    opacity: 0.6
+  }
 });
 
 const CustomTableHead = withStyles(theme => ({
@@ -264,6 +264,8 @@ class FichaExpediente extends Component {
 
   render() {
     let { classes } = this.props;
+    let allowEditTitle = this.props.expediente && this.props.expediente.Trabajos
+      && this.props.expediente.Trabajos.some(x => x.Id_Estado === 3);
     return (
       <div>
         <Paper className={`${classes.withoutRadius} m-3`}>
@@ -291,6 +293,7 @@ class FichaExpediente extends Component {
                           label={<Translate id="languages.fichaExpediente.labelExpedienteName" />}
                           className={classes.textField}
                           validators={['required']}
+                          disabled={allowEditTitle}
                           errorMessages={[this.props.translate("languages.fichaExpediente.requiredField")]}
                           onChange={this.handleChangeDataExpedient("Titulo")}
                           name="name" />
@@ -307,13 +310,13 @@ class FichaExpediente extends Component {
                           label={<Translate id="languages.fichaExpediente.labelExpedienteAnteced" />}
                           className={`${classes.textField} mt-3`}
                           placeholder=""
-                          InputLabelProps={{shrink: true}}
+                          InputLabelProps={{ shrink: true }}
                           onChange={this.handleChangeDataExpedient("Antecedente")}
                           name="antecedente" />
                       </Grid>
                       <Grid item xs={5} >
                         <Typography variant="subtitle1" gutterBottom className="m-0"
-                          style={{ color: "rgba(0, 0, 0, 0.55)" ,fontSize:"0.8rem"}}>
+                          style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: "0.8rem" }}>
                           <Translate id="languages.fichaExpediente.labelEntryDate" />
                         </Typography>
                         <Typography variant="subtitle1" gutterBottom>
@@ -324,7 +327,7 @@ class FichaExpediente extends Component {
                   </Grid>
                   <Grid item xs={12} className={`${classes.divGrey} p-4`}>
                     <Typography variant="subtitle1" gutterBottom className="m-0"
-                      style={{ color: "rgba(0, 0, 0, 0.55)", fontSize:"0.8rem" }}>
+                      style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: "0.8rem" }}>
                       <Translate id="languages.fichaExpediente.labelObservations" />
                     </Typography>
                     <TextField id="outlined-bare"

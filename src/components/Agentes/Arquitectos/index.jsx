@@ -185,6 +185,7 @@ class Arquitecto extends Component {
       //1- Se actualiza el agente
       agent["Porcentaje"] = agent.Porciento;
       agent["Funcion"] = agent.Funciones.join(",");
+      agent["PorcentajesEquitativos"] = agent.percentChecked === true ? 1 : 0;
       if (agent.Apellido1 && agent.Apellido2)
         agent["Nombre"] = `${agent.Apellido1} ${agent.Apellido2}, ${agent.Nombre}`
       agent["Ids_Funciones"] = agent.Funciones.map(value => {

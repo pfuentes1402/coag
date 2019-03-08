@@ -16,7 +16,7 @@ import { manageEncomenda } from '../../api';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import { withRouter } from 'react-router-dom';
 import { Translate } from "react-localize-redux";
-import {Dialog, DialogContent, CircularProgress} from "@material-ui/core";
+import { Dialog, DialogContent, CircularProgress } from "@material-ui/core";
 
 const styles = theme => ({
   margin: {
@@ -37,7 +37,7 @@ class Agentes extends Component {
     super(props);
     this.state = {
       encomenda: this.props.encomenda,
-        isLoading: false
+      isLoading: false
     }
   }
 
@@ -51,60 +51,60 @@ class Agentes extends Component {
 
   //Funcion que consume la api para crear un nuevo trabajo encomenda
   async addTrabajoEncomenda() {
-    await this.setState({isLoading: true});
+    await this.setState({ isLoading: true });
     try {
-        let encomenda = this.state.encomenda;
-        let encomendaActual = encomenda.EncomendaActual && encomenda.EncomendaActual.length > 0
-            ? encomenda.EncomendaActual[0] : null;
+      let encomenda = this.state.encomenda;
+      let encomendaActual = encomenda.EncomendaActual && encomenda.EncomendaActual.length > 0
+        ? encomenda.EncomendaActual[0] : null;
 
-        if (encomendaActual) {
-            let trabajoEncomenda = {
-                Id_Tipo_Grupo_Tematico: encomendaActual.Id_Tipo_Grupo_Tematico,
-                Id_Tipo_Autorizacion_Municipal: encomendaActual.Id_Tipo_Autorizacion_Municipal,
-                Id_Tipo_Fase: 1,
-                Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
-                Id_Tipo_Tramite: 0, /*0 Visado normal*/
-                Colegiados: encomenda.Colegiados,
-                Promotores: encomenda.Promotores,
-                IgnorarObservaciones: 1
-            };
+      if (encomendaActual) {
+        let trabajoEncomenda = {
+          Id_Tipo_Grupo_Tematico: encomendaActual.Id_Tipo_Grupo_Tematico,
+          Id_Tipo_Autorizacion_Municipal: encomendaActual.Id_Tipo_Autorizacion_Municipal,
+          Id_Tipo_Fase: 1,
+          Id_Tipo_Trabajo: 219,/*219 significa que es una encomenda*/
+          Id_Tipo_Tramite: 0, /*0 Visado normal*/
+          Colegiados: encomenda.Colegiados,
+          Promotores: encomenda.Promotores,
+          IgnorarObservaciones: 1
+        };
 
-            //Obtener el id de expediente del estado de redux y llamar la funcion
-            //postAddTrabajoEncomenda
-            let currentExpId = encomendaActual.Id_Expediente;
-            let result = await manageEncomenda(currentExpId, trabajoEncomenda);
+        //Obtener el id de expediente del estado de redux y llamar la funcion
+        //postAddTrabajoEncomenda
+        let currentExpId = encomendaActual.Id_Expediente;
+        let result = await manageEncomenda(currentExpId, trabajoEncomenda);
 
-            //Validación para continuar (si el resultado fue 200 se permite continuar)
-            if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
-                let url = `/visualizar-expediente/${currentExpId}`;
-                await this.setState({isLoading: false});
-                this.props.history.push(url);
-                return true;
-            }
-            else{
-                if(result.MensajesProcesado && result.MensajesProcesado.length > 0){
-                    await this.setState({isLoading: false});
-                    this.props.fetchErrorExpediente(result);
-                    return false;
-                }
-                else{
-                    if (result.response) {
-                        await this.setState({isLoading: false});
-                        this.props.fetchErrorExpediente(result.response.data);
-                        return false;
-                    }
-                    else {
-                        await this.setState({isLoading: false});
-                        this.props.fetchErrorExpediente(result.data);
-                        return false;
-                    }
-                }
-            }
+        //Validación para continuar (si el resultado fue 200 se permite continuar)
+        if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
+          let url = `/visualizar-expediente/${currentExpId}`;
+          await this.setState({ isLoading: false });
+          this.props.history.push(url);
+          return true;
         }
+        else {
+          if (result.MensajesProcesado && result.MensajesProcesado.length > 0) {
+            await this.setState({ isLoading: false });
+            this.props.fetchErrorExpediente(result);
+            return false;
+          }
+          else {
+            if (result.response) {
+              await this.setState({ isLoading: false });
+              this.props.fetchErrorExpediente(result.response.data);
+              return false;
+            }
+            else {
+              await this.setState({ isLoading: false });
+              this.props.fetchErrorExpediente(result.data);
+              return false;
+            }
+          }
+        }
+      }
 
-    }catch (e) {
-        await this.setState({isLoading: false});
-        this.props.fetchErrorExpediente(formatMenssage(e.message));
+    } catch (e) {
+      await this.setState({ isLoading: false });
+      this.props.fetchErrorExpediente(formatMenssage(e.message));
     }
 
   }
@@ -119,9 +119,9 @@ class Agentes extends Component {
     }
   }
 
-    handleClose = () => {
-        this.setState({ isLoading: false });
-    };
+  handleClose = () => {
+    this.setState({ isLoading: false });
+  };
 
   render() {
     let { classes } = this.props;
@@ -149,17 +149,20 @@ class Agentes extends Component {
           </ExpansionPanel>
         </Grid>
         <Grid item xs={12} className="py-2">
-            {this.props.isModificacion ? "" :
-                <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
-                        onClick={() => this.crearTrabajo()}>
-                    <Translate id="languages.generalButton.crearTrabajo" />
-                </Button>
-            }
+          {this.props.isModificacion ? "" :
+            <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
+              onClick={() => this.crearTrabajo()}>
+              <Translate id="languages.generalButton.crearTrabajo" />
+            </Button>
+          }
           <Button variant="contained" size="small" color="primary" className="float-right px-3"
             onClick={() => this.addTrabajoEncomenda()}>
             <Translate id="languages.generalButton.finalizar" />
           </Button>
-          <Button color="primary" size="small" className="float-right mx-2">
+          <Button color="primary" size="small" className="float-right mx-2"
+            onClick={() => {
+              this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
+            }}>
             <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
           </Button>
           <Button color="primary" size="small" className="float-left px-4" onClick={() => { this.props.handleBack() }}>
@@ -168,14 +171,14 @@ class Agentes extends Component {
         </Grid>
         <Grid item xs={12}>
           <Dialog
-              disableBackdropClick
-              disableEscapeKeyDown
-              open={this.state.isLoading}
-              onClose={this.handleClose}
+            disableBackdropClick
+            disableEscapeKeyDown
+            open={this.state.isLoading}
+            onClose={this.handleClose}
           >
-              <DialogContent>
-                <CircularProgress/>
-              </DialogContent>
+            <DialogContent>
+              <CircularProgress />
+            </DialogContent>
           </Dialog>
         </Grid>
       </Container>
