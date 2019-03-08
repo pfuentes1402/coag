@@ -181,9 +181,8 @@ class FormArquitecto extends Component {
               <Grid item xs={12}>
                 {!this.state.arquitecto.acceptTerm1 || !this.state.arquitecto.acceptTerm2
                   ? <Typography variant="caption" gutterBottom color="error" className="ml-3 pl-3">
-                    *<Translate id="languages.agentes.termsValidation" />
-                  </Typography> : ""
-                }
+                    <Translate id="languages.agentes.termsValidation" /> *
+                  </Typography> : ""}
                 <FormControlLabel
                   control={
                     <Checkbox

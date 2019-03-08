@@ -351,7 +351,7 @@ class ComunicacionEncargo extends React.Component {
                     {
                         relationsData[0].map((value, index) => {
                             return <Grid item xs={12} key={index} className={classes.paddingChildPanel}>
-                                <Typography variant="subtitle2" gutterBottom>{value.category}</Typography>
+                                <Typography variant="h6" gutterBottom>{value.category}</Typography>
                                 {value.items.map((item, itemIndex) => {
                                     return <Typography key={itemIndex} variant="subtitle1" gutterBottom>{item.Name}</Typography>
                                 })}
@@ -363,7 +363,7 @@ class ComunicacionEncargo extends React.Component {
                     {
                         relationsData[1].map((value, index) => {
                             return <Grid item xs={12} key={index} className={classes.paddingChildPanel}>
-                                <Typography variant="subtitle2" gutterBottom>{value.category}</Typography>
+                                <Typography variant="h6" gutterBottom>{value.category}</Typography>
                                 {value.items.map((item, itemIndex) => {
                                     return <Typography key={itemIndex} variant="subtitle1" gutterBottom>{item.Name}</Typography>
                                 })}

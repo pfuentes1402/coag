@@ -8,7 +8,8 @@ import { FETCH_SAVE_TRABAJO_TO_STORE } from "../../actions/expedientes/types";
 import {
   FETCH_DATAFORTREETRABAJO_SUCCESS, RESULTADOSBUSQUEDA, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJOFICHA,
   SET_EXPEDIENTE_SELECTED_DATOS, SET_EXPEDIENTE_SELECTED_DATOS_TRABAJO, ELIMINAR_TABLA, FETCH_EXPEDIENTES_SUCCESS, FETCH_EXPEDIENTES_ERROR,
-  ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO, ADD_AUTORIZACION_GRUPO_EXPEDIENTE
+  ADD_TRABAJO_EXPEDIENTE, EDIT_EXPEDIENTE_EN_TRABAJO, ADD_AUTORIZACION_GRUPO_EXPEDIENTE,
+  TABLE_PERSONALIZATION
 } from "../../actions/expedientes/types";
 import { PURGE } from 'redux-persist';
 const initialState = {
@@ -37,7 +38,12 @@ const initialState = {
   datosAgentes: {},
   datosTrabajo: {}, arbolEstructuraTrabajoRefactor: [{ 'id_expediente': 68885 }], selectedData: { expedieteotrabajo: {}, trabajoData: {} }, trabajoData: { Trabajos: [{}] },
   resultadoBusquedaPromotores: [],
-  trabajosPorExpediente: []
+  trabajosPorExpediente: [],
+  tablePersonalization: {
+    pageSize: 100,
+    columnDefs: [],
+    renderValue: "Columnas por defecto"
+  }
 };
 const expedientes = (state = initialState, action) => {
 
@@ -227,6 +233,13 @@ const expedientes = (state = initialState, action) => {
           }
       }
       return expediente;
+
+    case TABLE_PERSONALIZATION:
+      let customTable = {
+        ...state,
+        tablePersonalization: action.payload
+      }
+      return customTable;
 
     case PURGE:
       return initialState;

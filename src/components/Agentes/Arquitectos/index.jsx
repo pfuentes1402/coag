@@ -96,6 +96,9 @@ const styles = theme => ({
     border: "1px solid",
     padding: 8,
     margin: 4
+  },
+  selectAgent: {
+    backgroundColor: theme.palette.background.main,
   }
 });
 
@@ -275,7 +278,7 @@ class Arquitecto extends Component {
                 </TableRow>
                 : this.state.encomenda.Colegiados.map((row, index) => {
                   return (
-                    <TableRow className={classes.row} key={index}>
+                    <TableRow className={`${classes.row}`} key={index}>
                       <TableCell component="th" scope="row" className="px-1 text-center">
                         {row.Nif}
                       </TableCell>
