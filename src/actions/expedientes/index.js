@@ -60,7 +60,6 @@ export const fetchExpedienteSelected = (response) => ({
     payload: response
 });
 
-
 /*
 *Salva una direccion desde la pantalla de nuevo expediente
 */
@@ -447,6 +446,17 @@ export const dispatchAddAutorizacion = (idExpediente, data) => (dispatch) => {
     dispatch({
         type: types.ADD_AUTORIZACION_GRUPO_EXPEDIENTE,
         payload: { idExpediente, data }
+    })
+}
+
+export const dispatchTablePersonalization = (pageSize, defColumns, renderValue) => (dispatch) => {
+    dispatch({
+        type: types.TABLE_PERSONALIZATION,
+        payload: { 
+            pageSize: pageSize,
+            columnDefs: defColumns,
+            renderValue: renderValue
+        }
     })
 }
 
