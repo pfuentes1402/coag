@@ -734,6 +734,7 @@ export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_m
 }
 
 export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
+    console.log('expedietne',id_expediente)
     try {
         let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
         return response.data;
@@ -860,10 +861,14 @@ export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
 //Leer la carpeta temporal
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
+    
     try {
+        if(idExpediente){
+            let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+            return response.data;
+        }
 
-        let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
-        return response.data;
+
     } catch (error) {
         return formatMenssage(error.message);
     }

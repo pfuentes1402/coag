@@ -47,6 +47,7 @@ class MenuProyectoEjecucion extends Component {
 
 
     handleClick(idEstructura) {
+      alert(idEstructura)
         let newIdEstructura=this.state.estructurasAbiertas;
         let pos= this.state.estructurasAbiertas.indexOf(idEstructura)
         if (pos===-1){

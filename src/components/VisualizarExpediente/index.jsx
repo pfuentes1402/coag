@@ -92,7 +92,7 @@ class VisualizarExpediente extends Component {
   }
 
    componentWillMount() {
-     this.fetchExpediente();
+      this.fetchExpediente();
   }
 
   //Consumir api con el id de expediente espicificado por ur
@@ -134,11 +134,15 @@ class VisualizarExpediente extends Component {
   };
 
   async getEstructuraDocumental(idExpediente, idTrabajo){
+
       await this.setState({isLoadEstructura: true});
+      if(idExpediente ===null)
+          return false;
       let filterEstructura = [];
       let groupEstructura = [];
       let estructurasNivel1 = []
       try {
+
           let response = await getEstructuraDocumental(idExpediente, idTrabajo,this.props.activeLanguage.code);
           if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
               this.props.fetchErrorExpediente(response);

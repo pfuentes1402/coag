@@ -60,34 +60,28 @@ export const fetchExpedienteSelected = (response) => ({
     type: types.FETCH_SAVE_SELECTED_EXP_TO_STORE,
     payload: response
 });
-
-export const fetchShowUploadFiles = (show) => (
-    {
-        type: types.FETCH_SHOW_UPLOAD_FILES,
-        payload: show
-    });
-
-export const showUploadFiles = (show) =>
+export const resetUpladStates = (show) =>
     async (dispatch) => {
-        dispatch(fetchShowUploadFiles(show));
+        dispatch(fetchFiles(false,[],0,null,null,true));
     };
-
-export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
+export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength,currentUpload=null,currentUploadItem=null,fetchingDone=false,) => (
     {
         type: types.FETCH_FILES,
-        payload: {uploadInProgress, pendingUploadList, uploadLength}
+        payload: {uploadInProgress, pendingUploadList, uploadLength,currentUpload,currentUploadItem,fetchingDone}
     });
 
-export const fetchUploadFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
-    {
-        type: types.FETCH_UPLOAD_FILES,
-        payload: {uploadInProgress, pendingUploadList, uploadLength}
-    });
 
-export const uploadFiles = (acceptedFiles) =>
-    async (dispatch) => {
+// export const fetchUploadFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
+//     {
+//         type: types.FETCH_UPLOAD_FILES,
+//         payload: {uploadInProgress, pendingUploadList, uploadLength}
+//     });
+
+export const uploadFiles = (acceptedFiles,toEstructura,expediente,trabajo,estructura=false) =>
+    async (dispatch,getState) => {
       try {
           let files = []
+
           acceptedFiles.forEach(file => {
               files.push({
                   filename: file.name,
@@ -96,50 +90,61 @@ export const uploadFiles = (acceptedFiles) =>
           });
           if (files.length === 0)
               return null;
-
-          dispatch(fetchFiles(true, files, files.length));
-
-          let b = this;
+          let newList = [...files]
+          dispatch(fetchFiles(true, files, files.length));//estan almacenados en el reducer de status
           for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
               let item = files[i];
-              p = p.then(_ => new Promise(async resolve => {
-                      try {
-                          let newList = [...b.state.pendingUploadList]
-                          newList.splice(0, 1);
-                          await b.setState({
-                              currentUpload: i + 1,
-                              currentUploadItem: item,
-                              pendingUploadList: newList,
-                          });
-                          let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
-                          if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                              this.props.fetchErrorExpediente(response);
-                              this.abortUpload()
-                          } else {
 
-                              if (newList.length === 0) {
-                                  await b.setState({
-                                      uploadInProgress: false
-                                  });
-                                  setTimeout(async ()=>{
-                                      await this.loadInformation()
-                                  },1000)
+              try{
+                  p = p.then(_ => new Promise(async (resolve,reject) => {
+                          try {
+                              newList.splice(0, 1);
+                              let currentUpload=i+1;
+                              let currentUploadItem= item;
+                              let pendingUploadList= newList;
+                              dispatch(fetchFiles(true, pendingUploadList, files.length,currentUpload,currentUploadItem,false));//estan almacenados en el reducer de status
+                              let response = toEstructura?
+                                  await api.uploadFile(expediente.Id_Expediente, trabajo,estructura.id, item) :
+                                  await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
+                              if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                                  throw {success:false,response}
+                              } else {
+                                  if (newList.length === 0) {
+                                      dispatch(resetUpladStates());//estan almacenados en el reducer de status
 
-
+                                      /*await b.setState({
+                                          uploadInProgress: false
+                                      });*/
+                                      // setTimeout(async ()=>{
+                                      //     await this.loadInformation()
+                                      // },1000) todo: Esto hay que mandar a hacerlo desde el componente
+                                  }
                               }
+                          } catch (e) {
+                              dispatch(resetUpladStates())
+                              dispatch(fetchErrorExpediente(e.response))
+                              reject({success:false})
                           }
-                      } catch (e) {
-                          this.props.fetchErrorExpediente(formatMenssage(e.message));
-                          this.abortUpload()
+
+                          resolve({success:true})
+
                       }
+                  ));
+                 // if (p.success==false){
+                 //     console.log('jodio')
+                 //     dispatch(fetchErrorExpediente(p.response))
+                 // }
 
-                      resolve()
 
-                  }
-              ));
+              }catch (e) {
+                  dispatch(fetchErrorExpediente(e.response))
+                  return e
+              }
           }
-      }catch (e) {
+          dispatch(resetUpladStates())
 
+      }catch (e) {
+            return e
       }
 
     };
