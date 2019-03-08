@@ -311,7 +311,7 @@ class ComunicacionEncargo extends React.Component {
                     element.items.push({ Name: Trabajo_Titulo, id: Id_Tipo_Trabajo });
                 }
             });
-            return null
+
         })
 
         relations.forEach(element => {

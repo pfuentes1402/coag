@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="modificaciones en maqueta crear trabajo">
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/coag/coag" beforeDir="false" afterPath="$PROJECT_DIR$/coag/coag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/expedientes/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/expedientes/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/status/status.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/status/status.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/trabajos/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/trabajos/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,11 +23,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="935">
+              <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tiposTrabajo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2958">
+              <caret line="186" column="94" selection-start-line="186" selection-start-column="86" selection-end-line="186" selection-end-column="94" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tablaTiposTrabjo.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2618">
+              <caret line="161" column="2" selection-start-line="161" selection-start-column="2" selection-end-line="161" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="crearTrabajo.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="297">
+              <caret line="645" column="24" lean-forward="true" selection-start-line="645" selection-start-column="24" selection-end-line="645" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+                <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
+                <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tipoExpediente.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3697">
-              <caret line="267" selection-start-line="267" selection-end-line="267" />
+            <state relative-caret-position="1955">
+              <caret line="145" column="29" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="29" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -37,85 +88,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+      <file leaf-file-name="status.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="135" column="57" lean-forward="true" selection-start-line="135" selection-start-column="57" selection-end-line="135" selection-end-column="57" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="101" selection-start-line="101" selection-end-line="101" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="868" column="9" lean-forward="true" selection-start-line="868" selection-start-column="9" selection-end-line="868" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="mock://vm:237927">
-          <provider selected="true" editor-type-id="vmFileEditor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="http://localhost:3000/static/js/bundle.js">
-          <provider selected="true" editor-type-id="httpFileEditor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+            <state relative-caret-position="1836">
+              <caret line="115" column="155" selection-start-line="115" selection-start-column="145" selection-end-line="115" selection-end-column="155" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
+      <file leaf-file-name="types.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#1703#3038#0" />
-              </folding>
+            <state relative-caret-position="646">
+              <caret line="38" selection-start-line="38" selection-end-line="38" />
             </state>
           </provider>
         </entry>
@@ -132,12 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Id_Provincia</find>
-      <find>annadirNuevo</find>
-      <find>nada</find>
-      <find>loadingOoo</find>
-      <find>loadMunicipes</find>
-      <find>TablaBusquedaArquitectos</find>
       <find>fetchErrorExpediente</find>
       <find>fetchBuscador</find>
       <find>handleSearch</find>
@@ -150,18 +139,24 @@
       <find>subHeader</find>
       <find>borderBottom</find>
       <find>textField</find>
+      <find>add</find>
+      <find>ExpandLess</find>
+      <find>updateSelectTrabajos</find>
+      <find>border</find>
       <find>headerProyect</find>
-      <find>mapdis</find>
-      <find>fetcherr</find>
-      <find>FETCH_FIL</find>
-      <find>formatMe</find>
-      <find>FETCH_F</find>
-      <find>allow</find>
-      <find>estructuradocumental</find>
-      <find>getEs</find>
-      <find>almacentemporal</find>
-      <find>getFilesFromTemporalFolder</find>
-      <find>redux</find>
+      <find>h7</find>
+      <find>stro</find>
+      <find>volver</find>
+      <find>formatMenssage</find>
+      <find>return null</find>
+      <find>trabajoSeleccion</find>
+      <find>generalButton.cance</find>
+      <find>CheckIcon</find>
+      <find>visualizar</find>
+      <find>Expediente</find>
+      <find>handleCancel</find>
+      <find>circular</find>
+      <find>cancel</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -173,11 +168,10 @@
     </replaceStrings>
     <dirStrings>
       <dir>W:\DOCUMENTACIÓN\REACT\coag\src</dir>
-      <dir>G:\Yuliet\coag\src\components</dir>
       <dir>G:\Yuliet\coag</dir>
       <dir>G:\Yuliet\coag\src\components\VisualizarExpediente</dir>
+      <dir>G:\Yuliet\coag\src\components</dir>
       <dir>G:\Yuliet\coag\src</dir>
-      <dir>$PROJECT_DIR$/src/reducers</dir>
     </dirStrings>
   </component>
   <component name="FrameworkCommandLineHistory">
@@ -186,7 +180,6 @@
     </commandsHistory>
   </component>
   <component name="Git.Settings">
-    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -197,12 +190,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/encargo.jsx" />
         <option value="$PROJECT_DIR$/src/containers/AppHeader.js" />
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.css" />
         <option value="$PROJECT_DIR$/src/components/login/LoginFormaFinal.js" />
         <option value="$PROJECT_DIR$/src/components/login/Login.js" />
         <option value="$PROJECT_DIR$/src/containers/index.js" />
         <option value="$PROJECT_DIR$/node_modules/node-forge/lib/pbe.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/routes.js" />
         <option value="$PROJECT_DIR$/src/reducers/expedientes/expedientes.js" />
         <option value="$PROJECT_DIR$/src/components/ComponenteLareral/Componentelateral.js" />
@@ -215,9 +210,11 @@
         <option value="$PROJECT_DIR$/src/reducers/user/user.js" />
         <option value="$PROJECT_DIR$/src/actions/usuarios/index.js" />
         <option value="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
+        <option value="$PROJECT_DIR$/src/api/index.js" />
         <option value="$PROJECT_DIR$/src/components/Busquedas/TablaDatosModal.js" />
         <option value="$PROJECT_DIR$/src/components/MainContent/MainContent.js" />
         <option value="$PROJECT_DIR$/src/components/Home/AccionesExistentes.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/listaTrabajos.jsx" />
         <option value="$PROJECT_DIR$/src/components/Errors/index.js" />
         <option value="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
@@ -225,31 +222,31 @@
         <option value="$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
-        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/AddExpedient.js" />
         <option value="$PROJECT_DIR$/src/components/Address/index.js" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/general.jsx.js" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/general.jsx" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/Promotores/addPerson.jsx" />
         <option value="$PROJECT_DIR$/src/components/Agentes/search.jsx" />
         <option value="$PROJECT_DIR$/src/components/Home/Modalacciones.js" />
-        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
         <option value="$PROJECT_DIR$/src/resources.json" />
         <option value="$PROJECT_DIR$/src/index.js" />
-        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
         <option value="$PROJECT_DIR$/src/actions/expedientes/types.js" />
-        <option value="$PROJECT_DIR$/src/reducers/trabajos/trabajos.js" />
         <option value="$PROJECT_DIR$/src/reducers/status/status.js" />
         <option value="$PROJECT_DIR$/src/actions/expedientes/index.js" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-        <option value="$PROJECT_DIR$/src/api/index.js" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx" />
+        <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js" />
+        <option value="$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx" />
       </list>
     </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
+    <package-json value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="JsFlowSettings">
     <service-enabled>false</service-enabled>
@@ -258,6 +255,20 @@
     <other-services-enabled>false</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/coag/coag/node_modules" />
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/coag/coag/package.json" />
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
@@ -265,15 +276,11 @@
     <option name="width" value="1295" />
     <option name="height" value="705" />
   </component>
-  <component name="ProjectLevelVcsManager">
-    <OptionsSetting value="false" id="Update" />
-  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -303,13 +310,14 @@
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="AsistenteTrabajo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="coag" type="b2602c69:ProjectViewProjectNode" />
@@ -346,33 +354,13 @@
               <item name="coag" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="expedientes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="seleccionado" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
               <item name="status" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="coag" type="b2602c69:ProjectViewProjectNode" />
-              <item name="coag" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="trabajos" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,11 +398,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Javascript">
-    <configuration name="Javascript" type="JavascriptDebugType" uri="http://localhost:3000/">
-      <method v="2" />
-    </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -422,9 +407,8 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -432,9 +416,8 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
-    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -442,10 +425,8 @@
       </scripts>
       <node-interpreter value="project" />
       <envs />
-      <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JavaScript Debug.Javascript" />
       <item itemvalue="npm.start" />
       <item itemvalue="npm.test" />
       <item itemvalue="npm.build" />
@@ -545,7 +526,8 @@
       <workItem from="1551423592089" duration="14252000" />
       <workItem from="1551724090871" duration="1784000" />
       <workItem from="1551726073450" duration="14371000" />
-      <workItem from="1551901513208" duration="13346000" />
+      <workItem from="1551901513208" duration="27410000" />
+      <workItem from="1551989509472" duration="3151000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -841,11 +823,18 @@
       <option name="project" value="LOCAL" />
       <updated>1551963226748</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="para upload file">
+      <created>1551966590466</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1551966590466</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="583987000" />
+    <option name="totallyTimeSpent" value="561055000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -857,53 +846,52 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1920" height="1055" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.43925235" visible="true" weight="0.2497332" />
-      <window_info id="Structure" order="1" sideWeight="0.5607477" side_tool="true" weight="0.3011583" />
-      <window_info id="npm" order="2" sideWeight="0.6052061" side_tool="true" weight="0.20462047" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32881355" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.493565" weight="0.19209039" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.39240506" visible="true" weight="0.20462047" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49905002" weight="0.32808024" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.506435" side_tool="true" weight="0.41276595" />
-      <window_info anchor="bottom" id="Messages" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49966997" weight="0.3247734" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.58877885" weight="0.18731117" />
-      <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.32990867" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5069307" side_tool="true" visible="true" weight="0.2839879" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.5874587" weight="0.1860817" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49306932" visible="true" weight="0.2839879" />
+      <window_info id="npm" order="2" sideWeight="0.6075949" side_tool="true" weight="0.20462047" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49966997" weight="0.3247734" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="10" weight="0.32990867" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.39479393" weight="0.3011583" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
+      <window_info id="npm" order="2" sideWeight="0.56875" side_tool="true" weight="0.23939203" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31232092" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43125" visible="true" weight="0.23939203" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.6052061" side_tool="true" weight="0.20462047" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.493565" visible="true" weight="0.41276595" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49905002" weight="0.32808024" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.506435" side_tool="true" visible="true" weight="0.41276595" />
-      <window_info anchor="bottom" id="Messages" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49966997" weight="0.3247734" />
-      <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.58877885" weight="0.18731117" />
-      <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.32990867" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.7260417" weight="0.39111748" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32990867" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.27395833" side_tool="true" weight="0.67346936" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Favorites" order="3" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -944,25 +932,13 @@
         </entry>
       </map>
     </option>
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list />
-          </value>
-        </entry>
-        <entry key="User">
-          <value>
-            <list />
-          </value>
-        </entry>
-      </map>
-    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="merge con archivos" />
     <MESSAGE value="arreglado los errores de peticiones en la api con respecto al token" />
     <MESSAGE value="Estado de firma en las estructuras de carpeta con los colores correspondientes" />
     <MESSAGE value="merge Trabajo" />
@@ -987,23 +963,36 @@
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx" />
     <MESSAGE value="modificaciones en la busqueda" />
     <MESSAGE value="modificaciones en maqueta crear trabajo" />
-    <option name="LAST_COMMIT_MESSAGE" value="modificaciones en maqueta crear trabajo" />
+    <MESSAGE value="para upload file" />
+    <option name="LAST_COMMIT_MESSAGE" value="para upload file" />
   </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>this.state.expedientes</expression-string>
-        <language-id>JSX Harmony</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>response</expression-string>
-        <language-id>JSX Harmony</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="13" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/actions/interfaz/types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/interfaz/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/usuarios/types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/reducers/user/user.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1462">
@@ -1060,6 +1049,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2686">
+          <caret line="176" column="54" selection-start-line="176" selection-start-column="54" selection-end-line="176" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ComunicacionEncargo/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
@@ -1074,13 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Agentes/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
@@ -1092,9 +1081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4981">
           <caret line="306" column="185" selection-start-line="306" selection-start-column="177" selection-end-line="306" selection-end-column="185" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1109,9 +1095,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="72" column="5" lean-forward="true" selection-start-line="72" selection-start-column="5" selection-end-line="72" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1119,9 +1102,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1136,9 +1116,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="66" column="46" selection-start-line="66" selection-start-column="35" selection-end-line="66" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="59" column="20" lean-forward="true" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1153,9 +1144,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="263" column="27" lean-forward="true" selection-start-line="263" selection-start-column="27" selection-end-line="263" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1184,9 +1172,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1208,9 +1193,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="111" column="9" lean-forward="true" selection-start-line="109" selection-start-column="8" selection-end-line="111" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1218,18 +1200,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="236" column="58" lean-forward="true" selection-start-line="236" selection-start-column="58" selection-end-line="236" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#972#1433#0" />
-            <element signature="e#7282#10158#0" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="140" column="29" selection-start-line="140" selection-start-column="29" selection-end-line="140" selection-end-column="29" />
+        <state relative-caret-position="217">
+          <caret line="73" column="78" selection-start-line="73" selection-start-column="68" selection-end-line="73" selection-end-column="78" />
         </state>
       </provider>
     </entry>
@@ -1237,9 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="49" column="3" lean-forward="true" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1250,36 +1224,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
+    <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
-          <caret line="36" column="19" selection-start-line="36" selection-start-column="6" selection-end-line="36" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-94">
-          <caret line="386" column="31" lean-forward="true" selection-start-line="386" selection-start-column="31" selection-end-line="386" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
-            <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
-            <element signature="e#18404#23867#0" />
-            <element signature="e#24104#36694#0" />
-            <element signature="e#25412#27336#0" />
-            <element signature="e#37680#38809#0" />
-          </folding>
+        <state relative-caret-position="-527">
+          <caret line="151" column="9" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1290,6 +1238,11 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-816" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="631">
@@ -1297,118 +1250,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/trabajos/types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="12" column="5" selection-start-line="12" selection-end-line="15" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/trabajos/trabajos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/expedientes/expedientes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#163#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="44" column="71" selection-start-line="44" selection-start-column="54" selection-end-line="44" selection-end-column="71" />
-          <folding>
-            <element signature="e#0#134#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/expedientes/types.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/trabajos/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="http://localhost:3000/home/carlos/WebstormProjects/coag/webpack/bootstrap%20f153a17b99cea94e7ef9">
-      <provider selected="true" editor-type-id="httpFileEditor" />
-    </entry>
-    <entry file="http://localhost:3000/static/js/bundle.js">
-      <provider selected="true" editor-type-id="httpFileEditor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="868" column="9" lean-forward="true" selection-start-line="868" selection-start-column="9" selection-end-line="868" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#1703#3038#0" />
-          </folding>
+        <state relative-caret-position="646">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3697">
-          <caret line="267" selection-start-line="267" selection-end-line="267" />
+        <state relative-caret-position="1955">
+          <caret line="145" column="29" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="29" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="135" column="57" lean-forward="true" selection-start-line="135" selection-start-column="57" selection-end-line="135" selection-end-column="57" />
+        <state relative-caret-position="935">
+          <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tiposTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2958">
+          <caret line="186" column="94" selection-start-line="186" selection-start-column="86" selection-end-line="186" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions/expedientes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1836">
+          <caret line="115" column="155" selection-start-line="115" selection-start-column="145" selection-end-line="115" selection-end-column="155" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/tablaTiposTrabjo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2618">
+          <caret line="161" column="2" selection-start-line="161" selection-start-column="2" selection-end-line="161" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-through/coverage/lcov-report/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="27" column="21" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/reducers/status/status.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/NewExpedient/CatastralTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-374">
+          <caret line="294" column="6" lean-forward="true" selection-start-line="294" selection-start-column="6" selection-end-line="294" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/tipoExpediente.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="213" column="24" selection-start-line="213" selection-start-column="15" selection-end-line="213" selection-end-column="24" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AsistenteTrabajo/crearTrabajo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="645" column="24" lean-forward="true" selection-start-line="645" selection-start-column="24" selection-end-line="645" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="n#!!block;n#renderAgentsTable#0;n#CrearTrabajo#0" />
+            <element signature="n#!!block;n#renderPromotorsTable#0;n#CrearTrabajo#0" />
           </folding>
         </state>
       </provider>

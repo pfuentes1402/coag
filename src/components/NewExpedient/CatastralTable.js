@@ -302,7 +302,6 @@ class EnhancedTable extends React.Component {
         let locations = [...this.props.emplazamientos];
         selected.map((s, i)=>{
             locations.splice(s - i, 1);
-            return null
         });
 
         await this.setState({selected: []});
@@ -313,7 +312,6 @@ class EnhancedTable extends React.Component {
         let aux = [];
         Object.keys(catastro).map(key=>{
             aux.push(createData(catastro[key]));
-            return null
         })
         return aux;
     }
