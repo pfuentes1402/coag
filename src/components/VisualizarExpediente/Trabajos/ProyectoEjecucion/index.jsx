@@ -244,11 +244,13 @@ class TrabajoEjecucion extends Component {
 
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
             let folderInfo = folderInfoResponse.data.Carpetas[0];
+            console.log(folderInfo)
 
-            await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='0'?false:true})
+            await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='1'?true:false})
         } else {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
+                console.log('work_details',workDetails)
                 workDetails = workDetails.data;
                 console.log(workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado,'estado!');
                 await this.setState({
@@ -674,9 +676,13 @@ class TrabajoEjecucion extends Component {
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<div key={'temp-file-'+pos} data-draggable="item"><ExpansionPanel  classes={{root: classes.rootPanel}}
-                                                                                                onDragEnd={() => {this.props.dragging(false)}}
-                                                                                                onDragStart={() => {this.props.dragging(item)}}
+                                                                        return (<div  draggable="true"
+                                                                                      className={'draggable'}
+                                                                                      onDragEnd={() => {this.props.dragging(false)}}
+                                                                                      onDragStart={() => {console.log('drag start');this.props.dragging(item)}}
+                                                                                      style={{backgroundColor:'#cecece'}}
+                                                                        ><ExpansionPanel  classes={{root: classes.rootPanel}}
+
                                                                                                 expanded={this.state.panelExpanded === item.Nombre}
                                                                                                 onChange={this.expandPanel(item.Nombre, false)}>
                                                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
