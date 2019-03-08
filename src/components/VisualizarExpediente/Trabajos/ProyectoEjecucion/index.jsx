@@ -239,7 +239,7 @@ class TrabajoEjecucion extends Component {
     async loadGeneralInformation(){
         await this.setState({fetching: true})
         let expediente = this.props.expediente.Expediente[0];
-        console.log(expediente.Id_Expediente)
+        console.log(this.props.trabajo)
         if (this.props.estructura) {
 
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
