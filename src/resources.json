@@ -529,6 +529,10 @@
                 "Trabajo(s) a tramitar",
                 "Trabajo(s) a tramitar"
             ],
+            "datosEncargo":[
+                "Datos del encargo",
+                "Datos del encargo"
+            ],
             "nuevoTrabajoTitle":[
                 "Nuevo trabajo",
                 "Nuevo trabajo"

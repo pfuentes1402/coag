@@ -91,7 +91,6 @@ export const fetchTipoTrabajo = (idGrupoTematico, idLanguage = 2) => async (disp
         }
     } catch (error) {
         dispatch(fetchErrorTrabajo(formatMenssage(error.message)));
-        return null;
     }
 
 };
