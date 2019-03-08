@@ -1004,3 +1004,14 @@ export const deleteExpediente = async (idExpediente) => {
     return formatMenssage(error.message);
   }
 }
+
+/**Eliminar un expediente */
+export const deleteTrabajo = async (idExpediente, idTrabajo) => {
+  try {
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}`);
+    return result.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
+}
