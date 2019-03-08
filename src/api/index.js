@@ -275,6 +275,16 @@ export const getTrabajoeDatosGenerales = (id_expediente, id_Trabajo) =>
       return resultado;
     });
 
+export const putFichaTrabajo = async (id_expediente, id_Trabajo, data) => {
+    try {
+        let response = await api.put(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`,data);
+        return response.data;
+    }
+    catch (error) {
+        return formatMenssage(error.message);
+    }
+}
+
 export const errorLogin = (data) => (
 
   {

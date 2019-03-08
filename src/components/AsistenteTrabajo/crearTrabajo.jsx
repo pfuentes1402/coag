@@ -157,7 +157,7 @@ class CrearTrabajo extends Component {
 
     async componentWillMount() {
         this.groupByFases();
-        await this.getTiposTramites()
+        await this.getTiposTramites();
     }
 
     getIdTipoTramite(Name) {

@@ -274,8 +274,8 @@ class FichaExpediente extends Component {
                   <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
                     <Translate id="languages.fichaExpediente.titleFichaExpediente" />
                   </Typography>
-                  <Button type="submit" color="primary" disabled={this.state.isUpdate} >
-                    Aplicar cambios <Check />
+                  <Button type="submit" color="primary" disabled={this.state.isUpdate}>
+                      <Translate id="languages.generalButton.generalButton" /> <Check />
                   </Button>
                 </Grid>
                 <Divider style={{ height: 3 }} />
