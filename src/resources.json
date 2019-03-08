@@ -756,6 +756,10 @@
             "noLoa":[
                 "No existe LOA para este expediente.",
                 "No existe LOA para este expediente."
+            ],
+            "loginFailed":[
+                "Error de usuario o contraseña",
+                "Error de usuario o contraseña"
             ]
         }
     }
