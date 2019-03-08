@@ -179,6 +179,10 @@ class FormArquitecto extends Component {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
+                {!this.state.arquitecto.acceptTerm1 || !this.state.arquitecto.acceptTerm2
+                  ? <Typography variant="caption" gutterBottom color="error" className="ml-3 pl-3">
+                    <Translate id="languages.agentes.termsValidation" /> *
+                  </Typography> : ""}
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -186,7 +190,7 @@ class FormArquitecto extends Component {
                       onChange={this.notifyPropertyChange("acceptTerm1")}
                       color="primary" />
                   }
-                  label={<Translate id="languages.agentes.conditionTermn1"/>} />
+                  label={<Translate id="languages.agentes.conditionTermn1" />} />
 
                 <FormControlLabel
                   control={
@@ -195,7 +199,7 @@ class FormArquitecto extends Component {
                       onChange={this.notifyPropertyChange("acceptTerm2")}
                       color="primary" />
                   }
-                  label={<Translate id="languages.agentes.conditionTermn2"/>} />
+                  label={<Translate id="languages.agentes.conditionTermn2" />} />
               </Grid>
 
               <Grid item xs={12} className="text-right">
