@@ -138,6 +138,7 @@ class TrabajoEjecucion extends Component {
             uploadLength: 0,
             currentUpload: 0,
             itemSelected: [],
+            checkAll:false,
             currentUploadItem: false,
             pendingUploadList: [],
             fetchingRemove: 0,
@@ -239,20 +240,18 @@ class TrabajoEjecucion extends Component {
     async loadGeneralInformation(){
         await this.setState({fetching: true})
         let expediente = this.props.expediente.Expediente[0];
-        console.log(this.props.trabajo)
+
         if (this.props.estructura) {
 
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
             let folderInfo = folderInfoResponse.data.Carpetas[0];
-            console.log(folderInfo)
+
 
             await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='1'?true:false})
         } else {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
-                console.log('work_details',workDetails)
                 workDetails = workDetails.data;
-                console.log(workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado,'estado!');
                 await this.setState({
                     expediente,
                     allowUpload:workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado=='Tramitado'?false :true,
@@ -263,7 +262,6 @@ class TrabajoEjecucion extends Component {
             }
         }
         await this.loadInformation();
-
         await this.setState({fetching: false});
     }
     async loadInformation() {
@@ -317,12 +315,16 @@ class TrabajoEjecucion extends Component {
         }
 
     };
-
-    handleChange = (name, index, arrName) => event => {
-        let a = [];
-        Object.assign(a, this.state[arrName]);
-        a[index][name] = event.target.checked;
-        this.setState({[arrName]: a, panelExpanded: -1});
+    handleCheckAll =  () => async event => {
+       let tf = [...this.state.temporalFiles];
+        tf.map(item=>{
+            item.checked= event.target.checked;
+        });
+        let data = [...this.state.data];
+        data.map(item=>{
+            item.checked= event.target.checked;
+        });
+        await this.setState({temporalFiles:tf,data,checkAll:event.target.checked});
         let {files, temporalFiles} = this.itemsToRemove();
         if (files.length || temporalFiles.length) {
             this.setState({showDeleteButton: true,showDownloadButton: true})
@@ -335,6 +337,31 @@ class TrabajoEjecucion extends Component {
         } else {
             this.setState({disableAutoAsignButton: true})
         }
+
+
+    }
+    handleChange = (name, index, arrName) => async event => {
+        let a = [];
+        Object.assign(a, this.state[arrName]);
+        a[index][name] = event.target.checked;
+        await this.setState({[arrName]: a, panelExpanded: -1});
+        let bind= this
+        let {files, temporalFiles} = this.itemsToRemove();
+        if (files.length || temporalFiles.length) {
+            this.setState({showDeleteButton: true,showDownloadButton: true})
+        } else {
+            this.setState({showDeleteButton: false,showDownloadButton: false})
+        }
+        if(files.length===0 && temporalFiles.length>0)
+        {
+            this.setState({disableAutoAsignButton: false})
+        } else {
+            this.setState({disableAutoAsignButton: true})
+        }
+        if(files.length===this.state.data.length&&temporalFiles.length===this.state.temporalFiles.length)
+            this.setState({checkAll:true})
+        else
+            this.setState({checkAll:false})
     };
 
     itemsToRemove() {
@@ -672,6 +699,23 @@ class TrabajoEjecucion extends Component {
                                                                 </Typography>
                                                             </Grid>
                                                         </Grid>
+                                                        <Grid container >
+                                                            <Grid item xs={12} className={'d-flex'}>
+                                                                <Checkbox
+                                                                     checked={this.state.checkAll}
+                                                                     onChange={this.handleCheckAll()}
+                                                                    style={{
+                                                                        padding:0,
+                                                                        marginRight:6
+                                                                    }}
+                                                               />
+                                                                    <Typography >Seleccionar todo</Typography>
+
+
+
+                                                            </Grid>
+                                                        </Grid>
+
                                                         <Grid container spacing={24}>
                                                             <Grid item xs={12}>
                                                                 {
@@ -679,7 +723,7 @@ class TrabajoEjecucion extends Component {
                                                                         return (<div  draggable="true"
                                                                                       className={'draggable'}
                                                                                       onDragEnd={() => {this.props.dragging(false)}}
-                                                                                      onDragStart={() => {console.log('drag start');this.props.dragging(item)}}
+                                                                                      onDragStart={() => {this.props.dragging(item)}}
                                                                                       style={{backgroundColor:'#cecece'}}
                                                                         ><ExpansionPanel  classes={{root: classes.rootPanel}}
 
