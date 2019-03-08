@@ -40,13 +40,22 @@ class MenuProyectoEjecucion extends Component {
     super(props);
     this.state = {
         openExcecutionMenu: this.props.active,
-        openEstructura: false
+        openEstructura: false,
+        estructurasAbiertas:[]
     }
   }
 
 
-    handleClick(estructura) {
-        this.setState(state=>({openEstructura: state.openEstructura === estructura ? -1 : estructura}));
+    handleClick(idEstructura) {
+
+        let newIdEstructura=this.state.estructurasAbiertas;
+        let pos= this.state.estructurasAbiertas.indexOf(idEstructura)
+        if (pos===-1){
+            newIdEstructura.push(idEstructura)
+        }else{
+            newIdEstructura.splice(pos,1)
+        }
+        this.setState(state=>({estructurasAbiertas:newIdEstructura,openEstructura: state.openEstructura === idEstructura ? -1 : idEstructura}));
     };
 
 
@@ -69,9 +78,9 @@ class MenuProyectoEjecucion extends Component {
                         <ListItem button onClick={()=>{this.handleClick(estructura)}} className="pl-5" >
 
                             <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}/>
-                            {this.state.openEstructura === estructura ? <ExpandLess /> : <ExpandMore />}
+                            {this.state.estructurasAbiertas.indexOf(estructura) !=-1? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
-                        <Collapse in={this.state.openEstructura === estructura} timeout="auto" unmountOnExit>
+                        <Collapse in={this.state.estructurasAbiertas.indexOf(estructura) !=-1} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {this.props.estructuraDocumental[estructura].map((children,pos)=>{
                                     return <ListItem key={'menu-item'+pos} onDrop={async ()=>{

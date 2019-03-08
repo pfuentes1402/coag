@@ -23,7 +23,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
 import renderHTML from 'react-render-html';
 import Dropzone from "react-dropzone";
-import {fetchErrorExpediente, formatMenssage} from '../../../../actions/expedientes';
+import * as actionsExpedientes from '../../../../actions/expedientes';
+
 import {connect} from "react-redux";
 import {Translate, withLocalize} from "react-localize-redux";
 import {getDetallesArchivo} from "../../../../api";
@@ -107,19 +108,35 @@ const styles = theme => ({
         fontWeight: "bold"
     }
 });
-const mapStateToProps = (state) => (
-    {
+const mapStateToProps = (state) =>
+{
 
-    }
-);
+    return (
+        {
+            fileUpload:state.status.files
+        }
+    )
+};
 
 const mapDispatchToProps =
     {
-        fetchErrorExpediente: fetchErrorExpediente,
+        fetchErrorExpediente: actionsExpedientes.fetchErrorExpediente,
+        uploadFiles:actionsExpedientes.uploadFiles,
+        resetUploadStates:actionsExpedientes.resetUpladStates
 
     };
 
 class TrabajoEjecucion extends Component {
+     componentWillReceiveProps(nextProps, nextContext) {
+         this.reloadAfther1Second()
+     }
+     async reloadAfther1Second(){
+         await setTimeout(()=>{
+             if(this.props.fileUpload.fetchingDone)
+                 this.loadInformation()
+         },500)
+     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -136,6 +153,7 @@ class TrabajoEjecucion extends Component {
             uploadLength: 0,
             currentUpload: 0,
             itemSelected: [],
+            checkAll:false,
             currentUploadItem: false,
             pendingUploadList: [],
             fetchingRemove: 0,
@@ -147,65 +165,78 @@ class TrabajoEjecucion extends Component {
             loadingUpdateFichaTrabajo: false
         }
     }
+    async onDrop(acceptedFiles){
+        let expediente = this.props.expediente.Expediente[0];
 
-    async onDrop(acceptedFiles) {
-        let files = []
-        acceptedFiles.forEach(file => {
-            files.push({
-                filename: file.name,
-                data: file
-            })
-        });
-        if (files.length === 0)
-            return null;
+
+            if(this.props.estructura){
+                await this.props.uploadFiles(acceptedFiles,true,expediente,this.props.trabajo,this.props.estructura)
+            }else{
+                await this.props.uploadFiles(acceptedFiles,false,expediente,this.props.trabajo)
+            }
         await this.setState({
-            uploadInProgress: true,
-            pendingUploadList: files,
-            uploadLength: files.length
-        });
-        let b = this;
-        for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
-            let item = files[i];
-            p = p.then(_ => new Promise(async resolve => {
-
-                    try {
-                        let newList = [...b.state.pendingUploadList]
-                        newList.splice(0, 1);
-                        await b.setState({
-                            currentUpload: i + 1,
-                            currentUploadItem: item,
-                            pendingUploadList: newList,
-                        });
-                        let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
-                        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                            this.props.fetchErrorExpediente(response);
-                            this.abortUpload()
-                        } else {
-
-                            if (newList.length === 0) {
-                                await b.setState({
-                                    uploadInProgress: false
-                                });
-                                setTimeout(async ()=>{
-                                    await this.loadInformation()
-                                },1000)
-
-
-                            }
-                        }
-                    } catch (e) {
-                        this.props.fetchErrorExpediente(formatMenssage(e.message));
-                       this.abortUpload()
-                    }
-
-                    resolve()
-
-                }
-            ));
-        }
-
-
+            uploadInProgress:true
+        })
     }
+    //
+    // async onDrop(acceptedFiles) {
+    //     let files = []
+    //     acceptedFiles.forEach(file => {
+    //         files.push({
+    //             filename: file.name,
+    //             data: file
+    //         })
+    //     });
+    //     if (files.length === 0)
+    //         return null;
+    //     await this.setState({
+    //         uploadInProgress: true,
+    //         pendingUploadList: files,
+    //         uploadLength: files.length
+    //     });
+    //     let b = this;
+    //     for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
+    //         let item = files[i];
+    //         p = p.then(_ => new Promise(async resolve => {
+    //
+    //                 try {
+    //                     let newList = [...b.state.pendingUploadList]
+    //                     newList.splice(0, 1);
+    //                     await b.setState({
+    //                         currentUpload: i + 1,
+    //                         currentUploadItem: item,
+    //                         pendingUploadList: newList,
+    //                     });
+    //                     let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
+    //                     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+    //                         this.props.fetchErrorExpediente(response);
+    //                         this.abortUpload()
+    //                     } else {
+    //
+    //                         if (newList.length === 0) {
+    //                             await b.setState({
+    //                                 uploadInProgress: false
+    //                             });
+    //                             setTimeout(async ()=>{
+    //                                 await this.loadInformation()
+    //                             },1000)
+    //
+    //
+    //                         }
+    //                     }
+    //                 } catch (e) {
+    //                     this.props.fetchErrorExpediente(formatMenssage(e.message));
+    //                    this.abortUpload()
+    //                 }
+    //
+    //                 resolve()
+    //
+    //             }
+    //         ));
+    //     }
+    //
+    //
+    // }
 
 
     abortUpload() {
@@ -235,16 +266,18 @@ class TrabajoEjecucion extends Component {
     async loadGeneralInformation(){
         await this.setState({fetching: true})
         let expediente = this.props.expediente.Expediente[0];
+
         if (this.props.estructura) {
+
             let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
             let folderInfo = folderInfoResponse.data.Carpetas[0];
 
-            await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='0'?false:true})
+
+            await this.setState({ expediente,  folderInfo, allowUpload:folderInfo.Permite_Anexar_Archivos==='1'?true:false})
         } else {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
                 workDetails = workDetails.data;
-                console.log(workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado,'estado!');
                 await this.setState({
                     expediente,
                     allowUpload:workDetails.Trabajos[0].Estado &&workDetails.Trabajos[0].Estado=='Tramitado'?false :true,
@@ -255,11 +288,10 @@ class TrabajoEjecucion extends Component {
             }
         }
         await this.loadInformation();
-
         await this.setState({fetching: false});
     }
     async loadInformation() {
-        let expediente= this.state.expediente;
+        let expediente = this.props.expediente.Expediente[0];
         await this.setState({fetchingCenter: true})
         if (this.props.estructura) {
             let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
@@ -283,7 +315,7 @@ class TrabajoEjecucion extends Component {
                     temporalFiles
                 })
             } catch (e) {
-                this.props.fetchErrorExpediente(formatMenssage(e.message));
+                this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(e.message));
             }
         }
     }
@@ -309,12 +341,16 @@ class TrabajoEjecucion extends Component {
         }
 
     };
-
-    handleChange = (name, index, arrName) => event => {
-        let a = [];
-        Object.assign(a, this.state[arrName]);
-        a[index][name] = event.target.checked;
-        this.setState({[arrName]: a, panelExpanded: -1});
+    handleCheckAll =  () => async event => {
+       let tf = [...this.state.temporalFiles];
+        tf.map(item=>{
+            item.checked= event.target.checked;
+        });
+        let data = [...this.state.data];
+        data.map(item=>{
+            item.checked= event.target.checked;
+        });
+        await this.setState({temporalFiles:tf,data,checkAll:event.target.checked});
         let {files, temporalFiles} = this.itemsToRemove();
         if (files.length || temporalFiles.length) {
             this.setState({showDeleteButton: true,showDownloadButton: true})
@@ -327,6 +363,31 @@ class TrabajoEjecucion extends Component {
         } else {
             this.setState({disableAutoAsignButton: true})
         }
+
+
+    }
+    handleChange = (name, index, arrName) => async event => {
+        let a = [];
+        Object.assign(a, this.state[arrName]);
+        a[index][name] = event.target.checked;
+        await this.setState({[arrName]: a, panelExpanded: -1});
+        let bind= this
+        let {files, temporalFiles} = this.itemsToRemove();
+        if (files.length || temporalFiles.length) {
+            this.setState({showDeleteButton: true,showDownloadButton: true})
+        } else {
+            this.setState({showDeleteButton: false,showDownloadButton: false})
+        }
+        if(files.length===0 && temporalFiles.length>0)
+        {
+            this.setState({disableAutoAsignButton: false})
+        } else {
+            this.setState({disableAutoAsignButton: true})
+        }
+        if(files.length===this.state.data.length&&temporalFiles.length===this.state.temporalFiles.length)
+            this.setState({checkAll:true})
+        else
+            this.setState({checkAll:false})
     };
 
     itemsToRemove() {
@@ -520,13 +581,13 @@ class TrabajoEjecucion extends Component {
                         return null
                     })
                 }else{
-                    this.props.fetchErrorExpediente(formatMenssage(this.props.translate("languages.messages.fetchError")));
+                    this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
                 }
                 await this.setState({fetchingAutoAsign:false, showDeleteButton: false, showDownloadButton:false})
                 await this.loadInformation();
             }catch (e) {
                 await this.setState({fetchingAutoAsign:false})
-                this.props.fetchErrorExpediente(formatMenssage(e.message));
+                this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(e.message));
             }
         }
     }
@@ -820,7 +881,7 @@ class TrabajoEjecucion extends Component {
                                                     </Grid>
                                                     <Grid item xs={6} className="p-3 text-right">
                                                         {
-                                                            this.state.uploadInProgress||!this.state.allowUpload ? null :
+                                                            this.props.fileUpload.uploadInProgress||!this.state.allowUpload ? null :
                                                                 <Dropzone style={{
                                                                     width: 'auto',
                                                                     height: 'auto',
@@ -918,13 +979,34 @@ class TrabajoEjecucion extends Component {
                                                                 </Typography>
                                                             </Grid>
                                                         </Grid>
+                                                        <Grid container >
+                                                            <Grid item xs={12} className={'d-flex'}>
+                                                                <Checkbox
+                                                                     checked={this.state.checkAll}
+                                                                     onChange={this.handleCheckAll()}
+                                                                    style={{
+                                                                        padding:0,
+                                                                        marginRight:6
+                                                                    }}
+                                                               />
+                                                                    <Typography >Seleccionar todo</Typography>
+
+
+
+                                                            </Grid>
+                                                        </Grid>
+
                                                         <Grid container spacing={24}>
                                                             <Grid item xs={12}>
                                                                 {
                                                                     this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (<div key={'temp-file-'+pos} data-draggable="item"><ExpansionPanel  classes={{root: classes.rootPanel}}
-                                                                                                onDragEnd={() => {this.props.dragging(false)}}
-                                                                                                onDragStart={() => {this.props.dragging(item)}}
+                                                                        return (<div  draggable="true"
+                                                                                      className={'draggable'}
+                                                                                      onDragEnd={() => {this.props.dragging(false)}}
+                                                                                      onDragStart={() => {this.props.dragging(item)}}
+                                                                                      style={{backgroundColor:'#cecece'}}
+                                                                        ><ExpansionPanel  classes={{root: classes.rootPanel}}
+
                                                                                                 expanded={this.state.panelExpanded === item.Nombre}
                                                                                                 onChange={this.expandPanel(item.Nombre, false)}>
                                                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} classes={{content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}>
@@ -1194,14 +1276,14 @@ class TrabajoEjecucion extends Component {
                                 : null
                         }
                         {
-                            this.state.uploadInProgress ?
+                            this.props.fileUpload.uploadInProgress ?
                                 <div style={{marginTop: 20}}>
                                     <Paper>
                                         <Grid container spacing={16}>
                                             <Grid item xs={7} className="p-3">
                                                 <label style={{fontSize: 12}}>
                                                    <Translate id="languages.fileUpload.uploadingProgress" />
-                                                   {this.state.currentUpload} de {this.state.uploadLength}</label>
+                                                   {this.props.fileUpload.currentUpload} de {this.props.fileUpload.uploadLength}</label>
                                             </Grid>
                                             <Grid item xs={5} className="p-3"
                                                   style={{paddingRight: 10, paddingLeft: 0, textAlign: 'right'}}>
@@ -1215,19 +1297,19 @@ class TrabajoEjecucion extends Component {
                                         <Grid container spacing={5}>
                                             <Grid item xs={12} className="p-3">
                                                 <LinearProgress style={{height: 20}} variant="determinate"
-                                                                value={this.state.currentUpload * 100 / this.state.uploadLength}/>
+                                                                value={this.props.fileUpload.currentUpload * 100 / this.props.fileUpload.uploadLength}/>
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
                                             <Grid item xs={12} className="p-3">
-                                                <b style={{fontSize: 12}}>{this.state.currentUploadItem ? this.state.currentUploadItem.filename : null}</b>
+                                                <b style={{fontSize: 12}}>{this.props.fileUpload.currentUploadItem ? this.props.fileUpload.currentUploadItem.filename : null}</b>
                                             </Grid>
                                         </Grid>
                                         <Grid container spacing={16}>
                                             <Grid item xs={12} className="p-3">
                                                 <ul style={{listStyle: 'none', overflowX: 'hidden'}}>
                                                     {
-                                                        this.state.pendingUploadList.map((item, pos) => {
+                                                        this.props.fileUpload.pendingUploadList.map((item, pos) => {
 
                                                             return (<li>{item.filename}</li>)
                                                         })

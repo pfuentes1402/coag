@@ -27,6 +27,8 @@ import { fetchErrorExpediente, formatMenssage } from "../../actions/expedientes"
 import { groupBy, filter } from 'lodash';
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import ExpedienteGeneral from "./Trabajos/ComunicacionEncargo/general";
+import Dropzone from "react-dropzone";
+import * as actionsExpedientes from '../../actions/expedientes';
 
 const styles = theme => ({
   fichaExpediente: {
@@ -86,6 +88,7 @@ class VisualizarExpediente extends Component {
       currentExpediente: null,
       idTrabajoActivo: null/*this.props.match.params.idTrabajo*/,
       idEstructuraActiva: null,
+      estructurasAbiertas: [],
       titleEstructuraActiva: "",
       estructuraDocumental: [],
       estructurasPadre: [],
@@ -142,11 +145,15 @@ class VisualizarExpediente extends Component {
   };
 
   async getEstructuraDocumental(idExpediente, idTrabajo) {
+
     await this.setState({ isLoadEstructura: true });
+    if (idExpediente === null)
+      return false;
     let filterEstructura = [];
     let groupEstructura = [];
     let estructurasNivel1 = []
     try {
+
       let response = await getEstructuraDocumental(idExpediente, idTrabajo, this.props.activeLanguage.code);
       if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
         this.props.fetchErrorExpediente(response);
@@ -194,9 +201,9 @@ class VisualizarExpediente extends Component {
             active: active
           });
         }
-
       }
-      await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
+      if (idTrabajo)
+        await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
     }
   }
 
@@ -218,8 +225,11 @@ class VisualizarExpediente extends Component {
 
   getLi = async () => {
     let response = await postExpedienteAccion(this.props.match.params.id, 4, 0);
-    if (response.InfoAccion && response.InfoAccion.length > 0)
-      window.open(response.InfoAccion[0].Url, '_blank');
+    if (response.InfoAccion && response.InfoAccion.length > 0){
+      let url = response.InfoAccion[0].Url;
+      url = url.replace(" ","");
+      window.open(url, '_blank');
+    }
     if (response.MensajesProcesado && response.MensajesProcesado.length > 0)
       this.props.fetchErrorExpediente(response);
     else
@@ -229,8 +239,11 @@ class VisualizarExpediente extends Component {
 
   getLoa = async () => {
     let response = await postExpedienteAccion(this.props.match.params.id, 3, 0);
-    if (response.InfoAccion && response.InfoAccion.length > 0)
-      window.open(response.InfoAccion[0].Url, '_blank');
+    if (response.InfoAccion && response.InfoAccion.length > 0) {
+      let url = response.InfoAccion[0].Url;
+      url = url.replace(" ","");
+      window.open(url, '_blank');
+    }
     if (response.MensajesProcesado && response.MensajesProcesado.length > 0)
       this.props.fetchErrorExpediente(response);
     else
@@ -252,6 +265,16 @@ class VisualizarExpediente extends Component {
       this.props.history.push("/");
     else {
       this.props.fetchErrorExpediente(result);
+    }
+  }
+
+  async onDrop(acceptedFiles) {
+    let expediente = this.state.expediente.Expediente[0];
+    let estructura = this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false;
+    if (estructura) {
+      await this.props.uploadFiles(acceptedFiles, true, expediente, this.state.idTrabajoActivo, estructura)
+    } else {
+      await this.props.uploadFiles(acceptedFiles, false, expediente, this.state.idTrabajoActivo)
     }
   }
 
@@ -283,9 +306,21 @@ class VisualizarExpediente extends Component {
             </Toolbar>
             : this.state.optionsComponent === 2
               ? <Toolbar>
-                <Button color="primary" className={classes.button}>
-                  <Translate id="languages.generalButton.uploadFile" /><CloudUpload />
-                </Button>
+                {
+                  this.props.fileUpload.uploadInProgress ? null :
+                    <Dropzone style={{
+                      width: 'auto',
+                      height: 'auto',
+                      borderStyle: 'none'
+                    }}
+                      accept="application/pdf"
+                      onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                      <Button color="primary">
+                        <Translate id="languages.fileUpload.addFiles" /> <CloudUpload
+                          style={{ marginLeft: 5 }} />
+                      </Button>
+                    </Dropzone>
+                }
                 <Button color="primary" className={classes.button}
                   onClick={this.deleteTrabajoExpediente}>
                   <Translate id="languages.generalButton.delete" /><Close />
@@ -297,10 +332,23 @@ class VisualizarExpediente extends Component {
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
               </Toolbar>
-              : <Toolbar>
-                <Button color="primary" className={classes.button}>
-                  <Translate id="languages.fileUpload.addFiles" /><CloudUpload className="mx-2" />
-                </Button>
+              : <Toolbar style={{ width: "50%" }}>
+                {
+                  this.props.fileUpload.uploadInProgress ? null :
+                    <Dropzone style={{
+                      width: 300,
+                      height: 'auto',
+                      borderStyle: 'none',
+                      float: "right"
+                    }}
+                      accept="application/pdf"
+                      onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                      <Button color="primary">
+                        <Translate id="languages.fileUpload.addFiles" /> <CloudUpload
+                          style={{ marginLeft: 5 }} />
+                      </Button>
+                    </Dropzone>
+                }
               </Toolbar>}
         </AppBar>
       </div>
@@ -404,7 +452,8 @@ class VisualizarExpediente extends Component {
                   <ExpedienteGeneral expediente={expediente} /> :
                   <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
-                    expediente={expediente} trabajo={this.state.idTrabajoActivo}
+                    expediente={expediente}
+                    trabajo={this.state.idTrabajoActivo}
                     dragging={(state) => this.dragging(state)}
                     estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false} />)
             }
@@ -418,10 +467,13 @@ class VisualizarExpediente extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  fileUpload: state.status.files
+})
 
 const mapDispatchToProps = {
-  fetchErrorExpediente: fetchErrorExpediente
+  fetchErrorExpediente: fetchErrorExpediente,
+  uploadFiles: actionsExpedientes.uploadFiles,
 };
 
 VisualizarExpediente.propTypes = {

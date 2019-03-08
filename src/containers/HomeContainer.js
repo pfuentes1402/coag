@@ -13,7 +13,6 @@ class HomeContainer extends Component {
    
 
     render() {
-       
         return (
             <div className="homeContainer">
                 <MainContent/>               

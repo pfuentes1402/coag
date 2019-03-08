@@ -70,8 +70,13 @@ class TramitacionesCurso extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({ renderValue: this.props.tablePersonalization.renderValue });
+    async componentDidMount() {
+        await this.renderColumnsAsync();
+        this.setState({
+            renderValue: this.props.tablePersonalization.renderValue,
+            columnDefs: this.renderColumns().filter(x => x.selected),
+            allColumns: this.renderColumns()
+        });
     }
 
     renderColumns() {
@@ -96,6 +101,30 @@ class TramitacionesCurso extends Component {
         return this.props.tablePersonalization.columnDefs;
     }
 
+    async renderColumnsAsync() {
+        if (this.props.tablePersonalization.columnDefs.length === 0) {
+            let columns = [
+                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 100, pinned: null, selected: false },
+                { headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140, pinned: null, selected: true },
+                { headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200, selected: true },
+                { headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200, selected: true },
+                { headerName: "MUNICIPIO", field: "Concello", width: 200, selected: true },
+                { headerName: "ESTADO", field: "Estado", cellRenderer: 'estadoRenderer', colId: "estado", width: 180, selected: true },
+                { headerName: "ACCIONES", field: "acciones", cellRenderer: 'accionRenderer', colId: "params", width: 140, selected: true, cellClass: 'no-border', sortable: false, pinned: null, filter: null },
+                { headerName: "ANTECEDENTES", field: "Antecedente", width: 140, selected: false, pinned: null },
+                { headerName: "FECHA ENTRADA", field: "Fecha_Entrada", width: 140, selected: false, pinned: null },
+                { headerName: "FECHA TRAMITACIÓN", field: "Fecha_Tramitacion", width: 140, selected: false, pinned: null },
+                { headerName: "PROMOTOR", field: "Promotor", width: 140, selected: false, pinned: null },
+                { headerName: "ÚLTIMA MODIFICACIÓN", field: "Ultima_Modificacion", width: 140, selected: false, pinned: null }
+            ];
+            await this.props.dispatchTablePersonalization(
+                this.state && this.state.pageSize ? this.state.pageSize : 30, columns, "Columnas por defecto");
+        }
+        if (this.gridApi)
+            this.gridApi.redrawRows();
+        return this.props.tablePersonalization.columnDefs;
+    }
+
     onGridReady(params) {
         this.gridApi = params.api
         this.gridColumnApi = params.columnApi
@@ -114,6 +143,8 @@ class TramitacionesCurso extends Component {
             return;
         this.props.history.push("/visualizar-expediente/" + selectedRows[0].Id_Expediente + "/" + selectedRows[0].Id_Trabajo);
     }
+
+
     onBtExport() {
         var params = {
             columnGroups: true,
@@ -139,6 +170,11 @@ class TramitacionesCurso extends Component {
             document.getElementById("myGrid").style.minHeight = `${rows * minRowHeight + 190}px`;
             document.getElementsByClassName("ag-body-viewport")[0].style.height = `${rows * minRowHeight + 20}px`;
         }
+    }
+
+    refreshTable() {
+        this.gridApi.setColumnDefs(this.state.columnDefs);
+        this.gridApi.redrawRows();
     }
 
     handleSelectColumn = async event => {
@@ -175,8 +211,11 @@ class TramitacionesCurso extends Component {
             console.log(error);
         }
     }
+
     render() {
         let { classes } = this.props;
+        console.log("datas-changed", this.props.data);
+
         return (
             <CardBody className="card-body-Trabajos">
                 <Row style={{
@@ -245,26 +284,28 @@ class TramitacionesCurso extends Component {
                             width: '100%',
                             margin: '0px'
                         }}>
-                            <AgGridReact id="table-grid"
-                                columnDefs={this.state.columnDefs}
-                                context={this.state.context}
-                                frameworkComponents={this.state.frameworkComponents}
-                                rowData={this.props.data}
-                                enableSorting={true}
-                                enableFilter={false}
-                                floatingFilter={true}
-                                enableColResize={true}
-                                showToolPanel={true}
-                                pagination={true}
-                                paginationPageSize={this.state.pageSize}
-                                rowGroupPanelShow={this.state.rowGroupPanelShow}
-                                enableStatusBar={true}
-                                localeText={this.state.localeText}
-                                onGridReady={this.onGridReady.bind(this)}
-                                rowSelection={this.state.rowSelection}
-                                onSelectionChanged={this.onSelectionChanged.bind(this)}
-                                onGridSizeChanged={this.onGridSizeChanged.bind(this)}>
-                            </AgGridReact>
+                            {this.props.data && this.props.data.length > 0 &&
+                                <AgGridReact id="table-grid"
+                                    columnDefs={this.props.columnDefs.filter(x=> x.selected)/*this.state.columnDefs*/}
+                                    context={this.state.context}
+                                    frameworkComponents={this.state.frameworkComponents}
+                                    rowData={this.props.data}
+                                    enableSorting={true}
+                                    enableFilter={false}
+                                    floatingFilter={true}
+                                    enableColResize={true}
+                                    showToolPanel={true}
+                                    pagination={true}
+                                    paginationPageSize={this.state.pageSize}
+                                    rowGroupPanelShow={this.state.rowGroupPanelShow}
+                                    enableStatusBar={true}
+                                    localeText={this.state.localeText}
+                                    onGridReady={this.onGridReady.bind(this)}
+                                    rowSelection={this.state.rowSelection}
+                                    onSelectionChanged={this.onSelectionChanged.bind(this)}
+                                    onGridSizeChanged={this.onGridSizeChanged.bind(this)}>
+                                </AgGridReact>
+                            }
                         </div>
                     </Col>
                 </Row>
@@ -279,7 +320,8 @@ class TramitacionesCurso extends Component {
 }
 const mapStateToProps = state => ({
     datosBrutos: state.trabajos.estructuraDocumentalTrabajo ? state.trabajos.estructuraDocumentalTrabajo : '',
-    tablePersonalization: state.expedientes.tablePersonalization
+    tablePersonalization: state.expedientes.tablePersonalization,
+    columnDefs: state.expedientes.tablePersonalization.columnDefs
 });
 
 

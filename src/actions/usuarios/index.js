@@ -3,6 +3,7 @@ import { fetchCambiaStadoModal } from '../../actions/interfaz/index';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import * as types from './types';
 import { PURGE } from 'redux-persist';
+//import { constants } from 'perf_hooks';
 
 export const fetchInit = () => ({
     type: types.FETCH_EXPEDIENTES_INIT
@@ -75,12 +76,16 @@ export const errorLogin = (message) => (
         payload: message
     });
 
+export const dispatchErrorLogin = (errorValue) => (dispatch) =>{
+    dispatch(errorLogin(errorValue));
+}
+
 export const fetchUserLogin = (data, props) =>
     async (dispatch) => {
         try {
             let response = await funcionForma(data);
             if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                dispatch(fetchErrorExpediente(response));
+                //dispatch(fetchErrorExpediente(response));
                 dispatch(errorLogin(response.MensajesProcesado[0].Mensaje));
             }
             else {

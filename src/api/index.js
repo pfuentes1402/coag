@@ -28,8 +28,9 @@ const api = axios.create({
 
 });
 api.interceptors.request.use(async function (request) {
-    request.headers['Token']= await localStorage.getItem('token') || '';
-    return request
+  if (request.url === "/login") return request;
+  request.headers['Token'] = await localStorage.getItem('token') || '';
+  return request
 })
 
 api.interceptors.response.use(function (response) {
@@ -37,14 +38,16 @@ api.interceptors.response.use(function (response) {
 }, function (error) {
 
   const originalRequest = error.config
-
+  if (error.request && error.request.responseURL
+    && error.request.responseURL.indexOf("/login") !== -1)
+    return Promise.reject(error)
   if (error.response && error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true
 
 
     const retryOriginalRequest = new Promise(async (resolve) => {
       await getToken().then(response => {
-        if (response.headers.token) {
+        if (response && response.headers && response.headers.token) {
           originalRequest.headers['Token'] = response.headers.token;
           resolve(api(originalRequest))
         } else {
@@ -223,7 +226,6 @@ export function getAgentesInfo(id_Agente) {
 export const test = id_expediente =>
   api.get(`/expedientes/${id_expediente}`)
     .then(response => {
-
       return response.json();
     })
     .then(resultado => {
@@ -744,13 +746,13 @@ export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_m
 }
 
 export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
-    try {
-        let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 export const formatMenssage = (error) => (
@@ -870,10 +872,14 @@ export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
 //Leer la carpeta temporal
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
-    try {
 
-        let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
-        return response.data;
+    try {
+        if(idExpediente){
+            let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+            return response.data;
+        }
+
+
     } catch (error) {
         return formatMenssage(error.message);
     }

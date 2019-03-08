@@ -143,7 +143,7 @@ class Promotores extends Component {
         "Numero": "",
         "Piso": "",
         "Codigo_Postal": "",
-        "Porcentaje": null,
+        "Porcentaje": 0,
         "PorcentajesEquitativos": 1,
         "Id_Concello": "",
         "Id_Provincia": 15,
@@ -183,6 +183,8 @@ class Promotores extends Component {
     let arrayPromotores = objectPromotores.Promotores;
     if (promotor) {
       let index = arrayPromotores.findIndex(x => x.Nif === promotor.Nif);
+      promotor.Porcentaje = promotor.Porcentaje ? promotor.Porcentaje : 0;
+      promotor.PorcentajesEquitativos = promotor.PorcentajesEquitativos ? 1 : 0;
       if (index === -1) {
         arrayPromotores.push(promotor);
       }
@@ -272,7 +274,7 @@ class Promotores extends Component {
                       <TableCell padding="none">
                         <Input
                           id="percentage" style={{ width: 45, margin: 0 }}
-                          value={row.Porcentaje ? row.Porcentaje : row.porcentaje ? row.porcentaje : ""}
+                          value={row.Porcentaje ? row.Porcentaje : ""}
                           onChange={this.handleChangePercentage(row.Nif)}
                           disabled={!this.state.percentageEdit}
                           type="Number"

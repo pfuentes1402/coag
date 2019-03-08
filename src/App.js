@@ -18,10 +18,15 @@ import {Breadcrumb as BootstrapBreadcrumb} from "reactstrap";
 const mapStateToProps = state => ({
     idiomaFavorito: state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
 
+
 });
 const styles = theme => ({
-
-
+        uploadFile:{
+            position:'fixed',
+            bottom:15,
+            width:150,
+            right:10
+        }
 });
 class App extends Component {
     constructor(props) {
@@ -44,7 +49,7 @@ class App extends Component {
 
 
     render() {
-
+        let { classes } = this.props;
         return (
             <Grid style={{width: '100%'}} >
                 { this.props.history.location.pathname !== "/login" ?
@@ -85,6 +90,8 @@ class App extends Component {
                 <Grid>
                     <Error/>
                 </Grid>
+
+
             </Grid>
         );
     }
