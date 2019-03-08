@@ -744,6 +744,14 @@
             "noEncomenda":[
                 "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo.",
                 "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo."
+            ],
+            "noLi":[
+                "No existe LI para este expediente.",
+                "No existe LI para este expediente."
+            ],
+            "noLoa":[
+                "No existe LOA para este expediente.",
+                "No existe LOA para este expediente."
             ]
         }
     }

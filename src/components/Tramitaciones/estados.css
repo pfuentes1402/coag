@@ -24,3 +24,15 @@
   width: 15px;
   margin: 0 5px 0 0;
 }
+
+.ag-cell-focus,.ag-cell-no-focus{
+  border:none !important;
+}
+.no-border.ag-cell:focus{
+  border:none !important;
+  outline: none;
+}
+.no-border.ag-cell{
+  border:none !important;
+  outline: none;
+}

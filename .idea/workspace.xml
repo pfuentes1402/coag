@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/general.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/fichaExpediente.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ComunicacionEncargo/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -406,7 +401,7 @@
       <workItem from="1551459557345" duration="1232000" />
       <workItem from="1551720564741" duration="92000" />
       <workItem from="1551720690827" duration="646000" />
-      <workItem from="1551732291076" duration="3000" />
+      <workItem from="1551732291076" duration="107000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -482,7 +477,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="256801000" />
+    <option name="totallyTimeSpent" value="256905000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
