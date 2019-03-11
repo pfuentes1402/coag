@@ -251,12 +251,12 @@ export const GettrabajosExpediente = (id_expediente) =>
  *    id_expediente
  */
 export const expedientesuser = async () => {
-    try {
-        let response = await api.get('/expedientes');
-        return response.data;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get('/expedientes');
+    return response.data;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 
@@ -311,11 +311,11 @@ export const errorLogin = (data) => (
   });*/
 export const funcionForma = async (datos) => {
   try {
-      let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
-      return response;
+    let response = await api.post('/login', { Usuario: datos.usuario, password: datos.password });
+    return response;
   }
   catch (error) {
-      return formatMenssage(error.message);
+    return formatMenssage(error.message);
   }
 }
 
@@ -326,19 +326,19 @@ export const funcionForma = async (datos) => {
 */
 export const getToken = async () => {
   try {
-      let clienteId = await localStorage.getItem('clienteid') ;
-      let clienteClave = await localStorage.getItem('clienteclave') ;
-      let response = await axios.post('http://servicios.coag.es/api/authenticate',
-          {
-              ClienteId: clienteId,
-              ClienteClave: clienteClave
-          });
-      console.log(response.headers)
-      await localStorage.setItem('token', response.headers.token);
-      return response;
-  }catch (error) {
-      handleLoggout();
-      formatMenssage(error.message);
+    let clienteId = await localStorage.getItem('clienteid');
+    let clienteClave = await localStorage.getItem('clienteclave');
+    let response = await axios.post('http://servicios.coag.es/api/authenticate',
+      {
+        ClienteId: clienteId,
+        ClienteClave: clienteClave
+      });
+    console.log(response.headers)
+    await localStorage.setItem('token', response.headers.token);
+    return response;
+  } catch (error) {
+    handleLoggout();
+    formatMenssage(error.message);
   }
 }
 
@@ -364,13 +364,13 @@ export const getAcciones = () =>
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
  */
 export const getultimosTrabajos = async () => {
-    try {
-        let response = await api.get('/AccionesPendientes/');
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get('/AccionesPendientes/');
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 /**
@@ -387,24 +387,24 @@ export const getultimosTrabajos = async () => {
  * @param pageSize
  * @returns {Promise<*>}
  */
-export const getExpedienteSuscepNuevoTrabajo = async(filtro, idAccion, page = 1, pageSize = 25) => {
-    try {
-        let response = await api.get(`/expedientes?filtro=${filtro}&pag=${page}&tam=${pageSize}&id_tipo_accion=${idAccion}`);
-        return response.data;
-    }
-    catch (e) {
-        return formatMenssage(e.message);
-    }
+export const getExpedienteSuscepNuevoTrabajo = async (filtro, idAccion, page = 1, pageSize = 25) => {
+  try {
+    let response = await api.get(`/expedientes?filtro=${filtro}&pag=${page}&tam=${pageSize}&id_tipo_accion=${idAccion}`);
+    return response.data;
+  }
+  catch (e) {
+    return formatMenssage(e.message);
+  }
 }
 
-export const postExpedienteAccion = async(id_expediente, idAccion, ignorarObservaciones) => {
-    try {
-        let response = await api.post(`/expedientes/${id_expediente}/Accion?id_tipo_accion=${idAccion}&ignorarobservaciones=${ignorarObservaciones}`);
-        return response.data;
-    }
-    catch (e) {
-        return formatMenssage(e.message);
-    }
+export const postExpedienteAccion = async (id_expediente, idAccion, ignorarObservaciones) => {
+  try {
+    let response = await api.post(`/expedientes/${id_expediente}/Accion?id_tipo_accion=${idAccion}&ignorarobservaciones=${ignorarObservaciones}`);
+    return response.data;
+  }
+  catch (e) {
+    return formatMenssage(e.message);
+  }
 }
 
 /**
@@ -736,13 +736,13 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 2) =>
  * @returns {Promise<*>}
  */
 export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 2) => {
-    try {
-        let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
@@ -765,31 +765,31 @@ export const formatMenssage = (error) => (
  */
 
 export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
-        return response.data;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
+    return response.data;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 //obtener todos los archivos de una carpeta
 export const getFilesFromFolder = async (idExpediente, idTrabajo, folderId, lang = 1) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
-        return response;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
+    return response;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 //obtener los detalles de una carpeta
 export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang = 1) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
-        return response;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumentalinfocarpeta/${folderId}?idioma=${lang}`);
+    return response;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 /**
@@ -800,115 +800,115 @@ export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang =
  * @returns {Promise<*>}
  */
 export const getDetallesArchivo = async (idExpediente, idTrabajo, idEstructura) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1`);
-        return response.data;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1`);
+    return response.data;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 //obtener los detalles de un trabajo
 export const getWorkDetails = async (idExpediente, idTrabajo, lang = 1) => {
-    try {
-        let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
-        return response;
-    } catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
+    return response;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 //Subir un fichero a una carpeta
 export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
-    return new Promise(async (resolve, reject) => {
-        try {
+  return new Promise(async (resolve, reject) => {
+    try {
 
-            let data = new FormData();
-            data.append('file', file.data);
-            data.append('filename', file.filename)
+      let data = new FormData();
+      data.append('file', file.data);
+      data.append('filename', file.filename)
 
-            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Token': localStorage.getItem('token'),
-                    }
+      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Token': localStorage.getItem('token'),
+          }
 
 
-                }
-            );
-            resolve(result.data)
-        } catch (error) {
-            return(formatMenssage(error.message));
         }
+      );
+      resolve(result.data)
+    } catch (error) {
+      return (formatMenssage(error.message));
+    }
 
-    })
+  })
 
 }
 
 //subir fichero a carpeta temporal
-export const uploadFileToTemporalFolder = async (idExpediente,   file) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let data = new FormData();
-            data.append('file', file.data);
-            data.append('filename', file.filename)
-            let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Token': localStorage.getItem('token'),
-                    }
+export const uploadFileToTemporalFolder = async (idExpediente, file) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = new FormData();
+      data.append('file', file.data);
+      data.append('filename', file.filename)
+      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Token': localStorage.getItem('token'),
+          }
 
 
-                }
-            );
-            resolve(result.data)
-        } catch (error) {
-            reject(formatMenssage(error.message));
         }
+      );
+      resolve(result.data)
+    } catch (error) {
+      reject(formatMenssage(error.message));
+    }
 
-    })
+  })
 }
 //Leer la carpeta temporal
 
 export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
 
-    try {
-        if(idExpediente){
-            let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
-            return response.data;
-        }
-
-
-    } catch (error) {
-        return formatMenssage(error.message);
+  try {
+    if (idExpediente) {
+      let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+      return response.data;
     }
+
+
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 //mover un arivo desde la carpeta temporal a una estructura
 export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
-    try {
-      let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, {Nombre:file});
-      return result.data
-    } catch (error ) {
-      return formatMenssage("Error 400")
-    }
+  try {
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, { Nombre: file });
+    return result.data
+  } catch (error) {
+    return formatMenssage("Error 400")
+  }
 }
 //eliminar multiples archivos de la carpeta temporal
-export const removeFilesFromTemporalFolder = async (idExpediente,  arrayFiles) => {
+export const removeFilesFromTemporalFolder = async (idExpediente, arrayFiles) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, {data:{Archivos:arrayFiles}});
+    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, { data: { Archivos: arrayFiles } });
     return result.data
-  } catch (error ) {
-      return formatMenssage("Error 400")
+  } catch (error) {
+    return formatMenssage("Error 400")
   }
 }
 //eliminar un archivo de una estructura
 export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, {ignorarobservaciones:1});
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, { ignorarobservaciones: 1 });
     return result.data
-  } catch (error ) {
-      return formatMenssage("Error 400")
+  } catch (error) {
+    return formatMenssage("Error 400")
   }
 }
 //Eliminar multiples archivos de una estructura
@@ -916,13 +916,16 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
   try {
     let url = `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/archivos`
     let result = await api.delete(url,
-        {data:{ Archivos:arrayArchivos,
+      {
+        data: {
+          Archivos: arrayArchivos,
 
-            ignorarobservaciones:1}
+          ignorarobservaciones: 1
+        }
 
-        });
+      });
     return result.data
-  } catch (error ) {
+  } catch (error) {
     return formatMenssage("Error 400")
   }
 }
@@ -931,68 +934,68 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
 export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
   try {
     let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
-        {
-          Id_Trabajo:idTrabajo,
-          Archivos:file,
-          InsertarArchivos:1
-        }
-        );
+      {
+        Id_Trabajo: idTrabajo,
+        Archivos: file,
+        InsertarArchivos: 1
+      }
+    );
     return result.data
-  } catch (error ) {
+  } catch (error) {
     return formatMenssage("Error 400")
   }
 }
 //Obtener Url de Descarga de archivos En carpetas
-export const getUrlDownladFiles = async (idExpediente, idTrabajo,archivos) => {
+export const getUrlDownladFiles = async (idExpediente, idTrabajo, archivos) => {
   try {
 
     let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivosDescarga`,
-        {
-          Archivos:archivos
-        }
+      {
+        Archivos: archivos
+      }
     );
     return result.data
-  } catch (error ) {
+  } catch (error) {
     return formatMenssage("Error 400")
   }
 }
 export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
-    try {
+  try {
 
 
-        let result = await api.post(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivosDescarga`,
-            {
-                Archivos:archivos
-            }
-        );
-        return result.data
-    } catch (error ) {
-        return formatMenssage(`Error 404`)
-    }
+    let result = await api.post(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivosDescarga`,
+      {
+        Archivos: archivos
+      }
+    );
+    return result.data
+  } catch (error) {
+    return formatMenssage(`Error 404`)
+  }
 }
 
 //Obtener Url de Descarga de 1 archivo
-export const getUrlDownladOneFile = async (idExpediente, idTrabajo,archivo) => {
-    try {
+export const getUrlDownladOneFile = async (idExpediente, idTrabajo, archivo) => {
+  try {
 
 
-        let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${archivo}/InfoArchivoDescarga`
-        );
-        return result.data
-    } catch (error ) {
-        return formatMenssage("Error 404")
-    }
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${archivo}/InfoArchivoDescarga`
+    );
+    return result.data
+  } catch (error) {
+    return formatMenssage("Error 404")
+  }
 }
-export const download=async (urlFile,fileName)=>{
-    let response =await  axios.get(urlFile,{
-        responseType:'blob'
-    })
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
+export const download = async (urlFile, fileName) => {
+  let response = await axios.get(urlFile, {
+    responseType: 'blob'
+  })
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', fileName);
+  document.body.appendChild(link);
+  link.click();
 
 }
 
@@ -1028,6 +1031,15 @@ export const deleteTrabajo = async (idExpediente, idTrabajo) => {
     return result.data;
   }
   catch (error) {
+    return formatMenssage(error.message);
+  }
+}
+
+export const closeTrabajo = async (idExpediente, idTrabajo) => {
+  try {
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/cerrartrabajo`, { "ignorarobservaciones": 1 })
+    return result.data;
+  } catch (error) {
     return formatMenssage(error.message);
   }
 }

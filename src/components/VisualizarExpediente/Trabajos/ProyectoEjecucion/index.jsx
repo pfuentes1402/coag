@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Grid,
     Paper,
@@ -109,8 +109,7 @@ const styles = theme => ({
         fontWeight: "bold"
     }
 });
-const mapStateToProps = (state) =>
-{
+const mapStateToProps = (state) => {
     return (
         {
             fileUpload:state.status.files
@@ -868,39 +867,40 @@ class TrabajoEjecucion extends Component {
     }
 
     render() {
-        let {classes}=this.props
+        let { classes } = this.props
+        let disableButtons = this.props.disableActions;
         return (
-            <div style={{minHeight: 800}} className="m-2">
+            <div style={{ minHeight: 800 }} className="m-2">
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} className="p-3">
                         {
                             this.state.fetching ?
                                 <div className="text-center">
-                                    <CircularProgress/>
+                                    <CircularProgress />
                                 </div>
                                 : <div>
-                                    <Paper style={{paddingLeft: 10}}>
+                                    <Paper style={{ paddingLeft: 10 }}>
                                         {
                                             <div>
                                                 <Grid container spacing={16}>
                                                     <Grid item xs={6} className="p-3">
-                                                        <h6>{this.props.estructura 
+                                                        <h6>{this.props.estructura
                                                             ? <Translate id="languages.fileUpload.filesInFolder" />
                                                             : <Translate id="languages.fileUpload.filesOfWork" />}</h6>
                                                     </Grid>
                                                     <Grid item xs={6} className="p-3 text-right">
                                                         {
-                                                            this.props.fileUpload.uploadInProgress||!this.state.allowUpload ? null :
+                                                            this.props.fileUpload.uploadInProgress || !this.state.allowUpload ? null :
                                                                 <Dropzone style={{
                                                                     width: 'auto',
                                                                     height: 'auto',
                                                                     borderStyle: 'none'
                                                                 }}
-                                                                          accept="application/pdf"
-                                                                          onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
-                                                                    <Button color="primary">
+                                                                    accept="application/pdf"
+                                                                    onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                                                                    <Button color="primary" disabled={disableButtons}>
                                                                         <Translate id="languages.fileUpload.addFiles" /> <CloudUpload
-                                                                        style={{marginLeft: 5}}/>
+                                                                            style={{ marginLeft: 5 }} />
                                                                     </Button>
                                                                 </Dropzone>
                                                         }
@@ -910,35 +910,35 @@ class TrabajoEjecucion extends Component {
                                                     <Grid item xs={12} className="pr-3 text-right">
 
                                                         {
-                                                            this.state.temporalFiles?
-                                                                <div className={classes.wrapper} style={{float:'right'}}>
+                                                            this.state.temporalFiles ?
+                                                                <div className={classes.wrapper} style={{ float: 'right' }}>
                                                                     <Button
 
                                                                         color="primary"
                                                                         onClick={() => {
                                                                             this.handleAutoAsign()
                                                                         }}
-                                                                        disabled={this.state.disableAutoAsignButton ||this.state.fetchingAutoAsign>0}>
+                                                                        disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
                                                                         <Translate id="languages.fileUpload.automaticSection" />
                                                                     </Button>
-                                                                    {this.state.fetchingAutoAsign>0 && <CircularProgress size={24}
-                                                                                                                      className={classes.buttonProgress}/>}
-                                                                </div>:null
+                                                                    {this.state.fetchingAutoAsign > 0 && <CircularProgress size={24}
+                                                                        className={classes.buttonProgress} />}
+                                                                </div> : null
                                                         }
-                                                        <div className={classes.wrapper} style={{float:'right'}}>
+                                                        <div className={classes.wrapper} style={{ float: 'right' }}>
                                                             <Button
-
                                                                 color="primary"
                                                                 onClick={() => {
                                                                     this.handleRemove()
                                                                 }}
-                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove>0}>
+                                                                disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove > 0
+                                                                    || disableButtons}>
                                                                 <Translate id="languages.generalButton.delete" />
                                                             </Button>
-                                                            {this.state.fetchingRemove>0 && <CircularProgress size={24}
-                                                                                                              className={classes.buttonProgress}/>}
+                                                            {this.state.fetchingRemove > 0 && <CircularProgress size={24}
+                                                                className={classes.buttonProgress} />}
                                                         </div>
-                                                        <div className={classes.wrapper} style={{float:'right'}}>
+                                                        <div className={classes.wrapper} style={{ float: 'right' }}>
                                                             <Button
 
                                                                 color="primary"
@@ -948,8 +948,8 @@ class TrabajoEjecucion extends Component {
                                                                 disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
                                                                 <Translate id="languages.generalButton.download" />
                                                             </Button>
-                                                            {this.state.fetchingDownload? <CircularProgress size={24}
-                                                                                                              className={classes.buttonProgress}/>:null}
+                                                            {this.state.fetchingDownload ? <CircularProgress size={24}
+                                                                className={classes.buttonProgress} /> : null}
                                                         </div>
 
 
