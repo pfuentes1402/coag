@@ -152,6 +152,10 @@
             "addFile":[
                 "Añadir archivo",
                 "Añadir archivo"
+            ],
+            "generalButton":[
+                "Aplicar cambios",
+                "Aplicar cambios"
             ]
         },
         "generalAddress": {
@@ -233,7 +237,7 @@
                 "ANTECEDENTE"],
             "fieldObservaciones": [
                 "OBSERVACIONES",
-                "OBSERVACIONS"],
+                "OBSERVACIONES"],
             "helperTextObservaciones": [
                 "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio.",
                 "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio."],

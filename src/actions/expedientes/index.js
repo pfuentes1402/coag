@@ -76,7 +76,16 @@ export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength,cur
 //         type: types.FETCH_UPLOAD_FILES,
 //         payload: {uploadInProgress, pendingUploadList, uploadLength}
 //     });
+export const showUploadComponent = () => (
+    {
+        type: types.SHOW_UPLOAD,
 
+    });
+export const hideUploadComponent = () => (
+    {
+        type: types.HIDE_UPLOAD,
+
+    });
 export const uploadFiles = (acceptedFiles,toEstructura,expediente,trabajo,estructura=false) =>
     async (dispatch,getState) => {
       try {

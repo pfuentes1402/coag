@@ -2,6 +2,8 @@ import {
     FETCH_EXPEDIENTES_SUCCESS,
     FETCH_SHOW_UPLOAD_FILES,
     FETCH_UPLOAD_FILES,
+    SHOW_UPLOAD,
+    HIDE_UPLOAD,
     FETCH_FILES,
     FETCH_DONE
 } from "../../actions/expedientes/types";
@@ -19,9 +21,11 @@ const initialState =
         modalAcciones: false,
         selectedAction: 0,
         modalLoading: true,
+
         modal: false, muestraFiltros: true,
         contenedorAdd: false,
         contenedorPromo: false,
+        showUpload:true,
         files: {
             uploadInProgress: false,
             fetchingDone:false,
@@ -36,7 +40,16 @@ const initialState =
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
-
+        case SHOW_UPLOAD:
+            return {
+                ...state,
+                showUpload: true
+            };
+        case HIDE_UPLOAD:
+            return {
+                ...state,
+                showUpload: false
+            };
         case FETCH_FILES:
             return {
                 ...state,
