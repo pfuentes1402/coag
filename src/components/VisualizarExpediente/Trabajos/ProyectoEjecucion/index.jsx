@@ -10,14 +10,14 @@ import {
     Checkbox,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    LinearProgress, withStyles, ListItem, List, ListItemText
+    LinearProgress, withStyles, ListItem, List, ListItemText, FormControl, Select, MenuItem, FormControlLabel, RadioGroup, Radio, Tooltip
 } from '@material-ui/core';
 
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/Check';
 import ErrorOutline from '@material-ui/icons/ErrorOutline';
-
+import Check from '@material-ui/icons/Check';
 import Close from '@material-ui/icons/Close';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import moment from 'moment'
@@ -30,6 +30,8 @@ import {Translate, withLocalize} from "react-localize-redux";
 import {getDetallesArchivo} from "../../../../api";
 import {red, green, orange} from '@material-ui/core/colors';
 import {PanoramaFishEye, Lens} from '@material-ui/icons'
+import {getTiposTramite, putFichaTrabajo} from "../../../../api";
+import '../../../Tramitaciones/estados.css';
 
 const styles = theme => ({
     root: {
@@ -70,6 +72,15 @@ const styles = theme => ({
         fontSize: 12,
         marginTop: 6
     },
+    formControl: {
+        width: "100%"
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: "100%",
+        textAlign: 'left',
+    },
     textFieldInput: {
         borderRadius: 4,
         backgroundColor: theme.palette.common.white,
@@ -91,6 +102,10 @@ const styles = theme => ({
     },
     rootPanel: {
         position: "inherit"
+    },
+    helperText: {
+        textAlign: "end",
+        fontWeight: "bold"
     }
 });
 const mapStateToProps = (state) =>
@@ -146,7 +161,9 @@ class TrabajoEjecucion extends Component {
             allowUpload:true,
             disableAutoAsignButton: true,
             detallesArchivo: null,
-            loadingDetallesArchivo: false
+            loadingDetallesArchivo: false,
+            tiposTramites: [],
+            loadingUpdateFichaTrabajo: false
         }
     }
     async onDrop(acceptedFiles){
@@ -240,6 +257,18 @@ class TrabajoEjecucion extends Component {
     }
     async componentWillUnmount(){
         this.props.showUploadComponent()
+        await this.loadGeneralInformation();
+        await this.getTiposTramites();
+    }
+    async getTiposTramites() {
+        let response = await getTiposTramite(this.props.activeLanguage.code);
+        if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+            this.props.fetchErrorExpediente(response);
+        }
+        else {
+            let tiposTramites = response.Tipos_Trabajos_Tramites;
+            this.setState({ tiposTramites: tiposTramites });
+        }
     }
     async loadGeneralInformation(){
         await this.setState({fetching: true})
@@ -582,6 +611,260 @@ class TrabajoEjecucion extends Component {
 
     }
 
+    handleChangeFichaTrabajo = (propertyName) => (event) =>{
+        let trabajoCopy = {};
+        Object.assign(trabajoCopy, this.state.workDetails);
+        trabajoCopy.Trabajos[0][propertyName] = event.target.value;
+        this.setState({ workDetails: trabajoCopy });
+    }
+
+    handleChangeFichaTrabajoTipo = () => (event) =>{
+        let trabajoCopy = {};
+        Object.assign(trabajoCopy, this.state.workDetails);
+        trabajoCopy.Trabajos[0].Es_Trabajo_Nuevo = ("Es_Trabajo_Nuevo" === event.target.value) ? 1 : 0;
+        trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Sustancial = ("Es_Trabajo_Modificado_Sustancial" === event.target.value) ? 1 : 0;
+        trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica = ("Es_Trabajo_Modificado_Correcion_Basica" === event.target.value) ? 1 : 0;
+        this.setState({ workDetails: trabajoCopy });
+    }
+
+    getCleanedString(cadena) {
+        if (cadena == null)
+            return '';
+        var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.";
+
+        for (var i = 0; i < specialChars.length; i++) {
+            cadena = cadena.replace(new RegExp("\\" + specialChars[i], 'gi'), '');
+        }
+        cadena = cadena.toLowerCase();
+        cadena = cadena.replace(/ /g, "_");
+        cadena = cadena.replace(/á/gi, "a");
+        cadena = cadena.replace(/é/gi, "e");
+        cadena = cadena.replace(/í/gi, "i");
+        cadena = cadena.replace(/ó/gi, "o");
+        cadena = cadena.replace(/ú/gi, "u");
+        cadena = cadena.replace(/ñ/gi, "n");
+        return cadena;
+    }
+
+    estadoColor = (nombre) => {
+        let nombreLimpio = this.getCleanedString(nombre);
+        if (nombreLimpio !== '')
+            return (
+                <div className={nombreLimpio}>
+                  <img alt={200} src={require(`../../../Tramitaciones/IconosEstados/${nombreLimpio}.svg`)}/>
+                    {nombre}
+                </div>);
+    }
+
+    async putFichaTrabajo(){
+        try {
+            this.setState({loadingUpdateFichaTrabajo: true});
+            let trabajo = this.state.workDetails.Trabajos[0];
+            let data = {
+                "Id_Tipo_Tramite": trabajo.Id_Tipo_Tramite,
+                "Es_Trabajo_Nuevo": trabajo.Es_Trabajo_Nuevo,
+                "Es_Trabajo_Modificado_Correcion_Basica": trabajo.Es_Trabajo_Modificado_Correcion_Basica,
+                "Es_Trabajo_Modificado_Sustancial": trabajo.Es_Trabajo_Modificado_Sustancial,
+                "Es_Trabajo_Modificado_Requerido_Administracion": 0,
+                "Observaciones": trabajo.Observaciones,
+                "Envio_Administracion": 0 ,
+                "Titulo_Complementario": trabajo.Titulo_Complementario
+            }
+            let response = await putFichaTrabajo(this.props.expediente.Expediente[0].Id_Expediente, this.props.trabajo, data)
+            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
+                this.setState({loadingUpdateFichaTrabajo: false});
+
+            }
+            else {
+                this.setState({loadingUpdateFichaTrabajo: false});
+            }
+        }catch (e) {
+            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.setState({loadingUpdateFichaTrabajo: false});
+
+        }
+    }
+
+    renderFichaTrabajo(){
+       let {classes} = this.props;
+       return <ExpansionPanel expanded={this.state.fichaTrabajoOpen}
+                        onChange={() => this.setState({fichaTrabajoOpen: !this.state.fichaTrabajoOpen})}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                <div className="d-flex justify-content-between align-items-center" style={{width: "100%"}}>
+                    <Typography variant='button'>
+                        <Translate id="languages.fileUpload.formWork" />
+                    </Typography>
+                    <div>
+                        <Button type="submit" color="primary" onClick={async()=> {await this.putFichaTrabajo()}} disabled={this.state.loadingUpdateFichaTrabajo} style={this.state.fichaTrabajoOpen ? {} : {display: "none"}} >
+                            <Translate id="languages.generalButton.generalButton" /> <Check />
+                        </Button>
+                        {this.state.loadingUpdateFichaTrabajo ? <CircularProgress size={24}/> : ""}
+                    </div>
+                </div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails style={{padding: 0}}>
+                <Grid container spacing={0}>
+                    <Grid item xs={12}>
+                        <Grid container spacing={0} className="py-3 px-4">
+                            <Grid item xs={8}>
+                                <FormControl className={`${classes.formControl} pr-3`}>
+                                <TextField
+                                    value={this.state.workDetails.Trabajos[0].Titulo_Complementario ? this.state.workDetails.Trabajos[0].Titulo_Complementario : ""}
+                                    label={<Translate id="languages.fileUpload.complementaryTitle" />}
+                                    className={`text-uppercase`}
+                                    placeholder=""
+                                    InputLabelProps={{shrink: true}}
+                                    onChange={this.handleChangeFichaTrabajo("Titulo_Complementario")}
+                                    name="tituloComplementario" />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="subtitle1" gutterBottom className="m-0 text-uppercase"
+                                            style={{ color: "rgba(0, 0, 0, 0.55)" ,fontSize:"0.8rem"}}>
+                                    <Translate id="languages.fileUpload.entryDate" />
+                                </Typography>
+                                <Typography variant="subtitle2" gutterBottom>
+                                    {this.state.workDetails.Trabajos[0].Fecha_entrada ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY") : ""}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} className={classes.backgroundColor}>
+                        <Grid container spacing={0} className="p-4">
+                            <Grid item xs={8}>
+                                <Typography variant="subtitle1" gutterBottom className="m-0 text-uppercase"
+                                            style={{ color: "rgba(0, 0, 0, 0.55)" ,fontSize:"0.8rem"}}>
+                                    <Translate id="languages.fileUpload.state" />
+                                </Typography>
+                                <div className='estados'>
+                                    {this.estadoColor(this.state.workDetails.Trabajos[0].Estado ? this.state.workDetails.Trabajos[0].Estado : "")}
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Typography variant="subtitle1" gutterBottom className="m-0 text-uppercase"
+                                            style={{ color: "rgba(0, 0, 0, 0.55)" ,fontSize:"0.8rem"}}>
+                                    <Translate id="languages.fileUpload.visaDate" />
+                                </Typography>
+                                <Typography variant="subtitle2" gutterBottom>
+                                    {this.state.workDetails.Trabajos[0].Fecha_Tramitacion ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_Tramitacion)).format("DD/MM/YYYY") : ""}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container spacing={0} className="p-4">
+                            <Grid item xs={3}>
+                                <FormControl className={classes.formControl}>
+                                    <Select
+                                            value={this.state.workDetails.Trabajos[0].Tipo_Tramite}
+                                            displayEmpty
+                                            onChange={this.handleChangeFichaTrabajo("Tipo_Tramite")}
+                                            inputProps={{
+                                                name: 'Tipo_Tramite',
+                                                id: 'Tipo_Tramite',
+                                            }}
+                                    >
+
+                                        {this.state.tiposTramites && this.state.tiposTramites.map(tramite => (
+                                            <MenuItem
+                                                      value={tramite.Nombre}>{tramite.Nombre}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={9}>
+                                    <RadioGroup
+                                        aria-label="Gender"
+                                        name="gender1"
+                                        className="flex-nowrap"
+                                        value={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? "Es_Trabajo_Nuevo" : (this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? "Es_Trabajo_Modificado_Sustancial" : "Es_Trabajo_Modificado_Correcion_Basica")}
+                                        onChange={this.handleChangeFichaTrabajoTipo()}
+                                        row
+                                    >
+                                        <FormControlLabel value="Es_Trabajo_Nuevo"
+                                                          control={<Radio className="pt-0" color={ this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? "primary" : "secondary"}/>}
+                                                          label={<Translate id="languages.trabajo.nuevoTrabajoTitle" />}
+                                                          className={`${this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? 'font-weight-bold' : ''} m-0 pt-0`}
+                                        />
+                                        <FormControlLabel
+                                            value="Es_Trabajo_Modificado_Sustancial"
+                                            control={<Radio className="pt-0" color={ this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? "primary" : "secondary"}/>}
+                                            label={<Translate id="languages.trabajo.modificacionSustancialTitle" />}
+                                            className={`${this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? 'font-weight-bold' : ''} m-0 pt-0`} />
+                                        <FormControlLabel
+                                            value="Es_Trabajo_Modificado_Correcion_Basica"
+                                            control={<Radio className="pt-0" color={ this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? "primary" : "secondary"}/>}
+                                            label={<Translate id="languages.trabajo.correccionBasicaTitle" />}
+                                            className={`${this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? 'font-weight-bold' : ''} m-0 pt-0`} />
+                                    </RadioGroup>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} className={classes.backgroundColor}>
+                        <Grid container spacing={0} className="p-3">
+                            <Grid item xs={12}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField
+                                        id="observations"
+                                        label={<Translate id="languages.expedients.fieldObservaciones"/>}
+                                        value={this.state.workDetails.Trabajos[0].Observaciones ? this.state.workDetails.Trabajos[0].Observaciones : ''}
+                                        onChange={this.handleChangeFichaTrabajo("Observaciones")}
+                                        margin="normal"
+                                        multiline
+                                        rows={4}
+                                        helperText={"110/500"}
+                                        fullWidth
+                                        InputProps={{
+                                            disableUnderline: true,
+                                            classes: {
+                                                input: classes.textFieldInput
+                                            },
+                                        }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        onInput = {(e) =>{
+                                            let aux = e.target.value;
+                                            if(aux.length > 500) {
+                                                e.target.value = aux.slice(0, 500)
+                                            }
+                                        }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid container spacing={0} className="p-4">
+                            <Grid item xs={6}>
+                                <FormControl className={`${classes.formControl} pr-3`}>
+                                    <Tooltip title={`${this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/${this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}`}>
+                                        <TextField disabled={true}
+                                           value={`${this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/${this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}`}
+                                           label={<Translate id="languages.fileUpload.expedientType" />}
+                                               className={`text-uppercase`}
+                                           />
+                                    </Tooltip>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <FormControl className={classes.formControl}>
+                                    <TextField disabled={true}
+                                               value={this.state.workDetails.Trabajos[0].Tipo_Fase}
+                                               label={<Translate id="languages.fileUpload.documentation" />}
+                                               className={`text-uppercase`}
+                                    />
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ExpansionPanelDetails>
+        </ExpansionPanel>
+    }
+
     render() {
         let {classes}=this.props
         return (
@@ -900,7 +1183,35 @@ class TrabajoEjecucion extends Component {
                                                         </Grid>
                                                     </Grid>
                                                     :
-                                                    ""
+                                                    <Grid item xs={12}>
+                                                        <Grid container spacing={24} className="pt-3 px-2">
+                                                            <Grid item xs={6}>
+                                                                <Typography variant="subtitle2" className="text-uppercase">
+                                                                    <Translate id="languages.fileUpload.fileName" />
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={4}>
+                                                                <Typography variant="subtitle2" className="text-uppercase">
+                                                                    <Translate id="languages.fileUpload.folder" />
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={2} className="p-3" className="text-uppercase">
+                                                                <Typography variant="subtitle2">
+                                                                    <Translate id="languages.fileUpload.firm" />
+                                                                </Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid container spacing={24}>
+                                                            <Grid item xs={12}>
+                                                                <Paper elevation={1} className="p-3 text-center">
+                                                                    <Typography variant="subtitle1" gutterBottom>
+                                                                        <Translate id="languages.fileUpload.noResult" />
+                                                                    </Typography>
+                                                                </Paper>
+                                                            </Grid>
+                                                        </Grid>
+
+                                                    </Grid>
 
                                             }
                                         </Grid>
@@ -912,140 +1223,7 @@ class TrabajoEjecucion extends Component {
                     <Grid item md={6} xs={12} className="p-3">
                         {
                             this.state.workDetails ?
-                                <ExpansionPanel expanded={this.state.fichaTrabajoOpen}
-                                                onChange={() => this.setState({fichaTrabajoOpen: !this.state.fichaTrabajoOpen})}>
-                                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                        <Typography variant='button'>
-                                            <Translate id="languages.fileUpload.formWork" />
-                                        </Typography>
-                                    </ExpansionPanelSummary>
-                                    <ExpansionPanelDetails>
-                                        <Grid container spacing={24}>
-                                            <Grid item xs={12}>
-                                                <Grid container spacing={0}>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline' className="text-uppercase">
-                                                            <Translate id="languages.fileUpload.complementaryTitle" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Titulo_Complementario ? this.state.workDetails.Trabajos[0].Titulo_Complementario : "-"}
-                                                        </Typography>
-
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            <Translate id="languages.fileUpload.entryDate" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Fecha_entrada ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY") : "-"}
-                                                        </Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={12} className={classes.backgroundColor}>
-                                                <Grid container spacing={0}>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline' className="text-uppercase">
-                                                            <Translate id="languages.fileUpload.state" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Estado ? this.state.workDetails.Trabajos[0].Estado : "-"}
-                                                        </Typography>
-
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline' className="text-uppercase">
-                                                            <Translate id="languages.fileUpload.visaDate" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Fecha_Tramitacion ? moment(new Date(this.state.workDetails.Trabajos[0].Fecha_Tramitacion)).format("DD/MM/YYYY") : "-"}
-                                                            </Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div className="d-flex">
-                                                    <div className="pr-4">
-                                                        <Typography variant='subtitle2' >
-                                                            {this.state.workDetails.Trabajos[0].Tipo_Tramite}
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="d-flex px-2">
-                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
-
-                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Nuevo ? classes.black : ""}
-                                                            variant='subtitle2'>
-                                                            <Translate id="languages.fileUpload.newWork" />
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="d-flex  px-2">
-                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
-                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Sustancial ? classes.black : ""}
-                                                            variant='subtitle2'>
-                                                            <Translate id="languages.fileUpload.modification" />
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="d-flex px-2">
-                                                        {this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? <Lens className={classes.size} color="primary"/> : <PanoramaFishEye className={classes.size} color="secondary"/>}
-                                                        <Typography className={this.state.workDetails.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica ? classes.black : ""}
-                                                            variant='subtitle2'>
-                                                            <Translate id="languages.fileUpload.basicCorection" />
-                                                        </Typography>
-                                                    </div>
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12}  className={classes.backgroundColor}>
-                                                <Grid container spacing={0}>
-                                                    <Grid item xs={12}>
-                                                        <TextField
-                                                            disabled
-                                                            id="observations"
-                                                            label={<Translate id="languages.expedients.fieldObservaciones"/>}
-                                                            value={this.state.workDetails.Trabajos[0].Observaciones ? this.state.workDetails.Trabajos[0].Observaciones : '-'}
-                                                            margin="normal"
-                                                            multiline
-                                                            rows={4}
-                                                            helperText={"110/500"}
-                                                            fullWidth
-                                                            InputProps={{
-                                                                disableUnderline: true,
-                                                                classes: {
-                                                                    input: classes.textFieldInput,
-                                                                },
-                                                            }}
-                                                            InputLabelProps={{
-                                                                shrink: true,
-                                                            }}
-                                                        />
-                                                    </Grid>
-
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Grid container spacing={0}>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            <Translate id="languages.fileUpload.expedientType" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            {this.state.workDetails.Trabajos[0].Tipo_Grupo_tematico}/{this.state.workDetails.Trabajos[0].Tipo_Autorizacion_Municipal}
-                                                        </Typography>
-
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography variant='overline'>
-                                                            <Translate id="languages.fileUpload.documentation" />
-                                                        </Typography>
-                                                        <Typography variant='subtitle2'>
-                                                            ???????
-                                                            {/*{this.state.workDetails.Trabajos[0].Fecha_entrada?moment(new Date(this.state.workDetails.Trabajos[0].Fecha_entrada)).format("DD/MM/YYYY"):"-"}*/}
-                                                        </Typography>
-                                                    </Grid>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </ExpansionPanelDetails>
-                                </ExpansionPanel>
+                                this.renderFichaTrabajo()
                                 : null
                         }
                         {
