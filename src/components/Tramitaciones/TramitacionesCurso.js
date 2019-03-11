@@ -97,6 +97,7 @@ class TramitacionesCurso extends Component {
             ];
             this.props.dispatchTablePersonalization(
                 this.state && this.state.pageSize ? this.state.pageSize : 30, columns, "Columnas por defecto");
+            return columns;
         }
         return this.props.tablePersonalization.columnDefs;
     }
@@ -284,9 +285,9 @@ class TramitacionesCurso extends Component {
                             width: '100%',
                             margin: '0px'
                         }}>
-                            {this.props.data && this.props.data.length > 0 &&
+                            {this.props.data &&
                                 <AgGridReact id="table-grid"
-                                    columnDefs={this.props.columnDefs.filter(x=> x.selected)/*this.state.columnDefs*/}
+                                    columnDefs={this.state.columnDefs}
                                     context={this.state.context}
                                     frameworkComponents={this.state.frameworkComponents}
                                     rowData={this.props.data}

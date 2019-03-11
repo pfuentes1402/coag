@@ -11,7 +11,7 @@
     "@uppy/core": "^0.27.1",
     "@uppy/react": "^0.27.3",
     "@uppy/xhr-upload": "^0.27.3",
-    "ag-grid": "^17.1.1",
+    "ag-grid": "^18.1.2",
     "ag-grid-react": "^17.1.0",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.0",

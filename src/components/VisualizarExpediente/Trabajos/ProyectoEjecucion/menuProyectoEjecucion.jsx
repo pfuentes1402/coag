@@ -86,13 +86,13 @@ class MenuProyectoEjecucion extends Component {
                                     return <ListItem key={'menu-item'+pos} onDrop={async ()=>{
                                                         let response = await this.props.moveItemTo(children)
                                                         if (response)
-                                                            this.props.changeEstructura(children.Id_Estructura, children.Titulo)
+                                                            this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)
                                                     }}
                                                      style={{paddingLeft: 48}}
                                                      className={classNames((this.props.dragTarget ? classes.dragTarget: ''),
                                                          (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""))}
                                                      onDragOver={()=>{this.setState({drop:pos})}} button
-                                                     onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo)}}
+                                                     onClick={()=> { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)}}
                                                      >
                                         <ListItemIcon style={{marginRight: 0, marginLeft: 24}}
                                                       className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green )}>
