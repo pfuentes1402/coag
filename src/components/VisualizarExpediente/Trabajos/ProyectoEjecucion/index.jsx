@@ -123,7 +123,8 @@ const mapDispatchToProps =
         uploadFiles: actionsExpedientes.uploadFiles,
         resetUploadStates: actionsExpedientes.resetUpladStates,
         showUploadComponent: actionsExpedientes.showUploadComponent,
-        hideUploadComponent: actionsExpedientes.hideUploadComponent
+        hideUploadComponent: actionsExpedientes.hideUploadComponent,
+        formatMessage: actionsExpedientes.formatMenssage
 
     };
 
@@ -680,7 +681,7 @@ class TrabajoEjecucion extends Component {
                 this.setState({loadingUpdateFichaTrabajo: false});
             }
         }catch (e) {
-            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.props.fetchErrorExpediente(this.props.ormatMenssage(e.message));
             this.setState({loadingUpdateFichaTrabajo: false});
 
         }
