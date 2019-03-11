@@ -13,7 +13,7 @@ import {connect} from "react-redux";
 import {Breadcrumbs} from "react-breadcrumbs-dynamic";
 import {blue} from '@material-ui/core/colors';
 import {Breadcrumb as BootstrapBreadcrumb} from "reactstrap";
-
+import LoadingFiles from "./components/FileUpload/loadingFiles"
 
 const mapStateToProps = state => ({
     idiomaFavorito: state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
@@ -90,7 +90,7 @@ class App extends Component {
                 <Grid>
                     <Error/>
                 </Grid>
-
+                <LoadingFiles/>
 
             </Grid>
         );

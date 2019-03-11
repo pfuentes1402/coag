@@ -111,7 +111,6 @@ const styles = theme => ({
 });
 const mapStateToProps = (state) =>
 {
-
     return (
         {
             fileUpload:state.status.files
@@ -122,8 +121,11 @@ const mapStateToProps = (state) =>
 const mapDispatchToProps =
     {
         fetchErrorExpediente: actionsExpedientes.fetchErrorExpediente,
-        uploadFiles:actionsExpedientes.uploadFiles,
-        resetUploadStates:actionsExpedientes.resetUpladStates
+        uploadFiles: actionsExpedientes.uploadFiles,
+        resetUploadStates: actionsExpedientes.resetUpladStates,
+        showUploadComponent: actionsExpedientes.showUploadComponent,
+        hideUploadComponent: actionsExpedientes.hideUploadComponent,
+        formatMessage: actionsExpedientes.formatMenssage
 
     };
 
@@ -251,6 +253,12 @@ class TrabajoEjecucion extends Component {
     }
 
     async componentDidMount() {
+         this.props.hideUploadComponent()
+        await this.loadGeneralInformation()
+
+    }
+    async componentWillUnmount(){
+        this.props.showUploadComponent()
         await this.loadGeneralInformation();
         await this.getTiposTramites();
     }
@@ -674,7 +682,7 @@ class TrabajoEjecucion extends Component {
                 this.setState({loadingUpdateFichaTrabajo: false});
             }
         }catch (e) {
-            this.props.fetchErrorExpediente(formatMenssage(e.message));
+            this.props.fetchErrorExpediente(this.props.ormatMenssage(e.message));
             this.setState({loadingUpdateFichaTrabajo: false});
 
         }
