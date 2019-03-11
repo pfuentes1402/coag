@@ -95,7 +95,6 @@ const styles = theme => ({
 });
 const mapStateToProps = (state) =>
 {
-
     return (
         {
             fileUpload:state.status.files
@@ -106,8 +105,10 @@ const mapStateToProps = (state) =>
 const mapDispatchToProps =
     {
         fetchErrorExpediente: actionsExpedientes.fetchErrorExpediente,
-        uploadFiles:actionsExpedientes.uploadFiles,
-        resetUploadStates:actionsExpedientes.resetUpladStates
+        uploadFiles: actionsExpedientes.uploadFiles,
+        resetUploadStates: actionsExpedientes.resetUpladStates,
+        showUploadComponent: actionsExpedientes.showUploadComponent,
+        hideUploadComponent: actionsExpedientes.hideUploadComponent
 
     };
 
@@ -233,9 +234,12 @@ class TrabajoEjecucion extends Component {
     }
 
     async componentDidMount() {
-
-
+         this.props.hideUploadComponent()
         await this.loadGeneralInformation()
+
+    }
+    async componentWillUnmount(){
+        this.props.showUploadComponent()
     }
     async loadGeneralInformation(){
         await this.setState({fetching: true})

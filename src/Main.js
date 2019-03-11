@@ -10,6 +10,7 @@ import SelectorTipoTrabajoContainer from "./containers/SelectorTipoTrabajoContai
 import VisualizarExpediente from './components/VisualizarExpediente/index';
 import AsistenteTrabajo from './components/AsistenteTrabajo/index';
 import { withLocalize } from "react-localize-redux";
+
 class Main extends Component {
     render(){
 
