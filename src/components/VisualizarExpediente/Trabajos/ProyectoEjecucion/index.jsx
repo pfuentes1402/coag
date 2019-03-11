@@ -32,6 +32,7 @@ import {red, green, orange} from '@material-ui/core/colors';
 import {PanoramaFishEye, Lens} from '@material-ui/icons'
 import {getTiposTramite, putFichaTrabajo} from "../../../../api";
 import '../../../Tramitaciones/estados.css';
+import {formatMenssage} from "../../../../actions/expedientes";
 
 const styles = theme => ({
     root: {

@@ -149,9 +149,10 @@ class VisualizarExpediente extends Component {
     await this.setState({ isLoadEstructura: true });
     if (idExpediente === null)
       return false;
-    let filterEstructura = [];
+    let estructurasNivel2 = [];
     let groupEstructura = [];
-    let estructurasNivel1 = []
+    let estructurasNivel1 = [];
+    let estructuraChildrens = {};
     try {
 
       let response = await getEstructuraDocumental(idExpediente, idTrabajo, this.props.activeLanguage.code);
@@ -160,10 +161,13 @@ class VisualizarExpediente extends Component {
         await this.setState({ isLoadEstructura: false, estructuraDocumental: [] });
       }
       else {
-        filterEstructura = filter(response.EstructurasDocumentales, { "Id_Tipo_Estructura": 1 });
-        estructurasNivel1 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 1 });
-        groupEstructura = groupBy(filterEstructura, "Titulo_Padre");
-        await this.setState({ estructuraDocumental: groupEstructura, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
+          estructurasNivel1 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 1 });
+          estructurasNivel2 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 2 });
+          groupEstructura = groupBy(estructurasNivel2, "Titulo_Padre");
+          for(let i = 0; i < estructurasNivel1.length; i++){
+              estructuraChildrens[estructurasNivel1[i].Titulo] = groupEstructura[estructurasNivel1[i].Titulo] ? groupEstructura[estructurasNivel1[i].Titulo] : [];
+          }
+        await this.setState({ estructuraDocumental: estructuraChildrens, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
       }
     }
     catch (e) {
