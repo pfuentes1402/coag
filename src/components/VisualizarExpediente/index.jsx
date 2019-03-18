@@ -166,7 +166,7 @@ class VisualizarExpediente extends Component {
           estructurasNivel2 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 2 });
           groupEstructura = groupBy(estructurasNivel2, "Titulo_Padre");
           for(let i = 0; i < estructurasNivel1.length; i++){
-              estructuraChildrens[estructurasNivel1[i].Titulo] = groupEstructura[estructurasNivel1[i].Titulo] ? groupEstructura[estructurasNivel1[i].Titulo] : [];
+              estructuraChildrens[estructurasNivel1[i].Titulo] = groupEstructura[estructurasNivel1[i].Titulo] ? groupEstructura[estructurasNivel1[i].Titulo] : estructurasNivel1[i];
           }
         await this.setState({ estructuraDocumental: estructuraChildrens, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
       }
