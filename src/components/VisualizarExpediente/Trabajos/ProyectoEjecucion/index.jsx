@@ -945,8 +945,8 @@ class TrabajoEjecucion extends Component {
                     </Grid>
                     <div style={{ marginLeft: -10, background: "#f5f5f5" }}>
                         <Divider height={2} />
-                        <Grid container spacing={24} className="py-2 px-2">
-                            <Grid item md={6} xs={6} className="d-flex">
+                        <Grid container className="py-2 px-2">
+                            <Grid item md={5} xs={5} className="d-flex mr-3">
                                 <Checkbox
                                     checked={this.state.checkAll}
                                     onChange={this.handleCheckAll()}
@@ -960,12 +960,12 @@ class TrabajoEjecucion extends Component {
                                     <Translate id="languages.fileUpload.fileName" />
                                 </Typography>
                             </Grid>
-                            <Grid item md={4} xs={4}>
+                            <Grid item md={3} xs={3}>
                                 <Typography variant="subtitle2" className="text-uppercase">
                                     <Translate id="languages.fileUpload.folder" />
                                 </Typography>
                             </Grid>
-                            <Grid item md={2} xs={2} className="p-3" className="text-uppercase">
+                            <Grid item md={2} xs={2} className="p-3" className="text-uppercase text-right pr-2">
                                 <Typography variant="subtitle2">
                                     <Translate id="languages.fileUpload.firm" />
                                 </Typography>
@@ -1011,7 +1011,7 @@ class TrabajoEjecucion extends Component {
                                                                         />
                                                                         <Typography className={classes.orange}>{item.Nombre}</Typography>
                                                                     </Grid>
-                                                                    <Grid item md={4} xs={4} className="align-self-center">
+                                                                    <Grid item md={3} xs={3} className="align-self-center">
                                                                         <Typography className={classes.orange}>
                                                                             <Translate id="languages.fileUpload.unAssigned" />
                                                                         </Typography>
@@ -1069,7 +1069,7 @@ class TrabajoEjecucion extends Component {
                                                                         {item.Archivo}
                                                                     </Typography>
                                                                 </Grid>
-                                                                <Grid item xs={4} className="align-self-center">
+                                                                <Grid item xs={3} className="align-self-center">
                                                                     <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
                                                                         {item.Carpeta}
                                                                     </Typography>
@@ -1169,30 +1169,11 @@ class TrabajoEjecucion extends Component {
                                 </Grid>
                                 :
                                 <Grid item xs={12}>
-                                    <Grid container spacing={24} className="pt-3 px-2">
-                                        <Grid item xs={6}>
-                                            <Typography variant="subtitle2" className="text-uppercase">
-                                                <Translate id="languages.fileUpload.fileName" />
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Typography variant="subtitle2" className="text-uppercase">
-                                                <Translate id="languages.fileUpload.folder" />
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={2} className="p-3" className="text-uppercase">
-                                            <Typography variant="subtitle2">
-                                                <Translate id="languages.fileUpload.firm" />
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
                                     <Grid container spacing={24}>
-                                        <Grid item xs={12}>
-                                            <Paper elevation={1} className="p-3 text-center">
-                                                <Typography variant="subtitle1" gutterBottom>
-                                                    <Translate id="languages.fileUpload.noResult" />
-                                                </Typography>
-                                            </Paper>
+                                        <Grid item xs={12} className="text-center py-4">
+                                            <Typography variant="subtitle1" gutterBottom>
+                                                <Translate id="languages.fileUpload.noResult" />
+                                            </Typography>
                                         </Grid>
                                     </Grid>
 
