@@ -212,12 +212,10 @@ class Agentes extends Component {
           </ExpansionPanel>
         </Grid>
         <Grid item xs={12} className="py-2">
-          {this.props.isModificacion ? "" :
-            <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
-              onClick={() => this.crearTrabajo()}>
-              <Translate id="languages.generalButton.crearTrabajo" />
-            </Button>
-          }
+          <Button variant="contained" size="small" color="primary" className="float-right px-3 ml-2"
+            onClick={() => this.crearTrabajo()}>
+            <Translate id="languages.generalButton.crearTrabajo" />
+          </Button>
           <Button variant="contained" size="small" color="primary" className="float-right px-3"
             onClick={() => this.addTrabajoEncomenda(0)}>
             <Translate id="languages.generalButton.finalizar" />

@@ -257,10 +257,8 @@ class TrabajoEjecucion extends Component {
 
     async componentDidMount() {
         this.props.hideUploadComponent()
-        await this.loadGeneralInformation()
-
     }
-    async componentWillUnmount() {
+    async componentWillMount() {
         this.props.showUploadComponent()
         await this.loadGeneralInformation();
         await this.getTiposTramites();

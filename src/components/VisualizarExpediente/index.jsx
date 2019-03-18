@@ -99,8 +99,8 @@ class VisualizarExpediente extends Component {
     };
   }
 
-  componentWillMount() {
-    this.fetchExpediente();
+  async componentWillMount() {
+    await this.fetchExpediente();
   }
 
   switcToolbar(option) {
@@ -127,8 +127,6 @@ class VisualizarExpediente extends Component {
       let currentExpediente = expediente.Expediente.length > 0 ? expediente.Expediente[0] : null;
       let activeTrabajo = this.props.match.params.idTrabajo
         ? this.props.match.params.idTrabajo
-        /*: currentExpediente
-          ? currentExpediente.Id_Trabajo_Encomenda_Actual*/
         : null;
 
       await this.setState({
@@ -141,7 +139,7 @@ class VisualizarExpediente extends Component {
   }
 
 
-  handleExpandMenu = () => {
+  handleExpandMenu() {
     this.setState(state => ({ open: !state.open }));
   };
 
@@ -404,7 +402,7 @@ class VisualizarExpediente extends Component {
           onClick={() => this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={this.handleExpandMenu} className="pl-3 pr-2">
+        <ListItem button onClick={()=>{this.handleExpandMenu()}} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -492,9 +490,9 @@ class VisualizarExpediente extends Component {
 
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
-                : (this.state.renderComponent === "ExpedienteGeneral" ?
-                  <ExpedienteGeneral expediente={expediente} /> :
-                  <TrabajoEjecucion
+                : (this.state.renderComponent === "ExpedienteGeneral" 
+                ? <ExpedienteGeneral expediente={expediente} />                
+                : <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                     expediente={expediente}
                     trabajo={this.state.idTrabajoActivo}
