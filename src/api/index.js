@@ -1,7 +1,7 @@
 import { handleLoggout } from './../helpers/logout.js'
 import axios from 'axios';
 import * as types from './../actions/usuarios/types';
-
+import { setExpiredSession } from "./../actions/usuarios/index";
 const BASE_PATH = "http://servicios.coag.es/api";
 /*
 *
@@ -24,9 +24,8 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Token': localStorage.getItem('token') || ''
   }
-
-
 });
+
 api.interceptors.request.use(async function (request) {
   if (request.url === "/login") return request;
   request.headers['Token'] = await localStorage.getItem('token') || '';
@@ -35,31 +34,23 @@ api.interceptors.request.use(async function (request) {
 
 api.interceptors.response.use(function (response) {
   return response
-}, function (error) {
+}, async function (error) {
 
   const originalRequest = error.config
   if (error.request && error.request.responseURL
-    && error.request.responseURL.indexOf("/login") !== -1)
+    && error.request.responseURL.indexOf("/login") !== -1) {
     return Promise.reject(error)
-  if (error.response && error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true
-
-
-    const retryOriginalRequest = new Promise(async (resolve) => {
-      await getToken().then(response => {
-        if (response && response.headers && response.headers.token) {
-          originalRequest.headers['Token'] = response.headers.token;
-          resolve(api(originalRequest))
-        } else {
-          handleLoggout();
-        }
-      });
-    })
-    return retryOriginalRequest
   }
 
+  if (error.response && error.response.status === 401) {
+    const redirectLogin = new Promise(async (resolve) => {
+      handleLoggout();
+    })
+    return redirectLogin
+  }
   return Promise.reject(error)
 })
+
 /*
  *Proporciona los datos generales de un expediente
  * Parametros 
@@ -278,13 +269,13 @@ export const getTrabajoeDatosGenerales = (id_expediente, id_Trabajo) =>
     });
 
 export const putFichaTrabajo = async (id_expediente, id_Trabajo, data) => {
-    try {
-        let response = await api.put(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`,data);
-        return response.data;
-    }
-    catch (error) {
-        return formatMenssage(error.message);
-    }
+  try {
+    let response = await api.put(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`, data);
+    return response.data;
+  }
+  catch (error) {
+    return formatMenssage(error.message);
+  }
 }
 
 export const errorLogin = (data) => (

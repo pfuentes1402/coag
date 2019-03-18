@@ -156,6 +156,14 @@
             "generalButton":[
                 "Aplicar cambios",
                 "Aplicar cambios"
+            ],
+            "yes":[
+                "Si",
+                "Si"
+            ],
+            "no":[
+                "No",
+                "No"
             ]
         },
         "generalAddress": {
@@ -764,6 +772,10 @@
             "loginFailed":[
                 "Error de usuario o contraseña",
                 "Error de usuario o contraseña"
+            ],
+            "aceptConcents":[
+                "¿Aún así desea continuar?",
+                "¿Aún así desea continuar?"
             ]
         }
     }

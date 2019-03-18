@@ -6,6 +6,7 @@ import {IconButton , MenuList, MenuItem, Popper, Grow, Paper, ClickAwayListener 
 import { connect } from 'react-redux';
 import { Person} from "@material-ui/icons";
 import persistor from "../../../index";
+import { constants } from 'zlib';
 
 
 const styles = theme => ({
@@ -26,8 +27,7 @@ class MenuUser extends React.Component {
         };
     }
 
-
-    handleLoggout(){
+    handleLoggout =() =>{
         localStorage.clear();
         persistor.purge();
         this.props.history.push('/');

@@ -16,7 +16,6 @@ class Main extends Component {
 
         return(
             <div>
-
                 <Switch>
                     <Route exact path='/' component={(props) => <MainContainer {...props}/>} />
                     <Route path='/login' component={(props) => <Login {...props}/> }/>

@@ -76,7 +76,7 @@ export const errorLogin = (message) => (
         payload: message
     });
 
-export const dispatchErrorLogin = (errorValue) => (dispatch) =>{
+export const dispatchErrorLogin = (errorValue) => (dispatch) => {
     dispatch(errorLogin(errorValue));
 }
 
@@ -222,44 +222,43 @@ export const fetchIdAccion = (id) => ({
  * @param pageSize
  * @returns {Function}
  */
-export const fetchSuscepAcciones =  (filtro, idAccion, page, pageSize) =>
+export const fetchSuscepAcciones = (filtro, idAccion, page, pageSize) =>
     async (dispatch) => {
-            try {
-                let data = await getExpedienteSuscepNuevoTrabajo(filtro, idAccion, page, pageSize);
-                if( data.MensajesProcesado && data.MensajesProcesado.length > 0){
-                    dispatch(fetchErrorExpediente(data));
-                    dispatch(fetchCambiaStadoModal());
-                }
-                else
-                {
-                    switch (idAccion) {
-                        case 1:
-                            dispatch(fetchExpedientesSusceptibles(data.Expedientes, idAccion));
-                            break;
-                        case 2:
-                            dispatch(fetchExpedientesTrabajosTest(data.Expedientes, idAccion));
-                            break;
-                        case 3:
-                            dispatch(fetchSolicitarLoa(data.Expedientes, idAccion));
-                            break;
-                        case 4:
-                            dispatch(fetchSolicitarLi(data.Expedientes, idAccion));
-                            break;
-                        case 5:
-                            dispatch(fetchConvertirDigital(data.Expedientes, idAccion));
-                            break;
-                        case 6:
-                            dispatch(fetchCesarExpediente(data.Expedientes, idAccion));
-                            break;
-
-                    }
-                    dispatch(fetchCambiaStadoModal());
-                }
-            }
-            catch (e) {
-                dispatch(fetchErrorExpediente(formatMenssage(e.message)));
+        try {
+            let data = await getExpedienteSuscepNuevoTrabajo(filtro, idAccion, page, pageSize);
+            if (data.MensajesProcesado && data.MensajesProcesado.length > 0) {
+                dispatch(fetchErrorExpediente(data));
                 dispatch(fetchCambiaStadoModal());
             }
+            else {
+                switch (idAccion) {
+                    case 1:
+                        dispatch(fetchExpedientesSusceptibles(data.Expedientes, idAccion));
+                        break;
+                    case 2:
+                        dispatch(fetchExpedientesTrabajosTest(data.Expedientes, idAccion));
+                        break;
+                    case 3:
+                        dispatch(fetchSolicitarLoa(data.Expedientes, idAccion));
+                        break;
+                    case 4:
+                        dispatch(fetchSolicitarLi(data.Expedientes, idAccion));
+                        break;
+                    case 5:
+                        dispatch(fetchConvertirDigital(data.Expedientes, idAccion));
+                        break;
+                    case 6:
+                        dispatch(fetchCesarExpediente(data.Expedientes, idAccion));
+                        break;
+
+                }
+                dispatch(fetchCambiaStadoModal());
+            }
+        }
+        catch (e) {
+            dispatch(fetchErrorExpediente(formatMenssage(e.message)));
+            dispatch(fetchCambiaStadoModal());
+        }
 
     };
 
@@ -274,3 +273,10 @@ export const fetchsetSelected = (data) => ({
     type: types.SELECTAGENTTOADD,
     payload: data
 });
+
+export const setExpiredSession = (expired) => {
+    return {
+        type: types.EXPIRED_SESSION,
+        payload: expired
+    };
+}

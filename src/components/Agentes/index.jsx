@@ -16,7 +16,11 @@ import { manageEncomenda } from '../../api';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import { withRouter } from 'react-router-dom';
 import { Translate } from "react-localize-redux";
-import { Dialog, DialogContent, CircularProgress } from "@material-ui/core";
+import {
+  Dialog, DialogContent, DialogContentText, Typography,
+  DialogActions, DialogTitle, CircularProgress
+} from "@material-ui/core";
+import ReactQuill from "react-quill";
 
 const styles = theme => ({
   margin: {
@@ -37,7 +41,9 @@ class Agentes extends Component {
     super(props);
     this.state = {
       encomenda: this.props.encomenda,
-      isLoading: false
+      isLoading: false,
+      openVerification: false,
+      verificationMessages: []
     }
   }
 
@@ -50,7 +56,7 @@ class Agentes extends Component {
   }
 
   //Funcion que consume la api para crear un nuevo trabajo encomenda
-  async addTrabajoEncomenda() {
+  async addTrabajoEncomenda(ignorarObservations = 1) {
     await this.setState({ isLoading: true });
     try {
       let encomenda = this.state.encomenda;
@@ -66,13 +72,18 @@ class Agentes extends Component {
           Id_Tipo_Tramite: 0, /*0 Visado normal*/
           Colegiados: encomenda.Colegiados,
           Promotores: encomenda.Promotores,
-          IgnorarObservaciones: 1
+          IgnorarObservaciones: ignorarObservations
         };
 
         //Obtener el id de expediente del estado de redux y llamar la funcion
         //postAddTrabajoEncomenda
         let currentExpId = encomendaActual.Id_Expediente;
         let result = await manageEncomenda(currentExpId, trabajoEncomenda);
+        if (ignorarObservations === 0) {
+          this.setState({ verificationMessages: result.data.MensajesProcesado, isLoading: false })
+          this.openVerification(true);
+          return;
+        }
 
         //Validación para continuar (si el resultado fue 200 se permite continuar)
         if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
@@ -123,6 +134,58 @@ class Agentes extends Component {
     this.setState({ isLoading: false });
   };
 
+  openVerification = (open) => {
+    this.setState({ openVerification: open });
+  }
+
+  renderVerification() {
+    return (
+      <div>
+        <Dialog
+          open={true}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+          <DialogTitle id="alert-dialog-title">
+            <Translate id="languages.generalButton.mensaje" />
+          </DialogTitle>
+          <DialogContent>
+            {this.state.verificationMessages.map((message, index) => {
+              return <DialogContentText id="alert-dialog-description">
+                <ReactQuill key={index} value={message.Mensaje} readOnly theme='bubble' />
+              </DialogContentText>
+            })}
+            <Typography className="ml-1 pl-2" component="h2" variant="display1" gutterBottom style={{ fontSize: "1rem" }}>
+              <Translate id="languages.messages.aceptConcents" />
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button size="small" className="mx-2"
+              onClick={() => {
+                this.openVerification(false);
+              }}>
+              <Translate id="languages.generalButton.cancel" />
+            </Button>
+            <Button variant="contained" size="small" className="mx-2" color="primary"
+              onClick={() => {
+                this.openVerification(false);
+                this.addTrabajoEncomenda(1);
+              }}>
+              <Translate id="languages.generalButton.yes" />
+            </Button>
+            <Button variant="contained" size="small" className="mx-2" color="primary"
+              onClick={() => {
+                this.openVerification(false);
+                this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
+              }}>
+              <Translate id="languages.generalButton.no" />
+            </Button>
+
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+
   render() {
     let { classes } = this.props;
     return (
@@ -156,7 +219,7 @@ class Agentes extends Component {
             </Button>
           }
           <Button variant="contained" size="small" color="primary" className="float-right px-3"
-            onClick={() => this.addTrabajoEncomenda()}>
+            onClick={() => this.addTrabajoEncomenda(0)}>
             <Translate id="languages.generalButton.finalizar" />
           </Button>
           <Button color="primary" size="small" className="float-right mx-2"
@@ -180,6 +243,10 @@ class Agentes extends Component {
               <CircularProgress />
             </DialogContent>
           </Dialog>
+        </Grid>
+
+        <Grid item xs={12}>
+          {this.state.openVerification && this.renderVerification()}
         </Grid>
       </Container>
     );

@@ -74,7 +74,6 @@ class AsistenteTrabajo extends Component {
   }
 
   renderNotify() {
-
     return (
       <div>
         <Dialog

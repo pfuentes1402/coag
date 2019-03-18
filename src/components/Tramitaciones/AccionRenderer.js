@@ -79,7 +79,7 @@ class AccionRenderer extends Component {
 
     render() {
         return (
-            <div>{this.renderActions()}</div>
+            <div style={{pointerEvents:"none", opacity:0.5}}>{this.renderActions()}</div>
         );
     }
 };

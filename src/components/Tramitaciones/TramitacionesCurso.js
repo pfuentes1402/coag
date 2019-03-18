@@ -285,7 +285,7 @@ class TramitacionesCurso extends Component {
                             width: '100%',
                             margin: '0px'
                         }}>
-                            {this.props.data &&
+                            {this.props.data && this.props.data.length > 0 &&
                                 <AgGridReact id="table-grid"
                                     columnDefs={this.state.columnDefs}
                                     context={this.state.context}
