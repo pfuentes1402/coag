@@ -125,9 +125,43 @@ class Agentes extends Component {
   }
 
   async crearTrabajo() {
-    if (await this.addTrabajoEncomenda()) {
-      this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+    await this.setState({ isLoading: true });
+    try {
+      let encomenda = this.state.encomenda;
+      let encomendaActual = encomenda.EncomendaActual && encomenda.EncomendaActual.length > 0
+        ? encomenda.EncomendaActual[0] : null;
+
+      if (encomendaActual) {
+        let trabajoEncomenda = {
+          Id_Tipo_Grupo_Tematico: encomendaActual.Id_Tipo_Grupo_Tematico,
+          Id_Tipo_Autorizacion_Municipal: encomendaActual.Id_Tipo_Autorizacion_Municipal,
+          Id_Tipo_Fase: 1,
+          Id_Tipo_Trabajo: 219,
+          Id_Tipo_Tramite: 0,
+          Colegiados: encomenda.Colegiados,
+          Promotores: encomenda.Promotores,
+          IgnorarObservaciones: 1
+        };
+
+        //Obtener el id de expediente del estado de redux y llamar la funcion
+        let currentExpId = encomendaActual.Id_Expediente;
+        let result = await manageEncomenda(currentExpId, trabajoEncomenda);
+        if (result.status === 200) {
+          this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
+          return;
+        }
+        else if (result.MensajesProcesado && result.MensajesProcesado.length > 0)
+          this.props.fetchErrorExpediente(result);
+        else if (result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0)
+          this.props.fetchErrorExpediente(result.data);
+        await this.setState({ isLoading: false });
+      }
+    } catch (e) {
+      await this.setState({ isLoading: false });
+      this.props.fetchErrorExpediente(formatMenssage(e.message));
     }
+
+
   }
 
   handleClose = () => {

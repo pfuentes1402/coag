@@ -53,7 +53,6 @@ class MenuProyectoEjecucion extends Component {
 
 
   handleClick(idEstructura) {
-
     let newIdEstructura = this.state.estructurasAbiertas;
     let pos = this.state.estructurasAbiertas.indexOf(idEstructura)
     if (pos === -1) {
@@ -62,6 +61,10 @@ class MenuProyectoEjecucion extends Component {
       newIdEstructura.splice(pos, 1)
     }
     this.setState(state => ({ estructurasAbiertas: newIdEstructura, openEstructura: state.openEstructura === idEstructura ? -1 : idEstructura }));
+    if (pos === -1) {
+      let estructuraPadre = this.props.estructurasPadre ? this.props.estructurasPadre.find(e => e.Titulo === idEstructura) : "";
+      this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
+    }
   };
 
 
@@ -85,11 +88,7 @@ class MenuProyectoEjecucion extends Component {
               return <List key={'menu-' + position} component="div" disablePadding>
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
                   <div>
-                    <ListItem button onClick={() => {
-                      this.handleClick(estructura);
-                      //TODO: ver con dayni
-                      this.props.changeEstructura(estructura.Id_Estructura, estructura.Titulo, estructura)
-                    }} className={`${classes.item} pl-5`} >
+                    <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`} >
                       <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')} />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
