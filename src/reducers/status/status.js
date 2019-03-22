@@ -5,41 +5,47 @@ import {
     SHOW_UPLOAD,
     HIDE_UPLOAD,
     FETCH_FILES,
-    FETCH_DONE
+    FETCH_DONE,
+    SET_FETCHING_DONE
 } from "../../actions/expedientes/types";
 import {
     FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL,
     OCULTACAMBIAESTADOMODAL, SHOWBUSCADOR, SHOWACCIONES, BUTTON_ADD
 } from "../../actions/interfaz/types"
-import {GOEXPEDIENTES} from "../../actions/usuarios/types"
-import {PURGE} from 'redux-persist';
+import { GOEXPEDIENTES } from "../../actions/usuarios/types"
+import { PURGE } from 'redux-persist';
 
 const initialState =
-    {
-        showUploadFiles: false,
-        loading: true,
-        modalAcciones: false,
-        selectedAction: 0,
-        modalLoading: true,
+{
+    showUploadFiles: false,
+    loading: true,
+    modalAcciones: false,
+    selectedAction: 0,
+    modalLoading: true,
 
-        modal: false, muestraFiltros: true,
-        contenedorAdd: false,
-        contenedorPromo: false,
-        showUpload:true,
-        files: {
-            uploadInProgress: false,
-            fetchingDone:false,
-            pendingUploadList: [],
-            uploadLength: 0,
-            currentUpload:null,
-            currentUploadItem:null
-        },
-    };
+    modal: false, muestraFiltros: true,
+    contenedorAdd: false,
+    contenedorPromo: false,
+    showUpload: true,
+    files: {
+        uploadInProgress: false,
+        fetchingDone: false,
+        pendingUploadList: [],
+        uploadLength: 0,
+        currentUpload: null,
+        currentUploadItem: null
+    },
+};
 
 
 const reducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case SET_FETCHING_DONE:
+            let newState = {...state};
+            newState.files.fetchingDone = false;
+            return newState;
+            
         case SHOW_UPLOAD:
             return {
                 ...state,
@@ -59,7 +65,7 @@ const reducer = (state = initialState, action) => {
                     uploadLength: action.payload.uploadLength,
                     currentUpload: action.payload.currentUpload,
                     currentUploadItem: action.payload.currentUploadItem,
-                    fetchingDone:action.payload.fetchingDone
+                    fetchingDone: action.payload.fetchingDone
                 },
             };
 

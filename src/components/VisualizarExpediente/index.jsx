@@ -21,7 +21,8 @@ import MenuOption from './Trabajos/ProyectoEjecucion/menuProyectoEjecucion';
 import {
   getExpedienteDatosGeneral, getEstructuraDocumental,
   moveFileFromTemporalToStructure, deleteExpediente,
-  postExpedienteAccion, deleteTrabajo, closeTrabajo
+  postExpedienteAccion, deleteTrabajo, closeTrabajo,
+  moveFileToStructure
 } from '../../api';
 import { fetchErrorExpediente, formatMenssage } from "../../actions/expedientes";
 import { groupBy, filter } from 'lodash';
@@ -160,12 +161,12 @@ class VisualizarExpediente extends Component {
         await this.setState({ isLoadEstructura: false, estructuraDocumental: [] });
       }
       else {
-          estructurasNivel1 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 1 });
-          estructurasNivel2 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 2 });
-          groupEstructura = groupBy(estructurasNivel2, "Titulo_Padre");
-          for(let i = 0; i < estructurasNivel1.length; i++){
-              estructuraChildrens[estructurasNivel1[i].Titulo] = groupEstructura[estructurasNivel1[i].Titulo] ? groupEstructura[estructurasNivel1[i].Titulo] : estructurasNivel1[i];
-          }
+        estructurasNivel1 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 1 });
+        estructurasNivel2 = filter(response.EstructurasDocumentales, { "Nivel_Documentacion": 2 });
+        groupEstructura = groupBy(estructurasNivel2, "Titulo_Padre");
+        for (let i = 0; i < estructurasNivel1.length; i++) {
+          estructuraChildrens[estructurasNivel1[i].Titulo] = groupEstructura[estructurasNivel1[i].Titulo] ? groupEstructura[estructurasNivel1[i].Titulo] : estructurasNivel1[i];
+        }
         await this.setState({ estructuraDocumental: estructuraChildrens, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
       }
     }
@@ -402,7 +403,7 @@ class VisualizarExpediente extends Component {
           onClick={() => this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={()=>{this.handleExpandMenu()}} className="pl-3 pr-2">
+        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 pr-2">
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -410,7 +411,7 @@ class VisualizarExpediente extends Component {
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {this.state.expediente.Trabajos.map((trabajo, index) => {
-              return <MenuOption key={index}
+              return <MenuOption key={`menu_item_${index}`}
                 changeOption={(idTrabajo) => {
                   this.handleChangeMenuOption(idTrabajo);
                   this.switcToolbar(2);
@@ -435,23 +436,56 @@ class VisualizarExpediente extends Component {
       </List>
     );
   }
-  async moveItemTo(target) {
 
+  async moveItemTo(target) {
     let item = this.state.dragging
     try {
-      let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
-      if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-        this.props.fetchErrorExpediente(response);
-        return false
-      } else {
-        return true
+      if (item.temporalFiles) {
+        await this.moveFileToTemporal(target, item.temporalFiles);
+        await this.moveFileToEstructure(target, item.files);
+        return true;
       }
+      else {
+        await this.moveFileTo(target, item);
+        return true;
+      }
+      
     } catch (error) {
       this.props.fetchErrorExpediente("Error de comunicación con la API");
       return false
     }
-
   }
+
+  async moveFileTo(target, item) {
+    let response = await moveFileFromTemporalToStructure(target.Id_Expediente, target.Id_Trabajo, target.Id_Estructura, item.Nombre)
+    if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+      this.props.fetchErrorExpediente(response);
+      return false
+    } else {
+      return true
+    }
+  }
+
+  async moveFileToTemporal(target, files) {
+    for (let i = 0; i < files.length; i++) {
+      let element = files[i];
+      await this.moveFileTo(target, element)
+    }
+  }
+
+  async moveFileToEstructure(target, files) {
+    if(files.length === 0) return true;
+    let dataPost = { Archivos: files.map(element => {return {id_estructura: element.Id_Estructura}}) };
+    let response = await moveFileToStructure(target.Id_Expediente,
+      target.Id_Trabajo, target.Id_Estructura, dataPost);
+    if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+      this.props.fetchErrorExpediente(response);
+      return false
+    } else {
+      return true
+    }
+  }
+
   dragging(action) {
     this.setState({ dragging: action })
   }
@@ -490,9 +524,9 @@ class VisualizarExpediente extends Component {
 
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
-                : (this.state.renderComponent === "ExpedienteGeneral" 
-                ? <ExpedienteGeneral expediente={expediente} />                
-                : <TrabajoEjecucion
+                : (this.state.renderComponent === "ExpedienteGeneral"
+                  ? <ExpedienteGeneral expediente={expediente} />
+                  : <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                     expediente={expediente}
                     trabajo={this.state.idTrabajoActivo}

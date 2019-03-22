@@ -47,26 +47,41 @@ class MenuProyectoEjecucion extends Component {
     this.state = {
       openExcecutionMenu: this.props.active,
       openEstructura: false,
-      estructurasAbiertas: []
+      estructurasAbiertas: [],
     }
   }
 
-
   handleClick(idEstructura) {
+    this.expandExtructure(idEstructura, true);
+  };
+
+  async handleDragFiles(idEstructura) {
+    if (this.props.dragTarget)
+      this.expandExtructure(idEstructura, false, true);
+  }
+
+  expandExtructure(idEstructura, load = false, onlyOpen = false) {
     let newIdEstructura = this.state.estructurasAbiertas;
     let pos = this.state.estructurasAbiertas.indexOf(idEstructura)
-    if (pos === -1) {
-      newIdEstructura.push(idEstructura)
-    } else {
-      newIdEstructura.splice(pos, 1)
+    if (onlyOpen) {
+      if (pos === -1) {
+        newIdEstructura.push(idEstructura)
+      }
     }
+    else {
+      if (pos === -1) {
+        newIdEstructura.push(idEstructura)
+      } else {
+        newIdEstructura.splice(pos, 1)
+      }
+    }
+
     this.setState(state => ({ estructurasAbiertas: newIdEstructura, openEstructura: state.openEstructura === idEstructura ? -1 : idEstructura }));
-    if (pos === -1) {
+    if (load) {
       let estructuraPadre = this.props.estructurasPadre ? this.props.estructurasPadre.find(e => e.Titulo === idEstructura) : "";
       this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
     }
-  };
-
+  }
 
   render() {
     let { classes } = this.props;
@@ -87,8 +102,9 @@ class MenuProyectoEjecucion extends Component {
               let estructuraActual = this.props.estructuraDocumental[estructura];
               return <List key={'menu-' + position} component="div" disablePadding>
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
-                  <div>
-                    <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`} >
+                  <div onDragEnter={() => this.handleDragFiles(estructura)}
+                    onDragEnd={() => { alert() }}>
+                    <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
                       <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')} />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
@@ -104,8 +120,7 @@ class MenuProyectoEjecucion extends Component {
                             className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                               (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : classes.greyColor))}
                             onDragOver={() => { this.setState({ drop: pos }) }} button
-                            onClick={() => { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}
-                          >
+                            onClick={() => { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
                             <ListItemIcon style={{ marginRight: 0, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 && classes.green)}>
                               {children.Estado_Visual === 0 ? <Close /> : (children.Estado_Visual === 1 ? <Check /> : <Block />)}

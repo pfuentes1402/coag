@@ -25,6 +25,8 @@ import { Tabs, Tab } from '@material-ui/core';
 import Organismo from './addOrganismo';
 import Person from './addPerson';
 import SearchAgente from '../search';
+import { getBuscador } from '../../../api';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   marginPanel: {
@@ -105,6 +107,10 @@ const styles = theme => ({
   },
   percentage: {
     border: "none"
+  },
+  readOnly:{
+    pointerEvents:"none",
+    opacity:0.5
   }
 });
 
@@ -157,7 +163,7 @@ class Promotores extends Component {
       totalPages: 4,
       encomenda: this.props.encomenda,
       percentage: "",
-      percentageEdit: false,
+      percentageEdit: false
     }
   }
 
@@ -197,8 +203,17 @@ class Promotores extends Component {
     }
   }
 
-  editPromotor() {
-    this.setState({ percentageEdit: true })
+  async editPromotor(nif, option) {
+    this.setState({ percentageEdit: true,canSearch: false })
+    let promotor = this.props.encomenda.Promotores.find(x => x.Nif === nif);
+    if (promotor){
+      let search = await getBuscador(promotor.Nif, "Promotores", 1, 10);
+      if(search.data && search.data.Promotores && search.data.Promotores.length > 0){
+        let findedPromotor = search.data.Promotores[0];
+        findedPromotor.Porcentaje = promotor.Porcentaje;
+        this.handleSelectAgent(findedPromotor);
+      }
+    }
   }
 
   handleChangePercentage = nif => event => {
@@ -302,7 +317,8 @@ class Promotores extends Component {
   }
 
   renderTabsPromotor = () => {
-    return <Paper>
+    let {classes} = this.props;
+    return <Paper className={`${this.props.match.params.modificado? classes.readOnly : ""}`}>
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
@@ -313,8 +329,8 @@ class Promotores extends Component {
         <Tab label={<Translate id="languages.agentes.titlePersona" />} />
         <Tab label={<Translate id="languages.agentes.titleOrganismo" />} />
       </Tabs>
-      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} />}
-      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value + 1 === this.state.editPromotorData.Id_Tipo_Entidad ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
+      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} />}
+      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
     </Paper>
   }
 
@@ -349,4 +365,4 @@ Promotores.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(Promotores)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withLocalize(withStyles(styles)(Promotores))));

@@ -62,15 +62,20 @@ export const fetchExpedienteSelected = (response) => ({
 });
 export const resetUpladStates = (show) =>
     async (dispatch) => {
-        dispatch(fetchFiles(false,[],0,null,null,true));
+        dispatch(fetchFiles(false, [], 0, null, null, true));
     };
-export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength,currentUpload=null,currentUploadItem=null,fetchingDone=false,) => (
+export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength, currentUpload = null, currentUploadItem = null, fetchingDone = false, ) => (
     {
         type: types.FETCH_FILES,
-        payload: {uploadInProgress, pendingUploadList, uploadLength,currentUpload,currentUploadItem,fetchingDone}
+        payload: { uploadInProgress, pendingUploadList, uploadLength, currentUpload, currentUploadItem, fetchingDone }
     });
 
-
+export const dispatchSetFetchingDone = () =>
+    (dispatch) => {
+        dispatch({
+            type: types.SET_FETCHING_DONE,
+        });
+    };
 // export const fetchUploadFiles = (uploadInProgress, pendingUploadList, uploadLength) => (
 //     {
 //         type: types.FETCH_UPLOAD_FILES,
@@ -86,75 +91,75 @@ export const hideUploadComponent = () => (
         type: types.HIDE_UPLOAD,
 
     });
-export const uploadFiles = (acceptedFiles,toEstructura,expediente,trabajo,estructura=false) =>
-    async (dispatch,getState) => {
-      try {
-          let files = []
+export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo, estructura = false) =>
+    async (dispatch, getState) => {
+        try {
+            let files = []
 
-          acceptedFiles.forEach(file => {
-              files.push({
-                  filename: file.name,
-                  data: file
-              })
-          });
-          if (files.length === 0)
-              return null;
-          let newList = [...files]
-          dispatch(fetchFiles(true, files, files.length));//estan almacenados en el reducer de status
-          for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
-              let item = files[i];
+            acceptedFiles.forEach(file => {
+                files.push({
+                    filename: file.name,
+                    data: file
+                })
+            });
+            if (files.length === 0)
+                return null;
+            let newList = [...files]
+            dispatch(fetchFiles(true, files, files.length));//estan almacenados en el reducer de status
+            for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
+                let item = files[i];
 
-              try{
-                  p = p.then(_ => new Promise(async (resolve,reject) => {
-                          try {
-                              newList.splice(0, 1);
-                              let currentUpload=i+1;
-                              let currentUploadItem= item;
-                              let pendingUploadList= newList;
-                              dispatch(fetchFiles(true, pendingUploadList, files.length,currentUpload,currentUploadItem,false));//estan almacenados en el reducer de status
-                              let response = toEstructura?
-                                  await api.uploadFile(expediente.Id_Expediente, trabajo,estructura.id, item) :
-                                  await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
-                              if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                                  throw {success:false,response}
-                              } else {
-                                  if (newList.length === 0) {
-                                      dispatch(resetUpladStates());//estan almacenados en el reducer de status
+                try {
+                    p = p.then(_ => new Promise(async (resolve, reject) => {
+                        try {
+                            newList.splice(0, 1);
+                            let currentUpload = i + 1;
+                            let currentUploadItem = item;
+                            let pendingUploadList = newList;
+                            dispatch(fetchFiles(true, pendingUploadList, files.length, currentUpload, currentUploadItem, false));//estan almacenados en el reducer de status
+                            let response = toEstructura ?
+                                await api.uploadFile(expediente.Id_Expediente, trabajo, estructura.id, item) :
+                                await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
+                            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                                throw { success: false, response }
+                            } else {
+                                if (newList.length === 0) {
+                                    dispatch(resetUpladStates());//estan almacenados en el reducer de status
 
-                                      /*await b.setState({
-                                          uploadInProgress: false
-                                      });*/
-                                      // setTimeout(async ()=>{
-                                      //     await this.loadInformation()
-                                      // },1000) todo: Esto hay que mandar a hacerlo desde el componente
-                                  }
-                              }
-                          } catch (e) {
-                              dispatch(resetUpladStates())
-                              dispatch(fetchErrorExpediente(e.response))
-                              reject({success:false})
-                          }
+                                    /*await b.setState({
+                                        uploadInProgress: false
+                                    });*/
+                                    // setTimeout(async ()=>{
+                                    //     await this.loadInformation()
+                                    // },1000) todo: Esto hay que mandar a hacerlo desde el componente
+                                }
+                            }
+                        } catch (e) {
+                            dispatch(resetUpladStates())
+                            dispatch(fetchErrorExpediente(e.response))
+                            reject({ success: false })
+                        }
 
-                          resolve({success:true})
+                        resolve({ success: true })
 
-                      }
-                  ));
-                 // if (p.success==false){
-                 //     console.log('jodio')
-                 //     dispatch(fetchErrorExpediente(p.response))
-                 // }
+                    }
+                    ));
+                    // if (p.success==false){
+                    //     console.log('jodio')
+                    //     dispatch(fetchErrorExpediente(p.response))
+                    // }
 
 
-              }catch (e) {
-                  dispatch(fetchErrorExpediente(e.response))
-                  return e
-              }
-          }
-          dispatch(resetUpladStates())
+                } catch (e) {
+                    dispatch(fetchErrorExpediente(e.response))
+                    return e
+                }
+            }
+            dispatch(resetUpladStates())
 
-      }catch (e) {
+        } catch (e) {
             return e
-      }
+        }
 
     };
 
@@ -227,7 +232,7 @@ export const fetchFiltroUsuario = (filtro, tipoBusqueda) => ({
 *filtro: cadena a buscar
 *tipoBusqueda: expediente,trabajos, colegiados, promotores
 */
-export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
+export const fetchBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 100000) =>
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
@@ -242,7 +247,7 @@ export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
         }
 
         dispatch(fetchFiltroUsuario(temp, temp2));
-        try{
+        try {
             let searchResult = await getBuscador(temp, tipoBusqueda, page, pageSize);
             searchResult.data.MensajesProcesado && searchResult.data.MensajesProcesado.length > 0
                 ?
@@ -250,7 +255,7 @@ export const fetchBuscador = (filtro, tipoBusqueda, page=1, pageSize=100000) =>
                 :
                 dispatch(fetchDataResults(searchResult, tipoBusqueda));
             return searchResult;
-        } catch(error){
+        } catch (error) {
             dispatch(fetchErrorExpediente(formatMenssage(error.message)));
         }
     };
@@ -329,15 +334,15 @@ export const updateAddress = (address) =>
 */
 export const fetchexpedientesUser = () =>
     async (dispatch) => {
-    try {
-        let response = await expedientesuser();
-        response.MensajesProcesado && response.MensajesProcesado.length > 0
-            ? dispatch(fetchErrorExpediente(response))
-            : dispatch(fetchSuccess(response.Expedientes));
+        try {
+            let response = await expedientesuser();
+            response.MensajesProcesado && response.MensajesProcesado.length > 0
+                ? dispatch(fetchErrorExpediente(response))
+                : dispatch(fetchSuccess(response.Expedientes));
 
-    }catch (error) {
-        dispatch(fetchErrorExpediente(formatMenssage(error.message)));
-    }
+        } catch (error) {
+            dispatch(fetchErrorExpediente(formatMenssage(error.message)));
+        }
     };
 /**
  * Insertar nuevo expediente con emplazamientos
@@ -526,7 +531,7 @@ export const postAddTrabajoEncomenda = (idExpediente, dataPost) => async (dispat
                 : dispatch(dispatchAddTrabajoEncomendaExpediente(response.data));
             return response.data.MensajesProcesado.length === 0;
         }
-        else if(response.response){
+        else if (response.response) {
             let dataResponse = response.response.data;
             dataResponse.MensajesProcesado && dataResponse.MensajesProcesado.length > 0
                 ? dispatch(fetchErrorExpediente(dataResponse))

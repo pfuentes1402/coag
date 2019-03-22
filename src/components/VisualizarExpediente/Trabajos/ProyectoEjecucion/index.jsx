@@ -128,8 +128,8 @@ const mapDispatchToProps =
     resetUploadStates: actionsExpedientes.resetUpladStates,
     showUploadComponent: actionsExpedientes.showUploadComponent,
     hideUploadComponent: actionsExpedientes.hideUploadComponent,
-    formatMessage: actionsExpedientes.formatMenssage
-
+    formatMessage: actionsExpedientes.formatMenssage,
+    dispatchSetFetchingDone: actionsExpedientes.dispatchSetFetchingDone
 };
 
 class TrabajoEjecucion extends Component {
@@ -138,8 +138,10 @@ class TrabajoEjecucion extends Component {
     }
     async reloadAfther1Second() {
         await setTimeout(() => {
-            if (this.props.fileUpload.fetchingDone)
+            if (this.props.fileUpload.fetchingDone) {
                 this.loadInformation()
+                this.props.dispatchSetFetchingDone();
+            }
         }, 500)
     }
 
@@ -173,8 +175,6 @@ class TrabajoEjecucion extends Component {
     }
     async onDrop(acceptedFiles) {
         let expediente = this.props.expediente.Expediente[0];
-
-
         if (this.props.estructura) {
             await this.props.uploadFiles(acceptedFiles, true, expediente, this.props.trabajo, this.props.estructura)
         } else {
@@ -402,6 +402,12 @@ class TrabajoEjecucion extends Component {
         let temporalFiles = this.state.temporalFiles ? this.state.temporalFiles.filter((item) => item.checked) : []
         let files = this.state.data ? this.state.data.filter((item) => item.checked) : []
         return { files, temporalFiles }
+    }
+
+    getSelectedItems() {
+        let temporalFiles = this.state.temporalFiles ? this.state.temporalFiles.filter((item) => item.checked) : []
+        let files = this.state.data ? this.state.data.filter((item) => item.checked) : []
+        return files.concat(temporalFiles);
     }
 
     async handleRemove() {
@@ -973,13 +979,12 @@ class TrabajoEjecucion extends Component {
                     </div>
                 </div>
                 {this.state.fetchingCenter ?
-                    <Paper>
+                    <Paper style={{ marginLeft: -10 }} className="mt-3">
                         <Grid container spacing={24}>
                             <Grid item xs={12} className='p-3 text-center'>
                                 <CircularProgress />
                             </Grid>
                         </Grid>
-
                     </Paper> :
                     <Grid container spacing={16}>
                         {
@@ -989,177 +994,199 @@ class TrabajoEjecucion extends Component {
                                         <Grid item xs={12} style={{ paddingLeft: 2, paddingBottom: 2 }}>
                                             {
                                                 this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                    return (<div draggable="true"
-                                                        className={'draggable'}
-                                                        onDragEnd={() => { this.props.dragging(false) }}
-                                                        onDragStart={() => { this.props.dragging(item) }}
-                                                        style={{ backgroundColor: '#cecece' }}
-                                                    ><ExpansionPanel classes={{ root: classes.rootPanel }}
-                                                        expanded={this.state.panelExpanded === item.Nombre}
-                                                        onChange={this.expandPanel(item.Nombre, false)}
-                                                        style={{ borderRadius: 0 }}>
-                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} classes={{ content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}
-                                                                className="pl-0">
-                                                                <Grid container spacing={0}>
-                                                                    <Grid item md={6} xs={6} className='d-flex align-items-center'>
-                                                                        <Checkbox
-                                                                            checked={item.checked ? item.checked : false}
-                                                                            onChange={this.handleChange("checked", pos, 'temporalFiles')}
-                                                                            value={item.Nombre}
-                                                                        />
-                                                                        <Typography className={classes.orange}>{item.Nombre}</Typography>
-                                                                    </Grid>
-                                                                    <Grid item md={3} xs={3} className="align-self-center">
-                                                                        <Typography className={classes.orange}>
-                                                                            <Translate id="languages.fileUpload.unAssigned" />
-                                                                        </Typography>
-                                                                    </Grid>
-                                                                    <Grid item md={2} xs={2} className="text-right align-self-center">
-                                                                        <ErrorOutline className={classes.orange} size={24} />
-                                                                    </Grid>
-                                                                </Grid>
-                                                            </ExpansionPanelSummary>
-                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
-                                                                <Grid container spacing={16}>
-                                                                    <Grid item xs={6} className="align-items-center">
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={12}>
-                                                                                <Typography variant="button" gutterBottom className="text-uppercase">
-                                                                                    <Translate id="languages.fileUpload.fileSize" />
-                                                                                </Typography>
-                                                                            </Grid>
-
+                                                    return (
+                                                        <div draggable="true"
+                                                            className={'draggable'}
+                                                            onDragEnd={() => { this.props.dragging(false) }}
+                                                            onDragStart={() => {
+                                                                let allFiles = this.itemsToRemove();
+                                                                if (!item.checked)
+                                                                    allFiles.temporalFiles.push(item);
+                                                                this.props.dragging(allFiles)
+                                                            }}
+                                                            style={{ backgroundColor: '#cecece' }}
+                                                        ><ExpansionPanel classes={{ root: classes.rootPanel }}
+                                                            expanded={this.state.panelExpanded === item.Nombre}
+                                                            onChange={this.expandPanel(item.Nombre, false)}
+                                                            style={{ borderRadius: 0 }}>
+                                                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} classes={{ content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}
+                                                                    className="pl-0">
+                                                                    <Grid container spacing={0}>
+                                                                        <Grid item md={6} xs={6} className='d-flex align-items-center'>
+                                                                            <Checkbox
+                                                                                checked={item.checked ? item.checked : false}
+                                                                                onChange={this.handleChange("checked", pos, 'temporalFiles')}
+                                                                                value={item.Nombre}
+                                                                            />
+                                                                            <Typography className={classes.orange}>{item.Nombre}</Typography>
+                                                                        </Grid>
+                                                                        <Grid item md={3} xs={3} className="align-self-center">
+                                                                            <Typography className={classes.orange}>
+                                                                                <Translate id="languages.fileUpload.unAssigned" />
+                                                                            </Typography>
+                                                                        </Grid>
+                                                                        <Grid item md={2} xs={2} className="text-right align-self-center">
+                                                                            <ErrorOutline className={classes.orange} size={24} />
                                                                         </Grid>
                                                                     </Grid>
-                                                                    <Grid item xs={4} className="align-self-center">
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={12}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    {this.renderSize(item.Longitud)}
-                                                                                </Typography>
-                                                                            </Grid>
+                                                                </ExpansionPanelSummary>
+                                                                <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
+                                                                    <Grid container spacing={16}>
+                                                                        <Grid item xs={6} className="align-items-center">
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={12}>
+                                                                                    <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                        <Translate id="languages.fileUpload.fileSize" />
+                                                                                    </Typography>
+                                                                                </Grid>
 
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                        <Grid item xs={4} className="align-self-center">
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={12}>
+                                                                                    <Typography variant="button" gutterBottom>
+                                                                                        {this.renderSize(item.Longitud)}
+                                                                                    </Typography>
+                                                                                </Grid>
+
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                        <Grid item xs={2} className="align-self-center">
                                                                         </Grid>
                                                                     </Grid>
-                                                                    <Grid item xs={2} className="align-self-center">
-                                                                    </Grid>
-                                                                </Grid>
 
-                                                            </ExpansionPanelDetails>
-                                                        </ExpansionPanel></div>)
+                                                                </ExpansionPanelDetails>
+                                                            </ExpansionPanel></div>)
                                                 })
                                             }
                                             {
                                                 this.state.data.map((item, pos) => {
-                                                    return (<ExpansionPanel key={'file-' + pos} classes={{ root: classes.rootPanel }}
-                                                        expanded={this.state.panelExpanded === item.Id_Estructura}
-                                                        onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
-                                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} classes={{ content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}
-                                                            className="pl-0">
-                                                            <Grid container spacing={0}>
-                                                                <Grid item xs={6} className='d-flex align-items-center'>
-                                                                    <Checkbox
-                                                                        checked={item.checked ? item.checked : false}
-                                                                        onChange={this.handleChange("checked", pos, 'data')}
-                                                                        value={item.Archivo}
-                                                                    />
-                                                                    <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
-                                                                        {item.Archivo}
-                                                                    </Typography>
+                                                    return (<div draggable="true"
+                                                        className={'draggable'}
+                                                        onDragEnd={() => { this.props.dragging(false); }}
+                                                        onDragStart={() => {
+                                                            let allFiles = this.itemsToRemove();
+                                                            if (!item.checked)
+                                                                allFiles.files.push(item);
+                                                            this.props.dragging(allFiles);
+                                                        }}
+                                                        style={{ backgroundColor: '#cecece' }}>
+                                                        <ExpansionPanel classes={{ root: classes.rootPanel }}
+                                                            expanded={this.state.panelExpanded === item.Id_Estructura}
+                                                            onChange={this.expandPanel(item.Archivo, item.Id_Estructura)}>
+                                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
+                                                                classes={{ content: classes.margin, expanded: classes.margin, root: pos % 2 !== 0 && classes.backgroundColor }}
+                                                                className="pl-0">
+                                                                <Grid container spacing={0}>
+                                                                    <Grid item xs={6} className='d-flex align-items-center'>
+                                                                        <Checkbox
+                                                                            checked={item.checked ? item.checked : false}
+                                                                            onChange={this.handleChange("checked", pos, 'data')}
+                                                                            value={item.Archivo}
+                                                                        />
+                                                                        <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                            {item.Archivo}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                    <Grid item xs={3} className="align-self-center">
+                                                                        <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                            {item.Carpeta}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                    <Grid item xs={2} className="text-right align-self-center">
+                                                                        {item.Requisitos_Firma_Completos ?
+                                                                            <CheckCircle className={classes.green} /> :
+                                                                            <Close className={classes.red} />
+                                                                        }
+                                                                    </Grid>
                                                                 </Grid>
-                                                                <Grid item xs={3} className="align-self-center">
-                                                                    <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
-                                                                        {item.Carpeta}
-                                                                    </Typography>
-                                                                </Grid>
-                                                                <Grid item xs={2} className="text-right align-self-center">
-                                                                    {item.Requisitos_Firma_Completos ?
-                                                                        <CheckCircle className={classes.green} /> :
-                                                                        <Close className={classes.red} />
-                                                                    }
-                                                                </Grid>
-                                                            </Grid>
-                                                        </ExpansionPanelSummary>
-                                                        <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
-                                                            {this.state.loadingDetallesArchivo ? <CircularProgress /> :
-                                                                <Grid container spacing={16}>
-                                                                    <Grid item xs={12}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography variant="button" gutterBottom className="text-uppercase">
-                                                                                    <Translate id="languages.fileUpload.fileSize" />
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography gutterBottom>
-                                                                                    {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.renderSize(this.state.detallesArchivo.Archivos[0].Longitud) : ""}
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid item xs={12}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography variant="button" gutterBottom className="text-uppercase">
-                                                                                    <Translate id="languages.fileUpload.lastLocation" />
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography gutterBottom>
-                                                                                    {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Fecha : ""}
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid item xs={12}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    <Translate id="languages.fileUpload.fileFirms" />
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid item xs={6}>
-                                                                                <List className="pt-0">
-                                                                                    {
-                                                                                        this.state.detallesArchivo && this.state.detallesArchivo.FirmasDigitales && this.state.detallesArchivo.FirmasDigitales.length > 0 ? this.state.detallesArchivo.FirmasDigitales.map((fd, pos) => {
-                                                                                            if (fd.Id_Archivo === item.Id_Archivo) {
-                                                                                                return (
-                                                                                                    <ListItem className="pt-0 pb-2 px-0">
-                                                                                                        <ListItemText
-                                                                                                            primary={fd.Nombre} />
-                                                                                                    </ListItem>)
-                                                                                            } else {
-                                                                                                return "";
-                                                                                            }
-                                                                                        }) :
-                                                                                            <ListItem>
-                                                                                                <ListItemText primary="--" />
-                                                                                            </ListItem>
-                                                                                    }
-                                                                                </List>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    </Grid>
-                                                                    <Grid item xs={12}>
-                                                                        <Grid container spacing={0}>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography variant="button" gutterBottom>
-                                                                                    <Translate id="languages.fileUpload.requiredFirms" />
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                            <Grid item xs={6}>
-                                                                                <Typography gutterBottom>
-                                                                                    {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Firmas_Requeridas : ""}
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    </Grid>
 
-                                                                </Grid>
-                                                            }
+                                                            </ExpansionPanelSummary>
+                                                            <ExpansionPanelDetails className={pos % 2 !== 0 && classes.backgroundColor}>
+                                                                {this.state.loadingDetallesArchivo
+                                                                    ? <CircularProgress />
+                                                                    : <Grid container spacing={6}>
+                                                                        <Grid item xs={12}>
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                        <Translate id="languages.fileUpload.fileSize" />
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography gutterBottom>
+                                                                                        {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.renderSize(this.state.detallesArchivo.Archivos[0].Longitud) : ""}
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        </Grid>
 
-                                                        </ExpansionPanelDetails>
-                                                    </ExpansionPanel>)
+                                                                        <Grid item xs={12}>
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography variant="button" gutterBottom className="text-uppercase">
+                                                                                        <Translate id="languages.fileUpload.lastLocation" />
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography gutterBottom>
+                                                                                        {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Fecha : ""}
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        </Grid>
+
+                                                                        <Grid item xs={12}>
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography variant="button" gutterBottom>
+                                                                                        <Translate id="languages.fileUpload.fileFirms" />
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                                <Grid item xs={6}>
+                                                                                    <Grid item xs={12} className="pt-0">
+                                                                                        {
+                                                                                            this.state.detallesArchivo &&
+                                                                                                this.state.detallesArchivo.FirmasDigitales &&
+                                                                                                this.state.detallesArchivo.FirmasDigitales.length > 0
+                                                                                                ? this.state.detallesArchivo.FirmasDigitales.map((fd, pos) => {
+                                                                                                    return fd.Id_Archivo === item.Id_Archivo
+                                                                                                        ? <div className="pt-0 pb-2 px-0">
+                                                                                                            <ListItemText
+                                                                                                                primary={fd.Nombre} />
+                                                                                                        </div>
+                                                                                                        : ""
+                                                                                                })
+                                                                                                : <div>
+                                                                                                    <ListItemText primary="--" />
+                                                                                                </div>
+                                                                                        }
+                                                                                    </Grid>
+
+                                                                                </Grid>
+
+                                                                            </Grid>
+                                                                        </Grid>
+
+                                                                        <Grid item xs={12}>
+                                                                            <Grid container spacing={0}>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography variant="button" gutterBottom>
+                                                                                        <Translate id="languages.fileUpload.requiredFirms" />
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                                <Grid item xs={6}>
+                                                                                    <Typography gutterBottom>
+                                                                                        {this.state.detallesArchivo && this.state.detallesArchivo.Archivos && this.state.detallesArchivo.Archivos[0] ? this.state.detallesArchivo.Archivos[0].Firmas_Requeridas : ""}
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </Grid>}
+                                                            </ExpansionPanelDetails>
+                                                        </ExpansionPanel>
+                                                    </div>);
                                                 })
                                             }
                                         </Grid>

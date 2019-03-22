@@ -39,6 +39,7 @@ export const FETCH_FILES = 'FETCH_FILES';
 export const FETCH_DONE = 'FETCH_DONE';
 export const SHOW_UPLOAD = 'SHOW_UPLOAD';
 export const HIDE_UPLOAD = 'HIDE_UPLOAD';
+export const SET_FETCHING_DONE = 'SET_FETCHING_DONE';
 
 export const TABLE_PERSONALIZATION = 'TABLE_PERSONALIZATION';
 
