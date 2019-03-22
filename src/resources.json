@@ -77,6 +77,10 @@
                 "Añadir y guardar",
                 "Añadir y guardar"
             ],
+            "editSave":[
+                "Modificar y guardar",
+                "Modificar y guardar"
+            ],
             "delete":[
                 "Eliminar",
                 "Eliminar"

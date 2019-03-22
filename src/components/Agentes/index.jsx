@@ -80,7 +80,14 @@ class Agentes extends Component {
         let currentExpId = encomendaActual.Id_Expediente;
         let result = await manageEncomenda(currentExpId, trabajoEncomenda);
         if (ignorarObservations === 0) {
-          this.setState({ verificationMessages: result.data.MensajesProcesado, isLoading: false })
+          this.setState({
+            verificationMessages: result.MensajesProcesado 
+            ? result.MensajesProcesado 
+            : result.data.MensajesProcesado 
+            ? result.data.MensajesProcesado 
+            : [], 
+            isLoading: false
+          })
           this.openVerification(true);
           return;
         }

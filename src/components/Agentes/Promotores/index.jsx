@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Grid } from '@material-ui/core';
+import { Grid, LinearProgress } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import {
   fetchErrorExpediente,
@@ -108,9 +108,9 @@ const styles = theme => ({
   percentage: {
     border: "none"
   },
-  readOnly:{
-    pointerEvents:"none",
-    opacity:0.5
+  readOnly: {
+    pointerEvents: "none",
+    opacity: 0.5
   }
 });
 
@@ -163,7 +163,8 @@ class Promotores extends Component {
       totalPages: 4,
       encomenda: this.props.encomenda,
       percentage: "",
-      percentageEdit: false
+      percentageEdit: false,
+      editing: false
     }
   }
 
@@ -189,7 +190,7 @@ class Promotores extends Component {
     let arrayPromotores = objectPromotores.Promotores;
     if (promotor) {
       let index = arrayPromotores.findIndex(x => x.Nif === promotor.Nif);
-      promotor.Porcentaje = promotor.Porcentaje ? promotor.Porcentaje : 0;
+      promotor.Porcentaje = promotor.porcentaje ? promotor.porcentaje : 0;
       promotor.PorcentajesEquitativos = promotor.PorcentajesEquitativos ? 1 : 0;
       if (index === -1) {
         arrayPromotores.push(promotor);
@@ -204,16 +205,17 @@ class Promotores extends Component {
   }
 
   async editPromotor(nif, option) {
-    this.setState({ percentageEdit: true,canSearch: false })
+    this.setState({ percentageEdit: true, canSearch: false, editing: true })
     let promotor = this.props.encomenda.Promotores.find(x => x.Nif === nif);
-    if (promotor){
+    if (promotor) {
       let search = await getBuscador(promotor.Nif, "Promotores", 1, 10);
-      if(search.data && search.data.Promotores && search.data.Promotores.length > 0){
+      if (search.data && search.data.Promotores && search.data.Promotores.length > 0) {
         let findedPromotor = search.data.Promotores[0];
-        findedPromotor.Porcentaje = promotor.Porcentaje;
+        findedPromotor["porcentaje"] = promotor.Porcentaje;
         this.handleSelectAgent(findedPromotor);
       }
     }
+    this.setState({ editing: false });
   }
 
   handleChangePercentage = nif => event => {
@@ -244,6 +246,18 @@ class Promotores extends Component {
 
   handleSelectAgent(agent) {
     this.setState({ editPromotorData: agent, showAddPromotor: true, value: agent.Id_Tipo_Entidad - 1 });
+  }
+
+  isReadOnly() {
+    let modification = this.props.match.params.modificado ? true : false;
+    let exist = false;
+    if (this.state.encomenda.Promotores) {
+      exist = this.state.editPromotorData
+        ? this.state.encomenda.Promotores.some(x => x.Nif === this.state.editPromotorData.Nif)
+        : false;
+      return modification && exist;
+    }
+    return false;
   }
 
   renderSelection = () => {
@@ -317,8 +331,9 @@ class Promotores extends Component {
   }
 
   renderTabsPromotor = () => {
-    let {classes} = this.props;
-    return <Paper className={`${this.props.match.params.modificado? classes.readOnly : ""}`}>
+    let { classes } = this.props;
+    let isReadOnly = this.isReadOnly();
+    return <Paper className={`xx${this.props.match.params.modificado ? classes.readOnly : ""}`}>
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
@@ -326,11 +341,11 @@ class Promotores extends Component {
         textColor="primary"
         scrollable
         scrollButtons="auto">
-        <Tab label={<Translate id="languages.agentes.titlePersona" />} />
-        <Tab label={<Translate id="languages.agentes.titleOrganismo" />} />
+        <Tab label={<Translate id="languages.agentes.titlePersona" />} disabled={this.state.value === 1}/>
+        <Tab label={<Translate id="languages.agentes.titleOrganismo" />} disabled={this.state.value === 0}/>
       </Tabs>
-      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} />}
-      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} />}
+      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} readOnly={isReadOnly} />}
+      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} readOnly={isReadOnly} />}
     </Paper>
   }
 
@@ -346,7 +361,8 @@ class Promotores extends Component {
         </Grid>
 
         <Grid item xs={12} >
-          {this.state.showAddPromotor ? this.renderTabsPromotor() : ""}
+          {this.state.editing && <LinearProgress />}
+          {this.state.showAddPromotor && this.renderTabsPromotor()}
         </Grid>
       </Grid>
     );

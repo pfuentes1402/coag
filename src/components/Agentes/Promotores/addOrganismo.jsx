@@ -31,6 +31,10 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
     },
+    readOnly: {
+      pointerEvents: "none",
+      opacity: 0.5
+    }
 })
 
 const mapStateToProps = (state) => (
@@ -154,7 +158,7 @@ class AddOrganismo extends Component{
                 <Grid container spacing={16}>
                     <Grid item xs={12} >
 
-                        <div className="p-3">
+                        <div className={`p-3 ${this.props.readOnly && classes.readOnly}`}>
                             <Typography variant="subtitle1" gutterBottom>
                                 <Translate id="languages.agentes.titleDatosOrganismo"/>
                             </Typography>
@@ -257,7 +261,7 @@ class AddOrganismo extends Component{
                                 </Grid>
                             </Grid>
                         </div>
-                        <div className="p-3">
+                        <div className={`p-3 ${this.props.readOnly && classes.readOnly}`}>
                             <Typography variant="subtitle1" gutterBottom className="pb-3">
                                 <Translate id="languages.agentes.titleContacto"/>
                             </Typography>
@@ -470,7 +474,7 @@ class AddOrganismo extends Component{
                                 </Translate>
                             </FormControl>
                         </div>
-                        <div className={classes.divGrey}>
+                        <div className={`${classes.divGrey} ${this.props.readOnly && classes.readOnly}`}>
                             <Translate>
                                 {({ translate }) =><FormControlLabel className="ml-0 mr-0"
                                                                      control={
@@ -509,7 +513,7 @@ class AddOrganismo extends Component{
                                 </Translate>
                             </FormControl>
                         </div>
-                        <div className="p-3">
+                        <div className={`p-3 ${this.props.readOnly && classes.readOnly}`}>
                             <Translate>
                                 {({ translate }) =><FormControlLabel className="ml-0 mr-0 align-items-start text-justify"
                                                                      control={
@@ -531,7 +535,10 @@ class AddOrganismo extends Component{
                             </Button>
                             <Button type="submit" variant="contained" size="small" color="primary" className={classes.button}
                                     disabled={!this.state.checkedLey}>
-                                <Translate id="languages.generalButton.addedSave"/>
+                                {this.props.readOnly ?
+                                    <Translate id="languages.generalButton.editSave" />
+                                    : <Translate id="languages.generalButton.addedSave" />
+                                }
                             </Button>
                         </div>
 
