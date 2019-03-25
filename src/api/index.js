@@ -988,7 +988,7 @@ export const getUrlDownladOneFile = async (idExpediente, idTrabajo, archivo) => 
   }
 }
 export const download = async (urlFile, fileName) => {
-  let response = await axios.get(urlFile, {
+  let response = await api.get(urlFile, {
     responseType: 'blob'
   })
   const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -997,7 +997,6 @@ export const download = async (urlFile, fileName) => {
   link.setAttribute('download', fileName);
   document.body.appendChild(link);
   link.click();
-
 }
 
 
@@ -1039,6 +1038,15 @@ export const deleteTrabajo = async (idExpediente, idTrabajo) => {
 export const closeTrabajo = async (idExpediente, idTrabajo) => {
   try {
     let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/cerrartrabajo`, { "ignorarobservaciones": 1 })
+    return result.data;
+  } catch (error) {
+    return formatMenssage(error.message);
+  }
+}
+
+export const fileViewer = async (idExpediente, idTrabajo, idEstructura) => {
+  try {
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${idEstructura}/InfoArchivovisualizacion`)
     return result.data;
   } catch (error) {
     return formatMenssage(error.message);

@@ -16,6 +16,7 @@ import {
     Divider
 } from '@material-ui/core';
 
+
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/Check';
@@ -32,7 +33,7 @@ import { connect } from "react-redux";
 import { Translate, withLocalize } from "react-localize-redux";
 import { getDetallesArchivo } from "../../../../api";
 import { red, green, orange } from '@material-ui/core/colors';
-import { PanoramaFishEye, Lens } from '@material-ui/icons'
+import { PanoramaFishEye, Lens, PictureAsPdf } from '@material-ui/icons'
 import { getTiposTramite, putFichaTrabajo } from "../../../../api";
 import '../../../Tramitaciones/estados.css';
 import { formatMenssage } from "../../../../actions/expedientes";
@@ -95,6 +96,10 @@ const styles = theme => ({
         '&:focus': {
             borderColor: theme.palette.primary.main,
         },
+    },
+    link: {
+        color: theme.palette.primary.main,
+        cursor: "pointer"
     },
     black: {
         fontWeight: 700
@@ -170,7 +175,8 @@ class TrabajoEjecucion extends Component {
             detallesArchivo: null,
             loadingDetallesArchivo: false,
             tiposTramites: [],
-            loadingUpdateFichaTrabajo: false
+            loadingUpdateFichaTrabajo: false,
+            temporalFiles: []
         }
     }
     async onDrop(acceptedFiles) {
@@ -184,67 +190,6 @@ class TrabajoEjecucion extends Component {
             uploadInProgress: true
         })
     }
-    //
-    // async onDrop(acceptedFiles) {
-    //     let files = []
-    //     acceptedFiles.forEach(file => {
-    //         files.push({
-    //             filename: file.name,
-    //             data: file
-    //         })
-    //     });
-    //     if (files.length === 0)
-    //         return null;
-    //     await this.setState({
-    //         uploadInProgress: true,
-    //         pendingUploadList: files,
-    //         uploadLength: files.length
-    //     });
-    //     let b = this;
-    //     for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
-    //         let item = files[i];
-    //         p = p.then(_ => new Promise(async resolve => {
-    //
-    //                 try {
-    //                     let newList = [...b.state.pendingUploadList]
-    //                     newList.splice(0, 1);
-    //                     await b.setState({
-    //                         currentUpload: i + 1,
-    //                         currentUploadItem: item,
-    //                         pendingUploadList: newList,
-    //                     });
-    //                     let response = this.props.estructura ? await api.uploadFile(b.state.expediente.Id_Expediente, b.props.trabajo, b.props.estructura.id, item) : await api.uploadFileToTemporalFolder(b.state.expediente.Id_Expediente, item);
-    //                     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-    //                         this.props.fetchErrorExpediente(response);
-    //                         this.abortUpload()
-    //                     } else {
-    //
-    //                         if (newList.length === 0) {
-    //                             await b.setState({
-    //                                 uploadInProgress: false
-    //                             });
-    //                             setTimeout(async ()=>{
-    //                                 await this.loadInformation()
-    //                             },1000)
-    //
-    //
-    //                         }
-    //                     }
-    //                 } catch (e) {
-    //                     this.props.fetchErrorExpediente(formatMenssage(e.message));
-    //                    this.abortUpload()
-    //                 }
-    //
-    //                 resolve()
-    //
-    //             }
-    //         ));
-    //     }
-    //
-    //
-    // }
-
-
     abortUpload() {
         this.setState({
             uploadInProgress: false,
@@ -352,7 +297,9 @@ class TrabajoEjecucion extends Component {
 
     };
     handleCheckAll = () => async event => {
+
         let tf = [...this.state.temporalFiles];
+        console.log("", tf);
         tf.map(item => {
             item.checked = event.target.checked;
         });
@@ -543,7 +490,6 @@ class TrabajoEjecucion extends Component {
             }
             if (temporalFiles.length) {
                 let arrayArchivos = [];
-
                 temporalFiles.map(item => {
                     arrayArchivos.push({ Nombre: item.Nombre })
                     return null
@@ -603,6 +549,24 @@ class TrabajoEjecucion extends Component {
                 await this.setState({ fetchingAutoAsign: false })
                 this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(e.message));
             }
+        }
+    }
+
+    async handleDocumentView(file) {
+        try {
+            let expediente = this.props.expediente.Expediente[0];
+            let response = file.Id_Estructura
+                ? await api.fileViewer(expediente.Id_Expediente, this.props.trabajo, file.Id_Estructura)
+                : await api.getUrlDownladFilesTempFolder(expediente.Id_Expediente, [{ Nombre: file.Nombre }])
+
+            if (response.Archivos && response.Archivos.length > 0) {
+                window.open(response.Archivos[0].Url, "_blank");
+            }
+            else if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                this.props.fetchErrorExpediente(response);
+            }
+        } catch (error) {
+            this.props.fetchErrorExpediente(formatMenssage(error));
         }
     }
 
@@ -691,6 +655,15 @@ class TrabajoEjecucion extends Component {
             this.setState({ loadingUpdateFichaTrabajo: false });
 
         }
+    }
+
+    dragStart = (item, temporal) => (event) => {
+        let allFiles = this.itemsToRemove();
+        if (!item.checked && temporal)
+            allFiles.temporalFiles.push(item);
+        if (!item.checked && !temporal)
+            allFiles.files.push(item);
+        this.props.dragging(allFiles)
     }
 
     renderFichaTrabajo() {
@@ -998,12 +971,7 @@ class TrabajoEjecucion extends Component {
                                                         <div draggable="true"
                                                             className={'draggable'}
                                                             onDragEnd={() => { this.props.dragging(false) }}
-                                                            onDragStart={() => {
-                                                                let allFiles = this.itemsToRemove();
-                                                                if (!item.checked)
-                                                                    allFiles.temporalFiles.push(item);
-                                                                this.props.dragging(allFiles)
-                                                            }}
+                                                            onDragStart={this.dragStart(item, true)}
                                                             style={{ backgroundColor: '#cecece' }}
                                                         ><ExpansionPanel classes={{ root: classes.rootPanel }}
                                                             expanded={this.state.panelExpanded === item.Nombre}
@@ -1054,6 +1022,12 @@ class TrabajoEjecucion extends Component {
                                                                         </Grid>
                                                                         <Grid item xs={2} className="align-self-center">
                                                                         </Grid>
+
+                                                                        <Grid item xs={12}>
+                                                                            <span className={classes.link} onClick={() => this.handleDocumentView(item)}>
+                                                                                <Translate id="languages.fileUpload.viewDocument" />
+                                                                            </span>
+                                                                        </Grid>
                                                                     </Grid>
 
                                                                 </ExpansionPanelDetails>
@@ -1065,12 +1039,7 @@ class TrabajoEjecucion extends Component {
                                                     return (<div draggable="true"
                                                         className={'draggable'}
                                                         onDragEnd={() => { this.props.dragging(false); }}
-                                                        onDragStart={() => {
-                                                            let allFiles = this.itemsToRemove();
-                                                            if (!item.checked)
-                                                                allFiles.files.push(item);
-                                                            this.props.dragging(allFiles);
-                                                        }}
+                                                        onDragStart={this.dragStart(item, false)}
                                                         style={{ backgroundColor: '#cecece' }}>
                                                         <ExpansionPanel classes={{ root: classes.rootPanel }}
                                                             expanded={this.state.panelExpanded === item.Id_Estructura}
@@ -1182,6 +1151,11 @@ class TrabajoEjecucion extends Component {
                                                                                     </Typography>
                                                                                 </Grid>
                                                                             </Grid>
+                                                                        </Grid>
+                                                                        <Grid item xs={12}>
+                                                                            <span className={classes.link} onClick={() => this.handleDocumentView(item)}>
+                                                                                <Translate id="languages.fileUpload.viewDocument" />
+                                                                            </span>
                                                                         </Grid>
                                                                     </Grid>}
                                                             </ExpansionPanelDetails>

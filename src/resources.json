@@ -742,6 +742,10 @@
             "uploadingProgress":[
                 "Subiendo archivo",
                 "Subiendo archivo"
+            ],
+            "viewDocument":[
+                "Ver documento",
+                "Ver documento"
             ]
         },
         "messages":{
