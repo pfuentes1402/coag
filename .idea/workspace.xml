@@ -414,7 +414,7 @@
       <workItem from="1552915945438" duration="1204000" />
       <workItem from="1552940442366" duration="228000" />
       <workItem from="1553286583440" duration="658000" />
-      <workItem from="1553522368917" duration="14000" />
+      <workItem from="1553522368917" duration="43000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -490,7 +490,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="261514000" />
+    <option name="totallyTimeSpent" value="261543000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
