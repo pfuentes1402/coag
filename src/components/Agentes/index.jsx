@@ -81,11 +81,11 @@ class Agentes extends Component {
         let result = await manageEncomenda(currentExpId, trabajoEncomenda);
         if (ignorarObservations === 0) {
           this.setState({
-            verificationMessages: result.MensajesProcesado 
-            ? result.MensajesProcesado 
-            : result.data.MensajesProcesado 
-            ? result.data.MensajesProcesado 
-            : [], 
+            verificationMessages: result.MensajesProcesado
+              ? result.MensajesProcesado
+              : result.data.MensajesProcesado
+                ? result.data.MensajesProcesado
+                : [],
             isLoading: false
           })
           this.openVerification(true);
@@ -93,7 +93,8 @@ class Agentes extends Component {
         }
 
         //Validación para continuar (si el resultado fue 200 se permite continuar)
-        if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0) {
+        if ((result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length === 0)
+          || result.status === 200) {
           let url = `/visualizar-expediente/${currentExpId}`;
           await this.setState({ isLoading: false });
           this.props.history.push(url);

@@ -32,11 +32,12 @@ const styles = theme => ({
   withoutRadius: {
     borderRadius: 0
   },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-  titleColor:{
-    color: theme.palette.primary.main
+  tableWrapper: {
+    overflowX: 'auto',
+  },
+  titleColor: {
+    color: `${theme.palette.primary.main} !important`,
+    cursor: "pointer"
   }
 });
 
@@ -82,57 +83,58 @@ class ListaTrabajos extends Component {
             <Divider style={{ height: 3 }} />
           </Grid>
         </Grid>
-          <div className={classes.tableWrapper}>
-           <Table className={classes.table}>
-          <TableHead>
-            <TableRow className={classes.headHeight}>
-              <CustomTableHead className="text-uppercase px-3">N</CustomTableHead>
-              <CustomTableHead className="text-uppercase">
-                <Translate id="languages.trabajo.tableColumnTitle" />
-              </CustomTableHead>
-              <CustomTableHead className="pl-3 text-uppercase">
-                <Translate id="languages.trabajo.tableColumnState" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">
-                <Translate id="languages.trabajo.tableColumnEntry" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">
-                <Translate id="languages.trabajo.tableColumnVisado" />
-              </CustomTableHead>
-              <CustomTableHead className="text-uppercase px-3">
-                <Translate id="languages.trabajo.tableColumnInc" />
-              </CustomTableHead>
-            </TableRow>
-          </TableHead>
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow className={classes.headHeight}>
+                <CustomTableHead className="text-uppercase px-3">N</CustomTableHead>
+                <CustomTableHead className="text-uppercase">
+                  <Translate id="languages.trabajo.tableColumnTitle" />
+                </CustomTableHead>
+                <CustomTableHead className="pl-3 text-uppercase">
+                  <Translate id="languages.trabajo.tableColumnState" />
+                </CustomTableHead>
+                <CustomTableHead className="text-uppercase px-3">
+                  <Translate id="languages.trabajo.tableColumnEntry" />
+                </CustomTableHead>
+                <CustomTableHead className="text-uppercase px-3">
+                  <Translate id="languages.trabajo.tableColumnVisado" />
+                </CustomTableHead>
+                <CustomTableHead className="text-uppercase px-3">
+                  <Translate id="languages.trabajo.tableColumnInc" />
+                </CustomTableHead>
+              </TableRow>
+            </TableHead>
 
-          <TableBody className={classes.tableBodyHeight}>
-            {
-              this.props.expediente.Trabajos.length === 0 ?
-                <TableRow>
-                  <TableCell colSpan={6}></TableCell>
-                </TableRow>
-                : this.props.expediente.Trabajos.map((row, index) => {
-                  return (
-                    <TableRow className={classes.row} key={index}>
-                      <TableCell component="th" scope="row" className="px-1 text-center">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className="p-0">
-                        <a href={`/visualizar-expediente/${this.props.expediente.Expediente[0].Id_Expediente}/${row.Id_Trabajo}`}>
+            <TableBody className={classes.tableBodyHeight}>
+              {
+                this.props.expediente.Trabajos.length === 0 ?
+                  <TableRow>
+                    <TableCell colSpan={6}></TableCell>
+                  </TableRow>
+                  : this.props.expediente.Trabajos.map((row, index) => {
+                    return (
+                      <TableRow className={classes.row} key={index}>
+                        <TableCell component="th" scope="row" className="px-1 text-center">
+                          {index + 1}
+                        </TableCell>
+                        <TableCell className="p-0">
+                          <a className={classes.titleColor}
+                            onClick={() => this.props.changeEstructura(row.Id_Trabajo)}>
                             {row.Titulo}
-                        </a>
-                      </TableCell>
-                      <TableCell className="p-3">{row.Estado}</TableCell>
-                      <TableCell className="p-0 text-center">{row.Fecha_Entrada ? moment(row.Fecha_Entrada).format("DD/MM/YYYY") : "-"}</TableCell>
-                      <TableCell className="p-0 text-center">{row.Fecha_Tramitacion ? moment(row.Fecha_Tramitacion).format("DD/MM/YYYY") : "-"}</TableCell>
-                      <TableCell>{row.Incidencias !==  undefined ? row.Incidencias : 0}</TableCell>
-                    </TableRow>
-                  );
-                })
-            }
-          </TableBody>
-        </Table>
-          </div>
+                          </a>
+                        </TableCell>
+                        <TableCell className="p-3">{row.Estado}</TableCell>
+                        <TableCell className="p-0 text-center">{row.Fecha_Entrada ? moment(row.Fecha_Entrada).format("DD/MM/YYYY") : "-"}</TableCell>
+                        <TableCell className="p-0 text-center">{row.Fecha_Tramitacion ? moment(row.Fecha_Tramitacion).format("DD/MM/YYYY") : "-"}</TableCell>
+                        <TableCell>{row.Incidencias !== undefined ? row.Incidencias : 0}</TableCell>
+                      </TableRow>
+                    );
+                  })
+              }
+            </TableBody>
+          </Table>
+        </div>
       </Paper>
     );
   }

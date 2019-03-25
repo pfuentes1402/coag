@@ -449,7 +449,7 @@ class VisualizarExpediente extends Component {
         await this.moveFileTo(target, item);
         return true;
       }
-      
+
     } catch (error) {
       this.props.fetchErrorExpediente("Error de comunicación con la API");
       return false
@@ -474,8 +474,8 @@ class VisualizarExpediente extends Component {
   }
 
   async moveFileToEstructure(target, files) {
-    if(files.length === 0) return true;
-    let dataPost = { Archivos: files.map(element => {return {id_estructura: element.Id_Estructura}}) };
+    if (files.length === 0) return true;
+    let dataPost = { Archivos: files.map(element => { return { id_estructura: element.Id_Estructura } }) };
     let response = await moveFileToStructure(target.Id_Expediente,
       target.Id_Trabajo, target.Id_Estructura, dataPost);
     if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
@@ -525,7 +525,11 @@ class VisualizarExpediente extends Component {
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
                 : (this.state.renderComponent === "ExpedienteGeneral"
-                  ? <ExpedienteGeneral expediente={expediente} />
+                  ? <ExpedienteGeneral expediente={expediente}
+                    changeEstructura={(idTrabajo) => {
+                      this.handleChangeMenuOption(idTrabajo);
+                      this.switcToolbar(2);
+                    }} />
                   : <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                     expediente={expediente}
