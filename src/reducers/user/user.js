@@ -26,7 +26,7 @@ const initialstate = {
   filtroBusqueda: '',
   filtroAcciones: '',
   selectBusqueda: 'expedientes',
-  ultimostrabajos: { Trabajos: [] },
+  ultimostrabajos: { Trabajos: [], Acciones: [] },
   DatosConfiguracionesUsuario: {
     "Id": "",
     "Idioma_Predefinido": 2,

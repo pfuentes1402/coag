@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Container, Row, Col} from 'reactstrap';
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import TramitacionesCurso from './../Tramitaciones/TramitacionesCurso';
 
 class ContenedorExpedientes extends Component {
-    render() {       
+    render() {
         return (
             <div>
                 <Container className="full">
@@ -22,18 +22,9 @@ class ContenedorExpedientes extends Component {
     }
 }
 
-
-
-
 const mapStateToProps = state => ({
     ultimostrabajos: state.user.ultimostrabajos ? state.user.ultimostrabajos : '',
-    idioma: state.localize.languages[0].active===true ? 'es':'gal',
-  });
+    idioma: state.localize.languages[0].active === true ? 'es' : 'gal',
+});
 
-
-  
-  
-
-export default connect(mapStateToProps,{})(ContenedorExpedientes);
-
-
+export default connect(mapStateToProps, {})(ContenedorExpedientes);

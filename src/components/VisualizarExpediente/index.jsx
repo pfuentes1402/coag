@@ -96,7 +96,8 @@ class VisualizarExpediente extends Component {
       estructurasPadre: [],
       isLoadEstructura: false,
       active: false,
-      optionsComponent: this.props.match.params.idTrabajo ? 2 : 1 //Indica si lo seleccionado en Expediente(1), Trabajo(2), Estructura(3)
+      optionsComponent: this.props.match.params.idTrabajo ? 2 : 1, //Indica si lo seleccionado en Expediente(1), Trabajo(2), Estructura(3)
+      presentWork: false
     };
   }
 
@@ -245,12 +246,14 @@ class VisualizarExpediente extends Component {
   }
 
   presentTrabajo = async () => {
+    this.setState({presentWork: true});
     let result = await closeTrabajo(this.props.match.params.id, this.state.idTrabajoActivo);
     if (result.MensajesProcesado && result.MensajesProcesado.length > 0)
       this.props.fetchErrorExpediente(result);
     else {
       this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
     }
+    this.setState({presentWork: false});
   }
 
   getLoa = async () => {
@@ -367,7 +370,7 @@ class VisualizarExpediente extends Component {
                 <Button color="primary" className={classes.button} disabled={true}>
                   <Translate id="languages.generalButton.urgent" /><Notifications />
                 </Button>
-                <Button color="primary" className={classes.button}
+                <Button disabled={this.state.presentWork} color="primary" className={classes.button}
                   onClick={this.presentTrabajo}>
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
