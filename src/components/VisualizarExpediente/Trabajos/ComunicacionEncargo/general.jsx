@@ -9,7 +9,9 @@ class ExpedienteGeneral extends Component {
         return (
             <Grid container spacing={0}>
                 <Grid item md={6} xs={12} >
-                    <FichaExpediente disable={false} expediente={this.props.expediente} sourceExpediente={this.props.expediente.Expediente.length > 0 ? this.props.expediente.Expediente[0] : {}} />
+                    <FichaExpediente disable={false} expediente={this.props.expediente}
+                        sourceExpediente={this.props.expediente.Expediente.length > 0 ? this.props.expediente.Expediente[0] : {}}
+                        updateExpediente={(expediente) => this.props.updateExpediente(expediente)} />
 
                     <TipoExpediente expediente={this.props.expediente} sourceExpediente={this.props.expediente.Expediente.length > 0 ? this.props.expediente.Expediente[0] : {}} />
                 </Grid>

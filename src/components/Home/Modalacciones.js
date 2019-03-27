@@ -195,6 +195,7 @@ class Modalacciones extends Component {
                                                                     value={this.state.text}
                                                                     onChange={this.handleChange('text')}
                                                                     margin="normal"
+                                                                    autoFocus={true}
                                                                 />
                                                             </FormControl>
                                                         </Col>
@@ -251,7 +252,7 @@ class Modalacciones extends Component {
                                     <Divider/>
                                     <Row>
                                         <Col xs={12} className="d-flex">
-                                            <Typography variant="h6" gutterBottom className="pt-2">
+                                            <Typography variant="h6" gutterBottom className="pt-2 mr-1">
                                                 <Translate id="languages.generalText.resultados"/>
                                             </Typography>
                                             <Typography variant="h6" gutterBottom color="primary" className="pt-2">

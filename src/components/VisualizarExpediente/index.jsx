@@ -140,6 +140,15 @@ class VisualizarExpediente extends Component {
     }
   }
 
+  updateExpediente(expedienteData) {
+    if (expedienteData) {
+      this.setState({
+        expediente: expedienteData,
+        currentExpediente: expedienteData.Expediente.length > 0 ? expedienteData.Expediente[0] : null
+      })
+    }
+  }
+
 
   handleExpandMenu() {
     this.setState(state => ({ open: !state.open }));
@@ -246,14 +255,14 @@ class VisualizarExpediente extends Component {
   }
 
   presentTrabajo = async () => {
-    this.setState({presentWork: true});
+    this.setState({ presentWork: true });
     let result = await closeTrabajo(this.props.match.params.id, this.state.idTrabajoActivo);
     if (result.MensajesProcesado && result.MensajesProcesado.length > 0)
       this.props.fetchErrorExpediente(result);
     else {
       this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
     }
-    this.setState({presentWork: false});
+    this.setState({ presentWork: false });
   }
 
   getLoa = async () => {
@@ -321,6 +330,8 @@ class VisualizarExpediente extends Component {
   renderNavBar() {
     let { classes } = this.props;
     let disableActions = this.disableActions();
+    let trabajoActual = this.state.expediente ? this.state.expediente.Trabajos.find(t => t.Id_Trabajo == this.state.idTrabajoActivo) : {};
+    trabajoActual = trabajoActual ? trabajoActual : {};
     return (
       <div className={classes.root}>
         <AppBar position="static" className={`${classes.mainNav} nav-expedient`} color="default">
@@ -364,13 +375,15 @@ class VisualizarExpediente extends Component {
                     </Dropzone>
                 }
                 <Button color="primary" className={classes.button}
+                  disabled={trabajoActual.SePuede_Eliminar === 0}
                   onClick={this.deleteTrabajoExpediente}>
                   <Translate id="languages.generalButton.delete" /><Close />
                 </Button>
                 <Button color="primary" className={classes.button} disabled={true}>
                   <Translate id="languages.generalButton.urgent" /><Notifications />
                 </Button>
-                <Button disabled={this.state.presentWork} color="primary" className={classes.button}
+                <Button disabled={this.state.presentWork || trabajoActual.SePuede_Entregar === 0}
+                  color="primary" className={classes.button}
                   onClick={this.presentTrabajo}>
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
@@ -532,7 +545,8 @@ class VisualizarExpediente extends Component {
                     changeEstructura={(idTrabajo) => {
                       this.handleChangeMenuOption(idTrabajo);
                       this.switcToolbar(2);
-                    }} />
+                    }}
+                    updateExpediente={(expediente) => this.updateExpediente(expediente)} />
                   : <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                     expediente={expediente}

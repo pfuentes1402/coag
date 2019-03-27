@@ -245,6 +245,10 @@ class Promotores extends Component {
   }
 
   handleSelectAgent(agent) {
+    if (agent) {
+      agent["PorcentajesEquitativos"] = 1;
+      agent.porcentaje = agent.porcentaje ? agent.porcentaje : 0;
+    }
     this.setState({ editPromotorData: agent, showAddPromotor: true, value: agent.Id_Tipo_Entidad - 1 });
   }
 
@@ -341,8 +345,8 @@ class Promotores extends Component {
         textColor="primary"
         scrollable
         scrollButtons="auto">
-        <Tab label={<Translate id="languages.agentes.titlePersona" />} disabled={this.state.value === 1}/>
-        <Tab label={<Translate id="languages.agentes.titleOrganismo" />} disabled={this.state.value === 0}/>
+        <Tab label={<Translate id="languages.agentes.titlePersona" />} disabled={this.state.value === 1} />
+        <Tab label={<Translate id="languages.agentes.titleOrganismo" />} disabled={this.state.value === 0} />
       </Tabs>
       {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} readOnly={isReadOnly} />}
       {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} readOnly={isReadOnly} />}

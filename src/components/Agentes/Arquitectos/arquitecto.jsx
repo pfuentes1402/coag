@@ -55,11 +55,11 @@ class FormArquitecto extends Component {
     if (!arquitect.Funciones) {
       arquitect["Funciones"] = [];
       arquitect["Porciento"] = 0;
-      arquitect["percentChecked"] = true;
       arquitect["acceptTerm1"] = false;
       arquitect["acceptTerm2"] = false;
-      this.setState({ arquitecto: arquitect });
     }
+    arquitect["percentChecked"] = true;
+    this.setState({ arquitecto: arquitect });
   }
 
   notifyPropertyChange = (propertyName) => event => {
@@ -159,6 +159,7 @@ class FormArquitecto extends Component {
                   <Grid item xs={5}>
                     <TextField
                       label="%"
+                      disabled={this.state.arquitecto.percentChecked}
                       className={classes.mt0}
                       value={this.state.arquitecto.Porciento}
                       placeholder="Ej 25"
@@ -169,7 +170,7 @@ class FormArquitecto extends Component {
                   <Grid item xs={7}>
                     <FormControlLabel
                       control={
-                        <Checkbox
+                        <Checkbox 
                           checked={this.state.arquitecto.percentChecked}
                           onChange={this.notifyPropertyChange("percentChecked")}
                           color="primary" />

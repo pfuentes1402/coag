@@ -109,6 +109,8 @@ class FichaExpediente extends Component {
     let result = await putExpediente(this.state.sourceExpediente)
     if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
       this.props.fetchErrorExpediente(result.data);
+    }else{
+      this.props.updateExpediente(result.data); 
     }
     this.setState({ isUpdate: false });
   }

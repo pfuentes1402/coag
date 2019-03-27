@@ -116,6 +116,10 @@ const styles = theme => ({
     helperText: {
         textAlign: "end",
         fontWeight: "bold"
+    },
+    disabledContainer: {
+        pointerEvents: "none",
+        opacity: 0.4
     }
 });
 const mapStateToProps = (state) => {
@@ -668,6 +672,8 @@ class TrabajoEjecucion extends Component {
 
     renderFichaTrabajo() {
         let { classes } = this.props;
+        let work = this.state.workDetails && this.state.workDetails.Trabajos && this.state.workDetails.Trabajos.length > 0
+            ? this.state.workDetails.Trabajos[0] : {};
         return <ExpansionPanel expanded={this.state.fichaTrabajoOpen}
             onChange={() => this.setState({ fichaTrabajoOpen: !this.state.fichaTrabajoOpen })}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -675,7 +681,7 @@ class TrabajoEjecucion extends Component {
                     <Typography variant='button'>
                         <Translate id="languages.fileUpload.formWork" />
                     </Typography>
-                    <div>
+                    <div className={`${work.SePuede_Editar !== 1 ? classes.disabledContainer : ""}`}>
                         <Button type="submit" color="primary" onClick={async () => { await this.putFichaTrabajo() }} disabled={this.state.loadingUpdateFichaTrabajo} style={this.state.fichaTrabajoOpen ? {} : { display: "none" }} >
                             <Translate id="languages.generalButton.generalButton" /> <Check />
                         </Button>
@@ -683,7 +689,8 @@ class TrabajoEjecucion extends Component {
                     </div>
                 </div>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails style={{ padding: 0 }}>
+            <ExpansionPanelDetails style={{ padding: 0 }}
+                className={`${work.SePuede_Editar !== 1 ? classes.disabledContainer : ""}`}>
                 <Grid container spacing={0}>
                     <Grid item xs={12}>
                         <Grid container spacing={0} className="py-3 px-4">
@@ -736,7 +743,7 @@ class TrabajoEjecucion extends Component {
                         <Grid container spacing={0} className="p-4">
                             <Grid item xs={3}>
                                 <FormControl className={classes.formControl}>
-                                    <Select
+                                    <Select className={`${work.SePuede_EditarTipoTramite !== 1 ? classes.disabledContainer : ""}`}
                                         value={this.state.workDetails.Trabajos[0].Tipo_Tramite}
                                         displayEmpty
                                         onChange={this.handleChangeFichaTrabajo("Tipo_Tramite")}

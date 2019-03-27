@@ -16,9 +16,9 @@ const mapStateToProps = (state) => {
         errorExpediente: loadErros(state.expedientes.error),
         errorTrabajo: loadErros(state.trabajos.error)
     }
-} 
+}
 
-function loadErros(error){
+function loadErros(error) {
     return error && error.MensajesProcesado ? error.MensajesProcesado : []
 }
 
@@ -60,9 +60,18 @@ class ErrorSnackbars extends React.Component {
                         <Translate id="languages.generalButton.mensaje" />
                     </DialogTitle>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            <ReactQuill value={this.props.errorExpediente.length > 0 ? this.props.errorExpediente[0].Mensaje : (this.props.errorTrabajo.length > 0 ? this.props.errorTrabajo[0].Mensaje : "")} readOnly theme='bubble' />
-                        </DialogContentText>
+                        {this.props.errorExpediente.length > 0
+                            && this.props.errorExpediente.map((error) => {
+                                return <DialogContentText id="alert-dialog-description">
+                                    <ReactQuill value={error.Mensaje} readOnly theme='bubble' />
+                                </DialogContentText>
+                            })}
+                        {this.props.errorTrabajo.length > 0
+                            && this.props.errorTrabajo.map((error) => {
+                                return <DialogContentText id="alert-dialog-description">
+                                    <ReactQuill value={error.Mensaje} readOnly theme='bubble' />
+                                </DialogContentText>
+                            })}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary" autoFocus>
