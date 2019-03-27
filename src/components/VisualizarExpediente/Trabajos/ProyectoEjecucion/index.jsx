@@ -181,6 +181,7 @@ class TrabajoEjecucion extends Component {
     }
     async onDrop(acceptedFiles) {
         let expediente = this.props.expediente.Expediente[0];
+
         if (this.props.estructura) {
             await this.props.uploadFiles(acceptedFiles, true, expediente, this.props.trabajo, this.props.estructura)
         } else {
@@ -575,9 +576,9 @@ class TrabajoEjecucion extends Component {
         if (size < 1048576) {
             return (size / 1024).toFixed(2) + ' Kb'
         } else if (size < 1073741824) {
-            return (size / 1024 / 1024) + ' Mb'
+            return (size / 1024 / 1024).toFixed(2) + ' Mb'
         } else {
-            return (size / 1024 / 1024 / 1024) + ' Gb'
+            return (size / 1024 / 1024 / 1024).toFixed(2) + ' Gb'
         }
 
     }
