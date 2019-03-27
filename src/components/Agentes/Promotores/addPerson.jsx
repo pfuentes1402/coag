@@ -32,8 +32,8 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     readOnly: {
-      pointerEvents: "none",
-      opacity: 0.5
+        pointerEvents: "none",
+        opacity: 0.5
     }
 })
 
@@ -115,10 +115,14 @@ class AddPerson extends Component {
 
     }
 
-    handleChange = name => event => {
+    handleChange = (name, checkedProperty = false) => event => {
         let promotor = {};
         Object.assign(promotor, this.state.promotor);
-        promotor[name] = event.target.value;
+        if (!checkedProperty)
+            promotor[name] = event.target.value;
+        else {
+            promotor[name] = event.target.checked ? 1 : 0;
+        }
         this.setState({ promotor: promotor })
     };
 
@@ -289,8 +293,9 @@ class AddPerson extends Component {
                                         </InputLabel>
                                         <Input
                                             id="porcentaje"
+                                            disabled={this.state.promotor.PorcentajesEquitativos === 1}
                                             placeholder="Ej 25"
-                                            value={this.state.promotor.porcentaje ? this.state.promotor.porcentaje : ""}
+                                            value={this.state.promotor.porcentaje}
                                             onChange={this.handleChange('porcentaje')}
                                             endAdornment={<InputAdornment position="end">%</InputAdornment>}
                                             type="number"
@@ -302,8 +307,8 @@ class AddPerson extends Component {
                                         {({ translate }) => <FormControlLabel className="ml-0 mr-0"
                                             control={
                                                 <Checkbox
-                                                    checked={this.state.promotor.PorcentajesEquitativos ? this.state.promotor.PorcentajesEquitativos : 0}
-                                                    onChange={this.handleChange('PorcentajesEquitativos')}
+                                                    checked={this.state.promotor.PorcentajesEquitativos === 1}
+                                                    onChange={this.handleChange('PorcentajesEquitativos', true)}
                                                     value="PorcentajesEquitativos"
                                                     color="primary"
                                                 />

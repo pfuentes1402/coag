@@ -15,7 +15,7 @@ class TablaDatosModal extends Component {
         super(props);
         this.state =  {
             columnDefs: [
-                {headerName: "COD. EXP", field: "Id_Expediente", width: 93},
+                {headerName: "COD. EXP", field: "Expediente_Codigo", width: 93},
                 {headerName: "TITULO", field: "Titulo", width: 140},
                 {headerName: "F.ENTRADA", field: "Fecha_Entrada", width: 120},
                 {headerName: "MUNICIPIO", field: "Concello", width: 120},
