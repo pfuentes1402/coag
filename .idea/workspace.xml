@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" afterPath="$PROJECT_DIR$/src/components/MenuAppBar/MenuAppBar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/AccionRenderer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" afterPath="$PROJECT_DIR$/src/components/Tramitaciones/TramitacionesCurso.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -191,6 +195,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -234,7 +239,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,6 +414,7 @@
       <workItem from="1552940442366" duration="228000" />
       <workItem from="1553286583440" duration="658000" />
       <workItem from="1553522368917" duration="1298000" />
+      <workItem from="1553695126896" duration="16000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -485,7 +490,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262798000" />
+    <option name="totallyTimeSpent" value="262814000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

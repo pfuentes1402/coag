@@ -49,7 +49,7 @@ class AccionRenderer extends Component {
             case 0:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <EditSharp />
                         </IconButton >
                     </Tooltip>
@@ -58,7 +58,7 @@ class AccionRenderer extends Component {
             case 1:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <Notifications />
                         </IconButton >
                     </Tooltip>
@@ -70,7 +70,7 @@ class AccionRenderer extends Component {
             case 3:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <FileCopy />
                         </IconButton >
                     </Tooltip>
@@ -79,7 +79,7 @@ class AccionRenderer extends Component {
             case 4:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <Input />
                         </IconButton >
                     </Tooltip>
@@ -99,7 +99,7 @@ class AccionRenderer extends Component {
             case 10:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <Notifications />
                         </IconButton >
                     </Tooltip>
@@ -108,7 +108,7 @@ class AccionRenderer extends Component {
             case 11:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <Edit />
                         </IconButton >
                     </Tooltip>
@@ -117,7 +117,7 @@ class AccionRenderer extends Component {
             case 12:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <EditAttributes />
                         </IconButton >
                     </Tooltip>
@@ -126,7 +126,7 @@ class AccionRenderer extends Component {
             case 18:
                 return <span>
                     <Tooltip title={action.Nombre}>
-                        <IconButton disabled={true} className={classes.buttonAction} aria-label="View" color="primary">
+                        <IconButton disabled={false} className={classes.buttonAction} aria-label="View" color="primary">
                             <Input />
                         </IconButton >
                     </Tooltip>
@@ -138,7 +138,7 @@ class AccionRenderer extends Component {
 
     render() {
         return (
-            <div style={{}}>
+            <div disabled="disabled" style={{pointerEvents: "none", opacity: 0.4}}>
                 {this.getWorkActions().map(element => { return this.renderActions(element) })}
             </div>
         );

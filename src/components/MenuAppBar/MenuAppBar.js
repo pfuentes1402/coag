@@ -103,7 +103,7 @@ class MenuAppBar extends React.Component {
                                 <Add className={classes.rightIcon} />
 
                             </Button>
-                            <Button variant="outlined" color="secondary" className={classes.button}>
+                            <Button disabled={true} variant="outlined" color="secondary" className={classes.button}>
                                 <Translate id="languages.header.btnTramitacionLote" />
                                 <Settings className={classes.rightIcon} />
                             </Button>

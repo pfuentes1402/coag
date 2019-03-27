@@ -341,7 +341,7 @@ class VisualizarExpediente extends Component {
               <Button className={classes.button} disabled={true}>
                 <Translate id="languages.generalButton.cancelbuild" /><CancelPresentation className="ml-1" />
               </Button>
-              <Button color="primary" className={classes.button}>
+              <Button disabled={true} color="primary" className={classes.button}>
                 <Translate id="languages.generalButton.download" /> <CloudDownload className="ml-1" />
               </Button>
             </Toolbar>

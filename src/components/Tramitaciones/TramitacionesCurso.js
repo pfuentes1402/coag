@@ -226,7 +226,7 @@ class TramitacionesCurso extends Component {
                     <Col style={styles.col}>
                         <div className={classes.head}>
                             <div className="d-flex p-2">
-                                <Typography variant="h6" gutterBottom className="mb-0">
+                                <Typography variant="h6" gutterBottom className="mb-0 mr-1">
                                     Tramitaciones en Curso
                                 </Typography>
                                 <Typography variant="h6" color="primary" gutterBottom className="mb-0">
