@@ -22,7 +22,6 @@ const initialState =
     modalAcciones: false,
     selectedAction: 0,
     modalLoading: true,
-
     modal: false, muestraFiltros: true,
     contenedorAdd: false,
     contenedorPromo: false,

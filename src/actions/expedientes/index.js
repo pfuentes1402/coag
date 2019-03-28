@@ -97,6 +97,14 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo, es
             let files = []
 
             acceptedFiles.forEach(file => {
+                console.log(file)
+                if (file.name.length>50)
+                    throw "El fichero "+file.name+ ' tiene un nombre mayor a 50 caracteres. Prueba cambiarle el nombre por uno más pequeño.'
+                let topSize = 10 *1024*1024
+                if(file.size>topSize){
+                    let size = renderSize(file.size)
+                    throw "El fichero "+file.name+ ' ('+size+') excede el peso máximo permitido (10 Mb). Pruebe un fiechero más pequeño'
+                }
                 files.push({
                     filename: file.name,
                     data: file
@@ -158,7 +166,8 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo, es
             dispatch(resetUpladStates())
 
         } catch (e) {
-            return e
+            console.log('error!',e)
+            dispatch(fetchErrorExpediente(formatMenssage(e)))
         }
 
     };
@@ -198,10 +207,20 @@ export const cambioContenidoCentral = () => ({
     type: types.CAMBIO_CONTENEDOR_CENTRAL,
 
 });
+let renderSize=function(size) {
+    if (size < 1048576) {
+        return (size / 1024).toFixed(2) + ' Kb'
+    } else if (size < 1073741824) {
+        return (size / 1024 / 1024).toFixed(2) + ' Mb'
+    } else {
+        return (size / 1024 / 1024 / 1024).toFixed(2) + ' Gb'
+    }
 
+}
 /*
 *Obtiene la estructura documental de un trabajo
 */
+
 export const fetchEstructuraDocumental = (id_expediente, idtrabajo) =>
     (dispatch) => {
 
