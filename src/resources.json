@@ -1,11 +1,18 @@
 {
     "languages": {
         "header": {
-            "titleHome": ["INICIO", "INICIO"],
-            "btnNewExpedient": ["Nuevo expediente",
-                "Nuevo expediente"],
-            "btnTramitacionLote": ["Tramitación en lote",
-                "Tramitacion en lote\""]
+            "titleHome": [
+                "INICIO",
+                "INICIO"
+            ],
+            "btnNewExpedient": [
+                "Nuevo expediente",
+                "Nuevo expediente"
+            ],
+            "btnTramitacionLote": [
+                "Tramitación en lote",
+                "Tramitacion en lote\""
+            ]
         },
         "leftMenu": {
             "titleMenu": [
@@ -50,158 +57,165 @@
         "generalButton": {
             "cancel": [
                 "Cancelar",
-                "Cancelar"],
+                "Cancelar"
+            ],
             "search": [
                 "Buscar",
                 "Buscar"
             ],
             "add": [
                 "Agregar",
-                "Agregar"],
+                "Agregar"
+            ],
             "save": [
                 "Guardar",
-                "Guardar"],
+                "Guardar"
+            ],
             "next": [
                 "Siguiente",
-                "Siguiente"],
-            "validate": ["Validar",
-                "Validar"],
+                "Siguiente"
+            ],
+            "validate": [
+                "Validar",
+                "Validar"
+            ],
             "exportCsv": [
                 "Exportar a CSV",
-                "Exportar a CSV"],
-            "added":[
+                "Exportar a CSV"
+            ],
+            "added": [
                 "Añadir",
                 "Añadir"
             ],
-            "addedSave":[
+            "addedSave": [
                 "Añadir y guardar",
                 "Añadir y guardar"
             ],
-            "editSave":[
+            "editSave": [
                 "Modificar y guardar",
                 "Modificar y guardar"
             ],
-            "delete":[
+            "delete": [
                 "Eliminar",
                 "Eliminar"
             ],
-            "getli":[
+            "getli": [
                 "Obtener Li",
                 "Obtener Li"
             ],
-            "getloa":[
+            "getloa": [
                 "Obtener Loa",
                 "Obtener Loa"
             ],
-            "cancelbuild":[
+            "cancelbuild": [
                 "Renunciar obra",
                 "Renunciar obra"
             ],
-            "download":[
+            "download": [
                 "Descargar",
                 "Descargar"
             ],
-            "annadirNuevo":[
+            "annadirNuevo": [
                 "Añadir Nuevo",
                 "Añadir Nuevo"
             ],
-            "crearTrabajo":[
+            "crearTrabajo": [
                 "Crear trabajo",
                 "Crear trabajo"
             ],
-            "volver":[
-              "Volver",
-              "Volver"
+            "volver": [
+                "Volver",
+                "Volver"
             ],
-            "finalizar":[
-              "Finalizar",
-              "Finalizar"
+            "finalizar": [
+                "Finalizar",
+                "Finalizar"
             ],
-            "masInfo":[
+            "masInfo": [
                 "Más info",
                 "Más info"
             ],
-            "aceptar":[
+            "aceptar": [
                 "Aceptar",
                 "Aceptar"
             ],
-            "mensaje":[
+            "mensaje": [
                 "Mensaje",
                 "Mensaje"
             ],
-            "backExpedient":[
+            "backExpedient": [
                 "Regresar al expediente",
                 "Regresar al expediente"
             ],
-            "addEncomenda":[
+            "addEncomenda": [
                 "Agregar encomenda",
                 "Agregar encomenda"
             ],
-            "edit":[
+            "edit": [
                 "Editar",
                 "Editar"
             ],
-            "uploadFile":[
+            "uploadFile": [
                 "Subir Archivo",
                 "Subir Archivo"
             ],
-            "urgent":[
+            "urgent": [
                 "Urgente",
                 "Urgente"
             ],
-            "present":[
+            "present": [
                 "Presentar",
                 "Presentar"
             ],
-            "addFile":[
+            "addFile": [
                 "Añadir archivo",
                 "Añadir archivo"
             ],
-            "generalButton":[
+            "generalButton": [
                 "Aplicar cambios",
                 "Aplicar cambios"
             ],
-            "yes":[
+            "yes": [
                 "Si",
                 "Si"
             ],
-            "no":[
+            "no": [
                 "No",
                 "No"
             ]
         },
         "generalAddress": {
-            "domicilio":[
+            "domicilio": [
                 "DOMICILIO",
                 "DOMICILIO"
             ],
-            "calle":[
+            "calle": [
                 "CALLE",
                 "CALLE"
             ],
-            "piso":[
+            "piso": [
                 "PISO",
                 "PISO"
             ],
-            "provincia":[
+            "provincia": [
                 "provincia",
                 "provincia"
             ],
-            "municipio":[
+            "municipio": [
                 "municipio",
                 "municipio"
             ],
-            "region":[
+            "region": [
                 "REGIÓN",
                 "REGIÓN"
             ],
-            "pais":[
+            "pais": [
                 "PAÍS",
                 "PAÍS"
             ]
         },
         "generalText": {
-            "fieldRequired":[
+            "fieldRequired": [
                 "El campo es obligatorio",
                 "El campo es obligatorio"
             ],
@@ -237,91 +251,109 @@
         "expedients": {
             "fieldCodigoExpediente": [
                 "CODIGO EXPEDIENTE",
-                "CODIGO EXPEDENTE"],
+                "CODIGO EXPEDENTE"
+            ],
             "fieldCodigoEstudio": [
                 "CODIGO ESTUDIO",
-                "CODIGO ESTUDIO"],
+                "CODIGO ESTUDIO"
+            ],
             "fieldTitleExp": [
                 "TITULO DEL EXPEDIENTE",
-                "TITULO DEL EXPEDENTE"],
+                "TITULO DEL EXPEDENTE"
+            ],
             "fieldAntecedente": [
                 "ANTECEDENTE",
-                "ANTECEDENTE"],
+                "ANTECEDENTE"
+            ],
             "fieldObservaciones": [
                 "OBSERVACIONES",
-                "OBSERVACIONES"],
+                "OBSERVACIONES"
+            ],
             "helperTextObservaciones": [
                 "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio.",
-                "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio."],
+                "Introduce aquí las observaciones que consideres pertinentes. Estas observaciones solo serán visibles para el estudio."
+            ],
             "labelAddressValidate": [
-            "Ref catastral o coordenadas UTM",
-            "Ref catastral o coordenadas UTM"],
+                "Ref catastral o coordenadas UTM",
+                "Ref catastral o coordenadas UTM"
+            ],
             "helperTextAddressValidate": [
                 "La dirección se proporciona automáticamente",
-                "La dirección se proporciona automáticamente"],
+                "La dirección se proporciona automáticamente"
+            ],
             "fieldAliasDireccion": [
                 "ALIAS DIRECCION",
-                "ALIAS DIRECCION"],
+                "ALIAS DIRECCION"
+            ],
             "helperTextAliasDireccion": [
                 "Introducir un Alias para la dirección",
-                "Introducir un Alias para la dirección"],
+                "Introducir un Alias para la dirección"
+            ],
             "btnGuardarExpediente": [
                 "Guardar y crear expediente",
-                "Guardar y crear expediente"]
+                "Guardar y crear expediente"
+            ]
         },
-        "comunicacionEncargo":{
+        "comunicacionEncargo": {
             "titleEligeTipoExpeiente": [
                 "Elige el tipo de expediente",
-                "Elige el tipo de expediente"],
+                "Elige el tipo de expediente"
+            ],
             "fieldTipoObra": [
                 "TIPO DE OBRA",
-                "TIPO DE OBRA"],
+                "TIPO DE OBRA"
+            ],
             "fieldTipoTramite": [
                 "TIPO DE TRÁMITE",
-                "TIPO DE TRÁMITE"],
+                "TIPO DE TRÁMITE"
+            ],
             "titleVerDescription": [
                 "Ver descripción",
-                "Ver descripción"],
+                "Ver descripción"
+            ],
             "titleTrabajoPosiblesTramitar": [
                 "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido",
-                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido"]
+                "trabajos que es posible tramitar conforme al tipo de expediente y tramitación elegido"
+            ]
         },
-        "agentes":{
-            "tableColumnName":[
-                "Nombre", "Nombre"
+        "agentes": {
+            "tableColumnName": [
+                "Nombre",
+                "Nombre"
             ],
-            "tableColumnFunction":[
-                "Función","Función"
+            "tableColumnFunction": [
+                "Función",
+                "Función"
             ],
             "searchLabelBox": [
                 "Introduce términos de búsqueda",
                 "Introduce términos de búsqueda"
             ],
-            "searchLabelOption":[
+            "searchLabelOption": [
                 "Opción de búsqueda",
                 "Opción de búsqueda"
             ],
-            "search":[
+            "search": [
                 "Buscar",
                 "Buscar"
             ],
-            "firstName":[
+            "firstName": [
                 "Primer Apellido",
                 "Primer Apellido"
             ],
-            "secondName":[
+            "secondName": [
                 "Segundo Apellido",
                 "Segundo Apellido"
             ],
-            "observations":[
+            "observations": [
                 "Observaciones",
                 "Observaciones"
             ],
-            "functionsTitle":[
+            "functionsTitle": [
                 "Funciones compatibles con la tipología",
                 "Funciones compatibles con la tipología"
             ],
-            "percentTitle":[
+            "percentTitle": [
                 "Porcentage",
                 "Porcentage"
             ],
@@ -329,11 +361,11 @@
                 "Porcentaje equitativo con el resto de los Arquitectos",
                 "Porcentaje equitativo con el resto de los Arquitectos"
             ],
-            "conditionTermn1":[
+            "conditionTermn1": [
                 "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables. *",
                 "Declaro formalmente y bajo mi responsabilidad que no desempeño cargo funcional, o en caso de ejercerlo dispongo de las autorizaciones que exigen la Ley de incopatibilidades 53/1984 de 26 de diciembre y reglamentos que sean aplicables. *"
             ],
-            "conditionTermn2":[
+            "conditionTermn2": [
                 "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente. *",
                 "Tal y como se establece en el preámbulo del RD1000/2010 en el caso de que el trabajo que se tramita contenga documentación que no esté sujeta a la exigencia de visado colegial, ese declara que el visado voluntario de dicha documentación se solicita por petición expresa del cliente. *"
             ],
@@ -417,55 +449,55 @@
                 "organismo",
                 "organismo"
             ],
-            "searchValidation":[
+            "searchValidation": [
                 "el criterio de búsqueda es obligatorio",
                 "el criterio de búsqueda es obligatorio"
             ],
-            "agentSectionTitle":[
+            "agentSectionTitle": [
                 "Introducir agentes del expediente",
                 "Introducir agentes del expediente"
             ],
-            "arquitectDataTitle":[
+            "arquitectDataTitle": [
                 "Datos del Arquitecto",
                 "Datos del Arquitecto"
             ],
-            "termsValidation":[
+            "termsValidation": [
                 "Los términos y condiciones son obligatorios",
                 "Los términos y condiciones son obligatorios"
             ]
         },
-        "promotores":{
-            "itemsPerPage":[
+        "promotores": {
+            "itemsPerPage": [
                 "por página",
                 "por página"
             ],
-            "mainTitle":[
+            "mainTitle": [
                 "Promotores",
                 "Promotores"
             ]
         },
-        "fichaExpediente":{
-            "titleFichaExpediente":[
+        "fichaExpediente": {
+            "titleFichaExpediente": [
                 "Ficha expediente",
                 "Ficha expediente"
             ],
-            "titleListaTrabajos":[
+            "titleListaTrabajos": [
                 "Trabajos",
                 "Trabajos"
             ],
-            "labelExpedienteName":[
+            "labelExpedienteName": [
                 "NOMBRE DEL EXPEDIENTE",
                 "NOMBRE DEL EXPEDIENTE"
             ],
-            "requiredField":[
+            "requiredField": [
                 "Este campo es requerido",
                 "Este campo es requerido"
             ],
-            "labelExpedienteCode":[
+            "labelExpedienteCode": [
                 "COD ESTUDIO",
                 "COD ESTUDIO"
             ],
-            "labelExpedienteAnteced":[
+            "labelExpedienteAnteced": [
                 "ANTECEDENTE",
                 "ANTECEDENTE"
             ],
@@ -473,321 +505,328 @@
                 "FECHA ENTRADA",
                 "FECHA ENTRADA"
             ],
-            "labelObservations":[
+            "labelObservations": [
                 "OBSERVACIONES",
                 "OBSERVACIONES"
             ],
-            "titleUbication":[
+            "titleUbication": [
                 "Ubicación",
                 "Ubicación"
             ],
-            "tableLabelStret":[
+            "tableLabelStret": [
                 "Calle/Lugar",
                 "Calle/Lugar"
             ],
-            "tableLabelPiso":[
+            "tableLabelPiso": [
                 "Piso",
                 "Piso"
             ],
-            "tableLabelMunicipe":[
+            "tableLabelMunicipe": [
                 "Municipio",
                 "Municipio"
             ],
-            "labelAlias":[
+            "labelAlias": [
                 "ALIAS UBICACIÓN",
                 "ALIAS UBICACIÓN"
             ],
-            "titleExpedientType":[
+            "titleExpedientType": [
                 "Tipo de expediente",
                 "Tipo de expediente"
             ],
-            "titlePromotors":[
+            "titlePromotors": [
                 "Promotores",
                 "Promotores"
             ],
-            "tableColumnName":[
+            "tableColumnName": [
                 "Nombre",
                 "Nombre"
             ],
-            "titleAgents":[
+            "titleAgents": [
                 "Arquitectos",
                 "Arquitectos"
             ],
-            "tableColumnFunctions":[
+            "tableColumnFunctions": [
                 "Función",
                 "Función"
             ],
-            "editExpOptionTitle":[
+            "editExpOptionTitle": [
                 "Modificar encomenda",
                 "Modificar encomenda"
             ],
-            "addCurrentEncomenda":[
+            "addCurrentEncomenda": [
                 "Adicionar encomenda",
                 "Adicionar encomenda"
             ]
         },
         "search": {
-            "generalTitle":[
+            "generalTitle": [
                 "Búsquedas",
                 "Búsquedas"
             ],
-            "generalDescription":[
+            "generalDescription": [
                 "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos.",
                 "Utiliza el buscador para encontrar expedientes, trabajos, arquitectos, promotores, personas u organismos."
             ],
-            "generalTerm":[
+            "generalTerm": [
                 "Introduce el término de búsqueda",
                 "Introduce el término de búsqueda"
             ]
         },
         "trabajo": {
-            "trabajoTramitarTitle":[
+            "trabajoTramitarTitle": [
                 "Trabajo(s) a tramitar",
                 "Trabajo(s) a tramitar"
             ],
-            "datosEncargo":[
+            "datosEncargo": [
                 "Datos del encargo",
                 "Datos del encargo"
             ],
-            "nuevoTrabajoTitle":[
+            "nuevoTrabajoTitle": [
                 "Nuevo trabajo",
                 "Nuevo trabajo"
             ],
-            "modificacionSustancialTitle":[
+            "modificacionSustancialTitle": [
                 "Modificación sustancial",
                 "Modificación sustancial"
             ],
-            "correccionBasicaTitle":[
+            "correccionBasicaTitle": [
                 "Corrección básica",
-                "Corrección básica"],
-            "previCarpetaTitle":[
+                "Corrección básica"
+            ],
+            "previCarpetaTitle": [
                 "Previsualización de carpetas",
-                "Previsualización de carpetas"],
-            "emptyOption":[
+                "Previsualización de carpetas"
+            ],
+            "emptyOption": [
                 "None",
                 "None"
             ],
-            "tableColumnTitle":[
+            "tableColumnTitle": [
                 "Título del trabajo",
                 "Título del trabajo"
             ],
-            "tableColumnState":[
+            "tableColumnState": [
                 "Estado",
                 "Estado"
             ],
-            "tableColumnEntry":[
+            "tableColumnEntry": [
                 "Entrada",
                 "Entrada"
             ],
-            "tableColumnVisado":[
+            "tableColumnVisado": [
                 "Visado",
                 "Visado"
             ],
-            "tableColumnInc":[
+            "tableColumnInc": [
                 "Inc",
                 "Inc"
             ]
         },
-        "crearTrabajo":{
-            "panelTitle":[
+        "crearTrabajo": {
+            "panelTitle": [
                 "Expediente",
                 "Expediente"
             ],
-            "labelExpedienteType":[
+            "labelExpedienteType": [
                 "Tipo de expediente",
                 "Tipo de expediente"
             ],
-            "tableTitle":[
+            "tableTitle": [
                 "Título trabajo",
                 "Título trabajo"
             ],
-            "tableRequired":[
+            "tableRequired": [
                 "Obligatorio",
                 "Obligatorio"
             ],
-            "tableVisado":[
+            "tableVisado": [
                 "Complejo Visado",
                 "Complejo Visado"
             ],
-            "tableRegistro":[
+            "tableRegistro": [
                 "Complejo Registro",
                 "Complejo Registro"
             ],
-            "tableSelection":[
+            "tableSelection": [
                 "elemento seleccionado",
                 "elemento seleccionado"
             ],
-            "tableSelections":[
+            "tableSelections": [
                 "elementos seleccionados",
                 "elementos seleccionados"
             ],
-            "selectionTitle":[
+            "selectionTitle": [
                 "Seleccionar trabajo(s) a tramitar",
                 "Seleccionar trabajo(s) a tramitar"
             ]
         },
-        "fileUpload":{
-            "noInsertion":[
+        "fileUpload": {
+            "noInsertion": [
                 "no fue insertado.",
                 "no fue insertado."
             ],
-            "successInsertion":[
+            "successInsertion": [
                 "fue insertado en la estructura",
                 "fue insertado en la estructura"
             ],
-            "filesInFolder":[
+            "filesInFolder": [
                 "Archivos de carpeta",
                 "Archivos de carpeta"
             ],
-            "filesOfWork":[
+            "filesOfWork": [
                 "Archivos de trabajo",
                 "Archivos de trabajo"
             ],
-            "addFiles":[
+            "addFiles": [
                 "Añadir archivos",
                 "Añadir archivos"
             ],
-            "automaticSection":[
+            "automaticSection": [
                 "Asignación automática",
                 "Asignación automática"
             ],
-            "fileName":[
+            "fileName": [
                 "Nombre del Archivo",
                 "Nombre del Archivo"
             ],
-            "lastModification":[
+            "lastModification": [
                 "Última modificación",
                 "Última modificación"
             ],
-            "folder":[
+            "folder": [
                 "Carpeta",
                 "Carpeta"
             ],
-            "firm":[
+            "firm": [
                 "Firma",
                 "Firma"
             ],
-            "unAssigned":[
+            "unAssigned": [
                 "Sin Asignar",
                 "Sin Asignar"
             ],
-            "fileSize":[
+            "fileSize": [
                 "Tamaño del archivo",
                 "Tamaño del archivo"
             ],
-            "lastLocation":[
+            "lastLocation": [
                 "Última ubicación",
                 "Última ubicación"
             ],
-            "fileFirms":[
+            "fileFirms": [
                 "Firmas del archivo",
                 "Firmas del archivo"
             ],
-            "requiredFirms":[
+            "requiredFirms": [
                 "Firmas requeridas",
                 "Firmas requeridas"
             ],
-            "noResult":[
+            "noResult": [
                 "No hay resultados a mostrar",
                 "No hay resultados a mostrar"
             ],
-            "formWork":[
+            "formWork": [
                 "ficha del trabajo",
                 "ficha del trabajo"
             ],
-            "complementaryTitle":[
+            "complementaryTitle": [
                 "Título complementario",
                 "Título complementario"
             ],
-            "entryDate":[
+            "entryDate": [
                 "Fecha de entrada",
                 "Fecha de entrada"
             ],
-            "state":[
+            "state": [
                 "Estado",
                 "Estado"
             ],
-            "visaDate":[
+            "visaDate": [
                 "Fecha de Visado",
                 "Fecha de Visado"
             ],
-            "newWork":[
+            "newWork": [
                 "Nuevo Trabajo",
                 "Nuevo Trabajo"
             ],
-            "modification":[
+            "modification": [
                 "Modificación Sustancial",
                 "Modificación Sustancial"
             ],
-            "basicCorection":[
+            "basicCorection": [
                 "Corrección Básica",
                 "Corrección Básica"
             ],
-            "expedientType":[
+            "expedientType": [
                 "Tipo de expediente",
                 "Tipo de expediente"
             ],
-            "documentation":[
+            "documentation": [
                 "Documentación de",
                 "Documentación de"
             ],
-            "hideAclarations":[
+            "hideAclarations": [
                 "Ocultar aclaraciones de contenido",
                 "Ocultar aclaraciones de contenido"
             ],
-            "showAclarations":[
+            "showAclarations": [
                 "Mostrar aclaraciones de contenido",
                 "Mostrar aclaraciones de contenido"
             ],
-            "uploadingProgress":[
+            "uploadingProgress": [
                 "Subiendo archivo",
                 "Subiendo archivo"
             ],
-            "viewDocument":[
+            "viewDocument": [
                 "Ver documento",
                 "Ver documento"
+            ],
+            "administrationSend": [
+                "Envío Administración",
+                "Envío Administración"
+            ],
+            "administrativeNotification": [
+                "Notificación administrativa",
+                "Notificación administrativa"
             ]
         },
-        "messages":{
-            "comunicationValidation":[
+        "messages": {
+            "comunicationValidation": [
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada",
                 "No existen trabajos asociados para al tipo de obra y la tramitación urbanística seleccionada"
             ],
-            "trabajosSelectionValidate":[
+            "trabajosSelectionValidate": [
                 "Debe seleccionar al menos un trabajo",
                 "Debe seleccionar al menos un trabajo"
             ],
-            "filesDeleteMessage":[
+            "filesDeleteMessage": [
                 "Debe seleccionar al menos un archivo para eliminar",
                 "Debe seleccionar al menos un archivo para eliminar"
             ],
-            "fetchError":[
+            "fetchError": [
                 "Error procesando la petición",
                 "Error procesando la petición"
             ],
-            "noEncomenda":[
+            "noEncomenda": [
                 "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo.",
                 "No contiene encomenda creada. Para agregar trabajos a un expediente antes tiene que agregar su comunicación de encargo."
             ],
-            "noLi":[
+            "noLi": [
                 "No existe LI para este expediente.",
                 "No existe LI para este expediente."
             ],
-            "noLoa":[
+            "noLoa": [
                 "No existe LOA para este expediente.",
                 "No existe LOA para este expediente."
             ],
-            "loginFailed":[
+            "loginFailed": [
                 "Error de usuario o contraseña",
                 "Error de usuario o contraseña"
             ],
-            "aceptConcents":[
+            "aceptConcents": [
                 "¿Aún así desea continuar?",
                 "¿Aún así desea continuar?"
             ]
         }
     }
 }
-
-
-

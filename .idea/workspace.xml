@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -413,7 +412,7 @@
       <workItem from="1553522368917" duration="1298000" />
       <workItem from="1553695126896" duration="71000" />
       <workItem from="1553719721563" duration="514000" />
-      <workItem from="1553781466860" duration="253000" />
+      <workItem from="1553781466860" duration="886000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -496,7 +495,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="263636000" />
+    <option name="totallyTimeSpent" value="264269000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
