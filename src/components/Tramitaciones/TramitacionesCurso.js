@@ -215,8 +215,6 @@ class TramitacionesCurso extends Component {
 
     render() {
         let { classes } = this.props;
-        console.log("datas-changed", this.props.data);
-
         return (
             <CardBody className="card-body-Trabajos">
                 <Row style={{

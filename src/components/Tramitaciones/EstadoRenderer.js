@@ -36,12 +36,18 @@ class AccionRenderer extends Component {
     if (nombreLimpio !== '')
       return (
         <span className={nombreLimpio}>
-          <img alt={200} src={require(`./IconosEstados/${nombreLimpio}.svg`)}></img>
+          <img alt={200} src={this.checkIfExist(nombreLimpio)}></img>
           {nombre}
         </span>);
   }
 
-  renderState
+  checkIfExist = (nombreLimpio) => {
+    try {
+      return require(`./IconosEstados/${nombreLimpio}.svg`);
+    } catch (e) {
+      return require(`./IconosEstados/borrador.svg`);
+    }
+  }
 
   render() {
     return (<div className='estados'>
