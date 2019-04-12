@@ -69,7 +69,7 @@ const styles = theme => ({
   },
   leftNav: {
     flexGrow: 1,
-    height:50
+    height: 50
   },
   backgroundGrey: {
     backgroundColor: grey[100]
@@ -155,9 +155,9 @@ class VisualizarExpediente extends Component {
     this.setState(state => ({ open: !state.open }));
   };
 
-  async getEstructuraDocumental(idExpediente, idTrabajo) {
-
-    await this.setState({ isLoadEstructura: true });
+  async getEstructuraDocumental(idExpediente, idTrabajo, showLoading = true) {
+    if (showLoading)
+      await this.setState({ isLoadEstructura: true });
     if (idExpediente === null)
       return false;
     let estructurasNivel2 = [];
@@ -187,7 +187,7 @@ class VisualizarExpediente extends Component {
     }
   }
 
-  async handleChangeMenuOption(idTrabajo) {
+  async handleChangeMenuOption(idTrabajo, showLoading = true) {
     let active = this.state.active == idTrabajo ? -1 : idTrabajo;
     if (this.state.currentExpediente) {
       if (null === idTrabajo) {
@@ -221,7 +221,7 @@ class VisualizarExpediente extends Component {
         }
       }
       if (idTrabajo)
-        await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo);
+        await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo, showLoading);
     }
   }
 
@@ -437,6 +437,10 @@ class VisualizarExpediente extends Component {
                   this.handleChangeEstructuran(idEstructura, titleEstructura, estructura);
                   this.switcToolbar(3);
                 }}
+                refreshTree={(idTrabajo) => {
+                  this.handleChangeMenuOption(idTrabajo, false);
+                  this.switcToolbar(2);
+                }}
                 expediente={this.state.expediente}
                 trabajo={trabajo}
                 dragTarget={this.state.dragging ? this.state.dragging : false}
@@ -515,25 +519,30 @@ class VisualizarExpediente extends Component {
       this.state.expediente
         ? <Grid container>
           <Grid item xs={12}>
-            <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
+
+            <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
               {this.state.currentExpediente.Expediente_Codigo_Estudio + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
             </BreadcrumbsItem>
             {
               (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
-                ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
+                ? <BreadcrumbsItem key={2} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
                   {trabajoActual ? trabajoActual.Titulo : ""}
                 </BreadcrumbsItem>
                 : ""
             }
+            {this.state.estructuraActiva && this.state.estructuraActiva.Nivel_Documentacion === 2
+              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/"} key={3}>
+                {this.state.estructuraActiva.Titulo_Padre}
+              </BreadcrumbsItem> : ""}
+
             {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
-              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
+              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
                 {this.state.titleEstructuraActiva}
               </BreadcrumbsItem>
               : ""}
-
           </Grid>
-          <Grid item md={3} xs={12} style={{height:window.innerHeight*.8, overflow:"hidden"}} className={classes.boredrRight}>
-            <div style={{width:'107%',height:window.innerHeight*.8+15,overflowX: 'hidden',overflow:'scroll'}}>
+          <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden" }} className={classes.boredrRight}>
+            <div style={{ width: '107%', height: window.innerHeight * .8 + 15, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
             </div>
 

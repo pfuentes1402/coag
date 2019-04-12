@@ -18,14 +18,14 @@ const styles = theme => ({
   },
   textWhite: {
     color: "white",
-    fontSize:14,
+    fontSize: 14,
 
   },
-  font14:{
-    fontSize:14,
+  font14: {
+    fontSize: 14,
   },
-  font12:{
-    fontSize:12,
+  font12: {
+    fontSize: 12,
   },
   dragTarget: {
     border: 'solid 1px #b26a00',
@@ -36,20 +36,20 @@ const styles = theme => ({
   },
   greyColor: {
     backgroundColor: theme.palette.default,
-    fontSize:14
+    fontSize: 14
   },
   red: {
     color: red[500],
-    fontSize:14
+    fontSize: 14
 
   },
   green: {
     color: green[500],
-    fontSize:14
+    fontSize: 14
   },
   orange: {
     color: orange[500],
-    fontSize:14
+    fontSize: 14
   }
 });
 
@@ -128,17 +128,17 @@ class MenuProyectoEjecucion extends Component {
                             if (response)
                               this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)
                           }}
-                            style={{ paddingLeft: 48,paddingTop:5,paddingBottom:5 }}
+                            style={{ paddingLeft: 48, paddingTop: 5, paddingBottom: 5 }}
                             className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                               (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : classes.greyColor))}
                             onDragOver={() => { this.setState({ drop: pos }) }} button
                             onClick={() => { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
-                            <ListItemIcon style={{ marginRight: 0,fontSize:14, marginLeft: 24 }}
-                              className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green:classes.font14)}>
-                              {children.Estado_Visual === 0 ? <Close style={{fontSize:18}} /> : (children.Estado_Visual === 1 ? <Check style={{fontSize:18}} /> : <Block style={{fontSize:18}} />)}
+                            <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
+                              className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
+                              {children.Estado_Visual === 0 ? <Close style={{ fontSize: 18 }} /> : (children.Estado_Visual === 1 ? <Check style={{ fontSize: 18 }} /> : <Block style={{ fontSize: 18 }} />)}
                             </ListItemIcon>
                             <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido == 1 ? ' *' : '')}
-                              classes={{ primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green:classes.font14)) }}
+                              classes={{ primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)) }}
                             />
                           </ListItem>
                         })}
@@ -148,10 +148,12 @@ class MenuProyectoEjecucion extends Component {
                   </div> :
                   <ListItem key={'menu-item' + position} onDrop={async () => {
                     let response = await this.props.moveItemTo(estructuraActual)
-                    if (response)
+                    if (response) {
                       this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual)
+                      this.props.refreshTree(this.props.trabajo.Id_Trabajo);
+                    }
                   }}
-                    style={{ paddingLeft: 48,fontSize:14 }}
+                    style={{ paddingLeft: 48, fontSize: 14 }}
                     className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                       (estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""), classes.item)}
                     onDragOver={() => { this.setState({ drop: position }) }} button
@@ -159,7 +161,7 @@ class MenuProyectoEjecucion extends Component {
                   >
                     <ListItemIcon style={{ marginRight: 0 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>
-                      {estructuraActual.Estado_Visual === 0 ? <Close  /> : (estructuraActual.Estado_Visual === 1 ? <Check /> : <Block />)}
+                      {estructuraActual.Estado_Visual === 0 ? <Close /> : (estructuraActual.Estado_Visual === 1 ? <Check /> : <Block />)}
                     </ListItemIcon>
                     <ListItemText inset primary={estructuraActual.Titulo + (estructuraActual.Archivo_Requerido !== null && estructuraActual.Archivo_Requerido == 1 ? ' *' : '')}
 
