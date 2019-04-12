@@ -191,8 +191,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -235,6 +233,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,6 +413,7 @@
       <workItem from="1553695126896" duration="71000" />
       <workItem from="1553719721563" duration="514000" />
       <workItem from="1553781466860" duration="886000" />
+      <workItem from="1553883355386" duration="622000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -495,7 +496,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="264269000" />
+    <option name="totallyTimeSpent" value="264891000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -916,9 +917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="159" column="0" lean-forward="true" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#223#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

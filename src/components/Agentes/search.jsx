@@ -222,7 +222,7 @@ class SearchAgents extends Component {
             </Translate>
 
 
-            <Select
+            <Select hidden={true}
               className={classes.textField}
               value={this.state.selectedSearchOption}
               onChange={this.handleSearchOption}>
@@ -255,7 +255,8 @@ class SearchAgents extends Component {
             this.selectAgent({
               "Id_Entidad": -1, "Id_Tipo_Entidad": 1, "Id_Autonomia": 71,
               "Id_Pais": 100, "Id_Provincia": 15,
-            }, true)
+            }, true);
+            this.props.addPromotorChange();
           }}>
           <Translate id="languages.generalButton.annadirNuevo" />
         </Button> : ""}

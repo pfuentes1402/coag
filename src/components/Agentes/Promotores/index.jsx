@@ -27,6 +27,7 @@ import Person from './addPerson';
 import SearchAgente from '../search';
 import { getBuscador } from '../../../api';
 import { withRouter } from 'react-router-dom';
+import { truncateSync } from 'fs';
 
 const styles = theme => ({
   marginPanel: {
@@ -164,7 +165,8 @@ class Promotores extends Component {
       encomenda: this.props.encomenda,
       percentage: "",
       percentageEdit: false,
-      editing: false
+      editing: false,
+      addPromotorTrigger: false
     }
   }
 
@@ -199,7 +201,7 @@ class Promotores extends Component {
         arrayPromotores[index] = promotor;
       }
       objectPromotores.Promotores = arrayPromotores
-      this.setState({ showAddPromotor: false, encomenda: objectPromotores, canSearch: false });
+      this.setState({ showAddPromotor: false, encomenda: objectPromotores, canSearch: false, addPromotorTrigger: false });
       this.props.updateEncomenda(objectPromotores);
     }
   }
@@ -337,20 +339,22 @@ class Promotores extends Component {
   renderTabsPromotor = () => {
     let { classes } = this.props;
     let isReadOnly = this.isReadOnly();
-    return <Paper className={`xx${this.props.match.params.modificado ? classes.readOnly : ""}`}>
-      <Tabs
-        value={this.state.value}
-        onChange={this.handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        scrollable
-        scrollButtons="auto">
-        <Tab label={<Translate id="languages.agentes.titlePersona" />} disabled={this.state.value === 1} />
-        <Tab label={<Translate id="languages.agentes.titleOrganismo" />} disabled={this.state.value === 0} />
-      </Tabs>
-      {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} readOnly={isReadOnly} />}
-      {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} readOnly={isReadOnly} />}
-    </Paper>
+    return <div>
+      <Paper className={`xx${this.props.match.params.modificado ? classes.readOnly : ""}`}>
+        <Tabs
+          value={this.state.value}
+          onChange={this.handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          scrollable
+          scrollButtons="auto">
+          <Tab label={<Translate id="languages.agentes.titlePersona" />} disabled={this.state.value === 1 && !this.state.addPromotorTrigger} />
+          <Tab label={<Translate id="languages.agentes.titleOrganismo" />} disabled={this.state.value === 0 && !this.state.addPromotorTrigger} />
+        </Tabs>
+        {this.state.value === 0 && <Person key={this.state.editPromotorData.Nif} promotor={this.state.value === 0 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddPerson={(person) => { this.addPromotor(person) }} readOnly={isReadOnly} />}
+        {this.state.value === 1 && <Organismo key={this.state.editPromotorData.Nif} promotor={this.state.value === 1 ? this.state.editPromotorData : null} onCancelPromotor={() => { this.handleCancel() }} onAddOrganismo={(organismo) => { this.addPromotor(organismo) }} readOnly={isReadOnly} />}
+      </Paper>
+    </div>
   }
 
   render() {
@@ -361,7 +365,8 @@ class Promotores extends Component {
         </Grid>
 
         <Grid item xs={12}>
-          {this.state.canSearch ? <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent) => { this.handleSelectAgent(agent) }} allowAdd={true} /> : ""}
+          {this.state.canSearch && <SearchAgente tipoBusqueda="Promotores" selectAgent={(agent) => { this.handleSelectAgent(agent) }} allowAdd={true}
+            addPromotorChange={() => this.setState({ addPromotorTrigger: true })} />}
         </Grid>
 
         <Grid item xs={12} >

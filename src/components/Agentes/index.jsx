@@ -80,16 +80,22 @@ class Agentes extends Component {
         let currentExpId = encomendaActual.Id_Expediente;
         let result = await manageEncomenda(currentExpId, trabajoEncomenda);
         if (ignorarObservations === 0) {
-          this.setState({
-            verificationMessages: result.MensajesProcesado
-              ? result.MensajesProcesado
-              : result.data.MensajesProcesado
-                ? result.data.MensajesProcesado
-                : [],
-            isLoading: false
-          })
-          this.openVerification(true);
-          return;
+          let messages = result.MensajesProcesado
+            ? result.MensajesProcesado
+            : result.data.MensajesProcesado
+              ? result.data.MensajesProcesado
+              : [];
+          if (messages.length > 0) {
+            this.setState({
+              verificationMessages: messages,
+              isLoading: false
+            })
+            this.openVerification(true); return;
+          } else {
+            await this.setState({ isLoading: false });
+            this.props.history.push(`/visualizar-expediente/${currentExpId}`);
+            return;
+          }
         }
 
         //Validación para continuar (si el resultado fue 200 se permite continuar)
@@ -196,33 +202,47 @@ class Agentes extends Component {
                 <ReactQuill key={index} value={message.Mensaje} readOnly theme='bubble' />
               </DialogContentText>
             })}
-            <Typography className="ml-1 pl-2" component="h2" variant="display1" gutterBottom style={{ fontSize: "1rem" }}>
-              <Translate id="languages.messages.aceptConcents" />
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button size="small" className="mx-2"
-              onClick={() => {
-                this.openVerification(false);
-              }}>
-              <Translate id="languages.generalButton.cancel" />
-            </Button>
-            <Button variant="contained" size="small" className="mx-2" color="primary"
-              onClick={() => {
-                this.openVerification(false);
-                this.addTrabajoEncomenda(1);
-              }}>
-              <Translate id="languages.generalButton.yes" />
-            </Button>
-            <Button variant="contained" size="small" className="mx-2" color="primary"
-              onClick={() => {
-                this.openVerification(false);
-                this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
-              }}>
-              <Translate id="languages.generalButton.no" />
-            </Button>
 
-          </DialogActions>
+            {this.state.verificationMessages.every(x => x.IdTipo === 1)
+              && <Typography className="ml-1 pl-2" component="h2" variant="display1" gutterBottom style={{ fontSize: "1rem" }}>
+                <Translate id="languages.messages.aceptConcents" />
+              </Typography>}
+          </DialogContent>
+
+          {this.state.verificationMessages.every(x => x.IdTipo === 1)
+            ? <DialogActions>
+              <Button size="small" className="mx-2"
+                onClick={() => this.openVerification(false)}>
+                <Translate id="languages.generalButton.cancel" />
+              </Button>
+              <Button variant="contained" size="small" className="mx-2" color="primary"
+                onClick={() => {
+                  this.openVerification(false);
+                  this.addTrabajoEncomenda(1);
+                }}>
+                <Translate id="languages.generalButton.yes" />
+              </Button>
+              <Button variant="contained" size="small" className="mx-2" color="primary"
+                onClick={() => {
+                  this.openVerification(false);
+                  this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
+                }}>
+                <Translate id="languages.generalButton.no" />
+              </Button>
+            </DialogActions>
+            : <DialogActions>
+              <Button size="small" className="mx-2"
+                onClick={() => this.openVerification(false)}>
+                <Translate id="languages.generalButton.cancel" />
+              </Button>
+              <Button variant="contained" size="small" className="mx-2" color="primary"
+                onClick={() => {
+                  this.openVerification(false);
+                  this.props.history.push(`/visualizar-expediente/${this.props.match.params.id}`);
+                }}>
+                <Translate id="languages.generalButton.goToExpedient" />
+              </Button>
+            </DialogActions>}
         </Dialog>
       </div>
     );
