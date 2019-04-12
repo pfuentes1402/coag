@@ -72,7 +72,11 @@ const styles = theme => ({
         color: green[500]
     },
     orange: {
-        color: orange[500]
+        color: orange[500],
+        overflow:'hidden',
+        paddingRight:'5%',
+        textOverflow: 'ellipsis',
+        whiteSpace:'nowrap'
     },
     size: {
         fontSize: 12,

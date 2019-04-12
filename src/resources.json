@@ -713,6 +713,10 @@
                 "Tamaño del archivo",
                 "Tamaño del archivo"
             ],
+            "uploadDate": [
+                "Fecha de subida",
+                "Fecha de subida"
+            ],
             "lastLocation": [
                 "Última ubicación",
                 "Última ubicación"

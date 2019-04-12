@@ -69,6 +69,7 @@ const styles = theme => ({
   },
   leftNav: {
     flexGrow: 1,
+    height:50
   },
   backgroundGrey: {
     backgroundColor: grey[100]
@@ -531,8 +532,11 @@ class VisualizarExpediente extends Component {
               : ""}
 
           </Grid>
-          <Grid item md={3} xs={12} className={classes.boredrRight}>
-            {this.renderLeftNav()}
+          <Grid item md={3} xs={12} style={{height:window.innerHeight*.8, overflow:"hidden"}} className={classes.boredrRight}>
+            <div style={{width:'107%',height:window.innerHeight*.8+15,overflowX: 'hidden',overflow:'scroll'}}>
+              {this.renderLeftNav()}
+            </div>
+
           </Grid>
           <Grid item md={9} xs={12} className={classes.backgroundGrey}>
             {this.renderNavBar()}
