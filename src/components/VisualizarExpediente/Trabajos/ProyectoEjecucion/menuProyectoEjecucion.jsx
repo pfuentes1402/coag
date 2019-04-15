@@ -115,7 +115,7 @@ class MenuProyectoEjecucion extends Component {
               return <List key={'menu-' + position} component="div" disablePadding>
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
-                    onDragEnd={() => { alert() }}>
+                    onDragEnd={() => {  }}>
                     <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
                       <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')} />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}

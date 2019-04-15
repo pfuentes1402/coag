@@ -202,6 +202,7 @@ class TrabajoEjecucion extends Component {
         await this.setState({
             uploadInProgress: true
         })
+        this.props.refreshTree()
     }
     abortUpload() {
         this.setState({
@@ -419,6 +420,7 @@ class TrabajoEjecucion extends Component {
             }
             await this.setState({ fetchingRemove: false, showDeleteButton: false, showDownloadButton: false })
         }
+        this.props.refreshTree()
     }
     download_file(fileURL, fileName) {
         // for non-IE
