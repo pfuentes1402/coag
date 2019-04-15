@@ -6,37 +6,37 @@ import { fetchEstructuraDocumental, fetchexpedientesUser, fetchgetAcciones } fro
 import { getTrabajos } from '../actions/usuarios/index';
 class HomeContainer extends Component {
 
-    async componentWillMount(){
-       await this.props.fetchexpedientesUser();
-       await this.props.getTrabajos();
-    }
-   
+  async componentWillMount() {
+    await this.props.getTrabajos();
+    //await this.props.fetchexpedientesUser();
+  }
 
-    render() {
-        return (
-            <div className="homeContainer">
-                <MainContent/>               
-            </div>
-        );
-    }
+
+  render() {
+    return (
+      <div className="homeContainer">
+        <MainContent />
+      </div>
+    );
+  }
 }
 
 
-  
-  HomeContainer.defaultProps = {
-    loading: false,
-  };
+
+HomeContainer.defaultProps = {
+  loading: false,
+};
 
 const mapStateToProps = state => ({
-    trabajos: state.expedientes.trabajos,
-    loading: state.expedientes.loading,
-  });
+  trabajos: state.expedientes.trabajos,
+  loading: state.expedientes.loading,
+});
 
 const mapDispatchToProps = {
-    fetchEstructuraDocumental,
-    fetchgetAcciones,
-    fetchexpedientesUser,
-    getTrabajos
-    
+  fetchEstructuraDocumental,
+  fetchgetAcciones,
+  fetchexpedientesUser,
+  getTrabajos
+
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer);

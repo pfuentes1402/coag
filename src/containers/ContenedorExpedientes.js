@@ -1,62 +1,29 @@
 import React, {Component} from 'react';
-
 import './styles.css';
-
 import { fetchEstructuraDocumental, fetchExpedienteDatosGeneral, getAgentes,
      fetchTrabajoDatosGeneral, fetchEstructuraDocumentalTrabajo, setSelectedExpediente} from '../actions/expedientes';
 import {test} from '../api/index'
 import {Container, Row, Col, Card,  CardHeader, CardText } from 'reactstrap';
 import { connect } from 'react-redux';
-
 import ListWorks from '../components/ListWorks/ListWorks';
 import FichaExpediente from '../components/OverViewComponent/FichaExpediente';
-
 import ExpedientType from '../components/MainContent/ExpedientType/ExpedientType';
 import ExpedientContainer from '../components/MainContent/ExpedientContainer';
 
-
-//const   id_expediente='688685';
-
 class ContenedorExpedientes extends Component {
-
     componentDidMount(){
-           
-        let idtrabajo = '2';
-      
-        
-      
-        //this.props.fetchExpedienteDatosGeneral(id_expediente);           
-       // this.props.fetchTrabajoDatosGeneral(id_expediente,2)                     
-       // this.props.getAgentes('111');
-       // test('111');
-        //this.props.setSelectedExpediente(); 
-          
     
     }
     componentWillReceiveProps(){
-       // this.props.trabajos &&
-       // this.props.trabajos.map(x =>this.props.fetchTrabajoDatosGeneral(x.Id_Expediente,x.Id_Trabajo));           
-       // this.props.trabajos.map(x =>this.props.fetchEstructuraDocumentalTrabajo(x.Id_Expediente,x.Id_Trabajo)); 
        let id_e = this.props.selectedIdexpediente;
        let id_t = this.props.selectedIdTrabajo;
-      
-
-       //this.props.fetchEstructuraDocumental(id_e, id_t);         
-       
     }
    
-  
-
-
-
     render() {
-        
         return (
             <div>
             <Container className="full">
                 <Row className="principal">
-                    
-                                                                 
                     <Col xs="6" sm="6">
                         <div className='divderecha'>                           
                             <Card>                             

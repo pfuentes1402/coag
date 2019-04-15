@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Close from '@material-ui/icons/Close';
 import { connect } from "react-redux";
 import { postAddTrabajoEncomenda } from '../../actions/expedientes/index';
-import { manageEncomenda } from '../../api';
+import { manageEncomenda, fetchEncomendaActual } from '../../api';
 import { fetchErrorExpediente, formatMenssage } from '../../actions/expedientes/index';
 import { withRouter } from 'react-router-dom';
 import { Translate } from "react-localize-redux";
@@ -160,7 +160,7 @@ class Agentes extends Component {
         //Obtener el id de expediente del estado de redux y llamar la funcion
         let currentExpId = encomendaActual.Id_Expediente;
         let result = await manageEncomenda(currentExpId, trabajoEncomenda);
-        if (result.status === 200) {
+        if (result.status === 200 && await this.existEncomenda()) {
           this.props.history.push(`/crear-trabajo/${this.props.match.params.id}`);
           return;
         }
@@ -174,8 +174,13 @@ class Agentes extends Component {
       await this.setState({ isLoading: false });
       this.props.fetchErrorExpediente(formatMenssage(e.message));
     }
+  }
 
-
+  async existEncomenda() {
+    let result = await fetchEncomendaActual(this.props.match.params.id);
+    if (result.data)
+      return result.data.EncomendaActual.length > 0;
+    return false;
   }
 
   handleClose = () => {

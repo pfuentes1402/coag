@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -436,7 +432,7 @@
       <workItem from="1555096322831" duration="704000" />
       <workItem from="1555109984129" duration="110000" />
       <workItem from="1555351297476" duration="7000" />
-      <workItem from="1555351404653" duration="4000" />
+      <workItem from="1555351404653" duration="32000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -519,7 +515,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="265716000" />
+    <option name="totallyTimeSpent" value="265744000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
