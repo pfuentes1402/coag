@@ -1150,7 +1150,7 @@ class TrabajoEjecucion extends Component {
                                                                             <Grid container spacing={0}>
                                                                                 <Grid item xs={6}>
                                                                                     <Typography variant="button" gutterBottom className="text-uppercase">
-                                                                                        <Translate id="languages.fileUpload.lastLocation" />
+                                                                                        <Translate id="languages.fileUpload.uploadDate" />
                                                                                     </Typography>
                                                                                 </Grid>
                                                                                 <Grid item xs={6}>
