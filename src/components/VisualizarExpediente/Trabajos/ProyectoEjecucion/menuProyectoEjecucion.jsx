@@ -157,16 +157,13 @@ class MenuProyectoEjecucion extends Component {
                     className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                       (estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""), classes.item)}
                     onDragOver={() => { this.setState({ drop: position }) }} button
-                    onClick={() => { this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual) }}
-                  >
+                    onClick={() => { this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual) }}>
                     <ListItemIcon style={{ marginRight: 0 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>
                       {estructuraActual.Estado_Visual === 0 ? <Close /> : (estructuraActual.Estado_Visual === 1 ? <Check /> : <Block />)}
                     </ListItemIcon>
                     <ListItemText inset primary={estructuraActual.Titulo + (estructuraActual.Archivo_Requerido !== null && estructuraActual.Archivo_Requerido == 1 ? ' *' : '')}
-
-                      classes={{ primary: estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)) }}
-                    />
+                      classes={{ primary: estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)) }}/>
                   </ListItem>
                 }
 
