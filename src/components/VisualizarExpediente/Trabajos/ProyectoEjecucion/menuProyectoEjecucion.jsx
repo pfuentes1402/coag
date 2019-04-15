@@ -94,6 +94,10 @@ class MenuProyectoEjecucion extends Component {
       this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
     }
   }
+  async markStructure(idEstructura)
+  {
+      await this.setState(state => ({ openEstructura:  idEstructura  }));
+  }
 
   render() {
     let { classes } = this.props;
@@ -116,8 +120,14 @@ class MenuProyectoEjecucion extends Component {
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
                     onDragEnd={() => {  }}>
-                    <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
-                      <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')} />
+                    <ListItem style={{backgroundColor:this.state.openEstructura==estructura?'#2196f3':"white"}} button onClick={() => {
+
+                      this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
+                      <ListItemText
+                          primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
+                          classes={{primary:this.state.openEstructura==estructura?classes.textWhite:null}}
+                          style={{color:this.state.openEstructura==estructura?'white':"black"}}
+                      />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={this.state.estructurasAbiertas.indexOf(estructura) != -1} timeout="auto" unmountOnExit>
@@ -132,7 +142,10 @@ class MenuProyectoEjecucion extends Component {
                             className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                               (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : classes.greyColor))}
                             onDragOver={() => { this.setState({ drop: pos }) }} button
-                            onClick={() => { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
+                            onClick={() => {
+
+                              this.markStructure(children.Titulo_Padre)
+                              this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
                             <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
                               {children.Estado_Visual === 0 ? <Close style={{ fontSize: 18 }} /> : (children.Estado_Visual === 1 ? <Check style={{ fontSize: 18 }} /> : <Block style={{ fontSize: 18 }} />)}
