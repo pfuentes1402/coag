@@ -1243,7 +1243,7 @@ class TrabajoEjecucion extends Component {
     render() {
         let { classes } = this.props
         return (
-            <div style={{ minHeight: 800 }} className="m-2">
+            <div   className="m-2">
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} className="p-3">
                         {
