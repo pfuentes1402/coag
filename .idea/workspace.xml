@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Actualizar el menu luego de subir un archivo o moverlo a a una estructura">
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Upload Date en componente de ficheros en estructuras">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterDir="false" />
     </list>
@@ -19,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="203" column="10" lean-forward="true" selection-start-line="203" selection-start-column="10" selection-end-line="203" selection-end-column="10" />
+            <state relative-caret-position="-860">
+              <caret line="1155" column="98" lean-forward="true" selection-start-line="1155" selection-start-column="98" selection-end-line="1155" selection-end-column="98" />
             </state>
           </provider>
         </entry>
@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="127" column="104" selection-start-line="127" selection-start-column="104" selection-end-line="127" selection-end-column="104" />
+            <state relative-caret-position="188">
+              <caret line="147" column="123" selection-start-line="147" selection-start-column="123" selection-end-line="147" selection-end-column="123" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -132,7 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Button</find>
       <find>saveAdressTostore</find>
       <find>FETCH_SAVE_ADRESS_TO_STORE</find>
       <find>Fab</find>
@@ -162,6 +161,7 @@
       <find>moveFileToEstructure</find>
       <find>onDro</find>
       <find>leftna</find>
+      <find>upload</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -240,8 +240,8 @@
         <option value="$PROJECT_DIR$/src/actions/trabajos/index.js" />
         <option value="$PROJECT_DIR$/src/resources.json" />
         <option value="$PROJECT_DIR$/src/api/index.js" />
-        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
+        <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
         <option value="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
       </list>
     </option>
@@ -398,7 +398,12 @@
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="JSON&#10;XML&#10;JSX Harmony" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -659,11 +664,25 @@
       <option name="project" value="LOCAL" />
       <updated>1555318823814</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Marcar en azul el path activo">
+      <created>1555321730842</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1555321730842</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Upload Date en componente de ficheros en estructuras">
+      <created>1555329254817</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1555329254817</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273552000" />
+    <option name="totallyTimeSpent" value="277385000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -678,13 +697,14 @@
     <frame x="0" y="25" width="1600" height="875" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.43327555" visible="true" weight="0.24984147" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.43327555" visible="true" weight="0.17245817" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.5652174" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="File Transfer" visible="true" weight="0.329235" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2090164" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2090164" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -693,6 +713,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.7260417" weight="0.63265306" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="10" weight="0.32990867" />
+      <window_info anchor="right" id="Remote Host" weight="0.14800514" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -786,7 +807,9 @@
     <MESSAGE value="Aceptando merge" />
     <MESSAGE value="Merge branch 'cbs' of http://git.hacce.com/externos/coag into cbs&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/components/VisualizarExpediente/index.jsx" />
     <MESSAGE value="Actualizar el menu luego de subir un archivo o moverlo a a una estructura" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actualizar el menu luego de subir un archivo o moverlo a a una estructura" />
+    <MESSAGE value="Marcar en azul el path activo" />
+    <MESSAGE value="Upload Date en componente de ficheros en estructuras" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upload Date en componente de ficheros en estructuras" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/reactstrap/dist/reactstrap.es.js">
@@ -1092,13 +1115,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="203" column="10" lean-forward="true" selection-start-line="203" selection-start-column="10" selection-end-line="203" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
@@ -1109,10 +1125,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-860">
+          <caret line="1155" column="98" lean-forward="true" selection-start-line="1155" selection-start-column="98" selection-end-line="1155" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="127" column="104" selection-start-line="127" selection-start-column="104" selection-end-line="127" selection-end-column="104" />
+        <state relative-caret-position="188">
+          <caret line="147" column="123" selection-start-line="147" selection-start-column="123" selection-end-line="147" selection-end-column="123" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
