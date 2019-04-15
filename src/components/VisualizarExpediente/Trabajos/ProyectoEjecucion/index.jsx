@@ -202,6 +202,7 @@ class TrabajoEjecucion extends Component {
         await this.setState({
             uploadInProgress: true
         })
+        this.props.refreshTree()
     }
     abortUpload() {
         this.setState({
@@ -419,6 +420,7 @@ class TrabajoEjecucion extends Component {
             }
             await this.setState({ fetchingRemove: false, showDeleteButton: false, showDownloadButton: false })
         }
+        this.props.refreshTree()
     }
     download_file(fileURL, fileName) {
         // for non-IE
@@ -1148,7 +1150,7 @@ class TrabajoEjecucion extends Component {
                                                                             <Grid container spacing={0}>
                                                                                 <Grid item xs={6}>
                                                                                     <Typography variant="button" gutterBottom className="text-uppercase">
-                                                                                        <Translate id="languages.fileUpload.lastLocation" />
+                                                                                        <Translate id="languages.fileUpload.uploadDate" />
                                                                                     </Typography>
                                                                                 </Grid>
                                                                                 <Grid item xs={6}>
@@ -1241,7 +1243,7 @@ class TrabajoEjecucion extends Component {
     render() {
         let { classes } = this.props
         return (
-            <div style={{ minHeight: 800 }} className="m-2">
+            <div   className="m-2">
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} className="p-3">
                         {

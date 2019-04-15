@@ -888,6 +888,7 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
 export const moveFileToStructure = async (idExpediente, idTrabajo, folderId, files) => {
   try {
     let result = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/moverarchivos`, files);
+
     return result.data
   } catch (error) {
     return formatMenssage("Error 400")

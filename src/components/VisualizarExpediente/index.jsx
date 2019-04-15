@@ -189,20 +189,12 @@ class VisualizarExpediente extends Component {
 
   async handleChangeMenuOption(idTrabajo, showLoading = true) {
     let active = this.state.active == idTrabajo ? -1 : idTrabajo;
+
     if (this.state.currentExpediente) {
-      if (null === idTrabajo) {
-        await this.setState({
-          renderComponent: "ExpedienteGeneral",
-          idTrabajoActivo: idTrabajo,
-          idEstructuraActiva: null,
-          titleEstructuraActiva: "",
-          estructuraActiva: null,
-          active: active
-        });
-      } else {
-        if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual == idTrabajo) {
+      if(showLoading){
+        if (null === idTrabajo) {
           await this.setState({
-            renderComponent: "TrabajoComunicacion",
+            renderComponent: "ExpedienteGeneral",
             idTrabajoActivo: idTrabajo,
             idEstructuraActiva: null,
             titleEstructuraActiva: "",
@@ -210,16 +202,28 @@ class VisualizarExpediente extends Component {
             active: active
           });
         } else {
-          await this.setState({
-            renderComponent: "TrabajoEjecucion",
-            idTrabajoActivo: idTrabajo,
-            idEstructuraActiva: null,
-            titleEstructuraActiva: "",
-            estructuraActiva: null,
-            active: active
-          });
+          if (this.state.currentExpediente.Id_Trabajo_Encomenda_Actual == idTrabajo) {
+            await this.setState({
+              renderComponent: "TrabajoComunicacion",
+              idTrabajoActivo: idTrabajo,
+              idEstructuraActiva: null,
+              titleEstructuraActiva: "",
+              estructuraActiva: null,
+              active: active
+            });
+          } else {
+            await this.setState({
+              renderComponent: "TrabajoEjecucion",
+              idTrabajoActivo: idTrabajo,
+              idEstructuraActiva: null,
+              titleEstructuraActiva: "",
+              estructuraActiva: null,
+              active: active
+            });
+          }
         }
       }
+
       if (idTrabajo)
         await this.getEstructuraDocumental(this.state.currentExpediente.Id_Expediente, idTrabajo, showLoading);
     }
@@ -437,10 +441,7 @@ class VisualizarExpediente extends Component {
                   this.handleChangeEstructuran(idEstructura, titleEstructura, estructura);
                   this.switcToolbar(3);
                 }}
-                refreshTree={(idTrabajo) => {
-                  this.handleChangeMenuOption(idTrabajo, false);
-                  this.switcToolbar(2);
-                }}
+
                 expediente={this.state.expediente}
                 trabajo={trabajo}
                 dragTarget={this.state.dragging ? this.state.dragging : false}
@@ -464,17 +465,26 @@ class VisualizarExpediente extends Component {
       if (item.temporalFiles) {
         await this.moveFileToTemporal(target, item.temporalFiles);
         await this.moveFileToEstructure(target, item.files);
-        return true;
+
+
       }
       else {
         await this.moveFileTo(target, item);
-        return true;
+
       }
+      await this.refreshTree()
+
+      return true
+
+
 
     } catch (error) {
       this.props.fetchErrorExpediente("Error de comunicación con la API");
       return false
     }
+  }
+  async refreshTree(){
+    this.handleChangeMenuOption(this.state.idTrabajoActivo,false)
   }
 
   async moveFileTo(target, item) {
@@ -495,7 +505,10 @@ class VisualizarExpediente extends Component {
   }
 
   async moveFileToEstructure(target, files) {
-    if (files.length === 0) return true;
+    if (files.length === 0){
+
+      return true;
+    }
     let dataPost = { Archivos: files.map(element => { return { id_estructura: element.Id_Estructura } }) };
     let response = await moveFileToStructure(target.Id_Expediente,
       target.Id_Trabajo, target.Id_Estructura, dataPost);
@@ -559,12 +572,16 @@ class VisualizarExpediente extends Component {
                       this.handleChangeMenuOption(idTrabajo);
                       this.switcToolbar(2);
                     }}
+
                     updateExpediente={(expediente) => this.updateExpediente(expediente)} />
                   : <TrabajoEjecucion
                     key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
                     expediente={expediente}
                     trabajo={this.state.idTrabajoActivo}
                     dragging={(state) => this.dragging(state)}
+                    refreshTree={() => {
+                      this.refreshTree()
+                    }}
                     estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false}
                     disableActions={disableActions} />)
             }

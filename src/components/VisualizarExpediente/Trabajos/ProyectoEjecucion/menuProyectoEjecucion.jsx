@@ -21,6 +21,14 @@ const styles = theme => ({
     fontSize: 14,
 
   },
+  textWhite13: {
+    color: "white",
+    fontSize: 13,
+
+  },
+  font13: {
+    fontSize: 13,
+  },
   font14: {
     fontSize: 14,
   },
@@ -38,6 +46,15 @@ const styles = theme => ({
     backgroundColor: theme.palette.default,
     fontSize: 14
   },
+  greyColor13: {
+    backgroundColor: theme.palette.default,
+    fontSize: 13
+  },
+  red13: {
+    color: red[500],
+    fontSize: 13
+
+  },
   red: {
     color: red[500],
     fontSize: 14
@@ -47,9 +64,17 @@ const styles = theme => ({
     color: green[500],
     fontSize: 14
   },
+  green13: {
+    color: green[500],
+    fontSize: 13
+  },
   orange: {
     color: orange[500],
     fontSize: 14
+  },
+  orange13: {
+    color: orange[500],
+    fontSize: 13
   }
 });
 
@@ -94,6 +119,10 @@ class MenuProyectoEjecucion extends Component {
       this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
     }
   }
+  async markStructure(idEstructura)
+  {
+      await this.setState(state => ({ openEstructura:  idEstructura  }));
+  }
 
   render() {
     let { classes } = this.props;
@@ -101,7 +130,7 @@ class MenuProyectoEjecucion extends Component {
       <div >
         <ListItem button className={this.props.active ? classes.openOption : ""}
           onClick={() => { this.props.changeOption(this.props.trabajo.Id_Trabajo) }}>
-          <ListItemText primary={this.props.trabajo.Titulo} classes={{ primary: this.props.active ? classes.textWhite : "" }} />
+          <ListItemText primary={this.props.trabajo.Titulo} classes={{ primary: this.props.active ? classes.textWhite : classes.font14 }} />
           {this.props.active ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Divider />
@@ -112,12 +141,18 @@ class MenuProyectoEjecucion extends Component {
             Object.keys(this.props.estructuraDocumental).map((estructura, position) => {
               let estructuraPadre = this.props.estructurasPadre ? this.props.estructurasPadre.find(e => e.Titulo === estructura) : "";
               let estructuraActual = this.props.estructuraDocumental[estructura];
-              return <List key={'menu-' + position} component="div" disablePadding>
+              return <List key={'menu-' + position} style={{ paddingTop: 8, paddingBottom: 8}} component="div" disablePadding>
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
-                    onDragEnd={() => { alert() }}>
-                    <ListItem button onClick={() => { this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
-                      <ListItemText primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')} />
+                    onDragEnd={() => {  }}>
+                    <ListItem style={{backgroundColor:this.state.openEstructura==estructura?'#2196f3':"white",paddingTop: 0, paddingBottom: 0}} button onClick={() => {
+
+                      this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
+                      <ListItemText
+                          primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
+                          classes={{primary:this.state.openEstructura==estructura?classes.textWhite:classes.font14}}
+                          style={{color:this.state.openEstructura==estructura?'white':"black"}}
+                      />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={this.state.estructurasAbiertas.indexOf(estructura) != -1} timeout="auto" unmountOnExit>
@@ -132,13 +167,16 @@ class MenuProyectoEjecucion extends Component {
                             className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                               (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : classes.greyColor))}
                             onDragOver={() => { this.setState({ drop: pos }) }} button
-                            onClick={() => { this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
+                            onClick={() => {
+
+                              this.markStructure(children.Titulo_Padre)
+                              this.props.changeEstructura(children.Id_Estructura, children.Titulo, children) }}>
                             <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
                               {children.Estado_Visual === 0 ? <Close style={{ fontSize: 18 }} /> : (children.Estado_Visual === 1 ? <Check style={{ fontSize: 18 }} /> : <Block style={{ fontSize: 18 }} />)}
                             </ListItemIcon>
                             <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido == 1 ? ' *' : '')}
-                              classes={{ primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)) }}
+                              classes={{ primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite13 : (children.Estado_Visual === 0 ? classes.red13 : (children.Estado_Visual === 1 ? classes.green13 : classes.font13)) }}
                             />
                           </ListItem>
                         })}
