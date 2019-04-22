@@ -73,10 +73,10 @@ const styles = theme => ({
     },
     orange: {
         color: orange[500],
-        overflow:'hidden',
-        paddingRight:'5%',
+        overflow: 'hidden',
+        paddingRight: '5%',
         textOverflow: 'ellipsis',
-        whiteSpace:'nowrap'
+        whiteSpace: 'nowrap'
     },
     size: {
         fontSize: 12,
@@ -641,9 +641,17 @@ class TrabajoEjecucion extends Component {
         if (nombreLimpio !== '')
             return (
                 <div className={nombreLimpio}>
-                    <img alt={200} src={require(`../../../Tramitaciones/IconosEstados/${nombreLimpio}.svg`)} />
+                    <img alt={200} src={this.iconUrl(nombreLimpio)} />
                     {nombre}
                 </div>);
+    }
+
+    iconUrl = (nombreLimpio) => {
+        try {
+            return require(`../../../Tramitaciones/IconosEstados/${nombreLimpio}.svg`);
+        } catch (e) {
+            return require(`../../../Tramitaciones/IconosEstados/borrador.svg`);
+        }
     }
 
     async putFichaTrabajo() {
@@ -1243,7 +1251,7 @@ class TrabajoEjecucion extends Component {
     render() {
         let { classes } = this.props
         return (
-            <div   className="m-2">
+            <div className="m-2">
                 <Grid container spacing={16}>
                     <Grid item md={6} xs={12} className="p-3">
                         {
