@@ -127,6 +127,24 @@ class MenuProyectoEjecucion extends Component {
   {
       await this.setState(state => ({ openEstructura:  idEstructura  }));
   }
+  async initialExpanded(estructure){
+    await this.markStructure(estructure.Titulo)
+    await this.setState({estructurasAbiertas:[estructure.Titulo]})
+  }
+  componentWillReceiveProps(nextProps, nextContext) {
+
+    if(nextProps.idEstructuraActiva){
+
+      if(!this.state.openEstructura){
+        let estructuraActiva = nextProps.estructurasPadre.filter(item=>item.Id_Estructura==nextProps.idEstructuraActiva)
+
+        this.initialExpanded(estructuraActiva[0])
+
+      }
+
+    }
+  }
+
 
   render() {
     let { classes } = this.props;
