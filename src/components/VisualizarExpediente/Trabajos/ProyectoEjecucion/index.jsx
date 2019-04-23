@@ -158,6 +158,7 @@ class TrabajoEjecucion extends Component {
             if (this.props.fileUpload.fetchingDone) {
                 this.loadInformation()
                 this.props.dispatchSetFetchingDone();
+                this.props.refreshTree()
             }
         }, 500)
     }
@@ -202,7 +203,7 @@ class TrabajoEjecucion extends Component {
         await this.setState({
             uploadInProgress: true
         })
-        this.props.refreshTree()
+
     }
     abortUpload() {
         this.setState({

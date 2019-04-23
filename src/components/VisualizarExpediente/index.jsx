@@ -424,7 +424,7 @@ class VisualizarExpediente extends Component {
           onClick={() => this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 pr-2">
+        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 " >
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -555,7 +555,7 @@ class VisualizarExpediente extends Component {
               : ""}
           </Grid>
           <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden" }} className={classes.boredrRight}>
-            <div style={{ width: '107%', height: window.innerHeight * .8 + 15, overflowX: 'hidden', overflow: 'scroll' }}>
+            <div style={{ width: '107%', height: window.innerHeight * .8 +10, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
             </div>
 

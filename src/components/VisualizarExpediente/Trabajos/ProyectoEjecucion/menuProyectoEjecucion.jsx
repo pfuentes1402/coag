@@ -28,6 +28,7 @@ const styles = theme => ({
   },
   font13: {
     fontSize: 13,
+
   },
   font14: {
     fontSize: 14,
@@ -75,6 +76,9 @@ const styles = theme => ({
   orange13: {
     color: orange[500],
     fontSize: 13
+  },
+  padding0:{
+    padding:5
   }
 });
 
@@ -141,16 +145,16 @@ class MenuProyectoEjecucion extends Component {
             Object.keys(this.props.estructuraDocumental).map((estructura, position) => {
               let estructuraPadre = this.props.estructurasPadre ? this.props.estructurasPadre.find(e => e.Titulo === estructura) : "";
               let estructuraActual = this.props.estructuraDocumental[estructura];
-              return <List key={'menu-' + position} style={{ paddingTop: 8, paddingBottom: 8}} component="div" disablePadding>
+              return <List key={'menu-' + position}  component="div" disablePadding>
                 {this.props.estructuraDocumental[estructura].length && this.props.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
                     onDragEnd={() => {  }}>
-                    <ListItem style={{backgroundColor:this.state.openEstructura==estructura?'#2196f3':"white",paddingTop: 0, paddingBottom: 0}} button onClick={() => {
+                    <ListItem style={{backgroundColor:this.state.openEstructura==estructura?'#2196f3':"white",paddingTop: 5, paddingBottom: 5}} button onClick={() => {
 
                       this.handleClick(estructura) }} className={`${classes.item} pl-5`}>
                       <ListItemText
                           primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
-                          classes={{primary:this.state.openEstructura==estructura?classes.textWhite:classes.font14}}
+                          classes={{root:classes.padding0,primary:this.state.openEstructura==estructura?classes.textWhite:classes.font14}}
                           style={{color:this.state.openEstructura==estructura?'white':"black"}}
                       />
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1 ? <ExpandLess /> : <ExpandMore />}
@@ -176,7 +180,7 @@ class MenuProyectoEjecucion extends Component {
                               {children.Estado_Visual === 0 ? <Close style={{ fontSize: 18 }} /> : (children.Estado_Visual === 1 ? <Check style={{ fontSize: 18 }} /> : <Block style={{ fontSize: 18 }} />)}
                             </ListItemIcon>
                             <ListItemText inset primary={children.Titulo + (children.Archivo_Requerido !== null && children.Archivo_Requerido == 1 ? ' *' : '')}
-                              classes={{ primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite13 : (children.Estado_Visual === 0 ? classes.red13 : (children.Estado_Visual === 1 ? classes.green13 : classes.font13)) }}
+                              classes={{ root:classes.padding0, primary: children.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite13 : (children.Estado_Visual === 0 ? classes.red13 : (children.Estado_Visual === 1 ? classes.green13 : classes.font13)) }}
                             />
                           </ListItem>
                         })}
@@ -191,17 +195,17 @@ class MenuProyectoEjecucion extends Component {
                       this.props.refreshTree(this.props.trabajo.Id_Trabajo);
                     }
                   }}
-                    style={{ paddingLeft: 48, fontSize: 14 }}
+                    style={{ paddingLeft: 25, fontSize: 14,  paddingTop: 5, paddingBottom: 5  }}
                     className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
                       (estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""), classes.item)}
                     onDragOver={() => { this.setState({ drop: position }) }} button
                     onClick={() => { this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual) }}>
-                    <ListItemIcon style={{ marginRight: 0 }}
+                    <ListItemIcon style={{ marginRight: 0,fontSize:18 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>
-                      {estructuraActual.Estado_Visual === 0 ? <Close /> : (estructuraActual.Estado_Visual === 1 ? <Check /> : <Block />)}
+                      {estructuraActual.Estado_Visual === 0 ? <Close style={{fontSize:18}} /> : (estructuraActual.Estado_Visual === 1 ? <Check style={{fontSize:18}} /> : <Block style={{fontSize:18}} />)}
                     </ListItemIcon>
                     <ListItemText inset primary={estructuraActual.Titulo + (estructuraActual.Archivo_Requerido !== null && estructuraActual.Archivo_Requerido == 1 ? ' *' : '')}
-                      classes={{ primary: estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)) }}/>
+                      classes={{root:classes.padding0, primary: estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 ? classes.green: classes.font13)) }}/>
                   </ListItem>
                 }
 
