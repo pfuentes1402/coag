@@ -74,7 +74,7 @@ const styles = theme => ({
     orange: {
         color: orange[500],
         overflow: 'hidden',
-        paddingRight: '5%',
+        marginRight: '5%',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
     },
@@ -158,6 +158,7 @@ class TrabajoEjecucion extends Component {
             if (this.props.fileUpload.fetchingDone) {
                 this.loadInformation()
                 this.props.dispatchSetFetchingDone();
+                this.props.refreshTree()
             }
         }, 500)
     }
@@ -202,7 +203,7 @@ class TrabajoEjecucion extends Component {
         await this.setState({
             uploadInProgress: true
         })
-        this.props.refreshTree()
+
     }
     abortUpload() {
         this.setState({
@@ -1049,7 +1050,7 @@ class TrabajoEjecucion extends Component {
                                                                                 onChange={this.handleChange("checked", pos, 'temporalFiles')}
                                                                                 value={item.Nombre}
                                                                             />
-                                                                            <Typography className={classes.orange}>{item.Nombre}</Typography>
+                                                                            <Typography title={item.Nombre}  className={classes.orange}>{item.Nombre}</Typography>
                                                                         </Grid>
                                                                         <Grid item md={3} xs={3} className="align-self-center">
                                                                             <Typography className={classes.orange}>
@@ -1117,7 +1118,7 @@ class TrabajoEjecucion extends Component {
                                                                             onChange={this.handleChange("checked", pos, 'data')}
                                                                             value={item.Archivo}
                                                                         />
-                                                                        <Typography className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                        <Typography title={item.Archivo} style={{overflow:'hidden',marginRight:'5%', textOverflow:'ellipsis',whiteSpace:'nowrap'}} className={item.Requisitos_Firma_Completos ? "" : classes.red}>
                                                                             {item.Archivo}
                                                                         </Typography>
                                                                     </Grid>

@@ -100,9 +100,11 @@ class VisualizarExpediente extends Component {
       optionsComponent: this.props.match.params.idTrabajo ? 2 : 1, //Indica si lo seleccionado en Expediente(1), Trabajo(2), Estructura(3)
       presentWork: false
     };
+    this.menuLateral = React.createRef()
   }
 
   async componentWillMount() {
+
     await this.fetchExpediente();
   }
 
@@ -137,7 +139,21 @@ class VisualizarExpediente extends Component {
         currentExpediente: currentExpediente,
         idTrabajoActivo: activeTrabajo
       });
-      this.handleChangeMenuOption(activeTrabajo);
+      await this.handleChangeMenuOption(activeTrabajo);
+      let idEstructura = this.props.match.params.idEstructura
+      if(idEstructura){
+
+        let {estructurasPadre} = this.state;
+        if(estructurasPadre&&estructurasPadre.length>0){
+          let estr =  estructurasPadre.filter(item=>item.Id_Estructura==idEstructura)
+          if(estr.length==1)
+           await this.handleChangeEstructuran(idEstructura, estr[0].Titulo,  estr[0]);
+            console.log('menu',this.menuLateral)
+        }
+
+      }
+
+
     }
   }
 
@@ -167,6 +183,7 @@ class VisualizarExpediente extends Component {
     try {
 
       let response = await getEstructuraDocumental(idExpediente, idTrabajo, this.props.activeLanguage.code);
+
       if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
         this.props.fetchErrorExpediente(response);
         await this.setState({ isLoadEstructura: false, estructuraDocumental: [] });
@@ -424,7 +441,7 @@ class VisualizarExpediente extends Component {
           onClick={() => this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 pr-2">
+        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 " >
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -433,10 +450,13 @@ class VisualizarExpediente extends Component {
           <List component="div" disablePadding>
             {this.state.expediente.Trabajos.map((trabajo, index) => {
               return <MenuOption key={`menu_item_${index}`}
+
                 changeOption={(idTrabajo) => {
                   this.handleChangeMenuOption(idTrabajo);
                   this.switcToolbar(2);
                 }}
+
+                defaultEstructura={this.state.titleEstructura}
                 changeEstructura={(idEstructura, titleEstructura, estructura) => {
                   this.handleChangeEstructuran(idEstructura, titleEstructura, estructura);
                   this.switcToolbar(3);
@@ -528,6 +548,7 @@ class VisualizarExpediente extends Component {
     let { expediente } = this.state;
     let trabajoActual = this.state.expediente ? this.state.expediente.Trabajos.find(t => t.Id_Trabajo == this.state.idTrabajoActivo) : null; /*Por favor no cambiar los == asi está bien*/
     let disableActions = this.disableActions();
+
     return (
       this.state.expediente
         ? <Grid container>
@@ -544,18 +565,18 @@ class VisualizarExpediente extends Component {
                 : ""
             }
             {this.state.estructuraActiva && this.state.estructuraActiva.Nivel_Documentacion === 2
-              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/"} key={3}>
+              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/"+this.state.estructuraActiva.Id_Estructura_Padre} key={3}>
                 {this.state.estructuraActiva.Titulo_Padre}
               </BreadcrumbsItem> : ""}
 
             {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
-              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.idEstructuraActiva}>
+              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo+ "/"+this.state.estructuraActiva.Id_Estructura_Padre + "/" + this.state.Id_Estructura}>
                 {this.state.titleEstructuraActiva}
               </BreadcrumbsItem>
               : ""}
           </Grid>
           <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden" }} className={classes.boredrRight}>
-            <div style={{ width: '107%', height: window.innerHeight * .8 + 15, overflowX: 'hidden', overflow: 'scroll' }}>
+            <div style={{ width: '107%', height: window.innerHeight * .8 +10, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
             </div>
 
