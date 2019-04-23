@@ -305,7 +305,7 @@ class Promotores extends Component {
                       <TableCell padding="none" className="px-1 text-center">
                         {row.Nif}
                       </TableCell>
-                      <TableCell padding="none" className="p-0">{row.Nombre + (row.Apellido1 ? row.Apellido1 : "") + (row.Apellido2 ? row.Apellido2 : "")}</TableCell>
+                      <TableCell padding="none" className="p-0">{`${row.Nombre} ${(row.Apellido1 ? row.Apellido1 : "")} ${(row.Apellido2 ? row.Apellido2 : "")}`}</TableCell>
                       <TableCell padding="none">
                         <Input
                           id="percentage" style={{ width: 45, margin: 0 }}

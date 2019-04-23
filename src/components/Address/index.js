@@ -90,6 +90,9 @@ class ValidateAddress extends Component {
         this.setState({
             [name]: event.target.value,
         });
+        if(name === "alias"){
+            this.handleChangeAddress("Alias", event);
+        }
     };
 
     handleChangeAddress(name, event) {
@@ -182,10 +185,8 @@ class ValidateAddress extends Component {
                                                 onChange={(event)=>{this.handleChangeAddress('Numero', event)}}
                                                 margin="normal"
                                                 InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                type="number"
-                                            />
+                                                    shrink: true
+                                                }}/>
                                         </FormControl>
                                         <FormControl className={classes.formControl2}>
                                             <TextField
@@ -195,10 +196,8 @@ class ValidateAddress extends Component {
                                                 onChange={(event)=>{this.handleChangeAddress('Piso', event)}}
                                                 margin="normal"
                                                 InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                                type="number"
-                                            />
+                                                    shrink: true
+                                                }}/>
                                         </FormControl>
                                         <FormControl className={classes.formControl2}>
                                             <TextField
@@ -267,7 +266,7 @@ class ValidateAddress extends Component {
                                                 id="alias"
                                                 label={<Translate id="languages.expedients.fieldAliasDireccion"/>}
                                                 placeholder="Ej C/Numancia No 13"
-                                                value={this.state.alias}
+                                                value={data && data.Alias ? data.Alias : ""}
                                                 onChange={this.handleChange('alias')}
                                                 margin="normal"
                                                 InputLabelProps={{
