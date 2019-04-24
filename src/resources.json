@@ -842,6 +842,18 @@
             "dontContinue": [
                 "No puede continuar con los cambios aplicados",
                 "No puede continuar con los cambios aplicados"
+            ],
+            "confirmation": [
+                "Confirmación",
+                "Confirmación"
+            ],
+            "workConfirmation":[
+                "¿Está seguro que desea eliminar este trabajo?",
+                "¿Está seguro que desea eliminar este trabajo?"
+            ],
+            "expedientConfirmation":[
+                "¿Está seguro que desea eliminar este expediente?",
+                "¿Está seguro que desea eliminar este expediente?"
             ]
         }
     }

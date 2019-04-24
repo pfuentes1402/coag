@@ -30,6 +30,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import ExpedienteGeneral from "./Trabajos/ComunicacionEncargo/general";
 import Dropzone from "react-dropzone";
 import * as actionsExpedientes from '../../actions/expedientes';
+import Confirmation from "../Errors/confirmation";
 
 const styles = theme => ({
   fichaExpediente: {
@@ -88,7 +89,7 @@ class VisualizarExpediente extends Component {
       renderComponent: "TrabajoComunicacion",
       expediente: null,
       currentExpediente: null,
-      idTrabajoActivo: null/*this.props.match.params.idTrabajo*/,
+      idTrabajoActivo: null,
       idEstructuraActiva: null,
       estructurasAbiertas: [],
       titleEstructuraActiva: "",
@@ -98,7 +99,9 @@ class VisualizarExpediente extends Component {
       isLoadEstructura: false,
       active: false,
       optionsComponent: this.props.match.params.idTrabajo ? 2 : 1, //Indica si lo seleccionado en Expediente(1), Trabajo(2), Estructura(3)
-      presentWork: false
+      presentWork: false,
+      openConfirmationWork: false,
+      openConfirmationExpedient: false
     };
     this.menuLateral = React.createRef()
   }
@@ -141,14 +144,14 @@ class VisualizarExpediente extends Component {
       });
       await this.handleChangeMenuOption(activeTrabajo);
       let idEstructura = this.props.match.params.idEstructura
-      if(idEstructura){
+      if (idEstructura) {
 
-        let {estructurasPadre} = this.state;
-        if(estructurasPadre&&estructurasPadre.length>0){
-          let estr =  estructurasPadre.filter(item=>item.Id_Estructura==idEstructura)
-          if(estr.length==1)
-           await this.handleChangeEstructuran(idEstructura, estr[0].Titulo,  estr[0]);
-            console.log('menu',this.menuLateral)
+        let { estructurasPadre } = this.state;
+        if (estructurasPadre && estructurasPadre.length > 0) {
+          let estr = estructurasPadre.filter(item => item.Id_Estructura == idEstructura)
+          if (estr.length == 1)
+            await this.handleChangeEstructuran(idEstructura, estr[0].Titulo, estr[0]);
+          console.log('menu', this.menuLateral)
         }
 
       }
@@ -208,7 +211,7 @@ class VisualizarExpediente extends Component {
     let active = this.state.active == idTrabajo ? -1 : idTrabajo;
 
     if (this.state.currentExpediente) {
-      if(showLoading){
+      if (showLoading) {
         if (null === idTrabajo) {
           await this.setState({
             renderComponent: "ExpedienteGeneral",
@@ -349,6 +352,31 @@ class VisualizarExpediente extends Component {
     return false;
   }
 
+  openConfirmation = (isWork) => {
+    this.setState({ openConfirmationWork: isWork, openConfirmationExpedient: !isWork });
+  }
+
+  renderConfirmation() {
+    return (this.state.openConfirmationWork
+      ? <Confirmation openConfirmation={this.state.openConfirmationWork}
+        confirmationMessage={<Translate id="languages.messages.workConfirmation" />}
+        aceptConfirmation={async () => {
+          await this.deleteTrabajoExpediente();
+          this.setState({ openConfirmationWork: false })
+        }}
+        declineConfirmation={() => this.setState({ openConfirmationWork: false })} />
+      : this.state.openConfirmationExpedient
+        ? <Confirmation openConfirmation={this.state.openConfirmationExpedient}
+          confirmationMessage={<Translate id="languages.messages.expedientConfirmation" />}
+          aceptConfirmation={async () => {
+            await this.deleteExpedient();
+            this.setState({ openConfirmationExpedient: false });
+          }}
+          declineConfirmation={() => this.setState({ openConfirmationExpedient: false })} />
+        : <div></div>
+    );
+  }
+
   renderNavBar() {
     let { classes } = this.props;
     let disableActions = this.disableActions();
@@ -360,7 +388,7 @@ class VisualizarExpediente extends Component {
           {this.state.optionsComponent === 1
             ? <Toolbar>
               <Button color="primary" className={classes.button}
-                onClick={this.deleteExpedient}>
+                onClick={() => this.openConfirmation(false)}>
                 <Translate id="languages.generalButton.delete" /><Close />
               </Button>
               <Button color="primary" className={classes.button}
@@ -398,7 +426,7 @@ class VisualizarExpediente extends Component {
                 }
                 <Button color="primary" className={classes.button}
                   disabled={trabajoActual.SePuede_Eliminar === 0}
-                  onClick={this.deleteTrabajoExpediente}>
+                  onClick={() => this.openConfirmation(true)}>
                   <Translate id="languages.generalButton.delete" /><Close />
                 </Button>
                 <Button color="primary" className={classes.button} disabled={true}>
@@ -503,8 +531,8 @@ class VisualizarExpediente extends Component {
       return false
     }
   }
-  async refreshTree(){
-    this.handleChangeMenuOption(this.state.idTrabajoActivo,false)
+  async refreshTree() {
+    this.handleChangeMenuOption(this.state.idTrabajoActivo, false)
   }
 
   async moveFileTo(target, item) {
@@ -525,7 +553,7 @@ class VisualizarExpediente extends Component {
   }
 
   async moveFileToEstructure(target, files) {
-    if (files.length === 0){
+    if (files.length === 0) {
 
       return true;
     }
@@ -565,18 +593,18 @@ class VisualizarExpediente extends Component {
                 : ""
             }
             {this.state.estructuraActiva && this.state.estructuraActiva.Nivel_Documentacion === 2
-              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/"+this.state.estructuraActiva.Id_Estructura_Padre} key={3}>
+              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre} key={3}>
                 {this.state.estructuraActiva.Titulo_Padre}
               </BreadcrumbsItem> : ""}
 
             {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
-              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo+ "/"+this.state.estructuraActiva.Id_Estructura_Padre + "/" + this.state.Id_Estructura}>
+              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre + "/" + this.state.Id_Estructura}>
                 {this.state.titleEstructuraActiva}
               </BreadcrumbsItem>
               : ""}
           </Grid>
           <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden" }} className={classes.boredrRight}>
-            <div style={{ width: '107%', height: window.innerHeight * .8 +10, overflowX: 'hidden', overflow: 'scroll' }}>
+            <div style={{ width: '107%', height: window.innerHeight * .8 + 10, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
             </div>
 
@@ -608,6 +636,9 @@ class VisualizarExpediente extends Component {
             }
           </Grid>
 
+          <Grid item xs={12}>
+            {this.renderConfirmation()}
+          </Grid>
         </Grid>
         : <div className="text-center my-5">
           <CircularProgress />
