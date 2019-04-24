@@ -87,6 +87,10 @@
                 "Añadir",
                 "Añadir"
             ],
+            "modification": [
+                "Modificar",
+                "Modificar"
+            ],
             "addedSave": [
                 "Añadir y guardar",
                 "Añadir y guardar"

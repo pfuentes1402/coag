@@ -145,6 +145,13 @@ class AddExpedient extends Component {
     }
 
     async handleUpdateLocation(location) {
+        if(this.state.emplazamientos.some(x=> x.Georeferencia === location.Georeferencia)){
+            let index = this.state.emplazamientos.findIndex(x=> x.Georeferencia === location.Georeferencia);
+            let copy = Object.assign([], this.state.emplazamientos);
+            copy[index] = location;
+            await this.setState({ location: location, emplazamientos: copy});
+            return;
+        }
         await this.setState({ location: location});
     }
 

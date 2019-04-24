@@ -109,14 +109,14 @@ class FichaExpediente extends Component {
     let result = await putExpediente(this.state.sourceExpediente)
     if (result.data && result.data.MensajesProcesado && result.data.MensajesProcesado.length > 0) {
       this.props.fetchErrorExpediente(result.data);
-    }else{
-      this.props.updateExpediente(result.data); 
+    } else {
+      this.props.updateExpediente(result.data);
     }
     this.setState({ isUpdate: false });
   }
 
   handleShowUbication(action) {
-    this.setState({ isAddUbicacion: action, isShowAddress: false });
+    this.setState({ isAddUbicacion: action, isShowAddress: false, fromAdd: true });
   }
 
   handleUpdateLocation(location) {
@@ -132,12 +132,12 @@ class FichaExpediente extends Component {
     await this.setState({ isLoadingSave: true });
     let locations = [];
     Object.assign(locations, emplazamientos);
-    let equal = this.ifEqual(emplazamientos, location);
-    if (equal === -1) {
+
+    if (!emplazamientos.some(x => location.Id_Emplazamiento && x.Id_Emplazamiento === location.Id_Emplazamiento)) {
       locations.push(location);
-    }
-    else {
-      locations[equal] = location;
+    } else {
+      let index = emplazamientos.findIndex(x => x.Id_Emplazamiento === location.Id_Emplazamiento);
+      locations[index] = location;
     }
 
     let response = await putEmplazamiento(this.state.sourceExpediente.Id_Expediente, { "Emplazamientos": locations, "ignorarobservaciones": 1 });
@@ -157,10 +157,14 @@ class FichaExpediente extends Component {
       }
     }
     else {
-      this.setState({ emplazamientos: locations, isShowAddress: false, isLoadingSave: false })
+      let emplazamientos = response.data && response.data.Emplazamientos
+        ? response.data.Emplazamientos : locations;
+      this.setState({
+        emplazamientos: emplazamientos,
+        isShowAddress: false, isLoadingSave: false
+      });
       this.handleShowUbication(false);
     }
-
   }
 
   ifEqual(data, address) {
@@ -173,7 +177,11 @@ class FichaExpediente extends Component {
   }
 
   handleEdit(location) {
-    this.setState({ isShowAddress: true, isAddUbicacion: true, location: location })
+    this.setState({ isShowAddress: true, isAddUbicacion: true, fromAdd: false, location: location })
+  }
+
+  validate() {
+
   }
 
   renderUbicationTable() {
@@ -246,7 +254,10 @@ class FichaExpediente extends Component {
         {
           this.state.isAddUbicacion &&
           <Grid item xs={12} className="pt-2">
-            <ValidateAddress updateLocation={(location) => { this.handleUpdateLocation(location) }} isShowAddress={this.state.isShowAddress} updateIsShowAddress={(showAddress) => { this.handleUpdateIsShowAddress(showAddress) }} location={this.state.location} />
+            <ValidateAddress updateLocation={(location) => { this.handleUpdateLocation(location) }}
+              isShowAddress={this.state.isShowAddress}
+              updateIsShowAddress={(showAddress) => { this.handleUpdateIsShowAddress(showAddress) }}
+              location={this.state.location} validate={() => this.validate()} />
             <Grid item xs={12} className="text-right">
               <Button color="primary" size="small" className={`${classes.button} mx-2`}
                 onClick={() => { this.handleShowUbication(false) }}>
@@ -254,7 +265,9 @@ class FichaExpediente extends Component {
               </Button>
               <Button variant="contained" size="small" color="primary" className={classes.button} disabled={this.state.isLoadingSave}
                 onClick={() => { this.handleSaveAddress() }}>
-                <Translate id="languages.generalButton.added" />
+                {this.state.fromAdd
+                  ? <Translate id="languages.generalButton.added" />
+                  : <Translate id="languages.generalButton.modification" />}
                 {this.state.isLoadingSave && <CircularProgress size={24} />}
               </Button>
             </Grid>
@@ -279,7 +292,7 @@ class FichaExpediente extends Component {
                     <Translate id="languages.fichaExpediente.titleFichaExpediente" />
                   </Typography>
                   <Button type="submit" color="primary" disabled={this.state.isUpdate}>
-                      <Translate id="languages.generalButton.generalButton" /> <Check />
+                    <Translate id="languages.generalButton.generalButton" /> <Check />
                   </Button>
                 </Grid>
                 <Divider style={{ height: 3 }} />

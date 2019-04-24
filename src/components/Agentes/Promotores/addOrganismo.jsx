@@ -118,6 +118,7 @@ class AddOrganismo extends Component {
                     regiones: regiones.data.AreasGeograficasAutonomias ? regiones.data.AreasGeograficasAutonomias : [],
                     provincias: provincias.data.AreasGeograficasProvincias ? provincias.data.AreasGeograficasProvincias : [],
                     municipios: municipios.data.AreasGeograficasConcellos ? municipios.data.AreasGeograficasConcellos : [],
+                    expanded: this.state.promotor.Id_Entidad === -1
                 })
             }
         } catch (error) {
@@ -166,7 +167,7 @@ class AddOrganismo extends Component {
     };
 
     handleSubmit() {
-        this.props.onAddOrganismo(this.state.promotor)
+        this.props.onAddOrganismo(this.state.promotor);
     }
 
     render() {
@@ -289,7 +290,7 @@ class AddOrganismo extends Component {
                             </div>
 
                             {/**Contactos */}
-                            <ExpansionPanel style={{ boxShadow: "none" }} className="m-0">
+                            <ExpansionPanel style={{ boxShadow: "none" }} className="m-0" expanded={this.state.expanded}>
                                 <ExpansionPanelSummary expandIcon={<ExpandMore color={this.state.expanded ? "primary" : "default"} />}
                                     style={{ minHeight: 48, height: 48, padding: 16 }}
                                     className={`${this.state.expanded && classes.panelExapnded}`}
