@@ -672,6 +672,12 @@
             "noInsertion": [
                 "no fue insertado.",
                 "no fue insertado."
+            ],"noInsertionSingular": [
+                "no fue insertado.",
+                "no fue insertado."
+            ],"noInsertionPlural": [
+                "no fueron insertados.",
+                "no fueron insertados."
             ],
             "successInsertion": [
                 "fue insertado en la estructura",

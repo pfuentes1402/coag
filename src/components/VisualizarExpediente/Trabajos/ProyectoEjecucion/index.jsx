@@ -546,16 +546,22 @@ class TrabajoEjecucion extends Component {
                     return null
                 });
                 let result = await api.autoAsignFilesFromTemporalFiles(this.state.expediente.Id_Expediente, this.props.trabajo, files)
+                let resultados = []
+                let insertados = []
                 if (result.Archivos) {
                     result.Archivos.map(item => {
                         if (item.Insertado !== 1) {
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.noInsertion")}`))
+                            resultados.push(`<li style="padding-left: 0px">${item.Nombre} ${this.props.translate("languages.fileUpload.noInsertion")}</li>`)
+                            //this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.noInsertion")}`))
 
                         } else {
-                            this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.successInsertion")} ${item.Carpeta}`))
+                            resultados.push(`<li style="padding-left: 0px">${item.Nombre} ${this.props.translate("languages.fileUpload.successInsertion")} ${item.Carpeta}</li>`)
+                            //this.props.fetchErrorExpediente(api.formatMenssage(`${item.Nombre} ${this.props.translate("languages.fileUpload.successInsertion")} ${item.Carpeta}`))
                         }
                         return null
                     })
+                    this.props.fetchErrorExpediente(api.formatMenssage(`<ul  style="padding-left: 0px">${resultados.join('')} </ul>`))
+
                 } else {
                     this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
                 }

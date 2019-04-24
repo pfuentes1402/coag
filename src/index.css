@@ -14,3 +14,9 @@ body {
 .ql-tooltip{
   display: none !important;
 }
+.ql-editor ol li:not(.ql-direction-rtl), .ql-editor ul li:not(.ql-direction-rtl) {
+   padding-left: 0!important;
+}
+.ql-editor ol, .ql-editor ul {
+  padding-left: 0!important;
+}
