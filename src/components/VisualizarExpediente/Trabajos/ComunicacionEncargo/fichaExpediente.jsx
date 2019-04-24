@@ -144,7 +144,6 @@ class FichaExpediente extends Component {
     if (response.data && response.data.MensajesProcesado && response.data.MensajesProcesado.length > 0) {
       this.props.fetchErrorExpediente(response.data);
       this.setState({ isLoadingSave: false });
-
     }
     else if (response.response) {
       if (response.response.data.MensajesProcesado) {
@@ -258,6 +257,7 @@ class FichaExpediente extends Component {
               isShowAddress={this.state.isShowAddress}
               updateIsShowAddress={(showAddress) => { this.handleUpdateIsShowAddress(showAddress) }}
               location={this.state.location} validate={() => this.validate()} />
+            
             <Grid item xs={12} className="text-right">
               <Button color="primary" size="small" className={`${classes.button} mx-2`}
                 onClick={() => { this.handleShowUbication(false) }}>
