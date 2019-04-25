@@ -213,6 +213,11 @@ export const fetchIdAccion = (id) => ({
     payload: id
 })
 
+export const dispatchSetActiveLanguage = (language) => ({
+    type: types.SET_DEFAULT_LANGUAGE,
+    payload: language
+})
+
 
 /**
  *

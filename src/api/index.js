@@ -1,8 +1,9 @@
 import { handleLoggout } from './../helpers/logout.js'
 import axios from 'axios';
-import store from "../reducers/userExport";
 import * as types from './../actions/usuarios/types';
 import { setExpiredSession } from "./../actions/usuarios/index";
+import { withLocalize } from "react-localize-redux";
+import { getCookie } from "../reducers/userExport";
 const BASE_PATH = "http://servicios.coag.es/api";
 
 
@@ -53,10 +54,8 @@ api.interceptors.response.use(function (response) {
 })
 
 export const getDefaultLanguage = () => {
-  if (store) {
-    const state = store.getState();
-    return state.nuevaconfUsuario.idioma;
-  }
+  let language = getCookie("language");
+  return language ? language : 2;
 }
 
 /*
@@ -66,7 +65,7 @@ export const getDefaultLanguage = () => {
  */
 export const getExpedienteDatosGeneral = async (id_expediente) => {
   try {
-    let response = await api.get(`/expedientes/${id_expediente}`);
+    let response = await api.get(`/expedientes/${id_expediente}/?idioma=${getDefaultLanguage()}`);
     return response;
   }
   catch (error) {
@@ -82,7 +81,7 @@ export const getExpedienteDatosGeneral = async (id_expediente) => {
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTiposTrabajo = (id_grupo, idLanguage = 1) =>
-  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${idLanguage}`).then(response => {
+  api.get(`/tipos/guia/grupostematicos/?id_tipo_grupo_raiz=${id_grupo}&idioma=${getDefaultLanguage()}`).then(response => {
     return response;
   })
     .then(resultado => {
@@ -95,7 +94,7 @@ export const getTiposTrabajo = (id_grupo, idLanguage = 1) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
-  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${idLanguage}`)
+  api.get(`/Tipos/Guia/Tiposautorizacionmunicipal/?idioma=${getDefaultLanguage()}`)
     .then(response => {
       return response;
     })
@@ -112,7 +111,7 @@ export const getTiposAutorizacionMunicipal = (idLanguage = 2) =>
  */
 export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLanguage = 2) => {
   try {
-    let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${idLanguage}`);
+    let response = await api.get(`/Tipos/Guia/Fasestrabajos/?id_tipo_grupo_tematico=${id_tipo_grupo}&id_tipo_autorizacion_municipal=${id_tipo_autorizacion}&idioma=${getDefaultLanguage()}`);
     return response;
   }
   catch (error) {
@@ -126,7 +125,7 @@ export const getFasesTrabajos = async (id_tipo_grupo, id_tipo_autorizacion, idLa
  */
 export const getTiposTramite = async (idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/guia/tramites/?idioma=${idLanguage}`);
+    let response = await api.get(`/tipos/guia/tramites/?idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (error) {
@@ -142,7 +141,7 @@ export const getTiposTramite = async (idLanguage = 2) => {
  */
 export const getValidateAddress = async ref_catastral => {
   try {
-    let response = await api.get(`/DatosCatastro/${ref_catastral}`);
+    let response = await api.get(`/DatosCatastro/${ref_catastral}/?idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (error) {
@@ -157,7 +156,7 @@ export const getValidateAddress = async ref_catastral => {
  */
 export const postNuevoExpediente = async data => {
   try {
-    let response = await api.post(`/expedientes/`, data);
+    let response = await api.post(`/expedientes/?idioma=${getDefaultLanguage()}`, data);
 
     return response.data;
   }
@@ -172,7 +171,7 @@ export const postNuevoExpediente = async data => {
 */
 export const putExpediente = async (data) => {
   try {
-    let response = await api.put(`/expedientes/${data.Id_Expediente}`, data);
+    let response = await api.put(`/expedientes/${data.Id_Expediente}/?idioma=${getDefaultLanguage()}`, data);
     return response;
   }
   catch (error) {
@@ -238,7 +237,7 @@ export const test = id_expediente =>
  *    id_expediente
  */
 export const GettrabajosExpediente = (id_expediente) =>
-  api.get(`/expedientes/${id_expediente}/trabajos/`)
+  api.get(`/expedientes/${id_expediente}/trabajos/?idioma=${getDefaultLanguage()}`)
 
     .then(response => {
       return response.data.Trabajos;
@@ -251,7 +250,7 @@ export const GettrabajosExpediente = (id_expediente) =>
  */
 export const expedientesuser = async () => {
   try {
-    let response = await api.get('/expedientes');
+    let response = await api.get('/expedientes/?idioma=${getDefaultLanguage()}');
     return response.data;
   } catch (error) {
     return formatMenssage(error.message);
@@ -266,7 +265,7 @@ export const expedientesuser = async () => {
 *    id_Trabajo
 */
 export const getTrabajoeDatosGenerales = (id_expediente, id_Trabajo) =>
-  api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`)
+  api.get(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}/?idioma=${getDefaultLanguage()}`)
     .then(response => {
       return response;
 
@@ -276,9 +275,10 @@ export const getTrabajoeDatosGenerales = (id_expediente, id_Trabajo) =>
       return resultado;
     });
 
+
 export const putFichaTrabajo = async (id_expediente, id_Trabajo, data) => {
   try {
-    let response = await api.put(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}`, data);
+    let response = await api.put(`/expedientes/${id_expediente}/trabajos/${id_Trabajo}/?idioma=${getDefaultLanguage()}`, data);
     return response.data;
   }
   catch (error) {
@@ -347,7 +347,7 @@ export const getToken = async () => {
  *   Numero de acciones pendientes
 */
 export const getAcciones = () =>
-  api.post('http://servicios.coag.es/api/AccionesPendientes/')
+  api.post(`http://servicios.coag.es/api/AccionesPendientes/?idioma=${getDefaultLanguage()}`)
     .then(response => {
       return response;
     }).catch(error => {
@@ -359,7 +359,8 @@ export const getAcciones = () =>
 */
 export const getultimosTrabajos = async () => {
   try {
-    let response = await api.get('/AccionesPendientes/');
+    let test = getDefaultLanguage();
+    let response = await api.get(`/AccionesPendientes/?idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (error) {
@@ -383,7 +384,7 @@ export const getultimosTrabajos = async () => {
  */
 export const getExpedienteSuscepNuevoTrabajo = async (filtro, idAccion, page = 1, pageSize = 25) => {
   try {
-    let response = await api.get(`/expedientes?filtro=${filtro}&pag=${page}&tam=${pageSize}&id_tipo_accion=${idAccion}`);
+    let response = await api.get(`/expedientes?idioma=${getDefaultLanguage()}&filtro=${filtro}&pag=${page}&tam=${pageSize}&id_tipo_accion=${idAccion}`);
     return response.data;
   }
   catch (e) {
@@ -393,7 +394,7 @@ export const getExpedienteSuscepNuevoTrabajo = async (filtro, idAccion, page = 1
 
 export const postExpedienteAccion = async (id_expediente, idAccion, ignorarObservaciones) => {
   try {
-    let response = await api.post(`/expedientes/${id_expediente}/Accion?id_tipo_accion=${idAccion}&ignorarobservaciones=${ignorarObservaciones}`);
+    let response = await api.post(`/expedientes/${id_expediente}/Accion?id_tipo_accion=${idAccion}&ignorarobservaciones=${ignorarObservaciones}&idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (e) {
@@ -409,7 +410,7 @@ export const postExpedienteAccion = async (id_expediente, idAccion, ignorarObser
  */
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
-    let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}`;
+    let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}`;
     //let response = await fetchData(uri,{})
     let response = await api.get(uri);
     return response;
@@ -425,7 +426,7 @@ export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25)
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getestructuradocumental = (idExpediente, idTrabajo) =>
-  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental`)
+  api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/?idioma=${getDefaultLanguage()}`)
     .then(response => {
       return response.data;
     });
@@ -437,7 +438,7 @@ export const getestructuradocumental = (idExpediente, idTrabajo) =>
  * @returns {Promise<AxiosResponse<any>>}
  */
 export const getGruposRaiz = (idLanguage = 2) =>
-  api.get(`/tipos/guia/gruposraiz?idioma=${idLanguage}`)
+  api.get(`/tipos/guia/gruposraiz?idioma=${getDefaultLanguage()}`)
     .then(response => {
       return response;
     });
@@ -450,7 +451,7 @@ export const getGruposRaiz = (idLanguage = 2) =>
  */
 export const insertTrabajoEncomenda = (data, id_expediente) => {
   return new Promise((success, error) => {
-    api.post(`/expedientes/${id_expediente}/trabajos/`, data)
+    api.post(`/expedientes/${id_expediente}/trabajos/?idioma=${getDefaultLanguage()}`, data)
       .then(resultado => {
         success(resultado)
       }).catch(function (e) {
@@ -461,14 +462,14 @@ export const insertTrabajoEncomenda = (data, id_expediente) => {
 
 /**Todas las Funciones compatibles con la tipologia en agentes(Arquitectos)*/
 export const getFuncionesTipologia = (idLanguage = 2, idGrupoTematico = 0, idAutorizacionMunicipal = 0) =>
-  api.get(`/tipos/guia/funciones?idioma=${idLanguage}&id_tipo_grupo_tematico=${idGrupoTematico}&id_tipo_autorizacion_municipal=${idAutorizacionMunicipal}`)
+  api.get(`/tipos/guia/funciones?idioma=${getDefaultLanguage()}&id_tipo_grupo_tematico=${idGrupoTematico}&id_tipo_autorizacion_municipal=${idAutorizacionMunicipal}`)
     .then(response => {
       return response;
     });
 
 /**Agregar nuevos agentes a un trabajo */
 export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
-  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/`, { OtrosAgentes: otrosAgentes })
+  api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/otrosagentes/?idioma=${getDefaultLanguage()}`, { OtrosAgentes: otrosAgentes })
     .then(response => {
       return response;
     }).catch(error => {
@@ -483,7 +484,7 @@ export const addAgentesTrabajo = (idExpediente, idTrabajo, otrosAgentes) =>
  */
 export const getPaises = async (idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/paises?idioma=${idLanguage}`);
+    let response = await api.get(`/tipos/paises?idioma=${getDefaultLanguage()}`);
     return response;
   } catch (error) {
     return error;
@@ -496,7 +497,7 @@ export const getPaises = async (idLanguage = 2) => {
  */
 export const getRegionesAutonoma = async (idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/autonomias?idioma=${idLanguage}`)
+    let response = await api.get(`/tipos/autonomias?idioma=${getDefaultLanguage()}`)
     return response;
   } catch (error) {
     return error;
@@ -511,7 +512,7 @@ export const getRegionesAutonoma = async (idLanguage = 2) => {
  */
 export const getProvincias = async (idAutonomia, idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${idLanguage}`)
+    let response = await api.get(`/tipos/provincias?id_autonomia=${idAutonomia}&idioma=${getDefaultLanguage()}`)
     return response;
   } catch (error) {
     return error;
@@ -526,7 +527,7 @@ export const getProvincias = async (idAutonomia, idLanguage = 2) => {
  */
 export const getConcellos = async (id_provincia, idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${idLanguage}`)
+    let response = await api.get(`/tipos/Concellos?id_provincia=${id_provincia}&idioma=${getDefaultLanguage()}`)
     return response;
   } catch (error) {
     return error;
@@ -540,7 +541,7 @@ export const getConcellos = async (id_provincia, idLanguage = 2) => {
  */
 export const getTipoPromotores = async (idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/tipos_promotores?idioma=${idLanguage}`)
+    let response = await api.get(`/tipos/tipos_promotores?idioma=${getDefaultLanguage()}`)
     return response;
   } catch (error) {
     return error;
@@ -554,7 +555,7 @@ export const getTipoPromotores = async (idLanguage = 2) => {
  */
 export const getTipoOrganismoa = async (idLanguage = 2) => {
   try {
-    let response = await api.get(`/tipos/tipos_organismos?idioma=${idLanguage}`)
+    let response = await api.get(`/tipos/tipos_organismos?idioma=${getDefaultLanguage()}`)
     return response;
   } catch (error) {
     return error;
@@ -568,7 +569,7 @@ export const getTipoOrganismoa = async (idLanguage = 2) => {
  */
 export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
   try {
-    let response = await api.post(`/expedientes/${idExpediente}/trabajos/`, dataPost)
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/?idioma=${getDefaultLanguage()}`, dataPost)
     return response.data;
   }
   catch (error) {
@@ -582,7 +583,7 @@ export const addTrabajoEncomendaExpediente = async (idExpediente, dataPost) => {
  */
 export const putEmplazamiento = async (idExpediente, data) => {
   try {
-    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos`, data);
+    let response = await api.put(`/expedientes/${idExpediente}/emplazamientos/?idioma=${getDefaultLanguage()}`, data);
     return response;
   }
   catch (error) {
@@ -603,15 +604,15 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
     let response = {};
     switch (verb) {
       case "POST":
-        response = api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+        response = api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/?idioma=${getDefaultLanguage()}`, data);
         break;
 
       case "PUT":
-        response = api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/`, data);
+        response = api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/?idioma=${getDefaultLanguage()}`, data);
         break;
 
       case "DELETE":
-        response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}`);
+        response = api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/colegiados/${data}/?idioma=${getDefaultLanguage()}`);
         break;
       default:
         return null
@@ -632,7 +633,7 @@ export const manageColegiados = async (idExpediente, idTrabajo, verb, data) => {
  */
 export const getColegiados = async (idExpediente, idTrabajo) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`);
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/?idioma=${getDefaultLanguage()}`);
     return response;
   }
   catch (error) {
@@ -648,7 +649,7 @@ export const getColegiados = async (idExpediente, idTrabajo) => {
  */
 export const postColegiados = async (idExpediente, idTrabajo, data) => {
   try {
-    let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/?idioma=${getDefaultLanguage()}`, data);
     return response;
   }
   catch (error) {
@@ -665,7 +666,7 @@ export const postColegiados = async (idExpediente, idTrabajo, data) => {
  */
 export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => {
   try {
-    let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}`);
+    let response = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/${idColegiado}/?idioma=${getDefaultLanguage()}`);
     return response;
   }
   catch (error) {
@@ -682,7 +683,7 @@ export const deleteColegiados = async (idExpediente, idTrabajo, idColegiado) => 
  */
 export const putColegiados = async (idExpediente, idTrabajo, data) => {
   try {
-    let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/`, data);
+    let response = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/promotores/?idioma=${getDefaultLanguage()}`, data);
     return response;
   }
   catch (error) {
@@ -697,7 +698,7 @@ export const putColegiados = async (idExpediente, idTrabajo, data) => {
  */
 export const fetchEncomendaActual = async (idExpediente, languageId = 2) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${languageId}`);
+    let response = await api.get(`/expedientes/${idExpediente}/EncomendaActual?idioma=${getDefaultLanguage()}`);
     return response;
   }
   catch (error) {
@@ -713,7 +714,7 @@ export const fetchEncomendaActual = async (idExpediente, languageId = 2) => {
  */
 export const manageEncomenda = async (idExpediente, datapost, languageId = 2) => {
   try {
-    let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros?idioma=${languageId}`, datapost);
+    let response = await api.post(`/expedientes/${idExpediente}/trabajos/EncomendayOtros/?idioma=${getDefaultLanguage()}`, datapost);
     return response;
   }
   catch (error) {
@@ -731,7 +732,7 @@ export const manageEncomenda = async (idExpediente, datapost, languageId = 2) =>
  */
 export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_modificado, languageId = 2) => {
   try {
-    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${languageId}`);
+    let response = await api.get(`/tipos/guia/infocarpetasdetrabajo/?id_tipo_trabajo=${id_tipo_trabajo}&id_tipo_tramite=${id_tipo_tramite}&es_modificado=${es_modificado}&idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (error) {
@@ -741,7 +742,7 @@ export const infoCarpetasTrabajo = async (id_tipo_trabajo, id_tipo_tramite, es_m
 
 export const getEstructuraDocumental = async (id_expediente, id_trabajo, languageId = 2) => {
   try {
-    let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${languageId}`);
+    let response = await api.get(`/expedientes/${id_expediente}/trabajos/${id_trabajo}/estructuradocumental?idioma=${getDefaultLanguage()}`);
     return response.data;
   }
   catch (error) {
@@ -760,7 +761,7 @@ export const formatMenssage = (error) => (
 
 export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${lang}`);
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental?idioma=${getDefaultLanguage()}`);
     return response.data;
   } catch (error) {
     return formatMenssage(error.message);
@@ -770,7 +771,7 @@ export const getAllFiles = async (idExpediente, idTrabajo, lang = 1) => {
 //obtener todos los archivos de una carpeta
 export const getFilesFromFolder = async (idExpediente, idTrabajo, folderId, lang = 1) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${lang}`);
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos?idioma=${getDefaultLanguage()}`);
     return response;
   } catch (error) {
     return formatMenssage(error.message);
@@ -795,7 +796,7 @@ export const getFolderDetails = async (idExpediente, idTrabajo, folderId, lang =
  */
 export const getDetallesArchivo = async (idExpediente, idTrabajo, idEstructura) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1`);
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/Estructuradocumental/${idEstructura}?Detalle_archivo=1&idioma=${getDefaultLanguage()}`);
     return response.data;
   } catch (error) {
     return formatMenssage(error.message);
@@ -804,7 +805,7 @@ export const getDetallesArchivo = async (idExpediente, idTrabajo, idEstructura) 
 //obtener los detalles de un trabajo
 export const getWorkDetails = async (idExpediente, idTrabajo, lang = 1) => {
   try {
-    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${lang}`);
+    let response = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}?idioma=${getDefaultLanguage()}`);
     return response;
   } catch (error) {
     return formatMenssage(error.message);
@@ -820,7 +821,7 @@ export const uploadFile = async (idExpediente, idTrabajo, folderId, file) => {
       data.append('file', file.data);
       data.append('filename', file.filename)
 
-      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos`, data,
+      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivos/?idioma=${getDefaultLanguage()}`, data,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -846,7 +847,7 @@ export const uploadFileToTemporalFolder = async (idExpediente, file) => {
       let data = new FormData();
       data.append('file', file.data);
       data.append('filename', file.filename)
-      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos`, data,
+      let result = await axios.post(BASE_PATH + `/expedientes/${idExpediente}/AlmacenTemporalArchivos/?idioma=${getDefaultLanguage()}`, data,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -869,7 +870,7 @@ export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
 
   try {
     if (idExpediente) {
-      let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${lang}`);
+      let response = await api.get(`/expedientes/${idExpediente}/AlmacenTemporalArchivos?idioma=${getDefaultLanguage()}`);
       return response.data;
     }
 
@@ -881,7 +882,7 @@ export const getFilesFromTemporalFolder = async (idExpediente, lang = 1) => {
 //mover un arivo desde la carpeta temporal a una estructura
 export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, folderId, file) => {
   try {
-    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal`, { Nombre: file });
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/archivosdesdealmacentemporal/?idioma=${getDefaultLanguage()}`, { Nombre: file });
     return result.data
   } catch (error) {
     return formatMenssage("Error 400")
@@ -890,7 +891,7 @@ export const moveFileFromTemporalToStructure = async (idExpediente, idTrabajo, f
 //mover un archivo entre estructuras
 export const moveFileToStructure = async (idExpediente, idTrabajo, folderId, files) => {
   try {
-    let result = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/moverarchivos`, files);
+    let result = await api.put(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/moverarchivos/?idioma=${getDefaultLanguage()}`, files);
 
     return result.data
   } catch (error) {
@@ -901,7 +902,7 @@ export const moveFileToStructure = async (idExpediente, idTrabajo, folderId, fil
 //eliminar multiples archivos de la carpeta temporal
 export const removeFilesFromTemporalFolder = async (idExpediente, arrayFiles) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos`, { data: { Archivos: arrayFiles } });
+    let result = await api.delete(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/?idioma=${getDefaultLanguage()}`, { data: { Archivos: arrayFiles } });
     return result.data
   } catch (error) {
     return formatMenssage("Error 400")
@@ -910,7 +911,7 @@ export const removeFilesFromTemporalFolder = async (idExpediente, arrayFiles) =>
 //eliminar un archivo de una estructura
 export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}`, { ignorarobservaciones: 1 });
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${folderId}/?idioma=${getDefaultLanguage()}`, { ignorarobservaciones: 1 });
     return result.data
   } catch (error) {
     return formatMenssage("Error 400")
@@ -919,7 +920,7 @@ export const removeFileFromStructure = async (idExpediente, idTrabajo, folderId)
 //Eliminar multiples archivos de una estructura
 export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, arrayArchivos) => {
   try {
-    let url = `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/archivos`
+    let url = `/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/archivos/?idioma=${getDefaultLanguage()}`
     let result = await api.delete(url,
       {
         data: {
@@ -938,7 +939,7 @@ export const removeMultipleFilesFromStructure = async (idExpediente, idTrabajo, 
 //Asignación automática de archivos
 export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, file) => {
   try {
-    let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica`,
+    let result = await api.post(`/expedientes/${idExpediente}/AlmacenTemporalArchivos/AsignacionAutomatica/?idioma=${getDefaultLanguage()}`,
       {
         Id_Trabajo: idTrabajo,
         Archivos: file,
@@ -954,7 +955,7 @@ export const autoAsignFilesFromTemporalFiles = async (idExpediente, idTrabajo, f
 export const getUrlDownladFiles = async (idExpediente, idTrabajo, archivos) => {
   try {
 
-    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivosDescarga`,
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/InfoArchivosDescarga/?idioma=${getDefaultLanguage()}`,
       {
         Archivos: archivos
       }
@@ -968,7 +969,7 @@ export const getUrlDownladFilesTempFolder = async (idExpediente, archivos) => {
   try {
 
 
-    let result = await api.post(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivosDescarga`,
+    let result = await api.post(`/expedientes/${idExpediente}/almacentemporalarchivos/InfoArchivosDescarga/?idioma=${getDefaultLanguage()}`,
       {
         Archivos: archivos
       }
@@ -984,7 +985,7 @@ export const getUrlDownladOneFile = async (idExpediente, idTrabajo, archivo) => 
   try {
 
 
-    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${archivo}/InfoArchivoDescarga`
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${archivo}/InfoArchivoDescarga/?idioma=${getDefaultLanguage()}`
     );
     return result.data
   } catch (error) {
@@ -1009,7 +1010,7 @@ export const download = async (urlFile, fileName) => {
  */
 export const getAutorizacionMunicipal = async (grupoTematico, languageId = 1) => {
   try {
-    let result = await api.get(`/tipos/guia/tiposautorizacionmunicipal?idioma=${languageId}&id_tipo_grupo_tematico=${grupoTematico}`);
+    let result = await api.get(`/tipos/guia/tiposautorizacionmunicipal?idioma=${getDefaultLanguage()}&id_tipo_grupo_tematico=${grupoTematico}`);
     return result.data;
   }
   catch (error) {
@@ -1020,7 +1021,7 @@ export const getAutorizacionMunicipal = async (grupoTematico, languageId = 1) =>
 /**Eliminar un expediente */
 export const deleteExpediente = async (idExpediente) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}`);
+    let result = await api.delete(`/expedientes/${idExpediente}/?idioma=${getDefaultLanguage()}`);
     return result.data;
   }
   catch (error) {
@@ -1031,7 +1032,7 @@ export const deleteExpediente = async (idExpediente) => {
 /**Eliminar un expediente */
 export const deleteTrabajo = async (idExpediente, idTrabajo) => {
   try {
-    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}`);
+    let result = await api.delete(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/?idioma=${getDefaultLanguage()}`);
     return result.data;
   }
   catch (error) {
@@ -1041,7 +1042,7 @@ export const deleteTrabajo = async (idExpediente, idTrabajo) => {
 
 export const closeTrabajo = async (idExpediente, idTrabajo) => {
   try {
-    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/cerrartrabajo`, { "ignorarobservaciones": 1 })
+    let result = await api.post(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/cerrartrabajo/?idioma=${getDefaultLanguage()}`, { "ignorarobservaciones": 1 })
     return result.data;
   } catch (error) {
     return formatMenssage(error.message);
@@ -1050,7 +1051,7 @@ export const closeTrabajo = async (idExpediente, idTrabajo) => {
 
 export const fileViewer = async (idExpediente, idTrabajo, idEstructura) => {
   try {
-    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${idEstructura}/InfoArchivovisualizacion`)
+    let result = await api.get(`/expedientes/${idExpediente}/trabajos/${idTrabajo}/estructuradocumental/${idEstructura}/InfoArchivovisualizacion/?idioma=${getDefaultLanguage()}`)
     return result.data;
   } catch (error) {
     return formatMenssage(error.message);

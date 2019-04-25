@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { withLocalize } from "react-localize-redux";
 import { IconButton, MenuList, MenuItem, Popper, Grow, Paper, ClickAwayListener } from '@material-ui/core';
 import { Language } from "@material-ui/icons";
+import {setCookie} from "../../../reducers/userExport";
 
 
 const styles = theme => ({
@@ -38,7 +39,9 @@ class MenuLanguage extends React.Component {
 
     handleClick(language) {
         let { setActiveLanguage } = this.props;
+        setCookie("language",language);
         setActiveLanguage(language)
+        //this.props.dispatchSetActiveLanguage(language);
         this.setState({ open: false });
     }
 

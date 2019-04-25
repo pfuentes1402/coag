@@ -4,7 +4,7 @@ import {
 } from "../../actions/usuarios/types";
 import { RESULTADOSBUSQUEDA, FILTROBUSQUEDA, FILTROACCIONES } from "../../actions/expedientes/types";
 import { FETCH_LOGIN_SUCCESS, FETCH_LOADING, FETCH_ID_ACCION, EXPIRED_SESSION } from "../../actions/usuarios/types";
-import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO, FETCH_LANGUAGE } from "../../actions/usuarios/types";
+import { FETCH_LOGIN_FAIL, REFRESH_TOKEN_, ULTIMOSTRABAJOS, CAMBIASELECT, NUEVA_CONF_USUARIO, FETCH_LANGUAGE, SET_DEFAULT_LANGUAGE } from "../../actions/usuarios/types";
 import { FETCH_RESET_RESULT } from "../../actions/interfaz/types";
 import { PURGE } from 'redux-persist';
 
@@ -238,6 +238,11 @@ const reducer = (state = initialstate, action) => {
         ...state,
         expiredSession: action.payload
       }
+
+    case SET_DEFAULT_LANGUAGE:
+      let languageState = Object.assign({}, state);
+      languageState.DatosConfiguracionesUsuario.Idioma_Predefinido = action.payload ? action.payload : 2;
+      return languageState;
 
     default:
       return state;

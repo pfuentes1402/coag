@@ -12,7 +12,7 @@ import { Translate } from "react-localize-redux";
 import { Add, Settings, Search } from "@material-ui/icons";
 import MenuUser from "../Menus/user";
 import MenuLanguage from "../Menus/language";
-import { purgarStore, goHome, goExpedientesUser } from './../../actions/usuarios/index';
+import { purgarStore, goHome, goExpedientesUser, dispatchSetActiveLanguage } from './../../actions/usuarios/index';
 import { fetchMuestraModal, fetchCambiaStatoModalBuscador, fetchCambiaStadoModal } from './../../actions/interfaz/index';
 import { CSSTransitionGroup } from 'react-transition-group'
 import Modalacciones from '../../components/Home/Modalacciones';
@@ -42,10 +42,10 @@ const styles = theme => ({
         alignSelf: "center"
     },
     menuUser: {
-            display: "flex",
-            textAlign: "right",
-            [theme.breakpoints.down('sm')]: {
-                display: "inline",
+        display: "flex",
+        textAlign: "right",
+        [theme.breakpoints.down('sm')]: {
+            display: "inline",
         },
     }
 });
@@ -59,7 +59,6 @@ class MenuAppBar extends React.Component {
         };
 
     }
-
 
     handleHome = () => {
         this.props.goHome();
@@ -116,7 +115,7 @@ class MenuAppBar extends React.Component {
                     </Grid>
                     <Grid item xs={2} sm={4} md={1} lg={2} className={classes.col} >
                         <div className={classes.menuUser}>
-                            <MenuLanguage />
+                            <MenuLanguage dispatchSetActiveLanguage={this.props.dispatchSetActiveLanguage}/>
                             <MenuUser />
                         </div>
                     </Grid>
@@ -128,7 +127,7 @@ class MenuAppBar extends React.Component {
                         transitionLeaveTimeout={3000}>
                         {
                             this.props.mostrarModal === true ?
-                                <Modalacciones key={this.props.idAccion}/>
+                                <Modalacciones key={this.props.idAccion} />
                                 : ''}
                     </CSSTransitionGroup>
                 </div>
@@ -144,7 +143,7 @@ const mapStateToProps = state => (
     {
         usuario: state.user.DatosUsuarioValidado.Usuario ? state.user.DatosUsuarioValidado.Usuario : 'Login',
         mostrarModal: state.status.modalAcciones,
-        idAccion: state.user.idAccion ? state.user.idAccion : 0,
+        idAccion: state.user.idAccion ? state.user.idAccion : 0
     }
 );
 
@@ -155,6 +154,7 @@ const mapDispatchToProps = {
     fetchMuestraModal,
     fetchCambiaStatoModalBuscador,
     fetchCambiaStadoModal,
+    dispatchSetActiveLanguage
 };
 
 

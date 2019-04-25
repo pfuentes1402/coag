@@ -17,9 +17,10 @@ import LoadingFiles from "./components/FileUpload/loadingFiles"
 
 const mapStateToProps = state => ({
     idiomaFavorito: state.user.DatosConfiguracionesUsuario.Idioma_Predefinido,
-
-
 });
+
+
+
 const styles = theme => ({
         uploadFile:{
             position:'fixed',
