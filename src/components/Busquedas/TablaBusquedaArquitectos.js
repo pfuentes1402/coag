@@ -14,11 +14,10 @@ class TablaBusquedaArquitectos extends Component {
  
         this.state = {
             columnDefs: [
-                {headerName: "NIF", field: "Nif", width: 93},                
+                {headerName: "NIF", field: "Nif", width: 140},
                 {headerName: "NOMBRE", field: "Nombre", width: 140},                
                 {headerName: "APELLIDOS", field: "Apellido1", width: 120},
-                {headerName: "MUNICIPIO", field: "Concello", width: 120},
-                {headerName: "ID ENTIDAD", field: "Id_Entidad", width: 148},             
+
             ]          
             ,
             components: {
