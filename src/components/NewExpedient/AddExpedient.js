@@ -290,7 +290,7 @@ class AddExpedient extends Component {
                                         margin="normal"
                                         multiline
                                         rows={4}
-                                        helperText={"110/500"}
+
                                         fullWidth
                                         InputProps={{
                                             disableUnderline: true,
