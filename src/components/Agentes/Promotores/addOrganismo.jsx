@@ -82,7 +82,6 @@ class AddOrganismo extends Component {
                 "Id_Autonomia": 71,
                 "Id_Pais": 100,
                 "Nif_Representado": ""
-
             },
             tiposPromotor: [],
             domicilio: [],
@@ -93,7 +92,8 @@ class AddOrganismo extends Component {
             checkedRepresentado: false,
             selectedRepresentados: [],
             checkedLey: true,
-            expanded: false
+            expanded: false,
+            flag: this.props.promotor
         };
 
     }
@@ -203,7 +203,7 @@ class AddOrganismo extends Component {
                                             }}
                                             validators={['required']}
                                             errorMessages={[translate("languages.generalText.fieldRequired")]}
-
+                                            disabled={this.state.promotor && this.state.promotor.Id_Entidad !== -1}
                                         />}
                                     </Translate>
 

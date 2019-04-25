@@ -82,7 +82,7 @@ class TramitacionesCurso extends Component {
     renderColumns() {
         if (this.props.tablePersonalization.columnDefs.length === 0) {
             let columns = [
-                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 100, pinned: null, selected: false },
+                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 120, pinned: null, selected: true },
                 { headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140, pinned: null, selected: true },
                 { headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200, selected: true },
                 { headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200, selected: true },
@@ -105,7 +105,7 @@ class TramitacionesCurso extends Component {
     async renderColumnsAsync() {
         if (this.props.tablePersonalization.columnDefs.length === 0) {
             let columns = [
-                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 100, pinned: null, selected: false },
+                { headerName: "CÓDIGO", field: "Expediente_Codigo", width: 120, pinned: null, selected: true },
                 { headerName: "COD ESTUDIO", field: "Expediente_Codigo_estudio", width: 140, pinned: null, selected: true },
                 { headerName: "TITULO EXPEDIENTE", field: "Titulo_Expediente", width: 200, selected: true },
                 { headerName: "TITULO TRABAJO", field: "Titulo_Trabajo", width: 200, selected: true },

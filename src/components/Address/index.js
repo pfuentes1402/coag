@@ -86,6 +86,10 @@ class ValidateAddress extends Component {
 
     };
 
+    componentWillMount(){
+        this.setState({location: "", isShowAddress: false})
+    }
+
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
@@ -118,7 +122,7 @@ class ValidateAddress extends Component {
                 await this.setState({data: response.Datos_Completos ? response.Datos_Completos[0] : [], isValidate: false, isShowAddress:  true});
                 await this.props.updateLocation(response.Datos_Completos ? response.Datos_Completos[0] : []);
                 await this.props.updateIsShowAddress(true);
-                await this.props.validate();
+                //await this.props.validate();
             }
         }
         catch (e) {
@@ -134,7 +138,7 @@ class ValidateAddress extends Component {
         //let georeferencia = this.props.isShowAddress ? this.props.location.Georeferencia : this.state.location;
         let georeferencia = this.state.location;
         return (
-            <Grid container spacing={8}>
+            <Grid container spacing={8} className="pl-2">
                     <Grid item xs={12}>
                         <div style={{display: "flex", alignItems: "center"}}>
                             <FormControl className={classes.formControl1}>
@@ -162,7 +166,7 @@ class ValidateAddress extends Component {
                     </Grid>
                     <Grid item xs={12}>
                         {
-                            this.state.isShowAddress || this.props.isShowAddress  ?
+                            /*this.state.isShowAddress ||*/ this.props.isShowAddress  ?
                                 <Grid container spacing={16}>
                                     <Grid item xs={12}>
                                         <FormControl className={classes.formControl2}>

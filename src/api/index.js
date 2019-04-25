@@ -1,13 +1,14 @@
 import { handleLoggout } from './../helpers/logout.js'
 import axios from 'axios';
+import store from "../reducers/userExport";
 import * as types from './../actions/usuarios/types';
 import { setExpiredSession } from "./../actions/usuarios/index";
 const BASE_PATH = "http://servicios.coag.es/api";
+
+
 /*
-*
-*Configuración base para las llamadas axios,
-*se asegura que tenga el token, en caso de no tenerlo lo añade si este existe
-*
+*Configuración base para las llamadas axios, se asegura que
+* tenga el token, en caso de no tenerlo lo añade si este existe
 */
 const api = axios.create({
   baseURL: BASE_PATH,
@@ -50,6 +51,13 @@ api.interceptors.response.use(function (response) {
   }
   return Promise.reject(error)
 })
+
+export const getDefaultLanguage = () => {
+  if (store) {
+    const state = store.getState();
+    return state.nuevaconfUsuario.idioma;
+  }
+}
 
 /*
  *Proporciona los datos generales de un expediente
@@ -339,21 +347,16 @@ export const getToken = async () => {
  *   Numero de acciones pendientes
 */
 export const getAcciones = () =>
-  api.post('http://servicios.coag.es/api/AccionesPendientes/',
-  )
+  api.post('http://servicios.coag.es/api/AccionesPendientes/')
     .then(response => {
-
-      //  store.dispatch(fetchRefresh(response)).then( response=>{
-      //    return response;
-      //  });
       return response;
     }).catch(error => {
-
       return error;
     });
+
 /*
  *obtiene las acciones pendientes(todas), luego las pagina el componente 
- */
+*/
 export const getultimosTrabajos = async () => {
   try {
     let response = await api.get('/AccionesPendientes/');

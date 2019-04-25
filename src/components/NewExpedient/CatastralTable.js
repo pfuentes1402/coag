@@ -192,7 +192,7 @@ let EnhancedTableToolbar = props => {
                     </Tooltip>
                 ) : (
                     <Tooltip title={"Agregar"}>
-                        <Fab size="small" color="primary" disabled={!isShowAddress}
+                        <Fab size="small" color="primary" 
                              onClick={()=>{props.onSave()}}>
                             <Add/>
                         </Fab>

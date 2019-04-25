@@ -38,6 +38,7 @@ const initialstate = {
   data: { Expedientes: [] },
   expiredSession: false
 };
+
 const reducer = (state = initialstate, action) => {
 
   switch (action.type) {

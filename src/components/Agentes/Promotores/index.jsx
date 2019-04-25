@@ -210,11 +210,18 @@ class Promotores extends Component {
     this.setState({ percentageEdit: true, canSearch: false, editing: true })
     let promotor = this.props.encomenda.Promotores.find(x => x.Nif === nif);
     if (promotor) {
-      let search = await getBuscador(promotor.Nif, "Promotores", 1, 10);
-      if (search.data && search.data.Promotores && search.data.Promotores.length > 0) {
-        let findedPromotor = search.data.Promotores[0];
-        findedPromotor["porcentaje"] = promotor.Porcentaje;
-        this.handleSelectAgent(findedPromotor);
+      //1- Caso en que el promotor este completo
+      if (promotor.Id_Autonomia || promotor.Id_Concello || promotor.Id_Provincia || promotor.Pais) {
+        this.handleSelectAgent(promotor);
+      } 
+      //2- Caso en que haya que buscar al promotor porque no este completo
+      else {
+        let search = await getBuscador(promotor.Nif, "Promotores", 1, 10);
+        if (search.data && search.data.Promotores && search.data.Promotores.length > 0) {
+          let findedPromotor = search.data.Promotores[0];
+          findedPromotor["porcentaje"] = promotor.Porcentaje;
+          this.handleSelectAgent(findedPromotor);
+        }
       }
     }
     this.setState({ editing: false });
