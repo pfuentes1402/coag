@@ -116,7 +116,7 @@ class ListaTrabajos extends Component {
                     return (
                       <TableRow className={classes.row} key={index}>
                         <TableCell component="th" scope="row" className="px-1 text-center">
-                          {index + 1}
+                          {row.Id_Trabajo}
                         </TableCell>
                         <TableCell className="p-0">
                           <a className={classes.titleColor}
