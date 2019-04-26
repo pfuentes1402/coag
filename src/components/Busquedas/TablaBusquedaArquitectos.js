@@ -73,19 +73,19 @@ class TablaBusquedaArquitectos extends Component {
         switch (data) {
             case 'colegiados':
                 columnDefs= [
-                    {headerName: "Número de colegiado", field: "Id_Colegiado", width: 180},
+                    {headerName: "NO. COLEGIADO", field: "Id_Colegiado", width: 180},
                     {headerName: "NOMBRE", field: "Nombre", width: 140},
-                    {headerName: "APELLIDO", field: "Apellido1", width: 120},
-                    {headerName: "APELLIDO", field: "Apellido2", width: 120},
-                    {headerName: "Tipo", field: "Tipo_Colegiado", width: 120},
+                    {headerName: "1ER APELLIDO", field: "Apellido1", width: 140},
+                    {headerName: "2DO APELLIDO", field: "Apellido2", width: 140},
+                    {headerName: "TIPO", field: "Tipo_Colegiado", width: 120},
                 ]
                 break;
             default:
                 columnDefs= [
 
                         {headerName: "NOMBRE", field: "Nombre", width: 140},
-                        {headerName: "APELLIDO", field: "Apellido1", width: 120},
-                        {headerName: "APELLIDO", field: "Apellido2", width: 120},
+                        {headerName: "1ER APELLIDO", field: "Apellido1", width: 140},
+                        {headerName: "2DO APELLIDO", field: "Apellido2", width: 140},
                         ]
                 break;
 
