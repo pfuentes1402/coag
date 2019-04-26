@@ -12,11 +12,7 @@ class TablaBusquedaArquitectos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            columnDefs: [
-                {headerName: "NIF", field: "Nif", width: 140},
-                {headerName: "NOMBRE", field: "Nombre", width: 140},                
-                {headerName: "APELLIDOS", field: "Apellido1", width: 120},
-            ],
+            columnDefs: [],
             components: {
                     rowNodeIdRenderer: function (params) {
                         return params.node.id + 1;
@@ -60,9 +56,48 @@ class TablaBusquedaArquitectos extends Component {
         };       
         this.gridApi.exportDataAsCsv(params);
     };
+    componentWillMount() {
+        this.renderColumn()
+    }
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.renderColumn(nextProps)
+    }
+
+    async renderColumn(props = false){
+        let columnDefs=[];
+        let data = this.props.itemSelected
+        if (props){
+            data = props.itemSelected
+
+        }
+        switch (data) {
+            case 'colegiados':
+                columnDefs= [
+                    {headerName: "NO. COLEGIADO", field: "Id_Colegiado", width: 180},
+                    {headerName: "NOMBRE", field: "Nombre", width: 140},
+                    {headerName: "1ER APELLIDO", field: "Apellido1", width: 140},
+                    {headerName: "2DO APELLIDO", field: "Apellido2", width: 140},
+                    {headerName: "TIPO", field: "Tipo_Colegiado", width: 120},
+                ]
+                break;
+            default:
+                columnDefs= [
+
+                        {headerName: "NOMBRE", field: "Nombre", width: 140},
+                        {headerName: "1ER APELLIDO", field: "Apellido1", width: 140},
+                        {headerName: "2DO APELLIDO", field: "Apellido2", width: 140},
+                        ]
+                break;
+
+
+        }
+        await  this.setState({columnDefs})
+    }
 
 
     render() {
+
+
 
         return (
             <div
