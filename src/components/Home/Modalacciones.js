@@ -108,7 +108,7 @@ class Modalacciones extends Component {
         let value = e.target.value;
         this.setState({types: value});
         if(value === 'colegiados' || value === 'promotores' || value === 'otrosAgentes'){
-            this.setState({tablaArquitectos: true})
+            this.setState({tablaArquitectos: true,itemSelected:value})
         }
         else {
             this.setState({tablaArquitectos: false})
@@ -138,7 +138,7 @@ class Modalacciones extends Component {
         const RenderTipoTabla = () => {
             if(this.state.tablaArquitectos === true){
                 return (
-                    <TablaBusquedaArquitectos data={this.props.datosTablaResult}/>
+                    <TablaBusquedaArquitectos itemSelected={this.state.itemSelected} data={this.props.datosTablaResult}/>
                 );
             }else{
                 return (

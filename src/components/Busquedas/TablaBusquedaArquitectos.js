@@ -12,11 +12,7 @@ class TablaBusquedaArquitectos extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            columnDefs: [
-                {headerName: "NIF", field: "Nif", width: 140},
-                {headerName: "NOMBRE", field: "Nombre", width: 140},                
-                {headerName: "APELLIDOS", field: "Apellido1", width: 120},
-            ],
+            columnDefs: [],
             components: {
                     rowNodeIdRenderer: function (params) {
                         return params.node.id + 1;
@@ -60,9 +56,36 @@ class TablaBusquedaArquitectos extends Component {
         };       
         this.gridApi.exportDataAsCsv(params);
     };
+    componentWillMount() {
+        this.renderColumn()
+    }
+    async renderColumn(){
+        let columnDefs=[];
+        switch (this.props.itemSelected) {
+            case 'colegiados':
+                columnDefs= [
+                    {headerName: "Número de colegiado", field: "Id_Colegiado", width: 180},
+                    {headerName: "NOMBRE", field: "Nombre", width: 140},
+                    {headerName: "APELLIDOS", field: "Apellido1", width: 120},
+                    {headerName: "Tipo", field: "Tipo_Colegiado", width: 120},
+                ]
+                break;
+            default:
+                columnDefs= [
+                        {headerName: "NIF", field: "Nif", width: 140},
+                        {headerName: "NOMBRE", field: "Nombre", width: 140},
+                        {headerName: "APELLIDOS", field: "Apellido1", width: 120},
+                        ]
+                break;
+
+
+        }
+        await  this.setState({columnDefs})
+    }
 
 
     render() {
+
 
         return (
             <div
