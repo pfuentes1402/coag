@@ -59,9 +59,18 @@ class TablaBusquedaArquitectos extends Component {
     componentWillMount() {
         this.renderColumn()
     }
-    async renderColumn(){
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.renderColumn(nextProps)
+    }
+
+    async renderColumn(props = false){
         let columnDefs=[];
-        switch (this.props.itemSelected) {
+        let data = this.props.itemSelected
+        if (props){
+            data = props.itemSelected
+
+        }
+        switch (data) {
             case 'colegiados':
                 columnDefs= [
                     {headerName: "Número de colegiado", field: "Id_Colegiado", width: 180},
@@ -87,6 +96,7 @@ class TablaBusquedaArquitectos extends Component {
 
 
     render() {
+
 
 
         return (
