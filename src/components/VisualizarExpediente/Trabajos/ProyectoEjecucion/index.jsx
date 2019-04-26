@@ -189,7 +189,8 @@ class TrabajoEjecucion extends Component {
             loadingDetallesArchivo: false,
             tiposTramites: [],
             loadingUpdateFichaTrabajo: false,
-            temporalFiles: []
+            temporalFiles: [],
+            administrativeNotivficationSave: null
         }
     }
     async onDrop(acceptedFiles) {
@@ -248,10 +249,13 @@ class TrabajoEjecucion extends Component {
             try {
                 let workDetails = await api.getWorkDetails(expediente.Id_Expediente, this.props.trabajo);
                 workDetails = workDetails.data;
+                //TODO:
+
                 await this.setState({
                     expediente,
                     allowUpload: workDetails.Trabajos[0].Estado && workDetails.Trabajos[0].Estado == 'Tramitado' ? false : true,
                     workDetails,
+                    administrativeNotivficationSave: workDetails.Trabajos[0].Es_Trabajo_Modificado_Requerido_Administracion
                 })
             } catch (e) {
                 this.props.fetchErrorExpediente(e);
@@ -616,11 +620,16 @@ class TrabajoEjecucion extends Component {
     }
 
     handleChangeFichaTrabajoTipo = () => (event) => {
-        let trabajoCopy = {};
-        Object.assign(trabajoCopy, this.state.workDetails);
+        let trabajoCopy = Object.assign({}, this.state.workDetails);
         trabajoCopy.Trabajos[0].Es_Trabajo_Nuevo = ("Es_Trabajo_Nuevo" === event.target.value) ? 1 : 0;
         trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Sustancial = ("Es_Trabajo_Modificado_Sustancial" === event.target.value) ? 1 : 0;
         trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Correcion_Basica = ("Es_Trabajo_Modificado_Correcion_Basica" === event.target.value) ? 1 : 0;
+
+        if ("Es_Trabajo_Nuevo" === event.target.value) {
+            trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Requerido_Administracion = 0;
+        } else {
+            trabajoCopy.Trabajos[0].Es_Trabajo_Modificado_Requerido_Administracion = this.state.administrativeNotivficationSave;
+        }
         this.setState({ workDetails: trabajoCopy });
     }
 
@@ -682,12 +691,16 @@ class TrabajoEjecucion extends Component {
 
             }
             else {
-                this.setState({ loadingUpdateFichaTrabajo: false });
+                let workDetails = response && response.Trabajos && response.Trabajos.length > 0
+                    ? response.Trabajos[0].Es_Trabajo_Modificado_Requerido_Administracion : 0;
+                this.setState({
+                    loadingUpdateFichaTrabajo: false,
+                    administrativeNotivficationSave: workDetails
+                });
             }
         } catch (e) {
             this.props.fetchErrorExpediente(this.props.ormatMenssage(e.message));
             this.setState({ loadingUpdateFichaTrabajo: false });
-
         }
     }
 
@@ -1056,7 +1069,7 @@ class TrabajoEjecucion extends Component {
                                                                                 onChange={this.handleChange("checked", pos, 'temporalFiles')}
                                                                                 value={item.Nombre}
                                                                             />
-                                                                            <Typography title={item.Nombre}  className={classes.orange}>{item.Nombre}</Typography>
+                                                                            <Typography title={item.Nombre} className={classes.orange}>{item.Nombre}</Typography>
                                                                         </Grid>
                                                                         <Grid item md={3} xs={3} className="align-self-center">
                                                                             <Typography className={classes.orange}>
@@ -1124,7 +1137,7 @@ class TrabajoEjecucion extends Component {
                                                                             onChange={this.handleChange("checked", pos, 'data')}
                                                                             value={item.Archivo}
                                                                         />
-                                                                        <Typography title={item.Archivo} style={{overflow:'hidden',marginRight:'5%', textOverflow:'ellipsis',whiteSpace:'nowrap'}} className={item.Requisitos_Firma_Completos ? "" : classes.red}>
+                                                                        <Typography title={item.Archivo} style={{ overflow: 'hidden', marginRight: '5%', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} className={item.Requisitos_Firma_Completos ? "" : classes.red}>
                                                                             {item.Archivo}
                                                                         </Typography>
                                                                     </Grid>
