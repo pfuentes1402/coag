@@ -181,7 +181,7 @@ class AddExpedient extends Component {
             locations[equal] = location;
         }
 
-        await this.setState({ emplazamientos: locations });
+        await this.setState({ emplazamientos: locations, allowAdd: false });
         this.handleUpdateEmplazamientos(locations);
     }
 
