@@ -410,7 +410,13 @@ export const postExpedienteAccion = async (id_expediente, idAccion, ignorarObser
  */
 export const getBuscador = async (filtro, tipoBusqueda, page = 1, pageSize = 25) => {
   try {
-    let uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}`;
+    let uri =''
+    if(tipoBusqueda=='colegiados'){
+       uri = filtro === "" ? `/${tipoBusqueda}/?filtro=a&pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}`;
+    }else{
+       uri = filtro === "" ? `/${tipoBusqueda}/?pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}` : `/${tipoBusqueda}/?filtro=${filtro}&pag=${page}&tam=${pageSize}&idioma=${getDefaultLanguage()}`;
+    }
+
     //let response = await fetchData(uri,{})
     let response = await api.get(uri);
     return response;

@@ -255,6 +255,7 @@ export const fetchBuscador = (filtro, tipoBusqueda, page = 1, pageSize = 100000)
     async (dispatch) => {
         let temp = '';
         let temp2 = '';
+        console.log(filtro,tipoBusqueda)
         if (filtro != null) {
             temp = filtro;
         }
