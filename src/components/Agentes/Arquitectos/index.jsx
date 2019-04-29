@@ -205,7 +205,7 @@ class Arquitecto extends Component {
 
       newEncomenda.Colegiados.push(agent);
       this.setState({ encomenda: newEncomenda });
-      this.props.updateEncomenda(this.state.encomenda);
+      this.props.updateEncomenda(newEncomenda);
     }
     this.handleCanSearch(false);
   }
