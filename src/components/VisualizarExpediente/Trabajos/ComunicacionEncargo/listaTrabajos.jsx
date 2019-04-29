@@ -119,8 +119,7 @@ class ListaTrabajos extends Component {
                           {row.Id_Trabajo}
                         </TableCell>
                         <TableCell className="p-0">
-                          <a className={classes.titleColor}
-                            onClick={() => this.props.changeEstructura(row.Id_Trabajo)}>
+                          <a className={classes.titleColor} onClick={() => this.props.changeEstructura(row.Id_Trabajo)}>
                             {row.Titulo}
                           </a>
                         </TableCell>
