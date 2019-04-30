@@ -74,11 +74,9 @@ class Modalacciones extends Component {
         this.setState({loadingSearch: true});
         try {
             if(this.props.modal){
-                if(text === 'colegiados' && !text){
-                    this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
-                }else {
+
                     await this.props.fetchBuscador(text, this.props.selectBuscador);
-                }
+
             }
             else {
                 await this.props.fetchSuscepAcciones(text, this.props.idAccion, 1, 10000);
@@ -114,11 +112,11 @@ class Modalacciones extends Component {
             this.setState({tablaArquitectos: false})
         }
         this.props.fetchSelect(value);
-        if(value === 'colegiados' && !this.state.text){
-            this.props.fetchErrorExpediente(formatMenssage("Debe especificar un filtro para la búsqueda"));
-        }else {
+
+
+
             this.props.fetchBuscador(this.state.text, value);
-        }
+
 
     }
 
