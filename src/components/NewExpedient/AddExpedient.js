@@ -315,7 +315,7 @@ class AddExpedient extends Component {
                                     <Grid item xs={12}>
                                         <CatastralTable location={this.state.location} emplazamientos={this.state.emplazamientos}
                                             saveAddress={async () => {
-                                                this.setState({ key: Math.random() });
+                                                this.setState({ key: Math.random(), location: null });
                                                 this.handleUpdateIsShowAddress(false);
                                                 this.handleCanAdd(true);
                                             }}
@@ -338,7 +338,7 @@ class AddExpedient extends Component {
                                             <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
                                         </Button>
                                         <Button variant="contained" size="small" color="primary"
-                                            className={classes.button} 
+                                            className={classes.button}
                                             disabled={!this.state.location || !this.state.isShowAddress}
                                             onClick={async () => { await this.handleSaveAddress(); }}>
                                             <Translate id="languages.generalButton.added" />
