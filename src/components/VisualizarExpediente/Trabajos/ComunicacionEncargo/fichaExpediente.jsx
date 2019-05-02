@@ -120,6 +120,9 @@ class FichaExpediente extends Component {
   }
 
   handleUpdateLocation(location) {
+    if(this.state.location){
+      location["Id_Emplazamiento"] = this.state.location.Id_Emplazamiento;
+    }
     this.setState({ location: location });
   }
 
@@ -128,7 +131,7 @@ class FichaExpediente extends Component {
   }
 
   async handleSaveAddress() {
-    let { location, emplazamientos } = this.state;
+    let { location, emplazamientos, fromAdd } = this.state;
     await this.setState({ isLoadingSave: true });
     let locations = [];
     Object.assign(locations, emplazamientos);
