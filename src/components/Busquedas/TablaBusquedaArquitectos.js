@@ -83,6 +83,7 @@ class TablaBusquedaArquitectos extends Component {
             default:
                 columnDefs= [
 
+                        {headerName: "NIF", field: "Nif", width: 140},
                         {headerName: "NOMBRE", field: "Nombre", width: 140},
                         {headerName: "1ER APELLIDO", field: "Apellido1", width: 140},
                         {headerName: "2DO APELLIDO", field: "Apellido2", width: 140},
