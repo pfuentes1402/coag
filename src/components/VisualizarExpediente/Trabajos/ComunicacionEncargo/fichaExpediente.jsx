@@ -116,10 +116,13 @@ class FichaExpediente extends Component {
   }
 
   handleShowUbication(action) {
-    this.setState({ isAddUbicacion: action, isShowAddress: false, fromAdd: true });
+    this.setState({ isAddUbicacion: action, isShowAddress: false, fromAdd: true, location: null });
   }
 
   handleUpdateLocation(location) {
+    if(this.state.location){
+      location["Id_Emplazamiento"] = this.state.location.Id_Emplazamiento;
+    }
     this.setState({ location: location });
   }
 
@@ -128,7 +131,7 @@ class FichaExpediente extends Component {
   }
 
   async handleSaveAddress() {
-    let { location, emplazamientos } = this.state;
+    let { location, emplazamientos, fromAdd } = this.state;
     await this.setState({ isLoadingSave: true });
     let locations = [];
     Object.assign(locations, emplazamientos);
@@ -256,14 +259,16 @@ class FichaExpediente extends Component {
             <ValidateAddress updateLocation={(location) => { this.handleUpdateLocation(location) }}
               isShowAddress={this.state.isShowAddress}
               updateIsShowAddress={(showAddress) => { this.handleUpdateIsShowAddress(showAddress) }}
-              location={this.state.location} validate={() => this.validate()} />
-            
+              location={this.state.location} validate={() => this.validate()}
+              key={this.state.location ? this.state.location.Id_Emplazamiento : 1} />
+
             <Grid item xs={12} className="text-right">
               <Button color="primary" size="small" className={`${classes.button} mx-2`}
                 onClick={() => { this.handleShowUbication(false) }}>
                 <Translate id="languages.generalButton.cancel" /><Close className={classes.rightIcon} />
               </Button>
-              <Button variant="contained" size="small" color="primary" className={classes.button} disabled={this.state.isLoadingSave}
+              <Button variant="contained" size="small" color="primary" className={classes.button}
+                disabled={this.state.isLoadingSave || !this.state.location}
                 onClick={() => { this.handleSaveAddress() }}>
                 {this.state.fromAdd
                   ? <Translate id="languages.generalButton.added" />
