@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from '@material-ui/core';
 import FichaExpediente from './fichaExpediente';
 import TipoExpediente from './tipoExpediente';
-
+import TemporalFolder from '../ProyectoEjecucion/TemporalFolder'
 class TrabajoComunicacion extends Component {
 
   render() {

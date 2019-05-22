@@ -576,7 +576,7 @@ class VisualizarExpediente extends Component {
     let { expediente } = this.state;
     let trabajoActual = this.state.expediente ? this.state.expediente.Trabajos.find(t => t.Id_Trabajo == this.state.idTrabajoActivo) : null; /*Por favor no cambiar los == asi está bien*/
     let disableActions = this.disableActions();
-console.log('expediete',this.state.currentExpediente)
+
     return (
       this.state.expediente
         ? <Grid container>

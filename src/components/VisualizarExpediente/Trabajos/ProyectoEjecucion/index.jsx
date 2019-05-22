@@ -37,6 +37,7 @@ import { PanoramaFishEye, Lens, PictureAsPdf } from '@material-ui/icons'
 import { getTiposTramite, putFichaTrabajo } from "../../../../api";
 import '../../../Tramitaciones/estados.css';
 import { formatMenssage } from "../../../../actions/expedientes";
+import TemporalFolder from './TemporalFolder'
 //import { Divider } from 'material-ui';
 
 const styles = theme => ({
@@ -1280,6 +1281,7 @@ class TrabajoEjecucion extends Component {
                                     <CircularProgress />
                                 </div>
                                 : <div>
+                                    <TemporalFolder expediente={this.props.expediente} trabajo={this.props.trabajo} />
                                     {this.renderFilesOfWork()}
                                 </div>
                         }
