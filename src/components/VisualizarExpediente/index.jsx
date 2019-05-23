@@ -624,13 +624,13 @@ class VisualizarExpediente extends Component {
               </BreadcrumbsItem>
               : ""}
           </Grid>
-          <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden" }} className={classes.boredrRight}>
+          <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden", maxWidth: "22%" }} className={classes.boredrRight}>
             <div style={{ width: '107%', height: window.innerHeight * .8 + 10, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
             </div>
 
           </Grid>
-          <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{ padding: "0 15px" }}>
+          <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{ padding: "0 15px", minWidth: "78%" }}>
             {this.renderNavBar()}
             {
               this.state.renderComponent === "TrabajoComunicacion"
