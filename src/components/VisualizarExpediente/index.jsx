@@ -142,7 +142,7 @@ class VisualizarExpediente extends Component {
         currentExpediente: currentExpediente,
         idTrabajoActivo: activeTrabajo
       });
-      await this.handleChangeMenuOption(activeTrabajo);
+      await this.handleChangeMenuOption(null);
       let idEstructura = this.props.match.params.idEstructura
       if (idEstructura) {
 
@@ -184,9 +184,7 @@ class VisualizarExpediente extends Component {
     let estructurasNivel1 = [];
     let estructuraChildrens = {};
     try {
-
       let response = await getEstructuraDocumental(idExpediente, idTrabajo, this.props.activeLanguage.code);
-
       if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
         this.props.fetchErrorExpediente(response);
         await this.setState({ isLoadEstructura: false, estructuraDocumental: [] });
@@ -200,10 +198,12 @@ class VisualizarExpediente extends Component {
         }
         await this.setState({ estructuraDocumental: estructuraChildrens, estructurasPadre: estructurasNivel1, isLoadEstructura: false });
       }
+      return { estructuraDocumental: estructuraChildrens, estructurasPadre: estructurasNivel1 };
     }
     catch (e) {
       this.props.fetchErrorExpediente(formatMenssage(e.message));
       await this.setState({ isLoadEstructura: false });
+      return { estructuraDocumental: [], estructurasPadre: [] };
     }
   }
 
@@ -461,6 +461,7 @@ class VisualizarExpediente extends Component {
       </div>
     );
   }
+
   renderLeftNav() {
     let { classes } = this.props;
     return (
@@ -480,7 +481,7 @@ class VisualizarExpediente extends Component {
               return <MenuOption key={`menu_item_${index}`}
 
                 changeOption={(idTrabajo) => {
-                  this.handleChangeMenuOption(idTrabajo);
+                  this.handleChangeMenuOption(idTrabajo, true);
                   this.switcToolbar(2);
                 }}
 
@@ -499,6 +500,8 @@ class VisualizarExpediente extends Component {
                 idEstructuraActiva={this.state.idEstructuraActiva}
                 isLoadEstructura={this.state.isLoadEstructura}
                 active={this.state.active == trabajo.Id_Trabajo}
+                activeTrabajo={this.state.idTrabajoActivo}
+                getEstructuraDocumental={(idExpediente, idTrabajo, showLoading) => this.getEstructuraDocumental(idExpediente, idTrabajo, showLoading)}
               />
             })}
           </List>
@@ -576,14 +579,14 @@ class VisualizarExpediente extends Component {
     let { expediente } = this.state;
     let trabajoActual = this.state.expediente ? this.state.expediente.Trabajos.find(t => t.Id_Trabajo == this.state.idTrabajoActivo) : null; /*Por favor no cambiar los == asi está bien*/
     let disableActions = this.disableActions();
-console.log('expediete',this.state.currentExpediente)
+    console.log('expediete', this.state.currentExpediente)
     return (
       this.state.expediente
         ? <Grid container>
           <Grid item xs={12}>
 
             <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
-              {(this.state.currentExpediente.Expediente_Codigo?this.state.currentExpediente.Expediente_Codigo:this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
+              {(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
             </BreadcrumbsItem>
             {
               (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
@@ -609,10 +612,9 @@ console.log('expediete',this.state.currentExpediente)
             </div>
 
           </Grid>
-          <Grid item md={9} xs={12} className={classes.backgroundGrey}>
+          <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{padding: "0 15px"}}>
             {this.renderNavBar()}
             {
-
               this.state.renderComponent === "TrabajoComunicacion"
                 ? <TrabajoComunicacion expediente={expediente} />
                 : (this.state.renderComponent === "ExpedienteGeneral"
