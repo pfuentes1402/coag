@@ -299,7 +299,7 @@ class TemporalFolder extends Component {
 
     handleCheckAll = () => async event => {
         let tf = [...this.state.temporalFiles];
-        console.log("", tf);
+
         tf.map(item => {
             item.checked = event.target.checked;
         });
@@ -912,7 +912,7 @@ class TemporalFolder extends Component {
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            Archivos temporales del expediente <text
+                            Archivos temporales de expediente <text
                             style={{color: 'red'}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
@@ -972,6 +972,19 @@ class TemporalFolder extends Component {
                                             <div className="" style={{float: 'right'}}>
                                                 <Button className="px-2"
                                                         color="primary"
+                                                        style={{fontSize: 12, padding: '4px 8px'}}
+                                                        onClick={() => {
+                                                            this.handleDownload()
+                                                        }}
+                                                        disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
+                                                    <Translate id="languages.generalButton.download"/>
+                                                </Button>
+                                                {this.state.fetchingDownload ? <CircularProgress size={24}
+                                                                                                 className={classes.buttonProgress}/> : null}
+                                            </div>
+                                            <div className="" style={{float: 'right'}}>
+                                                <Button className="px-2"
+                                                        color="primary"
                                                         onClick={() => {
                                                             this.handleRemove()
                                                         }}
@@ -984,19 +997,6 @@ class TemporalFolder extends Component {
                                                                                                     className={classes.buttonProgress}/>}
                                             </div>
 
-                                            <div className="" style={{float: 'right'}}>
-                                                <Button className="px-2"
-                                                        color="primary"
-                                                        style={{fontSize: 12, padding: '4px 8px'}}
-                                                        onClick={() => {
-                                                            this.handleDownload()
-                                                        }}
-                                                        disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
-                                                    <Translate id="languages.generalButton.download"/>
-                                                </Button>
-                                                {this.state.fetchingDownload ? <CircularProgress size={24}
-                                                                                                 className={classes.buttonProgress}/> : null}
-                                            </div>
                                         </Grid>
 
                                     </Grid>
