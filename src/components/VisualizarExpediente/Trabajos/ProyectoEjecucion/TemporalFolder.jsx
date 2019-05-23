@@ -48,7 +48,6 @@ const styles = theme => ({
         position: 'relative',
     },
     buttonProgress: {
-
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -157,9 +156,9 @@ class TemporalFolder extends Component {
 
     async reloadAfther1Second() {
         await setTimeout(async () => {
-            if (this.props.fileUpload.currentUpload === null && this.state.uploadDone == false) {
+            if (this.props.fileUpload.currentUpload === null && this.state.uploadDone == false&&this.state.isMyRequest) {
                 this.loadInformation()
-                await this.setState({uploadDone: true})
+                await this.setState({uploadDone: true,isMyRequest:false})
             }
         }, 500)
     }
@@ -201,11 +200,13 @@ class TemporalFolder extends Component {
         await this.props.uploadFiles(acceptedFiles, false, expediente);
         await this.setState({
             uploadInProgress: true,
+            isMyRequest:true,
             uploadDone: false
         })
         if (this.props.notInFolderPlace) {
             this.props.showUploadComponent()
         }
+        this.dragOverUploadFileEnd()
 
     }
 
@@ -675,6 +676,7 @@ class TemporalFolder extends Component {
             allFiles.files.push(item);
         this.props.dragging(allFiles)
     }
+
     renderFichaTrabajo() {
         let {classes} = this.props;
         let work = this.state.workDetails && this.state.workDetails.Trabajos && this.state.workDetails.Trabajos.length > 0
@@ -897,11 +899,27 @@ class TemporalFolder extends Component {
                 </ExpansionPanelDetails>
             </ExpansionPanel>
     }
+
+    async dragOverUploadFile() {
+        console.log('now is dragging')
+        if (!this.props.isDragging) {
+            this.setState({userLocalFileInsertRequest: true})
+        }
+    }
+
+
+
+    async dragOverUploadFileEnd() {
+
+        this.setState({userLocalFileInsertRequest: false})
+
+    }
+
     render() {
         let {classes} = this.props
         let disableButtons = this.props.disableActions;
         return (
-            <div style={{paddingBottom:this.props.notInFolderPlace?0: 20}}>
+            <div style={{paddingBottom: this.props.notInFolderPlace ? 0 : 20}}>
                 {this.state.fetchingCenter ?
                     <Paper style={{marginLeft: -10}} className="mt-3">
                         <Grid container spacing={24}>
@@ -916,7 +934,15 @@ class TemporalFolder extends Component {
                             style={{color: 'red'}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <div style={{width: '100%'}}>
+                            <div style={{width: '100%'}} onDragLeave={() => {
+                                this.dragOverUploadFileEnd()
+                            }}
+
+                                 onDragOver={async () => {
+                                this.dragOverUploadFile()
+                            }} onDragExit={async () => {
+                                this.dragOverUploadFile()
+                            }}>
                                 <Typography variant={"body1"} style={{
                                     fontSize: 10,
                                     textAlign: 'justify',
@@ -927,238 +953,303 @@ class TemporalFolder extends Component {
                                     En el momento que se asignen a una carpeta determinada desaparecen de esta lista
                                 </Typography>
                                 <div>
+                                    {this.state.userLocalFileInsertRequest ?
+                                        <Grid item xs={12}
+                                              style={{paddingLeft: 2, paddingBottom: 2}}>
+                                            <Dropzone accept="application/pdf"
+                                                      style={{width:'100%',height:250}}
+                                                      onDragLeave={async () => {
+                                                          this.dragOverUploadFile()
+                                                      }}
+                                                onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                                                {() => (
+                                                    <div  style={{
+                                                        flex: 1,
+                                                        display: 'flex',
+                                                        flexDirection: "column",
+                                                        alignItems:"center",
+                                                        padding: 20,
+                                                        borderWidth: 2,
+                                                        borderRadius: 2,
+                                                        borderColor:' #eeeeee',
+                                                        borderStyle:"dashed",
+                                                        width:'100%',
+                                                        height:'100%',
+                                                        backgroundColor:"#fafafa",
+                                                        color: "#bdbdbd",
+                                                        outline: "none",
+                                                        transition:"border .24s ease-in-out"
+                                                    }}>
+                                                        <inpu />
+                                                        <p>Arrastre los archivos hasta esta área para subirlos a la carpeta temporal del proyecto.</p>
+                                                    </div>
+                                                )}
+                                            </Dropzone>
 
-
-                                    <Grid container>
-                                        <Grid item xs={12} className="pr-3 text-right">
-                                            <div className="" style={{float: 'right'}}>
-                                                {
-                                                    this.props.fileUpload.uploadInProgress || !this.state.allowUpload ? null :
-                                                        <Dropzone style={{
-                                                            width: 'auto',
-                                                            height: 'auto',
-                                                            borderStyle: 'none'
-                                                        }}
-                                                                  accept="application/pdf"
-                                                                  onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
-                                                            <Button color="primary"
+                                        </Grid>
+                                        :
+                                        <div>
+                                            <div>
+                                                <Grid container>
+                                                    <Grid item xs={12} className="pr-3 text-right">
+                                                        <div className="" style={{float: 'right'}}>
+                                                            {
+                                                                this.props.fileUpload.uploadInProgress || !this.state.allowUpload ? null :
+                                                                    <Dropzone style={{
+                                                                        width: 'auto',
+                                                                        height: 'auto',
+                                                                        borderStyle: 'none'
+                                                                    }}
+                                                                              accept="application/pdf"
+                                                                              onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
+                                                                        <Button color="primary"
+                                                                                style={{
+                                                                                    fontSize: 12,
+                                                                                    padding: '4px 8px'
+                                                                                }}
+                                                                                disabled={disableButtons}>
+                                                                            <Translate
+                                                                                id="languages.generalButton.uploadFile"/>
+                                                                            <CloudUpload
+                                                                                style={{marginLeft: 5}}/>
+                                                                        </Button>
+                                                                    </Dropzone>
+                                                            }
+                                                            {this.state.fetchingRemove > 0 &&
+                                                            <CircularProgress size={24}
+                                                                              className={classes.buttonProgress}/>}
+                                                        </div>
+                                                        {
+                                                            this.state.temporalFiles ?
+                                                                <div className="" style={{float: 'right'}}>
+                                                                    <Button className="px-2"
+                                                                            style={{fontSize: 12, padding: '4px 8px'}}
+                                                                            color="primary"
+                                                                            onClick={() => {
+                                                                                this.handleAutoAsign()
+                                                                            }}
+                                                                            disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
+                                                                        <Translate
+                                                                            id="languages.fileUpload.automaticSection"/>
+                                                                    </Button>
+                                                                    {this.state.fetchingAutoAsign > 0 &&
+                                                                    <CircularProgress size={24}
+                                                                                      className={classes.buttonProgress}/>}
+                                                                </div> : null
+                                                        }
+                                                        <div className="" style={{float: 'right'}}>
+                                                            <Button className="px-2"
+                                                                    color="primary"
                                                                     style={{fontSize: 12, padding: '4px 8px'}}
-                                                                    disabled={disableButtons}>
-                                                                <Translate id="languages.generalButton.uploadFile"/>
-                                                                <CloudUpload
-                                                                    style={{marginLeft: 5}}/>
+                                                                    onClick={() => {
+                                                                        this.handleDownload()
+                                                                    }}
+                                                                    disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
+                                                                <Translate id="languages.generalButton.download"/>
                                                             </Button>
-                                                        </Dropzone>
-                                                }
-                                                {this.state.fetchingRemove > 0 && <CircularProgress size={24}
-                                                                                                    className={classes.buttonProgress}/>}
-                                            </div>
-                                            {
-                                                this.state.temporalFiles ?
-                                                    <div className="" style={{float: 'right'}}>
-                                                        <Button className="px-2"
-                                                                style={{fontSize: 12, padding: '4px 8px'}}
-                                                                color="primary"
-                                                                onClick={() => {
-                                                                    this.handleAutoAsign()
+                                                            {this.state.fetchingDownload ? <CircularProgress size={24}
+                                                                                                             className={classes.buttonProgress}/> : null}
+                                                        </div>
+                                                        <div className="" style={{float: 'right'}}>
+                                                            <Button className="px-2"
+                                                                    color="primary"
+                                                                    onClick={() => {
+                                                                        this.handleRemove()
+                                                                    }}
+                                                                    style={{fontSize: 12, padding: '4px 8px'}}
+                                                                    disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove > 0
+                                                                    || disableButtons}>
+                                                                <Translate id="languages.generalButton.delete"/>
+                                                            </Button>
+                                                            {this.state.fetchingRemove > 0 &&
+                                                            <CircularProgress size={24}
+                                                                              className={classes.buttonProgress}/>}
+                                                        </div>
+
+                                                    </Grid>
+
+                                                </Grid>
+                                                <div style={{marginLeft: -10, background: "#f5f5f5"}}>
+                                                    <Divider height={2}/>
+                                                    <Grid container className="py-2 px-2">
+                                                        <Grid item md={5} xs={5} className="d-flex mr-3">
+                                                            <Checkbox
+                                                                checked={this.state.checkAll}
+                                                                onChange={this.handleCheckAll()}
+                                                                className="pl-1"
+                                                                style={{
+                                                                    padding: 0,
+                                                                    marginRight: 6
                                                                 }}
-                                                                disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
-                                                            <Translate id="languages.fileUpload.automaticSection"/>
-                                                        </Button>
-                                                        {this.state.fetchingAutoAsign > 0 && <CircularProgress size={24}
-                                                                                                               className={classes.buttonProgress}/>}
-                                                    </div> : null
-                                            }
-                                            <div className="" style={{float: 'right'}}>
-                                                <Button className="px-2"
-                                                        color="primary"
-                                                        style={{fontSize: 12, padding: '4px 8px'}}
-                                                        onClick={() => {
-                                                            this.handleDownload()
-                                                        }}
-                                                        disabled={this.state.showDownloadButton !== true || this.state.fetchingDownload}>
-                                                    <Translate id="languages.generalButton.download"/>
-                                                </Button>
-                                                {this.state.fetchingDownload ? <CircularProgress size={24}
-                                                                                                 className={classes.buttonProgress}/> : null}
+                                                            />
+                                                            <Typography variant="subtitle2" className="text-uppercase">
+                                                                <Translate id="languages.fileUpload.fileName"/>
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item md={3} xs={3}>
+                                                            <Typography variant="subtitle2" className="text-uppercase">
+                                                                <Translate id="languages.fileUpload.folder"/>
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item md={2} xs={2} className="p-3"
+                                                              className="text-uppercase text-right pr-2">
+                                                            <Typography variant="subtitle2">
+                                                                <Translate id="languages.fileUpload.firm"/>
+                                                            </Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Divider height={2}/>
+                                                </div>
                                             </div>
-                                            <div className="" style={{float: 'right'}}>
-                                                <Button className="px-2"
-                                                        color="primary"
-                                                        onClick={() => {
-                                                            this.handleRemove()
-                                                        }}
-                                                        style={{fontSize: 12, padding: '4px 8px'}}
-                                                        disabled={this.state.showDeleteButton !== true || this.state.fetchingRemove > 0
-                                                        || disableButtons}>
-                                                    <Translate id="languages.generalButton.delete"/>
-                                                </Button>
-                                                {this.state.fetchingRemove > 0 && <CircularProgress size={24}
-                                                                                                    className={classes.buttonProgress}/>}
-                                            </div>
-
-                                        </Grid>
-
-                                    </Grid>
-                                    <div style={{marginLeft: -10, background: "#f5f5f5"}}>
-                                        <Divider height={2}/>
-                                        <Grid container className="py-2 px-2">
-                                            <Grid item md={5} xs={5} className="d-flex mr-3">
-                                                <Checkbox
-                                                    checked={this.state.checkAll}
-                                                    onChange={this.handleCheckAll()}
-                                                    className="pl-1"
-                                                    style={{
-                                                        padding: 0,
-                                                        marginRight: 6
-                                                    }}
-                                                />
-                                                <Typography variant="subtitle2" className="text-uppercase">
-                                                    <Translate id="languages.fileUpload.fileName"/>
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item md={3} xs={3}>
-                                                <Typography variant="subtitle2" className="text-uppercase">
-                                                    <Translate id="languages.fileUpload.folder"/>
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item md={2} xs={2} className="p-3"
-                                                  className="text-uppercase text-right pr-2">
-                                                <Typography variant="subtitle2">
-                                                    <Translate id="languages.fileUpload.firm"/>
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                        <Divider height={2}/>
-                                    </div>
-                                </div>
-                                <div style={{maxHeight: 300, width: '100%', overflow: 'hidden'}}>
-                                    <div style={{maxHeight: 300, width: 'calc(100% + 15px)', overflowY: 'scroll', overflowX:'hidden'}}>
-                                        <Grid container spacing={16}>
-                                            {
-                                                (this.state.data && this.state.data.length > 0) || (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
-                                                    <Grid item xs={12}>
-                                                        <Grid container spacing={24}>
-                                                            <Grid item xs={12}
-                                                                  style={{paddingLeft: 2, paddingBottom: 2}}>
-                                                                {
-                                                                    this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
-                                                                        return (
-                                                                            <div draggable="true"
-                                                                                 className={'draggable'}
-                                                                                 onDragEnd={() => {
-                                                                                     this.props.dragging(false)
-                                                                                 }}
-                                                                                 onDragStart={this.dragStart(item, true)}
-                                                                                 style={{backgroundColor: '#cecece'}}
-                                                                            ><ExpansionPanel
-                                                                                classes={{root: classes.rootPanel}}
-                                                                                expanded={this.state.panelExpanded === item.Nombre}
-                                                                                onChange={this.expandPanel(item.Nombre, false)}
-                                                                                style={{borderRadius: 0}}>
-                                                                                <ExpansionPanelSummary
-                                                                                    expandIcon={<ExpandMoreIcon/>}
-                                                                                    classes={{
-                                                                                        content: classes.margin,
-                                                                                        expanded: classes.margin,
-                                                                                        root: pos % 2 !== 0 && classes.backgroundColor
-                                                                                    }}
-                                                                                    className="pl-0">
-                                                                                    <Grid container spacing={0}>
-                                                                                        <Grid item md={6} xs={6}
-                                                                                              className='d-flex align-items-center'>
-                                                                                            <Checkbox
-                                                                                                checked={item.checked ? item.checked : false}
-                                                                                                onChange={this.handleChange("checked", pos, 'temporalFiles')}
-                                                                                                value={item.Nombre}
-                                                                                            />
-                                                                                            <Typography
-                                                                                                title={item.Nombre}
-                                                                                                className={classes.orange}>{item.Nombre}</Typography>
-                                                                                        </Grid>
-                                                                                        <Grid item md={3} xs={3}
-                                                                                              className="align-self-center">
-                                                                                            <Typography
-                                                                                                className={classes.orange}>
-                                                                                                <Translate
-                                                                                                    id="languages.fileUpload.unAssigned"/>
-                                                                                            </Typography>
-                                                                                        </Grid>
-                                                                                        <Grid item md={2} xs={2}
-                                                                                              className="text-right align-self-center">
-                                                                                            <ErrorOutline
-                                                                                                className={classes.orange}
-                                                                                                size={24}/>
-                                                                                        </Grid>
-                                                                                    </Grid>
-                                                                                </ExpansionPanelSummary>
-                                                                                <ExpansionPanelDetails
-                                                                                    className={pos % 2 !== 0 && classes.backgroundColor}>
-                                                                                    <Grid container spacing={16}>
-                                                                                        <Grid item xs={6}
-                                                                                              className="align-items-center">
-                                                                                            <Grid container spacing={0}>
-                                                                                                <Grid item xs={12}>
-                                                                                                    <Typography
-                                                                                                        variant="button"
-                                                                                                        gutterBottom
-                                                                                                        className="text-uppercase">
-                                                                                                        <Translate
-                                                                                                            id="languages.fileUpload.fileSize"/>
-                                                                                                    </Typography>
+                                            <div style={{maxHeight: 300, width: '100%', overflow: 'hidden'}}>
+                                                <div style={{
+                                                    maxHeight: 300,
+                                                    width: 'calc(100% + 15px)',
+                                                    overflowY: 'scroll',
+                                                    overflowX: 'hidden'
+                                                }}>
+                                                    <Grid container spacing={16}>
+                                                        {
+                                                            (this.state.data && this.state.data.length > 0) || (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
+                                                                <Grid item xs={12}>
+                                                                    <Grid container spacing={24}>
+                                                                        <Grid item xs={12}
+                                                                              style={{
+                                                                                  paddingLeft: 2,
+                                                                                  paddingBottom: 2
+                                                                              }}>
+                                                                            {
+                                                                                this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
+                                                                                    return (
+                                                                                        <div draggable="true"
+                                                                                             className={'draggable'}
+                                                                                             onDragEnd={() => {
+                                                                                                 this.props.dragging(false)
+                                                                                             }}
+                                                                                             onDragStart={this.dragStart(item, true)}
+                                                                                             style={{backgroundColor: '#cecece'}}
+                                                                                        ><ExpansionPanel
+                                                                                            classes={{root: classes.rootPanel}}
+                                                                                            expanded={this.state.panelExpanded === item.Nombre}
+                                                                                            onChange={this.expandPanel(item.Nombre, false)}
+                                                                                            style={{borderRadius: 0}}>
+                                                                                            <ExpansionPanelSummary
+                                                                                                expandIcon={
+                                                                                                    <ExpandMoreIcon/>}
+                                                                                                classes={{
+                                                                                                    content: classes.margin,
+                                                                                                    expanded: classes.margin,
+                                                                                                    root: pos % 2 !== 0 && classes.backgroundColor
+                                                                                                }}
+                                                                                                className="pl-0">
+                                                                                                <Grid container
+                                                                                                      spacing={0}>
+                                                                                                    <Grid item md={6}
+                                                                                                          xs={6}
+                                                                                                          className='d-flex align-items-center'>
+                                                                                                        <Checkbox
+                                                                                                            checked={item.checked ? item.checked : false}
+                                                                                                            onChange={this.handleChange("checked", pos, 'temporalFiles')}
+                                                                                                            value={item.Nombre}
+                                                                                                        />
+                                                                                                        <Typography
+                                                                                                            title={item.Nombre}
+                                                                                                            className={classes.orange}>{item.Nombre}</Typography>
+                                                                                                    </Grid>
+                                                                                                    <Grid item md={3}
+                                                                                                          xs={3}
+                                                                                                          className="align-self-center">
+                                                                                                        <Typography
+                                                                                                            className={classes.orange}>
+                                                                                                            <Translate
+                                                                                                                id="languages.fileUpload.unAssigned"/>
+                                                                                                        </Typography>
+                                                                                                    </Grid>
+                                                                                                    <Grid item md={2}
+                                                                                                          xs={2}
+                                                                                                          className="text-right align-self-center">
+                                                                                                        <ErrorOutline
+                                                                                                            className={classes.orange}
+                                                                                                            size={24}/>
+                                                                                                    </Grid>
                                                                                                 </Grid>
+                                                                                            </ExpansionPanelSummary>
+                                                                                            <ExpansionPanelDetails
+                                                                                                className={pos % 2 !== 0 && classes.backgroundColor}>
+                                                                                                <Grid container
+                                                                                                      spacing={16}>
+                                                                                                    <Grid item xs={6}
+                                                                                                          className="align-items-center">
+                                                                                                        <Grid container
+                                                                                                              spacing={0}>
+                                                                                                            <Grid item
+                                                                                                                  xs={12}>
+                                                                                                                <Typography
+                                                                                                                    variant="button"
+                                                                                                                    gutterBottom
+                                                                                                                    className="text-uppercase">
+                                                                                                                    <Translate
+                                                                                                                        id="languages.fileUpload.fileSize"/>
+                                                                                                                </Typography>
+                                                                                                            </Grid>
 
-                                                                                            </Grid>
-                                                                                        </Grid>
-                                                                                        <Grid item xs={4}
-                                                                                              className="align-self-center">
-                                                                                            <Grid container spacing={0}>
-                                                                                                <Grid item xs={12}>
-                                                                                                    <Typography
-                                                                                                        variant="button"
-                                                                                                        gutterBottom>
-                                                                                                        {this.renderSize(item.Longitud)}
-                                                                                                    </Typography>
-                                                                                                </Grid>
+                                                                                                        </Grid>
+                                                                                                    </Grid>
+                                                                                                    <Grid item xs={4}
+                                                                                                          className="align-self-center">
+                                                                                                        <Grid container
+                                                                                                              spacing={0}>
+                                                                                                            <Grid item
+                                                                                                                  xs={12}>
+                                                                                                                <Typography
+                                                                                                                    variant="button"
+                                                                                                                    gutterBottom>
+                                                                                                                    {this.renderSize(item.Longitud)}
+                                                                                                                </Typography>
+                                                                                                            </Grid>
 
-                                                                                            </Grid>
-                                                                                        </Grid>
-                                                                                        <Grid item xs={2}
-                                                                                              className="align-self-center">
-                                                                                        </Grid>
+                                                                                                        </Grid>
+                                                                                                    </Grid>
+                                                                                                    <Grid item xs={2}
+                                                                                                          className="align-self-center">
+                                                                                                    </Grid>
 
-                                                                                        <Grid item xs={12}>
+                                                                                                    <Grid item xs={12}>
                                                                             <span className={classes.link}
                                                                                   onClick={() => this.handleDocumentView(item)}>
                                                                                 <Translate
                                                                                     id="languages.fileUpload.viewDocument"/>
                                                                             </span>
-                                                                                        </Grid>
-                                                                                    </Grid>
+                                                                                                    </Grid>
+                                                                                                </Grid>
 
-                                                                                </ExpansionPanelDetails>
-                                                                            </ExpansionPanel></div>)
-                                                                    })
-                                                                }
+                                                                                            </ExpansionPanelDetails>
+                                                                                        </ExpansionPanel></div>)
+                                                                                })
+                                                                            }
 
-                                                            </Grid>
-                                                        </Grid>
+                                                                        </Grid>
+                                                                    </Grid>
+                                                                </Grid>
+                                                                :
+                                                                <Grid item xs={12}>
+                                                                    <Grid container spacing={24}>
+                                                                        <Grid item xs={12} className="text-center py-4">
+                                                                            <Typography variant="subtitle1"
+                                                                                        gutterBottom>
+                                                                                <Translate
+                                                                                    id="languages.fileUpload.noResult"/>
+                                                                            </Typography>
+                                                                        </Grid>
+                                                                    </Grid>
+
+                                                                </Grid>
+
+                                                        }
                                                     </Grid>
-                                                    :
-                                                    <Grid item xs={12}>
-                                                        <Grid container spacing={24}>
-                                                            <Grid item xs={12} className="text-center py-4">
-                                                                <Typography variant="subtitle1" gutterBottom>
-                                                                    <Translate id="languages.fileUpload.noResult"/>
-                                                                </Typography>
-                                                            </Grid>
-                                                        </Grid>
-
-                                                    </Grid>
-
-                                            }
-                                        </Grid>
-                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>}
                                 </div>
 
 

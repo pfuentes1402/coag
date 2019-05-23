@@ -600,8 +600,8 @@ class TrabajoEjecucion extends Component {
                                     <CircularProgress />
                                 </div>
                                 : <div>
-                                    <TemporalFolder expediente={this.props.expediente} trabajo={this.props.trabajo} />
-                                    <FilesInFolder handleChangeEstructura={(idEstructura, titleEstructura) => {
+                                    <TemporalFolder isDragging={this.props.isDragging} dragging={(item)=>{this.props.dragging(item)}}  expediente={this.props.expediente} trabajo={this.props.trabajo} />
+                                    <FilesInFolder draggingItem={(item)=>{this.props.dragging(item)}} handleChangeEstructura={(idEstructura, titleEstructura) => {
                                         this.props.changeEstructura(idEstructura,titleEstructura)
                                     }} expediente={this.props.expediente} trabajo={this.props.trabajo} estructura={this.props.estructura} />
                                 </div>

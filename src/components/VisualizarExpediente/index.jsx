@@ -648,6 +648,7 @@ class VisualizarExpediente extends Component {
                     expediente={expediente}
                     trabajo={this.state.idTrabajoActivo}
                     dragging={(state) => this.dragging(state)}
+                    isDragging={this.state.dragging}
                     refreshTree={() => {
                       this.refreshTree()
                     }}
