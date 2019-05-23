@@ -237,9 +237,8 @@ class FilesInFolder extends Component {
     async loadGeneralInformation() {
         await this.setState({ fetching: true })
         let expediente = this.props.expediente.Expediente[0];
-        let folderInfoResponse = await api.getFolderDetails(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id)
-        let folderInfo = folderInfoResponse.data.Carpetas[0];
-        await this.setState({ expediente, folderInfo, allowUpload: folderInfo.Permite_Anexar_Archivos === '1' ? true : false })
+
+        await this.setState({ expediente })
         await this.loadInformation();
         await this.setState({ fetching: false });
     }
@@ -250,6 +249,11 @@ class FilesInFolder extends Component {
             let response = await api.getFilesFromFolder(expediente.Id_Expediente, this.props.trabajo, this.props.estructura.id);
             let documentos = response.data.Archivos;
             let firmasDigitales = response.data.FirmasDigitales;
+            await this.setState({ fetchingCenter: false, data: documentos, firmasDigitales })
+        }else{
+            let r = await api.getAllFiles(expediente.Id_Expediente, this.props.trabajo);
+            let documentos = r.Archivos;
+            let firmasDigitales = r.FirmasDigitales;
             await this.setState({ fetchingCenter: false, data: documentos, firmasDigitales })
         }
     }
