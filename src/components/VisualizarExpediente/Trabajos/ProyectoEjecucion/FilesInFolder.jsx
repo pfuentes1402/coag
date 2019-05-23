@@ -156,10 +156,12 @@ class FilesInFolder extends Component {
 
     async reloadAfther1Second() {
         await setTimeout(() => {
-            if (this.props.fileUpload.fetchingDone) {
+            if (this.props.fileUpload.fetchingDone&&this.state.isMyRequest) {
                 this.loadInformation()
                 this.props.dispatchSetFetchingDone();
-                this.props.refreshTree()
+                this.props.refreshTree();
+                this.setState({isMyRequest:false})
+;
             }
         }, 500)
     }
@@ -199,7 +201,8 @@ class FilesInFolder extends Component {
         await this.props.uploadFiles(acceptedFiles, true, expediente, this.props.trabajo, this.props.estructura)
 
         await this.setState({
-            uploadInProgress: true
+            uploadInProgress: true,
+            isMyRequest:true,
         })
 
     }
