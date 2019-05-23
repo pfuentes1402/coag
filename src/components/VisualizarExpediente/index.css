@@ -34,6 +34,9 @@
 .active:hover svg {
   color: black !important;
 }
+.dropSelector> input{
+  left: unset !important;
+}
 
 .title-breadcrumb{
   font-size: 16px

@@ -933,7 +933,7 @@ class TemporalFolder extends Component {
                             Archivos temporales de expediente <text
                             style={{color: 'red'}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
+                        <ExpansionPanelDetails style={{padding: "8px 0px 24px"}}>
                             <div style={{width: '100%'}} onDragLeave={() => {
                                 this.dragOverUploadFileEnd()
                             }}
@@ -957,7 +957,7 @@ class TemporalFolder extends Component {
                                         <Grid item xs={12}
                                               style={{paddingLeft: 2, paddingBottom: 2}}>
                                             <Dropzone accept="application/pdf"
-                                                      style={{width:'100%',height:250}}
+                                                      style={{width:'100%',height:250,paddingLeft:12,paddingRight:12}}
                                                       onDragLeave={async () => {
                                                           this.dragOverUploadFile()
                                                       }}
@@ -991,14 +991,16 @@ class TemporalFolder extends Component {
                                         <div>
                                             <div>
                                                 <Grid container>
-                                                    <Grid item xs={12} className="pr-3 text-right">
+                                                    <Grid item xs={12} className=" text-right" style={{marginRight:12}}>
                                                         <div className="" style={{float: 'right'}}>
                                                             {
                                                                 this.props.fileUpload.uploadInProgress || !this.state.allowUpload ? null :
-                                                                    <Dropzone style={{
-                                                                        width: 'auto',
-                                                                        height: 'auto',
-                                                                        borderStyle: 'none'
+                                                                    <Dropzone
+                                                                        className={'dropSelector'}
+                                                                        style={{
+
+                                                                        borderStyle: 'none',
+
                                                                     }}
                                                                               accept="application/pdf"
                                                                               onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
@@ -1069,7 +1071,7 @@ class TemporalFolder extends Component {
                                                     </Grid>
 
                                                 </Grid>
-                                                <div style={{marginLeft: -10, background: "#f5f5f5"}}>
+                                                <div style={{background: "#f5f5f5"}}>
                                                     <Divider height={2}/>
                                                     <Grid container className="py-2 px-2">
                                                         <Grid item md={5} xs={5} className="d-flex mr-3">
@@ -1115,7 +1117,7 @@ class TemporalFolder extends Component {
                                                                     <Grid container spacing={24}>
                                                                         <Grid item xs={12}
                                                                               style={{
-                                                                                  paddingLeft: 2,
+                                                                                  paddingLeft: 12,
                                                                                   paddingBottom: 2
                                                                               }}>
                                                                             {
