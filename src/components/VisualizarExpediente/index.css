@@ -34,3 +34,6 @@
 .active:hover svg {
   color: black !important;
 }
+.dropSelector> input{
+  left: unset !important;
+}
