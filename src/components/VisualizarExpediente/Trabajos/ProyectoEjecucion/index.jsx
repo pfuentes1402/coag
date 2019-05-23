@@ -148,21 +148,8 @@ const mapDispatchToProps =
 };
 
 class TrabajoEjecucion extends Component {
-    componentWillReceiveProps(nextProps, nextContext) {
-        this.reloadAfther1Second()
-    }
     componentWillUnmount() {
         this.props.showUploadComponent()
-    }
-
-    async reloadAfther1Second() {
-        await setTimeout(() => {
-            if (this.props.fileUpload.fetchingDone) {
-                this.loadInformation()
-                this.props.dispatchSetFetchingDone();
-                this.props.refreshTree()
-            }
-        }, 500)
     }
 
     constructor(props) {

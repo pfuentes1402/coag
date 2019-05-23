@@ -129,11 +129,10 @@ class MenuProyectoEjecucion extends Component {
   }
 
   handleClick(idEstructura) {
+    //this.expandExtructure(idEstructura, true);
     this.setState({ openEstructura: idEstructura });
-    if (idEstructura) {
-      let estructuraPadre = this.state.estructurasPadre ? this.state.estructurasPadre.find(e => e.Titulo === idEstructura) : "";
-      this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
-    }
+    let estructuraPadre = this.state.estructurasPadre ? this.state.estructurasPadre.find(e => e.Titulo === idEstructura) : "";
+    this.props.changeEstructura(estructuraPadre.Id_Estructura, estructuraPadre.Titulo, estructuraPadre);
   };
 
   handleExpandExtructura(idEstructura, onlyOpen = false) {
@@ -197,29 +196,17 @@ class MenuProyectoEjecucion extends Component {
     }
   }
 
-  isSelectMenuOption = () => {
-    let { trabajo, activeTrabajo } = this.props;
-    if (trabajo.Id_Trabajo === activeTrabajo)
-      return true;
-    return false;
-  }
 
   render() {
     let { classes } = this.props;
     let { isLoading } = this.state;
-    let isSelect = this.isSelectMenuOption();
-
     return (
       <div >
-        <ListItem button className={isSelect ? `${classes.openOption} active` : ""}
+        <ListItem button className={this.props.active ? `${classes.openOption} active` : ""}
           style={{ padding: "0 24px 0 0" }}>
           <ListItemText primary={this.props.trabajo.Titulo} style={{ padding: "11px 0 11px 24px" }}
-            classes={{ primary: isSelect ? classes.textWhite : classes.font14 }}
-            onClick={() => {
-              this.props.changeOption(this.props.trabajo.Id_Trabajo);
-              this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
-              this.handleClick(null);
-            }} />
+            classes={{ primary: this.props.active ? classes.textWhite : classes.font14 }}
+            onClick={() => { this.props.changeOption(this.props.trabajo.Id_Trabajo) }} />
           {this.state.isOpenTrabajo
             ? <ExpandLess onClick={async () => await this.handleOpenTrabajo(false)} />
             : <ExpandMore onClick={async () => await this.handleOpenTrabajo(true)} />}
@@ -235,16 +222,13 @@ class MenuProyectoEjecucion extends Component {
                 {this.state.estructuraDocumental[estructura].length && this.state.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
                     onDragEnd={() => { }}>
-                    <ListItem style={{ backgroundColor: this.state.openEstructura == estructura && isSelect ? '#2196f3' : "white" }}
+                    <ListItem style={{ backgroundColor: this.state.openEstructura == estructura ? '#2196f3' : "white" }}
                       button className={`${classes.item} pl-5 paddingStructure`}>
                       <ListItemText
                         primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
-                        classes={{ root: classes.padding0, primary: this.state.openEstructura == estructura && isSelect ? classes.textWhite : classes.font14 }}
-                        style={{ color: this.state.openEstructura == estructura && isSelect ? 'white' : "black", padding: "10px 0 10px 48px" }}
-                        onClick={() => {
-                          this.handleClick(estructura);
-                          this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
-                        }} />
+                        classes={{ root: classes.padding0, primary: this.state.openEstructura == estructura ? classes.textWhite : classes.font14 }}
+                        style={{ color: this.state.openEstructura == estructura ? 'white' : "black", padding: "10px 0 10px 48px" }}
+                        onClick={() => { this.handleClick(estructura) }} />
 
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1
                         ? <ExpandLess onClick={() => this.handleExpandExtructura(estructura, false)} />
@@ -263,9 +247,9 @@ class MenuProyectoEjecucion extends Component {
                               (children.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : classes.greyColor))}
                             onDragOver={() => { this.setState({ drop: pos }) }} button
                             onClick={() => {
+
                               this.markStructure(children.Titulo_Padre)
                               this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)
-                              this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
                             }}>
                             <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
@@ -280,22 +264,18 @@ class MenuProyectoEjecucion extends Component {
                       </List>
                     </Collapse>
                   </div> :
-                  <ListItem key={'menu-item' + position}
-                    onDrop={async () => {
-                      let response = await this.props.moveItemTo(estructuraActual)
-                      if (response) {
-                        this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual)
-                        this.props.refreshTree(this.props.trabajo.Id_Trabajo);
-                      }
-                    }}
+                  <ListItem key={'menu-item' + position} onDrop={async () => {
+                    let response = await this.props.moveItemTo(estructuraActual)
+                    if (response) {
+                      this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual)
+                      this.props.refreshTree(this.props.trabajo.Id_Trabajo);
+                    }
+                  }}
                     style={{ paddingLeft: 25, fontSize: 14, paddingTop: 5, paddingBottom: 5 }}
                     className={classNames((this.props.dragTarget ? classes.dragTarget : ''),
-                      (estructuraActual.Id_Estructura === this.props.idEstructuraActiva && isSelect ? classes.openOption : ""), classes.item)}
+                      (estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.openOption : ""), classes.item)}
                     onDragOver={() => { this.setState({ drop: position }) }} button
-                    onClick={() => {
-                      this.handleClick(estructura);
-                      this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
-                    }}>
+                    onClick={() => { this.props.changeEstructura(estructuraActual.Id_Estructura, estructuraActual.Titulo, estructuraActual) }}>
                     <ListItemIcon style={{ marginRight: 0, fontSize: 18 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>
                       {estructuraActual.Estado_Visual === 0 ? <Close style={{ fontSize: 18 }} /> : (estructuraActual.Estado_Visual === 1 ? <Check style={{ fontSize: 18 }} /> : <Block style={{ fontSize: 18 }} />)}
@@ -304,10 +284,11 @@ class MenuProyectoEjecucion extends Component {
                       classes={{ root: classes.padding0, primary: estructuraActual.Id_Estructura === this.props.idEstructuraActiva ? classes.textWhite : (estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 ? classes.green : classes.font13)) }} />
                   </ListItem>
                 }
+
               </List>
             })}
         </Collapse>
-
+        
       </div>
     )
   }
