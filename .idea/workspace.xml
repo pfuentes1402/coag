@@ -8,23 +8,12 @@
     </list>
     <list id="556f43b4-2c14-4935-b442-327c1330027b" name="Revert paso 2" comment="" />
     <list id="ac9f9f45-a436-4ff9-a646-b8aaac42d3c0" name="workspace de aplicar revert" comment="" />
-    <list id="036937f7-f8b2-4b0e-89b7-d1b10473b96a" name="Aplicando revert" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" />
-    </list>
-    <list id="352a3715-c0ee-4a8d-982f-f5f6403dbc13" name="Cambios para revert position" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/report.20190523.155133.17172.001.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/index.js" afterPath="$PROJECT_DIR$/src/api/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/FilesInFolder.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/FilesInFolder.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-    </list>
+    <list id="036937f7-f8b2-4b0e-89b7-d1b10473b96a" name="Aplicando revert" comment="" />
+    <list id="352a3715-c0ee-4a8d-982f-f5f6403dbc13" name="Cambios para revert position" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -474,7 +463,7 @@
       <workItem from="1558643638511" duration="295000" />
       <workItem from="1558644045510" duration="174000" />
       <workItem from="1558644329796" duration="107000" />
-      <workItem from="1558644496221" duration="724000" />
+      <workItem from="1558644496221" duration="832000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -564,7 +553,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="277929000" />
+    <option name="totallyTimeSpent" value="278037000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
