@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Habilitando comportamiento del menu lteral en la ficha del expediente" />
+    <list id="036937f7-f8b2-4b0e-89b7-d1b10473b96a" name="Aplicando revert" comment="" />
     <list id="82a9368d-5210-44f8-bef5-ef451f6dd756" name="Revert paso 4" comment="" />
-    <list id="f7671034-440e-4537-9b08-910b7d93fe67" name="Revert paso 3" comment="">
+    <list id="f7671034-440e-4537-9b08-910b7d93fe67" name="Revert paso 3" comment="" />
+    <list id="556f43b4-2c14-4935-b442-327c1330027b" name="Revert paso 2" comment="" />
+    <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Habilitando comportamiento del menu lteral en la ficha del expediente">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
     </list>
-    <list id="556f43b4-2c14-4935-b442-327c1330027b" name="Revert paso 2" comment="" />
     <list id="ac9f9f45-a436-4ff9-a646-b8aaac42d3c0" name="workspace de aplicar revert" comment="" />
-    <list id="036937f7-f8b2-4b0e-89b7-d1b10473b96a" name="Aplicando revert" comment="" />
     <list id="352a3715-c0ee-4a8d-982f-f5f6403dbc13" name="Cambios para revert position" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -103,7 +103,7 @@
         <option value="$PROJECT_DIR$/config/webpack.config.dev.js" />
         <option value="$PROJECT_DIR$/config/paths.js" />
         <option value="$PROJECT_DIR$/src/components/NewExpedient/CatastroTable.js" />
-        <option value="$PROJECT_DIR$/../COAG Estudio-20181122T175930Z-001/COAG Estudio/Colecciones postman-20181122T103300Z-001/Colecciones postman/v1/01_Expediente Emplazamientos.postman_collection.json" />
+        <option value="W:/COAG Estudio-20181122T175930Z-001/COAG Estudio/Colecciones postman-20181122T103300Z-001/Colecciones postman/v1/01_Expediente Emplazamientos.postman_collection.json" />
         <option value="$PROJECT_DIR$/coag/coag/src/api/index.js" />
         <option value="$PROJECT_DIR$/src/actions/expedient/types.js" />
         <option value="$PROJECT_DIR$/src/actions/expedient/index.js" />
@@ -177,7 +177,7 @@
     </packageJsonPaths>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1938" />
@@ -464,6 +464,7 @@
       <workItem from="1558644045510" duration="174000" />
       <workItem from="1558644329796" duration="107000" />
       <workItem from="1558644496221" duration="1068000" />
+      <workItem from="1558646658756" duration="124000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -553,7 +554,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="278273000" />
+    <option name="totallyTimeSpent" value="278397000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -565,9 +566,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2803437" sideWeight="0.43327555" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28464016" sideWeight="0.43327555" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.67346936" sideWeight="0.27395833" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
