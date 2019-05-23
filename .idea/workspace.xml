@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Habilitando comportamiento del menu lteral en la ficha del expediente">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -444,7 +443,7 @@
       <workItem from="1556636553745" duration="764000" />
       <workItem from="1556808418928" duration="459000" />
       <workItem from="1556823000567" duration="162000" />
-      <workItem from="1558616957624" duration="429000" />
+      <workItem from="1558616957624" duration="762000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -534,7 +533,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273899000" />
+    <option name="totallyTimeSpent" value="274232000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
