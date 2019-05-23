@@ -335,6 +335,7 @@ class FichaExpediente extends Component {
                           name="antecedente" />
                       </Grid>
                       <Grid item xs={5} >
+
                         <Typography variant="subtitle1" gutterBottom className="m-0"
                           style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: "0.8rem" }}>
                           <Translate id="languages.fichaExpediente.labelEntryDate" />

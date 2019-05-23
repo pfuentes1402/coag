@@ -261,7 +261,22 @@ class VisualizarExpediente extends Component {
     this.switcToolbar(1);
   }
 
-  async handleChangeEstructuran(idEstructura, titleEstructura, estructura) {
+  async handleChangeEstructuran(idEstructura, titleEstructura, estructura=false) {
+    if(!estructura){
+      Object.values(this.state.estructuraDocumental).map((mayores,p)=>{
+        if(mayores[0]){
+          Object.values(mayores).map(item=>{
+            if(item.Id_Estructura==idEstructura){
+              estructura=item
+            }
+          })
+        }else{
+          if(mayores.Id_Estructura==idEstructura){
+            estructura=mayores
+          }
+        }
+      })
+    }
     await this.setState({ idEstructuraActiva: idEstructura, titleEstructuraActiva: titleEstructura, estructuraActiva: estructura });
   }
 
@@ -332,6 +347,9 @@ class VisualizarExpediente extends Component {
   }
 
   disableActions = () => {
+    if(!this.state.idEstructuraActiva){
+      return true
+    }
     if (this.state.idTrabajoActivo) {
       let trabajoActivo = this.state.expediente.Trabajos
         ? this.state.expediente.Trabajos.find(x => x.Id_Trabajo === parseInt(this.state.idTrabajoActivo))
@@ -579,7 +597,7 @@ class VisualizarExpediente extends Component {
     let { expediente } = this.state;
     let trabajoActual = this.state.expediente ? this.state.expediente.Trabajos.find(t => t.Id_Trabajo == this.state.idTrabajoActivo) : null; /*Por favor no cambiar los == asi está bien*/
     let disableActions = this.disableActions();
-    console.log('expediete', this.state.currentExpediente)
+
     return (
       this.state.expediente
         ? <Grid container>
@@ -632,6 +650,10 @@ class VisualizarExpediente extends Component {
                     dragging={(state) => this.dragging(state)}
                     refreshTree={() => {
                       this.refreshTree()
+                    }}
+                    changeEstructura={(idEstructura, titleEstructura) => {
+                      this.handleChangeEstructuran(idEstructura, titleEstructura);
+                      this.switcToolbar(3);
                     }}
                     estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false}
                     disableActions={disableActions} />)

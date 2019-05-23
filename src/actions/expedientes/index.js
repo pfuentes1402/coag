@@ -91,7 +91,7 @@ export const hideUploadComponent = () => (
         type: types.HIDE_UPLOAD,
 
     });
-export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo, estructura = false) =>
+export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=false, estructura = false) =>
     async (dispatch, getState) => {
         try {
             let files = []
