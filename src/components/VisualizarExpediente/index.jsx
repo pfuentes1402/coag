@@ -107,7 +107,6 @@ class VisualizarExpediente extends Component {
   }
 
   async componentWillMount() {
-
     await this.fetchExpediente();
   }
 
@@ -261,18 +260,18 @@ class VisualizarExpediente extends Component {
     this.switcToolbar(1);
   }
 
-  async handleChangeEstructuran(idEstructura, titleEstructura, estructura=false) {
-    if(!estructura){
-      Object.values(this.state.estructuraDocumental).map((mayores,p)=>{
-        if(mayores[0]){
-          Object.values(mayores).map(item=>{
-            if(item.Id_Estructura==idEstructura){
-              estructura=item
+  async handleChangeEstructuran(idEstructura, titleEstructura, estructura = false) {
+    if (!estructura) {
+      Object.values(this.state.estructuraDocumental).map((mayores, p) => {
+        if (mayores[0]) {
+          Object.values(mayores).map(item => {
+            if (item.Id_Estructura == idEstructura) {
+              estructura = item
             }
           })
-        }else{
-          if(mayores.Id_Estructura==idEstructura){
-            estructura=mayores
+        } else {
+          if (mayores.Id_Estructura == idEstructura) {
+            estructura = mayores
           }
         }
       })
@@ -347,7 +346,7 @@ class VisualizarExpediente extends Component {
   }
 
   disableActions = () => {
-    if(!this.state.idEstructuraActiva){
+    if (!this.state.idEstructuraActiva) {
       return true
     }
     if (this.state.idTrabajoActivo) {
@@ -520,6 +519,7 @@ class VisualizarExpediente extends Component {
                 active={this.state.active == trabajo.Id_Trabajo}
                 activeTrabajo={this.state.idTrabajoActivo}
                 getEstructuraDocumental={(idExpediente, idTrabajo, showLoading) => this.getEstructuraDocumental(idExpediente, idTrabajo, showLoading)}
+                setTrabajoActivo={(idTrabajo) => this.setTrabajoActivo(idTrabajo)}
               />
             })}
           </List>
@@ -528,30 +528,28 @@ class VisualizarExpediente extends Component {
     );
   }
 
+  setTrabajoActivo = (idTrabajo) => {
+    this.setState({ idTrabajoActivo: idTrabajo });
+  }
+
   async moveItemTo(target) {
     let item = this.state.dragging
     try {
       if (item.temporalFiles) {
         await this.moveFileToTemporal(target, item.temporalFiles);
         await this.moveFileToEstructure(target, item.files);
-
-
       }
       else {
         await this.moveFileTo(target, item);
-
       }
       await this.refreshTree()
-
       return true
-
-
-
     } catch (error) {
       this.props.fetchErrorExpediente("Error de comunicación con la API");
       return false
     }
   }
+
   async refreshTree() {
     this.handleChangeMenuOption(this.state.idTrabajoActivo, false)
   }
@@ -592,6 +590,7 @@ class VisualizarExpediente extends Component {
   dragging(action) {
     this.setState({ dragging: action })
   }
+
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
@@ -603,7 +602,8 @@ class VisualizarExpediente extends Component {
         ? <Grid container>
           <Grid item xs={12}>
 
-            <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}>
+            <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}
+              className="title-breadcrumb">
               {(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
             </BreadcrumbsItem>
             {
@@ -630,7 +630,7 @@ class VisualizarExpediente extends Component {
             </div>
 
           </Grid>
-          <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{padding: "0 15px"}}>
+          <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{ padding: "0 15px" }}>
             {this.renderNavBar()}
             {
               this.state.renderComponent === "TrabajoComunicacion"
