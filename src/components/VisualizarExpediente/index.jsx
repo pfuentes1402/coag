@@ -249,7 +249,7 @@ class VisualizarExpediente extends Component {
   }
 
   setWorkSpaceToTrabajoEjecucion = (idTrabajo) => {
-   this.setState({
+    this.setState({
       renderComponent: "TrabajoEjecucion",
       idTrabajoActivo: idTrabajo
     });
@@ -527,7 +527,7 @@ class VisualizarExpediente extends Component {
                 activeTrabajo={this.state.idTrabajoActivo}
                 getEstructuraDocumental={(idExpediente, idTrabajo, showLoading) => this.getEstructuraDocumental(idExpediente, idTrabajo, showLoading)}
                 setTrabajoActivo={(idTrabajo) => this.setTrabajoActivo(idTrabajo)}
-                setWorkSpaceToTrabajoEjecucion = {(idTrabajo) => this.setWorkSpaceToTrabajoEjecucion(idTrabajo)}
+                setWorkSpaceToTrabajoEjecucion={(idTrabajo) => this.setWorkSpaceToTrabajoEjecucion(idTrabajo)}
               />
             })}
           </List>
@@ -616,13 +616,15 @@ class VisualizarExpediente extends Component {
             </BreadcrumbsItem>
             {
               (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")
-                ? <BreadcrumbsItem key={2} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}>
+                ? <BreadcrumbsItem key={2} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo}
+                  className="title-breadcrumb">
                   {trabajoActual ? trabajoActual.Titulo : ""}
                 </BreadcrumbsItem>
                 : ""
             }
             {this.state.estructuraActiva && this.state.estructuraActiva.Nivel_Documentacion === 2
-              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre} key={3}>
+              ? <BreadcrumbsItem to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre} key={3}
+                className="title-breadcrumb">
                 {this.state.estructuraActiva.Titulo_Padre}
               </BreadcrumbsItem> : ""}
 
