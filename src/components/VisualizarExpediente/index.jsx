@@ -248,6 +248,13 @@ class VisualizarExpediente extends Component {
     }
   }
 
+  setWorkSpaceToTrabajoEjecucion = (idTrabajo) => {
+   this.setState({
+      renderComponent: "TrabajoEjecucion",
+      idTrabajoActivo: idTrabajo
+    });
+  }
+
   handleTrabajoComunicacion() {
     this.setState({
       idTrabajoActivo: null,
@@ -521,6 +528,7 @@ class VisualizarExpediente extends Component {
                 activeTrabajo={this.state.idTrabajoActivo}
                 getEstructuraDocumental={(idExpediente, idTrabajo, showLoading) => this.getEstructuraDocumental(idExpediente, idTrabajo, showLoading)}
                 setTrabajoActivo={(idTrabajo) => this.setTrabajoActivo(idTrabajo)}
+                setWorkSpaceToTrabajoEjecucion = {(idTrabajo) => this.setWorkSpaceToTrabajoEjecucion(idTrabajo)}
               />
             })}
           </List>
@@ -638,7 +646,7 @@ class VisualizarExpediente extends Component {
                 ? <TrabajoComunicacion expediente={expediente} />
                 : (this.state.renderComponent === "ExpedienteGeneral"
                   ? <ExpedienteGeneral expediente={expediente}
-                                       dragging={(state) => this.dragging(state)}
+                    dragging={(state) => this.dragging(state)}
                     changeEstructura={(idTrabajo) => {
                       this.handleChangeMenuOption(idTrabajo);
                       this.switcToolbar(2);
