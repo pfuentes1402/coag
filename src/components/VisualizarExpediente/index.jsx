@@ -529,6 +529,8 @@ class VisualizarExpediente extends Component {
                 getEstructuraDocumental={(idExpediente, idTrabajo, showLoading) => this.getEstructuraDocumental(idExpediente, idTrabajo, showLoading)}
                 setTrabajoActivo={(idTrabajo) => this.setTrabajoActivo(idTrabajo)}
                 setWorkSpaceToTrabajoEjecucion={(idTrabajo) => this.setWorkSpaceToTrabajoEjecucion(idTrabajo)}
+                expansionRequest={this.state.expansionOrder}
+                resetExpansionRequest={() => this.expandMenuTree(null, null, null)}
               />
             })}
           </List>
@@ -600,6 +602,12 @@ class VisualizarExpediente extends Component {
     this.setState({ dragging: action })
   }
 
+  expandMenuTree = (trabajo, item, estructura) => {
+    console.log("expandMenuTree", { trabajo, item, estructura });
+    this.setState({ expansionOrder: { isExpand: true, data: { trabajo, item, estructura } } });
+  }
+
+
   render() {
     let { classes } = this.props;
     let { expediente } = this.state;
@@ -669,7 +677,9 @@ class VisualizarExpediente extends Component {
                       this.switcToolbar(3);
                     }}
                     estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false}
-                    disableActions={disableActions} />)
+                    disableActions={disableActions}
+                    expandMenuTree={(trabajo, item, estructura) => this.expandMenuTree(trabajo, item, estructura)}
+                  />)
             }
           </Grid>
 

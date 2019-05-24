@@ -15,8 +15,6 @@ import {
     Select, MenuItem, FormControlLabel, RadioGroup, Radio, Tooltip,
     Divider
 } from '@material-ui/core';
-
-
 import * as api from '../../../../api'
 import CloudUpload from '@material-ui/icons/CloudUpload';
 import CheckCircle from '@material-ui/icons/Check';
@@ -37,8 +35,6 @@ import { PanoramaFishEye, Lens, PictureAsPdf } from '@material-ui/icons'
 import { getTiposTramite, putFichaTrabajo } from "../../../../api";
 import '../../../Tramitaciones/estados.css';
 import { formatMenssage } from "../../../../actions/expedientes";
-import TemporalFolder from './TemporalFolder'
-//import { Divider } from 'material-ui';
 
 const styles = theme => ({
     root: {
@@ -725,8 +721,9 @@ class FilesInFolder extends Component {
                                                                             </Grid>
                                                                             <Grid item xs={3} className="align-self-center">
                                                                                 <Typography onClick={()=>{
+                                                                                    //TODO: Expandir toda la estructura en el árbol del menu lateral izquierdo
                                                                                     this.props.handleChangeEstructura(item.Id_Estructura_Padre,item.Carpeta)
-
+                                                                                    this.props.expandMenuTree(this.props.trabajo, item);
                                                                                 }} style={{textDecoration:'underline'}} className={item.Requisitos_Firma_Completos ? "" : classes.red}>
                                                                                     {item.Carpeta}
                                                                                 </Typography>

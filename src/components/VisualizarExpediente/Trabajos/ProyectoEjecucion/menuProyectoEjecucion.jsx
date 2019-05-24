@@ -89,7 +89,7 @@ class MenuProyectoEjecucion extends Component {
       openExcecutionMenu: this.props.active,
       openEstructura: false,
       estructurasAbiertas: [],
-      isOpenTrabajo: this.props.active,
+      isOpenTrabajo: null,
       estructuraDocumental: [],
       estructurasPadre: [],
       isLoading: false
@@ -97,13 +97,39 @@ class MenuProyectoEjecucion extends Component {
   }
 
   async componentWillMount() {
-    await this.setState({ isOpenTrabajo: this.props.trabajo.Id_Trabajo.toString() === this.props.activeTrabajo });
+    if (!this.state.isOpenTrabajo)
+      await this.setState({ isOpenTrabajo: this.props.trabajo.Id_Trabajo.toString() === this.props.activeTrabajo });
   }
 
   async componentDidMount() {
     if (this.state.isOpenTrabajo) {
       await this.handleOpenTrabajo(true);
       await this.props.changeOption(this.props.trabajo.Id_Trabajo)
+    }
+  }
+
+  async componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.expansionRequest) {
+      let { expansionRequest } = nextProps;
+      if (this.props.trabajo.Id_Trabajo === expansionRequest.data.trabajo) {
+        //Abrir opcion del menu que corresponde al trabajo
+        if (!this.state.isOpenTrabajo)
+          await this.handleOpenTrabajo(true);
+
+        //Abrir opcion del menu correspondiente a la estructura 
+        let estructura = null;
+        for (const prop in this.state.estructuraDocumental) {
+          if (this.state.estructuraDocumental[prop].some &&
+            this.state.estructuraDocumental[prop].some(x => x.Id_Estructura === expansionRequest.data.item.Id_Estructura_Padre)) {
+            estructura = prop;
+          }
+        }
+
+        if (estructura) {
+          this.handleExpandExtructura(estructura, true);
+          this.markStructure(estructura);
+        }
+      }
     }
   }
 
@@ -188,14 +214,7 @@ class MenuProyectoEjecucion extends Component {
     await this.markStructure(estructure.Titulo)
     await this.setState({ estructurasAbiertas: [estructure.Titulo] })
   }
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.idEstructuraActiva) {
-      if (!this.state.openEstructura) {
-        let estructuraActiva = nextProps.estructurasPadre.filter(item => item.Id_Estructura == nextProps.idEstructuraActiva)
-        //this.initialExpanded(estructuraActiva[0])
-      }
-    }
-  }
+
 
   isSelectMenuOption = () => {
     let { trabajo, activeTrabajo } = this.props;
@@ -219,6 +238,7 @@ class MenuProyectoEjecucion extends Component {
               this.props.changeOption(this.props.trabajo.Id_Trabajo);
               this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
               this.handleClick(null);
+              this.props.resetExpansionRequest();
             }} />
           {this.state.isOpenTrabajo
             ? <ExpandLess onClick={async () => await this.handleOpenTrabajo(false)} />
@@ -244,6 +264,8 @@ class MenuProyectoEjecucion extends Component {
                         onClick={() => {
                           this.handleClick(estructura);
                           this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
+                          this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
+                          this.prop.resetExpansionRequest();
                         }} />
 
                       {this.state.estructurasAbiertas.indexOf(estructura) != -1
@@ -266,6 +288,7 @@ class MenuProyectoEjecucion extends Component {
                               this.markStructure(children.Titulo_Padre)
                               this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)
                               this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
+                              this.props.resetExpansionRequest();
                             }}>
                             <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
@@ -295,6 +318,7 @@ class MenuProyectoEjecucion extends Component {
                     onClick={() => {
                       this.handleClick(estructura);
                       this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
+                      this.props.resetExpansionRequest();
                     }}>
                     <ListItemIcon style={{ marginRight: 0, fontSize: 18 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>

@@ -588,11 +588,18 @@ class TrabajoEjecucion extends Component {
                                     <CircularProgress />
                                 </div>
                                 : <div>
-                                    <TemporalFolder isDragging={this.props.isDragging} dragging={(item)=>{this.props.dragging(item)}}  expediente={this.props.expediente} trabajo={this.props.trabajo} />
-                                    <FilesInFolder draggingItem={(item)=>{this.props.dragging(item)}} handleChangeEstructura={(idEstructura, titleEstructura) => {
-                                        this.props.changeEstructura(idEstructura,titleEstructura)
-                                    }} dragging={(item)=>{this.props.dragging(item)}}
-                                                   expediente={this.props.expediente} trabajo={this.props.trabajo} estructura={this.props.estructura} />
+                                    <TemporalFolder isDragging={this.props.isDragging} dragging={(item) => { this.props.dragging(item) }} expediente={this.props.expediente} trabajo={this.props.trabajo} />
+                                    <FilesInFolder
+                                        draggingItem={(item) => { this.props.dragging(item) }}
+                                        handleChangeEstructura={(idEstructura, titleEstructura) => {
+                                            this.props.changeEstructura(idEstructura, titleEstructura)
+                                        }}
+                                        dragging={(item) => { this.props.dragging(item) }}
+                                        expediente={this.props.expediente}
+                                        trabajo={this.props.trabajo}
+                                        estructura={this.props.estructura}
+                                        expandMenuTree={(trabajo, item) => this.props.expandMenuTree(trabajo, item, this.props.estructura)}
+                                    />
                                 </div>
                         }
                     </Grid>
