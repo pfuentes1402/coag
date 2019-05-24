@@ -32,6 +32,7 @@ const initialState =
         pendingUploadList: [],
         uploadLength: 0,
         currentUpload: null,
+        typeUpload:null,
         currentUploadItem: null
     },
 };
@@ -64,7 +65,8 @@ const reducer = (state = initialState, action) => {
                     uploadLength: action.payload.uploadLength,
                     currentUpload: action.payload.currentUpload,
                     currentUploadItem: action.payload.currentUploadItem,
-                    fetchingDone: action.payload.fetchingDone
+                    fetchingDone: action.payload.fetchingDone,
+                    typeUpload:action.payload.typeUpload
                 },
             };
 

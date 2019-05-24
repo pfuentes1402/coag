@@ -345,6 +345,7 @@ class VisualizarExpediente extends Component {
   async onDrop(acceptedFiles) {
     let expediente = this.state.expediente.Expediente[0];
     let estructura = this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false;
+
     if (estructura) {
       await this.props.uploadFiles(acceptedFiles, true, expediente, this.state.idTrabajoActivo, estructura)
     } else {

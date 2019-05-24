@@ -156,7 +156,7 @@ class FilesInFolder extends Component {
 
     async reloadAfther1Second() {
         await setTimeout(() => {
-            if (this.props.fileUpload.fetchingDone&&this.state.isMyRequest) {
+            if (this.props.fileUpload.fetchingDone&&this.props.fileUpload.typeUpload=='toEstructura') {
                 this.loadInformation()
                 this.props.dispatchSetFetchingDone();
                 this.props.refreshTree();

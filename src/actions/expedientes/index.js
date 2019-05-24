@@ -60,14 +60,14 @@ export const fetchExpedienteSelected = (response) => ({
     type: types.FETCH_SAVE_SELECTED_EXP_TO_STORE,
     payload: response
 });
-export const resetUpladStates = (show) =>
+export const resetUpladStates = (typeUpload) =>
     async (dispatch) => {
-        dispatch(fetchFiles(false, [], 0, null, null, true));
+        dispatch(fetchFiles(false, [], 0, typeUpload,null, null, true));
     };
-export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength, currentUpload = null, currentUploadItem = null, fetchingDone = false, ) => (
+export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength,typeUpload ,currentUpload = null, currentUploadItem = null, fetchingDone = false, ) => (
     {
         type: types.FETCH_FILES,
-        payload: { uploadInProgress, pendingUploadList, uploadLength, currentUpload, currentUploadItem, fetchingDone }
+        payload: { uploadInProgress, pendingUploadList, uploadLength, currentUpload, currentUploadItem, fetchingDone,typeUpload }
     });
 
 export const dispatchSetFetchingDone = () =>
@@ -95,9 +95,10 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
     async (dispatch, getState) => {
         try {
             let files = []
+            let typeUpload= estructura?'toEstructura':'toTemporal'
 
             acceptedFiles.forEach(file => {
-                console.log(file)
+
                 if (file.name.length>50)
                     throw "El fichero "+file.name+ ' tiene un nombre mayor a 50 caracteres. Prueba cambiarle el nombre por uno más pequeño.'
                 let topSize = 10 *1024*1024
@@ -124,7 +125,7 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                             let currentUpload = i + 1;
                             let currentUploadItem = item;
                             let pendingUploadList = newList;
-                            dispatch(fetchFiles(true, pendingUploadList, files.length, currentUpload, currentUploadItem, false));//estan almacenados en el reducer de status
+                            dispatch(fetchFiles(true, pendingUploadList, files.length,typeUpload, currentUpload, currentUploadItem, false));//estan almacenados en el reducer de status
                             let response = toEstructura ?
                                 await api.uploadFile(expediente.Id_Expediente, trabajo, estructura.id, item) :
                                 await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
@@ -132,7 +133,7 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                                 throw { success: false, response }
                             } else {
                                 if (newList.length === 0) {
-                                    dispatch(resetUpladStates());//estan almacenados en el reducer de status
+                                    dispatch(resetUpladStates(typeUpload));//estan almacenados en el reducer de status
 
                                     /*await b.setState({
                                         uploadInProgress: false

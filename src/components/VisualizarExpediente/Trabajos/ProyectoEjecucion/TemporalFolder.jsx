@@ -156,7 +156,8 @@ class TemporalFolder extends Component {
 
     async reloadAfther1Second() {
         await setTimeout(async () => {
-            if (this.props.fileUpload.currentUpload === null && this.state.uploadDone == false&&this.state.isMyRequest) {
+            console.log(this.props.fileUpload)
+            if (this.props.fileUpload.currentUpload === null && this.state.uploadDone == false&&this.props.fileUpload.typeUpload=='toTemporal') {
                 this.loadInformation()
                 await this.setState({uploadDone: true,isMyRequest:false})
             }
