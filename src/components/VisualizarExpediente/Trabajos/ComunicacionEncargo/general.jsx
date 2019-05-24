@@ -4,6 +4,7 @@ import FichaExpediente from './fichaExpediente';
 import ListaTrabajos from './listaTrabajos';
 import TipoExpediente from './tipoExpediente';
 import TemporalFolder from '../ProyectoEjecucion/TemporalFolder'
+import TrabajoEjecucion from "../ProyectoEjecucion";
 class ExpedienteGeneral extends Component {
     render() {
         return (
@@ -18,7 +19,7 @@ class ExpedienteGeneral extends Component {
                 <Grid item md={6} xs={12} >
                    <Grid container spacing={2}>
                        <Grid item xs={12} className={"m-3"}>
-                           <TemporalFolder notInFolderPlace={true}   expediente={this.props.expediente}/>
+                           <TemporalFolder notInFolderPlace={true}  dragging={(state) => this.props.dragging(state)}   expediente={this.props.expediente}/>
                        </Grid>
                    </Grid>
 

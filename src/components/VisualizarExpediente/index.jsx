@@ -637,6 +637,7 @@ class VisualizarExpediente extends Component {
                 ? <TrabajoComunicacion expediente={expediente} />
                 : (this.state.renderComponent === "ExpedienteGeneral"
                   ? <ExpedienteGeneral expediente={expediente}
+                                       dragging={(state) => this.dragging(state)}
                     changeEstructura={(idTrabajo) => {
                       this.handleChangeMenuOption(idTrabajo);
                       this.switcToolbar(2);
