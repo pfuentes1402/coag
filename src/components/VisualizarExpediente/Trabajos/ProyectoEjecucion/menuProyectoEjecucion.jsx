@@ -265,7 +265,7 @@ class MenuProyectoEjecucion extends Component {
                             onClick={() => {
                               this.markStructure(children.Titulo_Padre)
                               this.props.changeEstructura(children.Id_Estructura, children.Titulo, children)
-                              this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
+                              this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
                             }}>
                             <ListItemIcon style={{ marginRight: 0, fontSize: 14, marginLeft: 24 }}
                               className={children.Estado_Visual === 0 ? classes.red : (children.Estado_Visual === 1 ? classes.green : classes.font14)}>
@@ -294,7 +294,7 @@ class MenuProyectoEjecucion extends Component {
                     onDragOver={() => { this.setState({ drop: position }) }} button
                     onClick={() => {
                       this.handleClick(estructura);
-                      this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
+                      this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
                     }}>
                     <ListItemIcon style={{ marginRight: 0, fontSize: 18 }}
                       className={estructuraActual.Estado_Visual === 0 ? classes.red : (estructuraActual.Estado_Visual === 1 && classes.green)}>
