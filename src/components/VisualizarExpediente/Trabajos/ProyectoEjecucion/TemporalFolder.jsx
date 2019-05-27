@@ -394,7 +394,7 @@ class TemporalFolder extends Component {
             await this.setState({fetchingRemove: false, showDeleteButton: false, showDownloadButton: false,disableAutoAsignButton:true})
         }
         this.unselectAll()
-        this.props.refreshTree()
+
     }
     async unselectAll()
     {

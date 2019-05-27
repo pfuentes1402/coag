@@ -596,6 +596,7 @@ class TrabajoEjecucion extends Component {
                                         handleChangeEstructura={(idEstructura, titleEstructura) => {
                                             this.props.changeEstructura(idEstructura, titleEstructura)
                                         }}
+                                        refreshTree={()=>this.props.refreshTree()}
                                         dragging={(item) => { this.props.dragging(item) }}
                                         expediente={this.props.expediente}
                                         trabajo={this.props.trabajo}
