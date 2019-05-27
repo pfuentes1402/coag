@@ -6,7 +6,7 @@ import {
     HIDE_UPLOAD,
     FETCH_FILES,
     FETCH_DONE,
-    SET_FETCHING_DONE
+    SET_FETCHING_DONE, CANCEL_UPLOAD
 } from "../../actions/expedientes/types";
 import {
     FETCH_SHOW_MODAL, FETCH_HIDE_MODAL, CAMBIAESTADOMODAL,
@@ -21,6 +21,7 @@ const initialState =
     loading: true,
     modalAcciones: false,
     selectedAction: 0,
+    cancelUpload:false,
     modalLoading: true,
     modal: false, muestraFiltros: true,
     contenedorAdd: false,
@@ -55,6 +56,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 showUpload: false
+            };
+        case CANCEL_UPLOAD:
+            return {
+                ...state,
+                cancelUpload: action.payload.cancelUpload
             };
         case FETCH_FILES:
             return {

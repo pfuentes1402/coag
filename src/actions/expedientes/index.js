@@ -69,6 +69,11 @@ export const fetchFiles = (uploadInProgress, pendingUploadList, uploadLength,typ
         type: types.FETCH_FILES,
         payload: { uploadInProgress, pendingUploadList, uploadLength, currentUpload, currentUploadItem, fetchingDone,typeUpload }
     });
+export const cancelUpload = (cancelUpload=true) => ({
+    type: types.CANCEL_UPLOAD,
+    payload: {cancelUpload}
+});
+
 
 export const dispatchSetFetchingDone = () =>
     (dispatch) => {
@@ -94,6 +99,7 @@ export const hideUploadComponent = () => (
 export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=false, estructura = false) =>
     async (dispatch, getState) => {
         try {
+            dispatch(cancelUpload(false))
             let files = []
             let typeUpload= estructura?'toEstructura':'toTemporal'
 
@@ -122,19 +128,27 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                 try {
                     p = p.then(_ => new Promise(async (resolve, reject) => {
                         try {
-                            newList.splice(0, 1);
-                            let currentUpload = i + 1;
-                            let currentUploadItem = item;
-                            let pendingUploadList = newList;
-                            dispatch(fetchFiles(true, pendingUploadList, files.length,typeUpload, currentUpload, currentUploadItem, false));//estan almacenados en el reducer de status
-                            let response = toEstructura ?
-                                await api.uploadFile(expediente.Id_Expediente, trabajo, estructura.id, item) :
-                                await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
-                            if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+                            let {status} =  await  getState();
 
+                            if(status.cancelUpload===true) {
+                                debugger;
+                                dispatch(resetUpladStates(typeUpload));
+                                resolve();
 
-                                errores.push(response.MensajesProcesado[0].Mensaje)
                             }
+                            else{newList.splice(0, 1);
+                                let currentUpload = i + 1;
+                                let currentUploadItem = item;
+                                let pendingUploadList = newList;
+                                dispatch(fetchFiles(true, pendingUploadList, files.length,typeUpload, currentUpload, currentUploadItem, false));//estan almacenados en el reducer de status
+                                let response = toEstructura ?
+                                    await api.uploadFile(expediente.Id_Expediente, trabajo, estructura.id, item) :
+                                    await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
+                                if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
+
+
+                                    errores.push(response.MensajesProcesado[0].Mensaje)
+                                }
                                 //throw { success: false, response }
 
                                 if (newList.length === 0) {
@@ -151,9 +165,9 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
 
 
                                 }
-
+                            }
                         } catch (e) {
-                            dispatch(resetUpladStates())
+                            dispatch(resetUpladStates(typeUpload))
                             dispatch(fetchErrorExpediente(e.response))
                             reject({ success: false })
                         }
@@ -163,10 +177,6 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
 
                     }
                     ));
-                    // if (p.success==false){
-                    //     console.log('jodio')
-                    //     dispatch(fetchErrorExpediente(p.response))
-                    // }
 
 
                 } catch (e) {
@@ -175,7 +185,7 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                 }
             }
 
-            dispatch(resetUpladStates())
+            dispatch(resetUpladStates('all'))
 
         } catch (e) {
             console.log('error!',e)
