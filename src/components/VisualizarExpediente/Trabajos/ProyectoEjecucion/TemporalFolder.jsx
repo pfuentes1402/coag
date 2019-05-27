@@ -363,7 +363,7 @@ class TemporalFolder extends Component {
         count += files.length
         count += temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove: true, showDownloadButton: false})
+            await this.setState({fetchingRemove: true,  disableAutoAsignButton:true,showDownloadButton: false})
 
             if (temporalFiles.length) {
                 let arrayArchivos = [];
@@ -385,16 +385,25 @@ class TemporalFolder extends Component {
                         fetchingRemove: false,
                         showDeleteButton: false,
                         showDownloadButton: false,
+
                         temporalFiles: newData
                     })
                 }
 
             }
-            await this.setState({fetchingRemove: false, showDeleteButton: false, showDownloadButton: false})
+            await this.setState({fetchingRemove: false, showDeleteButton: false, showDownloadButton: false,disableAutoAsignButton:true})
         }
+        this.unselectAll()
         this.props.refreshTree()
     }
-
+    async unselectAll()
+    {
+        let {...temporalFiles} = this.state
+        temporalFiles.map((item) =>{
+            item.checked=false
+        } )
+        await this.setState({temporalFiles})
+    }
     download_file(fileURL, fileName) {
         // for non-IE
         if (!window.ActiveXObject) {
