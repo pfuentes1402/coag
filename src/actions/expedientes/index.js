@@ -115,6 +115,7 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                 return null;
             let newList = [...files]
             dispatch(fetchFiles(true, files, files.length));//estan almacenados en el reducer de status
+            let errores =[];
             for (let i = 0, p = Promise.resolve(); i < files.length; i++) {
                 let item = files[i];
 
@@ -130,24 +131,33 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                                 await api.uploadFile(expediente.Id_Expediente, trabajo, estructura.id, item) :
                                 await api.uploadFileToTemporalFolder(expediente.Id_Expediente, item);
                             if (response.MensajesProcesado && response.MensajesProcesado.length > 0) {
-                                throw { success: false, response }
-                            } else {
+
+
+                                errores.push(response.MensajesProcesado[0].Mensaje)
+                            }
+                                //throw { success: false, response }
+
                                 if (newList.length === 0) {
                                     dispatch(resetUpladStates(typeUpload));//estan almacenados en el reducer de status
 
-                                    /*await b.setState({
-                                        uploadInProgress: false
-                                    });*/
-                                    // setTimeout(async ()=>{
-                                    //     await this.loadInformation()
-                                    // },1000) todo: Esto hay que mandar a hacerlo desde el componente
+                                    if(errores.length){
+                                        let msg= '';
+                                        errores.map(item=>{
+                                            msg+='<li>'+item+'</li>'
+                                        })
+                                        dispatch(fetchErrorExpediente(formatMenssage('<ul>'+msg+"</ul>")))
+
+                                    }
+
+
                                 }
-                            }
+
                         } catch (e) {
                             dispatch(resetUpladStates())
                             dispatch(fetchErrorExpediente(e.response))
                             reject({ success: false })
                         }
+
 
                         resolve({ success: true })
 
@@ -164,6 +174,7 @@ export const uploadFiles = (acceptedFiles, toEstructura, expediente, trabajo=fal
                     return e
                 }
             }
+
             dispatch(resetUpladStates())
 
         } catch (e) {

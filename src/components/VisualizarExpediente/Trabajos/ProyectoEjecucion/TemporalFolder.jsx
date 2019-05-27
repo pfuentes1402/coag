@@ -931,8 +931,8 @@ class TemporalFolder extends Component {
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            Archivos temporales de expediente <text
-                            style={{color: 'red'}}> ({this.state.temporalFiles.length})</text>
+                            Archivos temporales de expediente   <text
+                            style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{padding: "8px 0px 24px"}}>
                             <div style={{width: '100%'}} onDragLeave={() => {
