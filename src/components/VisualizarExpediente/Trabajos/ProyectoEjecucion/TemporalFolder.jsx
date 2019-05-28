@@ -543,7 +543,13 @@ class TemporalFolder extends Component {
                     this.props.fetchErrorExpediente(api.formatMenssage(`<ul  style="padding-left: 0px">${resultados.join('')} </ul>`))
 
                 } else {
-                    this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
+                    console.log(result)
+                    if(result&&result.MensajesProcesado&&result.MensajesProcesado[0].Mensaje){
+                        this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(result.MensajesProcesado[0].Mensaje));
+                    }else{
+                        this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
+                    }
+
                 }
                 await this.setState({fetchingAutoAsign: false, showDeleteButton: false, showDownloadButton: false})
                 await this.loadInformation();
@@ -1032,7 +1038,7 @@ class TemporalFolder extends Component {
                                                                               className={classes.buttonProgress}/>}
                                                         </div>
                                                         {
-                                                            this.state.temporalFiles ?
+                                                            this.state.temporalFiles?
                                                                 <div className="" style={{float: 'right'}}>
                                                                     <Button className="px-2"
                                                                             style={{fontSize: 12, padding: '4px 8px'}}
@@ -1040,7 +1046,7 @@ class TemporalFolder extends Component {
                                                                             onClick={() => {
                                                                                 this.handleAutoAsign()
                                                                             }}
-                                                                            disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
+                                                                            disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0||this.props.notInFolderPlace}>
                                                                         <Translate
                                                                             id="languages.fileUpload.automaticSection"/>
                                                                     </Button>
