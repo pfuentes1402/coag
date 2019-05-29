@@ -40,6 +40,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     overflowX: 'auto',
+    marginTop: -50
   },
   grow: {
     flexGrow: 1,
@@ -53,7 +54,8 @@ const styles = theme => ({
   },
   mainNav: {
     boxShadow: "none",
-    flexDirection: "row-reverse"
+    flexDirection: "row-reverse",
+    backgroundColor: "transparent"
   },
   button: {
     margin: 0,
@@ -411,7 +413,7 @@ class VisualizarExpediente extends Component {
       <div className={classes.root}>
         <AppBar position="static" className={`${classes.mainNav} nav-expedient`} color="default">
           {this.state.optionsComponent === 1
-            ? <Toolbar>
+            ? <Toolbar className="tool">
               <Button color="primary" className={classes.button}
                 onClick={() => this.openConfirmation(false)}>
                 <Translate id="languages.generalButton.delete" /><Close />
@@ -432,7 +434,7 @@ class VisualizarExpediente extends Component {
               </Button>
             </Toolbar>
             : this.state.optionsComponent === 2
-              ? <Toolbar>
+              ? <Toolbar className="tool">
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
@@ -463,7 +465,7 @@ class VisualizarExpediente extends Component {
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
               </Toolbar>
-              : <Toolbar style={{ width: "100%", textAlign: "right" }}>
+              : <Toolbar className="tool-drop" style={{ width: "100%", textAlign: "right" }}>
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
@@ -495,7 +497,7 @@ class VisualizarExpediente extends Component {
           onClick={() => this.handleTrabajoComunicacion()}>
           {`${this.state.currentExpediente.Expediente_Codigo_Estudio} ${this.state.currentExpediente.Titulo}`}
         </ListSubheader>}>
-        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 " >
+        <ListItem button onClick={() => { this.handleExpandMenu() }} className="pl-3 pr-3" >
           <ListItemText inset primary={<Translate id="languages.fichaExpediente.titleListaTrabajos" />} className="pl-0" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -617,8 +619,7 @@ class VisualizarExpediente extends Component {
     return (
       this.state.expediente
         ? <Grid container>
-          <Grid item xs={12}>
-
+          <Grid item xs={6}>
             <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}
               className="title-breadcrumb">
               {(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
@@ -643,6 +644,9 @@ class VisualizarExpediente extends Component {
               </BreadcrumbsItem>
               : ""}
           </Grid>
+          <Grid item xs={6}>
+            {this.renderNavBar()}
+          </Grid>
           <Grid item md={3} xs={12} style={{ height: window.innerHeight * .8, overflow: "hidden", maxWidth: "22%" }} className={classes.boredrRight}>
             <div style={{ width: '107%', height: window.innerHeight * .8 + 10, overflowX: 'hidden', overflow: 'scroll' }}>
               {this.renderLeftNav()}
@@ -650,36 +654,34 @@ class VisualizarExpediente extends Component {
 
           </Grid>
           <Grid item md={9} xs={12} className={classes.backgroundGrey} style={{ padding: "0 15px", minWidth: "78%" }}>
-            {this.renderNavBar()}
-            {
-              this.state.renderComponent === "TrabajoComunicacion"
-                ? <TrabajoComunicacion expediente={expediente} />
-                : (this.state.renderComponent === "ExpedienteGeneral"
-                  ? <ExpedienteGeneral expediente={expediente}
-                    dragging={(state) => this.dragging(state)}
-                    changeEstructura={(idTrabajo) => {
-                      this.handleChangeMenuOption(idTrabajo);
-                      this.switcToolbar(2);
-                    }}
+            {this.state.renderComponent === "TrabajoComunicacion"
+              ? <TrabajoComunicacion expediente={expediente} />
+              : (this.state.renderComponent === "ExpedienteGeneral"
+                ? <ExpedienteGeneral expediente={expediente}
+                  dragging={(state) => this.dragging(state)}
+                  changeEstructura={(idTrabajo) => {
+                    this.handleChangeMenuOption(idTrabajo);
+                    this.switcToolbar(2);
+                  }}
 
-                    updateExpediente={(expediente) => this.updateExpediente(expediente)} />
-                  : <TrabajoEjecucion
-                    key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
-                    expediente={expediente}
-                    trabajo={this.state.idTrabajoActivo}
-                    dragging={(state) => this.dragging(state)}
-                    isDragging={this.state.dragging}
-                    refreshTree={() => {
-                      this.refreshTree()
-                    }}
-                    changeEstructura={(idEstructura, titleEstructura) => {
-                      this.handleChangeEstructuran(idEstructura, titleEstructura);
-                      this.switcToolbar(3);
-                    }}
-                    estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false}
-                    disableActions={disableActions}
-                    expandMenuTree={(trabajo, item, estructura) => this.expandMenuTree(trabajo, item, estructura)}
-                  />)
+                  updateExpediente={(expediente) => this.updateExpediente(expediente)} />
+                : <TrabajoEjecucion
+                  key={this.state.idTrabajoActivo + (this.state.idEstructuraActiva ? this.state.idEstructuraActiva : "")}
+                  expediente={expediente}
+                  trabajo={this.state.idTrabajoActivo}
+                  dragging={(state) => this.dragging(state)}
+                  isDragging={this.state.dragging}
+                  refreshTree={() => {
+                    this.refreshTree()
+                  }}
+                  changeEstructura={(idEstructura, titleEstructura) => {
+                    this.handleChangeEstructuran(idEstructura, titleEstructura);
+                    this.switcToolbar(3);
+                  }}
+                  estructura={this.state.idEstructuraActiva ? { id: this.state.idEstructuraActiva } : false}
+                  disableActions={disableActions}
+                  expandMenuTree={(trabajo, item, estructura) => this.expandMenuTree(trabajo, item, estructura)}
+                />)
             }
           </Grid>
 

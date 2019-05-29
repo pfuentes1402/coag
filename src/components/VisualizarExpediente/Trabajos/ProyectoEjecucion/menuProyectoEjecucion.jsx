@@ -240,9 +240,12 @@ class MenuProyectoEjecucion extends Component {
               this.handleClick(null);
               this.props.resetExpansionRequest();
             }} />
-          {this.state.isOpenTrabajo
-            ? <ExpandLess onClick={async () => await this.handleOpenTrabajo(false)} />
-            : <ExpandMore onClick={async () => await this.handleOpenTrabajo(true)} />}
+          <div className="arrow-right"
+            onClick={async () => await this.handleOpenTrabajo(!this.state.isOpenTrabajo)}>
+            {this.state.isOpenTrabajo
+              ? <ExpandLess className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(false)} />
+              : <ExpandMore className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(true)} />}
+          </div>
         </ListItem>
         <Divider />
 
@@ -251,6 +254,7 @@ class MenuProyectoEjecucion extends Component {
             : Object.keys(this.state.estructuraDocumental).map((estructura, position) => {
               let estructuraPadre = this.state.estructurasPadre ? this.state.estructurasPadre.find(e => e.Titulo === estructura) : "";
               let estructuraActual = this.state.estructuraDocumental[estructura];
+              let isOpenStructure = this.state.estructurasAbiertas.indexOf(estructura) != -1;
               return <List key={'menu-' + this.props.trabajo.Id_Trabajo} component="div" disablePadding>
                 {this.state.estructuraDocumental[estructura].length && this.state.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
@@ -268,9 +272,13 @@ class MenuProyectoEjecucion extends Component {
                           this.prop.resetExpansionRequest();
                         }} />
 
-                      {this.state.estructurasAbiertas.indexOf(estructura) != -1
-                        ? <ExpandLess onClick={() => this.handleExpandExtructura(estructura, false)} />
-                        : <ExpandMore onClick={() => this.handleExpandExtructura(estructura, true)} />}
+                      <div className="arrow-right"
+                        onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)}>
+                        {isOpenStructure
+                          ? <ExpandLess className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)} />
+                          : <ExpandMore className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)} />}
+                      </div>
+
                     </ListItem>
                     <Collapse in={this.state.estructurasAbiertas.indexOf(estructura) != -1} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
