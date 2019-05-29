@@ -150,8 +150,10 @@ class VisualizarExpediente extends Component {
         let { estructurasPadre } = this.state;
         if (estructurasPadre && estructurasPadre.length > 0) {
           let estr = estructurasPadre.filter(item => item.Id_Estructura == idEstructura)
-          if (estr.length == 1)
-            await this.handleChangeEstructuran(idEstructura, estr[0].Titulo, estr[0]);
+          if (estr.length == 1) {
+            //await this.handleChangeEstructuran(idEstructura, estr[0].Titulo, estr[0]);
+            this.menuLateral.handleSelectStructure(estr[0].Titulo, activeTrabajo);
+          }
           console.log('menu', this.menuLateral)
         }
 
@@ -506,7 +508,7 @@ class VisualizarExpediente extends Component {
           <List component="div" disablePadding>
             {this.state.expediente.Trabajos.map((trabajo, index) => {
               return <MenuOption key={`menu_item_${index}`}
-
+                ref={instance => { this.menuLateral = instance; }}
                 changeOption={(idTrabajo) => {
                   this.handleChangeMenuOption(idTrabajo, true);
                   this.switcToolbar(2);
@@ -533,6 +535,7 @@ class VisualizarExpediente extends Component {
                 setWorkSpaceToTrabajoEjecucion={(idTrabajo) => this.setWorkSpaceToTrabajoEjecucion(idTrabajo)}
                 expansionRequest={this.state.expansionOrder}
                 resetExpansionRequest={() => this.expandMenuTree(null, null, null)}
+                idParamEstructura={this.props.match.params.idEstructura}
               />
             })}
           </List>

@@ -105,6 +105,14 @@ class MenuProyectoEjecucion extends Component {
     if (this.state.isOpenTrabajo) {
       await this.handleOpenTrabajo(true);
       await this.props.changeOption(this.props.trabajo.Id_Trabajo)
+
+      if (this.props.idParamEstructura && this.state.estructurasPadre
+        && this.state.estructurasPadre.length > 0) {
+        let estr = this.state.estructurasPadre.filter(item => item.Id_Estructura == this.props.idParamEstructura)
+        if (estr.length == 1) {
+          this.handleSelectStructure(estr[0].Titulo, this.props.trabajo.Id_Trabajo, false);
+        }
+      }
     }
   }
 
@@ -144,6 +152,7 @@ class MenuProyectoEjecucion extends Component {
         estructurasPadre: data.estructurasPadre,
         isLoading: false
       });
+      
       return;
     }
   };
@@ -223,6 +232,13 @@ class MenuProyectoEjecucion extends Component {
     return false;
   }
 
+  handleSelectStructure = (estructura, idTrabajo, resetExpansion = true) => {
+    this.handleClick(estructura);
+    this.props.setTrabajoActivo(idTrabajo);
+    this.props.setWorkSpaceToTrabajoEjecucion(idTrabajo);
+    if (resetExpansion) this.props.resetExpansionRequest();
+  }
+
   render() {
     let { classes } = this.props;
     let { isLoading } = this.state;
@@ -265,18 +281,13 @@ class MenuProyectoEjecucion extends Component {
                         primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
                         classes={{ root: classes.padding0, primary: this.state.openEstructura == estructura && isSelect ? classes.textWhite : classes.font14 }}
                         style={{ color: this.state.openEstructura == estructura && isSelect ? 'white' : "black", padding: "10px 0 10px 48px" }}
-                        onClick={() => {
-                          this.handleClick(estructura);
-                          this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
-                          this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
-                          this.prop.resetExpansionRequest();
-                        }} />
+                        onClick={() => { this.handleSelectStructure(estructura, this.props.trabajo.Id_Trabajo) }} />
 
                       <div className="arrow-right"
                         onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)}>
-                        {isOpenStructure
-                          ? <ExpandLess className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)} />
-                          : <ExpandMore className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)} />}
+                        {this.state.estructurasAbiertas.indexOf(estructura) != -1
+                          ? <ExpandLess className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, true)} />
+                          : <ExpandMore className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, false)} />}
                       </div>
 
                     </ListItem>
