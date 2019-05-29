@@ -47,6 +47,21 @@ const theme = createMuiTheme({
         secondary: grey,
         default: grey[100]
     },
+
+    typography:{
+        fontFamily: "Montserrat",
+
+        body1:{
+            fontFamily:'Montserrat',
+            fontSize:12,
+
+        },
+        button:{
+            fontWeight:'bolder',
+            fontSize:12
+        }
+    },
+
 });
 
 ReactDOM.render((

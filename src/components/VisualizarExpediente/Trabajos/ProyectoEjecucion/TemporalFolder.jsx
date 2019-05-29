@@ -66,6 +66,7 @@ const styles = theme => ({
     red: {
         color: red[500],
 
+
     },
     green: {
         color: green[500]
@@ -915,19 +916,49 @@ class TemporalFolder extends Component {
                 </ExpansionPanelDetails>
             </ExpansionPanel>
     }
-
-    async dragOverUploadFile() {
-        console.log('now is dragging')
-        if (!this.props.isDragging) {
-            this.setState({userLocalFileInsertRequest: true})
+    makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
+        return result;
+    }
+
+    async dragOverUploadFile(dragInternoOn=false) {
+
+        let makeid=this.makeid(50);
+
+
+       await this.setState({userLocalFileInsertRequest: true,makeid})
+        setTimeout(async()=>{
+            if(this.state.makeid==makeid){
+                await  this.setState({userLocalFileInsertRequest: false})
+            }
+
+
+        },3000)
+
+
     }
 
 
 
-    async dragOverUploadFileEnd() {
+    async dragOverUploadFileEnd(dragInternoOn=false) {
+        console.log('salio',dragInternoOn)
+        setTimeout(async()=>{
+            await  this.setState({userLocalFileInsertRequest: false})
 
-        this.setState({userLocalFileInsertRequest: false})
+        },500)
+
+
+
+
+
+
+
+
 
     }
 
@@ -945,22 +976,22 @@ class TemporalFolder extends Component {
                         </Grid>
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <ExpansionPanelSummary  style={{paddingLeft:15}} expandIcon={<ExpandMoreIcon/>}>
                             Archivos temporales de expediente   <text
                             style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails style={{padding: "8px 0px 24px"}}>
-                            <div style={{width: '100%'}} onDragLeave={() => {
-                                this.dragOverUploadFileEnd()
-                            }}
+                        <ExpansionPanelDetails style={{padding: "8px 0px 0px"}}>
+                            <div style={{width: '100%'}}
+                                 onDragLeave={async () => {
+                                     this.dragOverUploadFileEnd()
 
-                                 onDragOver={async () => {
+                                 }}
+
+                                 onDragEnter={async () => {
                                 this.dragOverUploadFile()
-                            }} onDragExit={async () => {
-                                this.dragOverUploadFile()
-                            }}>
+                            }} >
                                 <Typography variant={"body1"} style={{
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     textAlign: 'justify',
                                     padding: '0 15px',
                                     marginTop: -25
@@ -973,10 +1004,9 @@ class TemporalFolder extends Component {
                                         <Grid item xs={12}
                                               style={{paddingLeft: 2, paddingBottom: 2}}>
                                             <Dropzone accept="application/pdf"
-                                                      style={{width:'100%',height:250,paddingLeft:12,paddingRight:12}}
-                                                      onDragLeave={async () => {
-                                                          this.dragOverUploadFile()
-                                                      }}
+                                                      style={{width:'calc(100% - 12px)',height:240,marginBottom:6,marginLeft:6,marginRight:6}}
+
+
                                                 onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
                                                 {() => (
                                                     <div  style={{
