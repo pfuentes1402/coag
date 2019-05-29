@@ -7,14 +7,7 @@
     <list id="556f43b4-2c14-4935-b442-327c1330027b" name="Revert paso 2" comment="" />
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Habilitando comportamiento del menu lteral en la ficha del expediente">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/index.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/actions/expedientes/types.js" afterPath="$PROJECT_DIR$/src/actions/expedientes/types.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/TemporalFolder.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/TemporalFolder.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/reducers/status/status.js" afterPath="$PROJECT_DIR$/src/reducers/status/status.js" />
     </list>
     <list id="ac9f9f45-a436-4ff9-a646-b8aaac42d3c0" name="workspace de aplicar revert" comment="" />
     <list id="352a3715-c0ee-4a8d-982f-f5f6403dbc13" name="Cambios para revert position" comment="" />
@@ -478,7 +471,7 @@
       <workItem from="1558729848633" duration="201000" />
       <workItem from="1558981833609" duration="41000" />
       <workItem from="1559161504810" duration="13000" />
-      <workItem from="1559161811438" duration="7000" />
+      <workItem from="1559161811438" duration="630000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -568,7 +561,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="281429000" />
+    <option name="totallyTimeSpent" value="282052000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

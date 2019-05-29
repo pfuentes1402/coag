@@ -471,10 +471,12 @@ class VisualizarExpediente extends Component {
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
-
                       height: 'auto',
                       borderStyle: 'none',
-                      display:'flex', flexDirection: "row-reverse"
+                      display:'flex', 
+                      flexDirection: "row-reverse",
+                      position: "absolute",
+                      right: 10
                     }}
                       disabled={disableActions}
                       accept="application/pdf"
