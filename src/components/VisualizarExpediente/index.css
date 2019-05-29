@@ -51,10 +51,13 @@
 }
 
 .title-breadcrumb{
-  font-size: 16px
+  font-size: 16px;
+
+
 }
 .title-breadcrumb + b{
-  font-size: 16px
+  font-size: 16px;
+
 }
 .arrow-right{
   float: right;

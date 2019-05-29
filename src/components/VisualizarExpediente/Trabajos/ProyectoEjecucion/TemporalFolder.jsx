@@ -66,6 +66,7 @@ const styles = theme => ({
     red: {
         color: red[500],
 
+
     },
     green: {
         color: green[500]
@@ -363,7 +364,7 @@ class TemporalFolder extends Component {
         count += files.length
         count += temporalFiles.length
         if (count) {
-            await this.setState({fetchingRemove: true, showDownloadButton: false})
+            await this.setState({fetchingRemove: true,  disableAutoAsignButton:true,showDownloadButton: false})
 
             if (temporalFiles.length) {
                 let arrayArchivos = [];
@@ -385,16 +386,25 @@ class TemporalFolder extends Component {
                         fetchingRemove: false,
                         showDeleteButton: false,
                         showDownloadButton: false,
+
                         temporalFiles: newData
                     })
                 }
 
             }
-            await this.setState({fetchingRemove: false, showDeleteButton: false, showDownloadButton: false})
+            await this.setState({fetchingRemove: false, showDeleteButton: false, showDownloadButton: false,disableAutoAsignButton:true})
         }
-        this.props.refreshTree()
-    }
+        this.unselectAll()
 
+    }
+    async unselectAll()
+    {
+        let {...temporalFiles} = this.state
+        temporalFiles.map((item) =>{
+            item.checked=false
+        } )
+        await this.setState({temporalFiles})
+    }
     download_file(fileURL, fileName) {
         // for non-IE
         if (!window.ActiveXObject) {
@@ -534,7 +544,13 @@ class TemporalFolder extends Component {
                     this.props.fetchErrorExpediente(api.formatMenssage(`<ul  style="padding-left: 0px">${resultados.join('')} </ul>`))
 
                 } else {
-                    this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
+                    console.log(result)
+                    if(result&&result.MensajesProcesado&&result.MensajesProcesado[0].Mensaje){
+                        this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(result.MensajesProcesado[0].Mensaje));
+                    }else{
+                        this.props.fetchErrorExpediente(actionsExpedientes.formatMenssage(this.props.translate("languages.messages.fetchError")));
+                    }
+
                 }
                 await this.setState({fetchingAutoAsign: false, showDeleteButton: false, showDownloadButton: false})
                 await this.loadInformation();
@@ -900,19 +916,49 @@ class TemporalFolder extends Component {
                 </ExpansionPanelDetails>
             </ExpansionPanel>
     }
-
-    async dragOverUploadFile() {
-        console.log('now is dragging')
-        if (!this.props.isDragging) {
-            this.setState({userLocalFileInsertRequest: true})
+    makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
+        return result;
+    }
+
+    async dragOverUploadFile(dragInternoOn=false) {
+
+        let makeid=this.makeid(50);
+
+
+       await this.setState({userLocalFileInsertRequest: true,makeid})
+        setTimeout(async()=>{
+            if(this.state.makeid==makeid){
+                await  this.setState({userLocalFileInsertRequest: false})
+            }
+
+
+        },3000)
+
+
     }
 
 
 
-    async dragOverUploadFileEnd() {
+    async dragOverUploadFileEnd(dragInternoOn=false) {
+        console.log('salio',dragInternoOn)
+        setTimeout(async()=>{
+            await  this.setState({userLocalFileInsertRequest: false})
 
-        this.setState({userLocalFileInsertRequest: false})
+        },500)
+
+
+
+
+
+
+
+
 
     }
 
@@ -930,22 +976,22 @@ class TemporalFolder extends Component {
                         </Grid>
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                            Archivos temporales de expediente <text
-                            style={{color: 'red'}}> ({this.state.temporalFiles.length})</text>
+                        <ExpansionPanelSummary  style={{paddingLeft:15}} expandIcon={<ExpandMoreIcon/>}>
+                            Archivos temporales de expediente   <text
+                            style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails style={{padding: "8px 0px 24px"}}>
-                            <div style={{width: '100%'}} onDragLeave={() => {
-                                this.dragOverUploadFileEnd()
-                            }}
+                        <ExpansionPanelDetails style={{padding: "8px 0px 0px"}}>
+                            <div style={{width: '100%'}}
+                                 onDragLeave={async () => {
+                                     this.dragOverUploadFileEnd()
 
-                                 onDragOver={async () => {
+                                 }}
+
+                                 onDragEnter={async () => {
                                 this.dragOverUploadFile()
-                            }} onDragExit={async () => {
-                                this.dragOverUploadFile()
-                            }}>
+                            }} >
                                 <Typography variant={"body1"} style={{
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     textAlign: 'justify',
                                     padding: '0 15px',
                                     marginTop: -25
@@ -958,10 +1004,9 @@ class TemporalFolder extends Component {
                                         <Grid item xs={12}
                                               style={{paddingLeft: 2, paddingBottom: 2}}>
                                             <Dropzone accept="application/pdf"
-                                                      style={{width:'100%',height:250,paddingLeft:12,paddingRight:12}}
-                                                      onDragLeave={async () => {
-                                                          this.dragOverUploadFile()
-                                                      }}
+                                                      style={{width:'calc(100% - 12px)',height:240,marginBottom:6,marginLeft:6,marginRight:6}}
+
+
                                                 onDrop={(acceptedFiles) => this.onDrop(acceptedFiles)}>
                                                 {() => (
                                                     <div  style={{
@@ -1023,7 +1068,7 @@ class TemporalFolder extends Component {
                                                                               className={classes.buttonProgress}/>}
                                                         </div>
                                                         {
-                                                            this.state.temporalFiles ?
+                                                            this.state.temporalFiles?
                                                                 <div className="" style={{float: 'right'}}>
                                                                     <Button className="px-2"
                                                                             style={{fontSize: 12, padding: '4px 8px'}}
@@ -1031,7 +1076,7 @@ class TemporalFolder extends Component {
                                                                             onClick={() => {
                                                                                 this.handleAutoAsign()
                                                                             }}
-                                                                            disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0}>
+                                                                            disabled={this.state.disableAutoAsignButton || this.state.fetchingAutoAsign > 0||this.props.notInFolderPlace}>
                                                                         <Translate
                                                                             id="languages.fileUpload.automaticSection"/>
                                                                     </Button>

@@ -141,6 +141,7 @@ const mapDispatchToProps =
     fetchErrorExpediente: actionsExpedientes.fetchErrorExpediente,
     uploadFiles: actionsExpedientes.uploadFiles,
     resetUploadStates: actionsExpedientes.resetUpladStates,
+    cancelUpload: actionsExpedientes.cancelUpload,
     showUploadComponent: actionsExpedientes.showUploadComponent,
     hideUploadComponent: actionsExpedientes.hideUploadComponent,
     formatMessage: actionsExpedientes.formatMenssage,
@@ -199,6 +200,7 @@ class TrabajoEjecucion extends Component {
             this.setState({ tiposTramites: tiposTramites });
         }
     }
+
     async loadGeneralInformation() {
         await this.setState({ fetching: true })
         let expediente = this.props.expediente.Expediente[0];
@@ -594,6 +596,7 @@ class TrabajoEjecucion extends Component {
                                         handleChangeEstructura={(idEstructura, titleEstructura) => {
                                             this.props.changeEstructura(idEstructura, titleEstructura)
                                         }}
+                                        refreshTree={()=>this.props.refreshTree()}
                                         dragging={(item) => { this.props.dragging(item) }}
                                         expediente={this.props.expediente}
                                         trabajo={this.props.trabajo}
@@ -677,7 +680,13 @@ class TrabajoEjecucion extends Component {
                                             </Grid>
                                             <Grid item xs={5} className="p-3"
                                                 style={{ paddingRight: 10, paddingLeft: 0, textAlign: 'right' }}>
-                                                <a onClick={() => this.abortUpload()} style={{
+                                                <a onClick={() =>
+                                                {
+
+                                                    this.props.cancelUpload(true)
+                                                    this.props.resetUploadStates()
+                                                    this.props.fetchErrorExpediente('La subida de ficheros ha sido cancelada');
+                                                }} style={{
                                                     fontSize: 12,
                                                     textDecoration: 'underline',
                                                     color: '#2196f3'

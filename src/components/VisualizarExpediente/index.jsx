@@ -440,7 +440,7 @@ class VisualizarExpediente extends Component {
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
-                      width: 'auto',
+
                       height: 'auto',
                       borderStyle: 'none'
                     }}
@@ -467,14 +467,14 @@ class VisualizarExpediente extends Component {
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
               </Toolbar>
-              : <Toolbar className="tool-drop" style={{ width: "100%", textAlign: "right" }}>
+              : <Toolbar className="tool-drop" style={{ width: "100%", textAlign: "right",overflow:'hidden' }}>
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
-                      width: "100%",
+
                       height: 'auto',
                       borderStyle: 'none',
-                      float: "right"
+                      display:'flex', flexDirection: "row-reverse"
                     }}
                       disabled={disableActions}
                       accept="application/pdf"
