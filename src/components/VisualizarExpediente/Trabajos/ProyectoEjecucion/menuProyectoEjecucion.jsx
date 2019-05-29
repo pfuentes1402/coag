@@ -92,7 +92,8 @@ class MenuProyectoEjecucion extends Component {
       isOpenTrabajo: null,
       estructuraDocumental: [],
       estructurasPadre: [],
-      isLoading: false
+      isLoading: false,
+      showArrow: true
     }
   }
 
@@ -105,6 +106,14 @@ class MenuProyectoEjecucion extends Component {
     if (this.state.isOpenTrabajo) {
       await this.handleOpenTrabajo(true);
       await this.props.changeOption(this.props.trabajo.Id_Trabajo)
+
+      if (this.props.idParamEstructura && this.state.estructurasPadre
+        && this.state.estructurasPadre.length > 0) {
+        let estr = this.state.estructurasPadre.filter(item => item.Id_Estructura == this.props.idParamEstructura)
+        if (estr.length == 1) {
+          this.handleSelectStructure(estr[0].Titulo, this.props.trabajo.Id_Trabajo, false);
+        }
+      }
     }
   }
 
@@ -142,8 +151,10 @@ class MenuProyectoEjecucion extends Component {
       this.setState({
         estructuraDocumental: data.estructuraDocumental,
         estructurasPadre: data.estructurasPadre,
-        isLoading: false
+        isLoading: false,
+        showArrow: data.estructurasPadre.length > 0
       });
+
       return;
     }
   };
@@ -223,6 +234,13 @@ class MenuProyectoEjecucion extends Component {
     return false;
   }
 
+  handleSelectStructure = (estructura, idTrabajo, resetExpansion = true) => {
+    this.handleClick(estructura);
+    this.props.setTrabajoActivo(idTrabajo);
+    this.props.setWorkSpaceToTrabajoEjecucion(idTrabajo);
+    if (resetExpansion) this.props.resetExpansionRequest();
+  }
+
   render() {
     let { classes } = this.props;
     let { isLoading } = this.state;
@@ -240,9 +258,15 @@ class MenuProyectoEjecucion extends Component {
               this.handleClick(null);
               this.props.resetExpansionRequest();
             }} />
-          {this.state.isOpenTrabajo
-            ? <ExpandLess onClick={async () => await this.handleOpenTrabajo(false)} />
-            : <ExpandMore onClick={async () => await this.handleOpenTrabajo(true)} />}
+          {this.state.showArrow > 0
+            ? <div className="arrow-right"
+              onClick={async () => await this.handleOpenTrabajo(!this.state.isOpenTrabajo)}>
+              {this.state.isOpenTrabajo
+                ? <ExpandLess className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(false)} />
+                : <ExpandMore className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(true)} />}
+            </div>
+            : <div></div>
+          }
         </ListItem>
         <Divider />
 
@@ -251,7 +275,8 @@ class MenuProyectoEjecucion extends Component {
             : Object.keys(this.state.estructuraDocumental).map((estructura, position) => {
               let estructuraPadre = this.state.estructurasPadre ? this.state.estructurasPadre.find(e => e.Titulo === estructura) : "";
               let estructuraActual = this.state.estructuraDocumental[estructura];
-              return <List key={'menu-' + this.props.trabajo.Id_Trabajo} component="div" disablePadding>
+              let isOpenStructure = this.state.estructurasAbiertas.indexOf(estructura) != -1;
+              return <List key={`menu-${position}-${this.props.trabajo.Id_Trabajo}`} component="div" disablePadding>
                 {this.state.estructuraDocumental[estructura].length && this.state.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
                     onDragEnd={() => { }}>
@@ -261,16 +286,15 @@ class MenuProyectoEjecucion extends Component {
                         primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
                         classes={{ root: classes.padding0, primary: this.state.openEstructura == estructura && isSelect ? classes.textWhite : classes.font14 }}
                         style={{ color: this.state.openEstructura == estructura && isSelect ? 'white' : "black", padding: "10px 0 10px 48px" }}
-                        onClick={() => {
-                          this.handleClick(estructura);
-                          this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
-                          this.props.setWorkSpaceToTrabajoEjecucion(this.props.trabajo.Id_Trabajo);
-                          this.prop.resetExpansionRequest();
-                        }} />
+                        onClick={() => { this.handleSelectStructure(estructura, this.props.trabajo.Id_Trabajo) }} />
 
-                      {this.state.estructurasAbiertas.indexOf(estructura) != -1
-                        ? <ExpandLess onClick={() => this.handleExpandExtructura(estructura, false)} />
-                        : <ExpandMore onClick={() => this.handleExpandExtructura(estructura, true)} />}
+                      <div className="arrow-right"
+                        onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)}>
+                        {this.state.estructurasAbiertas.indexOf(estructura) != -1
+                          ? <ExpandLess className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, true)} />
+                          : <ExpandMore className="my-auto mx-auto" onClick={() => this.handleExpandExtructura(estructura, false)} />}
+                      </div>
+
                     </ListItem>
                     <Collapse in={this.state.estructurasAbiertas.indexOf(estructura) != -1} timeout="auto" unmountOnExit>
                       <List component="div" disablePadding>
