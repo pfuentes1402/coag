@@ -92,7 +92,8 @@ class MenuProyectoEjecucion extends Component {
       isOpenTrabajo: null,
       estructuraDocumental: [],
       estructurasPadre: [],
-      isLoading: false
+      isLoading: false,
+      showArrow: true
     }
   }
 
@@ -150,9 +151,10 @@ class MenuProyectoEjecucion extends Component {
       this.setState({
         estructuraDocumental: data.estructuraDocumental,
         estructurasPadre: data.estructurasPadre,
-        isLoading: false
+        isLoading: false,
+        showArrow: data.estructurasPadre.length > 0
       });
-      
+
       return;
     }
   };
@@ -256,12 +258,15 @@ class MenuProyectoEjecucion extends Component {
               this.handleClick(null);
               this.props.resetExpansionRequest();
             }} />
-          <div className="arrow-right"
-            onClick={async () => await this.handleOpenTrabajo(!this.state.isOpenTrabajo)}>
-            {this.state.isOpenTrabajo
-              ? <ExpandLess className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(false)} />
-              : <ExpandMore className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(true)} />}
-          </div>
+          {this.state.showArrow > 0
+            ? <div className="arrow-right"
+              onClick={async () => await this.handleOpenTrabajo(!this.state.isOpenTrabajo)}>
+              {this.state.isOpenTrabajo
+                ? <ExpandLess className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(false)} />
+                : <ExpandMore className="my-auto mx-auto" onClick={async () => await this.handleOpenTrabajo(true)} />}
+            </div>
+            : <div></div>
+          }
         </ListItem>
         <Divider />
 
@@ -271,7 +276,7 @@ class MenuProyectoEjecucion extends Component {
               let estructuraPadre = this.state.estructurasPadre ? this.state.estructurasPadre.find(e => e.Titulo === estructura) : "";
               let estructuraActual = this.state.estructuraDocumental[estructura];
               let isOpenStructure = this.state.estructurasAbiertas.indexOf(estructura) != -1;
-              return <List key={'menu-' + this.props.trabajo.Id_Trabajo} component="div" disablePadding>
+              return <List key={`menu-${position}-${this.props.trabajo.Id_Trabajo}`} component="div" disablePadding>
                 {this.state.estructuraDocumental[estructura].length && this.state.estructuraDocumental[estructura].length > 0 ?
                   <div onDragEnter={() => this.handleDragFiles(estructura)}
                     onDragEnd={() => { }}>
