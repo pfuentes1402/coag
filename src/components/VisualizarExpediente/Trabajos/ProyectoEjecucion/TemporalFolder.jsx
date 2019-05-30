@@ -977,8 +977,12 @@ class TemporalFolder extends Component {
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
                         <ExpansionPanelSummary  style={{paddingLeft:8}} expandIcon={<ExpandMoreIcon/>}>
-                            Archivos temporales de expediente   <text
-                            style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
+                            <Typography variant={"display4"}>
+                                Archivos temporales de expediente   <text
+                                style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
+                            </Typography>
+
+
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{padding: "8px 0px 0px"}}>
                             <div style={{width: '100%'}}

@@ -69,7 +69,7 @@ class ListaTrabajos extends Component {
       <Paper className={`${classes.withoutRadius} m-3`}>
         <Grid container >
           <Grid item md={10}>
-            <Typography variant="subtitle1" gutterBottom className="m-2">
+            <Typography variant="display4" gutterBottom className="m-2">
               <Translate id="languages.fichaExpediente.titleListaTrabajos" />
             </Typography>
           </Grid>

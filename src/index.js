@@ -45,16 +45,68 @@ const theme = createMuiTheme({
     palette: {
         primary: blue,
         secondary: grey,
-        default: grey[100]
+        default: grey[100],
+
+
+    },
+    overrides:{
+        MuiFormLabel:{
+            root:{
+                fontSize:11
+            }
+        },
+        MuiInputBase:{
+          root:{
+              fontSize:14
+          }
+        },
+        MuiTypography:{
+          subtitle1:{
+              fontSize:15,
+              fontWeight:200
+          }
+        },
+        MuiTableCell:{
+            root:{
+                paddingLeft:5
+            },
+            body:{
+                fontSize:12,
+
+            },
+            head:{
+                paddingLeft:0,
+                fontSize:10
+            }
+        }
     },
 
     typography:{
         fontFamily: "Montserrat",
+        fontWeight:400,
+        fontSize:12,
+
 
         body1:{
             fontFamily:'Montserrat',
             fontSize:12,
 
+        },
+        display3:{
+            fontFamily:'Montserrat',
+            fontSize:11,
+            fontWeight: 200
+        },
+        display2:{
+            fontFamily:'Montserrat',
+            fontSize:14,
+            fontWeight: 400
+        },
+        display4:{
+            fontFamily:'Montserrat',
+            fontSize:17,
+            fontWeight: 200,
+            color:'black'
         },
         button:{
             fontWeight:'bolder',

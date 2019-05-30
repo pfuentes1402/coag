@@ -605,10 +605,10 @@ class FilesInFolder extends Component {
                         <div>
                             <Grid container spacing={16}>
                                 <Grid item xs={6} className="py-2 mt-1">
-                                    <h6 style={{paddingBottom:12}}>{this.props.estructura
+                                    <Typography variant={"display4"} style={{paddingBottom:12}}>{this.props.estructura
                                         ? <Translate id="languages.fileUpload.filesInFolder" />
                                         : <Translate id="languages.fileUpload.filesOfWork" />}  <text
-                                        style={{color: 'red'}}> ({this.state.data.length})</text></h6>
+                                        style={{color: 'red'}}> ({this.state.data.length})</text></Typography>
                                 </Grid>
                                 <Grid item xs={6} className="px-3 py-1 text-right">
                                     <Grid container>
