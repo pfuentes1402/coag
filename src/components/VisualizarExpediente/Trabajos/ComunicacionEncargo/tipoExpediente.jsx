@@ -102,7 +102,7 @@ class TipoExpediente extends Component {
             <TableHead>
               <TableRow className={classes.headHeight}>
                 <CustomTableHead className="text-uppercase px-3">Nif</CustomTableHead>
-                <CustomTableHead className="text-uppercase">
+                <CustomTableHead className="text-uppercase px-3">
                   <Translate id="languages.fichaExpediente.tableColumnName" />
                 </CustomTableHead>
                 <CustomTableHead className="px-2 text-uppercase">%</CustomTableHead>
@@ -195,7 +195,7 @@ class TipoExpediente extends Component {
         <Grid container spacing={16} className="my-3 p-2">
           <Grid item xs={12} className="p-0">
             <Grid item xs={12} className=" d-flex justify-content-between">
-              <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+              <Typography variant="display4" gutterBottom className="mx-2 my-1">
                 <Translate id="languages.fichaExpediente.titleExpedientType" />
               </Typography>
               <Button color="primary" onClick={() => this.props.history.push(`/comunicacion/${this.state.sourceExpediente.Id_Expediente}/1`)}>

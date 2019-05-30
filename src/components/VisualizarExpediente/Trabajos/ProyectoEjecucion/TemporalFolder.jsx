@@ -968,7 +968,7 @@ class TemporalFolder extends Component {
         return (
             <div style={{paddingBottom: this.props.notInFolderPlace ? 0 : 20}}>
                 {this.state.fetchingCenter ?
-                    <Paper style={{marginLeft: -10}} className="mt-3">
+                    <Paper className="mt-3 mb-3">
                         <Grid container spacing={24}>
                             <Grid item xs={12} className='p-3 text-center'>
                                 <CircularProgress/>
@@ -976,9 +976,13 @@ class TemporalFolder extends Component {
                         </Grid>
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
-                        <ExpansionPanelSummary  style={{paddingLeft:15}} expandIcon={<ExpandMoreIcon/>}>
-                            Archivos temporales de expediente   <text
-                            style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
+                        <ExpansionPanelSummary  style={{paddingLeft:8}} expandIcon={<ExpandMoreIcon/>}>
+                            <Typography variant={"display4"}>
+                                Archivos temporales de expediente   <text
+                                style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
+                            </Typography>
+
+
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails style={{padding: "8px 0px 0px"}}>
                             <div style={{width: '100%'}}

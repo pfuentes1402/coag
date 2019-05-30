@@ -615,7 +615,7 @@ class TrabajoEjecucion extends Component {
                         {
                             this.state.folderInfo ?
                                 <Paper
-                                    style={{ borderColor: '#cecece', borderWidth: 1, marginTop: -7, marginBottom: 10 }}>
+                                    style={{ borderColor: '#cecece', borderWidth: 1, marginBottom: 10 }}>
                                     <div className="px-4 py-2">
                                         <Typography variant='button'>{this.state.folderInfo.Nombre}</Typography>
                                     </div>

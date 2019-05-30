@@ -644,7 +644,7 @@ class VisualizarExpediente extends Component {
               </BreadcrumbsItem> : ""}
 
             {(this.state.titleEstructuraActiva && this.state.renderComponent !== "TrabajoComunicacion")
-              ? <BreadcrumbsItem key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre + "/" + this.state.Id_Estructura}>
+              ? <BreadcrumbsItem className={'title-breadcrumb-modified'} key={4} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente + "/" + this.state.idTrabajoActivo + "/" + this.state.estructuraActiva.Id_Estructura_Padre + "/" + this.state.Id_Estructura}>
                 {this.state.titleEstructuraActiva}
               </BreadcrumbsItem>
               : ""}

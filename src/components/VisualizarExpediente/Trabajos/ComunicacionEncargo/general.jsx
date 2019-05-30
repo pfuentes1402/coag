@@ -17,11 +17,10 @@ class ExpedienteGeneral extends Component {
                     <TipoExpediente expediente={this.props.expediente} sourceExpediente={this.props.expediente.Expediente.length > 0 ? this.props.expediente.Expediente[0] : {}} />
                 </Grid>
                 <Grid item md={6} xs={12} >
-                   <Grid container spacing={2}>
-                       <Grid item xs={12} className={"m-3"}>
-                           <TemporalFolder notInFolderPlace={true}  dragging={(state) => this.props.dragging(state)}   expediente={this.props.expediente}/>
-                       </Grid>
-                   </Grid>
+                    <div className="m-3">
+                        <TemporalFolder notInFolderPlace={true}  dragging={(state) => this.props.dragging(state)}   expediente={this.props.expediente}/>
+                    </div>
+
 
                     <ListaTrabajos
                         changeEstructura={(idTrabajo) => this.props.changeEstructura(idTrabajo)}

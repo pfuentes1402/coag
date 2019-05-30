@@ -594,7 +594,7 @@ class FilesInFolder extends Component {
         return (
             <div>
                 {this.state.fetchingCenter ?
-                    <Paper style={{marginLeft: -10}} className="mt-3">
+                    <Paper className="mt-3 mb-3">
                         <Grid container spacing={24}>
                             <Grid item xs={12} className='p-3 text-center'>
                                 <CircularProgress/>
@@ -604,11 +604,11 @@ class FilesInFolder extends Component {
                     <Paper style={{ paddingLeft: 10 }}>
                         <div>
                             <Grid container spacing={16}>
-                                <Grid item xs={6} className="px-3 py-2 mt-1">
-                                    <h6 style={{paddingBottom:12}}>{this.props.estructura
+                                <Grid item xs={6} className="py-2 mt-1">
+                                    <Typography variant={"display4"} style={{paddingBottom:12}}>{this.props.estructura
                                         ? <Translate id="languages.fileUpload.filesInFolder" />
                                         : <Translate id="languages.fileUpload.filesOfWork" />}  <text
-                                        style={{color: 'red'}}> ({this.state.data.length})</text></h6>
+                                        style={{color: 'red'}}> ({this.state.data.length})</text></Typography>
                                 </Grid>
                                 <Grid item xs={6} className="px-3 py-1 text-right">
                                     <Grid container>

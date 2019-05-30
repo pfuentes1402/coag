@@ -293,7 +293,7 @@ class FichaExpediente extends Component {
             <Grid container spacing={16} className={classNames("my-3", this.props.disable ? classes.disable : "")} >
               <Grid item xs={12}>
                 <Grid item xs={12} className="d-flex justify-content-between">
-                  <Typography variant="subtitle1" gutterBottom className="mx-2 my-1">
+                  <Typography variant="display4" gutterBottom className="mx-2 my-1">
                     <Translate id="languages.fichaExpediente.titleFichaExpediente" />
                   </Typography>
                   <Button type="submit" color="primary" disabled={this.state.isUpdate}>
@@ -335,20 +335,23 @@ class FichaExpediente extends Component {
                           name="antecedente" />
                       </Grid>
                       <Grid item xs={5} >
+                        <TextValidator
+                            value={moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
+                            label={<Translate id="languages.fichaExpediente.labelEntryDate" />}
+                            className={classes.textField}
+                            validators={['required']}
+                            disabled={allowEditTitle}
+                            errorMessages={[this.props.translate("languages.fichaExpediente.requiredField")]}
+                            onChange={this.handleChangeDataExpedient("Titulo")}
+                            name="name" />
 
-                        <Typography variant="subtitle1" gutterBottom className="m-0"
-                          style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: "0.8rem" }}>
-                          <Translate id="languages.fichaExpediente.labelEntryDate" />
-                        </Typography>
-                        <Typography variant="subtitle1" gutterBottom>
-                          {moment(new Date(this.state.sourceExpediente.Fecha_Entrada)).format("DD/MM/YYYY")}
-                        </Typography>
+
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12} className={`${classes.divGrey} p-4`}>
                     <Typography variant="subtitle1" gutterBottom className="m-0"
-                      style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: "0.8rem" }}>
+                      style={{ color: "rgba(0, 0, 0, 0.55)", fontSize: 11 }}>
                       <Translate id="languages.fichaExpediente.labelObservations" />
                     </Typography>
                     <TextField id="outlined-bare"
