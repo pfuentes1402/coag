@@ -144,22 +144,6 @@ class VisualizarExpediente extends Component {
         idTrabajoActivo: activeTrabajo
       });
       await this.handleChangeMenuOption(null);
-      let idEstructura = this.props.match.params.idEstructura
-      if (idEstructura) {
-
-        let { estructurasPadre } = this.state;
-        if (estructurasPadre && estructurasPadre.length > 0) {
-          let estr = estructurasPadre.filter(item => item.Id_Estructura == idEstructura)
-          if (estr.length == 1) {
-            //await this.handleChangeEstructuran(idEstructura, estr[0].Titulo, estr[0]);
-            this.menuLateral.handleSelectStructure(estr[0].Titulo, activeTrabajo);
-          }
-          console.log('menu', this.menuLateral)
-        }
-
-      }
-
-
     }
   }
 

@@ -252,6 +252,7 @@ class MenuProyectoEjecucion extends Component {
           style={{ padding: "0 24px 0 0" }}>
           <ListItemText primary={this.props.trabajo.Titulo} style={{ padding: "11px 0 11px 24px" }}
             classes={{ primary: isSelect ? classes.textWhite : classes.font14 }}
+            className="max-expanssion"
             onClick={() => {
               this.props.changeOption(this.props.trabajo.Id_Trabajo);
               this.props.setTrabajoActivo(this.props.trabajo.Id_Trabajo);
@@ -286,7 +287,8 @@ class MenuProyectoEjecucion extends Component {
                         primary={estructura + ((estructuraPadre && estructuraPadre.Archivo_Requerido !== null && estructuraPadre.Archivo_Requerido == 1) ? ' *' : '')}
                         classes={{ root: classes.padding0, primary: this.state.openEstructura == estructura && isSelect ? classes.textWhite : classes.font14 }}
                         style={{ color: this.state.openEstructura == estructura && isSelect ? 'white' : "black", padding: "10px 0 10px 48px" }}
-                        onClick={() => { this.handleSelectStructure(estructura, this.props.trabajo.Id_Trabajo) }} />
+                        onClick={() => { this.handleSelectStructure(estructura, this.props.trabajo.Id_Trabajo) }} 
+                        className="max-expanssion-child"/>
 
                       <div className="arrow-right"
                         onClick={() => this.handleExpandExtructura(estructura, !isOpenStructure)}>

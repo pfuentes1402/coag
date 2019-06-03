@@ -1153,22 +1153,21 @@ class TemporalFolder extends Component {
                                                     <Divider height={2}/>
                                                 </div>
                                             </div>
-                                            <div style={{maxHeight: 300, width: '100%', overflow: 'hidden'}}>
+                                            <div style={{width: '100%', overflow: 'hidden'}}>
                                                 <div style={{
-                                                    maxHeight: 300,
                                                     width: 'calc(100% + 15px)',
                                                     overflowY: 'scroll',
                                                     overflowX: 'hidden'
                                                 }}>
-                                                    <Grid container spacing={16}>
+                                                    <Grid container spacing={16} className="m-0">
                                                         {
                                                             (this.state.data && this.state.data.length > 0) || (this.state.temporalFiles && this.state.temporalFiles.length > 0) ?
-                                                                <Grid item xs={12}>
-                                                                    <Grid container spacing={24}>
+                                                                <Grid item xs={12} className="p-0">
+                                                                    <Grid container spacing={24} className="mb-0">
                                                                         <Grid item xs={12}
                                                                               style={{
                                                                                   paddingLeft: 12,
-                                                                                  paddingBottom: 2
+                                                                                  paddingBottom: 0
                                                                               }}>
                                                                             {
                                                                                 this.state.temporalFiles && this.state.temporalFiles.map((item, pos) => {
