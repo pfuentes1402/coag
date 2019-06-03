@@ -8,10 +8,6 @@
     <list default="true" id="df29dd5a-86ac-442e-b9a0-1f9591fb2ecc" name="Default" comment="Aceptando merge">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coag/coag" afterPath="$PROJECT_DIR$/coag/coag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/TemporalFolder.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/TemporalFolder.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/Trabajos/ProyectoEjecucion/menuProyectoEjecucion.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" afterPath="$PROJECT_DIR$/src/components/VisualizarExpediente/index.jsx" />
     </list>
     <list id="ac9f9f45-a436-4ff9-a646-b8aaac42d3c0" name="workspace de aplicar revert" comment="" />
     <list id="352a3715-c0ee-4a8d-982f-f5f6403dbc13" name="Cambios para revert position" comment="" />
@@ -479,7 +475,7 @@
       <workItem from="1559231552328" duration="29000" />
       <workItem from="1559240517345" duration="12000" />
       <workItem from="1559240572180" duration="922000" />
-      <workItem from="1559578253260" duration="5000" />
+      <workItem from="1559578253260" duration="73000" />
     </task>
     <task id="LOCAL-00001" summary="Componente Arbol beta1">
       <created>1523527974138</created>
@@ -569,7 +565,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="283645000" />
+    <option name="totallyTimeSpent" value="283713000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
