@@ -977,7 +977,7 @@ class TemporalFolder extends Component {
                     </Paper> : <ExpansionPanel expanded={this.state.expandSectionTempFile}
                                                onChange={() => this.setState({expandSectionTempFile: !this.state.expandSectionTempFile})}>
                         <ExpansionPanelSummary  style={{paddingLeft:8}} expandIcon={<ExpandMoreIcon/>}>
-                            <Typography variant={"display4"}>
+                            <Typography variant={"display4"} style={{paddingLeft: this.props.notInFolderPlace ? 0 :10}}>
                                 Archivos temporales de expediente   <text
                                 style={{color: 'red',paddingLeft:5}}> ({this.state.temporalFiles.length})</text>
                             </Typography>
@@ -997,7 +997,7 @@ class TemporalFolder extends Component {
                                 <Typography variant={"body1"} style={{
                                     fontSize: 12,
                                     textAlign: 'justify',
-                                    padding: '0 15px',
+                                    padding: '0 18px',
                                     marginTop: -25
                                 }}>
                                     Archivos pendientes de asignar subidos al expediente.
