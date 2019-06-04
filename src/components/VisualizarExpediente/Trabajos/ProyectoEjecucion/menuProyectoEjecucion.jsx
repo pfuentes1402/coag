@@ -259,7 +259,7 @@ class MenuProyectoEjecucion extends Component {
               this.handleClick(null);
               this.props.resetExpansionRequest();
             }} />
-          {this.state.showArrow > 0
+          {this.props.trabajo.Tiene_Carpetas === 1
             ? <div className="arrow-right"
               onClick={async () => await this.handleOpenTrabajo(!this.state.isOpenTrabajo)}>
               {this.state.isOpenTrabajo
