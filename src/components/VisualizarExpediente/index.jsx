@@ -3,6 +3,7 @@ import {
   AppBar, Toolbar, withStyles, Grid, Button, Collapse,
   ListItemText, Divider
 } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 import {
   Close, FileCopy, CancelPresentation, CloudDownload, ExpandLess,
   ExpandMore, CloudUpload, Notifications, Check
@@ -35,7 +36,7 @@ import Confirmation from "../Errors/confirmation";
 const styles = theme => ({
   fichaExpediente: {
     backgroundColor: theme.palette.primary.main,
-    color: "white"
+    color: "white !important"
   },
   root: {
     flexGrow: 1,
@@ -67,8 +68,10 @@ const styles = theme => ({
     borderBottom: "solid 1px " + grey[300],
     position: "relative",
     cursor: "pointer",
-    lineHeight: 2,
-    fontSize: 16
+    lineHeight: 1.5,
+    fontSize: 16,
+    fontWeight: 500,
+    color: "#232323"
   },
   leftNav: {
     flexGrow: 1,
@@ -79,6 +82,10 @@ const styles = theme => ({
   },
   boredrRight: {
     borderRight: "1.5px solid #CCC",
+  },
+  noMaxWidth: {
+    maxWidth: 'none',
+    fontSize: 16
   }
 
 });
@@ -451,13 +458,13 @@ class VisualizarExpediente extends Component {
                   <Translate id="languages.generalButton.present" /><Check />
                 </Button>
               </Toolbar>
-              : <Toolbar className="tool-drop" style={{ width: "100%", textAlign: "right",overflow:'hidden' }}>
+              : <Toolbar className="tool-drop" style={{ width: "100%", textAlign: "right", overflow: 'hidden' }}>
                 {
                   this.props.fileUpload.uploadInProgress ? null :
                     <Dropzone style={{
                       height: 'auto',
                       borderStyle: 'none',
-                      display:'flex', 
+                      display: 'flex',
                       flexDirection: "row-reverse",
                       position: "absolute",
                       right: 10
@@ -611,7 +618,12 @@ class VisualizarExpediente extends Component {
           <Grid item xs={6}>
             <BreadcrumbsItem key={1} to={'/visualizar-expediente/' + this.state.currentExpediente.Id_Expediente}
               className="title-breadcrumb">
-              {(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
+              <Tooltip
+                title={(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}
+                placement="top-start"
+                classes={{ tooltip: classes.noMaxWidth }}>
+                <div className="title-breadcrumb">{(this.state.currentExpediente.Expediente_Codigo ? this.state.currentExpediente.Expediente_Codigo : this.state.currentExpediente.Expediente_Codigo_Estudio) + (this.state.renderComponent === "TrabajoComunicacion" || this.state.renderComponent === "ExpedienteGeneral" ? ` ${this.state.currentExpediente.Titulo}` : "")}</div>
+              </Tooltip>
             </BreadcrumbsItem>
             {
               (this.state.idTrabajoActivo && this.state.renderComponent !== "TrabajoComunicacion")

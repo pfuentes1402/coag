@@ -12,16 +12,16 @@
 .nav-expedient button > span {
   white-space: nowrap;
 }
-.nav-expedient::-webkit-scrollbar{
+.nav-expedient::-webkit-scrollbar {
   width: 1px;
   height: 3px;
-  background-color: #CCC;
+  background-color: #ccc;
 }
 .nav-expedient::-webkit-scrollbar-thumb {
-	background-color: #CCC;
+  background-color: #ccc;
 }
 .nav-expedient::-webkit-scrollbar-track {
-	background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .tool {
@@ -66,6 +66,12 @@
 
 .title-breadcrumb {
   font-size: 16px;
+  /*Para mostrar texto en una sola linea*/
+  display: inline !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50%;
 }
 .title-breadcrumb + b {
   font-size: 16px;
