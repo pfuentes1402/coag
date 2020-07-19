@@ -48,7 +48,7 @@
     "html-webpack-plugin": "2.29.0",
     "ignore-styles": "^5.0.1",
     "jest": "20.0.4",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.22.2",
     "namor": "^1.0.1",
     "object-assign": "4.1.1",
